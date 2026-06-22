@@ -1,0 +1,167 @@
+@import 'tailwindcss';
+@plugin '@tailwindcss/forms';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../views/**/*.blade.php';
+@source '../js/**/*.js';
+
+@theme {
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
+        'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+
+    --color-brand: #1e3a5f;
+    --color-brand-dark: #152d4a;
+    --color-brand-light: #2a4f80;
+    --color-gold: #c9a84c;
+    --color-gold-light: #f5eac8;
+    --color-gold-dark: #a88930;
+
+    --color-erp-bg: #eef1f5;
+    --color-erp-sidebar: #152d4a;
+    --color-erp-sidebar-hover: #1e3a5f;
+    --color-erp-nav: #ffffff;
+    --color-erp-nav-muted: #64748b;
+    --color-erp-border: #dde3ea;
+}
+
+/* ERP sidebar — commercial light nav */
+.erp-nav-section {
+    @apply px-3 pt-4 pb-1 text-[10px] font-bold text-gray-400 uppercase tracking-widest;
+}
+
+.erp-nav-link {
+    @apply flex items-center gap-2.5 px-3 py-2 text-[13px] rounded-sm text-gray-600 transition;
+}
+
+.erp-nav-link:hover {
+    @apply bg-gray-50 text-brand;
+}
+
+.erp-nav-link-active {
+    @apply bg-brand/5 text-brand font-semibold border-l-2 border-gold -ml-px pl-[11px];
+}
+
+.erp-nav-group {
+    @apply w-full flex items-center gap-2 px-3 py-2 text-[13px] rounded-sm text-gray-700 transition;
+}
+
+.erp-nav-group:hover {
+    @apply bg-gray-50 text-brand;
+}
+
+.erp-nav-group-active {
+    @apply text-brand font-semibold;
+}
+
+.erp-nav-group-icon {
+    @apply w-7 h-7 rounded-sm flex items-center justify-center shrink-0;
+}
+
+.erp-nav-sub {
+    @apply ml-3 pl-3 border-l border-erp-border space-y-0.5 py-1;
+}
+
+.erp-nav-sub-link {
+    @apply block px-2.5 py-1.5 text-xs rounded-sm text-gray-500 transition truncate;
+}
+
+.erp-nav-sub-link:hover {
+    @apply bg-gray-50 text-brand;
+}
+
+.erp-nav-sub-link-active {
+    @apply bg-brand/5 text-brand font-semibold;
+}
+
+.erp-nav-commercial .erp-nav-group-icon {
+    @apply bg-gold/15 text-gold-dark;
+}
+
+/* ERP shell */
+.erp-sidebar-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(30, 58, 95, 0.15) transparent;
+}
+
+.erp-sidebar-scroll::-webkit-scrollbar {
+    width: 4px;
+}
+
+.erp-sidebar-scroll::-webkit-scrollbar-thumb {
+    background: rgba(30, 58, 95, 0.15);
+    border-radius: 2px;
+}
+
+/* ERP components */
+.erp-panel {
+    @apply bg-white border border-erp-border rounded-sm shadow-sm;
+}
+
+.erp-panel-head {
+    @apply px-4 py-3 border-b border-erp-border flex items-center justify-between gap-3 bg-gray-50/80;
+}
+
+.erp-panel-body {
+    @apply p-4;
+}
+
+.erp-table {
+    @apply w-full text-sm;
+}
+
+.erp-table thead tr {
+    @apply bg-gray-50 border-b border-erp-border;
+}
+
+.erp-table th {
+    @apply px-4 py-2.5 text-left text-[11px] font-semibold text-gray-500 uppercase tracking-wider whitespace-nowrap;
+}
+
+.erp-table td {
+    @apply px-4 py-2.5 text-gray-700 align-middle;
+}
+
+.erp-table tbody tr {
+    @apply border-b border-gray-100 hover:bg-blue-50/40 transition-colors;
+}
+
+.erp-btn-primary {
+    @apply inline-flex items-center gap-1.5 bg-brand hover:bg-brand-dark text-white text-xs font-semibold px-3 py-2 rounded-sm transition;
+}
+
+.erp-btn-secondary {
+    @apply inline-flex items-center gap-1.5 bg-white hover:bg-gray-50 text-gray-700 text-xs font-medium px-3 py-2 rounded-sm border border-erp-border transition;
+}
+
+.erp-btn-danger {
+    @apply inline-flex items-center gap-1.5 bg-red-50 hover:bg-red-100 text-red-700 text-xs font-medium px-3 py-2 rounded-sm border border-red-200 transition;
+}
+
+.erp-input {
+    @apply w-full rounded-sm border-erp-border text-sm focus:border-brand focus:ring-brand;
+}
+
+.erp-kpi {
+    @apply bg-white border border-erp-border rounded-sm shadow-sm px-4 py-3;
+}
+
+.erp-kpi-value {
+    @apply text-2xl font-bold tabular-nums;
+}
+
+.erp-kpi-label {
+    @apply text-[11px] font-medium uppercase tracking-wide opacity-70 mt-0.5;
+}
+
+.erp-badge {
+    @apply inline-flex items-center text-[11px] font-semibold px-2 py-0.5 rounded-sm;
+}
+
+.erp-form-label {
+    @apply block text-[11px] font-semibold text-gray-500 uppercase tracking-wide mb-1;
+}
+
+.erp-form-section {
+    @apply bg-white border border-erp-border rounded-sm shadow-sm p-5 space-y-4;
+}
