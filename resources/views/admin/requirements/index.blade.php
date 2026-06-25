@@ -81,8 +81,8 @@
                             {{ $order->created_at->format('d M Y') }}
                         </td>
                         <td class="text-right">
-                            <div class="inline-flex items-center gap-1">
-                                <a href="{{ route('admin.requirements.show', $order) }}" class="erp-btn-primary !py-1 !px-2.5">Open</a>
+                            <div class="erp-table-actions">
+                                <a href="{{ route('admin.requirements.show', $order) }}" class="erp-btn-sm-secondary">Open</a>
                                 @if(auth()->user()->hasPermission('orders.delete'))
                                     <form method="POST" action="{{ route('admin.requirements.destroy', $order) }}" class="inline"
                                           onsubmit="return confirm('Delete requirement {{ $order->ref_code }}? This cannot be undone.')">

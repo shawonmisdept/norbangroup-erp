@@ -1,15 +1,16 @@
-<header class="h-14 bg-white border-b border-erp-border flex items-center justify-between px-4 lg:px-6 shrink-0 sticky top-0 z-30">
+<header class="h-14 bg-white border-b border-erp-border flex items-center justify-between px-3 sm:px-4 lg:px-6 shrink-0 sticky top-0 z-30 safe-top">
 
-    <div class="flex items-center gap-3 min-w-0">
+    <div class="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
         <button type="button" @click="sidebarOpen = !sidebarOpen"
-                class="lg:hidden p-1.5 -ml-1 text-gray-500 hover:text-gray-800 hover:bg-gray-100 rounded-sm">
+                class="lg:hidden p-2 -ml-1 text-gray-500 hover:text-gray-800 hover:bg-gray-100 rounded-sm min-w-[2.5rem] min-h-[2.5rem] flex items-center justify-center"
+                aria-label="Toggle menu">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                 <path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round"/>
             </svg>
         </button>
 
         @hasSection('breadcrumbs')
-            <nav class="hidden sm:flex items-center gap-1.5 text-xs text-gray-400 min-w-0">
+            <nav class="flex items-center gap-1.5 text-[10px] sm:text-xs text-gray-400 min-w-0 truncate">
                 @yield('breadcrumbs')
             </nav>
         @else
@@ -18,7 +19,7 @@
     </div>
 
     <div class="flex items-center gap-2 shrink-0">
-        @if(auth()->user()->hasPermission('orders.view'))
+        @if(auth()->user()->canReceiveNotifications())
             @include('partials.erp.notification-bell')
         @endif
 

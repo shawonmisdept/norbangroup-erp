@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\User;
+use App\Models\Hrm\EmployeePortalUser;
 
 return [
 
@@ -42,6 +43,10 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'employee' => [
+            'driver' => 'session',
+            'provider' => 'employee_portal_users',
+        ],
     ],
 
     /*
@@ -65,6 +70,10 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => env('AUTH_MODEL', User::class),
+        ],
+        'employee_portal_users' => [
+            'driver' => 'eloquent',
+            'model' => EmployeePortalUser::class,
         ],
 
         // 'users' => [

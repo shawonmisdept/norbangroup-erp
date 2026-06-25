@@ -47,6 +47,7 @@ class RequirementTest extends TestCase
             'mail_host'    => '127.0.0.1',
             'mail_port'    => 2525,
             'mail_username'=> null,
+            'mail_password'=> null,
         ]);
         AppSetting::clearCache();
 

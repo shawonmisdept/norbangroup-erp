@@ -1,12 +1,81 @@
 <?php
 
 use App\Http\Controllers\Admin\AppSettingsController;
+use App\Http\Controllers\Admin\Hrm\AttendanceController;
+use App\Http\Controllers\Admin\Hrm\Attendance\HubController as AttendanceHubController;
+use App\Http\Controllers\Admin\Hrm\Attendance\GatePointController as AttendanceGatePointController;
+use App\Http\Controllers\Admin\Hrm\Attendance\HalfDayEntryController as AttendanceHalfDayEntryController;
+use App\Http\Controllers\Admin\Hrm\Attendance\LateAcceptanceController as AttendanceLateAcceptanceController;
+use App\Http\Controllers\Admin\Hrm\Attendance\ManualPunchController as AttendanceManualPunchController;
+use App\Http\Controllers\Admin\Hrm\Attendance\PlannedController as AttendancePlannedController;
+use App\Http\Controllers\Admin\Hrm\Attendance\PolicyController as AttendancePolicyController;
+use App\Http\Controllers\Admin\Hrm\Attendance\ReportController as AttendanceReportController;
+use App\Http\Controllers\Admin\Hrm\DashboardController as HrmDashboardController;
+use App\Http\Controllers\Admin\Hrm\EmployeeController;
+use App\Http\Controllers\Admin\Hrm\EmployeeHubController;
+use App\Http\Controllers\Admin\Hrm\EmployeePortalController;
+use App\Http\Controllers\Admin\Hrm\HrmMasterController;
+use App\Http\Controllers\Admin\Hrm\Leave\AllocationController as LeaveAllocationController;
+use App\Http\Controllers\Admin\Hrm\Leave\BulkEntryController as LeaveBulkEntryController;
+use App\Http\Controllers\Admin\Hrm\Leave\HubController as LeaveHubController;
+use App\Http\Controllers\Admin\Hrm\Leave\MaternityRuleController;
+use App\Http\Controllers\Admin\Hrm\Leave\MaternityTransactionController;
+use App\Http\Controllers\Admin\Hrm\Leave\OpeningBalanceController;
+use App\Http\Controllers\Admin\Hrm\Leave\PlannedController as LeavePlannedController;
+use App\Http\Controllers\Admin\Hrm\Leave\PolicyController as LeavePolicyController;
+use App\Http\Controllers\Admin\Hrm\Leave\RuleController as LeaveRuleController;
+use App\Http\Controllers\Admin\Hrm\Leave\TransactionController as LeaveTransactionController;
+use App\Http\Controllers\Admin\Hrm\Salary\IncrementBulkController;
+use App\Http\Controllers\Admin\Hrm\Salary\IncrementRuleController;
+use App\Http\Controllers\Admin\Hrm\Salary\IncrementUploadController;
+use App\Http\Controllers\Admin\Hrm\Salary\CloseController as SalaryCloseController;
+use App\Http\Controllers\Admin\Hrm\Salary\EmployeeSalaryController;
+use App\Http\Controllers\Admin\Hrm\Salary\GradeController as SalaryGradeController;
+use App\Http\Controllers\Admin\Hrm\Salary\GradeDetailController;
+use App\Http\Controllers\Admin\Hrm\Salary\HeadController as SalaryHeadController;
+use App\Http\Controllers\Admin\Hrm\Salary\HubController as SalaryHubController;
+use App\Http\Controllers\Admin\Hrm\Salary\PlannedController as SalaryPlannedController;
+use App\Http\Controllers\Admin\Hrm\Salary\ProcessController as SalaryProcessController;
+use App\Http\Controllers\Admin\Hrm\Salary\UploadController as SalaryUploadController;
+use App\Http\Controllers\Admin\Hrm\Compliance\AgeVerificationController as ComplianceAgeVerificationController;
+use App\Http\Controllers\Admin\Hrm\Compliance\BonusController as ComplianceBonusController;
+use App\Http\Controllers\Admin\Hrm\Compliance\GratuityController as ComplianceGratuityController;
+use App\Http\Controllers\Admin\Hrm\Compliance\HubController as ComplianceHubController;
+use App\Http\Controllers\Admin\Hrm\Compliance\RegisterController as ComplianceRegisterController;
+use App\Http\Controllers\Admin\Hrm\Compliance\WorkingHoursController as ComplianceWorkingHoursController;
+use App\Http\Controllers\Admin\Hrm\Finance\HubController as FinanceHubController;
+use App\Http\Controllers\Admin\Hrm\Finance\BulkAdvanceController as FinanceBulkAdvanceController;
+use App\Http\Controllers\Admin\Hrm\Finance\FinalSettlementController as FinanceFinalSettlementController;
+use App\Http\Controllers\Admin\Hrm\Finance\LoanController as FinanceLoanController;
+use App\Http\Controllers\Admin\Hrm\Finance\PfController as FinancePfController;
+use App\Http\Controllers\Admin\Hrm\Finance\TaxController as FinanceTaxController;
+use App\Http\Controllers\Admin\Hrm\Recruitment\HubController as RecruitmentHubController;
+use App\Http\Controllers\Admin\Hrm\Rmg\ExportController as RmgExportController;
+use App\Http\Controllers\Admin\Hrm\Rmg\GatePassController as RmgGatePassController;
+use App\Http\Controllers\Admin\Hrm\Rmg\GenericRmgController;
+use App\Http\Controllers\Admin\Hrm\Rmg\HubController as RmgHubController;
+use App\Http\Controllers\Admin\Hrm\Rmg\ManpowerPlanningController as RmgManpowerPlanningController;
+use App\Http\Controllers\Admin\Hrm\Rmg\ProxyPunchController as RmgProxyPunchController;
+use App\Http\Controllers\Admin\Hrm\Rmg\WorkerTransferController as RmgWorkerTransferController;
+use App\Http\Controllers\Admin\Hrm\Attendance\RosterController as AttendanceRosterController;
 use App\Http\Controllers\Admin\MasterController;
 use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Employee\AttendanceController as EmployeeAttendanceController;
+use App\Http\Controllers\Employee\CheckInController as EmployeeCheckInController;
+use App\Http\Controllers\Employee\Auth\LoginController as EmployeeLoginController;
+use App\Http\Controllers\Employee\DashboardController as EmployeeDashboardController;
+use App\Http\Controllers\Employee\LeaveController as EmployeeLeaveController;
+use App\Http\Controllers\Employee\LateAcceptanceController as EmployeeLateAcceptanceController;
+use App\Http\Controllers\Employee\LoanController as EmployeeLoanController;
+use App\Http\Controllers\Employee\PfController as EmployeePfController;
+use App\Http\Controllers\Employee\PayslipController as EmployeePayslipController;
+use App\Http\Controllers\Employee\RosterController as EmployeeRosterController;
+use App\Http\Controllers\Employee\NotificationController as EmployeeNotificationController;
+use App\Http\Controllers\Employee\ProfileController as EmployeeProfileController;
 use App\Http\Controllers\OrderController;
 use App\Models\Order;
 use Illuminate\Support\Facades\Route;
@@ -69,9 +138,12 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
         Route::get('/settings', [AppSettingsController::class, 'edit'])->name('settings.edit');
         Route::put('/settings', [AppSettingsController::class, 'update'])->name('settings.update');
         Route::post('/settings/test-mail', [AppSettingsController::class, 'sendTestMail'])->name('settings.test-mail');
+        Route::post('/settings/test-sms', [AppSettingsController::class, 'sendTestSms'])->name('settings.test-sms');
     });
 
     Route::middleware('auth')->prefix('notifications')->name('notifications.')->group(function () {
+        Route::get('/', [NotificationController::class, 'index'])->name('index');
+        Route::get('/unread-count', [NotificationController::class, 'unreadCount'])->name('unread-count');
         Route::patch('/read-all', [NotificationController::class, 'markAllRead'])->name('read-all');
         Route::patch('/{id}/read', [NotificationController::class, 'markRead'])->name('read');
     });
@@ -91,5 +163,517 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
         Route::get('/masters/{module}/{id}/edit', [MasterController::class, 'edit'])->name('masters.edit')->whereNumber('id');
         Route::put('/masters/{module}/{id}', [MasterController::class, 'update'])->name('masters.update')->whereNumber('id');
         Route::delete('/masters/{module}/{id}', [MasterController::class, 'destroy'])->name('masters.destroy')->whereNumber('id');
+    });
+
+    Route::prefix('hrm')->name('hrm.')->middleware('factory.scope')->group(function () {
+        Route::middleware('hrm.any')->group(function () {
+            Route::get('/', [HrmDashboardController::class, 'index'])->name('dashboard');
+            Route::get('/today-attendance', [HrmDashboardController::class, 'todayAttendance'])->name('dashboard.today-attendance');
+        });
+
+        Route::middleware('hrm.master.any')->group(function () {
+            Route::get('/masters', [HrmMasterController::class, 'hub'])->name('masters.hub');
+        });
+
+        Route::middleware('hrm.master.permission:view')->group(function () {
+            Route::get('/masters/{module}', [HrmMasterController::class, 'index'])->name('masters.index');
+            Route::get('/masters/{module}/{id}', [HrmMasterController::class, 'show'])->name('masters.show')->whereNumber('id');
+        });
+
+        Route::middleware('hrm.master.permission:manage')->group(function () {
+            Route::get('/masters/{module}/create', [HrmMasterController::class, 'create'])->name('masters.create');
+            Route::post('/masters/{module}', [HrmMasterController::class, 'store'])->name('masters.store');
+            Route::get('/masters/{module}/{id}/edit', [HrmMasterController::class, 'edit'])->name('masters.edit')->whereNumber('id');
+            Route::put('/masters/{module}/{id}', [HrmMasterController::class, 'update'])->name('masters.update')->whereNumber('id');
+            Route::delete('/masters/{module}/{id}', [HrmMasterController::class, 'destroy'])->name('masters.destroy')->whereNumber('id');
+        });
+
+        Route::middleware('hrm.any')->group(function () {
+            Route::get('/employee', EmployeeHubController::class)->name('employee.hub');
+            Route::get('/recruitment', RecruitmentHubController::class)->name('recruitment.hub');
+        });
+
+        Route::middleware('permission:hrm.employees.manage')->group(function () {
+            Route::get('/employees/create', [EmployeeController::class, 'create'])->name('employees.create');
+            Route::post('/employees', [EmployeeController::class, 'store'])->name('employees.store');
+            Route::get('/employees/{employee}/edit', [EmployeeController::class, 'edit'])->name('employees.edit');
+            Route::put('/employees/{employee}', [EmployeeController::class, 'update'])->name('employees.update');
+            Route::delete('/employees/{employee}', [EmployeeController::class, 'destroy'])->name('employees.destroy');
+            Route::post('/employees/{employee}/portal', [EmployeePortalController::class, 'store'])->name('employees.portal.store');
+            Route::put('/employees/{employee}/portal', [EmployeePortalController::class, 'update'])->name('employees.portal.update');
+            Route::delete('/employees/{employee}/portal', [EmployeePortalController::class, 'destroy'])->name('employees.portal.destroy');
+        });
+
+        Route::middleware('permission:hrm.employees.view')->group(function () {
+            Route::get('/employees', [EmployeeController::class, 'index'])->name('employees.index');
+            Route::get('/employees/{employee}', [EmployeeController::class, 'show'])->name('employees.show');
+            Route::get('/employees/{employee}/id-card', [EmployeeController::class, 'idCard'])->name('employees.id-card');
+        });
+
+        Route::middleware('permission:hrm.employees.separation.view')->group(function () {
+            Route::get('/separations', [\App\Http\Controllers\Admin\Hrm\SeparationController::class, 'index'])->name('separations.index');
+            Route::get('/separations/export', [\App\Http\Controllers\Admin\Hrm\SeparationController::class, 'export'])->name('separations.export');
+            Route::get('/separations/{separation}', [\App\Http\Controllers\Admin\Hrm\SeparationController::class, 'show'])->name('separations.show')->whereNumber('separation');
+        });
+
+        Route::middleware('permission:hrm.employees.separation.manage')->group(function () {
+            Route::get('/separations/create', [\App\Http\Controllers\Admin\Hrm\SeparationController::class, 'create'])->name('separations.create');
+            Route::post('/separations', [\App\Http\Controllers\Admin\Hrm\SeparationController::class, 'store'])->name('separations.store');
+            Route::delete('/separations/{separation}', [\App\Http\Controllers\Admin\Hrm\SeparationController::class, 'cancel'])->name('separations.cancel')->whereNumber('separation');
+        });
+
+        Route::middleware('permission:hrm.employees.separation.approve')->group(function () {
+            Route::post('/separations/{separation}/approve', [\App\Http\Controllers\Admin\Hrm\SeparationController::class, 'approve'])->name('separations.approve')->whereNumber('separation');
+            Route::post('/separations/{separation}/reject', [\App\Http\Controllers\Admin\Hrm\SeparationController::class, 'reject'])->name('separations.reject')->whereNumber('separation');
+            Route::post('/separations/{separation}/exit-data', [\App\Http\Controllers\Admin\Hrm\SeparationController::class, 'saveExitData'])->name('separations.exit-data')->whereNumber('separation');
+        });
+
+        Route::middleware('permission:hrm.employees.promotion.view')->group(function () {
+            Route::get('/promotions', [\App\Http\Controllers\Admin\Hrm\PromotionController::class, 'index'])->name('promotions.index');
+            Route::get('/promotions/export', [\App\Http\Controllers\Admin\Hrm\PromotionController::class, 'export'])->name('promotions.export');
+            Route::get('/promotions/{promotion}', [\App\Http\Controllers\Admin\Hrm\PromotionController::class, 'show'])->name('promotions.show')->whereNumber('promotion');
+        });
+
+        Route::middleware('permission:hrm.employees.promotion.manage')->group(function () {
+            Route::get('/promotions/create', [\App\Http\Controllers\Admin\Hrm\PromotionController::class, 'create'])->name('promotions.create');
+            Route::post('/promotions', [\App\Http\Controllers\Admin\Hrm\PromotionController::class, 'store'])->name('promotions.store');
+            Route::delete('/promotions/{promotion}', [\App\Http\Controllers\Admin\Hrm\PromotionController::class, 'cancel'])->name('promotions.cancel')->whereNumber('promotion');
+        });
+
+        Route::middleware('permission:hrm.employees.promotion.approve')->group(function () {
+            Route::post('/promotions/{promotion}/approve', [\App\Http\Controllers\Admin\Hrm\PromotionController::class, 'approve'])->name('promotions.approve')->whereNumber('promotion');
+            Route::post('/promotions/{promotion}/reject', [\App\Http\Controllers\Admin\Hrm\PromotionController::class, 'reject'])->name('promotions.reject')->whereNumber('promotion');
+        });
+
+        Route::middleware('permission:hrm.employees.letters.view')->group(function () {
+            Route::get('/letters', [\App\Http\Controllers\Admin\Hrm\LetterController::class, 'index'])->name('letters.index');
+            Route::get('/letters/{letter}', [\App\Http\Controllers\Admin\Hrm\LetterController::class, 'show'])->name('letters.show')->whereNumber('letter');
+            Route::get('/letters/{letter}/print', [\App\Http\Controllers\Admin\Hrm\LetterController::class, 'print'])->name('letters.print')->whereNumber('letter');
+        });
+
+        Route::middleware('permission:hrm.employees.letters.manage')->group(function () {
+            Route::get('/letters/create', [\App\Http\Controllers\Admin\Hrm\LetterController::class, 'create'])->name('letters.create');
+            Route::post('/letters', [\App\Http\Controllers\Admin\Hrm\LetterController::class, 'store'])->name('letters.store');
+        });
+
+        Route::middleware('permission:hrm.employees.discipline.view')->group(function () {
+            Route::get('/discipline', [\App\Http\Controllers\Admin\Hrm\DisciplinaryController::class, 'index'])->name('discipline.index');
+            Route::get('/discipline/{discipline}', [\App\Http\Controllers\Admin\Hrm\DisciplinaryController::class, 'show'])->name('discipline.show')->whereNumber('discipline');
+        });
+
+        Route::middleware('permission:hrm.employees.discipline.manage')->group(function () {
+            Route::get('/discipline/create', [\App\Http\Controllers\Admin\Hrm\DisciplinaryController::class, 'create'])->name('discipline.create');
+            Route::post('/discipline', [\App\Http\Controllers\Admin\Hrm\DisciplinaryController::class, 'store'])->name('discipline.store');
+            Route::post('/discipline/{discipline}/close', [\App\Http\Controllers\Admin\Hrm\DisciplinaryController::class, 'close'])->name('discipline.close')->whereNumber('discipline');
+        });
+
+        Route::middleware('permission:hrm.recruitment.postings.view')->group(function () {
+            Route::get('/recruitment/postings', [\App\Http\Controllers\Admin\Hrm\Recruitment\JobPostingController::class, 'index'])->name('recruitment.postings.index');
+            Route::get('/recruitment/postings/{posting}', [\App\Http\Controllers\Admin\Hrm\Recruitment\JobPostingController::class, 'show'])->name('recruitment.postings.show')->whereNumber('posting');
+        });
+
+        Route::middleware('permission:hrm.recruitment.postings.manage')->group(function () {
+            Route::get('/recruitment/postings/create', [\App\Http\Controllers\Admin\Hrm\Recruitment\JobPostingController::class, 'create'])->name('recruitment.postings.create');
+            Route::post('/recruitment/postings', [\App\Http\Controllers\Admin\Hrm\Recruitment\JobPostingController::class, 'store'])->name('recruitment.postings.store');
+            Route::get('/recruitment/postings/{posting}/edit', [\App\Http\Controllers\Admin\Hrm\Recruitment\JobPostingController::class, 'edit'])->name('recruitment.postings.edit')->whereNumber('posting');
+            Route::put('/recruitment/postings/{posting}', [\App\Http\Controllers\Admin\Hrm\Recruitment\JobPostingController::class, 'update'])->name('recruitment.postings.update')->whereNumber('posting');
+            Route::delete('/recruitment/postings/{posting}', [\App\Http\Controllers\Admin\Hrm\Recruitment\JobPostingController::class, 'destroy'])->name('recruitment.postings.destroy')->whereNumber('posting');
+        });
+
+        Route::middleware('permission:hrm.recruitment.applications.view')->group(function () {
+            Route::get('/recruitment/dashboard', [\App\Http\Controllers\Admin\Hrm\Recruitment\DashboardController::class, 'index'])->name('recruitment.dashboard');
+            Route::get('/recruitment/applications', [\App\Http\Controllers\Admin\Hrm\Recruitment\ApplicationController::class, 'index'])->name('recruitment.applications.index');
+            Route::get('/recruitment/applications/export', [\App\Http\Controllers\Admin\Hrm\Recruitment\ApplicationController::class, 'export'])->name('recruitment.applications.export');
+            Route::get('/recruitment/applications/{application}', [\App\Http\Controllers\Admin\Hrm\Recruitment\ApplicationController::class, 'show'])->name('recruitment.applications.show')->whereNumber('application');
+            Route::get('/recruitment/offer-letters/{offerLetter}', [\App\Http\Controllers\Admin\Hrm\Recruitment\OfferLetterController::class, 'show'])->name('recruitment.offer-letters.show')->whereNumber('offerLetter');
+            Route::get('/recruitment/offer-letters/{offerLetter}/print', [\App\Http\Controllers\Admin\Hrm\Recruitment\OfferLetterController::class, 'print'])->name('recruitment.offer-letters.print')->whereNumber('offerLetter');
+        });
+
+        Route::middleware('permission:hrm.recruitment.applications.manage')->group(function () {
+            Route::get('/recruitment/applications/create', [\App\Http\Controllers\Admin\Hrm\Recruitment\ApplicationController::class, 'create'])->name('recruitment.applications.create');
+            Route::post('/recruitment/applications', [\App\Http\Controllers\Admin\Hrm\Recruitment\ApplicationController::class, 'store'])->name('recruitment.applications.store');
+            Route::post('/recruitment/applications/{application}/status', [\App\Http\Controllers\Admin\Hrm\Recruitment\ApplicationController::class, 'updateStatus'])->name('recruitment.applications.status')->whereNumber('application');
+            Route::post('/recruitment/applications/{application}/interviews', [\App\Http\Controllers\Admin\Hrm\Recruitment\ApplicationController::class, 'scheduleInterview'])->name('recruitment.applications.interviews.store')->whereNumber('application');
+            Route::post('/recruitment/applications/{application}/interviews/{interview}/complete', [\App\Http\Controllers\Admin\Hrm\Recruitment\ApplicationController::class, 'completeInterview'])->name('recruitment.applications.interviews.complete')->whereNumber(['application', 'interview']);
+            Route::get('/recruitment/applications/{application}/offer-letter', [\App\Http\Controllers\Admin\Hrm\Recruitment\OfferLetterController::class, 'create'])->name('recruitment.applications.offer-letter.create')->whereNumber('application');
+            Route::post('/recruitment/applications/{application}/offer-letter', [\App\Http\Controllers\Admin\Hrm\Recruitment\OfferLetterController::class, 'store'])->name('recruitment.applications.offer-letter.store')->whereNumber('application');
+        });
+
+        Route::middleware('permission:hrm.recruitment.applications.convert')->group(function () {
+            Route::post('/recruitment/applications/{application}/convert', [\App\Http\Controllers\Admin\Hrm\Recruitment\ApplicationController::class, 'convert'])->name('recruitment.applications.convert')->whereNumber('application');
+        });
+
+        Route::middleware('permission:hrm.attendance.view')->group(function () {
+            Route::get('/attendance', AttendanceHubController::class)->name('attendance.hub');
+            Route::get('/attendance/planned/{module}', AttendancePlannedController::class)->name('attendance.planned');
+            Route::get('/attendance/punches', [AttendanceController::class, 'punches'])->name('attendance.punches');
+            Route::get('/attendance/daily', [AttendanceController::class, 'daily'])->name('attendance.daily');
+            Route::get('/attendance/periods', [AttendanceController::class, 'periods'])->name('attendance.periods');
+            Route::get('/attendance/periods/{period}', [AttendanceController::class, 'showPeriod'])->name('attendance.periods.show');
+            Route::get('/attendance/policy', [AttendancePolicyController::class, 'index'])->name('attendance.policy.index');
+            Route::get('/attendance/late-acceptance', [AttendanceLateAcceptanceController::class, 'index'])->name('attendance.late-acceptance.index');
+            Route::get('/attendance/late-acceptance/{lateAcceptance}', [AttendanceLateAcceptanceController::class, 'show'])->name('attendance.late-acceptance.show');
+            Route::get('/attendance/half-day-entry', [AttendanceHalfDayEntryController::class, 'index'])->name('attendance.half-day-entry.index');
+            Route::get('/attendance/manual-punch', [AttendanceManualPunchController::class, 'index'])->name('attendance.manual-punch.index');
+            Route::get('/attendance/gate-points', [AttendanceGatePointController::class, 'index'])->name('attendance.gate-points.index');
+            Route::get('/attendance/gate-points/{gatePoint}/qr', [AttendanceGatePointController::class, 'qr'])->name('attendance.gate-points.qr');
+            Route::get('/attendance/reports', [AttendanceReportController::class, 'index'])->name('attendance.reports.index');
+            Route::get('/attendance/reports/export', [AttendanceReportController::class, 'export'])->name('attendance.reports.export');
+            Route::get('/attendance/reports/employee/{employee}', [AttendanceReportController::class, 'employeeCalendar'])->name('attendance.reports.employee');
+            Route::get('/attendance/roster', [AttendanceRosterController::class, 'index'])->name('attendance.roster.index');
+            Route::get('/attendance/roster/variance', [AttendanceRosterController::class, 'variance'])->name('attendance.roster.variance');
+            Route::get('/attendance/roster/variance/export', [AttendanceRosterController::class, 'exportVariance'])->name('attendance.roster.variance.export');
+            Route::get('/attendance/roster/{roster}', [AttendanceRosterController::class, 'show'])->name('attendance.roster.show')->whereNumber('roster');
+        });
+
+        Route::middleware('permission:hrm.attendance.sync')->group(function () {
+            Route::get('/attendance/sync', [AttendanceController::class, 'sync'])->name('attendance.sync.index');
+            Route::get('/attendance/sync/failures', [AttendanceController::class, 'syncFailures'])->name('attendance.sync.failures');
+            Route::post('/attendance/sync-all', [AttendanceController::class, 'syncAll'])->name('attendance.sync-all');
+            Route::post('/attendance/devices/{device}/sync', [AttendanceController::class, 'syncDevice'])->name('attendance.devices.sync');
+        });
+
+        Route::middleware('permission:hrm.attendance.manage')->group(function () {
+            Route::get('/attendance/half-day-entry/create', [AttendanceHalfDayEntryController::class, 'create'])->name('attendance.half-day-entry.create');
+            Route::post('/attendance/half-day-entry', [AttendanceHalfDayEntryController::class, 'store'])->name('attendance.half-day-entry.store');
+            Route::get('/attendance/manual-punch/create', [AttendanceManualPunchController::class, 'create'])->name('attendance.manual-punch.create');
+            Route::post('/attendance/manual-punch', [AttendanceManualPunchController::class, 'store'])->name('attendance.manual-punch.store');
+            Route::get('/attendance/gate-points/create', [AttendanceGatePointController::class, 'create'])->name('attendance.gate-points.create');
+            Route::post('/attendance/gate-points', [AttendanceGatePointController::class, 'store'])->name('attendance.gate-points.store');
+            Route::get('/attendance/gate-points/{gatePoint}/edit', [AttendanceGatePointController::class, 'edit'])->name('attendance.gate-points.edit');
+            Route::put('/attendance/gate-points/{gatePoint}', [AttendanceGatePointController::class, 'update'])->name('attendance.gate-points.update');
+            Route::get('/attendance/policy/{policy}/edit', [AttendancePolicyController::class, 'edit'])->name('attendance.policy.edit');
+            Route::put('/attendance/policy/{policy}', [AttendancePolicyController::class, 'update'])->name('attendance.policy.update');
+            Route::post('/attendance/process', [AttendanceController::class, 'process'])->name('attendance.process');
+            Route::post('/attendance/process-today', [AttendanceController::class, 'processToday'])->name('attendance.process-today');
+            Route::post('/attendance/periods/{period}/freeze', [AttendanceController::class, 'freezePeriod'])->name('attendance.periods.freeze');
+            Route::get('/attendance/roster/create', [AttendanceRosterController::class, 'create'])->name('attendance.roster.create');
+            Route::post('/attendance/roster', [AttendanceRosterController::class, 'store'])->name('attendance.roster.store');
+            Route::post('/attendance/roster/{roster}/assign', [AttendanceRosterController::class, 'assign'])->name('attendance.roster.assign')->whereNumber('roster');
+            Route::post('/attendance/roster/{roster}/publish', [AttendanceRosterController::class, 'publish'])->name('attendance.roster.publish')->whereNumber('roster');
+            Route::get('/attendance/roster/{roster}/import-template', [AttendanceRosterController::class, 'importTemplate'])->name('attendance.roster.import-template')->whereNumber('roster');
+            Route::post('/attendance/roster/{roster}/import', [AttendanceRosterController::class, 'import'])->name('attendance.roster.import')->whereNumber('roster');
+        });
+
+        Route::middleware('permission:hrm.attendance.approve')->group(function () {
+            Route::post('/attendance/late-acceptance/{lateAcceptance}/approve', [AttendanceLateAcceptanceController::class, 'approve'])->name('attendance.late-acceptance.approve');
+            Route::post('/attendance/late-acceptance/{lateAcceptance}/reject', [AttendanceLateAcceptanceController::class, 'reject'])->name('attendance.late-acceptance.reject');
+        });
+
+        Route::redirect('/attendance/index', '/admin/hrm/attendance/sync');
+
+        // ── Leave sub-modules ──
+        Route::middleware('permission:hrm.leave.view')->group(function () {
+            Route::get('/leave', LeaveHubController::class)->name('leave.hub');
+            Route::get('/leave/planned/{module}', LeavePlannedController::class)->name('leave.planned');
+
+            Route::get('/leave/policies', [LeavePolicyController::class, 'index'])->name('leave.policies.index');
+            Route::get('/leave/rules', [LeaveRuleController::class, 'index'])->name('leave.rules.index');
+            Route::get('/leave/maternity-rules', [MaternityRuleController::class, 'index'])->name('leave.maternity-rules.index');
+            Route::get('/leave/opening-balances', [OpeningBalanceController::class, 'index'])->name('leave.opening-balances.index');
+            Route::get('/leave/transactions', [LeaveTransactionController::class, 'index'])->name('leave.transactions.index');
+            Route::get('/leave/transactions/{transaction}', [LeaveTransactionController::class, 'show'])->name('leave.transactions.show');
+            Route::get('/leave/allocation', [LeaveAllocationController::class, 'index'])->name('leave.allocation.index');
+            Route::get('/leave/bulk-entry', [LeaveBulkEntryController::class, 'index'])->name('leave.bulk-entry.index');
+            Route::get('/leave/maternity-transactions', [MaternityTransactionController::class, 'index'])->name('leave.maternity-transactions.index');
+            Route::get('/leave/maternity-transactions/{maternityTransaction}', [MaternityTransactionController::class, 'show'])->name('leave.maternity-transactions.show');
+        });
+
+        Route::middleware('permission:hrm.leave.manage')->group(function () {
+            Route::get('/leave/policies/create', [LeavePolicyController::class, 'create'])->name('leave.policies.create');
+            Route::post('/leave/policies', [LeavePolicyController::class, 'store'])->name('leave.policies.store');
+            Route::get('/leave/policies/{policy}/edit', [LeavePolicyController::class, 'edit'])->name('leave.policies.edit');
+            Route::put('/leave/policies/{policy}', [LeavePolicyController::class, 'update'])->name('leave.policies.update');
+            Route::delete('/leave/policies/{policy}', [LeavePolicyController::class, 'destroy'])->name('leave.policies.destroy');
+
+            Route::get('/leave/rules/create', [LeaveRuleController::class, 'create'])->name('leave.rules.create');
+            Route::post('/leave/rules', [LeaveRuleController::class, 'store'])->name('leave.rules.store');
+            Route::get('/leave/rules/{rule}/edit', [LeaveRuleController::class, 'edit'])->name('leave.rules.edit');
+            Route::put('/leave/rules/{rule}', [LeaveRuleController::class, 'update'])->name('leave.rules.update');
+            Route::delete('/leave/rules/{rule}', [LeaveRuleController::class, 'destroy'])->name('leave.rules.destroy');
+
+            Route::get('/leave/maternity-rules/create', [MaternityRuleController::class, 'create'])->name('leave.maternity-rules.create');
+            Route::post('/leave/maternity-rules', [MaternityRuleController::class, 'store'])->name('leave.maternity-rules.store');
+            Route::get('/leave/maternity-rules/{maternityRule}/edit', [MaternityRuleController::class, 'edit'])->name('leave.maternity-rules.edit');
+            Route::put('/leave/maternity-rules/{maternityRule}', [MaternityRuleController::class, 'update'])->name('leave.maternity-rules.update');
+            Route::delete('/leave/maternity-rules/{maternityRule}', [MaternityRuleController::class, 'destroy'])->name('leave.maternity-rules.destroy');
+
+            Route::get('/leave/opening-balances/create', [OpeningBalanceController::class, 'create'])->name('leave.opening-balances.create');
+            Route::post('/leave/opening-balances', [OpeningBalanceController::class, 'store'])->name('leave.opening-balances.store');
+            Route::get('/leave/opening-balances/{openingBalance}/edit', [OpeningBalanceController::class, 'edit'])->name('leave.opening-balances.edit');
+            Route::put('/leave/opening-balances/{openingBalance}', [OpeningBalanceController::class, 'update'])->name('leave.opening-balances.update');
+
+            Route::post('/leave/allocation/run', [LeaveAllocationController::class, 'run'])->name('leave.allocation.run');
+
+            Route::get('/leave/bulk-entry/template', [LeaveBulkEntryController::class, 'template'])->name('leave.bulk-entry.template');
+            Route::post('/leave/bulk-entry', [LeaveBulkEntryController::class, 'store'])->name('leave.bulk-entry.store');
+
+            Route::get('/leave/maternity-transactions/create', [MaternityTransactionController::class, 'create'])->name('leave.maternity-transactions.create');
+            Route::post('/leave/maternity-transactions', [MaternityTransactionController::class, 'store'])->name('leave.maternity-transactions.store');
+        });
+
+        Route::middleware('permission:hrm.leave.approve')->group(function () {
+            Route::post('/leave/transactions/{transaction}/approve', [LeaveTransactionController::class, 'approve'])->name('leave.transactions.approve');
+            Route::post('/leave/transactions/{transaction}/reject', [LeaveTransactionController::class, 'reject'])->name('leave.transactions.reject');
+        });
+
+        // Legacy leave redirects
+        Route::redirect('/leave/applications', '/admin/hrm/leave/transactions');
+        Route::redirect('/leave/balances', '/admin/hrm/leave/opening-balances');
+
+        // ── Salary sub-modules ──
+        Route::middleware('permission:hrm.salary.view')->group(function () {
+            Route::get('/salary', SalaryHubController::class)->name('salary.hub');
+            Route::get('/salary/planned/{module}', SalaryPlannedController::class)->name('salary.planned');
+
+            Route::get('/salary/heads', [SalaryHeadController::class, 'index'])->name('salary.heads.index');
+            Route::get('/salary/heads/{head}', [SalaryHeadController::class, 'show'])->name('salary.heads.show')->whereNumber('head');
+            Route::get('/salary/grades', [SalaryGradeController::class, 'index'])->name('salary.grades.index');
+            Route::get('/salary/grades/{grade}', [SalaryGradeController::class, 'show'])->name('salary.grades.show')->whereNumber('grade');
+            Route::get('/salary/grade-details', [GradeDetailController::class, 'index'])->name('salary.grade-details.index');
+            Route::get('/salary/grade-details/{gradeDetail}', [GradeDetailController::class, 'show'])->name('salary.grade-details.show')->whereNumber('gradeDetail');
+            Route::get('/salary/employee-salary', [EmployeeSalaryController::class, 'index'])->name('salary.employee-salary.index');
+            Route::get('/salary/upload', [SalaryUploadController::class, 'index'])->name('salary.upload.index');
+            Route::get('/salary/process', [SalaryProcessController::class, 'index'])->name('salary.process.index');
+            Route::get('/salary/process/{period}', [SalaryProcessController::class, 'show'])->name('salary.process.show');
+            Route::get('/salary/process/{period}/payslip/{item}', [SalaryProcessController::class, 'payslip'])->name('salary.process.payslip')->whereNumber('item');
+            Route::get('/salary/process/{period}/payslip/{item}/print', [SalaryProcessController::class, 'payslipPrint'])->name('salary.process.payslip.print')->whereNumber('item');
+            Route::get('/salary/close', [SalaryCloseController::class, 'index'])->name('salary.close.index');
+            Route::get('/salary/increment-rules', [IncrementRuleController::class, 'index'])->name('salary.increment-rules.index');
+            Route::get('/salary/increment-bulk', [IncrementBulkController::class, 'index'])->name('salary.increment-bulk.index');
+            Route::get('/salary/increment-upload', [IncrementUploadController::class, 'index'])->name('salary.increment-upload.index');
+        });
+
+        Route::middleware('permission:hrm.salary.manage')->group(function () {
+            Route::get('/salary/heads/create', [SalaryHeadController::class, 'create'])->name('salary.heads.create');
+            Route::post('/salary/heads', [SalaryHeadController::class, 'store'])->name('salary.heads.store');
+            Route::get('/salary/heads/{head}/edit', [SalaryHeadController::class, 'edit'])->name('salary.heads.edit');
+            Route::put('/salary/heads/{head}', [SalaryHeadController::class, 'update'])->name('salary.heads.update');
+            Route::delete('/salary/heads/{head}', [SalaryHeadController::class, 'destroy'])->name('salary.heads.destroy');
+
+            Route::get('/salary/grades/create', [SalaryGradeController::class, 'create'])->name('salary.grades.create');
+            Route::post('/salary/grades', [SalaryGradeController::class, 'store'])->name('salary.grades.store');
+            Route::get('/salary/grades/{grade}/edit', [SalaryGradeController::class, 'edit'])->name('salary.grades.edit');
+            Route::put('/salary/grades/{grade}', [SalaryGradeController::class, 'update'])->name('salary.grades.update');
+            Route::delete('/salary/grades/{grade}', [SalaryGradeController::class, 'destroy'])->name('salary.grades.destroy');
+
+            Route::get('/salary/grade-details/create', [GradeDetailController::class, 'create'])->name('salary.grade-details.create');
+            Route::post('/salary/grade-details', [GradeDetailController::class, 'store'])->name('salary.grade-details.store');
+            Route::get('/salary/grade-details/{gradeDetail}/edit', [GradeDetailController::class, 'edit'])->name('salary.grade-details.edit');
+            Route::put('/salary/grade-details/{gradeDetail}', [GradeDetailController::class, 'update'])->name('salary.grade-details.update');
+            Route::delete('/salary/grade-details/{gradeDetail}', [GradeDetailController::class, 'destroy'])->name('salary.grade-details.destroy');
+
+            Route::get('/salary/employee-salary/create', [EmployeeSalaryController::class, 'create'])->name('salary.employee-salary.create');
+            Route::post('/salary/employee-salary/calculate', [EmployeeSalaryController::class, 'calculate'])->name('salary.employee-salary.calculate');
+            Route::post('/salary/employee-salary', [EmployeeSalaryController::class, 'store'])->name('salary.employee-salary.store');
+            Route::get('/salary/employee-salary/{salaryStructure}/edit', [EmployeeSalaryController::class, 'edit'])->name('salary.employee-salary.edit');
+            Route::put('/salary/employee-salary/{salaryStructure}', [EmployeeSalaryController::class, 'update'])->name('salary.employee-salary.update');
+
+            Route::get('/salary/upload/template', [SalaryUploadController::class, 'template'])->name('salary.upload.template');
+            Route::post('/salary/upload', [SalaryUploadController::class, 'store'])->name('salary.upload.store');
+
+            Route::post('/salary/process/run', [SalaryProcessController::class, 'run'])->name('salary.process.run');
+
+            Route::get('/salary/increment-rules/create', [IncrementRuleController::class, 'create'])->name('salary.increment-rules.create');
+            Route::post('/salary/increment-rules', [IncrementRuleController::class, 'store'])->name('salary.increment-rules.store');
+            Route::get('/salary/increment-rules/{incrementRule}/edit', [IncrementRuleController::class, 'edit'])->name('salary.increment-rules.edit');
+            Route::put('/salary/increment-rules/{incrementRule}', [IncrementRuleController::class, 'update'])->name('salary.increment-rules.update');
+            Route::delete('/salary/increment-rules/{incrementRule}', [IncrementRuleController::class, 'destroy'])->name('salary.increment-rules.destroy');
+
+            Route::post('/salary/increment-bulk/apply', [IncrementBulkController::class, 'apply'])->name('salary.increment-bulk.apply');
+
+            Route::get('/salary/increment-upload/template', [IncrementUploadController::class, 'template'])->name('salary.increment-upload.template');
+            Route::post('/salary/increment-upload', [IncrementUploadController::class, 'store'])->name('salary.increment-upload.store');
+        });
+
+        Route::middleware('permission:hrm.salary.approve')->group(function () {
+            Route::post('/salary/close/{period}/freeze', [SalaryCloseController::class, 'freeze'])->name('salary.close.freeze');
+            Route::post('/salary/close/{period}/send-payslips', [SalaryCloseController::class, 'sendPayslips'])->name('salary.close.send-payslips');
+            Route::get('/salary/close/{period}/bank-advise', [SalaryCloseController::class, 'bankAdvise'])->name('salary.close.bank-advise');
+        });
+
+        // ── Compliance sub-modules ──
+        Route::middleware('permission:hrm.compliance.view')->group(function () {
+            Route::get('/compliance', ComplianceHubController::class)->name('compliance.hub');
+            Route::get('/compliance/registers', [ComplianceRegisterController::class, 'index'])->name('compliance.registers.index');
+            Route::get('/compliance/registers/export/{type}', [ComplianceRegisterController::class, 'export'])->name('compliance.registers.export');
+            Route::get('/compliance/bonus', [ComplianceBonusController::class, 'index'])->name('compliance.bonus.index');
+            Route::get('/compliance/bonus/{bonusRun}', [ComplianceBonusController::class, 'show'])->name('compliance.bonus.show')->whereNumber('bonusRun');
+            Route::get('/compliance/bonus/{bonusRun}/export', [ComplianceBonusController::class, 'export'])->name('compliance.bonus.export')->whereNumber('bonusRun');
+            Route::get('/compliance/gratuity', [ComplianceGratuityController::class, 'index'])->name('compliance.gratuity.index');
+            Route::get('/compliance/gratuity/{gratuitySettlement}', [ComplianceGratuityController::class, 'show'])->name('compliance.gratuity.show')->whereNumber('gratuitySettlement');
+            Route::get('/compliance/gratuity-export', [ComplianceGratuityController::class, 'export'])->name('compliance.gratuity.export');
+            Route::get('/compliance/age-verification', [ComplianceAgeVerificationController::class, 'index'])->name('compliance.age-verification.index');
+            Route::get('/compliance/age-verification/export', [ComplianceAgeVerificationController::class, 'export'])->name('compliance.age-verification.export');
+            Route::get('/compliance/working-hours', [ComplianceWorkingHoursController::class, 'index'])->name('compliance.working-hours.index');
+        });
+
+        Route::middleware('permission:hrm.compliance.manage')->group(function () {
+            Route::get('/compliance/bonus/create', [ComplianceBonusController::class, 'create'])->name('compliance.bonus.create');
+            Route::post('/compliance/bonus', [ComplianceBonusController::class, 'store'])->name('compliance.bonus.store');
+            Route::post('/compliance/bonus/{bonusRun}/calculate', [ComplianceBonusController::class, 'calculate'])->name('compliance.bonus.calculate')->whereNumber('bonusRun');
+            Route::post('/compliance/bonus/{bonusRun}/approve', [ComplianceBonusController::class, 'approve'])->name('compliance.bonus.approve')->whereNumber('bonusRun');
+            Route::post('/compliance/gratuity/{gratuitySettlement}/paid', [ComplianceGratuityController::class, 'markPaid'])->name('compliance.gratuity.paid')->whereNumber('gratuitySettlement');
+            Route::post('/compliance/working-hours/notify', [ComplianceWorkingHoursController::class, 'notify'])->name('compliance.working-hours.notify');
+        });
+
+        Route::middleware('permission:hrm.finance.view')->group(function () {
+            Route::get('/finance', FinanceHubController::class)->name('finance.hub');
+            Route::get('/finance/tax', [FinanceTaxController::class, 'index'])->name('finance.tax.index');
+            Route::get('/finance/tax/certificate', [FinanceTaxController::class, 'certificate'])->name('finance.tax.certificate');
+            Route::get('/finance/tax/export-annual', [FinanceTaxController::class, 'exportAnnualTds'])->name('finance.tax.export-annual');
+            Route::get('/finance/pf', [FinancePfController::class, 'index'])->name('finance.pf.index');
+            Route::get('/finance/pf/{account}', [FinancePfController::class, 'show'])->name('finance.pf.show')->whereNumber('account');
+            Route::get('/finance/pf/employer-report', [FinancePfController::class, 'employerReport'])->name('finance.pf.employer-report');
+            Route::get('/finance/pf/employer-report/export', [FinancePfController::class, 'exportEmployerReport'])->name('finance.pf.employer-report.export');
+            Route::get('/finance/loans', [FinanceLoanController::class, 'index'])->name('finance.loans.index');
+            Route::get('/finance/loans/bulk', [FinanceBulkAdvanceController::class, 'index'])->name('finance.loans.bulk');
+            Route::get('/finance/loans/{loan}/statement', [FinanceLoanController::class, 'statement'])->name('finance.loans.statement')->whereNumber('loan');
+            Route::get('/finance/loans/{loan}', [FinanceLoanController::class, 'show'])->name('finance.loans.show')->whereNumber('loan');
+        });
+
+        Route::middleware('hrm.any')->group(function () {
+            Route::get('/finance/final-settlement', [FinanceFinalSettlementController::class, 'index'])->name('finance.final-settlement.index');
+            Route::get('/finance/final-settlement/export', [FinanceFinalSettlementController::class, 'export'])->name('finance.final-settlement.export');
+            Route::get('/finance/final-settlement/create', [FinanceFinalSettlementController::class, 'create'])->name('finance.final-settlement.create');
+            Route::post('/finance/final-settlement', [FinanceFinalSettlementController::class, 'store'])->name('finance.final-settlement.store');
+            Route::get('/finance/final-settlement/{finalSettlement}', [FinanceFinalSettlementController::class, 'show'])->name('finance.final-settlement.show')->whereNumber('finalSettlement');
+            Route::get('/finance/final-settlement/{finalSettlement}/print', [FinanceFinalSettlementController::class, 'print'])->name('finance.final-settlement.print')->whereNumber('finalSettlement');
+            Route::post('/finance/final-settlement/{finalSettlement}/calculate', [FinanceFinalSettlementController::class, 'calculate'])->name('finance.final-settlement.calculate')->whereNumber('finalSettlement');
+            Route::put('/finance/final-settlement/{finalSettlement}/adjustments', [FinanceFinalSettlementController::class, 'updateAdjustments'])->name('finance.final-settlement.adjustments')->whereNumber('finalSettlement');
+            Route::put('/finance/final-settlement/{finalSettlement}/clearance', [FinanceFinalSettlementController::class, 'updateClearance'])->name('finance.final-settlement.clearance')->whereNumber('finalSettlement');
+            Route::post('/finance/final-settlement/{finalSettlement}/approve', [FinanceFinalSettlementController::class, 'approve'])->name('finance.final-settlement.approve')->whereNumber('finalSettlement');
+            Route::post('/finance/final-settlement/{finalSettlement}/paid', [FinanceFinalSettlementController::class, 'markPaid'])->name('finance.final-settlement.paid')->whereNumber('finalSettlement');
+        });
+
+        Route::middleware('permission:hrm.finance.manage')->group(function () {
+            Route::get('/finance/tax/create', [FinanceTaxController::class, 'create'])->name('finance.tax.create');
+            Route::post('/finance/tax', [FinanceTaxController::class, 'store'])->name('finance.tax.store');
+            Route::get('/finance/tax/{taxYear}/edit', [FinanceTaxController::class, 'edit'])->name('finance.tax.edit')->whereNumber('taxYear');
+            Route::put('/finance/tax/{taxYear}', [FinanceTaxController::class, 'update'])->name('finance.tax.update')->whereNumber('taxYear');
+            Route::get('/finance/pf/create', [FinancePfController::class, 'create'])->name('finance.pf.create');
+            Route::post('/finance/pf', [FinancePfController::class, 'store'])->name('finance.pf.store');
+            Route::get('/finance/loans/create', [FinanceLoanController::class, 'create'])->name('finance.loans.create');
+            Route::post('/finance/loans', [FinanceLoanController::class, 'store'])->name('finance.loans.store');
+            Route::post('/finance/loans/bulk', [FinanceBulkAdvanceController::class, 'store'])->name('finance.loans.bulk.store');
+            Route::post('/finance/loans/{loan}/approve', [FinanceLoanController::class, 'approve'])->name('finance.loans.approve')->whereNumber('loan');
+            Route::post('/finance/loans/{loan}/settle', [FinanceLoanController::class, 'settle'])->name('finance.loans.settle')->whereNumber('loan');
+            Route::post('/finance/loans/{loan}/reject', [FinanceLoanController::class, 'reject'])->name('finance.loans.reject')->whereNumber('loan');
+        });
+
+        // ── RMG extras ──
+        Route::middleware('permission:hrm.rmg.view')->group(function () {
+            Route::get('/rmg', RmgHubController::class)->name('rmg.hub');
+            Route::get('/rmg/worker-transfer', [RmgWorkerTransferController::class, 'index'])->name('rmg.worker-transfer.index');
+            Route::get('/rmg/gate-pass', [RmgGatePassController::class, 'index'])->name('rmg.gate-pass.index');
+            Route::get('/rmg/manpower-planning', [RmgManpowerPlanningController::class, 'index'])->name('rmg.manpower-planning.index');
+            Route::get('/rmg/proxy-punch', [RmgProxyPunchController::class, 'index'])->name('rmg.proxy-punch.index');
+
+            foreach (['osd-movement', 'canteen', 'medical', 'training', 'sub-contract', 'buyer-holiday', 'salary-hold', 'production-incentive'] as $rmgSub) {
+                Route::get('/rmg/' . $rmgSub, [GenericRmgController::class, 'index'])
+                    ->defaults('submodule', $rmgSub)
+                    ->name('rmg.' . $rmgSub . '.index');
+            }
+
+            Route::get('/rmg/cash-list', [RmgExportController::class, 'cashListIndex'])->name('rmg.cash-list.index');
+            Route::get('/rmg/cash-list/export', [RmgExportController::class, 'cashListExport'])->name('rmg.cash-list.export');
+            Route::get('/rmg/buyer-audit-export', [RmgExportController::class, 'buyerAuditIndex'])->name('rmg.buyer-audit-export.index');
+            Route::get('/rmg/buyer-audit-export/export', [RmgExportController::class, 'buyerAuditExport'])->name('rmg.buyer-audit-export.export');
+        });
+
+        Route::middleware('permission:hrm.rmg.manage')->group(function () {
+            Route::get('/rmg/worker-transfer/create', [RmgWorkerTransferController::class, 'create'])->name('rmg.worker-transfer.create');
+            Route::post('/rmg/worker-transfer', [RmgWorkerTransferController::class, 'store'])->name('rmg.worker-transfer.store');
+            Route::post('/rmg/worker-transfer/{workerTransfer}/approve', [RmgWorkerTransferController::class, 'approve'])
+                ->name('rmg.worker-transfer.approve')->whereNumber('workerTransfer');
+
+            Route::get('/rmg/gate-pass/create', [RmgGatePassController::class, 'create'])->name('rmg.gate-pass.create');
+            Route::post('/rmg/gate-pass', [RmgGatePassController::class, 'store'])->name('rmg.gate-pass.store');
+            Route::post('/rmg/gate-pass/{gatePass}/approve', [RmgGatePassController::class, 'approve'])
+                ->name('rmg.gate-pass.approve')->whereNumber('gatePass');
+
+            Route::get('/rmg/manpower-planning/create', [RmgManpowerPlanningController::class, 'create'])->name('rmg.manpower-planning.create');
+            Route::post('/rmg/manpower-planning', [RmgManpowerPlanningController::class, 'store'])->name('rmg.manpower-planning.store');
+
+            Route::get('/rmg/proxy-punch/create', [RmgProxyPunchController::class, 'create'])->name('rmg.proxy-punch.create');
+            Route::post('/rmg/proxy-punch', [RmgProxyPunchController::class, 'store'])->name('rmg.proxy-punch.store');
+            Route::post('/rmg/proxy-punch/{proxyPunchFlag}/review', [RmgProxyPunchController::class, 'review'])
+                ->name('rmg.proxy-punch.review')->whereNumber('proxyPunchFlag');
+
+            foreach (['osd-movement', 'canteen', 'medical', 'training', 'sub-contract', 'buyer-holiday', 'salary-hold', 'production-incentive'] as $rmgSub) {
+                Route::get('/rmg/' . $rmgSub . '/create', [GenericRmgController::class, 'create'])
+                    ->defaults('submodule', $rmgSub)
+                    ->name('rmg.' . $rmgSub . '.create');
+                Route::post('/rmg/' . $rmgSub, [GenericRmgController::class, 'store'])
+                    ->defaults('submodule', $rmgSub)
+                    ->name('rmg.' . $rmgSub . '.store');
+            }
+
+            Route::post('/rmg/salary-hold/{salaryHold}/release', [GenericRmgController::class, 'release'])
+                ->name('rmg.salary-hold.release')->whereNumber('salaryHold');
+            Route::post('/rmg/production-incentive/{productionIncentive}/approve', [GenericRmgController::class, 'approveIncentive'])
+                ->name('rmg.production-incentive.approve')->whereNumber('productionIncentive');
+        });
+
+        // Legacy payroll redirects
+        Route::redirect('/payroll', '/admin/hrm/salary');
+        Route::redirect('/payroll/periods', '/admin/hrm/salary/process');
+        Route::redirect('/payroll/salary-structures', '/admin/hrm/salary/employee-salary');
+    });
+});
+
+Route::prefix('careers')->name('careers.')->group(function () {
+    Route::get('/', [\App\Http\Controllers\Careers\CareersController::class, 'index'])->name('index');
+    Route::get('/track', [\App\Http\Controllers\Careers\CareersController::class, 'trackForm'])->name('track');
+    Route::post('/track', [\App\Http\Controllers\Careers\CareersController::class, 'track'])->name('track.submit')->middleware('throttle:10,1');
+    Route::get('/success/{application}', [\App\Http\Controllers\Careers\CareersController::class, 'success'])->name('success')->whereNumber('application');
+    Route::get('/{posting}', [\App\Http\Controllers\Careers\CareersController::class, 'show'])->name('show')->whereNumber('posting');
+    Route::get('/{posting}/apply', [\App\Http\Controllers\Careers\CareersController::class, 'apply'])->name('apply')->whereNumber('posting');
+    Route::post('/{posting}/otp', [\App\Http\Controllers\Careers\CareersController::class, 'sendOtp'])->name('otp.send')->whereNumber('posting')->middleware('throttle:5,1');
+    Route::post('/{posting}/apply', [\App\Http\Controllers\Careers\CareersController::class, 'storeApply'])->name('apply.store')->whereNumber('posting')->middleware('throttle:3,60');
+});
+
+Route::prefix('employee')->name('employee.')->group(function () {
+    Route::middleware('guest:employee')->group(function () {
+        Route::get('/login', [EmployeeLoginController::class, 'create'])->name('login');
+        Route::post('/login', [EmployeeLoginController::class, 'store'])->name('login.store');
+    });
+
+    Route::post('/logout', [EmployeeLoginController::class, 'destroy'])->name('logout')->middleware('auth:employee');
+
+    Route::middleware('auth:employee')->group(function () {
+        Route::redirect('/', '/employee/dashboard');
+        Route::get('/dashboard', EmployeeDashboardController::class)->name('dashboard');
+        Route::get('/profile', [EmployeeProfileController::class, 'show'])->name('profile');
+        Route::get('/attendance', [EmployeeAttendanceController::class, 'index'])->name('attendance');
+        Route::get('/attendance/check-in', [EmployeeCheckInController::class, 'create'])->name('attendance.check-in');
+        Route::post('/attendance/check-in', [EmployeeCheckInController::class, 'store'])->name('attendance.check-in.store');
+        Route::get('/late-acceptance', [EmployeeLateAcceptanceController::class, 'index'])->name('late-acceptance.index');
+        Route::get('/late-acceptance/apply', [EmployeeLateAcceptanceController::class, 'create'])->name('late-acceptance.apply');
+        Route::post('/late-acceptance/apply', [EmployeeLateAcceptanceController::class, 'store'])->name('late-acceptance.apply.store');
+        Route::get('/leave', [EmployeeLeaveController::class, 'index'])->name('leave');
+        Route::get('/leave/apply', [EmployeeLeaveController::class, 'create'])->name('leave.apply');
+        Route::post('/leave/apply', [EmployeeLeaveController::class, 'store'])->name('leave.apply.store');
+        Route::post('/leave/applications/{application}/approve', [EmployeeLeaveController::class, 'approve'])->name('leave.applications.approve');
+        Route::post('/leave/applications/{application}/reject', [EmployeeLeaveController::class, 'reject'])->name('leave.applications.reject');
+        Route::post('/leave/applications/{application}/cancel', [EmployeeLeaveController::class, 'cancel'])->name('leave.cancel');
+        Route::get('/payslips', [EmployeePayslipController::class, 'index'])->name('payslips');
+        Route::get('/payslips/{payslip}', [EmployeePayslipController::class, 'show'])->name('payslips.show');
+        Route::get('/payslips/{payslip}/print', [EmployeePayslipController::class, 'print'])->name('payslips.print');
+        Route::get('/loans', [EmployeeLoanController::class, 'index'])->name('loans');
+        Route::get('/loans/{loan}/statement', [EmployeeLoanController::class, 'statement'])->name('loans.statement')->whereNumber('loan');
+        Route::get('/loans/apply', [EmployeeLoanController::class, 'create'])->name('loans.apply');
+        Route::post('/loans/apply', [EmployeeLoanController::class, 'store'])->name('loans.apply.store');
+        Route::get('/roster', [EmployeeRosterController::class, 'index'])->name('roster');
+        Route::get('/pf', [EmployeePfController::class, 'index'])->name('pf');
+        Route::get('/separation', [\App\Http\Controllers\Employee\SeparationController::class, 'index'])->name('separation');
+        Route::post('/separation', [\App\Http\Controllers\Employee\SeparationController::class, 'store'])->name('separation.store');
+        Route::delete('/separation', [\App\Http\Controllers\Employee\SeparationController::class, 'cancel'])->name('separation.cancel');
+        Route::post('/separation/{separation}/approve', [\App\Http\Controllers\Employee\SeparationController::class, 'approve'])->name('separation.approve')->whereNumber('separation');
+        Route::post('/separation/{separation}/reject', [\App\Http\Controllers\Employee\SeparationController::class, 'reject'])->name('separation.reject')->whereNumber('separation');
+        Route::get('/notifications', [EmployeeNotificationController::class, 'index'])->name('notifications.index');
+        Route::get('/notifications/unread-count', [EmployeeNotificationController::class, 'unreadCount'])->name('notifications.unread-count');
+        Route::patch('/notifications/read-all', [EmployeeNotificationController::class, 'markAllRead'])->name('notifications.read-all');
+        Route::patch('/notifications/{id}/read', [EmployeeNotificationController::class, 'markRead'])->name('notifications.read');
     });
 });

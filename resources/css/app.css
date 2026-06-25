@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@import '../../node_modules/tom-select/dist/css/tom-select.default.css';
 @plugin '@tailwindcss/forms';
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
@@ -25,57 +26,323 @@
     --color-erp-border: #dde3ea;
 }
 
-/* ERP sidebar — commercial light nav */
+/* ERP sidebar shell */
+.erp-sidebar {
+    background: linear-gradient(180deg, #fafbfc 0%, #f4f6f9 100%);
+    border-right: 1px solid #d5dde8;
+    box-shadow: 2px 0 12px rgba(21, 45, 74, 0.06);
+}
+
+.erp-sidebar-brand {
+    background: linear-gradient(135deg, #1e3a5f 0%, #152d4a 55%, #1a3352 100%);
+    color: white;
+    border-bottom: 2px solid #c9a84c;
+    box-shadow: 0 2px 8px rgba(21, 45, 74, 0.2);
+}
+
+.erp-sidebar-footer {
+    border-top: 1px solid #d5dde8;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.6) 0%, rgba(244, 246, 249, 0.9) 100%);
+}
+
+.erp-sidebar-footer a {
+    @apply flex items-center gap-2 px-3 py-2 text-xs text-gray-500 rounded-md border border-transparent transition;
+}
+
+.erp-sidebar-footer a:hover {
+    @apply text-brand bg-white border-erp-border shadow-sm;
+}
+
+/* ERP sidebar — menu search */
+.erp-nav-search {
+    @apply px-2 pt-2 pb-1;
+}
+
+.erp-nav-search-field {
+    @apply relative;
+}
+
+.erp-nav-search-icon {
+    @apply pointer-events-none absolute left-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400;
+}
+
+.erp-nav-search-input {
+    @apply w-full rounded-md border border-erp-border bg-white py-2 pl-9 pr-8 text-[13px] text-gray-700 shadow-sm transition placeholder:text-gray-400;
+}
+
+.erp-nav-search-input:focus {
+    @apply border-brand/40 bg-white outline-none ring-2 ring-brand/10;
+}
+
+.erp-nav-search-clear {
+    @apply absolute right-2 top-1/2 -translate-y-1/2 rounded p-0.5 text-gray-400 transition hover:bg-gray-100 hover:text-gray-600;
+}
+
+.erp-nav-search-empty {
+    @apply px-3 py-2 text-[11px] italic text-gray-400;
+}
+
+[data-nav-search-hidden] {
+    display: none !important;
+}
+
+/* ERP sidebar — nav items */
 .erp-nav-section {
-    @apply px-3 pt-4 pb-1 text-[10px] font-bold text-gray-400 uppercase tracking-widest;
+    @apply flex items-center gap-2 px-3 pt-5 pb-1.5 text-[10px] font-bold uppercase tracking-widest;
+    color: #8a96a8;
+}
+
+.erp-nav-section::before {
+    content: '';
+    width: 3px;
+    height: 10px;
+    border-radius: 2px;
+    background: linear-gradient(180deg, #c9a84c, #a88930);
+    flex-shrink: 0;
 }
 
 .erp-nav-link {
-    @apply flex items-center gap-2.5 px-3 py-2 text-[13px] rounded-sm text-gray-600 transition;
+    @apply flex items-center gap-2.5 px-3 py-2 text-[13px] rounded-md text-gray-600 transition-all duration-150;
 }
 
 .erp-nav-link:hover {
-    @apply bg-gray-50 text-brand;
+    @apply text-brand;
+    background: rgba(30, 58, 95, 0.06);
 }
 
 .erp-nav-link-active {
-    @apply bg-brand/5 text-brand font-semibold border-l-2 border-gold -ml-px pl-[11px];
+    @apply font-semibold text-brand -ml-px pl-[11px];
+    background: linear-gradient(90deg, rgba(30, 58, 95, 0.1) 0%, rgba(201, 168, 76, 0.08) 100%);
+    border-left: 2px solid #c9a84c;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
 }
 
 .erp-nav-group {
-    @apply w-full flex items-center gap-2 px-3 py-2 text-[13px] rounded-sm text-gray-700 transition;
+    @apply w-full flex items-center gap-2 px-3 py-2 text-[13px] rounded-md text-gray-700 transition-all duration-150;
 }
 
 .erp-nav-group:hover {
-    @apply bg-gray-50 text-brand;
+    @apply text-brand;
+    background: rgba(30, 58, 95, 0.06);
 }
 
 .erp-nav-group-active {
-    @apply text-brand font-semibold;
+    @apply font-semibold text-brand;
+    background: linear-gradient(90deg, rgba(30, 58, 95, 0.08) 0%, rgba(201, 168, 76, 0.05) 100%);
 }
 
 .erp-nav-group-icon {
-    @apply w-7 h-7 rounded-sm flex items-center justify-center shrink-0;
+    @apply w-7 h-7 rounded-md flex items-center justify-center shrink-0;
+    background: linear-gradient(135deg, rgba(30, 58, 95, 0.12) 0%, rgba(30, 58, 95, 0.06) 100%);
+    color: #1e3a5f;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.erp-nav-group-active .erp-nav-group-icon {
+    background: linear-gradient(135deg, #1e3a5f 0%, #2a4f80 100%);
+    color: white;
+    box-shadow: 0 1px 3px rgba(21, 45, 74, 0.25);
+}
+
+.erp-nav-group-active .erp-nav-group-icon-master {
+    background: linear-gradient(135deg, #c9a84c 0%, #a88930 100%);
+    color: white;
+    box-shadow: 0 1px 4px rgba(168, 137, 48, 0.35);
+}
+
+.erp-nav-group-icon-hrm {
+    background: linear-gradient(135deg, rgba(30, 58, 95, 0.14) 0%, rgba(42, 79, 128, 0.08) 100%);
+    color: #1e3a5f;
 }
 
 .erp-nav-sub {
-    @apply ml-3 pl-3 border-l border-erp-border space-y-0.5 py-1;
+    @apply ml-3 pl-3 space-y-0.5 py-1;
+    border-left: 2px solid transparent;
+    border-image: linear-gradient(180deg, #c9a84c 0%, rgba(30, 58, 95, 0.2) 100%) 1;
 }
 
 .erp-nav-sub-link {
-    @apply block px-2.5 py-1.5 text-xs rounded-sm text-gray-500 transition truncate;
+    @apply block px-2.5 py-1.5 text-xs rounded-md text-gray-500 transition-all duration-150 truncate;
 }
 
 .erp-nav-sub-link:hover {
-    @apply bg-gray-50 text-brand;
+    @apply text-brand;
+    background: rgba(30, 58, 95, 0.06);
 }
 
 .erp-nav-sub-link-active {
-    @apply bg-brand/5 text-brand font-semibold;
+    @apply font-semibold text-brand;
+    background: linear-gradient(90deg, rgba(30, 58, 95, 0.1) 0%, rgba(201, 168, 76, 0.07) 100%);
+    box-shadow: inset 2px 0 0 #c9a84c;
+}
+
+.erp-nav-board {
+    @apply mb-0.5;
+}
+
+.erp-nav-board .erp-nav-sub {
+    @apply pb-1;
+    border-left: 2px solid transparent;
+    border-image: linear-gradient(180deg, #c9a84c 0%, rgba(30, 58, 95, 0.2) 100%) 1;
+    background: transparent;
+    border-radius: 0;
+}
+
+.erp-nav-sub-group {
+    @apply w-full flex items-center gap-1 px-2 py-1.5 mt-0.5 text-[11px] font-semibold rounded-md transition-all duration-150;
+    color: #5a6578;
+}
+
+.erp-nav-sub-group:hover {
+    @apply text-brand;
+    background: rgba(30, 58, 95, 0.06);
+}
+
+.erp-nav-sub-group-active {
+    @apply text-brand;
+    background: rgba(30, 58, 95, 0.08);
+}
+
+.erp-nav-sub-nested {
+    @apply ml-2 pl-2 space-y-0.5 pb-0.5;
+    border-left: 2px solid rgba(201, 168, 76, 0.35);
 }
 
 .erp-nav-commercial .erp-nav-group-icon {
-    @apply bg-gold/15 text-gold-dark;
+    background: linear-gradient(135deg, rgba(201, 168, 76, 0.25) 0%, rgba(201, 168, 76, 0.1) 100%);
+    color: #a88930;
+}
+
+/* Notification bell */
+.erp-notif-badge {
+    @apply inline-flex items-center px-1.5 py-0.5 rounded text-[9px] font-bold uppercase tracking-wide;
+}
+
+.erp-notif-badge-order {
+    @apply bg-blue-50 text-blue-700 border border-blue-100;
+}
+
+.erp-notif-badge-hrm {
+    @apply bg-amber-50 text-amber-800 border border-amber-100;
+}
+
+.erp-notif-badge-default {
+    @apply bg-gray-100 text-gray-600 border border-gray-200;
+}
+
+/* Tom Select — match ERP inputs */
+.ts-wrapper {
+    width: 100%;
+    display: block;
+    position: relative;
+}
+
+.ts-wrapper.single .ts-control,
+.ts-wrapper.multi .ts-control {
+    @apply h-7 min-h-[28px] rounded-sm border-erp-border px-2 py-0 text-xs leading-none shadow-none bg-white;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.ts-wrapper.single.input-active .ts-control,
+.ts-wrapper.multi.input-active .ts-control {
+    @apply border-brand ring-1 ring-brand/30;
+}
+
+.ts-wrapper .ts-dropdown {
+    @apply rounded-sm border-erp-border shadow-xl text-xs;
+    z-index: 50;
+    width: 100%;
+    min-width: 0;
+    left: 0 !important;
+    right: auto !important;
+}
+
+.ts-dropdown-content {
+    max-height: 240px;
+    overflow-y: auto;
+}
+
+.ts-dropdown .option {
+    @apply py-1.5 px-2.5 text-xs;
+}
+
+.ts-dropdown .option.active {
+    @apply bg-brand/10 text-brand;
+}
+
+.ts-dropdown .dropdown-input-wrap {
+    @apply border-b border-erp-border bg-gray-50/80 px-2 py-1 sticky top-0 z-10;
+}
+
+.ts-dropdown .dropdown-input {
+    @apply w-full text-xs border-erp-border rounded-sm focus:border-brand focus:ring-brand;
+}
+
+.ts-wrapper .ts-control input {
+    @apply text-xs leading-none;
+}
+
+.ts-wrapper .ts-control .item {
+    @apply text-xs leading-none;
+}
+
+select.erp-input.tomselected,
+select.emp-input.tomselected {
+    display: none !important;
+}
+
+.erp-subnav {
+    @apply bg-white border border-erp-border rounded-lg shadow-sm overflow-hidden;
+}
+
+.erp-subnav-header {
+    @apply flex flex-wrap items-center gap-3 px-4 py-3 border-b border-erp-border bg-gradient-to-r from-brand/[0.03] via-gray-50/80 to-white;
+}
+
+.erp-subnav-hub {
+    @apply inline-flex items-center gap-2 px-3.5 py-2 text-xs font-semibold rounded-lg border border-erp-border bg-white text-gray-700 transition hover:border-brand/30 hover:text-brand hover:shadow-sm;
+}
+
+.erp-subnav-hub-active {
+    @apply border-brand bg-brand text-white shadow-sm hover:text-white hover:border-brand;
+}
+
+.erp-subnav-hint {
+    @apply text-[11px] text-gray-400 ml-auto;
+}
+
+.erp-subnav-groups {
+    @apply grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-5 gap-0 divide-y sm:divide-y-0 sm:divide-x divide-erp-border;
+}
+
+.erp-subnav-group {
+    @apply p-3.5 min-w-0;
+}
+
+.erp-subnav-group-label {
+    @apply flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-gray-500 mb-2.5 px-0.5;
+}
+
+.erp-subnav-group-dot {
+    @apply w-1.5 h-1.5 rounded-full bg-gold shrink-0;
+}
+
+.erp-subnav-group-items {
+    @apply flex flex-wrap gap-1.5;
+}
+
+.erp-subnav-flat {
+    @apply flex flex-wrap gap-1.5 p-3.5;
+}
+
+.erp-subnav-link {
+    @apply inline-flex items-center px-2.5 py-1.5 text-[11px] font-semibold rounded-md text-gray-600 bg-gray-50/80 border border-gray-100 transition hover:bg-brand/5 hover:text-brand hover:border-brand/20;
+}
+
+.erp-subnav-link-active {
+    @apply bg-brand text-white border-brand shadow-sm hover:bg-brand-dark hover:text-white hover:border-brand-dark;
 }
 
 /* ERP shell */
@@ -89,7 +356,7 @@
 }
 
 .erp-sidebar-scroll::-webkit-scrollbar-thumb {
-    background: rgba(30, 58, 95, 0.15);
+    background: linear-gradient(180deg, rgba(201, 168, 76, 0.4), rgba(30, 58, 95, 0.25));
     border-radius: 2px;
 }
 
@@ -138,8 +405,24 @@
     @apply inline-flex items-center gap-1.5 bg-red-50 hover:bg-red-100 text-red-700 text-xs font-medium px-3 py-2 rounded-sm border border-red-200 transition;
 }
 
-.erp-input {
-    @apply w-full rounded-sm border-erp-border text-sm focus:border-brand focus:ring-brand;
+.erp-btn-sm-primary {
+    @apply inline-flex items-center justify-center bg-brand hover:bg-brand-dark text-white text-[11px] font-semibold px-2 py-1 rounded-sm transition whitespace-nowrap;
+}
+
+.erp-btn-sm-secondary {
+    @apply inline-flex items-center justify-center bg-white hover:bg-gray-50 text-gray-700 text-[11px] font-medium px-2 py-1 rounded-sm border border-erp-border transition whitespace-nowrap;
+}
+
+.erp-table-actions {
+    @apply inline-flex items-center gap-1 justify-end flex-wrap;
+}
+
+.erp-input:not(textarea) {
+    @apply h-7 min-h-[28px] w-full rounded-sm border-erp-border px-2 py-0 text-xs leading-none focus:border-brand focus:ring-brand;
+}
+
+.erp-input:is(textarea) {
+    @apply w-full rounded-sm border-erp-border text-xs focus:border-brand focus:ring-brand;
 }
 
 .erp-kpi {
@@ -164,4 +447,485 @@
 
 .erp-form-section {
     @apply bg-white border border-erp-border rounded-sm shadow-sm p-5 space-y-4;
+}
+
+.erp-panel-form {
+    overflow: visible;
+}
+
+.erp-panel-form .erp-panel-body {
+    overflow: visible;
+}
+
+/* Employee wizard (create / edit) */
+.erp-employee-wizard-header {
+    @apply bg-white border border-erp-border rounded-sm shadow-sm p-4 mb-4;
+}
+
+.erp-employee-wizard-layout {
+    @apply grid grid-cols-1 lg:grid-cols-[240px_minmax(0,1fr)] gap-4;
+}
+
+.erp-employee-wizard-sidebar {
+    @apply bg-white border border-erp-border rounded-sm shadow-sm p-4 h-fit lg:sticky lg:top-4;
+}
+
+.erp-employee-wizard-progress {
+    @apply relative w-20 h-20 mx-auto mb-4;
+}
+
+.erp-employee-wizard-progress svg {
+    @apply w-full h-full -rotate-90;
+}
+
+.erp-employee-wizard-step {
+    @apply w-full flex items-center gap-3 px-3 py-2.5 rounded-sm text-left text-xs font-medium transition;
+}
+
+.erp-employee-wizard-step-active {
+    @apply bg-brand/10 text-brand border border-brand/20;
+}
+
+.erp-employee-wizard-step-idle {
+    @apply text-gray-500 hover:bg-gray-50;
+}
+
+.erp-employee-wizard-step-dot {
+    @apply w-4 h-4 rounded-full border-2 shrink-0;
+}
+
+.erp-employee-index-row {
+    @apply flex items-center gap-4 px-4 py-3 hover:bg-gray-50/80 transition border-b border-erp-border last:border-b-0;
+}
+
+.erp-employee-index-photo {
+    @apply w-12 h-12 rounded-full object-cover border-2 border-white shadow-sm shrink-0;
+}
+
+.erp-employee-index-photo-fallback {
+    @apply w-12 h-12 rounded-full flex items-center justify-center bg-brand text-white text-sm font-semibold border-2 border-white shadow-sm shrink-0;
+}
+
+/* ── Mobile responsive (project-wide) ── */
+
+.safe-top {
+    padding-top: env(safe-area-inset-top, 0);
+}
+
+.safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom, 0);
+}
+
+/* Horizontal scroll for tables inside panels (no markup change) */
+.erp-panel:has(> table.erp-table),
+.erp-panel.overflow-hidden:has(> table.erp-table) {
+    @apply overflow-x-auto overscroll-x-contain;
+    -webkit-overflow-scrolling: touch;
+}
+
+.erp-panel:has(> table.erp-table) > table.erp-table,
+.erp-panel.overflow-hidden:has(> table.erp-table) > table.erp-table {
+    min-width: 36rem;
+}
+
+.erp-panel-body:has(> table) {
+    @apply overflow-x-auto overscroll-x-contain;
+    -webkit-overflow-scrolling: touch;
+}
+
+.erp-panel-body > table {
+    min-width: 20rem;
+}
+
+/* Filter / toolbar rows */
+.erp-filter-bar {
+    @apply flex flex-col sm:flex-row sm:flex-wrap sm:items-end gap-3;
+}
+
+.erp-filter-bar > .erp-filter-field {
+    @apply w-full sm:w-auto sm:min-w-[9rem] sm:flex-1;
+}
+
+.erp-filter-bar > .erp-filter-field-grow {
+    @apply w-full sm:flex-[2] sm:min-w-[12rem];
+}
+
+.erp-filter-bar > .erp-filter-actions {
+    @apply w-full sm:w-auto flex flex-wrap gap-2;
+}
+
+@media (max-width: 639px) {
+    .erp-panel-body {
+        @apply p-3;
+    }
+
+    .erp-panel-head {
+        @apply px-3 py-2.5 flex-col items-start gap-2;
+    }
+
+    .erp-table th,
+    .erp-table td {
+        @apply px-3 py-2 text-xs;
+    }
+
+    .erp-table th {
+        @apply text-[10px];
+    }
+
+    .erp-btn-primary,
+    .erp-btn-secondary,
+    .erp-btn-danger {
+        @apply min-h-[2.5rem];
+    }
+
+    .erp-form-section {
+        @apply p-4;
+    }
+
+    .erp-kpi-value {
+        @apply text-xl;
+    }
+
+    /* Full-width fixed filter fields on small screens */
+    .erp-panel-body .w-44,
+    .erp-panel-body .w-48,
+    .erp-panel-body .w-52,
+    .erp-filter-bar .w-44,
+    .erp-filter-bar .w-48,
+    .erp-filter-bar .w-52 {
+        width: 100%;
+    }
+
+    /* Stack multi-column grids without responsive prefixes */
+    .erp-panel-body .grid.grid-cols-2:not([class*='sm:']):not([class*='md:']):not([class*='lg:']),
+    .erp-panel-body .grid.grid-cols-3:not([class*='sm:']):not([class*='md:']):not([class*='lg:']),
+    .erp-panel-body .grid.grid-cols-4:not([class*='sm:']):not([class*='md:']):not([class*='lg:']),
+    main .grid.grid-cols-2:not([class*='sm:']):not([class*='md:']):not([class*='lg:']),
+    main .grid.grid-cols-3:not([class*='sm:']):not([class*='md:']):not([class*='lg:']),
+    main .grid.grid-cols-4:not([class*='sm:']):not([class*='md:']):not([class*='lg:']),
+    #salary-view-modal-body .grid.grid-cols-2 {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 1023px) {
+    body.sidebar-open {
+        @apply overflow-hidden;
+    }
+}
+
+/* ── Employee Portal — mobile app shell ── */
+
+.emp-app {
+    @apply min-h-screen antialiased;
+    background: linear-gradient(160deg, #0f2744 0%, #1e3a5f 35%, #eef1f5 35%);
+}
+
+@media (min-width: 480px) {
+    .emp-app {
+        @apply py-6 px-4;
+        background: linear-gradient(135deg, #152d4a 0%, #1e3a5f 50%, #2a4f80 100%);
+    }
+}
+
+.emp-shell {
+    @apply relative mx-auto flex min-h-screen w-full max-w-md flex-col overflow-hidden bg-[#f4f6fa];
+    box-shadow: 0 25px 50px -12px rgba(15, 39, 68, 0.45);
+}
+
+@media (min-width: 480px) {
+    .emp-shell {
+        min-height: calc(100vh - 3rem);
+        max-height: calc(100vh - 3rem);
+        @apply rounded-[2rem] border border-white/10;
+    }
+
+    .emp-shell > .emp-hero:first-child {
+        border-top-left-radius: 2rem;
+        border-top-right-radius: 2rem;
+    }
+}
+
+.emp-main {
+    @apply flex-1 overflow-y-auto px-4;
+    padding-top: 1rem;
+    padding-bottom: calc(5.5rem + env(safe-area-inset-bottom, 0));
+    scrollbar-width: none;
+}
+
+.emp-main::-webkit-scrollbar {
+    display: none;
+}
+
+.emp-hero {
+    @apply relative shrink-0 overflow-hidden text-white;
+    margin: 0;
+    padding: max(1.25rem, env(safe-area-inset-top, 0px)) 1rem 1.5rem;
+    background: linear-gradient(135deg, #152d4a 0%, #1e3a5f 55%, #2a5080 100%);
+    border-radius: 0 0 1.75rem 1.75rem;
+}
+
+.emp-hero-sub {
+    padding-bottom: 1.75rem;
+}
+
+.emp-hero-sub .emp-back {
+    @apply mb-3 inline-flex items-center gap-1 rounded-lg py-1 text-sm font-medium text-white/75 transition hover:text-white;
+}
+
+.emp-hero-sub .emp-back svg {
+    @apply h-4 w-4;
+}
+
+.emp-hero-sub h1 {
+    @apply text-xl font-bold leading-tight;
+}
+
+.emp-hero-sub .emp-hero-subtitle {
+    @apply mt-1 text-sm text-white/60;
+}
+
+.emp-hero-sub .emp-hero-row {
+    @apply flex items-start justify-between gap-3;
+}
+
+.emp-hero::after {
+    content: '';
+    @apply pointer-events-none absolute -right-8 -top-8 h-32 w-32 rounded-full opacity-20;
+    background: radial-gradient(circle, #c9a84c 0%, transparent 70%);
+}
+
+.emp-card {
+    @apply rounded-2xl border border-white/80 bg-white shadow-[0_2px_16px_rgba(30,58,95,0.06)];
+}
+
+.emp-card-padded {
+    @apply rounded-2xl border border-white/80 bg-white p-4 shadow-[0_2px_16px_rgba(30,58,95,0.06)];
+}
+
+.emp-stat {
+    @apply rounded-2xl p-3.5 text-center;
+}
+
+.emp-stat-value {
+    @apply text-2xl font-bold tabular-nums leading-none;
+}
+
+.emp-stat-label {
+    @apply mt-1.5 text-[10px] font-semibold uppercase tracking-wider opacity-80;
+}
+
+.emp-quick {
+    @apply flex flex-col items-center gap-2 rounded-2xl border border-white/80 bg-white p-4 text-center shadow-[0_2px_12px_rgba(30,58,95,0.05)] transition active:scale-[0.97];
+}
+
+.emp-quick-icon {
+    @apply flex h-12 w-12 items-center justify-center rounded-2xl;
+}
+
+.emp-list-item {
+    @apply flex items-center gap-3 px-4 py-3.5 transition active:bg-gray-50;
+}
+
+.emp-section-title {
+    @apply mb-2.5 px-0.5 text-[11px] font-bold uppercase tracking-widest text-gray-400;
+}
+
+.emp-page-title {
+    @apply text-xl font-bold tracking-tight text-gray-900;
+}
+
+.emp-page-sub {
+    @apply mt-0.5 text-xs text-gray-500;
+}
+
+.emp-badge {
+    @apply inline-flex shrink-0 items-center rounded-full px-2.5 py-0.5 text-[10px] font-semibold;
+}
+
+.emp-btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-brand px-4 py-3 text-sm font-semibold text-white shadow-[0_4px_14px_rgba(30,58,95,0.25)] transition active:scale-[0.98];
+}
+
+.emp-btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl border border-erp-border bg-white px-4 py-3 text-sm font-semibold text-gray-700 transition active:scale-[0.98];
+}
+
+.emp-btn-sm {
+    @apply inline-flex items-center justify-center rounded-lg bg-brand px-2.5 py-1 text-[10px] font-semibold text-white transition active:scale-[0.98];
+}
+
+.emp-btn-sm-secondary {
+    @apply inline-flex items-center justify-center rounded-lg border border-erp-border bg-white px-2.5 py-1 text-[10px] font-semibold text-gray-700 transition active:scale-[0.98];
+}
+
+.emp-input {
+    @apply w-full rounded-xl border-erp-border bg-gray-50/50 px-3.5 py-2.5 text-sm focus:border-brand focus:bg-white focus:ring-brand;
+}
+
+.emp-label {
+    @apply mb-1.5 block text-[11px] font-semibold uppercase tracking-wide text-gray-500;
+}
+
+.emp-tabbar {
+    @apply fixed bottom-0 left-1/2 z-50 flex w-full max-w-md -translate-x-1/2 items-end justify-around border-t border-gray-200/80 bg-white/90 px-1 pt-1.5 backdrop-blur-xl;
+    padding-bottom: calc(0.5rem + env(safe-area-inset-bottom, 0));
+    box-shadow: 0 -4px 24px rgba(15, 39, 68, 0.08);
+}
+
+.emp-tab {
+    @apply flex min-w-0 flex-1 flex-col items-center gap-0.5 rounded-xl px-1 py-1.5 text-[10px] font-semibold text-gray-400 transition;
+}
+
+.emp-tab-active {
+    @apply text-brand;
+}
+
+.emp-tab-icon {
+    @apply flex h-7 w-7 items-center justify-center rounded-xl transition;
+}
+
+.emp-tab-active .emp-tab-icon {
+    @apply bg-brand/10 text-brand;
+}
+
+.emp-toast {
+    @apply mb-4 rounded-2xl px-4 py-3 text-xs font-medium;
+}
+
+.emp-toast-success {
+    @apply border border-green-200/80 bg-green-50 text-green-800;
+}
+
+.emp-toast-error {
+    @apply border border-red-200/80 bg-red-50 text-red-800;
+}
+
+.emp-login-bg {
+    @apply flex min-h-screen items-center justify-center p-5;
+    background: linear-gradient(160deg, #0f2744 0%, #1e3a5f 45%, #2a5080 100%);
+}
+
+.emp-login-card {
+    @apply w-full max-w-sm overflow-hidden rounded-3xl bg-white shadow-2xl;
+}
+
+.payslip-attendance-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+    text-align: center;
+}
+
+@media (min-width: 640px) {
+    .payslip-attendance-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+}
+
+@media (min-width: 1024px) {
+    .payslip-attendance-grid {
+        grid-template-columns: repeat(7, minmax(0, 1fr));
+    }
+}
+
+.payslip-attendance-stat {
+    @apply rounded-xl border border-erp-border/70 px-2 py-3;
+}
+
+.payslip-attendance-stat .stat-value {
+    @apply text-lg font-bold tabular-nums text-gray-900;
+}
+
+.payslip-attendance-stat .stat-label {
+    @apply mt-1 text-[10px] font-semibold uppercase tracking-wide text-gray-500;
+}
+
+.emp-payslip .erp-panel {
+    @apply rounded-2xl border-0 shadow-[0_2px_12px_rgba(30,58,95,0.06)];
+}
+
+.emp-payslip .erp-panel-head {
+    @apply rounded-t-2xl bg-gray-50/60;
+}
+
+/* Force 3-column grid inside employee phone shell regardless of viewport width */
+.emp-payslip .payslip-attendance-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 0.5rem;
+}
+
+.emp-payslip .payslip-attendance-stat {
+    @apply flex min-h-[4.25rem] flex-col items-center justify-center rounded-xl bg-gray-50 px-1.5 py-2.5;
+    border-color: transparent;
+}
+
+.emp-payslip .payslip-attendance-stat .stat-value {
+    @apply text-lg font-bold leading-none;
+}
+
+.emp-payslip .payslip-attendance-stat .stat-label {
+    @apply mt-1.5 text-[9px] leading-tight;
+}
+
+.emp-avatar-ring {
+    @apply rounded-full ring-4 ring-white/30 ring-offset-2 ring-offset-transparent;
+}
+
+/* ── Payslip print / PDF ── */
+
+.payslip-print-page {
+    @apply min-h-screen bg-gray-100 text-gray-900;
+}
+
+.payslip-print-toolbar {
+    @apply mx-auto mb-6 max-w-3xl rounded-2xl border border-erp-border bg-white p-4 shadow-sm;
+}
+
+.payslip-print-document {
+    @apply mx-auto max-w-3xl rounded-2xl border border-erp-border bg-white p-6 shadow-sm;
+}
+
+.payslip-print-header {
+    @apply mb-6 flex flex-col gap-4 border-b border-erp-border pb-5 sm:flex-row sm:items-start sm:justify-between;
+}
+
+.payslip-print-document .payslip-document {
+    @apply space-y-3;
+}
+
+.payslip-print-document .erp-panel {
+    @apply rounded-xl border border-erp-border/80 shadow-none;
+}
+
+@media print {
+    .no-print {
+        display: none !important;
+    }
+
+    .payslip-print-page {
+        background: white !important;
+        padding: 0 !important;
+    }
+
+    .payslip-print-toolbar {
+        display: none !important;
+    }
+
+    .payslip-print-document {
+        max-width: 100% !important;
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        border-radius: 0 !important;
+    }
+
+    .payslip-print-document .erp-panel {
+        break-inside: avoid;
+        box-shadow: none !important;
+    }
+
+    .payslip-print-header {
+        border-bottom-color: #dde3ea !important;
+    }
 }

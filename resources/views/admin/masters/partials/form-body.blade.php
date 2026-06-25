@@ -1,6 +1,6 @@
 {{-- Main field grid (excludes image & is_active — those live in sidebar / image panel) --}}
 @php
-    $mainFields = collect($config['fields'])->reject(fn ($meta, $field) => in_array($meta['type'], ['image', 'boolean']));
+    $mainFields = collect($config['fields'])->reject(fn ($meta, $field) => ($meta['type'] ?? '') === 'image' || $field === 'is_active');
     $hasImage = collect($config['fields'])->contains(fn ($meta) => ($meta['type'] ?? '') === 'image');
 @endphp
 

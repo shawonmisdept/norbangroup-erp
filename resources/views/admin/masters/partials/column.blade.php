@@ -1,5 +1,6 @@
 @php
-    $relationMeta = config("masters.relation_columns.{$column}");
+    $relationColumnsConfig = $relationColumnsConfig ?? 'masters.relation_columns';
+    $relationMeta = config("{$relationColumnsConfig}.{$column}");
 @endphp
 
 @if($column === 'code')
@@ -27,8 +28,16 @@
     <span class="text-gray-700">{{ $record->{$rel}?->{$display} ?? '—' }}</span>
 @elseif($column === 'description' && $record->description)
     <span class="text-gray-600 text-xs line-clamp-2 max-w-xs">{{ $record->description }}</span>
-@elseif(in_array($column, ['start_date', 'end_date'], true) && $record->{$column})
+@elseif($column === 'is_night' || $column === 'is_paid' || $column === 'is_optional')
+    @if($record->{$column})
+        <span class="text-xs font-semibold px-2 py-0.5 rounded-sm bg-blue-50 text-blue-700">Yes</span>
+    @else
+        <span class="text-xs text-gray-400">No</span>
+    @endif
+@elseif($column === 'date' && $record->{$column})
     <span class="text-gray-600">{{ $record->{$column}->format('d M Y') }}</span>
+@elseif(in_array($column, ['start_time', 'end_time'], true) && $record->{$column})
+    <span class="text-gray-600">{{ $record->{$column} }}</span>
 @elseif(in_array($column, ['calendar_type', 'branch', 'account_number', 'swift_code'], true) && $record->{$column})
     <span class="text-gray-600">{{ $record->{$column} }}</span>
 @else

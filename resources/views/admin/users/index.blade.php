@@ -44,9 +44,9 @@
                         <td class="hidden md:table-cell text-xs text-gray-500">{{ $user->factory?->name ?? '—' }}</td>
                         <td><span class="erp-badge bg-gold-light text-gold-dark">{{ $user->roleLabel() }}</span></td>
                         <td class="text-right">
-                            <div class="inline-flex items-center gap-1">
-                                <a href="{{ route('admin.users.show', $user) }}" class="erp-btn-secondary !py-1 !px-2">View</a>
-                                <a href="{{ route('admin.users.edit', $user) }}" class="erp-btn-primary !py-1 !px-2">Edit</a>
+                            <div class="erp-table-actions">
+                                <a href="{{ route('admin.users.show', $user) }}" class="erp-btn-sm-secondary">View</a>
+                                <a href="{{ route('admin.users.edit', $user) }}" class="erp-btn-sm-primary">Edit</a>
                                 @if($user->id !== auth()->id())
                                     <form method="POST" action="{{ route('admin.users.destroy', $user) }}" class="inline"
                                           onsubmit="return confirm('Delete this user?')">

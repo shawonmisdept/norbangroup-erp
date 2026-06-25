@@ -1,4 +1,44 @@
 import Alpine from 'alpinejs';
+import './searchable-selects';
+
+Alpine.data('notificationBell', (initialCount = 0, pollUrl = '') => ({
+    open: false,
+    unreadCount: initialCount,
+    pollTimer: null,
+    pollUrl,
+
+    init() {
+        if (this.pollUrl) {
+            this.pollTimer = setInterval(() => this.refreshCount(), 60000);
+        }
+    },
+
+    destroy() {
+        if (this.pollTimer) {
+            clearInterval(this.pollTimer);
+        }
+    },
+
+    async refreshCount() {
+        if (! this.pollUrl) {
+            return;
+        }
+
+        try {
+            const response = await fetch(this.pollUrl, {
+                headers: { Accept: 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
+                credentials: 'same-origin',
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                this.unreadCount = data.count ?? 0;
+            }
+        } catch {
+            // ignore polling errors
+        }
+    },
+}));
 
 Alpine.data('referenceFiles', () => ({
     techpack: [{ id: 1, fileName: null, previewUrl: null, isPdf: false }],
@@ -110,6 +150,405 @@ Alpine.data('toastHub', () => ({
                 this.toasts = this.toasts.filter((item) => item.id !== id);
             }, 200);
         }
+    },
+}));
+
+Alpine.data('employeeForm', (config = {}) => {
+    const stepOrder = config.steps || ['setup', 'official', 'personal', 'contact', 'family', 'education', 'employment'];
+
+    return {
+        step: config.tab || 'setup',
+        stepOrder,
+        factoryId: config.factoryId || '',
+        departmentId: config.departmentId || '',
+        designationId: config.designationId || '',
+        buildingId: config.buildingId || '',
+        floorId: config.floorId || '',
+        shiftId: config.shiftId || '',
+        lineId: config.lineId || '',
+        departments: config.departments || [],
+        designations: config.designations || [],
+        buildings: config.buildings || [],
+        floors: config.floors || [],
+        lines: config.lines || [],
+        shifts: config.shifts || [],
+        photoPreview: config.photoPreview || null,
+        nomineePhotoPreview: config.nomineePhotoPreview || null,
+        educationRows: config.educationRows?.length ? config.educationRows : [{
+            degree: '', institution: '', board_or_university: '', passing_year: '', result: '',
+        }],
+        employmentRows: config.employmentRows?.length ? config.employmentRows : [{
+            company_name: '', designation: '', department: '', joining_date: '', leaving_date: '', reason_for_leaving: '',
+        }],
+        displayName: config.displayName || '',
+        displayEmployeeId: config.displayEmployeeId || '',
+        displayPhone: config.displayPhone || '',
+        status: config.status || 'active',
+        submitError: '',
+        init() {
+            this.factoryId = String(this.factoryId || '');
+            this.departmentId = String(this.departmentId || '');
+            this.designationId = String(this.designationId || '');
+            this.buildingId = String(this.buildingId || '');
+            this.floorId = String(this.floorId || '');
+            this.shiftId = String(this.shiftId || '');
+            this.lineId = String(this.lineId || '');
+            this.status = String(this.status || 'active');
+
+            this.$nextTick(() => {
+                this.initStepSelects();
+            });
+
+            ['factoryId', 'departmentId', 'designationId', 'buildingId', 'floorId', 'lineId', 'shiftId', 'status'].forEach((field) => {
+                this.$watch(field, () => {
+                    this.$nextTick(() => window.syncTomSelects?.(this.$root));
+                });
+            });
+        },
+        syncTomSelects() {
+            this.$nextTick(() => window.syncTomSelects?.(this.$root));
+        },
+        initStepSelects() {
+            this.$nextTick(() => {
+                setTimeout(() => {
+                    const panel = this.$root.querySelector(`[data-wizard-step="${this.step}"]`);
+
+                    if (panel) {
+                        panel.querySelectorAll('select.erp-input, select.emp-input').forEach((el) => {
+                            if (el.tomselect) {
+                                window.refreshSearchableSelect?.(el);
+                            } else {
+                                window.enhanceSelect?.(el);
+                            }
+                        });
+                    }
+
+                    window.syncTomSelects?.(this.$root);
+                }, 80);
+            });
+        },
+        progressPercent() {
+            const idx = this.stepOrder.indexOf(this.step);
+
+            return idx >= 0 ? Math.round(((idx + 1) / this.stepOrder.length) * 100) : 0;
+        },
+        isLastStep() {
+            return this.step === this.stepOrder[this.stepOrder.length - 1];
+        },
+        isFirstStep() {
+            return this.step === this.stepOrder[0];
+        },
+        goToStep(stepKey) {
+            if (this.stepOrder.includes(stepKey)) {
+                this.step = stepKey;
+                this.initStepSelects();
+            }
+        },
+        onPhotoSelected(event) {
+            const file = event.target.files?.[0];
+
+            if (! file || ! file.type.startsWith('image/')) {
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = (loadEvent) => {
+                this.photoPreview = loadEvent.target?.result ?? null;
+            };
+            reader.readAsDataURL(file);
+        },
+        onNomineePhotoSelected(event) {
+            const file = event.target.files?.[0];
+
+            if (! file || ! file.type.startsWith('image/')) {
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = (loadEvent) => {
+                this.nomineePhotoPreview = loadEvent.target?.result ?? null;
+            };
+            reader.readAsDataURL(file);
+        },
+        addEducationRow() {
+            this.educationRows.push({
+                degree: '', institution: '', board_or_university: '', passing_year: '', result: '',
+            });
+        },
+        removeEducationRow(index) {
+            if (this.educationRows.length > 1) {
+                this.educationRows.splice(index, 1);
+            }
+        },
+        addEmploymentRow() {
+            this.employmentRows.push({
+                company_name: '', designation: '', department: '', joining_date: '', leaving_date: '', reason_for_leaving: '',
+            });
+        },
+        removeEmploymentRow(index) {
+            if (this.employmentRows.length > 1) {
+                this.employmentRows.splice(index, 1);
+            }
+        },
+        filteredDepartments() {
+            if (! this.factoryId) {
+                return [];
+            }
+
+            return this.departments.filter((d) => String(d.factory_id) === String(this.factoryId));
+        },
+        filteredDesignations() {
+            if (! this.departmentId) {
+                return [];
+            }
+
+            return this.designations.filter((d) => String(d.department_id) === String(this.departmentId));
+        },
+        filteredBuildings() {
+            if (! this.factoryId) {
+                return [];
+            }
+
+            return this.buildings.filter((b) => String(b.factory_id) === String(this.factoryId));
+        },
+        filteredFloors() {
+            if (! this.buildingId) {
+                return [];
+            }
+
+            return this.floors.filter((f) => String(f.building_id) === String(this.buildingId));
+        },
+        filteredLines() {
+            if (! this.floorId) {
+                return [];
+            }
+
+            return this.lines.filter((l) => String(l.floor_id) === String(this.floorId));
+        },
+        filteredShifts() {
+            if (! this.factoryId) {
+                return [];
+            }
+
+            return this.shifts.filter((s) => String(s.factory_id) === String(this.factoryId));
+        },
+        onFactoryChange() {
+            this.departmentId = '';
+            this.designationId = '';
+            this.buildingId = '';
+            this.floorId = '';
+            this.shiftId = '';
+            this.lineId = '';
+            this.syncTomSelects();
+        },
+        onBuildingChange() {
+            this.floorId = '';
+            this.lineId = '';
+            this.syncTomSelects();
+        },
+        validateCurrentStep() {
+            if (this.step === 'setup') {
+                return this.validateSetupFields(true);
+            }
+
+            return true;
+        },
+        validateSetupFields(showErrors = false) {
+            const missing = [];
+
+            if (! String(this.displayName ?? '').trim()) {
+                missing.push('Employee Name');
+            }
+
+            if (! String(this.displayEmployeeId ?? '').trim()) {
+                missing.push('Employee ID');
+            }
+
+            if (! String(this.factoryId ?? '').trim()) {
+                missing.push('Factory / Unit');
+            }
+
+            if (! String(this.status ?? '').trim()) {
+                missing.push('Status');
+            }
+
+            if (missing.length && showErrors) {
+                this.submitError = 'Please fill required Employee Setup fields: ' + missing.join(', ');
+            }
+
+            return missing.length === 0;
+        },
+        prepareSubmit(event) {
+            this.submitError = '';
+
+            if (! this.validateSetupFields(true)) {
+                event.preventDefault();
+                this.step = 'setup';
+            }
+        },
+        validateStep(stepKey) {
+            if (stepKey === 'setup') {
+                return this.validateSetupFields(false);
+            }
+
+            return true;
+        },
+        prevStep() {
+            const idx = this.stepOrder.indexOf(this.step);
+
+            if (idx > 0) {
+                this.step = this.stepOrder[idx - 1];
+                this.initStepSelects();
+            }
+        },
+        nextStep() {
+            if (! this.validateCurrentStep()) {
+                return;
+            }
+
+            const idx = this.stepOrder.indexOf(this.step);
+
+            if (idx < this.stepOrder.length - 1) {
+                this.step = this.stepOrder[idx + 1];
+                this.initStepSelects();
+            }
+        },
+        selectedDepartmentName() {
+            const dept = this.departments.find((d) => String(d.id) === String(this.departmentId));
+
+            return dept?.name ?? '—';
+        },
+        selectedDesignationName() {
+            const des = this.designations.find((d) => String(d.id) === String(this.designationId));
+
+            return des?.name ?? '—';
+        },
+        selectedShiftName() {
+            const shift = this.shifts.find((s) => String(s.id) === String(this.shiftId));
+
+            return shift?.name ?? '—';
+        },
+    };
+});
+
+Alpine.data('employeeTabs', (initialTab = 'personal') => ({
+    tab: initialTab,
+}));
+
+Alpine.data('erpShell', (openGroups = {}, adminOpenInitial = false) => ({
+    sidebarOpen: false,
+    openGroups: { ...openGroups },
+    adminOpen: adminOpenInitial,
+    navSearch: '',
+    navSearchEmpty: false,
+
+    filterSidebarNav() {
+        const nav = document.getElementById('erp-sidebar-nav');
+
+        if (! nav) {
+            return;
+        }
+
+        const query = this.navSearch.trim().toLowerCase();
+        const labeled = nav.querySelectorAll('[data-nav-label]');
+
+        nav.classList.toggle('nav-search-active', query.length > 0);
+
+        if (! query) {
+            labeled.forEach((el) => el.removeAttribute('data-nav-search-hidden'));
+            nav.querySelectorAll('[data-nav-branch]').forEach((el) => el.removeAttribute('data-nav-search-hidden'));
+            nav.querySelectorAll('[data-nav-section]').forEach((el) => el.removeAttribute('data-nav-search-hidden'));
+            this.navSearchEmpty = false;
+
+            return;
+        }
+
+        const matched = new Set();
+
+        labeled.forEach((el) => {
+            const label = (el.getAttribute('data-nav-label') || '').toLowerCase();
+
+            if (label.includes(query)) {
+                matched.add(el);
+            }
+        });
+
+        labeled.forEach((el) => {
+            if (matched.has(el)) {
+                el.removeAttribute('data-nav-search-hidden');
+            } else {
+                el.setAttribute('data-nav-search-hidden', '');
+            }
+        });
+
+        labeled.forEach((el) => {
+            if (el.querySelector('[data-nav-label]:not([data-nav-search-hidden])')) {
+                el.removeAttribute('data-nav-search-hidden');
+            }
+        });
+
+        nav.querySelectorAll('[data-nav-branch]').forEach((branch) => {
+            const hasMatch = branch.querySelector('[data-nav-label]:not([data-nav-search-hidden])');
+
+            if (hasMatch) {
+                branch.removeAttribute('data-nav-search-hidden');
+                this.expandNavAncestors(branch, nav);
+            } else {
+                branch.setAttribute('data-nav-search-hidden', '');
+            }
+        });
+
+        nav.querySelectorAll('[data-nav-label]:not([data-nav-search-hidden])').forEach((el) => {
+            this.expandNavAncestors(el, nav);
+        });
+
+        const sections = nav.querySelectorAll('[data-nav-section]');
+
+        sections.forEach((section, index) => {
+            const nextSection = sections[index + 1] ?? null;
+            let sibling = section.nextElementSibling;
+            let sectionVisible = false;
+
+            while (sibling && sibling !== nextSection) {
+                if (! sibling.hasAttribute('data-nav-search-hidden')) {
+                    sectionVisible = true;
+                    break;
+                }
+
+                sibling = sibling.nextElementSibling;
+            }
+
+            if (sectionVisible) {
+                section.removeAttribute('data-nav-search-hidden');
+            } else {
+                section.setAttribute('data-nav-search-hidden', '');
+            }
+        });
+
+        this.navSearchEmpty = matched.size === 0;
+    },
+
+    expandNavAncestors(el, nav) {
+        let parent = el.parentElement;
+
+        while (parent && parent !== nav) {
+            parent.removeAttribute('data-nav-search-hidden');
+
+            const openKey = parent.getAttribute('data-nav-open-key');
+
+            if (openKey === 'admin') {
+                this.adminOpen = true;
+            } else if (openKey) {
+                this.openGroups[openKey] = true;
+            }
+
+            parent = parent.parentElement;
+        }
+    },
+
+    clearNavSearch() {
+        this.navSearch = '';
+        this.filterSidebarNav();
     },
 }));
 

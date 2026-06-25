@@ -1,0 +1,37 @@
+@extends('layouts.admin')
+
+@section('title', 'Device Sync — Attendance')
+
+@section('breadcrumbs')
+    <a href="{{ route('admin.hrm.attendance.hub') }}" class="hover:text-brand">Attendance</a>
+    <span>/</span>
+    <span class="text-gray-800 font-medium">Device Sync</span>
+@endsection
+
+@section('admin-content')
+@include('admin.hrm.partials.submodule-nav', ['section' => 'attendance', 'current' => 'sync'])
+
+@php
+    $syncActions = '';
+    if (auth()->user()->hasPermission('hrm.attendance.sync')) {
+        $syncActions .= '<form method="POST" action="' . route('admin.hrm.attendance.sync-all') . '" class="inline">'
+            . csrf_field()
+            . '<button type="submit" class="erp-btn-primary">Sync All Devices</button>'
+            . '</form>';
+    }
+    if (auth()->user()->hasPermission('hrm.attendance.manage')) {
+        $syncActions .= '<form method="POST" action="' . route('admin.hrm.attendance.process-today') . '" class="inline">'
+            . csrf_field()
+            . '<button type="submit" class="erp-btn-secondary">Process Today</button>'
+            . '</form>';
+    }
+@endphp
+
+@include('partials.erp.page-header', [
+    'title' => 'ZKTeco SpeedFace V5L',
+    'subtitle' => 'Real-time face attendance — device pushes directly to ERP',
+    'actions' => $syncActions,
+])
+
+@include('admin.hrm.attendance.partials.sync-dashboard')
+@endsection

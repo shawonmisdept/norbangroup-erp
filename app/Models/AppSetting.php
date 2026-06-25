@@ -18,6 +18,15 @@ class AppSetting extends Model
         'mail_encryption', 'mail_from_address', 'mail_from_name', 'mail_admin_address',
         'notify_popup_enabled', 'notify_popup_admin_on_order', 'notify_popup_admin_on_status',
         'notify_mail_client_on_order', 'notify_mail_admin_on_order', 'notify_mail_client_on_status',
+        'notify_popup_hrm_late_acceptance', 'notify_popup_hrm_unmapped_punch', 'notify_popup_hrm_manual_punch',
+        'notify_popup_hrm_leave', 'notify_mail_hrm_leave', 'notify_popup_hrm_sync_failed',
+        'notify_popup_hrm_daily_attendance', 'notify_popup_hrm_contract_expiry', 'notify_popup_hrm_probation_end',
+        'notify_popup_hrm_ot_limit', 'notify_mail_hrm_payslip',
+        'notify_popup_hrm_recruitment', 'notify_mail_hrm_recruitment_candidate', 'notify_sms_hrm_recruitment',
+        'notify_popup_hrm_worker_transfer', 'notify_popup_hrm_gate_pass', 'notify_popup_hrm_proxy_punch',
+        'notify_popup_hrm_manpower_variance',
+        'recruitment_otp_enabled',
+        'sms_provider', 'sms_api_key', 'sms_api_secret', 'sms_sender_id', 'sms_custom_url',
     ];
 
     protected $casts = [
@@ -28,9 +37,28 @@ class AppSetting extends Model
         'notify_mail_client_on_order'     => 'boolean',
         'notify_mail_admin_on_order'      => 'boolean',
         'notify_mail_client_on_status'    => 'boolean',
+        'notify_popup_hrm_late_acceptance' => 'boolean',
+        'notify_popup_hrm_unmapped_punch'  => 'boolean',
+        'notify_popup_hrm_manual_punch'    => 'boolean',
+        'notify_popup_hrm_leave'           => 'boolean',
+        'notify_mail_hrm_leave'            => 'boolean',
+        'notify_popup_hrm_sync_failed'     => 'boolean',
+        'notify_popup_hrm_daily_attendance'=> 'boolean',
+        'notify_popup_hrm_contract_expiry' => 'boolean',
+        'notify_popup_hrm_probation_end'   => 'boolean',
+        'notify_popup_hrm_ot_limit'        => 'boolean',
+        'notify_mail_hrm_payslip'          => 'boolean',
+        'notify_popup_hrm_recruitment'     => 'boolean',
+        'notify_mail_hrm_recruitment_candidate' => 'boolean',
+        'notify_sms_hrm_recruitment'       => 'boolean',
+        'notify_popup_hrm_worker_transfer' => 'boolean',
+        'notify_popup_hrm_gate_pass'       => 'boolean',
+        'notify_popup_hrm_proxy_punch'     => 'boolean',
+        'notify_popup_hrm_manpower_variance' => 'boolean',
+        'recruitment_otp_enabled'          => 'boolean',
     ];
 
-    protected $hidden = ['mail_password'];
+    protected $hidden = ['mail_password', 'sms_api_key', 'sms_api_secret'];
 
     public static function current(): self
     {
@@ -75,6 +103,26 @@ class AppSetting extends Model
             'notify_mail_client_on_order'  => true,
             'notify_mail_admin_on_order'   => true,
             'notify_mail_client_on_status' => true,
+            'notify_popup_hrm_late_acceptance' => true,
+            'notify_popup_hrm_unmapped_punch'  => true,
+            'notify_popup_hrm_manual_punch'    => false,
+            'notify_popup_hrm_leave'           => true,
+            'notify_mail_hrm_leave'            => true,
+            'notify_popup_hrm_sync_failed'     => true,
+            'notify_popup_hrm_daily_attendance'=> true,
+            'notify_popup_hrm_contract_expiry' => true,
+            'notify_popup_hrm_probation_end'   => true,
+            'notify_popup_hrm_ot_limit'        => true,
+            'notify_mail_hrm_payslip'          => true,
+            'notify_popup_hrm_recruitment'     => true,
+            'notify_mail_hrm_recruitment_candidate' => true,
+            'notify_sms_hrm_recruitment'       => false,
+            'notify_popup_hrm_worker_transfer' => true,
+            'notify_popup_hrm_gate_pass'       => true,
+            'notify_popup_hrm_proxy_punch'     => true,
+            'notify_popup_hrm_manpower_variance' => true,
+            'recruitment_otp_enabled'          => true,
+            'sms_provider'                     => 'log',
         ];
     }
 
@@ -87,19 +135,81 @@ class AppSetting extends Model
 
     public function setMailPasswordAttribute(?string $value): void
     {
-        if ($value !== null && $value !== '') {
-            $this->attributes['mail_password'] = Crypt::encryptString($value);
+        if ($value === null || $value === '') {
+            $this->attributes['mail_password'] = null;
+
+            return;
         }
+
+        $this->attributes['mail_password'] = Crypt::encryptString($value);
     }
 
     public function mailPasswordPlain(): ?string
     {
-        if (! $this->attributes['mail_password'] ?? null) {
+        return $this->decryptAttribute('mail_password');
+    }
+
+    public function setSmsApiKeyAttribute(?string $value): void
+    {
+        $this->encryptAttribute('sms_api_key', $value);
+    }
+
+    public function setSmsApiSecretAttribute(?string $value): void
+    {
+        $this->encryptAttribute('sms_api_secret', $value);
+    }
+
+    public function smsApiKeyPlain(): ?string
+    {
+        return $this->decryptAttribute('sms_api_key');
+    }
+
+    public function smsApiSecretPlain(): ?string
+    {
+        return $this->decryptAttribute('sms_api_secret');
+    }
+
+    public function canSendSms(): bool
+    {
+        if ($this->sms_provider === 'log') {
+            return true;
+        }
+
+        if ($this->sms_provider === 'greenweb') {
+            return filled($this->smsApiKeyPlain());
+        }
+
+        if ($this->sms_provider === 'custom') {
+            return filled($this->sms_custom_url);
+        }
+
+        return filled($this->smsApiKeyPlain()) && filled($this->sms_sender_id);
+    }
+
+    public function recruitmentOtpEnabled(): bool
+    {
+        return (bool) $this->recruitment_otp_enabled;
+    }
+
+    private function encryptAttribute(string $column, ?string $value): void
+    {
+        if ($value === null || $value === '') {
+            $this->attributes[$column] = null;
+
+            return;
+        }
+
+        $this->attributes[$column] = Crypt::encryptString($value);
+    }
+
+    private function decryptAttribute(string $column): ?string
+    {
+        if (! ($this->attributes[$column] ?? null)) {
             return null;
         }
 
         try {
-            return Crypt::decryptString($this->attributes['mail_password']);
+            return Crypt::decryptString($this->attributes[$column]);
         } catch (\Throwable) {
             return null;
         }

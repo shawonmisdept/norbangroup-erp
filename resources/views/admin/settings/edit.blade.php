@@ -16,13 +16,13 @@
 ])
 
 <form method="POST" action="{{ route('admin.settings.update') }}" enctype="multipart/form-data" class="max-w-4xl space-y-5"
-      x-data="{ tab: 'general', mailer: '{{ old('mail_mailer', $settings->mail_mailer) }}' }">
+      x-data="{ tab: 'general', mailer: '{{ old('mail_mailer', $settings->mail_mailer) }}', smsProvider: '{{ old('sms_provider', $settings->sms_provider ?? 'log') }}' }">
     @csrf @method('PUT')
 
     {{-- Tabs --}}
     <div class="erp-panel overflow-hidden">
         <div class="flex border-b border-erp-border bg-gray-50/80 overflow-x-auto">
-            @foreach(['general' => 'General', 'mail' => 'Mail', 'notifications' => 'Notifications'] as $key => $label)
+            @foreach(['general' => 'General', 'mail' => 'Mail', 'sms' => 'SMS Gateway', 'notifications' => 'Notifications'] as $key => $label)
                 <button type="button" @click="tab = '{{ $key }}'"
                         class="px-4 py-3 text-xs font-semibold uppercase tracking-wide border-b-2 transition whitespace-nowrap"
                         :class="tab === '{{ $key }}' ? 'border-gold text-brand bg-white' : 'border-transparent text-gray-400 hover:text-gray-600'">
@@ -202,22 +202,172 @@
                 </div>
             </div>
 
+            {{-- SMS Gateway --}}
+            <div x-show="tab === 'sms'" x-cloak class="space-y-4">
+                <p class="text-sm text-gray-500">Configure bulk SMS provider for recruitment OTP and candidate notifications.</p>
+
+                <div class="grid sm:grid-cols-2 gap-4">
+                    <div class="sm:col-span-2">
+                        <label class="erp-form-label">SMS Provider</label>
+                        <select name="sms_provider" x-model="smsProvider" class="erp-input">
+                            @foreach(config('sms.providers', []) as $key => $provider)
+                                <option value="{{ $key }}" {{ old('sms_provider', $settings->sms_provider ?? 'log') === $key ? 'selected' : '' }}>
+                                    {{ $provider['label'] }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+
+                @foreach(config('sms.providers', []) as $key => $provider)
+                    <div x-show="smsProvider === '{{ $key }}'" x-cloak class="rounded-sm border border-erp-border bg-gray-50/60 px-4 py-3 text-xs text-gray-600">
+                        {{ $provider['description'] }}
+                    </div>
+                @endforeach
+
+                <div x-show="smsProvider !== 'log'" class="grid sm:grid-cols-2 gap-4 border-t border-erp-border pt-4">
+                    <div x-show="['sslwireless', 'bulksmsbd', 'greenweb', 'custom'].includes(smsProvider)">
+                        <label class="erp-form-label" x-text="smsProvider === 'greenweb' ? 'API Token' : 'API Key / Token'"></label>
+                        <input type="password" name="sms_api_key" class="erp-input" placeholder="Leave blank to keep current" autocomplete="new-password">
+                    </div>
+                    <div x-show="['sslwireless', 'bulksmsbd', 'custom'].includes(smsProvider)">
+                        <label class="erp-form-label">Sender ID / Masking Name</label>
+                        <input type="text" name="sms_sender_id" value="{{ old('sms_sender_id', $settings->sms_sender_id) }}" class="erp-input" maxlength="20" placeholder="NORBAN">
+                    </div>
+                    <div x-show="smsProvider === 'custom'" class="sm:col-span-2">
+                        <label class="erp-form-label">Custom API URL</label>
+                        <input type="url" name="sms_custom_url" value="{{ old('sms_custom_url', $settings->sms_custom_url) }}" class="erp-input" placeholder="https://your-sms-provider.com/api/send">
+                        <p class="text-[11px] text-gray-400 mt-1">POST JSON body: phone, message, sender</p>
+                    </div>
+                </div>
+
+                <p class="text-[11px] text-gray-400 border-t border-erp-border pt-4">
+                    Enable recruitment SMS in the <button type="button" @click="tab = 'notifications'" class="text-brand font-semibold hover:underline">Notifications</button> tab.
+                    Save settings first, then send a test SMS below.
+                </p>
+            </div>
+
             {{-- Notifications --}}
             <div x-show="tab === 'notifications'" x-cloak class="space-y-4">
-                <p class="text-sm text-gray-500">Control popup (in-app) and email notifications for requirement events.</p>
+                <p class="text-sm text-gray-500">Control popup (in-app) and email notifications.</p>
                 <p class="text-xs text-gray-400 rounded-sm border border-erp-border bg-gray-50 px-3 py-2">
-                    Email notifications use the mail driver configured in the <button type="button" @click="tab = 'mail'" class="text-brand font-semibold hover:underline">Mail</button> tab
-                    (Gmail, SMTP, etc.). Enable the toggles below to send emails on each event.
+                    Email notifications use the mail driver configured in the <button type="button" @click="tab = 'mail'" class="text-brand font-semibold hover:underline">Mail</button> tab.
+                    HRM attendance alerts appear in the admin notification bell.
                 </p>
 
+                <p class="text-[11px] font-bold text-gray-500 uppercase tracking-wide pt-1">Requirements</p>
                 <div class="divide-y divide-erp-border border border-erp-border rounded-sm">
                     @foreach([
-                        ['notify_popup_enabled', 'Enable popup notifications', 'Show toast alerts in the admin panel'],
+                        ['notify_popup_enabled', 'Enable popup notifications', 'Master toggle for in-app notification bell alerts'],
                         ['notify_popup_admin_on_order', 'Popup — new requirement', 'Notify admin users when a client submits a requirement'],
                         ['notify_popup_admin_on_status', 'Popup — status change', 'Notify admin users when requirement status is updated'],
                         ['notify_mail_client_on_order', 'Email — client confirmation', 'Send confirmation email to client on submission'],
                         ['notify_mail_admin_on_order', 'Email — admin alert', 'Send email to admin when a new requirement arrives'],
                         ['notify_mail_client_on_status', 'Email — client status update', 'Send email to client when status changes'],
+                    ] as [$field, $title, $desc])
+                        <label class="flex items-start gap-3 px-4 py-3 cursor-pointer hover:bg-gray-50/80">
+                            <input type="hidden" name="{{ $field }}" value="0">
+                            <input type="checkbox" name="{{ $field }}" value="1"
+                                   {{ old($field, $settings->{$field}) ? 'checked' : '' }}
+                                   class="mt-0.5 rounded border-gray-300 text-brand focus:ring-brand">
+                            <span>
+                                <span class="block text-sm font-medium text-gray-800">{{ $title }}</span>
+                                <span class="block text-xs text-gray-400 mt-0.5">{{ $desc }}</span>
+                            </span>
+                        </label>
+                    @endforeach
+                </div>
+
+                <p class="text-[11px] font-bold text-gray-500 uppercase tracking-wide pt-2">HRM Attendance</p>
+                <div class="divide-y divide-erp-border border border-erp-border rounded-sm">
+                    @foreach([
+                        ['notify_popup_hrm_late_acceptance', 'Popup — late acceptance apply', 'Notify HR when an employee submits a late forgiveness application'],
+                        ['notify_popup_hrm_unmapped_punch', 'Popup — unmapped biometric punch', 'Notify when SpeedFace/ZKTeco punch has no matching employee PIN'],
+                        ['notify_popup_hrm_manual_punch', 'Popup — manual punch entry', 'Notify when HR records a manual IN/OUT punch fix'],
+                        ['notify_popup_hrm_sync_failed', 'Popup — biometric sync failed', 'Alert IT/HR when ZKTeco ADMS sync fails for a device'],
+                        ['notify_popup_hrm_daily_attendance', 'Popup — daily late/absent alert', 'Summary to HR; line chiefs get team alerts via employee portal'],
+                        ['notify_popup_hrm_ot_limit', 'Popup — OT limit exceeded', 'Alert when payroll calculation exceeds monthly OT limit'],
+                    ] as [$field, $title, $desc])
+                        <label class="flex items-start gap-3 px-4 py-3 cursor-pointer hover:bg-gray-50/80">
+                            <input type="hidden" name="{{ $field }}" value="0">
+                            <input type="checkbox" name="{{ $field }}" value="1"
+                                   {{ old($field, $settings->{$field}) ? 'checked' : '' }}
+                                   class="mt-0.5 rounded border-gray-300 text-brand focus:ring-brand">
+                            <span>
+                                <span class="block text-sm font-medium text-gray-800">{{ $title }}</span>
+                                <span class="block text-xs text-gray-400 mt-0.5">{{ $desc }}</span>
+                            </span>
+                        </label>
+                    @endforeach
+                </div>
+
+                <p class="text-[11px] font-bold text-gray-500 uppercase tracking-wide pt-2">HRM Leave & Payroll</p>
+                <div class="divide-y divide-erp-border border border-erp-border rounded-sm">
+                    @foreach([
+                        ['notify_popup_hrm_leave', 'Popup — leave workflow', 'Bell alerts for leave apply and HR approval steps'],
+                        ['notify_mail_hrm_leave', 'Email — leave notifications', 'Email reporting manager on apply; email employee on approve/reject/cancel'],
+                        ['notify_mail_hrm_payslip', 'Email — payslip ready', 'Send payslip email when payroll period is closed'],
+                    ] as [$field, $title, $desc])
+                        <label class="flex items-start gap-3 px-4 py-3 cursor-pointer hover:bg-gray-50/80">
+                            <input type="hidden" name="{{ $field }}" value="0">
+                            <input type="checkbox" name="{{ $field }}" value="1"
+                                   {{ old($field, $settings->{$field}) ? 'checked' : '' }}
+                                   class="mt-0.5 rounded border-gray-300 text-brand focus:ring-brand">
+                            <span>
+                                <span class="block text-sm font-medium text-gray-800">{{ $title }}</span>
+                                <span class="block text-xs text-gray-400 mt-0.5">{{ $desc }}</span>
+                            </span>
+                        </label>
+                    @endforeach
+                </div>
+
+                <p class="text-[11px] font-bold text-gray-500 uppercase tracking-wide pt-2">HRM Recruitment</p>
+                <div class="divide-y divide-erp-border border border-erp-border rounded-sm">
+                    @foreach([
+                        ['recruitment_otp_enabled', 'Verify Phone (OTP) on apply', 'Require OTP verification before candidates can submit an online application'],
+                        ['notify_popup_hrm_recruitment', 'Popup — new job application', 'Bell alert to HR when a candidate applies via the careers portal'],
+                        ['notify_mail_hrm_recruitment_candidate', 'Email — candidate updates', 'Email confirmation on apply; status and interview updates when email is provided'],
+                        ['notify_sms_hrm_recruitment', 'SMS — candidate updates', 'Send application and interview SMS using the SMS Gateway tab provider'],
+                    ] as [$field, $title, $desc])
+                        <label class="flex items-start gap-3 px-4 py-3 cursor-pointer hover:bg-gray-50/80">
+                            <input type="hidden" name="{{ $field }}" value="0">
+                            <input type="checkbox" name="{{ $field }}" value="1"
+                                   {{ old($field, $settings->{$field}) ? 'checked' : '' }}
+                                   class="mt-0.5 rounded border-gray-300 text-brand focus:ring-brand">
+                            <span>
+                                <span class="block text-sm font-medium text-gray-800">{{ $title }}</span>
+                                <span class="block text-xs text-gray-400 mt-0.5">{{ $desc }}</span>
+                            </span>
+                        </label>
+                    @endforeach
+                </div>
+
+                <p class="text-[11px] font-bold text-gray-500 uppercase tracking-wide pt-2">HRM RMG Extras</p>
+                <div class="divide-y divide-erp-border border border-erp-border rounded-sm">
+                    @foreach([
+                        ['notify_popup_hrm_worker_transfer', 'Popup — worker transfer', 'Notify HR when a cross-line or unit transfer is submitted'],
+                        ['notify_popup_hrm_gate_pass', 'Popup — gate pass', 'Notify when an employee gate pass is submitted for approval'],
+                        ['notify_popup_hrm_proxy_punch', 'Popup — proxy punch flag', 'Alert when a suspicious biometric punch is flagged'],
+                        ['notify_popup_hrm_manpower_variance', 'Popup — manpower shortfall', 'Alert when planned headcount exceeds present attendance on a line'],
+                    ] as [$field, $title, $desc])
+                        <label class="flex items-start gap-3 px-4 py-3 cursor-pointer hover:bg-gray-50/80">
+                            <input type="hidden" name="{{ $field }}" value="0">
+                            <input type="checkbox" name="{{ $field }}" value="1"
+                                   {{ old($field, $settings->{$field}) ? 'checked' : '' }}
+                                   class="mt-0.5 rounded border-gray-300 text-brand focus:ring-brand">
+                            <span>
+                                <span class="block text-sm font-medium text-gray-800">{{ $title }}</span>
+                                <span class="block text-xs text-gray-400 mt-0.5">{{ $desc }}</span>
+                            </span>
+                        </label>
+                    @endforeach
+                </div>
+
+                <p class="text-[11px] font-bold text-gray-500 uppercase tracking-wide pt-2">HRM Employment</p>
+                <div class="divide-y divide-erp-border border border-erp-border rounded-sm">
+                    @foreach([
+                        ['notify_popup_hrm_contract_expiry', 'Popup — contract expiry', 'Alert HR at 90, 30 and 7 days before contract end date'],
+                        ['notify_popup_hrm_probation_end', 'Popup — probation end', 'Alert HR at 30 and 7 days before probation end date'],
                     ] as [$field, $title, $desc])
                         <label class="flex items-start gap-3 px-4 py-3 cursor-pointer hover:bg-gray-50/80">
                             <input type="hidden" name="{{ $field }}" value="0">
@@ -247,4 +397,14 @@
         <p class="text-[11px] text-gray-400">Sends a test message to {{ auth()->user()->email }} using saved Gmail/SMTP settings.</p>
     </form>
 @endif
+
+<form method="POST" action="{{ route('admin.settings.test-sms') }}" class="max-w-4xl mt-3 flex flex-wrap items-end gap-3">
+    @csrf
+    <div>
+        <label class="erp-form-label">Test SMS Phone</label>
+        <input type="text" name="test_sms_phone" required class="erp-input !text-xs w-44" placeholder="01XXXXXXXXX">
+    </div>
+    <button type="submit" class="erp-btn-secondary !text-xs">Send Test SMS</button>
+    <p class="text-[11px] text-gray-400 w-full">Uses saved SMS Gateway settings. Log driver writes to Laravel log only.</p>
+</form>
 @endsection

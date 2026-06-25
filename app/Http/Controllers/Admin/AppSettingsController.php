@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Services\Sms\SmsGatewayFactory;
 use App\Http\Requests\UpdateAppSettingsRequest;
 use App\Models\AppSetting;
 use App\Services\AppSettingLogoService;
@@ -35,6 +36,14 @@ class AppSettingsController extends Controller
 
         if (empty($data['mail_password'])) {
             unset($data['mail_password']);
+        }
+
+        if (empty($data['sms_api_key'])) {
+            unset($data['sms_api_key']);
+        }
+
+        if (empty($data['sms_api_secret'])) {
+            unset($data['sms_api_secret']);
         }
 
         if ($data['mail_mailer'] === 'gmail') {
@@ -108,5 +117,28 @@ class AppSettingsController extends Controller
         }
 
         return back()->with('success', 'Test email sent to ' . $request->user()->email . '.');
+    }
+
+    public function sendTestSms(Request $request, SmsGatewayFactory $factory): RedirectResponse
+    {
+        abort_unless($request->user()?->hasPermission('settings.manage'), 403);
+
+        $validated = $request->validate([
+            'test_sms_phone' => ['required', 'string', 'max:20'],
+        ]);
+
+        $settings = AppSetting::current();
+
+        if (! $settings->canSendSms()) {
+            return back()->with('error', 'SMS provider credentials are incomplete. Save API key and sender ID first.');
+        }
+
+        $message = 'Test SMS from ' . config('app.name') . '. Your SMS gateway is configured correctly.';
+
+        if (! $factory->make($settings)->send($validated['test_sms_phone'], $message)) {
+            return back()->with('error', 'Failed to send test SMS. Check provider credentials and logs.');
+        }
+
+        return back()->with('success', 'Test SMS sent to ' . $validated['test_sms_phone'] . '.');
     }
 }

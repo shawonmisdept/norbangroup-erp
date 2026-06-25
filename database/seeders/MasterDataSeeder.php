@@ -12,10 +12,14 @@ use Database\Seeders\Masters\ColorSeeder;
 use Database\Seeders\Masters\CompanyCalendarSeeder;
 use Database\Seeders\Masters\CompositionSeeder;
 use Database\Seeders\Masters\DepartmentSeeder;
-use Database\Seeders\Masters\DesignationSeeder;
+use Database\Seeders\Masters\FactoryDesignationSeeder;
 use Database\Seeders\Masters\FabricCategorySeeder;
 use Database\Seeders\Masters\FabricationSeeder;
 use Database\Seeders\Masters\FabricTypeSeeder;
+use Database\Seeders\Hrm\DemoEmployeeSeeder;
+use Database\Seeders\Hrm\HrmMasterDataSeeder;
+use Database\Seeders\Hrm\SalaryIncrementSeeder;
+use Database\Seeders\Hrm\SalaryLegacySeeder;
 use Database\Seeders\Masters\FactorySeeder;
 use Database\Seeders\Masters\GarmentProductionStatusSeeder;
 use Database\Seeders\Masters\GsmSeeder;
@@ -49,9 +53,13 @@ class MasterDataSeeder extends Seeder
     {
         $this->call([
             FactorySeeder::class,
+            HrmMasterDataSeeder::class,
             DepartmentSeeder::class,
             CompanyCalendarSeeder::class,
-            DesignationSeeder::class,
+            FactoryDesignationSeeder::class,
+            SalaryLegacySeeder::class,
+            DemoEmployeeSeeder::class,
+            SalaryIncrementSeeder::class,
             BuyerSeeder::class,
             BrandSeeder::class,
             SeasonSeeder::class,

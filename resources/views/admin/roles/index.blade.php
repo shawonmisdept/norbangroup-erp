@@ -24,8 +24,8 @@
                     <h2 class="text-sm font-semibold text-gray-800">{{ $role->name }}</h2>
                     <p class="text-[11px] text-gray-400">{{ $role->users_count }} assigned user(s)</p>
                 </div>
-                <div class="flex gap-1">
-                    <a href="{{ route('admin.roles.edit', $role) }}" class="erp-btn-secondary !py-1 !px-2">Edit</a>
+                <div class="erp-table-actions">
+                    <a href="{{ route('admin.roles.edit', $role) }}" class="erp-btn-sm-primary">Edit</a>
                     @if(! $role->users_count)
                         <form method="POST" action="{{ route('admin.roles.destroy', $role) }}" class="inline"
                               onsubmit="return confirm('Delete this role?')">

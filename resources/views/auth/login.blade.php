@@ -79,7 +79,8 @@
             </div>
 
             <p class="text-center text-[11px] text-gray-400 mt-4">
-                <a href="{{ route('orders.create') }}" class="hover:text-brand">← Back to public requirement form</a>
+                <a href="{{ route('orders.create') }}" class="hover:text-brand block">← Back to public requirement form</a>
+                <a href="{{ route('employee.login') }}" class="hover:text-brand block mt-1">Employee portal sign in →</a>
             </p>
         </div>
     </div>

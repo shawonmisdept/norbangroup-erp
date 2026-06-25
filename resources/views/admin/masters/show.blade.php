@@ -1,11 +1,16 @@
+@php
+    $routePrefix = $routePrefix ?? 'admin.masters';
+    $hubLabel = $hubLabel ?? 'Master Data';
+    $masterNamespace = $masterNamespace ?? 'masters';
+@endphp
 @extends('layouts.admin')
 
 @section('title', $config['label'] . ' ' . $record->code)
 
 @section('breadcrumbs')
-    <a href="{{ route('admin.masters.hub') }}" class="hover:text-brand">Master Data</a>
+    <a href="{{ route("{$routePrefix}.hub") }}" class="hover:text-brand">{{ $hubLabel }}</a>
     <span>/</span>
-    <a href="{{ route('admin.masters.index', $module) }}" class="hover:text-brand">{{ $config['label_plural'] }}</a>
+    <a href="{{ route("{$routePrefix}.index", $module) }}" class="hover:text-brand">{{ $config['label_plural'] }}</a>
     <span>/</span>
     <span class="text-gray-800 font-medium">{{ $record->code }}</span>
 @endsection
@@ -41,15 +46,15 @@
                 <span><span class="text-gray-400">Created:</span> {{ $record->created_at->format('d M Y') }}</span>
             </div>
         </div>
-        @if(auth()->user()->canManageMaster($module))
+        @if(auth()->user()->canManageMasterModule($masterNamespace, $module))
             <div class="flex items-center gap-2 shrink-0">
-                <a href="{{ route('admin.masters.edit', [$module, $record]) }}" class="erp-btn-primary">
+                <a href="{{ route("{$routePrefix}.edit", [$module, $record]) }}" class="erp-btn-primary">
                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                     Edit
                 </a>
-                <form method="POST" action="{{ route('admin.masters.destroy', [$module, $record]) }}"
+                <form method="POST" action="{{ route("{$routePrefix}.destroy", [$module, $record]) }}"
                       onsubmit="return confirm('Delete this {{ strtolower($config['label']) }} permanently?')">
                     @csrf @method('DELETE')
                     <button type="submit" class="erp-btn-danger">
@@ -73,7 +78,7 @@
         </div>
         <div class="divide-y divide-gray-100">
             @foreach($config['fields'] as $field => $meta)
-                @if($meta['type'] === 'boolean') @continue @endif
+                @if($meta['type'] === 'boolean' && $field === 'is_active') @continue @endif
                 <div class="flex flex-col sm:flex-row px-5 py-3.5 hover:bg-gray-50/50 gap-1 sm:gap-0">
                     <dt class="sm:w-44 shrink-0 text-[11px] font-semibold text-gray-400 uppercase tracking-wide sm:pt-0.5">
                         {{ $meta['label'] }}
@@ -114,7 +119,13 @@
                             <p class="text-sm text-gray-600 leading-relaxed whitespace-pre-line">{{ $record->{$field} }}</p>
                         @elseif($field === 'email' && $record->{$field})
                             <a href="mailto:{{ $record->{$field} }}" class="text-brand hover:underline">{{ $record->{$field} }}</a>
-                        @elseif($field === 'phone' && $record->{$field})
+                        @elseif($meta['type'] === 'boolean')
+                            @if($record->{$field})
+                                <span class="text-xs font-semibold px-2 py-0.5 rounded-sm bg-blue-50 text-blue-700">Yes</span>
+                            @else
+                                <span class="text-xs text-gray-400">No</span>
+                            @endif
+                        @elseif($meta['type'] === 'time' && $record->{$field})
                             <span class="tabular-nums">{{ $record->{$field} }}</span>
                         @else
                             {{ $record->{$field} ?? '—' }}
@@ -186,11 +197,11 @@
 
         <div class="erp-panel">
             <div class="erp-panel-body space-y-2">
-                <a href="{{ route('admin.masters.index', $module) }}" class="erp-btn-secondary w-full justify-center !py-2">
+                <a href="{{ route("{$routePrefix}.index", $module) }}" class="erp-btn-secondary w-full justify-center !py-2">
                     ← Back to {{ $config['label_plural'] }}
                 </a>
-                @if(auth()->user()->canManageMaster($module))
-                    <a href="{{ route('admin.masters.edit', [$module, $record]) }}" class="erp-btn-primary w-full justify-center !py-2">
+                @if(auth()->user()->canManageMasterModule($masterNamespace, $module))
+                    <a href="{{ route("{$routePrefix}.edit", [$module, $record]) }}" class="erp-btn-primary w-full justify-center !py-2">
                         Edit Record
                     </a>
                 @endif

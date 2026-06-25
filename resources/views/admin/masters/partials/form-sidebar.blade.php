@@ -1,4 +1,7 @@
 @php
+    $routePrefix = $routePrefix ?? 'admin.masters';
+@endphp
+@php
     $isEdit = isset($record);
     $isActive = (bool) old('is_active', $isEdit ? $record->is_active : true);
 @endphp
@@ -54,11 +57,11 @@
                 {{ $isEdit ? 'Save Changes' : 'Create ' . $config['label'] }}
             </button>
             @if($isEdit)
-                <a href="{{ route('admin.masters.show', [$module, $record]) }}" class="erp-btn-secondary w-full justify-center !py-2">
+                <a href="{{ route("{$routePrefix}.show", [$module, $record]) }}" class="erp-btn-secondary w-full justify-center !py-2">
                     Cancel
                 </a>
             @else
-                <a href="{{ route('admin.masters.index', $module) }}" class="erp-btn-secondary w-full justify-center !py-2">
+                <a href="{{ route("{$routePrefix}.index", $module) }}" class="erp-btn-secondary w-full justify-center !py-2">
                     Cancel
                 </a>
             @endif
@@ -66,7 +69,7 @@
 
         @if($isEdit)
             <hr class="border-erp-border">
-            <a href="{{ route('admin.masters.show', [$module, $record]) }}"
+            <a href="{{ route("{$routePrefix}.show", [$module, $record]) }}"
                class="flex items-center gap-2 text-xs text-brand hover:underline">
                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" stroke-linecap="round" stroke-linejoin="round"/>

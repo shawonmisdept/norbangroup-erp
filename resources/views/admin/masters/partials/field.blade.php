@@ -62,6 +62,25 @@
            placeholder="{{ $meta['placeholder'] ?? '' }}">
     @error($field)<p class="text-xs text-red-500 mt-1">{{ $message }}</p>@enderror
 
+@elseif($meta['type'] === 'time')
+    <label class="erp-form-label">
+        {{ $meta['label'] }}
+        @if($meta['required'] ?? false)<span class="text-red-400">*</span>@endif
+    </label>
+    <input type="time" name="{{ $field }}" class="erp-input"
+           value="{{ old($field, isset($record) ? $record->{$field} : '') }}"
+           {{ ($meta['required'] ?? false) ? 'required' : '' }}>
+    @error($field)<p class="text-xs text-red-500 mt-1">{{ $message }}</p>@enderror
+
+@elseif($meta['type'] === 'boolean')
+    <label class="flex items-center gap-2 cursor-pointer">
+        <input type="hidden" name="{{ $field }}" value="0">
+        <input type="checkbox" name="{{ $field }}" value="1" class="rounded border-gray-300 text-brand focus:ring-brand"
+               {{ old($field, isset($record) ? $record->{$field} : ($meta['default'] ?? false)) ? 'checked' : '' }}>
+        <span class="text-sm text-gray-700">{{ $meta['label'] }}</span>
+    </label>
+    @error($field)<p class="text-xs text-red-500 mt-1">{{ $message }}</p>@enderror
+
 @else
     <label class="erp-form-label">
         {{ $meta['label'] }}

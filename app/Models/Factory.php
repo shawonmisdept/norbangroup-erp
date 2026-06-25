@@ -10,9 +10,15 @@ class Factory extends Model
 {
     use HasMasterCode;
 
-    protected $fillable = ['name', 'address', 'phone', 'is_active'];
+    protected $fillable = [
+        'name', 'address', 'phone', 'is_active',
+        'attendance_lat', 'attendance_lng', 'attendance_radius_m', 'mobile_checkin_enabled',
+    ];
 
-    protected $casts = ['is_active' => 'boolean'];
+    protected $casts = [
+        'is_active'              => 'boolean',
+        'mobile_checkin_enabled' => 'boolean',
+    ];
 
     public static function codePrefix(): string
     {
