@@ -46,7 +46,7 @@
                     <select name="department_id" class="erp-input !text-xs">
                         <option value="">—</option>
                         @foreach($departments as $dept)
-                            <option value="{{ $dept->id }}" {{ (string) old('department_id', $posting->department_id) === (string) $dept->id ? 'selected' : '' }}>{{ $dept->name }}</option>
+                            <option value="{{ $dept->id }}" {{ (string) old('department_id', $posting->department_id) === (string) $dept->id ? 'selected' : '' }}>{{ $dept->displayLabel() }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -55,7 +55,7 @@
                     <select name="designation_id" class="erp-input !text-xs">
                         <option value="">—</option>
                         @foreach($designations as $des)
-                            <option value="{{ $des->id }}" {{ (string) old('designation_id', $posting->designation_id) === (string) $des->id ? 'selected' : '' }}>{{ $des->name }}</option>
+                            <option value="{{ $des->id }}" {{ (string) old('designation_id', $posting->designation_id) === (string) $des->id ? 'selected' : '' }}>{{ $des->displayLabel() }}</option>
                         @endforeach
                     </select>
                 </div>

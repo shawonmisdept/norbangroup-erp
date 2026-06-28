@@ -144,8 +144,15 @@ class JobPostingController extends Controller
 
         return [
             'factories'        => $this->factoryOptions($request),
-            'departments'      => Department::where('is_active', true)->when($factoryId, fn ($q) => $q->where('factory_id', $factoryId))->orderBy('name')->get(),
-            'designations'     => Designation::where('is_active', true)->orderBy('name')->get(),
+            'departments'      => Department::where('is_active', true)
+                ->with('factory')
+                ->when($factoryId, fn ($q) => $q->where('factory_id', $factoryId))
+                ->orderBy('name')
+                ->get(),
+            'designations'     => Designation::where('is_active', true)
+                ->with('department.factory')
+                ->orderBy('name')
+                ->get(),
             'workerCategories' => WorkerCategory::where('is_active', true)->orderBy('name')->get(),
             'statuses'         => JobPosting::STATUSES,
             'defaultFactoryId' => $factoryId,

@@ -12,6 +12,7 @@ use Database\Seeders\Masters\ColorSeeder;
 use Database\Seeders\Masters\CompanyCalendarSeeder;
 use Database\Seeders\Masters\CompositionSeeder;
 use Database\Seeders\Masters\DepartmentSeeder;
+use Database\Seeders\Masters\FactoryDesignationSeeder;
 use Database\Seeders\Masters\UnitDepartmentsDesignationsSeeder;
 use Database\Seeders\Masters\FabricCategorySeeder;
 use Database\Seeders\Masters\FabricationSeeder;
@@ -58,6 +59,7 @@ class MasterDataSeeder extends Seeder
             HrmMasterDataSeeder::class,
             DepartmentSeeder::class,
             UnitDepartmentsDesignationsSeeder::class,
+            FactoryDesignationSeeder::class,
             CompanyCalendarSeeder::class,
             SalaryLegacySeeder::class,
             HeadOfficeEmployeeSeeder::class,

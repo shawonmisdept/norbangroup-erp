@@ -235,13 +235,27 @@ class PromotionController extends Controller
     /** @return array<int, string> */
     private function designationOptions(): array
     {
-        return Designation::query()->orderBy('name')->pluck('name', 'id')->all();
+        return Designation::query()
+            ->with('department.factory')
+            ->orderBy('name')
+            ->get()
+            ->mapWithKeys(fn (Designation $designation) => [
+                $designation->id => $designation->displayLabel(),
+            ])
+            ->all();
     }
 
     /** @return array<int, string> */
     private function departmentOptions(): array
     {
-        return Department::query()->orderBy('name')->pluck('name', 'id')->all();
+        return Department::query()
+            ->with('factory')
+            ->orderBy('name')
+            ->get()
+            ->mapWithKeys(fn (Department $department) => [
+                $department->id => $department->displayLabel(),
+            ])
+            ->all();
     }
 
     /** @return array<int, string> */

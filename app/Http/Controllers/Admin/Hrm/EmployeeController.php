@@ -399,7 +399,9 @@ class EmployeeController extends Controller
                 ->tap($scopeFactory)
                 ->orderBy('name')
                 ->get(['id', 'name', 'factory_id']),
-            'designations'     => $designationsQuery->get(['id', 'name', 'department_id']),
+            'designations'     => $designationsQuery
+                ->with('department.factory')
+                ->get(['id', 'name', 'department_id']),
             'buildings'        => Building::query()
                 ->with('factory')
                 ->where('is_active', true)
@@ -449,8 +451,29 @@ class EmployeeController extends Controller
         return [
             'employee'              => $employee,
             'factories'             => $this->factoryOptions($request),
-            'departments'           => Department::where('is_active', true)->tap($scopeOrgData)->orderBy('name')->get(['id', 'name', 'factory_id']),
-            'designations'          => Designation::where('is_active', true)->orderBy('name')->get(['id', 'name', 'department_id']),
+            'departments'           => Department::where('is_active', true)
+                ->with('factory')
+                ->tap($scopeOrgData)
+                ->orderBy('name')
+                ->get(['id', 'name', 'factory_id'])
+                ->map(fn (Department $department) => [
+                    'id'            => $department->id,
+                    'name'          => $department->name,
+                    'factory_id'    => $department->factory_id,
+                    'display_label' => $department->displayLabel(),
+                ])
+                ->values(),
+            'designations'          => Designation::where('is_active', true)
+                ->with('department.factory')
+                ->orderBy('name')
+                ->get(['id', 'name', 'department_id'])
+                ->map(fn (Designation $designation) => [
+                    'id'              => $designation->id,
+                    'name'            => $designation->name,
+                    'department_id'   => $designation->department_id,
+                    'display_label'   => $designation->displayLabel(),
+                ])
+                ->values(),
             'workerCategories'      => WorkerCategory::where('is_active', true)->orderBy('name')->get(['id', 'name']),
             'employmentTypes'       => EmploymentType::where('is_active', true)->orderBy('name')->get(['id', 'name']),
             'buildings'             => Building::where('is_active', true)->tap($scopeOrgData)->orderBy('name')->get(['id', 'name', 'factory_id']),

@@ -21,7 +21,7 @@
             <option value="">All</option>
             @foreach($departments as $department)
                 <option value="{{ $department->id }}" {{ (string) ($filters['department_id'] ?? '') === (string) $department->id ? 'selected' : '' }}>
-                    {{ \App\Support\RelationDisplay::label($department, 'name', 'factory.name') }}
+                    {{ $department->displayLabel() }}
                 </option>
             @endforeach
         </select>
@@ -34,7 +34,7 @@
             <option value="">All</option>
             @foreach($designations as $designation)
                 <option value="{{ $designation->id }}" {{ (string) ($filters['designation_id'] ?? '') === (string) $designation->id ? 'selected' : '' }}>
-                    {{ $designation->name }}
+                    {{ $designation->displayLabel() }}
                 </option>
             @endforeach
         </select>

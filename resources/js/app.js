@@ -355,6 +355,12 @@ Alpine.data('employeeForm', (config = {}) => {
                 return String(d.department_id) === String(this.departmentId);
             });
         },
+        departmentLabel(dept) {
+            return dept.display_label || dept.name || '';
+        },
+        designationLabel(des) {
+            return des.display_label || des.name || '';
+        },
         filteredBuildings() {
             if (! this.factoryId) {
                 return [];
@@ -483,12 +489,12 @@ Alpine.data('employeeForm', (config = {}) => {
         selectedDepartmentName() {
             const dept = this.departments.find((d) => String(d.id) === String(this.departmentId));
 
-            return dept?.name ?? '—';
+            return dept ? this.departmentLabel(dept) : '—';
         },
         selectedDesignationName() {
             const des = this.designations.find((d) => String(d.id) === String(this.designationId));
 
-            return des?.name ?? '—';
+            return des ? this.designationLabel(des) : '—';
         },
         selectedShiftName() {
             const shift = this.shifts.find((s) => String(s.id) === String(this.shiftId));

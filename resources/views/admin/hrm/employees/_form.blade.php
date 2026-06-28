@@ -242,21 +242,21 @@
                     </div>
                     <div>
                         <label class="erp-form-label">Department</label>
-                        <select class="erp-input !text-xs" x-model="departmentId" @change="designationId = ''; syncTomSelects()">
+                        <select class="erp-input !text-xs" x-model="departmentId" @change="onDepartmentChange()" data-dynamic-options="true">
                             <option value="">Choose one</option>
-                            @foreach($departments as $dept)
-                                <option value="{{ $dept->id }}">{{ $dept->name }}</option>
-                            @endforeach
+                            <template x-for="dept in filteredDepartments()" :key="dept.id">
+                                <option :value="dept.id" x-text="departmentLabel(dept)"></option>
+                            </template>
                         </select>
                         @error('department_id')<p class="text-xs text-red-500 mt-1">{{ $message }}</p>@enderror
                     </div>
                     <div>
                         <label class="erp-form-label">Designation</label>
-                        <select class="erp-input !text-xs" x-model="designationId" data-searchable="true">
+                        <select class="erp-input !text-xs" x-model="designationId" data-searchable="true" data-dynamic-options="true">
                             <option value="">Choose one</option>
-                            @foreach($designations as $des)
-                                <option value="{{ $des->id }}">{{ $des->name }}</option>
-                            @endforeach
+                            <template x-for="des in filteredDesignations()" :key="des.id">
+                                <option :value="des.id" x-text="designationLabel(des)"></option>
+                            </template>
                         </select>
                         @error('designation_id')<p class="text-xs text-red-500 mt-1">{{ $message }}</p>@enderror
                     </div>

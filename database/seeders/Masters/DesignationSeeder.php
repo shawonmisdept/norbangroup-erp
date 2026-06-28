@@ -25,12 +25,16 @@ class DesignationSeeder extends Seeder
         ];
 
         foreach ($records as $record) {
+            $departmentId = $record['department']
+                ? Department::where('name', $record['department'])->value('id')
+                : null;
+
             Designation::updateOrCreate(
-                ['name' => $record['name']],
                 [
-                    'department_id' => $record['department']
-                        ? Department::where('name', $record['department'])->value('id')
-                        : null,
+                    'name'          => $record['name'],
+                    'department_id' => $departmentId,
+                ],
+                [
                     'is_active' => true,
                 ]
             );

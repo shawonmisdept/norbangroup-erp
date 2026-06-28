@@ -35,7 +35,6 @@ class UnitDepartmentsDesignationsSeeder extends Seeder
         $departmentIds = Department::whereIn('factory_id', $factoryIds)->pluck('id');
 
         Designation::whereIn('department_id', $departmentIds)->delete();
-        Designation::whereNull('department_id')->delete();
         Department::whereIn('factory_id', $factoryIds)->delete();
 
         $departmentCount = 0;
@@ -67,11 +66,13 @@ class UnitDepartmentsDesignationsSeeder extends Seeder
 
         foreach ($data['designations'] as $designationRow) {
             Designation::updateOrCreate(
-                ['name' => $designationRow['name']],
                 [
-                    'native_name'   => $designationRow['native_name'] ?: null,
+                    'name'          => $designationRow['name'],
                     'department_id' => null,
-                    'is_active'     => true,
+                ],
+                [
+                    'native_name' => $designationRow['native_name'] ?: null,
+                    'is_active'   => true,
                 ]
             );
 

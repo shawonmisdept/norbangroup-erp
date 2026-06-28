@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Services\AppSettingsService;
 use App\Services\Sms\SmsGatewayFactory;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -25,6 +26,10 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Schema::defaultStringLength(191);
+
+        if ($this->app->environment('production') && str_starts_with((string) config('app.url'), 'https://')) {
+            URL::forceScheme('https');
+        }
 
         $this->app->make(AppSettingsService::class)->applyRuntimeConfig();
     }
