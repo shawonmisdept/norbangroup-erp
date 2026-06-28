@@ -48,8 +48,7 @@
                                 <a href="{{ route('admin.users.show', $user) }}" class="erp-btn-sm-secondary">View</a>
                                 <a href="{{ route('admin.users.edit', $user) }}" class="erp-btn-sm-primary">Edit</a>
                                 @if($user->id !== auth()->id())
-                                    <form method="POST" action="{{ route('admin.users.destroy', $user) }}" class="inline"
-                                          onsubmit="return confirm('Delete this user?')">
+                                    <form method="POST" action="{{ route('admin.users.destroy', $user) }}" class="inline" data-confirm="Delete this user?">
                                         @csrf @method('DELETE')
                                         <button type="submit" class="erp-btn-danger !py-1 !px-2">Del</button>
                                     </form>

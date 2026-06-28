@@ -54,8 +54,7 @@
                     </svg>
                     Edit
                 </a>
-                <form method="POST" action="{{ route("{$routePrefix}.destroy", [$module, $record]) }}"
-                      onsubmit="return confirm('Delete this {{ strtolower($config['label']) }} permanently?')">
+                <form method="POST" action="{{ route("{$routePrefix}.destroy", [$module, $record]) }}" data-confirm="Delete this {{ strtolower($config['label']) }} permanently?">
                     @csrf @method('DELETE')
                     <button type="submit" class="erp-btn-danger">
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -102,7 +101,11 @@
                             @if($record->{$relName})
                                 <span class="inline-flex items-center gap-1.5">
                                     <span class="w-1.5 h-1.5 rounded-full bg-brand"></span>
-                                    {{ $record->{$relName}?->{$meta['display'] ?? 'name'} }}
+                                    {{ \App\Support\RelationDisplay::label(
+                                        $record->{$relName},
+                                        $meta['display'] ?? 'name',
+                                        $meta['display_with'] ?? null
+                                    ) }}
                                 </span>
                             @else
                                 <span class="text-gray-400">—</span>

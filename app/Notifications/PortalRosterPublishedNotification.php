@@ -3,17 +3,14 @@
 namespace App\Notifications;
 
 use App\Models\Hrm\ShiftRoster;
+use App\Notifications\Concerns\DeliversEmployeeWebPush;
 use Illuminate\Notifications\Notification;
 
 class PortalRosterPublishedNotification extends Notification
 {
+    use DeliversEmployeeWebPush;
+
     public function __construct(public ShiftRoster $roster) {}
-
-    public function via(object $notifiable): array
-    {
-        return ['database'];
-    }
-
     public function toDatabase(object $notifiable): array
     {
         $this->roster->loadMissing('factory');

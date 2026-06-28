@@ -323,6 +323,29 @@ class EmployeeEnrollmentTest extends TestCase
             ->assertSee('Searchable Worker');
     }
 
+    public function test_employee_list_filters_by_status(): void
+    {
+        Employee::create([
+            'factory_id'    => $this->factory->id,
+            'employee_code' => $this->factory->code . '-00002',
+            'name'          => 'Probation Worker',
+            'status'        => 'probation',
+        ]);
+
+        Employee::create([
+            'factory_id'    => $this->factory->id,
+            'employee_code' => $this->factory->code . '-00003',
+            'name'          => 'Active Worker',
+            'status'        => 'active',
+        ]);
+
+        $this->actingAs($this->hrAdmin)
+            ->get(route('admin.hrm.employees.index', ['status' => 'probation']))
+            ->assertOk()
+            ->assertSee('Probation Worker')
+            ->assertDontSee('Active Worker');
+    }
+
     public function test_user_without_permission_cannot_access_employees(): void
     {
         $role = Role::create([

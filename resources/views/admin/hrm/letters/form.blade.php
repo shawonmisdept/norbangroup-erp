@@ -46,7 +46,10 @@
         </form>
 
         @if($selectedEmployeeId && $selectedTemplateId)
-            <form method="POST" action="{{ route('admin.hrm.letters.store') }}" class="erp-panel-body space-y-3">
+            <form method="POST" action="{{ route('admin.hrm.letters.store') }}" class="erp-panel-body space-y-3"
+                  data-confirm="Issue this letter to the employee?"
+                  data-confirm-variant="primary"
+                  data-confirm-ok="Yes, issue">
                 @csrf
                 <input type="hidden" name="employee_id" value="{{ $selectedEmployeeId }}">
                 <input type="hidden" name="template_id" value="{{ $selectedTemplateId }}">
@@ -54,7 +57,7 @@
                     <label class="erp-form-label">Internal Notes</label>
                     <textarea name="notes" rows="2" class="erp-input !text-xs" placeholder="Optional notes…">{{ old('notes') }}</textarea>
                 </div>
-                <button type="submit" class="erp-btn-primary w-full justify-center" onclick="return confirm('Issue this letter to the employee?')">Issue Letter</button>
+                <button type="submit" class="erp-btn-primary w-full justify-center">Issue Letter</button>
             </form>
         @endif
     </div>

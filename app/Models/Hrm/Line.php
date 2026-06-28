@@ -13,7 +13,7 @@ class Line extends Model
 
     protected $table = 'hrm_lines';
 
-    protected $fillable = ['factory_id', 'floor_id', 'name', 'description', 'is_active'];
+    protected $fillable = ['factory_id', 'floor_id', 'name', 'native_name', 'description', 'is_active'];
 
     protected $casts = ['is_active' => 'boolean'];
 

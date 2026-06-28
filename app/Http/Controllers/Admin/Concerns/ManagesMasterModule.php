@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin\Concerns;
 
 use App\Models\Item;
 use App\Services\MasterImageService;
+use App\Support\RelationDisplay;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
@@ -214,9 +216,33 @@ trait ManagesMasterModule
 
             $model = $meta['relation'];
             $display = $meta['display'] ?? 'name';
-            $query = $model::query()->orderBy($display);
+            $displayWith = $meta['display_with'] ?? null;
+            $query = $model::query();
+            $table = (new $model)->getTable();
+
+            if ($displayWith) {
+                $relationName = Str::before($displayWith, '.');
+                $query->with($relationName);
+
+                if ($relationName === 'factory' && $table === 'departments') {
+                    $query->join('factories', 'departments.factory_id', '=', 'factories.id')
+                        ->orderBy('factories.name')
+                        ->orderBy("{$table}.{$display}")
+                        ->select("{$table}.*");
+                } else {
+                    $query->orderBy($display);
+                }
+            } else {
+                $query->orderBy($display);
+            }
+
             $this->scopeRelationQuery($query, $model);
-            $options[$field] = $query->pluck($display, 'id');
+
+            $options[$field] = $displayWith
+                ? $query->get()->mapWithKeys(fn ($record) => [
+                    $record->id => RelationDisplay::label($record, $display, $displayWith),
+                ])
+                : $query->pluck($display, 'id');
         }
 
         return $options;

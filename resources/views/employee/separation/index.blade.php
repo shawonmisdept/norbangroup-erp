@@ -20,7 +20,10 @@
             @if($pending->reason)
                 <p class="mt-2 rounded-xl bg-gray-50 px-3 py-2 text-xs text-gray-600">{{ $pending->reason }}</p>
             @endif
-            <form method="POST" action="{{ route('employee.separation.cancel') }}" class="mt-3" onsubmit="return confirm('Cancel your separation request?')">
+            <form method="POST" action="{{ route('employee.separation.cancel') }}" class="mt-3"
+                  data-confirm="Cancel your separation request?"
+                  data-confirm-title="Cancel request"
+                  data-confirm-ok="Yes, cancel">
                 @csrf
                 @method('DELETE')
                 <button type="submit" class="emp-btn-secondary w-full !py-2.5 !text-xs !text-amber-800">Cancel Request</button>

@@ -5,9 +5,11 @@ namespace App\Models\Hrm;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use NotificationChannels\WebPush\HasPushSubscriptions;
 
 class EmployeePortalUser extends Authenticatable
 {
+    use HasPushSubscriptions;
     use Notifiable;
     protected $table = 'hrm_employee_portal_users';
 

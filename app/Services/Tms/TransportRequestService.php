@@ -1,0 +1,325 @@
+<?php
+
+namespace App\Services\Tms;
+
+use App\Models\Hrm\Employee;
+use App\Models\Tms\TmsDriver;
+use App\Models\Tms\TmsTransportRequest;
+use App\Models\Tms\TmsTransportRequestHistory;
+use App\Models\Tms\TmsTripLog;
+use App\Models\Tms\TmsVehicle;
+use App\Models\User;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;
+
+class TransportRequestService
+{
+    public function __construct(
+        private TmsNotificationService $notifications,
+    ) {}
+
+    public function submit(Employee $employee, array $data): TmsTransportRequest
+    {
+        if (! in_array($employee->status, ['active', 'probation'], true)) {
+            throw ValidationException::withMessages([
+                'employee' => 'Only active employees can submit transport requests.',
+            ]);
+        }
+
+        $request = TmsTransportRequest::create([
+            'factory_id'         => $employee->factory_id,
+            'employee_id'        => $employee->id,
+            'pickup_location'    => $data['pickup_location'],
+            'destination_id'     => $data['destination_id'] ?? null,
+            'destination_custom' => $data['destination_custom'] ?? null,
+            'pickup_at'          => $data['pickup_at'],
+            'purpose'            => $data['purpose'],
+            'passenger_count'    => $data['passenger_count'],
+            'status'             => 'pending',
+        ]);
+
+        $this->recordHistory($request, null, 'pending', employeeId: $employee->id, notes: 'Submitted');
+
+        $this->notifications->requestSubmitted($request);
+
+        return $request;
+    }
+
+    public function cancel(TmsTransportRequest $request, Employee $employee): TmsTransportRequest
+    {
+        if ($request->employee_id !== $employee->id) {
+            abort(403);
+        }
+
+        return match ($request->status) {
+            'pending'  => $this->cancelPending($request, $employee),
+            'approved' => $this->cancelApproved($request, $employee),
+            default    => throw ValidationException::withMessages([
+                'status' => 'This request can no longer be cancelled.',
+            ]),
+        };
+    }
+
+    private function cancelPending(TmsTransportRequest $request, Employee $employee): TmsTransportRequest
+    {
+        if ($request->status !== 'pending') {
+            throw ValidationException::withMessages([
+                'status' => 'Only pending requests can be cancelled.',
+            ]);
+        }
+
+        $request->update([
+            'status'       => 'cancelled',
+            'cancelled_at' => now(),
+        ]);
+
+        $this->recordHistory($request, 'pending', 'cancelled', employeeId: $employee->id);
+
+        $this->notifications->requestCancelled($request);
+
+        return $request->fresh();
+    }
+
+    private function cancelApproved(TmsTransportRequest $request, Employee $employee): TmsTransportRequest
+    {
+        $trip = $request->tripLog;
+
+        if (! $trip || $trip->trip_status !== 'not_started') {
+            throw ValidationException::withMessages([
+                'status' => 'Trip has already started. Contact transport admin to cancel.',
+            ]);
+        }
+
+        return DB::transaction(function () use ($request, $employee, $trip) {
+            $remaining = TmsTransportRequest::query()
+                ->where('trip_log_id', $trip->id)
+                ->where('id', '!=', $request->id)
+                ->where('status', 'approved')
+                ->get();
+
+            $request->update([
+                'status'       => 'cancelled',
+                'cancelled_at' => now(),
+                'trip_log_id'  => null,
+                'vehicle_id'   => null,
+                'driver_id'    => null,
+            ]);
+
+            $this->recordHistory(
+                $request,
+                'approved',
+                'cancelled',
+                employeeId: $employee->id,
+                notes: 'Cancelled by employee before trip start',
+            );
+
+            if ($remaining->isEmpty()) {
+                $trip->delete();
+            } else {
+                $trip->update([
+                    'total_passengers' => (int) $remaining->sum('passenger_count'),
+                ]);
+            }
+
+            $this->notifications->requestCancelled($request->fresh(['employee', 'driver.employee']));
+
+            return $request->fresh();
+        });
+    }
+
+    public function approve(TmsTransportRequest $request, User $user, ?int $vehicleId, int $driverId): TmsTripLog
+    {
+        return $this->mergeAndApprove([$request->id], $user, $driverId, $vehicleId);
+    }
+
+    /** @param  list<int>  $requestIds */
+    public function mergeAndApprove(array $requestIds, User $user, int $driverId, ?int $vehicleIdOverride = null): TmsTripLog
+    {
+        $requestIds = array_values(array_unique(array_map('intval', $requestIds)));
+
+        if ($requestIds === []) {
+            throw ValidationException::withMessages(['request_ids' => 'Select at least one request.']);
+        }
+
+        $requests = TmsTransportRequest::with(['employee', 'destination'])
+            ->whereIn('id', $requestIds)
+            ->get();
+
+        if ($requests->count() !== count($requestIds)) {
+            throw ValidationException::withMessages(['request_ids' => 'One or more requests were not found.']);
+        }
+
+        $this->assertMergeable($requests);
+
+        $driver = TmsDriver::with(['employee', 'defaultVehicle'])->findOrFail($driverId);
+        $vehicle = $this->resolveVehicle($driver, $vehicleIdOverride, $requests->first()->factory_id);
+        $totalPassengers = (int) $requests->sum('passenger_count');
+
+        $this->validateAssignment($requests->first(), $vehicle, $driver, $totalPassengers);
+
+        return DB::transaction(function () use ($requests, $user, $vehicle, $driver, $totalPassengers) {
+            $tripLog = TmsTripLog::create([
+                'transport_request_id' => $requests->first()->id,
+                'factory_id'           => $requests->first()->factory_id,
+                'vehicle_id'           => $vehicle->id,
+                'driver_id'            => $driver->id,
+                'total_passengers'     => $totalPassengers,
+                'trip_status'          => 'not_started',
+            ]);
+
+            foreach ($requests as $request) {
+                $request->update([
+                    'status'      => 'approved',
+                    'vehicle_id'  => $vehicle->id,
+                    'driver_id'   => $driver->id,
+                    'trip_log_id' => $tripLog->id,
+                    'approved_by' => $user->id,
+                    'approved_at' => now(),
+                ]);
+
+                $note = $requests->count() > 1
+                    ? 'Merged and approved (trip #' . $tripLog->id . ', ' . $totalPassengers . ' passengers)'
+                    : 'Approved and assigned';
+
+                $this->recordHistory($request, 'pending', 'approved', userId: $user->id, notes: $note);
+
+                $this->notifications->requestApproved($request->fresh(['employee', 'driver.employee', 'vehicle']));
+            }
+
+            return $tripLog->fresh(['vehicle', 'driver.employee', 'transportRequests.employee']);
+        });
+    }
+
+    public function reject(TmsTransportRequest $request, User $user, string $reason): TmsTransportRequest
+    {
+        if ($request->status !== 'pending') {
+            throw ValidationException::withMessages(['status' => 'Request is not pending.']);
+        }
+
+        $request->update([
+            'status'           => 'rejected',
+            'rejected_by'      => $user->id,
+            'rejected_at'      => now(),
+            'rejection_reason' => $reason,
+        ]);
+
+        $this->recordHistory($request, 'pending', 'rejected', userId: $user->id, notes: $reason);
+
+        $this->notifications->requestRejected($request->fresh('employee'));
+
+        return $request;
+    }
+
+    /** @param  Collection<int, TmsTransportRequest>  $requests */
+    private function assertMergeable(Collection $requests): void
+    {
+        if ($requests->contains(fn ($r) => $r->status !== 'pending')) {
+            throw ValidationException::withMessages(['request_ids' => 'All selected requests must be pending.']);
+        }
+
+        $factoryIds = $requests->pluck('factory_id')->unique();
+        if ($factoryIds->count() > 1) {
+            throw ValidationException::withMessages(['request_ids' => 'All requests must belong to the same unit.']);
+        }
+
+        $destinations = $requests->map(fn ($r) => $r->destination_id ?: 'custom:' . strtolower(trim($r->destination_custom ?? '')))->unique();
+        if ($destinations->count() > 1) {
+            throw ValidationException::withMessages(['request_ids' => 'All requests must share the same destination.']);
+        }
+
+        $dates = $requests->map(fn ($r) => $r->pickup_at?->toDateString())->unique();
+        if ($dates->count() > 1) {
+            throw ValidationException::withMessages(['request_ids' => 'All requests must be on the same date.']);
+        }
+    }
+
+    private function resolveVehicle(TmsDriver $driver, ?int $overrideId, int $factoryId): TmsVehicle
+    {
+        if ($overrideId) {
+            $vehicle = TmsVehicle::findOrFail($overrideId);
+        } elseif ($driver->default_vehicle_id) {
+            $vehicle = TmsVehicle::findOrFail($driver->default_vehicle_id);
+        } else {
+            throw ValidationException::withMessages([
+                'driver_id' => 'Driver has no default vehicle. Assign a vehicle to the driver or provide an override.',
+            ]);
+        }
+
+        if ($vehicle->factory_id !== $factoryId || $driver->factory_id !== $factoryId) {
+            throw ValidationException::withMessages(['vehicle_id' => 'Vehicle must belong to the same unit.']);
+        }
+
+        return $vehicle;
+    }
+
+    private function validateAssignment(
+        TmsTransportRequest $request,
+        TmsVehicle $vehicle,
+        TmsDriver $driver,
+        ?int $totalPassengers = null,
+    ): void {
+        $passengers = $totalPassengers ?? $request->passenger_count;
+
+        if ($vehicle->factory_id !== $request->factory_id || $driver->factory_id !== $request->factory_id) {
+            throw ValidationException::withMessages(['factory' => 'Vehicle and driver must belong to the same unit.']);
+        }
+
+        if (! $vehicle->isAvailable()) {
+            throw ValidationException::withMessages(['vehicle_id' => 'Selected vehicle is not available.']);
+        }
+
+        if ($passengers > $vehicle->passenger_capacity) {
+            throw ValidationException::withMessages([
+                'vehicle_id' => "Total passengers ({$passengers}) exceeds vehicle capacity ({$vehicle->passenger_capacity}). Select fewer requests or another driver/vehicle.",
+            ]);
+        }
+
+        if (! $driver->isActive()) {
+            throw ValidationException::withMessages(['driver_id' => 'Selected driver is inactive.']);
+        }
+
+        $employee = $driver->employee;
+        if (! $employee || ! in_array($employee->status, ['active', 'probation'], true)) {
+            throw ValidationException::withMessages(['driver_id' => 'Driver employee is not active.']);
+        }
+
+        if (TmsTripLog::where('driver_id', $driver->id)->where('trip_status', 'in_progress')->exists()) {
+            throw ValidationException::withMessages(['driver_id' => 'Driver already has an active trip.']);
+        }
+
+        if (TmsTripLog::where('vehicle_id', $vehicle->id)->where('trip_status', 'in_progress')->exists()) {
+            throw ValidationException::withMessages(['vehicle_id' => 'Vehicle already has an active trip.']);
+        }
+    }
+
+    public function recordStatusChange(
+        TmsTransportRequest $request,
+        ?string $from,
+        string $to,
+        ?int $userId = null,
+        ?int $employeeId = null,
+        ?string $notes = null,
+    ): void {
+        $this->recordHistory($request, $from, $to, $userId, $employeeId, $notes);
+    }
+
+    private function recordHistory(
+        TmsTransportRequest $request,
+        ?string $from,
+        string $to,
+        ?int $userId = null,
+        ?int $employeeId = null,
+        ?string $notes = null,
+    ): void {
+        TmsTransportRequestHistory::create([
+            'transport_request_id'   => $request->id,
+            'from_status'            => $from,
+            'to_status'              => $to,
+            'changed_by_user_id'     => $userId,
+            'changed_by_employee_id' => $employeeId,
+            'notes'                  => $notes,
+            'created_at'             => now(),
+        ]);
+    }
+}

@@ -6,6 +6,13 @@
     <meta name="theme-color" content="#1e3a5f">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="{{ config('portal.name') }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    @if(config('webpush.vapid.public_key'))
+        <meta name="vapid-public-key" content="{{ config('webpush.vapid.public_key') }}">
+    @endif
+    <link rel="manifest" href="{{ url('/manifest.webmanifest') }}">
+    <link rel="apple-touch-icon" href="{{ url('/pwa/icon-192.png') }}">
     <title>@yield('title', 'Employee Portal') — {{ config('portal.name') }}</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
@@ -41,6 +48,7 @@
             @endif
 
             <main class="emp-main">
+                @include('employee.partials.pwa-install-banner')
                 @if(session('success'))
                     <div class="emp-toast emp-toast-success">{{ session('success') }}</div>
                 @endif
@@ -64,5 +72,6 @@
     @endauth
 
     @stack('scripts')
+    @include('partials.confirm-dialog')
 </body>
 </html>

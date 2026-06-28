@@ -16,6 +16,7 @@ use App\Models\Hrm\LateAcceptanceApplication;
 use App\Models\Hrm\LeaveApplication;
 use App\Models\Hrm\LoanAccount;
 use App\Models\Hrm\PayrollItem;
+use App\Models\Hrm\PerformanceReview;
 use App\Models\Hrm\GatePass;
 use App\Models\Hrm\ProxyPunchFlag;
 use App\Models\Hrm\ShiftRoster;
@@ -48,6 +49,10 @@ use App\Notifications\PortalSeparationStatusNotification;
 use App\Notifications\PortalLoanRejectedNotification;
 use App\Notifications\PortalLoanSettledNotification;
 use App\Notifications\PortalPayslipReadyNotification;
+use App\Notifications\PerformanceReviewPendingHrNotification;
+use App\Notifications\PerformanceReviewPendingRatingNotification;
+use App\Notifications\PortalPerformanceReviewApprovedNotification;
+use App\Notifications\PortalPerformanceReviewRejectedNotification;
 use App\Notifications\PortalRosterPublishedNotification;
 use App\Notifications\PromotionApprovedNotification;
 use App\Notifications\PromotionPendingNotification;
@@ -134,7 +139,7 @@ class HrmNotificationService
 
         $manager = $application->employee?->reportingTo;
 
-        if ($manager?->portalUser) {
+        if ($settings->notify_popup_enabled && $settings->notify_popup_hrm_leave && $manager?->portalUser) {
             $this->notifyPortalUser(
                 $manager->portalUser,
                 new PortalLeaveApprovalRequiredNotification($application)
@@ -169,7 +174,7 @@ class HrmNotificationService
 
         $employee = $application->employee;
 
-        if ($employee?->portalUser) {
+        if ($settings->notify_popup_enabled && $settings->notify_popup_hrm_leave && $employee?->portalUser) {
             $this->notifyPortalUser(
                 $employee->portalUser,
                 new PortalLeaveStatusNotification($application, $statusLabel)
@@ -178,6 +183,66 @@ class HrmNotificationService
 
         if ($settings->notify_mail_hrm_leave && $employee?->email) {
             $this->sendMail($employee->email, new LeaveStatusMail($application, $statusLabel));
+        }
+    }
+
+    public function performanceReviewPendingRating(PerformanceReview $review): void
+    {
+        $settings = AppSetting::current();
+        $review->loadMissing(['employee.reportingTo.portalUser']);
+
+        if ($settings->notify_popup_enabled && $settings->notify_popup_hrm_performance) {
+            $this->notifyPermission(
+                'hrm.performance.rate',
+                new PerformanceReviewPendingRatingNotification($review),
+                $review->factory_id
+            );
+        }
+    }
+
+    public function performanceReviewPendingHr(PerformanceReview $review): void
+    {
+        $settings = AppSetting::current();
+        $review->loadMissing(['employee']);
+
+        if (! $settings->notify_popup_enabled || ! $settings->notify_popup_hrm_performance) {
+            return;
+        }
+
+        $this->notifyPermission(
+            'hrm.performance.approve',
+            new PerformanceReviewPendingHrNotification($review),
+            $review->factory_id
+        );
+    }
+
+    public function performanceReviewApproved(PerformanceReview $review): void
+    {
+        $settings = AppSetting::current();
+        $review->loadMissing(['employee.portalUser']);
+
+        $employee = $review->employee;
+
+        if ($settings->notify_popup_enabled && $settings->notify_popup_hrm_performance && $employee?->portalUser) {
+            $this->notifyPortalUser(
+                $employee->portalUser,
+                new PortalPerformanceReviewApprovedNotification($review)
+            );
+        }
+    }
+
+    public function performanceReviewRejected(PerformanceReview $review): void
+    {
+        $settings = AppSetting::current();
+        $review->loadMissing(['employee.portalUser']);
+
+        $employee = $review->employee;
+
+        if ($settings->notify_popup_enabled && $settings->notify_popup_hrm_performance && $employee?->portalUser) {
+            $this->notifyPortalUser(
+                $employee->portalUser,
+                new PortalPerformanceReviewRejectedNotification($review)
+            );
         }
     }
 
@@ -206,6 +271,12 @@ class HrmNotificationService
 
     public function payslipReady(PayrollItem $item): void
     {
+        $settings = AppSetting::current();
+
+        if (! $settings->notify_popup_enabled) {
+            return;
+        }
+
         $item->loadMissing(['employee.portalUser', 'period']);
         $portalUser = $item->employee?->portalUser;
 
@@ -216,6 +287,12 @@ class HrmNotificationService
 
     public function advanceDisbursed(LoanAccount $loan): void
     {
+        $settings = AppSetting::current();
+
+        if (! $settings->notify_popup_enabled) {
+            return;
+        }
+
         $loan->loadMissing(['employee.portalUser']);
 
         if ($loan->employee?->portalUser) {
@@ -228,6 +305,12 @@ class HrmNotificationService
 
     public function loanSettled(LoanAccount $loan, float $amount): void
     {
+        $settings = AppSetting::current();
+
+        if (! $settings->notify_popup_enabled) {
+            return;
+        }
+
         $loan->loadMissing(['employee.portalUser']);
 
         if ($loan->employee?->portalUser) {
@@ -240,6 +323,12 @@ class HrmNotificationService
 
     public function loanApplicationSubmitted(LoanAccount $loan): void
     {
+        $settings = AppSetting::current();
+
+        if (! $settings->notify_popup_enabled) {
+            return;
+        }
+
         $loan->loadMissing('employee');
 
         $this->notifyPermission(
@@ -268,6 +357,12 @@ class HrmNotificationService
 
     public function promotionPending(EmployeePromotion $promotion): void
     {
+        $settings = AppSetting::current();
+
+        if (! $settings->notify_popup_enabled) {
+            return;
+        }
+
         $promotion->loadMissing(['employee', 'toDesignation']);
 
         $this->notifyPermission(
@@ -279,38 +374,44 @@ class HrmNotificationService
 
     public function promotionApproved(EmployeePromotion $promotion): void
     {
+        $settings = AppSetting::current();
         $promotion->loadMissing(['employee.portalUser']);
 
-        if ($promotion->employee?->portalUser) {
+        if ($settings->notify_popup_enabled && $promotion->employee?->portalUser) {
             $this->notifyPortalUser(
                 $promotion->employee->portalUser,
                 new PortalPromotionStatusNotification($promotion, 'Approved')
             );
         }
 
-        $this->notifyPermission(
-            'hrm.employees.promotion.view',
-            new PromotionApprovedNotification($promotion),
-            $promotion->factory_id
-        );
+        if ($settings->notify_popup_enabled) {
+            $this->notifyPermission(
+                'hrm.employees.promotion.view',
+                new PromotionApprovedNotification($promotion),
+                $promotion->factory_id
+            );
+        }
     }
 
     public function promotionRejected(EmployeePromotion $promotion): void
     {
+        $settings = AppSetting::current();
         $promotion->loadMissing(['employee.portalUser']);
 
-        if ($promotion->employee?->portalUser) {
+        if ($settings->notify_popup_enabled && $promotion->employee?->portalUser) {
             $this->notifyPortalUser(
                 $promotion->employee->portalUser,
                 new PortalPromotionStatusNotification($promotion, 'Rejected')
             );
         }
 
-        $this->notifyPermission(
-            'hrm.employees.promotion.view',
-            new PromotionRejectedNotification($promotion),
-            $promotion->factory_id
-        );
+        if ($settings->notify_popup_enabled) {
+            $this->notifyPermission(
+                'hrm.employees.promotion.view',
+                new PromotionRejectedNotification($promotion),
+                $promotion->factory_id
+            );
+        }
     }
 
     public function gatePassPending(GatePass $gatePass): void
@@ -383,6 +484,12 @@ class HrmNotificationService
 
     public function loanRejected(LoanAccount $loan, ?string $reason = null): void
     {
+        $settings = AppSetting::current();
+
+        if (! $settings->notify_popup_enabled) {
+            return;
+        }
+
         $loan->loadMissing(['employee.portalUser']);
 
         if ($loan->employee?->portalUser) {
@@ -395,6 +502,12 @@ class HrmNotificationService
 
     public function rosterPublished(ShiftRoster $roster): void
     {
+        $settings = AppSetting::current();
+
+        if (! $settings->notify_popup_enabled) {
+            return;
+        }
+
         $roster->loadMissing(['entries.employee.portalUser']);
 
         $notified = [];
@@ -413,6 +526,10 @@ class HrmNotificationService
 
     public function finalSettlementApproved(FinalSettlement $settlement): void
     {
+        if (! AppSetting::current()->notify_popup_enabled) {
+            return;
+        }
+
         $settlement->loadMissing('employee');
 
         $this->notifyFinanceSettlementManagers(
@@ -423,6 +540,10 @@ class HrmNotificationService
 
     public function finalSettlementCalculated(FinalSettlement $settlement): void
     {
+        if (! AppSetting::current()->notify_popup_enabled) {
+            return;
+        }
+
         $settlement->loadMissing('employee');
 
         $this->notifyFinanceSettlementManagers(
@@ -433,6 +554,10 @@ class HrmNotificationService
 
     public function finalSettlementPending(Employee $employee): void
     {
+        if (! AppSetting::current()->notify_popup_enabled) {
+            return;
+        }
+
         if (FinalSettlement::query()->where('employee_id', $employee->id)->exists()) {
             return;
         }
@@ -445,6 +570,12 @@ class HrmNotificationService
 
     public function finalSettlementPaid(FinalSettlement $settlement): void
     {
+        $settings = AppSetting::current();
+
+        if (! $settings->notify_popup_enabled) {
+            return;
+        }
+
         $settlement->loadMissing(['employee.portalUser']);
 
         if ($settlement->employee?->portalUser) {
@@ -457,20 +588,23 @@ class HrmNotificationService
 
     public function separationSubmitted(EmployeeSeparation $separation): void
     {
+        $settings = AppSetting::current();
         $separation->loadMissing(['employee.reportingTo.portalUser']);
 
-        if ($separation->employee?->reportingTo?->portalUser) {
+        if ($settings->notify_popup_enabled && $separation->employee?->reportingTo?->portalUser) {
             $this->notifyPortalUser(
                 $separation->employee->reportingTo->portalUser,
                 new SeparationSubmittedNotification($separation)
             );
         }
 
-        $this->notifyPermission(
-            'hrm.employees.separation.view',
-            new SeparationSubmittedNotification($separation),
-            $separation->factory_id
-        );
+        if ($settings->notify_popup_enabled) {
+            $this->notifyPermission(
+                'hrm.employees.separation.view',
+                new SeparationSubmittedNotification($separation),
+                $separation->factory_id
+            );
+        }
     }
 
     public function recruitmentApplicationSubmitted(\App\Models\Hrm\RecruitmentApplication $application): void
@@ -490,6 +624,10 @@ class HrmNotificationService
 
     public function separationPendingHr(EmployeeSeparation $separation): void
     {
+        if (! AppSetting::current()->notify_popup_enabled) {
+            return;
+        }
+
         $this->notifyPermission(
             'hrm.employees.separation.approve',
             new SeparationPendingHrNotification($separation),
@@ -499,30 +637,42 @@ class HrmNotificationService
 
     public function separationApproved(EmployeeSeparation $separation): void
     {
+        $settings = AppSetting::current();
         $separation->loadMissing(['employee.portalUser']);
 
-        if ($separation->employee?->portalUser) {
+        if ($settings->notify_popup_enabled && $separation->employee?->portalUser) {
             $this->notifyPortalUser(
                 $separation->employee->portalUser,
                 new PortalSeparationStatusNotification($separation, 'Approved')
             );
         }
 
-        $this->notifyPermission(
-            'hrm.employees.separation.view',
-            new SeparationApprovedNotification($separation),
-            $separation->factory_id
-        );
+        if ($settings->notify_popup_enabled) {
+            $this->notifyPermission(
+                'hrm.employees.separation.view',
+                new SeparationApprovedNotification($separation),
+                $separation->factory_id
+            );
+        }
     }
 
     public function separationRejected(EmployeeSeparation $separation): void
     {
+        $settings = AppSetting::current();
         $separation->loadMissing(['employee.portalUser']);
 
-        if ($separation->employee?->portalUser) {
+        if ($settings->notify_popup_enabled && $separation->employee?->portalUser) {
             $this->notifyPortalUser(
                 $separation->employee->portalUser,
                 new PortalSeparationStatusNotification($separation, 'Rejected')
+            );
+        }
+
+        if ($settings->notify_popup_enabled) {
+            $this->notifyPermission(
+                'hrm.employees.separation.view',
+                new SeparationRejectedNotification($separation),
+                $separation->factory_id
             );
         }
     }

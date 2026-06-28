@@ -27,8 +27,7 @@
                 <div class="erp-table-actions">
                     <a href="{{ route('admin.roles.edit', $role) }}" class="erp-btn-sm-primary">Edit</a>
                     @if(! $role->users_count)
-                        <form method="POST" action="{{ route('admin.roles.destroy', $role) }}" class="inline"
-                              onsubmit="return confirm('Delete this role?')">
+                        <form method="POST" action="{{ route('admin.roles.destroy', $role) }}" class="inline" data-confirm="Delete this role?">
                             @csrf @method('DELETE')
                             <button type="submit" class="erp-btn-danger !py-1 !px-2">Del</button>
                         </form>

@@ -14,7 +14,7 @@ class Building extends Model
 
     protected $table = 'hrm_buildings';
 
-    protected $fillable = ['factory_id', 'name', 'description', 'is_active'];
+    protected $fillable = ['factory_id', 'name', 'native_name', 'description', 'is_active'];
 
     protected $casts = ['is_active' => 'boolean'];
 

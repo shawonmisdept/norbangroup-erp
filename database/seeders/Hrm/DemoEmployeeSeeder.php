@@ -46,9 +46,16 @@ class DemoEmployeeSeeder extends Seeder
                 ->where('name', $row['department'])
                 ->first();
 
-            $designation = $department
-                ? Designation::where('department_id', $department->id)->where('name', $row['designation'])->first()
-                : null;
+            $designation = Designation::query()
+                ->where('name', $row['designation'])
+                ->where(function ($query) use ($department) {
+                    $query->whereNull('department_id');
+
+                    if ($department) {
+                        $query->orWhere('department_id', $department->id);
+                    }
+                })
+                ->first();
 
             $workerCategory = WorkerCategory::where('name', $row['worker_category'])->where('is_active', true)->first();
             $employmentType = EmploymentType::where('name', $row['employment_type'])->where('is_active', true)->first();

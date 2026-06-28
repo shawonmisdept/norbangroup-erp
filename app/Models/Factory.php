@@ -11,7 +11,7 @@ class Factory extends Model
     use HasMasterCode;
 
     protected $fillable = [
-        'name', 'address', 'phone', 'is_active',
+        'name', 'native_name', 'address', 'phone', 'is_active',
         'attendance_lat', 'attendance_lng', 'attendance_radius_m', 'mobile_checkin_enabled',
     ];
 

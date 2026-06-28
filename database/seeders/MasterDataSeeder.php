@@ -12,11 +12,13 @@ use Database\Seeders\Masters\ColorSeeder;
 use Database\Seeders\Masters\CompanyCalendarSeeder;
 use Database\Seeders\Masters\CompositionSeeder;
 use Database\Seeders\Masters\DepartmentSeeder;
-use Database\Seeders\Masters\FactoryDesignationSeeder;
+use Database\Seeders\Masters\UnitDepartmentsDesignationsSeeder;
 use Database\Seeders\Masters\FabricCategorySeeder;
 use Database\Seeders\Masters\FabricationSeeder;
 use Database\Seeders\Masters\FabricTypeSeeder;
 use Database\Seeders\Hrm\DemoEmployeeSeeder;
+use Database\Seeders\Hrm\HeadOfficeEmployeeSeeder;
+use Database\Seeders\Hrm\DemoPerformanceSeeder;
 use Database\Seeders\Hrm\HrmMasterDataSeeder;
 use Database\Seeders\Hrm\SalaryIncrementSeeder;
 use Database\Seeders\Hrm\SalaryLegacySeeder;
@@ -55,10 +57,12 @@ class MasterDataSeeder extends Seeder
             FactorySeeder::class,
             HrmMasterDataSeeder::class,
             DepartmentSeeder::class,
+            UnitDepartmentsDesignationsSeeder::class,
             CompanyCalendarSeeder::class,
-            FactoryDesignationSeeder::class,
             SalaryLegacySeeder::class,
+            HeadOfficeEmployeeSeeder::class,
             DemoEmployeeSeeder::class,
+            DemoPerformanceSeeder::class,
             SalaryIncrementSeeder::class,
             BuyerSeeder::class,
             BrandSeeder::class,

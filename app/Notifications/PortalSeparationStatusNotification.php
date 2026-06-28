@@ -3,20 +3,17 @@
 namespace App\Notifications;
 
 use App\Models\Hrm\EmployeeSeparation;
+use App\Notifications\Concerns\DeliversEmployeeWebPush;
 use Illuminate\Notifications\Notification;
 
 class PortalSeparationStatusNotification extends Notification
 {
+    use DeliversEmployeeWebPush;
+
     public function __construct(
         public EmployeeSeparation $separation,
         public string $statusLabel,
     ) {}
-
-    public function via(object $notifiable): array
-    {
-        return ['database'];
-    }
-
     public function toArray(object $notifiable): array
     {
         return [

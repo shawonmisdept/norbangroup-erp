@@ -127,6 +127,25 @@ class EmployeeServiceHistoryService
         }
     }
 
+    public function recordPerformanceReview(Employee $employee, \App\Models\Hrm\PerformanceReview $review): void
+    {
+        $score = $review->overall_score !== null ? number_format((float) $review->overall_score, 1) . '%' : '—';
+
+        $this->write(
+            $employee,
+            'performance',
+            null,
+            null,
+            $score,
+            sprintf(
+                '%s review approved — overall score %s',
+                $review->cycleTypeLabel(),
+                $score
+            ),
+            $review->period_to->toDateString()
+        );
+    }
+
     private function write(
         Employee $employee,
         string $eventType,

@@ -33,8 +33,53 @@ class Role extends Model
             return in_array('masters.' . $matches[2], $permissions, true);
         }
 
-        if (preg_match('/^hrm\.([a-z0-9-]+)\.(view|manage)$/', $permission, $matches)) {
+        if (preg_match('/^hrm\.(hrm-[a-z0-9-]+)\.(view|manage)$/', $permission, $matches)) {
             return in_array('hrm.masters.' . $matches[2], $permissions, true);
+        }
+
+        if (preg_match('/^hrm\.finance\.([a-z-]+)\.(view|manage)$/', $permission, $matches)) {
+            return in_array('hrm.finance.' . $matches[2], $permissions, true);
+        }
+
+        if (preg_match('/^hrm\.compliance\.([a-z-]+)\.(view|manage)$/', $permission, $matches)) {
+            return in_array('hrm.compliance.' . $matches[2], $permissions, true);
+        }
+
+        if (preg_match('/^hrm\.employees\.(promotion|separation|letters|discipline)\.(view|manage)$/', $permission, $matches)) {
+            return in_array('hrm.employees.' . $matches[2], $permissions, true);
+        }
+
+        if ($permission === 'hrm.employees.promotion.approve' || $permission === 'hrm.employees.separation.approve') {
+            return in_array('hrm.employees.manage', $permissions, true);
+        }
+
+        if ($permission === 'hrm.performance.rate' || $permission === 'hrm.performance.approve') {
+            return in_array('hrm.performance.manage', $permissions, true);
+        }
+
+        if (preg_match('/^hrm\.performance\.(bonus|increment)\.(view|manage)$/', $permission, $matches)) {
+            return in_array('hrm.performance.' . $matches[2], $permissions, true);
+        }
+
+        if ($permission === 'hrm.dashboard.view') {
+            foreach (array_keys(config('hrm.modules', [])) as $module) {
+                if (in_array("hrm.{$module}.view", $permissions, true)) {
+                    return true;
+                }
+            }
+
+            $parentViews = [
+                'hrm.masters.view', 'hrm.employees.view', 'hrm.attendance.view', 'hrm.attendance.sync',
+                'hrm.leave.view', 'hrm.salary.view', 'hrm.payroll.view', 'hrm.compliance.view',
+                'hrm.finance.view', 'hrm.rmg.view', 'hrm.performance.view', 'hrm.performance.bonus.view',
+                'hrm.performance.increment.view', 'hrm.recruitment.postings.view', 'hrm.recruitment.applications.view',
+            ];
+
+            foreach ($parentViews as $parent) {
+                if (in_array($parent, $permissions, true)) {
+                    return true;
+                }
+            }
         }
 
         if (preg_match('/^hrm\.leave\.([a-z-]+)\.(view|manage)$/', $permission, $matches)) {
@@ -130,7 +175,8 @@ class Role extends Model
             config('hrm.permissions.compliance', []),
             config('hrm.permissions.finance', []),
             config('hrm.permissions.rmg', []),
-            config('hrm.permissions.payroll', [])
+            config('hrm.permissions.payroll', []),
+            config('hrm.permissions.performance', [])
         );
 
         foreach (config('hrm.leave_submodules', []) as $key => $sub) {
@@ -208,6 +254,44 @@ class Role extends Model
             }
             if ($items !== []) {
                 $groups['RMG — ' . $sub['label']] = $items;
+            }
+        }
+
+        foreach (config('hrm.performance_submodules', []) as $key => $sub) {
+            $items = [];
+            if (! empty($sub['permission'])) {
+                $items[$sub['permission']] = 'View ' . $sub['label'];
+            }
+            if (! empty($sub['manage'])) {
+                $items[$sub['manage']] = 'Manage ' . $sub['label'];
+            }
+            if ($items !== []) {
+                $groups['Performance — ' . $sub['label']] = $items;
+            }
+        }
+
+        $groups['TMS — All Modules'] = array_merge(
+            config('tms.permissions.global', []),
+            config('tms.permissions.settings', []),
+            config('tms.permissions.vehicles', []),
+            config('tms.permissions.drivers', []),
+            config('tms.permissions.requests', []),
+            config('tms.permissions.trips', []),
+            config('tms.permissions.fuel', []),
+            config('tms.permissions.reports', []),
+            config('tms.permissions.overtime', [])
+        );
+
+        foreach (config('tms.submodules', []) as $key => $sub) {
+            $items = [];
+            if (! empty($sub['permission'])) {
+                $items[$sub['permission']] = 'View ' . $sub['label'];
+            }
+            if (! empty($sub['manage'])) {
+                $items[$sub['manage']] = 'Manage ' . $sub['label'];
+            }
+            if ($items !== []) {
+                $groups['TMS — ' . $sub['label']] = $items;
             }
         }
 

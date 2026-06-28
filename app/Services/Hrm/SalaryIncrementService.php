@@ -133,8 +133,13 @@ class SalaryIncrementService
         return $structure->fresh();
     }
 
-    public function applyDirectGross(Employee $employee, float $newGross, User $user): SalaryStructure
-    {
+    public function applyDirectGross(
+        Employee $employee,
+        float $newGross,
+        User $user,
+        ?int $performanceReviewId = null,
+        ?int $performanceIncrementRunId = null,
+    ): SalaryStructure {
         $employee->loadMissing('salaryStructure.salaryGrade');
         $structure = $employee->salaryStructure;
 
@@ -167,13 +172,15 @@ class SalaryIncrementService
         $structure->save();
 
         SalaryIncrementLog::create([
-            'factory_id'               => $employee->factory_id,
-            'salary_increment_rule_id' => null,
-            'employee_id'              => $employee->id,
-            'previous_gross'           => $previousGross,
-            'new_gross'                => $newGross,
-            'applied_by'               => $user->id,
-            'applied_at'               => now(),
+            'factory_id'                   => $employee->factory_id,
+            'salary_increment_rule_id'     => null,
+            'employee_id'                  => $employee->id,
+            'performance_review_id'        => $performanceReviewId,
+            'performance_increment_run_id' => $performanceIncrementRunId,
+            'previous_gross'               => $previousGross,
+            'new_gross'                    => $newGross,
+            'applied_by'                   => $user->id,
+            'applied_at'                   => now(),
         ]);
 
         return $structure->fresh();

@@ -24,8 +24,12 @@
     @php
         $rel = $relationMeta['relation'];
         $display = $relationMeta['display'];
+        $relRecord = $record->{$rel};
+        $relLabel = $relRecord
+            ? \App\Support\RelationDisplay::label($relRecord, $display, $relationMeta['display_with'] ?? null)
+            : '—';
     @endphp
-    <span class="text-gray-700">{{ $record->{$rel}?->{$display} ?? '—' }}</span>
+    <span class="text-gray-700">{{ $relLabel !== '' ? $relLabel : '—' }}</span>
 @elseif($column === 'description' && $record->description)
     <span class="text-gray-600 text-xs line-clamp-2 max-w-xs">{{ $record->description }}</span>
 @elseif($column === 'is_night' || $column === 'is_paid' || $column === 'is_optional')

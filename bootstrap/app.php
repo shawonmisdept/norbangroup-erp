@@ -25,6 +25,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'hrm.master.permission' => \App\Http\Middleware\EnsureHrmMasterModulePermission::class,
             'hrm.master.any'        => \App\Http\Middleware\EnsureAnyHrmMasterViewPermission::class,
             'hrm.any'               => \App\Http\Middleware\EnsureAnyHrmViewPermission::class,
+            'tms.any'               => \App\Http\Middleware\EnsureAnyTmsViewPermission::class,
             'adms.push'             => \App\Http\Middleware\EnsureAdmsPushToken::class,
             'factory.scope'         => \App\Http\Middleware\EnsureUserFactoryScope::class,
         ]);

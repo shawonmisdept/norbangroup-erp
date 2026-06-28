@@ -51,10 +51,25 @@ class NotificationController extends Controller
             'hrm_leave_applied', 'hrm_leave_pending_hr' => route('admin.hrm.leave.transactions.index'),
             'hrm_daily_attendance'=> route('admin.hrm.attendance.reports.index'),
             'hrm_contract_expiry', 'hrm_probation_end', 'hrm_ot_limit' => route('admin.hrm.employees.index'),
+            'hrm_working_hours'   => route('admin.hrm.compliance.working-hours.index'),
+            'hrm_performance_pending_hr', 'hrm_performance_pending_rating' => route('admin.hrm.performance.reviews.index'),
+            'loan_application'    => route('admin.hrm.finance.loans.index'),
+            'final_settlement_approved', 'final_settlement_calculated', 'final_settlement_pending' => route('admin.hrm.finance.final-settlement.index'),
+            'separation_submitted', 'separation_pending_hr', 'separation_approved', 'separation_rejected' => route('admin.hrm.separations.index'),
+            'promotion_pending', 'promotion_approved', 'promotion_rejected' => route('admin.hrm.promotions.index'),
+            'recruitment_application' => route('admin.hrm.recruitment.applications.index'),
+            'gate_pass_pending'   => route('admin.hrm.rmg.gate-pass.index'),
+            'proxy_punch_flagged' => route('admin.hrm.rmg.proxy-punch.index'),
+            'worker_transfer_pending' => route('admin.hrm.rmg.worker-transfer.index'),
+            'manpower_variance'   => route('admin.hrm.rmg.manpower-planning.index'),
             'new_requirement', 'status_updated' => route('admin.requirements.index'),
-            default => $user?->hasAnyHrmViewPermission()
-                ? route('admin.hrm.dashboard')
-                : route('admin.profile.edit'),
+            'tms_request_submitted', 'tms_request_cancelled', 'tms_trip_started', 'tms_trip_completed' => route('admin.tms.requests.index'),
+            'tms_ot_pending' => route('admin.tms.trips.index'),
+            default => $user?->hasAnyTmsViewPermission()
+                ? route('admin.tms.dashboard')
+                : ($user?->hasAnyHrmViewPermission()
+                    ? route('admin.hrm.dashboard')
+                    : route('admin.profile.edit')),
         };
     }
 }

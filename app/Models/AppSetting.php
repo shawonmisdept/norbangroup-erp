@@ -24,7 +24,7 @@ class AppSetting extends Model
         'notify_popup_hrm_ot_limit', 'notify_mail_hrm_payslip',
         'notify_popup_hrm_recruitment', 'notify_mail_hrm_recruitment_candidate', 'notify_sms_hrm_recruitment',
         'notify_popup_hrm_worker_transfer', 'notify_popup_hrm_gate_pass', 'notify_popup_hrm_proxy_punch',
-        'notify_popup_hrm_manpower_variance',
+        'notify_popup_hrm_manpower_variance', 'notify_popup_hrm_performance',
         'recruitment_otp_enabled',
         'sms_provider', 'sms_api_key', 'sms_api_secret', 'sms_sender_id', 'sms_custom_url',
     ];
@@ -55,6 +55,7 @@ class AppSetting extends Model
         'notify_popup_hrm_gate_pass'       => 'boolean',
         'notify_popup_hrm_proxy_punch'     => 'boolean',
         'notify_popup_hrm_manpower_variance' => 'boolean',
+        'notify_popup_hrm_performance'       => 'boolean',
         'recruitment_otp_enabled'          => 'boolean',
     ];
 
@@ -121,6 +122,7 @@ class AppSetting extends Model
             'notify_popup_hrm_gate_pass'       => true,
             'notify_popup_hrm_proxy_punch'     => true,
             'notify_popup_hrm_manpower_variance' => true,
+            'notify_popup_hrm_performance'       => true,
             'recruitment_otp_enabled'          => true,
             'sms_provider'                     => 'log',
         ];

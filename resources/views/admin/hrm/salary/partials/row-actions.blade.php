@@ -14,8 +14,7 @@
         <a href="{{ $editRoute }}" class="erp-btn-sm-primary">Edit</a>
     @endif
     @if($canManage && $destroyRoute)
-        <form method="POST" action="{{ $destroyRoute }}" class="inline"
-              onsubmit="return confirm(@js($confirm))">
+        <form method="POST" action="{{ $destroyRoute }}" class="inline" data-confirm="{{ $confirm }}">
             @csrf
             @method('DELETE')
             <button type="submit" class="erp-btn-danger !py-1 !px-2 text-[11px]">Del</button>

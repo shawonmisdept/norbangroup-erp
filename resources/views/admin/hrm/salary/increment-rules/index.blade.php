@@ -38,7 +38,8 @@
                         @if(auth()->user()->canManageSalarySubmodule('increment-rules'))
                             <div class="erp-table-actions">
                                 <a href="{{ route('admin.hrm.salary.increment-rules.edit', $rule) }}" class="erp-btn-sm-primary">Edit</a>
-                                <form method="POST" action="{{ route('admin.hrm.salary.increment-rules.destroy', $rule) }}" class="inline" onsubmit="return confirm(@js('Delete rule "' . $rule->name . '"?'))">
+                                <form method="POST" action="{{ route('admin.hrm.salary.increment-rules.destroy', $rule) }}" class="inline"
+                                      data-confirm="Delete rule &quot;{{ $rule->name }}&quot;?">
                                     @csrf @method('DELETE')
                                     <button type="submit" class="erp-btn-danger !py-1 !px-2 text-[11px]">Del</button>
                                 </form>

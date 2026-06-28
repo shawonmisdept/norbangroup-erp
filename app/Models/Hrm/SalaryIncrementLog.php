@@ -14,6 +14,8 @@ class SalaryIncrementLog extends Model
         'factory_id',
         'salary_increment_rule_id',
         'employee_id',
+        'performance_review_id',
+        'performance_increment_run_id',
         'previous_gross',
         'new_gross',
         'applied_by',
@@ -34,6 +36,16 @@ class SalaryIncrementLog extends Model
     public function employee(): BelongsTo
     {
         return $this->belongsTo(Employee::class);
+    }
+
+    public function performanceReview(): BelongsTo
+    {
+        return $this->belongsTo(PerformanceReview::class, 'performance_review_id');
+    }
+
+    public function performanceIncrementRun(): BelongsTo
+    {
+        return $this->belongsTo(PerformanceIncrementRun::class, 'performance_increment_run_id');
     }
 
     public function appliedByUser(): BelongsTo

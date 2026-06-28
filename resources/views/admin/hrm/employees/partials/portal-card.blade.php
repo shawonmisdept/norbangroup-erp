@@ -46,8 +46,7 @@
                         <button type="submit" class="erp-btn-secondary !py-1.5 !px-3 text-xs">Reset Portal Password</button>
                     </form>
 
-                    <form method="POST" action="{{ route('admin.hrm.employees.portal.destroy', $employee) }}"
-                          onsubmit="return confirm('Disable portal access for this employee?')">
+                    <form method="POST" action="{{ route('admin.hrm.employees.portal.destroy', $employee) }}" data-confirm="Disable portal access for this employee?">
                         @csrf @method('DELETE')
                         <button type="submit" class="erp-btn-danger !py-1.5 !px-3 text-xs">Disable Portal Access</button>
                     </form>

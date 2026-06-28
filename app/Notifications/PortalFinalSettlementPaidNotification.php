@@ -3,17 +3,14 @@
 namespace App\Notifications;
 
 use App\Models\Hrm\FinalSettlement;
+use App\Notifications\Concerns\DeliversEmployeeWebPush;
 use Illuminate\Notifications\Notification;
 
 class PortalFinalSettlementPaidNotification extends Notification
 {
+    use DeliversEmployeeWebPush;
+
     public function __construct(public FinalSettlement $settlement) {}
-
-    public function via(object $notifiable): array
-    {
-        return ['database'];
-    }
-
     public function toDatabase(object $notifiable): array
     {
         return [

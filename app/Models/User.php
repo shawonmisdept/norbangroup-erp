@@ -113,7 +113,8 @@ class User extends Authenticatable
             || $this->hasAnySalaryViewPermission()
             || $this->hasAnyComplianceViewPermission()
             || $this->hasAnyFinanceViewPermission()
-            || $this->hasAnyRmgViewPermission();
+            || $this->hasAnyRmgViewPermission()
+            || $this->hasAnyPerformanceViewPermission();
     }
 
     public function canViewEmployeeSubmodule(string $key): bool
@@ -444,10 +445,123 @@ class User extends Authenticatable
         return false;
     }
 
+    public function canViewPerformanceSubmodule(string $key): bool
+    {
+        if ($this->hasPermission('hrm.performance.view')
+            || $this->hasPermission('hrm.performance.bonus.view')
+            || $this->hasPermission('hrm.performance.increment.view')) {
+            return true;
+        }
+
+        $sub = config("hrm.performance_submodules.{$key}");
+
+        if (! $sub) {
+            return false;
+        }
+
+        return $this->hasPermission($sub['permission'] ?? 'hrm.performance.view');
+    }
+
+    public function canManagePerformanceSubmodule(string $key): bool
+    {
+        if ($this->hasPermission('hrm.performance.manage')
+            || $this->hasPermission('hrm.performance.bonus.manage')
+            || $this->hasPermission('hrm.performance.increment.manage')) {
+            return true;
+        }
+
+        $sub = config("hrm.performance_submodules.{$key}");
+
+        if (! $sub) {
+            return false;
+        }
+
+        return $this->hasPermission($sub['manage'] ?? 'hrm.performance.manage');
+    }
+
+    public function hasAnyPerformanceViewPermission(): bool
+    {
+        if ($this->hasPermission('hrm.performance.view')
+            || $this->hasPermission('hrm.performance.bonus.view')
+            || $this->hasPermission('hrm.performance.increment.view')) {
+            return true;
+        }
+
+        foreach (array_keys(config('hrm.performance_submodules', [])) as $key) {
+            if ($this->canViewPerformanceSubmodule($key)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function canRatePerformance(): bool
+    {
+        return $this->hasPermission('hrm.performance.rate')
+            || $this->hasPermission('hrm.performance.manage');
+    }
+
+    public function canApprovePerformance(): bool
+    {
+        return $this->hasPermission('hrm.performance.approve')
+            || $this->hasPermission('hrm.performance.manage');
+    }
+
+    public function canViewTmsSubmodule(string $key): bool
+    {
+        $sub = config("tms.submodules.{$key}");
+
+        if (! $sub) {
+            return false;
+        }
+
+        if ($this->hasPermission($sub['permission'] ?? 'tms.dashboard.view')) {
+            return true;
+        }
+
+        if (! empty($sub['also']) && $this->hasPermission($sub['also'])) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function canManageTmsSubmodule(string $key): bool
+    {
+        $sub = config("tms.submodules.{$key}");
+
+        if (! $sub || empty($sub['manage'])) {
+            return false;
+        }
+
+        return $this->hasPermission($sub['manage']);
+    }
+
+    public function hasAnyTmsViewPermission(): bool
+    {
+        foreach (array_keys(config('tms.submodules', [])) as $key) {
+            if ($this->canViewTmsSubmodule($key)) {
+                return true;
+            }
+        }
+
+        foreach (config('tms.permissions', []) as $group) {
+            foreach (array_keys($group) as $perm) {
+                if ($this->hasPermission($perm)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
     public function canReceiveNotifications(): bool
     {
         return $this->hasPermission('orders.view')
             || $this->hasAnyHrmViewPermission()
+            || $this->hasAnyTmsViewPermission()
             || $this->unreadNotifications()->exists();
     }
 

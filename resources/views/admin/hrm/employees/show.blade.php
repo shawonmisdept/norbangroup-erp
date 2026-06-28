@@ -232,7 +232,10 @@
 
         @if(auth()->user()->hasPermission('hrm.employees.manage'))
             <a href="{{ route('admin.hrm.employees.edit', $employee) }}" class="erp-btn-primary w-full justify-center !py-2.5">Edit Employee</a>
-            <form method="POST" action="{{ route('admin.hrm.employees.destroy', $employee) }}" onsubmit="return confirm('Remove this employee record?')">
+            <form method="POST" action="{{ route('admin.hrm.employees.destroy', $employee) }}"
+                  data-confirm="Remove this employee record?"
+                  data-confirm-title="Remove employee"
+                  data-confirm-ok="Yes, remove">
                 @csrf @method('DELETE')
                 <button type="submit" class="erp-btn-danger w-full justify-center !py-2.5">Remove Record</button>
             </form>

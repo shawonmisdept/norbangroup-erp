@@ -1,0 +1,189 @@
+<?php
+
+return [
+    'permissions' => [
+        'global' => [
+            'tms.dashboard.view' => 'View TMS Dashboard',
+        ],
+        'settings' => [
+            'tms.settings.view'   => 'View TMS Settings',
+            'tms.settings.manage' => 'Manage TMS Settings',
+        ],
+        'vehicles' => [
+            'tms.vehicles.view'   => 'View Vehicles',
+            'tms.vehicles.manage' => 'Manage Vehicles',
+        ],
+        'drivers' => [
+            'tms.drivers.view'   => 'View Drivers',
+            'tms.drivers.manage' => 'Manage Drivers',
+        ],
+        'requests' => [
+            'tms.requests.view'    => 'View Transport Requests',
+            'tms.requests.approve' => 'Approve / Reject / Assign Requests',
+        ],
+        'trips' => [
+            'tms.trips.view' => 'View Trip Logs',
+        ],
+        'fuel' => [
+            'tms.fuel.view'   => 'View Fuel Logs',
+            'tms.fuel.manage' => 'Manage Fuel Logs',
+        ],
+        'reports' => [
+            'tms.reports.view' => 'View TMS Reports',
+        ],
+        'overtime' => [
+            'tms.overtime.manage' => 'Mark Driver OT Paid',
+        ],
+    ],
+
+    'submodules' => [
+        'dashboard' => [
+            'label'      => 'Dashboard',
+            'permission' => 'tms.dashboard.view',
+            'route'      => 'admin.tms.dashboard',
+            'icon'       => 'M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z',
+            'status'     => 'active',
+        ],
+        'settings' => [
+            'label'      => 'Settings',
+            'permission' => 'tms.settings.view',
+            'manage'     => 'tms.settings.manage',
+            'route'      => 'admin.tms.settings.index',
+            'icon'       => 'M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z M15 12a3 3 0 11-6 0 3 3 0 016 0z',
+            'status'     => 'active',
+        ],
+        'destinations' => [
+            'label'      => 'Destinations',
+            'permission' => 'tms.settings.view',
+            'manage'     => 'tms.settings.manage',
+            'route'      => 'admin.tms.destinations.index',
+            'icon'       => 'M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z',
+            'status'     => 'active',
+        ],
+        'vehicles' => [
+            'label'      => 'Vehicles',
+            'permission' => 'tms.vehicles.view',
+            'manage'     => 'tms.vehicles.manage',
+            'route'      => 'admin.tms.vehicles.index',
+            'icon'       => 'M8 7h8m-8 4h8m-4 8V7m8 4v9a1 1 0 01-1 1H5a1 1 0 01-1-1V7l2-4h14l2 4v9a1 1 0 01-1 1h-3',
+            'status'     => 'active',
+        ],
+        'drivers' => [
+            'label'      => 'Drivers',
+            'permission' => 'tms.drivers.view',
+            'manage'     => 'tms.drivers.manage',
+            'route'      => 'admin.tms.drivers.index',
+            'icon'       => 'M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z',
+            'status'     => 'active',
+        ],
+        'requests' => [
+            'label'      => 'Requests',
+            'permission' => 'tms.requests.view',
+            'also'       => 'tms.requests.approve',
+            'route'      => 'admin.tms.requests.index',
+            'icon'       => 'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2',
+            'status'     => 'active',
+        ],
+        'trips' => [
+            'label'      => 'Trips',
+            'permission' => 'tms.trips.view',
+            'route'      => 'admin.tms.trips.index',
+            'icon'       => 'M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7',
+            'status'     => 'active',
+        ],
+        'odometer' => [
+            'label'      => 'Daily KM',
+            'permission' => 'tms.trips.view',
+            'manage'     => 'tms.settings.manage',
+            'route'      => 'admin.tms.odometer.index',
+            'icon'       => 'M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z',
+            'status'     => 'active',
+        ],
+        'fuel' => [
+            'label'      => 'Fuel',
+            'permission' => 'tms.fuel.view',
+            'manage'     => 'tms.fuel.manage',
+            'route'      => 'admin.tms.fuel.index',
+            'icon'       => 'M13 10V3L4 14h7v7l9-11h-7z',
+            'status'     => 'active',
+        ],
+        'reports' => [
+            'label'      => 'Reports',
+            'permission' => 'tms.reports.view',
+            'route'      => 'admin.tms.reports.index',
+            'icon'       => 'M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z',
+            'status'     => 'active',
+        ],
+    ],
+
+    'nav_groups' => [
+        'Setup' => ['settings', 'destinations'],
+        'Fleet' => ['vehicles', 'drivers', 'odometer'],
+        'Operations' => ['requests', 'trips', 'fuel'],
+    ],
+
+    'request_statuses' => [
+        'pending'     => 'Pending',
+        'approved'    => 'Approved',
+        'rejected'    => 'Rejected',
+        'cancelled'   => 'Cancelled',
+        'in_progress' => 'In Progress',
+        'completed'   => 'Completed',
+    ],
+
+    'request_status_colors' => [
+        'pending'     => 'bg-amber-100 text-amber-800',
+        'approved'    => 'bg-blue-100 text-blue-800',
+        'rejected'    => 'bg-red-100 text-red-800',
+        'cancelled'   => 'bg-gray-100 text-gray-600',
+        'in_progress' => 'bg-sky-100 text-sky-800',
+        'completed'   => 'bg-green-100 text-green-800',
+    ],
+
+    'vehicle_types' => [
+        'own'    => 'Own',
+        'rental' => 'Rental',
+    ],
+
+    'vehicle_statuses' => [
+        'available'   => 'Available',
+        'on_trip'     => 'On Trip',
+        'maintenance' => 'Maintenance',
+    ],
+
+    'vehicle_status_colors' => [
+        'available'   => 'bg-green-100 text-green-800',
+        'on_trip'     => 'bg-sky-100 text-sky-800',
+        'maintenance' => 'bg-amber-100 text-amber-800',
+    ],
+
+    'fuel_types' => [
+        'gas'    => 'Gas',
+        'petrol' => 'Petrol',
+        'diesel' => 'Diesel',
+    ],
+
+    'fuel_paid_by' => [
+        'company'       => 'Company',
+        'rental_party'  => 'Rental Party',
+    ],
+
+    'ot_basis' => [
+        'global_office_time'  => 'Global Office End Time',
+        'employee_shift_end'  => 'Employee Shift End Time',
+    ],
+
+    'trip_statuses' => [
+        'not_started' => 'Not Started',
+        'in_progress' => 'In Progress',
+        'completed'   => 'Completed',
+    ],
+
+    'trip_status_colors' => [
+        'not_started' => 'bg-amber-100 text-amber-800',
+        'in_progress' => 'bg-sky-100 text-sky-800',
+        'completed'   => 'bg-green-100 text-green-800',
+    ],
+
+    'pickup_grace_minutes' => 0,
+];

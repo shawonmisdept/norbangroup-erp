@@ -68,6 +68,16 @@ return [
             'hrm.rmg.view'   => 'View RMG extras modules',
             'hrm.rmg.manage' => 'Manage RMG extras modules',
         ],
+        'performance' => [
+            'hrm.performance.view'    => 'View performance reviews & cycles',
+            'hrm.performance.manage'  => 'Manage cycles, templates & HR proxy rating',
+            'hrm.performance.rate'    => 'Submit performance ratings (reporting person)',
+            'hrm.performance.approve' => 'Approve performance reviews (HR)',
+            'hrm.performance.bonus.view'   => 'View performance bonus bands & runs',
+            'hrm.performance.bonus.manage' => 'Calculate & approve performance bonus runs',
+            'hrm.performance.increment.view'   => 'View performance increment bands & runs',
+            'hrm.performance.increment.manage' => 'Calculate & apply annual increments from reviews',
+        ],
         // Legacy alias — kept for backward compatibility in role checks
         'payroll' => [
             'hrm.payroll.view'    => 'View payroll (legacy — use Salary)',
@@ -261,6 +271,14 @@ TXT,
     |--------------------------------------------------------------------------
     */
     'employee_submodules' => [
+        'dashboard' => [
+            'label'       => 'Dashboard',
+            'description' => 'Headcount, joinings, pending exit & promotion stats',
+            'permission'  => 'hrm.employees.view',
+            'manage'      => 'hrm.employees.manage',
+            'route'       => 'admin.hrm.employee.dashboard',
+            'status'      => 'active',
+        ],
         'employees' => [
             'label'       => 'Employees',
             'description' => 'Enroll, edit profiles, ID cards & portal accounts',
@@ -341,6 +359,14 @@ TXT,
     |--------------------------------------------------------------------------
     */
     'leave_submodules' => [
+        'dashboard' => [
+            'label'       => 'Dashboard',
+            'description' => 'Pending approvals, pipeline & on-leave today',
+            'permission'  => 'hrm.leave.view',
+            'manage'      => 'hrm.leave.manage',
+            'route'       => 'admin.hrm.leave.dashboard',
+            'status'      => 'active',
+        ],
         'policies' => [
             'label'       => 'Leave Policies',
             'description' => 'Factory-wise entitlement per leave type',
@@ -415,10 +441,121 @@ TXT,
 
     /*
     |--------------------------------------------------------------------------
+    | Performance sub-modules
+    |--------------------------------------------------------------------------
+    */
+    'performance_submodules' => [
+        'dashboard' => [
+            'label'       => 'Dashboard',
+            'description' => 'Pending ratings, open cycles & bonus/increment runs',
+            'permission'  => 'hrm.performance.view',
+            'manage'      => 'hrm.performance.manage',
+            'route'       => 'admin.hrm.performance.dashboard',
+            'status'      => 'active',
+        ],
+        'cycles' => [
+            'label'       => 'Review Cycles',
+            'description' => 'Open probation, mid-year & annual review batches',
+            'permission'  => 'hrm.performance.view',
+            'manage'      => 'hrm.performance.manage',
+            'route'       => 'admin.hrm.performance.cycles.index',
+            'status'      => 'active',
+        ],
+        'templates' => [
+            'label'       => 'Score Templates',
+            'description' => 'Hybrid criteria & weight configuration',
+            'permission'  => 'hrm.performance.view',
+            'manage'      => 'hrm.performance.manage',
+            'route'       => 'admin.hrm.performance.templates.index',
+            'status'      => 'active',
+        ],
+        'reviews' => [
+            'label'       => 'Reviews',
+            'description' => 'Rate, approve & track employee performance',
+            'permission'  => 'hrm.performance.view',
+            'manage'      => 'hrm.performance.rate',
+            'route'       => 'admin.hrm.performance.reviews.index',
+            'status'      => 'active',
+        ],
+        'bonus-bands' => [
+            'label'       => 'Bonus Bands',
+            'description' => 'Score-to-bonus % mapping per factory',
+            'permission'  => 'hrm.performance.bonus.view',
+            'manage'      => 'hrm.performance.bonus.manage',
+            'route'       => 'admin.hrm.performance.bonus-bands.index',
+            'status'      => 'active',
+        ],
+        'bonus-runs' => [
+            'label'       => 'Performance Bonus',
+            'description' => 'Mid-year bonus runs from approved reviews',
+            'permission'  => 'hrm.performance.bonus.view',
+            'manage'      => 'hrm.performance.bonus.manage',
+            'route'       => 'admin.hrm.performance.bonus-runs.index',
+            'status'      => 'active',
+        ],
+        'increment-bands' => [
+            'label'       => 'Increment Bands',
+            'description' => 'Score-to-increment % for annual salary revision',
+            'permission'  => 'hrm.performance.increment.view',
+            'manage'      => 'hrm.performance.increment.manage',
+            'route'       => 'admin.hrm.performance.increment-bands.index',
+            'status'      => 'active',
+        ],
+        'increment-runs' => [
+            'label'       => 'Annual Increment',
+            'description' => 'Apply salary increments from annual reviews',
+            'permission'  => 'hrm.performance.increment.view',
+            'manage'      => 'hrm.performance.increment.manage',
+            'route'       => 'admin.hrm.performance.increment-runs.index',
+            'status'      => 'active',
+        ],
+    ],
+
+    'performance' => [
+        'minimum_pass_score' => 60,
+        'late_day_penalty'   => 5,
+        'discipline_penalties' => [
+            'verbal_warning'  => 5,
+            'written_warning' => 10,
+            'show_cause'      => 15,
+            'suspension'      => 30,
+        ],
+        'default_criteria' => [
+            ['code' => 'attendance', 'label' => 'Attendance', 'criterion_type' => 'auto', 'weight' => 25, 'sort_order' => 1],
+            ['code' => 'punctuality', 'label' => 'Punctuality', 'criterion_type' => 'auto', 'weight' => 15, 'sort_order' => 2],
+            ['code' => 'discipline', 'label' => 'Discipline', 'criterion_type' => 'auto', 'weight' => 10, 'sort_order' => 3],
+            ['code' => 'work_quality', 'label' => 'Work Quality', 'criterion_type' => 'manual', 'weight' => 30, 'sort_order' => 4],
+            ['code' => 'behaviour', 'label' => 'Behaviour & Teamwork', 'criterion_type' => 'manual', 'weight' => 20, 'sort_order' => 5],
+        ],
+        'bonus_base_default' => 'gross',
+        'default_bonus_bands' => [
+            ['name' => 'Outstanding', 'min_score' => 90, 'max_score' => 100, 'bonus_percent' => 100, 'sort_order' => 1],
+            ['name' => 'Good', 'min_score' => 75, 'max_score' => 89.99, 'bonus_percent' => 75, 'sort_order' => 2],
+            ['name' => 'Average', 'min_score' => 60, 'max_score' => 74.99, 'bonus_percent' => 50, 'sort_order' => 3],
+            ['name' => 'Poor', 'min_score' => 0, 'max_score' => 59.99, 'bonus_percent' => 0, 'sort_order' => 4],
+        ],
+        'default_increment_bands' => [
+            ['name' => 'Outstanding', 'min_score' => 90, 'max_score' => 100, 'increment_percent' => 10, 'sort_order' => 1],
+            ['name' => 'Good', 'min_score' => 75, 'max_score' => 89.99, 'increment_percent' => 7, 'sort_order' => 2],
+            ['name' => 'Average', 'min_score' => 60, 'max_score' => 74.99, 'increment_percent' => 5, 'sort_order' => 3],
+            ['name' => 'Poor', 'min_score' => 0, 'max_score' => 59.99, 'increment_percent' => 0, 'sort_order' => 4],
+        ],
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Compliance sub-modules (Bangladesh labour law)
     |--------------------------------------------------------------------------
     */
     'compliance_submodules' => [
+        'dashboard' => [
+            'label'       => 'Dashboard',
+            'description' => 'Festival bonus runs & gratuity settlement overview',
+            'permission'  => 'hrm.compliance.view',
+            'manage'      => 'hrm.compliance.manage',
+            'route'       => 'admin.hrm.compliance.dashboard',
+            'status'      => 'active',
+        ],
         'registers' => [
             'label'       => 'Statutory Registers',
             'description' => 'Attendance, wage, leave & OT registers (BD format CSV)',
@@ -472,6 +609,14 @@ TXT,
     |--------------------------------------------------------------------------
     */
     'finance_submodules' => [
+        'dashboard' => [
+            'label'       => 'Dashboard',
+            'description' => 'Loans, TDS, PF & final settlement snapshot',
+            'permission'  => 'hrm.finance.view',
+            'manage'      => 'hrm.finance.manage',
+            'route'       => 'admin.hrm.finance.dashboard',
+            'status'      => 'active',
+        ],
         'tax' => [
             'label'       => 'Income Tax (TDS)',
             'description' => 'Assessment year slabs & employee TDS ledger',
@@ -533,6 +678,14 @@ TXT,
     |--------------------------------------------------------------------------
     */
     'rmg_submodules' => [
+        'dashboard' => [
+            'label'       => 'Dashboard',
+            'description' => 'Gate pass, transfers & proxy punch flags',
+            'permission'  => 'hrm.rmg.view',
+            'manage'      => 'hrm.rmg.manage',
+            'route'       => 'admin.hrm.rmg.dashboard',
+            'status'      => 'active',
+        ],
         'worker-transfer' => [
             'label'       => 'Worker Transfer',
             'description' => 'Cross-line or cross-unit employee transfers with approval',
@@ -673,6 +826,14 @@ TXT,
     |--------------------------------------------------------------------------
     */
     'attendance_submodules' => [
+        'dashboard' => [
+            'label'       => 'Dashboard',
+            'description' => 'Today\'s attendance, late acceptance & open periods',
+            'permission'  => 'hrm.attendance.view',
+            'manage'      => 'hrm.attendance.manage',
+            'route'       => 'admin.hrm.attendance.dashboard',
+            'status'      => 'active',
+        ],
         'sync' => [
             'label'       => 'Device Sync',
             'description' => 'ZKTeco ADMS sync, process today, device status',
@@ -778,6 +939,14 @@ TXT,
     |--------------------------------------------------------------------------
     */
     'salary_submodules' => [
+        'dashboard' => [
+            'label'       => 'Dashboard',
+            'description' => 'Salary setup coverage & payroll period status',
+            'permission'  => 'hrm.salary.view',
+            'manage'      => 'hrm.salary.manage',
+            'route'       => 'admin.hrm.salary.dashboard',
+            'status'      => 'active',
+        ],
         'heads' => [
             'label'       => 'Head',
             'description' => 'Salary components (Basic, HRA, deductions)',
@@ -883,11 +1052,12 @@ TXT,
             'fields' => [
                 'factory_id'  => ['type' => 'relation', 'label' => 'Factory / Unit', 'required' => true, 'relation' => Factory::class, 'display' => 'name'],
                 'name'        => ['type' => 'text', 'label' => 'Building Name', 'required' => true],
+                'native_name' => ['type' => 'text', 'label' => 'Native Name', 'placeholder' => 'বাংলা নাম'],
                 'description' => ['type' => 'textarea', 'label' => 'Description'],
                 'is_active'   => ['type' => 'boolean', 'label' => 'Active', 'default' => true],
             ],
-            'columns' => ['code', 'name', 'factory_id', 'is_active'],
-            'search'  => ['name', 'code'],
+            'columns' => ['code', 'name', 'native_name', 'factory_id', 'is_active'],
+            'search'  => ['name', 'native_name', 'code'],
         ],
 
         'hrm-floors' => [
@@ -899,12 +1069,13 @@ TXT,
                 'factory_id'   => ['type' => 'relation', 'label' => 'Factory / Unit', 'required' => true, 'relation' => Factory::class, 'display' => 'name'],
                 'building_id'  => ['type' => 'relation', 'label' => 'Building', 'required' => true, 'relation' => Building::class, 'display' => 'name'],
                 'name'         => ['type' => 'text', 'label' => 'Floor Name', 'required' => true],
+                'native_name'  => ['type' => 'text', 'label' => 'Native Name', 'placeholder' => 'বাংলা নাম'],
                 'floor_number' => ['type' => 'number', 'label' => 'Floor Number', 'min' => 0],
                 'description'  => ['type' => 'textarea', 'label' => 'Description'],
                 'is_active'    => ['type' => 'boolean', 'label' => 'Active', 'default' => true],
             ],
-            'columns' => ['code', 'name', 'building_id', 'floor_number', 'factory_id', 'is_active'],
-            'search'  => ['name', 'code'],
+            'columns' => ['code', 'name', 'native_name', 'building_id', 'floor_number', 'factory_id', 'is_active'],
+            'search'  => ['name', 'native_name', 'code'],
         ],
 
         'hrm-lines' => [
@@ -916,11 +1087,12 @@ TXT,
                 'factory_id'  => ['type' => 'relation', 'label' => 'Factory / Unit', 'required' => true, 'relation' => Factory::class, 'display' => 'name'],
                 'floor_id'    => ['type' => 'relation', 'label' => 'Floor', 'required' => true, 'relation' => Floor::class, 'display' => 'name'],
                 'name'        => ['type' => 'text', 'label' => 'Line Name', 'required' => true],
+                'native_name' => ['type' => 'text', 'label' => 'Native Name', 'placeholder' => 'বাংলা নাম'],
                 'description' => ['type' => 'textarea', 'label' => 'Description'],
                 'is_active'   => ['type' => 'boolean', 'label' => 'Active', 'default' => true],
             ],
-            'columns' => ['code', 'name', 'floor_id', 'factory_id', 'is_active'],
-            'search'  => ['name', 'code'],
+            'columns' => ['code', 'name', 'native_name', 'floor_id', 'factory_id', 'is_active'],
+            'search'  => ['name', 'native_name', 'code'],
         ],
 
         'hrm-shifts' => [
@@ -966,12 +1138,13 @@ TXT,
             'model'        => WorkerCategory::class,
             'fields' => [
                 'name'          => ['type' => 'text', 'label' => 'Category Name', 'required' => true, 'placeholder' => 'e.g. Operator, Helper, QC'],
+                'native_name'   => ['type' => 'text', 'label' => 'Native Name', 'placeholder' => 'বাংলা নাম'],
                 'minimum_wage'  => ['type' => 'number', 'label' => 'Minimum Wage (Daily)', 'min' => 0, 'step' => 0.01, 'placeholder' => 'BD wage board minimum'],
                 'description'   => ['type' => 'textarea', 'label' => 'Description'],
                 'is_active'     => ['type' => 'boolean', 'label' => 'Active', 'default' => true],
             ],
-            'columns' => ['code', 'name', 'minimum_wage', 'is_active'],
-            'search'  => ['name', 'code'],
+            'columns' => ['code', 'name', 'native_name', 'minimum_wage', 'is_active'],
+            'search'  => ['name', 'native_name', 'code'],
         ],
 
         'hrm-employment-types' => [
@@ -993,13 +1166,14 @@ TXT,
             'model'        => LeaveType::class,
             'fields' => [
                 'name'               => ['type' => 'text', 'label' => 'Leave Name', 'required' => true, 'placeholder' => 'e.g. Casual, Sick, Maternity'],
+                'native_name'        => ['type' => 'text', 'label' => 'Native Name', 'placeholder' => 'বাংলা নাম'],
                 'is_paid'            => ['type' => 'boolean', 'label' => 'Paid Leave', 'default' => true],
                 'max_days_per_year'  => ['type' => 'number', 'label' => 'Max Days / Year', 'min' => 0],
                 'description'        => ['type' => 'textarea', 'label' => 'Description'],
                 'is_active'          => ['type' => 'boolean', 'label' => 'Active', 'default' => true],
             ],
-            'columns' => ['code', 'name', 'is_paid', 'max_days_per_year', 'is_active'],
-            'search'  => ['name', 'code'],
+            'columns' => ['code', 'name', 'native_name', 'is_paid', 'max_days_per_year', 'is_active'],
+            'search'  => ['name', 'native_name', 'code'],
         ],
 
         'hrm-biometric-devices' => [

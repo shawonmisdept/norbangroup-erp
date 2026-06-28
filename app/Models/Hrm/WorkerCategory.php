@@ -11,7 +11,7 @@ class WorkerCategory extends Model
 
     protected $table = 'hrm_worker_categories';
 
-    protected $fillable = ['name', 'description', 'minimum_wage', 'is_active'];
+    protected $fillable = ['name', 'native_name', 'description', 'minimum_wage', 'is_active'];
 
     protected $casts = [
         'is_active'     => 'boolean',

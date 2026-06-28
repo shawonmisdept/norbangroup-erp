@@ -11,6 +11,11 @@ class FactorySeeder extends Seeder
     {
         $records = [
             [
+                'name'    => 'Head Office',
+                'address' => 'Dhaka, Bangladesh',
+                'phone'   => '01711111100',
+            ],
+            [
                 'name'    => 'Norban Comtex Limited',
                 'address' => 'Narayanganj, Bangladesh',
                 'phone'   => '01711111101',

@@ -213,10 +213,13 @@
             @endif
             <div class="erp-panel">
                 <div class="erp-panel-head"><h2 class="text-xs font-semibold text-gray-700 uppercase">HR Approval</h2></div>
-                <form method="POST" action="{{ route('admin.hrm.separations.approve', $separation) }}" class="erp-panel-body space-y-3">
+                <form method="POST" action="{{ route('admin.hrm.separations.approve', $separation) }}" class="erp-panel-body space-y-3"
+                      data-confirm="Approve separation? Employee status will be updated."
+                      data-confirm-variant="primary"
+                      data-confirm-ok="Yes, approve">
                     @csrf
                     <textarea name="notes" rows="2" class="erp-input !text-xs" placeholder="Approval notes (optional)"></textarea>
-                    <button type="submit" class="erp-btn-primary w-full justify-center" onclick="return confirm('Approve separation? Employee status will be updated.')" {{ ! $separation->exitClearanceComplete() ? 'disabled' : '' }}>Approve Separation</button>
+                    <button type="submit" class="erp-btn-primary w-full justify-center" {{ ! $separation->exitClearanceComplete() ? 'disabled' : '' }}>Approve Separation</button>
                 </form>
             </div>
             <div class="erp-panel">
@@ -230,7 +233,7 @@
         @endif
 
         @if($separation->isPending() && $canManage)
-            <form method="POST" action="{{ route('admin.hrm.separations.cancel', $separation) }}" onsubmit="return confirm('Cancel this separation request?')">
+            <form method="POST" action="{{ route('admin.hrm.separations.cancel', $separation) }}" data-confirm="Cancel this separation request?">
                 @csrf
                 @method('DELETE')
                 <button type="submit" class="erp-btn-secondary w-full justify-center !text-amber-700">Cancel Request</button>

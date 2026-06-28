@@ -152,8 +152,7 @@
                                 'viewUrl' => route('admin.hrm.attendance.periods.show', $period),
                             ])
                             @if(auth()->user()->hasPermission('hrm.attendance.manage') && ! $period->isFrozen())
-                                <form method="POST" action="{{ route('admin.hrm.attendance.periods.freeze', $period) }}" class="inline"
-                                      onsubmit="return confirm('Freeze {{ $period->periodLabel() }}? This cannot be undone.')">
+                                <form method="POST" action="{{ route('admin.hrm.attendance.periods.freeze', $period) }}" class="inline" data-confirm="Freeze {{ $period->periodLabel() }}? This cannot be undone.">
                                     @csrf
                                     <button type="submit" class="erp-btn-primary !py-1 !px-2 text-xs">Freeze</button>
                                 </form>

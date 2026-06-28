@@ -61,7 +61,8 @@ return [
             'label_plural' => 'Factories',
             'model'        => Factory::class,
             'fields' => [
-                'name'      => ['type' => 'text', 'label' => 'Name', 'required' => true],
+                'name'        => ['type' => 'text', 'label' => 'Name', 'required' => true],
+                'native_name' => ['type' => 'text', 'label' => 'Native Name', 'placeholder' => 'বাংলা নাম'],
                 'address'   => ['type' => 'text', 'label' => 'Address'],
                 'phone'     => ['type' => 'text', 'label' => 'Phone'],
                 'attendance_lat' => ['type' => 'text', 'label' => 'Attendance GPS Lat', 'placeholder' => '23.8103'],
@@ -70,8 +71,8 @@ return [
                 'mobile_checkin_enabled' => ['type' => 'boolean', 'label' => 'Mobile Check-in Enabled', 'default' => true],
                 'is_active' => ['type' => 'boolean', 'label' => 'Active', 'default' => true],
             ],
-            'columns' => ['code', 'name', 'address', 'phone', 'is_active'],
-            'search'  => ['name', 'code'],
+            'columns' => ['code', 'name', 'native_name', 'address', 'phone', 'is_active'],
+            'search'  => ['name', 'native_name', 'code'],
         ],
 
         'departments' => [
@@ -80,26 +81,28 @@ return [
             'model'        => Department::class,
             'with'         => ['factory'],
             'fields' => [
-                'name'       => ['type' => 'text', 'label' => 'Name', 'required' => true],
+                'name'        => ['type' => 'text', 'label' => 'Name', 'required' => true],
+                'native_name' => ['type' => 'text', 'label' => 'Native Name', 'placeholder' => 'বাংলা নাম'],
                 'factory_id' => ['type' => 'relation', 'label' => 'Factory', 'required' => true, 'relation' => Factory::class, 'display' => 'name'],
                 'is_active'  => ['type' => 'boolean', 'label' => 'Active', 'default' => true],
             ],
-            'columns' => ['code', 'name', 'factory_id', 'is_active'],
-            'search'  => ['name', 'code'],
+            'columns' => ['code', 'name', 'native_name', 'factory_id', 'is_active'],
+            'search'  => ['name', 'native_name', 'code'],
         ],
 
         'designations' => [
             'label'        => 'Designation',
             'label_plural' => 'Designations',
             'model'        => Designation::class,
-            'with'         => ['department'],
+            'with'         => ['department.factory'],
             'fields' => [
                 'name'          => ['type' => 'text', 'label' => 'Name', 'required' => true],
-                'department_id' => ['type' => 'relation', 'label' => 'Department', 'relation' => Department::class, 'display' => 'name', 'nullable' => true],
+                'native_name'   => ['type' => 'text', 'label' => 'Native Name', 'placeholder' => 'বাংলা নাম'],
+                'department_id' => ['type' => 'relation', 'label' => 'Department', 'relation' => Department::class, 'display' => 'name', 'display_with' => 'factory.name', 'nullable' => true],
                 'is_active'     => ['type' => 'boolean', 'label' => 'Active', 'default' => true],
             ],
-            'columns' => ['code', 'name', 'department_id', 'is_active'],
-            'search'  => ['name', 'code'],
+            'columns' => ['code', 'name', 'native_name', 'department_id', 'is_active'],
+            'search'  => ['name', 'native_name', 'code'],
         ],
 
         'buyers' => [
@@ -478,7 +481,7 @@ return [
 
     'relation_columns' => [
         'factory_id'         => ['relation' => 'factory', 'display' => 'name'],
-        'department_id'      => ['relation' => 'department', 'display' => 'name'],
+        'department_id'      => ['relation' => 'department', 'display' => 'name', 'display_with' => 'factory.name'],
         'buyer_id'           => ['relation' => 'buyer', 'display' => 'name'],
         'material_type_id'   => ['relation' => 'materialType', 'display' => 'name'],
         'supplier_type_id'   => ['relation' => 'supplierType', 'display' => 'name'],

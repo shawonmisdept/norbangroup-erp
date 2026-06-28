@@ -28,7 +28,18 @@ trait ScopesHrmFactory
     protected function authorizeFactoryAccess(Request $request, int $factoryId): void
     {
         if ($request->user()?->factory_id && $request->user()->factory_id !== $factoryId) {
-            abort(403);
+            abort(403, 'You do not have access to data for this factory / unit.');
         }
+    }
+
+    protected function scopedFactoryName(Request $request): ?string
+    {
+        $factoryId = $request->user()?->factory_id;
+
+        if (! $factoryId) {
+            return null;
+        }
+
+        return Factory::whereKey($factoryId)->value('name');
     }
 }

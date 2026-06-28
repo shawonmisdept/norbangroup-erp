@@ -72,7 +72,7 @@
         </div>
 
         @if($canManage && $record->status === 'open')
-            <form method="POST" action="{{ route('admin.hrm.discipline.close', $record) }}" onsubmit="return confirm('Close this disciplinary record?')">
+            <form method="POST" action="{{ route('admin.hrm.discipline.close', $record) }}" data-confirm="Close this disciplinary record?">
                 @csrf
                 <button type="submit" class="erp-btn-secondary w-full justify-center">Close Record</button>
             </form>

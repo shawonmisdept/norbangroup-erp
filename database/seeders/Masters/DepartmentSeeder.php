@@ -10,6 +10,9 @@ class DepartmentSeeder extends Seeder
 {
     public function run(): void
     {
+        $unitData = require database_path('seeders/data/unit_departments_designations.php');
+        $excelFactories = $unitData['factories'];
+
         $departments = [
             'Merchandising',
             'Production Planning',
@@ -28,7 +31,7 @@ class DepartmentSeeder extends Seeder
             'Maintenance',
         ];
 
-        foreach (Factory::where('is_active', true)->get() as $factory) {
+        foreach (Factory::where('is_active', true)->whereNotIn('name', $excelFactories)->get() as $factory) {
             foreach ($departments as $name) {
                 Department::updateOrCreate(
                     ['name' => $name, 'factory_id' => $factory->id],

@@ -4,7 +4,7 @@
 
 @section('hero')
 <div class="emp-hero">
-    <div class="relative flex items-start justify-between gap-3">
+    <div class="emp-hero-inner relative flex items-start justify-between gap-3">
         <div class="flex min-w-0 items-center gap-3">
             <div class="emp-avatar-ring shrink-0">
                 @include('partials.employee-avatar', ['employee' => $employee, 'size' => '56', 'round' => true])
@@ -131,6 +131,18 @@
                     @include('employee.partials.tab-icon', ['icon' => 'wallet'])
                 </span>
                 <span class="text-[10px] font-semibold text-gray-700">PF</span>
+            </a>
+            <a href="{{ route('employee.performance') }}" class="emp-quick">
+                <span class="emp-quick-icon bg-violet-50 text-violet-600">
+                    @include('employee.partials.tab-icon', ['icon' => 'star'])
+                </span>
+                <span class="text-[10px] font-semibold text-gray-700">Performance</span>
+            </a>
+            <a href="{{ route('employee.transport.index') }}" class="emp-quick">
+                <span class="emp-quick-icon bg-sky-50 text-sky-600">
+                    @include('employee.partials.tab-icon', ['icon' => 'clock'])
+                </span>
+                <span class="text-[10px] font-semibold text-gray-700">Transport</span>
             </a>
         </div>
     </div>

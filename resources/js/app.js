@@ -1,15 +1,27 @@
 import Alpine from 'alpinejs';
 import './searchable-selects';
+import './employee-pwa';
+import { initConfirmHandlers, registerConfirmDialog } from './confirm-dialog';
 
-Alpine.data('notificationBell', (initialCount = 0, pollUrl = '') => ({
+Alpine.data('notificationBell', (initialCount = 0, pollUrl = '', useFixedPanel = false) => ({
     open: false,
     unreadCount: initialCount,
     pollTimer: null,
     pollUrl,
+    useFixedPanel,
+    panelStyle: '',
 
     init() {
         if (this.pollUrl) {
             this.pollTimer = setInterval(() => this.refreshCount(), 60000);
+        }
+
+        if (this.useFixedPanel) {
+            window.addEventListener('resize', () => {
+                if (this.open) {
+                    this.updatePanelPosition();
+                }
+            });
         }
     },
 
@@ -17,6 +29,27 @@ Alpine.data('notificationBell', (initialCount = 0, pollUrl = '') => ({
         if (this.pollTimer) {
             clearInterval(this.pollTimer);
         }
+    },
+
+    toggle() {
+        this.open = ! this.open;
+
+        if (this.open && this.useFixedPanel) {
+            this.$nextTick(() => this.updatePanelPosition());
+        }
+    },
+
+    updatePanelPosition() {
+        const trigger = this.$refs.trigger;
+
+        if (! trigger) {
+            return;
+        }
+
+        const rect = trigger.getBoundingClientRect();
+        const right = Math.max(12, window.innerWidth - rect.right);
+
+        this.panelStyle = `top:${rect.bottom + 8}px;right:${right}px;`;
     },
 
     async refreshCount() {
@@ -166,12 +199,14 @@ Alpine.data('employeeForm', (config = {}) => {
         floorId: config.floorId || '',
         shiftId: config.shiftId || '',
         lineId: config.lineId || '',
+        reportingToId: config.reportingToId || '',
         departments: config.departments || [],
         designations: config.designations || [],
         buildings: config.buildings || [],
         floors: config.floors || [],
         lines: config.lines || [],
         shifts: config.shifts || [],
+        reportingCandidates: config.reportingCandidates || [],
         photoPreview: config.photoPreview || null,
         nomineePhotoPreview: config.nomineePhotoPreview || null,
         educationRows: config.educationRows?.length ? config.educationRows : [{
@@ -193,10 +228,12 @@ Alpine.data('employeeForm', (config = {}) => {
             this.floorId = String(this.floorId || '');
             this.shiftId = String(this.shiftId || '');
             this.lineId = String(this.lineId || '');
+            this.reportingToId = String(this.reportingToId || '');
             this.status = String(this.status || 'active');
 
             this.$nextTick(() => {
                 this.initStepSelects();
+                setTimeout(() => this.refreshDynamicSelects(), 120);
             });
 
             ['factoryId', 'departmentId', 'designationId', 'buildingId', 'floorId', 'lineId', 'shiftId', 'status'].forEach((field) => {
@@ -206,7 +243,15 @@ Alpine.data('employeeForm', (config = {}) => {
             });
         },
         syncTomSelects() {
-            this.$nextTick(() => window.syncTomSelects?.(this.$root));
+            this.refreshDynamicSelects();
+        },
+        refreshDynamicSelects() {
+            this.$nextTick(() => {
+                this.$root.querySelectorAll('select[data-dynamic-options]').forEach((el) => {
+                    window.refreshSearchableSelect?.(el);
+                });
+                window.syncTomSelects?.(this.$root);
+            });
         },
         initStepSelects() {
             this.$nextTick(() => {
@@ -302,7 +347,13 @@ Alpine.data('employeeForm', (config = {}) => {
                 return [];
             }
 
-            return this.designations.filter((d) => String(d.department_id) === String(this.departmentId));
+            return this.designations.filter((d) => {
+                if (d.department_id === null || d.department_id === undefined || d.department_id === '') {
+                    return true;
+                }
+
+                return String(d.department_id) === String(this.departmentId);
+            });
         },
         filteredBuildings() {
             if (! this.factoryId) {
@@ -332,6 +383,13 @@ Alpine.data('employeeForm', (config = {}) => {
 
             return this.shifts.filter((s) => String(s.factory_id) === String(this.factoryId));
         },
+        filteredReportingCandidates() {
+            if (! this.factoryId) {
+                return [];
+            }
+
+            return this.reportingCandidates.filter((c) => String(c.factory_id) === String(this.factoryId));
+        },
         onFactoryChange() {
             this.departmentId = '';
             this.designationId = '';
@@ -339,12 +397,21 @@ Alpine.data('employeeForm', (config = {}) => {
             this.floorId = '';
             this.shiftId = '';
             this.lineId = '';
-            this.syncTomSelects();
+            this.reportingToId = '';
+            this.refreshDynamicSelects();
+        },
+        onDepartmentChange() {
+            this.designationId = '';
+            this.refreshDynamicSelects();
         },
         onBuildingChange() {
             this.floorId = '';
             this.lineId = '';
-            this.syncTomSelects();
+            this.refreshDynamicSelects();
+        },
+        onFloorChange() {
+            this.lineId = '';
+            this.refreshDynamicSelects();
         },
         validateCurrentStep() {
             if (this.step === 'setup') {
@@ -552,6 +619,51 @@ Alpine.data('erpShell', (openGroups = {}, adminOpenInitial = false) => ({
     },
 }));
 
+Alpine.data('employeeIndexFilters', () => ({
+    searchTimer: null,
+
+    submit() {
+        this.$refs.filterForm?.requestSubmit();
+    },
+
+    debouncedSearch() {
+        clearTimeout(this.searchTimer);
+        this.searchTimer = setTimeout(() => this.submit(), 350);
+    },
+
+    onFactoryChange() {
+        ['department_id', 'building_id', 'shift_id', 'designation_id'].forEach((name) => {
+            const field = this.$refs.filterForm?.querySelector(`[name="${name}"]`);
+
+            if (field) {
+                field.value = '';
+            }
+        });
+
+        this.submit();
+    },
+
+    onDepartmentChange() {
+        const designation = this.$refs.filterForm?.querySelector('[name="designation_id"]');
+
+        if (designation) {
+            designation.value = '';
+        }
+
+        this.submit();
+    },
+
+    onSelectChange() {
+        this.submit();
+    },
+
+    clearFilters() {
+        window.location.href = this.$refs.filterForm?.action ?? window.location.pathname;
+    },
+}));
+
 window.Alpine = Alpine;
 
+registerConfirmDialog(Alpine);
 Alpine.start();
+initConfirmHandlers();

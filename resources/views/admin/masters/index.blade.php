@@ -3,7 +3,7 @@
     $hubLabel = $hubLabel ?? 'Master Data';
     $masterNamespace = $masterNamespace ?? 'masters';
     $columnLabels = [
-        'code' => 'Code', 'name' => 'Name', 'address' => 'Address', 'phone' => 'Phone',
+        'code' => 'Code', 'name' => 'Name', 'native_name' => 'Native Name', 'address' => 'Address', 'phone' => 'Phone',
         'company' => 'Company', 'email' => 'Email', 'country' => 'Country',
         'year' => 'Year', 'start_date' => 'Start', 'end_date' => 'End',
         'hex_code' => 'Hex', 'sort_order' => 'Order', 'unit' => 'Unit', 'value' => 'GSM',
@@ -77,8 +77,7 @@
                                 <a href="{{ route("{$routePrefix}.show", [$module, $record]) }}" class="erp-btn-sm-secondary">View</a>
                                 @if(auth()->user()->canManageMasterModule($masterNamespace, $module))
                                     <a href="{{ route("{$routePrefix}.edit", [$module, $record]) }}" class="erp-btn-sm-primary">Edit</a>
-                                    <form method="POST" action="{{ route("{$routePrefix}.destroy", [$module, $record]) }}" class="inline"
-                                          onsubmit="return confirm('Delete this {{ strtolower($config['label']) }}?')">
+                                    <form method="POST" action="{{ route("{$routePrefix}.destroy", [$module, $record]) }}" class="inline" data-confirm="Delete this {{ strtolower($config['label']) }}?">
                                         @csrf @method('DELETE')
                                         <button type="submit" class="erp-btn-danger !py-1 !px-2">Del</button>
                                     </form>

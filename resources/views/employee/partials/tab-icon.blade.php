@@ -50,4 +50,9 @@
             <path stroke-linecap="round" stroke-linejoin="round" d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/>
         </svg>
         @break
+    @case('star')
+        <svg class="{{ $class }}" fill="none" viewBox="0 0 24 24" stroke="{{ $stroke }}" stroke-width="{{ ($active ?? false) ? 2.2 : 1.8 }}">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3l2.4 4.9 5.4.8-3.9 3.8.9 5.3L12 15.8l-4.8 2.5.9-5.3-3.9-3.8 5.4-.8L12 3z"/>
+        </svg>
+        @break
 @endswitch

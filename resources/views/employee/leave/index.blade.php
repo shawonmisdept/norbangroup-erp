@@ -135,7 +135,9 @@
                             <span class="emp-badge {{ $badgeClass }}">{{ $application->statusLabel() }}</span>
                             @if($application->isPending())
                                 <form method="POST" action="{{ route('employee.leave.cancel', $application) }}"
-                                      onsubmit="return confirm('Cancel this leave application?')">
+                                      data-confirm="Cancel this leave application?"
+                                      data-confirm-title="Cancel leave"
+                                      data-confirm-ok="Yes, cancel">
                                     @csrf
                                     <button type="submit" class="text-[10px] font-semibold text-red-500">Cancel</button>
                                 </form>

@@ -101,9 +101,12 @@
                         <td class="text-right">
                             <a href="{{ route('admin.hrm.promotions.show', $row) }}" class="text-brand text-xs hover:underline">View</a>
                             @if($canApprove && $row->isPending())
-                                <form method="POST" action="{{ route('admin.hrm.promotions.approve', $row) }}" class="inline ml-2">
+                                <form method="POST" action="{{ route('admin.hrm.promotions.approve', $row) }}" class="inline ml-2"
+                                      data-confirm="Approve this request?"
+                                      data-confirm-variant="primary"
+                                      data-confirm-ok="Yes, approve">
                                     @csrf
-                                    <button type="submit" class="text-green-600 text-xs hover:underline" onclick="return confirm('Approve this request?')">Approve</button>
+                                    <button type="submit" class="text-green-600 text-xs hover:underline">Approve</button>
                                 </form>
                             @endif
                         </td>

@@ -11,7 +11,7 @@ class LeaveType extends Model
 
     protected $table = 'hrm_leave_types';
 
-    protected $fillable = ['code', 'name', 'is_paid', 'max_days_per_year', 'description', 'is_active'];
+    protected $fillable = ['code', 'name', 'native_name', 'is_paid', 'max_days_per_year', 'description', 'is_active'];
 
     protected $casts = [
         'is_active' => 'boolean',

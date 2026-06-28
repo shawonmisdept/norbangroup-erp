@@ -33,7 +33,10 @@
 </div>
 
 @if($canManage && $selectedRule && $employees->isNotEmpty())
-<form method="POST" action="{{ route('admin.hrm.salary.increment-bulk.apply') }}" id="bulk-form">
+<form method="POST" action="{{ route('admin.hrm.salary.increment-bulk.apply') }}" id="bulk-form"
+      data-confirm="Apply {{ $selectedRule->name }} to selected employees?"
+      data-confirm-variant="warning"
+      data-confirm-ok="Yes, apply">
     @csrf
     <input type="hidden" name="rule_id" value="{{ $selectedRule->id }}">
 
@@ -41,7 +44,7 @@
         <div class="erp-panel-head flex-wrap gap-2">
             <h2 class="text-xs font-semibold uppercase tracking-wide text-gray-600">Employees — {{ $selectedGrade?->name }}</h2>
             <button type="submit" class="erp-btn-primary !py-1.5 !px-3 text-xs"
-                    onclick="return confirm('Apply {{ $selectedRule->name }} to selected employees?')">
+                   >
                 Apply Increment
             </button>
         </div>

@@ -90,6 +90,28 @@
 </div>
 @endif
 
+@if($performance_stats ?? null)
+<h2 class="text-sm font-semibold text-gray-800 mb-3">Performance Overview</h2>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
+    <a href="{{ route('admin.hrm.performance.reviews.index', ['pending_rating' => 1]) }}" class="erp-kpi border-amber-200 bg-amber-50/60 hover:border-brand/40 transition-all block">
+        <p class="erp-kpi-value text-amber-700">{{ number_format($performance_stats['pending_rating']) }}</p>
+        <p class="erp-kpi-label text-amber-700">Pending Rating</p>
+    </a>
+    <a href="{{ route('admin.hrm.performance.reviews.index', ['pending_hr' => 1]) }}" class="erp-kpi border-blue-200 bg-blue-50/60 hover:border-brand/40 transition-all block">
+        <p class="erp-kpi-value text-blue-700">{{ number_format($performance_stats['pending_hr']) }}</p>
+        <p class="erp-kpi-label text-blue-700">Pending HR</p>
+    </a>
+    <a href="{{ route('admin.hrm.performance.reviews.index', ['status' => 'approved']) }}" class="erp-kpi border-emerald-200 bg-emerald-50/60 hover:border-brand/40 transition-all block">
+        <p class="erp-kpi-value text-emerald-700">{{ number_format($performance_stats['approved_month']) }}</p>
+        <p class="erp-kpi-label text-emerald-700">Approved This Month</p>
+    </a>
+    <a href="{{ route('admin.hrm.performance.cycles.index') }}" class="erp-kpi border-violet-200 bg-violet-50/60 hover:border-brand/40 transition-all block">
+        <p class="erp-kpi-value text-violet-700">{{ number_format($performance_stats['open_cycles']) }}</p>
+        <p class="erp-kpi-label text-violet-700">Open Cycles</p>
+    </a>
+</div>
+@endif
+
 @if(auth()->user()->hasAnyAttendanceViewPermission())
 <h2 class="text-sm font-semibold text-gray-800 mb-3">Today's Attendance Data</h2>
 <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-6">

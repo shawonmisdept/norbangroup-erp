@@ -106,8 +106,7 @@
             </div>
             <div class="erp-panel-body">
                 <p class="text-xs text-gray-500 mb-3">Permanently delete this requirement and all uploaded reference files.</p>
-                <form method="POST" action="{{ route('admin.requirements.destroy', $order) }}"
-                      onsubmit="return confirm('Delete requirement {{ $order->ref_code }}? This cannot be undone.')">
+                <form method="POST" action="{{ route('admin.requirements.destroy', $order) }}" data-confirm="Delete requirement {{ $order->ref_code }}? This cannot be undone.">
                     @csrf @method('DELETE')
                     <button type="submit" class="erp-btn-danger w-full justify-center !py-2.5">Delete Requirement</button>
                 </form>

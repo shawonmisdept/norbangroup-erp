@@ -68,9 +68,12 @@
                 <h2 class="text-xs font-semibold text-gray-700 uppercase tracking-wide">HR Action</h2>
             </div>
             <div class="erp-panel-body space-y-4">
-                <form method="POST" action="{{ route('admin.hrm.attendance.late-acceptance.approve', $application) }}">
+                <form method="POST" action="{{ route('admin.hrm.attendance.late-acceptance.approve', $application) }}"
+                      data-confirm="Approve late acceptance? Salary will not be deducted for this day."
+                      data-confirm-variant="primary"
+                      data-confirm-ok="Yes, approve">
                     @csrf
-                    <button type="submit" class="erp-btn-primary w-full justify-center" onclick="return confirm('Approve late acceptance? Salary will not be deducted for this day.')">Approve</button>
+                    <button type="submit" class="erp-btn-primary w-full justify-center">Approve</button>
                 </form>
                 <form method="POST" action="{{ route('admin.hrm.attendance.late-acceptance.reject', $application) }}" class="space-y-2">
                     @csrf

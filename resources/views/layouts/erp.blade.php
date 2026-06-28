@@ -53,10 +53,20 @@
             }
         }
 
+        $tmsGroupOpen = [];
+        foreach (config('tms.nav_groups', []) as $groupLabel => $keys) {
+            $gKey = 'tms_grp_' . str_replace([' ', '&'], ['_', 'and'], $groupLabel);
+            $tmsGroupOpen[$gKey] = collect($keys)->contains(
+                fn (string $key) => request()->routeIs('admin.tms.' . $key . '*')
+                    || request()->routeIs('admin.tms.' . str_replace('_', '-', $key) . '*')
+            );
+        }
+
         $initialOpenGroups = array_merge(
             $initialOpenGroups,
             $initialHrmOpenGroups,
             $hrmModuleGroupOpen,
+            $tmsGroupOpen,
             [
                 'master_data' => request()->routeIs('admin.masters.*', 'admin.hrm.masters.*'),
                 'attendance'  => request()->routeIs('admin.hrm.attendance.*'),
@@ -67,6 +77,8 @@
                 'rmg'         => request()->routeIs('admin.hrm.rmg.*'),
                 'employee'    => request()->routeIs('admin.hrm.employee.*', 'admin.hrm.employees.*', 'admin.hrm.separations.*', 'admin.hrm.promotions.*', 'admin.hrm.letters.*', 'admin.hrm.discipline.*'),
                 'recruitment' => request()->routeIs('admin.hrm.recruitment.*'),
+                'performance' => request()->routeIs('admin.hrm.performance.*'),
+                'tms'         => request()->routeIs('admin.tms.*'),
             ]
         );
 
@@ -102,6 +114,7 @@
     </div>
 
     <style>[x-cloak]{display:none!important}</style>
+    @include('partials.confirm-dialog')
     @stack('scripts')
 </body>
 </html>

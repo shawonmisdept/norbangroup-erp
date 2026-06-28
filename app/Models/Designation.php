@@ -10,7 +10,7 @@ class Designation extends Model
 {
     use HasMasterCode;
 
-    protected $fillable = ['name', 'department_id', 'is_active'];
+    protected $fillable = ['name', 'native_name', 'department_id', 'is_active'];
 
     protected $casts = ['is_active' => 'boolean'];
 

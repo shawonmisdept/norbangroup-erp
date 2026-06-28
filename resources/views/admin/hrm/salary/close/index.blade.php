@@ -14,10 +14,13 @@
     <td class="text-right">
         <div class="inline-flex flex-wrap gap-2 justify-end">
             @if($period->status==='calculated' && auth()->user()->hasPermission('hrm.salary.approve'))
-            <form method="POST" action="{{ route('admin.hrm.salary.close.freeze',$period) }}" class="inline">
+            <form method="POST" action="{{ route('admin.hrm.salary.close.freeze',$period) }}" class="inline"
+                  data-confirm="Close {{ $period->periodLabel() }} and email payslips?"
+                  data-confirm-variant="warning"
+                  data-confirm-ok="Yes, close">
                 @csrf
                 <input type="hidden" name="send_payslips" value="1">
-                <button type="submit" class="erp-btn-primary !py-1 !px-2 text-[11px]" onclick="return confirm('Close {{ $period->periodLabel() }} and email payslips?')">Close</button>
+                <button type="submit" class="erp-btn-primary !py-1 !px-2 text-[11px]">Close</button>
             </form>
             @endif
             @if($period->isFrozen() && auth()->user()->hasPermission('hrm.salary.approve'))

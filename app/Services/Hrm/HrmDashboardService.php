@@ -8,6 +8,7 @@ use App\Models\Hrm\Employee;
 use App\Models\Hrm\EmployeeTaxLedger;
 use App\Models\Hrm\FinalSettlement;
 use App\Models\Hrm\LoanAccount;
+use App\Models\Hrm\PerformanceReview;
 use App\Models\Hrm\PfContribution;
 use App\Models\User;
 use Carbon\Carbon;
@@ -36,6 +37,7 @@ class HrmDashboardService
      *     today_leave: Collection<int, object>,
      *     today_shifts: Collection<int, object>,
      *     finance_stats: array<string, int|float>|null,
+     *     performance_stats: array<string, int>|null,
      * }
      */
     public function buildOverview(?User $user, ?int $factoryId, Carbon $date): array
@@ -51,6 +53,9 @@ class HrmDashboardService
             'today_shifts'      => $this->todayByShift($factoryIds, $date),
             'finance_stats'     => $user?->hasAnyFinanceViewPermission()
                 ? $this->financeStats($factoryIds, $date)
+                : null,
+            'performance_stats' => $user?->hasAnyPerformanceViewPermission()
+                ? $this->performanceStats($factoryIds)
                 : null,
         ];
     }
@@ -86,6 +91,27 @@ class HrmDashboardService
             'month_tds'                 => round((float) $monthTds, 2),
             'month_pf_employer'         => round((float) $monthPfEmployer, 2),
             'pending_final_settlements' => (int) (clone $settlementBase)->whereIn('status', ['draft', 'calculated', 'approved'])->count(),
+        ];
+    }
+
+    /** @return array{pending_rating: int, pending_hr: int, approved_month: int, open_cycles: int} */
+    public function performanceStats(array $factoryIds): array
+    {
+        $base = PerformanceReview::query()
+            ->when($factoryIds !== [], fn ($q) => $q->whereIn('factory_id', $factoryIds));
+
+        return [
+            'pending_rating' => (int) (clone $base)->where('status', 'pending_rating')->count(),
+            'pending_hr'     => (int) (clone $base)->where('status', 'pending_hr')->count(),
+            'approved_month' => (int) (clone $base)
+                ->where('status', 'approved')
+                ->whereMonth('hr_approved_at', now()->month)
+                ->whereYear('hr_approved_at', now()->year)
+                ->count(),
+            'open_cycles'    => (int) \App\Models\Hrm\PerformanceCycle::query()
+                ->when($factoryIds !== [], fn ($q) => $q->whereIn('factory_id', $factoryIds))
+                ->where('status', 'open')
+                ->count(),
         ];
     }
 

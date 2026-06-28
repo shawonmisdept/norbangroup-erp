@@ -11,7 +11,7 @@ class Department extends Model
 {
     use HasMasterCode;
 
-    protected $fillable = ['name', 'factory_id', 'is_active'];
+    protected $fillable = ['name', 'native_name', 'factory_id', 'is_active'];
 
     protected $casts = ['is_active' => 'boolean'];
 

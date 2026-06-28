@@ -33,14 +33,44 @@ class EmployeeController extends Controller
     ) {}
     public function index(Request $request)
     {
+        return view('admin.hrm.employees.index', $this->indexViewData($request));
+    }
+
+    /** @return array<string, mixed> */
+    private function indexViewData(Request $request): array
+    {
         $query = Employee::query()
-            ->with(['factory', 'department', 'designation', 'line', 'workerCategory', 'shift', 'reportingTo'])
+            ->with(['factory', 'department', 'designation', 'building', 'line', 'workerCategory', 'employmentType', 'shift', 'reportingTo'])
             ->latest();
 
         $this->scopeToUserFactory($query, $request);
 
         if ($request->filled('factory_id')) {
             $query->where('factory_id', $request->factory_id);
+        }
+
+        if ($request->filled('department_id')) {
+            $query->where('department_id', $request->department_id);
+        }
+
+        if ($request->filled('designation_id')) {
+            $query->where('designation_id', $request->designation_id);
+        }
+
+        if ($request->filled('building_id')) {
+            $query->where('building_id', $request->building_id);
+        }
+
+        if ($request->filled('worker_category_id')) {
+            $query->where('worker_category_id', $request->worker_category_id);
+        }
+
+        if ($request->filled('employment_type_id')) {
+            $query->where('employment_type_id', $request->employment_type_id);
+        }
+
+        if ($request->filled('shift_id')) {
+            $query->where('shift_id', $request->shift_id);
         }
 
         if ($request->filled('status')) {
@@ -58,14 +88,27 @@ class EmployeeController extends Controller
             });
         }
 
-        $employees = $query->paginate(20)->withQueryString();
-
-        return view('admin.hrm.employees.index', [
-            'employees'  => $employees,
-            'factories'  => $this->factoryOptions($request),
-            'statuses'   => Employee::STATUSES,
-            'filters'    => $request->only(['search', 'factory_id', 'status']),
+        $filters = $request->only([
+            'search', 'factory_id', 'department_id', 'designation_id', 'building_id',
+            'worker_category_id', 'employment_type_id', 'shift_id', 'status',
         ]);
+
+        $filterOptions = $this->indexFilterOptions($request);
+
+        return [
+            'employees'        => $query->paginate(20)->withQueryString(),
+            'factories'        => $filterOptions['factories'],
+            'departments'      => $filterOptions['departments'],
+            'designations'     => $filterOptions['designations'],
+            'buildings'        => $filterOptions['buildings'],
+            'workerCategories' => $filterOptions['workerCategories'],
+            'employmentTypes'  => $filterOptions['employmentTypes'],
+            'shifts'           => $filterOptions['shifts'],
+            'statuses'         => Employee::STATUSES,
+            'filters'          => $filters,
+            'showUnitFilter'   => count($filterOptions['factories']) > 1,
+            'hasActiveFilters' => collect($filters)->filter(fn ($value) => filled($value))->isNotEmpty(),
+        ];
     }
 
     public function create(Request $request)
@@ -313,43 +356,113 @@ class EmployeeController extends Controller
         return $data;
     }
 
+    private function indexFilterOptions(Request $request): array
+    {
+        $userFactoryId = $request->user()?->factory_id;
+        $selectedFactoryId = $request->input('factory_id', $userFactoryId);
+        $selectedDepartmentId = $request->input('department_id');
+
+        $scopeFactory = function ($query) use ($userFactoryId, $selectedFactoryId) {
+            if ($userFactoryId) {
+                $query->where('factory_id', $userFactoryId);
+            } elseif ($selectedFactoryId) {
+                $query->where('factory_id', $selectedFactoryId);
+            }
+        };
+
+        $designationsQuery = Designation::query()
+            ->where('is_active', true)
+            ->orderBy('name');
+
+        if ($selectedDepartmentId) {
+            $designationsQuery->where(function ($query) use ($selectedDepartmentId) {
+                $query->where('department_id', $selectedDepartmentId)
+                    ->orWhereNull('department_id');
+            });
+        } elseif ($selectedFactoryId) {
+            $departmentIds = Department::query()
+                ->where('is_active', true)
+                ->where('factory_id', $selectedFactoryId)
+                ->pluck('id');
+
+            $designationsQuery->where(function ($query) use ($departmentIds) {
+                $query->whereIn('department_id', $departmentIds)
+                    ->orWhereNull('department_id');
+            });
+        }
+
+        return [
+            'factories'        => $this->factoryOptions($request),
+            'departments'      => Department::query()
+                ->with('factory')
+                ->where('is_active', true)
+                ->tap($scopeFactory)
+                ->orderBy('name')
+                ->get(['id', 'name', 'factory_id']),
+            'designations'     => $designationsQuery->get(['id', 'name', 'department_id']),
+            'buildings'        => Building::query()
+                ->with('factory')
+                ->where('is_active', true)
+                ->tap($scopeFactory)
+                ->orderBy('name')
+                ->get(['id', 'name', 'factory_id']),
+            'workerCategories' => WorkerCategory::query()
+                ->where('is_active', true)
+                ->orderBy('name')
+                ->get(['id', 'name']),
+            'employmentTypes'  => EmploymentType::query()
+                ->where('is_active', true)
+                ->orderBy('name')
+                ->get(['id', 'name']),
+            'shifts'           => Shift::query()
+                ->with('factory')
+                ->where('is_active', true)
+                ->tap($scopeFactory)
+                ->orderBy('name')
+                ->get(['id', 'name', 'factory_id']),
+        ];
+    }
+
     private function formOptions(Request $request, ?Employee $employee = null): array
     {
-        $factoryId = old('factory_id', $employee?->factory_id ?? $request->user()?->factory_id);
+        $userFactoryId = $request->user()?->factory_id;
+        $selectedFactoryId = old('factory_id', $employee?->factory_id ?? $userFactoryId);
 
         $reportingQuery = Employee::query()
             ->whereIn('status', ['active', 'probation'])
             ->orderBy('name');
 
-        if ($factoryId) {
-            $reportingQuery->where('factory_id', $factoryId);
-        } elseif ($request->user()?->factory_id) {
-            $reportingQuery->where('factory_id', $request->user()->factory_id);
+        if ($userFactoryId) {
+            $reportingQuery->where('factory_id', $userFactoryId);
         }
 
         if ($employee) {
             $reportingQuery->where('id', '!=', $employee->id);
         }
 
-        $orgScope = $request->user()?->factory_id ?? $factoryId;
+        $scopeOrgData = function ($query) use ($userFactoryId) {
+            if ($userFactoryId) {
+                $query->where('factory_id', $userFactoryId);
+            }
+        };
 
         return [
             'employee'              => $employee,
             'factories'             => $this->factoryOptions($request),
-            'departments'           => Department::where('is_active', true)->when($orgScope, fn ($q) => $q->where('factory_id', $orgScope))->orderBy('name')->get(['id', 'name', 'factory_id']),
+            'departments'           => Department::where('is_active', true)->tap($scopeOrgData)->orderBy('name')->get(['id', 'name', 'factory_id']),
             'designations'          => Designation::where('is_active', true)->orderBy('name')->get(['id', 'name', 'department_id']),
             'workerCategories'      => WorkerCategory::where('is_active', true)->orderBy('name')->get(['id', 'name']),
             'employmentTypes'       => EmploymentType::where('is_active', true)->orderBy('name')->get(['id', 'name']),
-            'buildings'             => Building::where('is_active', true)->when($orgScope, fn ($q) => $q->where('factory_id', $orgScope))->orderBy('name')->get(['id', 'name', 'factory_id']),
-            'floors'                => Floor::where('is_active', true)->when($orgScope, fn ($q) => $q->where('factory_id', $orgScope))->orderBy('name')->get(['id', 'name', 'factory_id', 'building_id']),
-            'lines'                 => Line::where('is_active', true)->when($orgScope, fn ($q) => $q->where('factory_id', $orgScope))->orderBy('name')->get(['id', 'name', 'factory_id', 'floor_id']),
-            'shifts'                => Shift::where('is_active', true)->when($orgScope, fn ($q) => $q->where('factory_id', $orgScope))->orderBy('name')->get(['id', 'name', 'factory_id']),
+            'buildings'             => Building::where('is_active', true)->tap($scopeOrgData)->orderBy('name')->get(['id', 'name', 'factory_id']),
+            'floors'                => Floor::where('is_active', true)->tap($scopeOrgData)->orderBy('name')->get(['id', 'name', 'factory_id', 'building_id']),
+            'lines'                 => Line::where('is_active', true)->tap($scopeOrgData)->orderBy('name')->get(['id', 'name', 'factory_id', 'floor_id']),
+            'shifts'                => Shift::where('is_active', true)->tap($scopeOrgData)->orderBy('name')->get(['id', 'name', 'factory_id']),
             'reportingCandidates'   => $reportingQuery->get(['id', 'name', 'employee_code', 'factory_id']),
             'statuses'              => $this->editableStatuses($employee),
             'weekdayLabels'         => \App\Services\Hrm\EmployeeScheduleService::WEEKDAY_LABELS,
             'genders'               => config('hrm.employee_options.genders', []),
             'bloodGroups'           => config('hrm.employee_options.blood_groups', []),
-            'defaultFactoryId'      => $factoryId,
+            'defaultFactoryId'      => $selectedFactoryId,
         ];
     }
 

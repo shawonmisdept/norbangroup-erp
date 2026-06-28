@@ -58,6 +58,7 @@ class UpdateAppSettingsRequest extends FormRequest
             'notify_popup_hrm_gate_pass'       => ['sometimes', 'boolean'],
             'notify_popup_hrm_proxy_punch'     => ['sometimes', 'boolean'],
             'notify_popup_hrm_manpower_variance' => ['sometimes', 'boolean'],
+            'notify_popup_hrm_performance'       => ['sometimes', 'boolean'],
             'recruitment_otp_enabled'          => ['sometimes', 'boolean'],
             'sms_provider'                     => ['required', Rule::in(array_keys(config('sms.providers', [])))],
             'sms_api_key'                      => ['nullable', 'string', 'max:500'],
@@ -104,6 +105,7 @@ class UpdateAppSettingsRequest extends FormRequest
             'notify_popup_hrm_gate_pass'       => $this->boolean('notify_popup_hrm_gate_pass'),
             'notify_popup_hrm_proxy_punch'     => $this->boolean('notify_popup_hrm_proxy_punch'),
             'notify_popup_hrm_manpower_variance' => $this->boolean('notify_popup_hrm_manpower_variance'),
+            'notify_popup_hrm_performance'       => $this->boolean('notify_popup_hrm_performance'),
             'recruitment_otp_enabled'          => $this->boolean('recruitment_otp_enabled'),
         ]);
     }

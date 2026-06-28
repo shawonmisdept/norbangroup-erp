@@ -45,7 +45,7 @@
     <div class="space-y-3">
         <a href="{{ route('admin.users.edit', $user) }}" class="erp-btn-primary w-full justify-center !py-2.5">Edit User</a>
         @if($user->id !== auth()->id())
-            <form method="POST" action="{{ route('admin.users.destroy', $user) }}" onsubmit="return confirm('Delete permanently?')">
+            <form method="POST" action="{{ route('admin.users.destroy', $user) }}" data-confirm="Delete permanently?">
                 @csrf @method('DELETE')
                 <button type="submit" class="erp-btn-danger w-full justify-center !py-2.5">Delete User</button>
             </form>

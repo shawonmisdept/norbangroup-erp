@@ -3,20 +3,17 @@
 namespace App\Notifications;
 
 use App\Models\Hrm\EmployeePromotion;
+use App\Notifications\Concerns\DeliversEmployeeWebPush;
 use Illuminate\Notifications\Notification;
 
 class PortalPromotionStatusNotification extends Notification
 {
+    use DeliversEmployeeWebPush;
+
     public function __construct(
         public EmployeePromotion $promotion,
         public string $statusLabel,
     ) {}
-
-    public function via(object $notifiable): array
-    {
-        return ['database'];
-    }
-
     public function toArray(object $notifiable): array
     {
         $this->promotion->loadMissing('toDesignation');

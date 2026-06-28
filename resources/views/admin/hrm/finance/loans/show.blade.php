@@ -16,8 +16,7 @@
         <form method="POST" action="{{ route('admin.hrm.finance.loans.approve', $loan) }}">@csrf
             <button type="submit" class="erp-btn-primary !text-xs">Approve & Create Schedule</button>
         </form>
-        <form method="POST" action="{{ route('admin.hrm.finance.loans.reject', $loan) }}"
-              onsubmit="return confirm('Reject this loan application?')">@csrf
+        <form method="POST" action="{{ route('admin.hrm.finance.loans.reject', $loan) }}" data-confirm="Reject this loan application?">@csrf
             <input type="hidden" name="reject_reason" id="reject-reason">
             <button type="submit" class="erp-btn-secondary !text-xs text-red-700"
                     onclick="document.getElementById('reject-reason').value = prompt('Rejection reason (optional):') || '';">
@@ -31,8 +30,7 @@
 @if($canManage && $loan->status === 'active' && (float) $loan->balance > 0)
 <div class="erp-panel mb-4">
     <div class="erp-panel-head"><h2 class="text-xs font-semibold uppercase text-gray-600">Early Settlement</h2></div>
-    <form method="POST" action="{{ route('admin.hrm.finance.loans.settle', $loan) }}" class="erp-panel-body grid grid-cols-1 md:grid-cols-3 gap-4 items-end"
-          onsubmit="return confirm('Record early settlement for this loan?')">
+    <form method="POST" action="{{ route('admin.hrm.finance.loans.settle', $loan) }}" class="erp-panel-body grid grid-cols-1 md:grid-cols-3 gap-4 items-end" data-confirm="Record early settlement for this loan?">
         @csrf
         <div>
             <label class="erp-form-label">Settlement amount (৳)</label>

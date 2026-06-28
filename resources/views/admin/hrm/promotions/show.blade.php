@@ -137,9 +137,12 @@
                 <div class="erp-panel">
                     <div class="erp-panel-head"><h2 class="text-xs font-semibold text-gray-700 uppercase tracking-wide">HR Approval</h2></div>
                     <div class="erp-panel-body space-y-3">
-                        <form method="POST" action="{{ route('admin.hrm.promotions.approve', $promotion) }}">
+                        <form method="POST" action="{{ route('admin.hrm.promotions.approve', $promotion) }}"
+                              data-confirm="Approve and apply changes to employee record?"
+                              data-confirm-variant="primary"
+                              data-confirm-ok="Yes, approve">
                             @csrf
-                            <button type="submit" class="erp-btn-primary w-full" onclick="return confirm('Approve and apply changes to employee record?')">Approve</button>
+                            <button type="submit" class="erp-btn-primary w-full">Approve</button>
                         </form>
                         <form method="POST" action="{{ route('admin.hrm.promotions.reject', $promotion) }}" class="space-y-2">
                             @csrf
@@ -159,7 +162,7 @@
             @if($canManage)
                 <div class="erp-panel">
                     <div class="erp-panel-body">
-                        <form method="POST" action="{{ route('admin.hrm.promotions.cancel', $promotion) }}" onsubmit="return confirm('Cancel this request?')">
+                        <form method="POST" action="{{ route('admin.hrm.promotions.cancel', $promotion) }}" data-confirm="Cancel this request?">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="text-xs text-gray-500 hover:text-red-600">Cancel request</button>

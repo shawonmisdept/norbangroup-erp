@@ -14,7 +14,7 @@ class Floor extends Model
 
     protected $table = 'hrm_floors';
 
-    protected $fillable = ['factory_id', 'building_id', 'name', 'floor_number', 'description', 'is_active'];
+    protected $fillable = ['factory_id', 'building_id', 'name', 'native_name', 'floor_number', 'description', 'is_active'];
 
     protected $casts = [
         'is_active' => 'boolean',

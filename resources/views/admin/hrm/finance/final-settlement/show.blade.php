@@ -158,8 +158,7 @@
 @if($settlement->status === 'calculated' && $settlement->clearanceComplete())
 <div class="erp-panel mb-4">
     <div class="erp-panel-body">
-        <form method="POST" action="{{ route('admin.hrm.finance.final-settlement.approve', $settlement) }}"
-              onsubmit="return confirm('Approve this final settlement for disbursement?')">
+        <form method="POST" action="{{ route('admin.hrm.finance.final-settlement.approve', $settlement) }}" data-confirm="Approve this final settlement for disbursement?">
             @csrf
             <button type="submit" class="erp-btn-primary !py-2 text-xs">Approve for Disbursement</button>
         </form>
@@ -170,8 +169,7 @@
 @if($settlement->status === 'approved')
 <div class="erp-panel mb-4">
     <div class="erp-panel-body">
-        <form method="POST" action="{{ route('admin.hrm.finance.final-settlement.paid', $settlement) }}"
-              onsubmit="return confirm('Mark as paid? This will close outstanding loans and deactivate PF account.')">
+        <form method="POST" action="{{ route('admin.hrm.finance.final-settlement.paid', $settlement) }}" data-confirm="Mark as paid? This will close outstanding loans and deactivate PF account.">
             @csrf
             <button type="submit" class="erp-btn-primary !py-2 text-xs">Mark Paid & Close Accounts</button>
         </form>

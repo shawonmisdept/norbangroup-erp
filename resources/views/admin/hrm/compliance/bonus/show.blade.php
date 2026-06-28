@@ -28,10 +28,10 @@
                     <button type="submit" class="erp-btn-primary !text-xs">Calculate Bonus</button>
                 </form>
             @elseif($run->status === 'calculated')
-                <form method="POST" action="{{ route('admin.hrm.compliance.bonus.calculate', $run) }}" onsubmit="return confirm('Recalculate bonus for all eligible employees?')">@csrf
+                <form method="POST" action="{{ route('admin.hrm.compliance.bonus.calculate', $run) }}" data-confirm="Recalculate bonus for all eligible employees?">@csrf
                     <button type="submit" class="erp-btn-secondary !text-xs">Recalculate</button>
                 </form>
-                <form method="POST" action="{{ route('admin.hrm.compliance.bonus.approve', $run) }}" onsubmit="return confirm('Approve this bonus run for export and payroll?')">@csrf
+                <form method="POST" action="{{ route('admin.hrm.compliance.bonus.approve', $run) }}" data-confirm="Approve this bonus run for export and payroll?">@csrf
                     <button type="submit" class="erp-btn-primary !text-xs">Approve</button>
                 </form>
             @elseif($run->status === 'approved')

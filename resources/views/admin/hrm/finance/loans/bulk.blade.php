@@ -36,6 +36,9 @@
 
 @if($canManage && $filterFactoryId && $employees->isNotEmpty())
 <form method="POST" action="{{ route('admin.hrm.finance.loans.bulk.store') }}"
+      data-confirm="Disburse festival advance to selected employees?"
+      data-confirm-variant="warning"
+      data-confirm-ok="Yes, disburse"
       x-data="bulkAdvanceForm({{ json_encode(old('amounts', [])) }}, {{ old('default_amount', 0) }}, {{ old('total_installments', 1) }})">
     @csrf
     <input type="hidden" name="factory_id" value="{{ $filterFactoryId }}">
@@ -72,7 +75,7 @@
         <div class="erp-panel-head flex-wrap gap-2">
             <h2 class="text-xs font-semibold uppercase tracking-wide text-gray-600">Employees</h2>
             <button type="submit" class="erp-btn-primary !py-1.5 !px-3 text-xs"
-                    onclick="return confirm('Disburse festival advance to selected employees?')">
+                   >
                 Disburse Advances
             </button>
         </div>

@@ -14,6 +14,7 @@
         'employee' => fn ($key) => auth()->user()->canViewEmployeeSubmodule($key),
         'recruitment' => fn ($key) => auth()->user()->canViewRecruitmentSubmodule($key),
         'leave' => fn ($key) => auth()->user()->canViewLeaveSubmodule($key),
+        'performance' => fn ($key) => auth()->user()->canViewPerformanceSubmodule($key),
         'attendance' => fn ($key) => auth()->user()->canViewAttendanceSubmodule($key),
         'compliance' => fn ($key) => auth()->user()->canViewComplianceSubmodule($key),
         'finance' => fn ($key) => auth()->user()->canViewFinanceSubmodule($key),
@@ -36,7 +37,7 @@
             return false;
         }
 
-        $base = preg_replace('/\.(index|hub)$/', '', $submodules[$key]['route']);
+        $base = preg_replace('/\.(index|hub|dashboard)$/', '', $submodules[$key]['route']);
 
         return request()->routeIs($base) || request()->routeIs($base . '.*');
     };
@@ -68,6 +69,14 @@
                class="erp-nav-sub-link {{ request()->routeIs($hubRoute) ? 'erp-nav-sub-link-active' : '' }}">
                 Hub
             </a>
+
+            @if(isset($submodules['dashboard']) && ($submodules['dashboard']['status'] ?? '') === 'active' && $canView('dashboard'))
+                <a href="{{ route($submodules['dashboard']['route']) }}"
+                   data-nav-label="HRM {{ $label }} Dashboard"
+                   class="erp-nav-sub-link {{ $routeMatch('dashboard') ? 'erp-nav-sub-link-active' : '' }}">
+                    Dashboard
+                </a>
+            @endif
 
             @if($navGroups !== [])
                 @foreach($navGroups as $groupLabel => $keys)
@@ -109,6 +118,9 @@
                 @endforeach
             @else
                 @foreach($submodules as $key => $sub)
+                    @if($key === 'dashboard')
+                        @continue
+                    @endif
                     @if(($sub['status'] ?? '') === 'active' && $canView($key))
                         <a href="{{ route($sub['route']) }}"
                            data-nav-label="HRM {{ $label }} {{ $sub['label'] }}"

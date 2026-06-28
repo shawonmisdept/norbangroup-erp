@@ -84,8 +84,7 @@
                             <div class="erp-table-actions">
                                 <a href="{{ route('admin.requirements.show', $order) }}" class="erp-btn-sm-secondary">Open</a>
                                 @if(auth()->user()->hasPermission('orders.delete'))
-                                    <form method="POST" action="{{ route('admin.requirements.destroy', $order) }}" class="inline"
-                                          onsubmit="return confirm('Delete requirement {{ $order->ref_code }}? This cannot be undone.')">
+                                    <form method="POST" action="{{ route('admin.requirements.destroy', $order) }}" class="inline" data-confirm="Delete requirement {{ $order->ref_code }}? This cannot be undone.">
                                         @csrf @method('DELETE')
                                         <button type="submit" class="erp-btn-danger !py-1 !px-2.5">Del</button>
                                     </form>

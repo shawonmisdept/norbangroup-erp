@@ -38,7 +38,7 @@ class Employee extends Model
         'emergency_contact_name', 'emergency_contact_phone', 'emergency_contact_relation',
         'nominee_name', 'nominee_relation', 'nominee_nid', 'nominee_nid_document', 'nominee_photo',
         'biometric_user_id', 'photo',
-        'joining_date', 'confirmation_date', 'probation_end_date', 'contract_end_date',
+        'joining_date', 'confirmation_date', 'probation_passed_at', 'probation_end_date', 'contract_end_date',
         'separation_date', 'last_working_day', 'status', 'late_acceptance_enabled',
         'weekend_days', 'weekend_ot_allowed', 'half_day_pay_ratio', 'notes',
     ];
@@ -205,6 +205,28 @@ class Employee extends Model
     public function disciplinaryRecords(): HasMany
     {
         return $this->hasMany(DisciplinaryRecord::class)->latest('incident_date');
+    }
+
+    public function performanceReviews(): HasMany
+    {
+        return $this->hasMany(PerformanceReview::class)->latest('id');
+    }
+
+    public function pendingPerformanceReview(): HasOne
+    {
+        return $this->hasOne(PerformanceReview::class)
+            ->whereIn('status', ['draft', 'blocked', 'pending_rating', 'pending_hr'])
+            ->latestOfMany('id');
+    }
+
+    public function hasPassedProbation(): bool
+    {
+        return $this->probation_passed_at !== null;
+    }
+
+    public function isReviewBlocked(): bool
+    {
+        return $this->status === 'suspended';
     }
 
     public function isSeparated(): bool
