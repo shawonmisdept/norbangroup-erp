@@ -1,4 +1,5 @@
 {
+    "id": "/employee/",
     "name": "Employee Portal",
     "short_name": "Employee",
     "description": "Employee self-service portal",

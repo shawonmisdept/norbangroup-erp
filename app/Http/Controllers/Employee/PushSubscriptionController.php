@@ -23,7 +23,7 @@ class PushSubscriptionController extends Controller
             $validated['endpoint'],
             $validated['keys']['p256dh'],
             $validated['keys']['auth'],
-            $validated['contentEncoding'] ?? 'aesgcm',
+            $validated['contentEncoding'] ?? 'aes128gcm',
         );
 
         return response()->json(['success' => true]);

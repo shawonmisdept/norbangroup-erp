@@ -1,5 +1,16 @@
 const csrfToken = () => document.querySelector('meta[name="csrf-token"]')?.content ?? '';
 
+const SW_URL = '/employee/sw.js';
+const SW_SCOPE = '/employee/';
+
+window.__empPwaInstallPrompt = window.__empPwaInstallPrompt ?? null;
+
+window.addEventListener('beforeinstallprompt', (event) => {
+    event.preventDefault();
+    window.__empPwaInstallPrompt = event;
+    window.dispatchEvent(new CustomEvent('emp-pwa-install-available'));
+});
+
 function urlBase64ToUint8Array(base64String) {
     const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
     const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/');
@@ -8,14 +19,24 @@ function urlBase64ToUint8Array(base64String) {
     return Uint8Array.from([...raw].map((char) => char.charCodeAt(0)));
 }
 
+function detectContentEncoding(subscription) {
+    if (subscription?.contentEncoding) {
+        return subscription.contentEncoding;
+    }
+
+    return 'aes128gcm';
+}
+
 async function registerServiceWorker() {
     if (!('serviceWorker' in navigator)) {
         return null;
     }
 
     try {
-        return await navigator.serviceWorker.register('/sw.js', { scope: '/' });
-    } catch {
+        return await navigator.serviceWorker.register(SW_URL, { scope: SW_SCOPE });
+    } catch (error) {
+        console.warn('Service worker registration failed', error);
+
         return null;
     }
 }
@@ -67,7 +88,7 @@ async function subscribeToPush(registration) {
         body: JSON.stringify({
             endpoint: payload.endpoint,
             keys: payload.keys,
-            contentEncoding: 'aesgcm',
+            contentEncoding: detectContentEncoding(subscription),
         }),
     });
 
@@ -113,7 +134,7 @@ export async function enableEmployeePush() {
     const permission = await Notification.requestPermission();
 
     if (permission !== 'granted') {
-        throw new Error('Notification permission denied');
+        throw new Error('Notification permission denied. Allow notifications in browser site settings.');
     }
 
     const registration = await registerServiceWorker();
@@ -126,7 +147,7 @@ export async function enableEmployeePush() {
 }
 
 export async function disableEmployeePush() {
-    const registration = await navigator.serviceWorker.getRegistration('/sw.js');
+    const registration = await navigator.serviceWorker.getRegistration(SW_URL);
 
     if (registration) {
         await unsubscribeFromPush(registration);
@@ -138,8 +159,8 @@ export function isStandalonePwa() {
         || window.navigator.standalone === true;
 }
 
-export function canInstallPwa() {
-    return 'BeforeInstallPromptEvent' in window || isStandalonePwa();
+export function hasInstallPrompt() {
+    return !! window.__empPwaInstallPrompt;
 }
 
 export async function initEmployeePwa() {
@@ -160,12 +181,6 @@ export async function initEmployeePwa() {
             }
         }
     }
-
-    window.addEventListener('beforeinstallprompt', (event) => {
-        event.preventDefault();
-        window.__empPwaInstallPrompt = event;
-        window.dispatchEvent(new CustomEvent('emp-pwa-install-available'));
-    });
 }
 
 document.addEventListener('alpine:init', () => {
@@ -181,32 +196,41 @@ document.addEventListener('alpine:init', () => {
                 return;
             }
 
+            this.syncState();
+
+            window.addEventListener('emp-pwa-install-available', () => {
+                this.syncState();
+            });
+        },
+
+        syncState() {
             this.canPush = 'Notification' in window && 'PushManager' in window
                 && Notification.permission !== 'granted'
                 && !! document.querySelector('meta[name="vapid-public-key"]')?.content;
 
-            this.canInstall = ! isStandalonePwa();
+            this.canInstall = hasInstallPrompt() && ! isStandalonePwa();
             this.visible = this.canInstall || this.canPush;
-
-            window.addEventListener('emp-pwa-install-available', () => {
-                this.canInstall = true;
-                this.visible = true;
-            });
         },
 
         async installApp() {
             const prompt = window.__empPwaInstallPrompt;
 
             if (! prompt) {
-                this.message = 'Use your browser menu: Add to Home Screen / Install app.';
+                this.message = 'Install not ready. Use Chrome menu (⋮) → Install Employee Portal.';
 
                 return;
             }
 
-            prompt.prompt();
-            await prompt.userChoice;
+            await prompt.prompt();
+            const { outcome } = await prompt.userChoice;
+
             window.__empPwaInstallPrompt = null;
             this.canInstall = false;
+
+            if (outcome === 'accepted') {
+                this.message = 'App installed.';
+            }
+
             this.updateVisibility();
         },
 
@@ -232,8 +256,12 @@ document.addEventListener('alpine:init', () => {
     }));
 });
 
+function shouldInitEmployeePwa() {
+    return window.location.pathname.startsWith('/employee');
+}
+
 document.addEventListener('DOMContentLoaded', () => {
-    if (document.body.classList.contains('emp-app')) {
+    if (shouldInitEmployeePwa()) {
         initEmployeePwa();
     }
 });
