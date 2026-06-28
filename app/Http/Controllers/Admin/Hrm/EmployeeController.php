@@ -201,7 +201,7 @@ class EmployeeController extends Controller
     {
         $this->authorizeEmployeeAccess($request, $employee);
 
-        $employee->load(['educationHistories', 'employmentHistories']);
+        $employee->load(['educationHistories', 'employmentHistories', 'department.factory', 'designation.department.factory', 'shift.factory']);
 
         return view('admin.hrm.employees.edit', array_merge(
             ['employee' => $employee],
@@ -451,35 +451,23 @@ class EmployeeController extends Controller
         return [
             'employee'              => $employee,
             'factories'             => $this->factoryOptions($request),
-            'departments'           => Department::where('is_active', true)
-                ->with('factory')
-                ->tap($scopeOrgData)
-                ->orderBy('name')
-                ->get(['id', 'name', 'factory_id'])
-                ->map(fn (Department $department) => [
-                    'id'            => $department->id,
-                    'name'          => $department->name,
-                    'factory_id'    => $department->factory_id,
-                    'display_label' => $department->displayLabel(),
-                ])
-                ->values(),
-            'designations'          => Designation::where('is_active', true)
-                ->with('department.factory')
-                ->orderBy('name')
-                ->get(['id', 'name', 'department_id'])
-                ->map(fn (Designation $designation) => [
-                    'id'              => $designation->id,
-                    'name'            => $designation->name,
-                    'department_id'   => $designation->department_id,
-                    'display_label'   => $designation->displayLabel(),
-                ])
-                ->values(),
+            'departments'           => $this->serializeDepartments(
+                Department::where('is_active', true)->with('factory')->tap($scopeOrgData)->orderBy('name')->get(),
+                $employee
+            ),
+            'designations'          => $this->serializeDesignations(
+                Designation::where('is_active', true)->with('department.factory')->orderBy('name')->get(),
+                $employee
+            ),
             'workerCategories'      => WorkerCategory::where('is_active', true)->orderBy('name')->get(['id', 'name']),
             'employmentTypes'       => EmploymentType::where('is_active', true)->orderBy('name')->get(['id', 'name']),
             'buildings'             => Building::where('is_active', true)->tap($scopeOrgData)->orderBy('name')->get(['id', 'name', 'factory_id']),
             'floors'                => Floor::where('is_active', true)->tap($scopeOrgData)->orderBy('name')->get(['id', 'name', 'factory_id', 'building_id']),
             'lines'                 => Line::where('is_active', true)->tap($scopeOrgData)->orderBy('name')->get(['id', 'name', 'factory_id', 'floor_id']),
-            'shifts'                => Shift::where('is_active', true)->tap($scopeOrgData)->orderBy('name')->get(['id', 'name', 'factory_id']),
+            'shifts'                => $this->serializeShifts(
+                Shift::where('is_active', true)->with('factory')->tap($scopeOrgData)->orderBy('name')->get(),
+                $employee
+            ),
             'reportingCandidates'   => $reportingQuery->get(['id', 'name', 'employee_code', 'factory_id']),
             'statuses'              => $this->editableStatuses($employee),
             'weekdayLabels'         => \App\Services\Hrm\EmployeeScheduleService::WEEKDAY_LABELS,
@@ -516,5 +504,62 @@ class EmployeeController extends Controller
         if ($request->user()?->factory_id && $request->user()->factory_id !== $employee->factory_id) {
             abort(403, 'You do not have access to this employee record.');
         }
+    }
+
+    /** @return list<array<string, mixed>> */
+    private function serializeDepartments($departments, ?Employee $employee = null): array
+    {
+        $employee?->loadMissing('department.factory');
+
+        if ($employee?->department && ! $departments->contains('id', $employee->department_id)) {
+            $departments = $departments->push($employee->department);
+        }
+
+        return $departments
+            ->map(fn (Department $department) => [
+                'id'         => $department->id,
+                'name'       => $department->name,
+                'factory_id' => $department->factory_id,
+            ])
+            ->values()
+            ->all();
+    }
+
+    /** @return list<array<string, mixed>> */
+    private function serializeDesignations($designations, ?Employee $employee = null): array
+    {
+        $employee?->loadMissing('designation.department.factory');
+
+        if ($employee?->designation && ! $designations->contains('id', $employee->designation_id)) {
+            $designations = $designations->push($employee->designation);
+        }
+
+        return $designations
+            ->map(fn (Designation $designation) => [
+                'id'            => $designation->id,
+                'name'          => $designation->name,
+                'department_id' => $designation->department_id,
+            ])
+            ->values()
+            ->all();
+    }
+
+    /** @return list<array<string, mixed>> */
+    private function serializeShifts($shifts, ?Employee $employee = null): array
+    {
+        $employee?->loadMissing('shift.factory');
+
+        if ($employee?->shift && ! $shifts->contains('id', $employee->shift_id)) {
+            $shifts = $shifts->push($employee->shift);
+        }
+
+        return $shifts
+            ->map(fn (Shift $shift) => [
+                'id'         => $shift->id,
+                'name'       => $shift->name,
+                'factory_id' => $shift->factory_id,
+            ])
+            ->values()
+            ->all();
     }
 }

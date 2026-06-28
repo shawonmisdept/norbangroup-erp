@@ -220,6 +220,7 @@ Alpine.data('employeeForm', (config = {}) => {
         displayPhone: config.displayPhone || '',
         status: config.status || 'active',
         submitError: '',
+        _prevDepartmentId: null,
         init() {
             this.factoryId = String(this.factoryId || '');
             this.departmentId = String(this.departmentId || '');
@@ -230,13 +231,25 @@ Alpine.data('employeeForm', (config = {}) => {
             this.lineId = String(this.lineId || '');
             this.reportingToId = String(this.reportingToId || '');
             this.status = String(this.status || 'active');
+            this._prevDepartmentId = this.departmentId;
 
             this.$nextTick(() => {
                 this.initStepSelects();
-                setTimeout(() => this.refreshDynamicSelects(), 120);
+                requestAnimationFrame(() => {
+                    setTimeout(() => {
+                        this.refreshDynamicSelects();
+                        window.syncTomSelects?.(this.$root);
+                    }, 250);
+                });
             });
 
-            ['factoryId', 'departmentId', 'designationId', 'buildingId', 'floorId', 'lineId', 'shiftId', 'status'].forEach((field) => {
+            ['factoryId', 'departmentId'].forEach((field) => {
+                this.$watch(field, () => {
+                    this.refreshDynamicSelects();
+                });
+            });
+
+            ['designationId', 'buildingId', 'floorId', 'lineId', 'shiftId', 'status'].forEach((field) => {
                 this.$watch(field, () => {
                     this.$nextTick(() => window.syncTomSelects?.(this.$root));
                 });
@@ -247,11 +260,44 @@ Alpine.data('employeeForm', (config = {}) => {
         },
         refreshDynamicSelects() {
             this.$nextTick(() => {
+                this.rebuildOrgSelects();
+
                 this.$root.querySelectorAll('select[data-dynamic-options]').forEach((el) => {
-                    window.refreshSearchableSelect?.(el);
+                    if (el.dataset.searchable !== 'true') {
+                        if (el.tomselect) {
+                            window.destroySearchableSelect?.(el);
+                        }
+
+                        return;
+                    }
+
+                    if (! el.tomselect) {
+                        window.enhanceSelect?.(el);
+                    }
                 });
+
                 window.syncTomSelects?.(this.$root);
             });
+        },
+        withPinnedSelection(items, selectedId, sourceList = null) {
+            if (! selectedId) {
+                return items;
+            }
+
+            if (items.some((item) => String(item.id) === String(selectedId))) {
+                return items;
+            }
+
+            const selected = this.findById(sourceList ?? items, selectedId);
+
+            if (! selected) {
+                return items;
+            }
+
+            return [selected, ...items];
+        },
+        findById(items, id) {
+            return items.find((item) => String(item.id) === String(id)) ?? null;
         },
         initStepSelects() {
             this.$nextTick(() => {
@@ -260,6 +306,10 @@ Alpine.data('employeeForm', (config = {}) => {
 
                     if (panel) {
                         panel.querySelectorAll('select.erp-input, select.emp-input').forEach((el) => {
+                            if (el.dataset.dynamicOptions === 'true') {
+                                return;
+                            }
+
                             if (el.tomselect) {
                                 window.refreshSearchableSelect?.(el);
                             } else {
@@ -337,29 +387,71 @@ Alpine.data('employeeForm', (config = {}) => {
         },
         filteredDepartments() {
             if (! this.factoryId) {
-                return [];
+                return this.withPinnedSelection([], this.departmentId, this.departments);
             }
 
-            return this.departments.filter((d) => String(d.factory_id) === String(this.factoryId));
+            const items = this.departments.filter((d) => String(d.factory_id) === String(this.factoryId));
+
+            return this.withPinnedSelection(items, this.departmentId, this.departments);
         },
         filteredDesignations() {
             if (! this.departmentId) {
-                return [];
+                return this.withPinnedSelection([], this.designationId, this.designations);
             }
 
-            return this.designations.filter((d) => {
-                if (d.department_id === null || d.department_id === undefined || d.department_id === '') {
-                    return true;
-                }
+            const linked = this.designations.filter(
+                (d) => String(d.department_id) === String(this.departmentId)
+            );
 
-                return String(d.department_id) === String(this.departmentId);
+            if (linked.length > 0) {
+                return this.withPinnedSelection(linked, this.designationId, this.designations);
+            }
+
+            const shared = this.designations.filter(
+                (d) => d.department_id === null || d.department_id === undefined || d.department_id === ''
+            );
+
+            return this.withPinnedSelection(shared, this.designationId, this.designations);
+        },
+        populateSelect(select, items, selectedId) {
+            if (! select) {
+                return;
+            }
+
+            const value = String(selectedId || '');
+
+            if (select.tomselect) {
+                const ts = select.tomselect;
+                ts.clear(true);
+                ts.clearOptions();
+
+                items.forEach((item) => {
+                    ts.addOption({ value: String(item.id), text: item.name || '' });
+                });
+
+                ts.refreshOptions(false);
+                ts.setValue(value, true);
+
+                return;
+            }
+
+            while (select.options.length > 1) {
+                select.remove(1);
+            }
+
+            items.forEach((item) => {
+                const option = document.createElement('option');
+                option.value = String(item.id);
+                option.textContent = item.name || '';
+                select.appendChild(option);
             });
+
+            select.value = value;
         },
-        departmentLabel(dept) {
-            return dept.display_label || dept.name || '';
-        },
-        designationLabel(des) {
-            return des.display_label || des.name || '';
+        rebuildOrgSelects() {
+            this.populateSelect(this.$refs.departmentSelect, this.filteredDepartments(), this.departmentId);
+            this.populateSelect(this.$refs.designationSelect, this.filteredDesignations(), this.designationId);
+            this.populateSelect(this.$refs.shiftSelect, this.filteredShifts(), this.shiftId);
         },
         filteredBuildings() {
             if (! this.factoryId) {
@@ -384,10 +476,12 @@ Alpine.data('employeeForm', (config = {}) => {
         },
         filteredShifts() {
             if (! this.factoryId) {
-                return [];
+                return this.withPinnedSelection([], this.shiftId, this.shifts);
             }
 
-            return this.shifts.filter((s) => String(s.factory_id) === String(this.factoryId));
+            const items = this.shifts.filter((s) => String(s.factory_id) === String(this.factoryId));
+
+            return this.withPinnedSelection(items, this.shiftId, this.shifts);
         },
         filteredReportingCandidates() {
             if (! this.factoryId) {
@@ -407,7 +501,11 @@ Alpine.data('employeeForm', (config = {}) => {
             this.refreshDynamicSelects();
         },
         onDepartmentChange() {
-            this.designationId = '';
+            if (this._prevDepartmentId !== null && String(this._prevDepartmentId) !== String(this.departmentId)) {
+                this.designationId = '';
+            }
+
+            this._prevDepartmentId = this.departmentId;
             this.refreshDynamicSelects();
         },
         onBuildingChange() {
@@ -489,17 +587,17 @@ Alpine.data('employeeForm', (config = {}) => {
         selectedDepartmentName() {
             const dept = this.departments.find((d) => String(d.id) === String(this.departmentId));
 
-            return dept ? this.departmentLabel(dept) : '—';
+            return dept?.name || '—';
         },
         selectedDesignationName() {
             const des = this.designations.find((d) => String(d.id) === String(this.designationId));
 
-            return des ? this.designationLabel(des) : '—';
+            return des?.name || '—';
         },
         selectedShiftName() {
-            const shift = this.shifts.find((s) => String(s.id) === String(this.shiftId));
+            const shift = this.findById(this.shifts, this.shiftId);
 
-            return shift?.name ?? '—';
+            return shift?.name || '—';
         },
     };
 });

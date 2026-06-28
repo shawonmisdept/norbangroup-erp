@@ -19,6 +19,10 @@ function shouldEnhanceSelect(el) {
         return false;
     }
 
+    if (el.dataset.dynamicOptions === 'true') {
+        return false;
+    }
+
     if (el.dataset.searchable === 'true') {
         return true;
     }
@@ -118,6 +122,7 @@ window.initSearchableSelects = initSearchableSelects;
 window.refreshSearchableSelect = refreshSearchableSelect;
 window.syncTomSelects = syncTomSelects;
 window.enhanceSelect = enhanceSelect;
+window.destroySearchableSelect = destroySearchableSelect;
 
 function bootSearchableSelects() {
     initSearchableSelects(document, { visibleOnly: true });

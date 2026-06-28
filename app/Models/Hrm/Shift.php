@@ -33,4 +33,9 @@ class Shift extends Model
     {
         return $this->belongsTo(Factory::class);
     }
+
+    public function displayLabel(): string
+    {
+        return \App\Support\OrgMasterDisplay::shift($this);
+    }
 }

@@ -67,7 +67,7 @@ class HeadOfficeEmployeeSeeder extends Seeder
                 continue;
             }
 
-            Employee::updateOrCreate(
+            Employee::withTrashed()->updateOrCreate(
                 ['employee_code' => $row['employee_code']],
                 [
                     'factory_id'         => $factory->id,
@@ -83,6 +83,7 @@ class HeadOfficeEmployeeSeeder extends Seeder
                     'permanent_address'  => $row['permanent_address'] ?? null,
                     'joining_date'       => $row['joining_date'] ?? null,
                     'status'             => $row['status'] ?? 'active',
+                    'deleted_at'         => null,
                 ]
             );
 

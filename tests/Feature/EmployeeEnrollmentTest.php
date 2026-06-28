@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Department;
+use App\Models\Designation;
 use App\Models\Factory;
 use App\Models\Hrm\Employee;
 use App\Models\Hrm\WorkerCategory;
@@ -306,6 +307,80 @@ class EmployeeEnrollmentTest extends TestCase
             ->assertSee('after@example.com')
             ->assertSee('01720000000')
             ->assertSee('HSC');
+    }
+
+    public function test_employee_edit_form_includes_org_cascade_config(): void
+    {
+        $department = Department::create([
+            'name'       => 'Sewing',
+            'factory_id' => $this->factory->id,
+            'is_active'  => true,
+        ]);
+
+        $otherDepartment = Department::create([
+            'name'       => 'Cutting',
+            'factory_id' => $this->factory->id,
+            'is_active'  => true,
+        ]);
+
+        $designation = Designation::create([
+            'name'          => 'Line Chief',
+            'department_id' => $department->id,
+            'is_active'     => true,
+        ]);
+
+        Designation::create([
+            'name'          => 'Cutter',
+            'department_id' => $otherDepartment->id,
+            'is_active'     => true,
+        ]);
+
+        Designation::create([
+            'name'          => 'Shared Manager',
+            'department_id' => null,
+            'is_active'     => true,
+        ]);
+
+        $employee = Employee::create([
+            'factory_id'     => $this->factory->id,
+            'department_id'  => $department->id,
+            'designation_id' => $designation->id,
+            'employee_code'  => 'M-E888',
+            'name'           => 'Cascade Worker',
+            'status'         => 'active',
+        ]);
+
+        $response = $this->actingAs($this->hrAdmin)
+            ->get(route('admin.hrm.employees.edit', $employee));
+
+        $response->assertOk()
+            ->assertSee('x-ref="departmentSelect"', false)
+            ->assertSee('x-ref="designationSelect"', false)
+            ->assertSee('\u0022departmentId\u0022:\u0022' . $department->id, false)
+            ->assertSee('\u0022designationId\u0022:\u0022' . $designation->id, false)
+            ->assertSee('\u0022name\u0022:\u0022Sewing\u0022', false)
+            ->assertSee('\u0022name\u0022:\u0022Line Chief\u0022', false);
+    }
+
+    public function test_department_without_linked_designations_falls_back_to_shared_titles(): void
+    {
+        $department = Department::create([
+            'name'       => 'Admin & HR',
+            'factory_id' => $this->factory->id,
+            'is_active'  => true,
+        ]);
+
+        Designation::create([
+            'name'          => 'General Manager',
+            'department_id' => null,
+            'is_active'     => true,
+        ]);
+
+        $response = $this->actingAs($this->hrAdmin)
+            ->get(route('admin.hrm.employees.create'));
+
+        $response->assertOk()
+            ->assertSee('\u0022name\u0022:\u0022General Manager\u0022', false);
     }
 
     public function test_employee_list_supports_search(): void

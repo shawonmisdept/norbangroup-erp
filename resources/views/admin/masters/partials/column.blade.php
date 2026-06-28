@@ -27,7 +27,7 @@
         $relRecord = $record->{$rel};
         $relLabel = $relRecord
             ? \App\Support\RelationDisplay::label($relRecord, $display, $relationMeta['display_with'] ?? null)
-            : '—';
+            : ($column === 'department_id' && $record instanceof \App\Models\Designation ? 'Shared (all units)' : '—');
     @endphp
     <span class="text-gray-700">{{ $relLabel !== '' ? $relLabel : '—' }}</span>
 @elseif($column === 'description' && $record->description)

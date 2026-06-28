@@ -46,21 +46,26 @@ class DemoEmployeeSeeder extends Seeder
                 ->where('name', $row['department'])
                 ->first();
 
-            $designation = Designation::query()
-                ->where('name', $row['designation'])
-                ->where(function ($query) use ($department) {
-                    $query->whereNull('department_id');
+            $designation = null;
 
-                    if ($department) {
-                        $query->orWhere('department_id', $department->id);
-                    }
-                })
-                ->first();
+            if ($department) {
+                $designation = Designation::query()
+                    ->where('name', $row['designation'])
+                    ->where('department_id', $department->id)
+                    ->first();
+            }
+
+            if (! $designation) {
+                $designation = Designation::query()
+                    ->where('name', $row['designation'])
+                    ->whereNull('department_id')
+                    ->first();
+            }
 
             $workerCategory = WorkerCategory::where('name', $row['worker_category'])->where('is_active', true)->first();
             $employmentType = EmploymentType::where('name', $row['employment_type'])->where('is_active', true)->first();
 
-            $employee = Employee::updateOrCreate(
+            $employee = Employee::withTrashed()->updateOrCreate(
                 ['employee_code' => $row['employee_code']],
                 [
                     'factory_id'          => $factory->id,
@@ -80,6 +85,7 @@ class DemoEmployeeSeeder extends Seeder
                     'weekend_days'        => $row['weekend_days'] ?? [0],
                     'weekend_ot_allowed'  => $row['weekend_ot_allowed'] ?? false,
                     'half_day_pay_ratio'  => $row['half_day_pay_ratio'] ?? null,
+                    'deleted_at'          => null,
                 ]
             );
 

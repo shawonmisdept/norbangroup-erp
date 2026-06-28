@@ -242,31 +242,22 @@
                     </div>
                     <div>
                         <label class="erp-form-label">Department</label>
-                        <select class="erp-input !text-xs" x-model="departmentId" @change="onDepartmentChange()" data-dynamic-options="true">
+                        <select x-ref="departmentSelect" class="erp-input !text-xs" x-model="departmentId" @change="onDepartmentChange()" data-dynamic-options="true" data-searchable="false">
                             <option value="">Choose one</option>
-                            <template x-for="dept in filteredDepartments()" :key="dept.id">
-                                <option :value="dept.id" x-text="departmentLabel(dept)"></option>
-                            </template>
                         </select>
                         @error('department_id')<p class="text-xs text-red-500 mt-1">{{ $message }}</p>@enderror
                     </div>
                     <div>
                         <label class="erp-form-label">Designation</label>
-                        <select class="erp-input !text-xs" x-model="designationId" data-searchable="true" data-dynamic-options="true">
+                        <select x-ref="designationSelect" class="erp-input !text-xs" x-model="designationId" data-searchable="true" data-dynamic-options="true">
                             <option value="">Choose one</option>
-                            <template x-for="des in filteredDesignations()" :key="des.id">
-                                <option :value="des.id" x-text="designationLabel(des)"></option>
-                            </template>
                         </select>
                         @error('designation_id')<p class="text-xs text-red-500 mt-1">{{ $message }}</p>@enderror
                     </div>
                     <div>
                         <label class="erp-form-label">Duty Schedule (Shift)</label>
-                        <select class="erp-input !text-xs" x-model="shiftId">
+                        <select x-ref="shiftSelect" class="erp-input !text-xs" x-model="shiftId" data-dynamic-options="true" data-searchable="false">
                             <option value="">Choose one</option>
-                            @foreach($shifts as $shift)
-                                <option value="{{ $shift->id }}">{{ $shift->name }}</option>
-                            @endforeach
                         </select>
                         @error('shift_id')<p class="text-xs text-red-500 mt-1">{{ $message }}</p>@enderror
                     </div>

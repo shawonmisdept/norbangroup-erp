@@ -28,4 +28,9 @@ class OrgMasterDisplay
 
         return implode(' — ', $parts);
     }
+
+    public static function shift(?\App\Models\Hrm\Shift $shift): string
+    {
+        return RelationDisplay::label($shift, 'name', 'factory.name');
+    }
 }
