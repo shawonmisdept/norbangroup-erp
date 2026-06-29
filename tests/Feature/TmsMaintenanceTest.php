@@ -87,6 +87,48 @@ class TmsMaintenanceTest extends TestCase
         $this->assertEquals(800.0, (float) $log->fresh()->total_cost);
     }
 
+    public function test_maintenance_log_accepts_blank_labor_cost(): void
+    {
+        $factory = Factory::create(['name' => 'Test Factory', 'is_active' => true]);
+
+        $role = Role::create([
+            'name'        => 'TMS Admin',
+            'permissions' => ['tms.maintenance.view', 'tms.maintenance.manage'],
+        ]);
+
+        $user = User::create([
+            'name'       => 'Admin',
+            'email'      => 'maint-blank@test.com',
+            'password'   => 'password',
+            'role_id'    => $role->id,
+            'factory_id' => $factory->id,
+        ]);
+
+        $vehicle = TmsVehicle::create([
+            'factory_id'         => $factory->id,
+            'name'               => 'Hiace',
+            'reg_number'         => 'DHK-9999',
+            'type'               => 'own',
+            'fuel_type'          => 'petrol',
+            'passenger_capacity' => 8,
+            'status'             => 'available',
+        ]);
+
+        $this->actingAs($user)
+            ->post(route('admin.tms.maintenance.store'), [
+                'factory_id'   => $factory->id,
+                'vehicle_id'   => $vehicle->id,
+                'service_date' => '2026-06-01',
+                'service_type' => 'repair',
+                'paid_by'      => 'company',
+                'status'       => 'open',
+                'labor_cost'   => '',
+            ])
+            ->assertRedirect(route('admin.tms.maintenance.index'));
+
+        $this->assertSame(0.0, (float) TmsMaintenanceLog::firstOrFail()->labor_cost);
+    }
+
     public function test_fleet_cost_report_summarizes_costs(): void
     {
         $factory = Factory::create(['name' => 'Test Factory', 'is_active' => true]);

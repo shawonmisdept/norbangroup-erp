@@ -137,7 +137,7 @@ class MaintenanceController extends Controller
 
     private function validateLog(Request $request): array
     {
-        return $request->validate([
+        $validated = $request->validate([
             'factory_id'   => ['required', 'exists:factories,id'],
             'vehicle_id'   => ['required', 'exists:tms_vehicles,id'],
             'service_date' => ['required', 'date'],
@@ -153,7 +153,11 @@ class MaintenanceController extends Controller
             'parts.*.part_name'  => ['nullable', 'string', 'max:255'],
             'parts.*.quantity'   => ['nullable', 'numeric', 'min:0'],
             'parts.*.unit_price' => ['nullable', 'numeric', 'min:0'],
-        ]) + ['labor_cost' => $request->input('labor_cost', 0)];
+        ]);
+
+        $validated['labor_cost'] = $validated['labor_cost'] ?? 0;
+
+        return $validated;
     }
 
     private function vehicleOptions(Request $request, ?int $factoryId = null): array
