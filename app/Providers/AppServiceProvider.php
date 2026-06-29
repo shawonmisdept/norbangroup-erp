@@ -27,6 +27,13 @@ class AppServiceProvider extends ServiceProvider
     {
         Schema::defaultStringLength(191);
 
+        if (filter_var(env('APP_DEBUG', false), FILTER_VALIDATE_BOOL)) {
+            config(['app.debug' => true]);
+            ini_set('display_errors', '1');
+            ini_set('display_startup_errors', '1');
+            error_reporting(E_ALL);
+        }
+
         if ($this->app->environment('production') && str_starts_with((string) config('app.url'), 'https://')) {
             URL::forceScheme('https');
         }

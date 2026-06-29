@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\Tms;
 
 use App\Http\Controllers\Admin\Hrm\Concerns\ScopesHrmFactory;
 use App\Http\Controllers\Controller;
+use App\Models\Hrm\Employee;
 use App\Models\Tms\TmsRentalVendor;
 use App\Models\Tms\TmsVehicle;
 use Illuminate\Http\Request;
@@ -43,6 +44,7 @@ class VehicleController extends Controller
             'statuses'  => config('tms.vehicle_statuses'),
             'paidBy'    => config('tms.fuel_paid_by'),
             'vendors'   => $this->vendorOptions($request),
+            'employees' => $this->employeeOptions($request),
         ]);
     }
 
@@ -64,13 +66,14 @@ class VehicleController extends Controller
         $this->authorizeFactoryAccess($request, $vehicle->factory_id);
 
         return view('admin.tms.vehicles.form', [
-            'vehicle'   => $vehicle->load('rentalVendor'),
+            'vehicle'   => $vehicle->load(['rentalVendor', 'allocatedEmployee']),
             'factories' => $this->factoryOptions($request),
             'types'     => config('tms.vehicle_types'),
             'fuelTypes' => config('tms.fuel_types'),
             'statuses'  => config('tms.vehicle_statuses'),
             'paidBy'    => config('tms.fuel_paid_by'),
             'vendors'   => $this->vendorOptions($request, $vehicle->factory_id),
+            'employees' => $this->employeeOptions($request, $vehicle->factory_id),
         ]);
     }
 
@@ -111,6 +114,10 @@ class VehicleController extends Controller
             'rental_km_rate'         => ['nullable', 'numeric', 'min:0'],
             'fuel_covered_by'        => ['nullable', 'in:company,rental_party'],
             'maintenance_covered_by' => ['nullable', 'in:company,rental_party'],
+            'allocated_employee_id'  => [
+                'nullable',
+                Rule::exists('hrm_employees', 'id')->where(fn ($q) => $q->where('factory_id', $request->input('factory_id'))),
+            ],
         ]);
 
         if ($data['type'] === 'rental') {
@@ -130,6 +137,22 @@ class VehicleController extends Controller
         $query = TmsRentalVendor::query()->where('status', 'active')->orderBy('name');
         $fid = $factoryId ?? $request->user()?->factory_id;
 
+        if ($fid) {
+            $query->where('factory_id', $fid);
+        } elseif ($request->filled('factory_id')) {
+            $query->where('factory_id', $request->factory_id);
+        }
+
+        return $query->pluck('name', 'id')->all();
+    }
+
+    private function employeeOptions(Request $request, ?int $factoryId = null): array
+    {
+        $query = Employee::query()
+            ->whereIn('status', ['active', 'probation'])
+            ->orderBy('name');
+
+        $fid = $factoryId ?? $request->user()?->factory_id;
         if ($fid) {
             $query->where('factory_id', $fid);
         } elseif ($request->filled('factory_id')) {

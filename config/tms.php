@@ -251,4 +251,23 @@ return [
         'open'   => 'bg-amber-100 text-amber-800',
         'closed' => 'bg-green-100 text-green-800',
     ],
+
+    'maintenance_item_units' => [
+        'Pcs',
+        'Set',
+        'Pair',
+        'Service',
+        'Job',
+        'Ltr',
+        'Gal',
+        'Kg',
+        'Bottle',
+        'Can',
+        'Box',
+        'Roll',
+        'Tube',
+        'Bag',
+        'Side',
+        'Ft',
+    ],
 ];

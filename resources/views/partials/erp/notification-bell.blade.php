@@ -1,48 +1,49 @@
-<div class="relative" x-data="notificationBell({{ auth()->user()->unreadNotifications()->count() }}, '{{ route('admin.notifications.unread-count') }}')">
-    @php
-        $recentNotifications = auth()->user()->notifications()->limit(12)->get();
-        $typeMeta = [
-            'new_requirement' => ['label' => 'Order', 'class' => 'erp-notif-badge-order'],
-            'status_updated' => ['label' => 'Order', 'class' => 'erp-notif-badge-order'],
-            'hrm_late_acceptance' => ['label' => 'HRM', 'class' => 'erp-notif-badge-hrm'],
-            'hrm_unmapped_punch' => ['label' => 'HRM', 'class' => 'erp-notif-badge-hrm'],
-            'hrm_manual_punch' => ['label' => 'HRM', 'class' => 'erp-notif-badge-hrm'],
-            'hrm_sync_failed' => ['label' => 'HRM', 'class' => 'erp-notif-badge-hrm'],
-            'hrm_leave_applied' => ['label' => 'Leave', 'class' => 'erp-notif-badge-hrm'],
-            'hrm_leave_pending_hr' => ['label' => 'Leave', 'class' => 'erp-notif-badge-hrm'],
-            'hrm_daily_attendance' => ['label' => 'HRM', 'class' => 'erp-notif-badge-hrm'],
-            'hrm_contract_expiry' => ['label' => 'HRM', 'class' => 'erp-notif-badge-hrm'],
-            'hrm_probation_end' => ['label' => 'HRM', 'class' => 'erp-notif-badge-hrm'],
-            'hrm_ot_limit' => ['label' => 'HRM', 'class' => 'erp-notif-badge-hrm'],
-            'advance_disbursed' => ['label' => 'Finance', 'class' => 'erp-notif-badge-hrm'],
-            'loan_settled' => ['label' => 'Finance', 'class' => 'erp-notif-badge-hrm'],
-            'loan_application' => ['label' => 'Finance', 'class' => 'erp-notif-badge-hrm'],
-            'final_settlement_approved' => ['label' => 'F&F', 'class' => 'erp-notif-badge-hrm'],
-            'final_settlement_calculated' => ['label' => 'F&F', 'class' => 'erp-notif-badge-hrm'],
-            'final_settlement_pending' => ['label' => 'F&F', 'class' => 'erp-notif-badge-hrm'],
-            'separation_submitted' => ['label' => 'Exit', 'class' => 'erp-notif-badge-hrm'],
-            'separation_pending_hr' => ['label' => 'Exit', 'class' => 'erp-notif-badge-hrm'],
-            'separation_approved' => ['label' => 'Exit', 'class' => 'erp-notif-badge-hrm'],
-            'separation_rejected' => ['label' => 'Exit', 'class' => 'erp-notif-badge-hrm'],
-            'promotion_pending' => ['label' => 'Promo', 'class' => 'erp-notif-badge-hrm'],
-            'promotion_approved' => ['label' => 'Promo', 'class' => 'erp-notif-badge-hrm'],
-            'promotion_rejected' => ['label' => 'Promo', 'class' => 'erp-notif-badge-hrm'],
-            'recruitment_application' => ['label' => 'Recruit', 'class' => 'erp-notif-badge-hrm'],
-            'roster_published' => ['label' => 'Roster', 'class' => 'erp-notif-badge-hrm'],
-            'hrm_working_hours' => ['label' => 'HRM', 'class' => 'erp-notif-badge-hrm'],
-            'hrm_performance_pending_hr' => ['label' => 'Perf', 'class' => 'erp-notif-badge-hrm'],
-            'hrm_performance_pending_rating' => ['label' => 'Perf', 'class' => 'erp-notif-badge-hrm'],
-            'gate_pass_pending' => ['label' => 'RMG', 'class' => 'erp-notif-badge-hrm'],
-            'proxy_punch_flagged' => ['label' => 'RMG', 'class' => 'erp-notif-badge-hrm'],
-            'worker_transfer_pending' => ['label' => 'RMG', 'class' => 'erp-notif-badge-hrm'],
-            'manpower_variance' => ['label' => 'RMG', 'class' => 'erp-notif-badge-hrm'],
-            'tms_request_submitted' => ['label' => 'TMS', 'class' => 'erp-notif-badge-hrm'],
-            'tms_request_cancelled' => ['label' => 'TMS', 'class' => 'erp-notif-badge-hrm'],
-            'tms_trip_started' => ['label' => 'TMS', 'class' => 'erp-notif-badge-hrm'],
-            'tms_trip_completed' => ['label' => 'TMS', 'class' => 'erp-notif-badge-hrm'],
-            'tms_ot_pending' => ['label' => 'TMS', 'class' => 'erp-notif-badge-hrm'],
-        ];
-    @endphp
+@php
+    $recentNotifications = auth()->user()->notifications()->limit(12)->get();
+    $unreadCount = auth()->user()->unreadNotifications()->count();
+    $typeMeta = [
+        'new_requirement' => ['label' => 'Order', 'class' => 'erp-notif-badge-order'],
+        'status_updated' => ['label' => 'Order', 'class' => 'erp-notif-badge-order'],
+        'hrm_late_acceptance' => ['label' => 'HRM', 'class' => 'erp-notif-badge-hrm'],
+        'hrm_unmapped_punch' => ['label' => 'HRM', 'class' => 'erp-notif-badge-hrm'],
+        'hrm_manual_punch' => ['label' => 'HRM', 'class' => 'erp-notif-badge-hrm'],
+        'hrm_sync_failed' => ['label' => 'HRM', 'class' => 'erp-notif-badge-hrm'],
+        'hrm_leave_applied' => ['label' => 'Leave', 'class' => 'erp-notif-badge-hrm'],
+        'hrm_leave_pending_hr' => ['label' => 'Leave', 'class' => 'erp-notif-badge-hrm'],
+        'hrm_daily_attendance' => ['label' => 'HRM', 'class' => 'erp-notif-badge-hrm'],
+        'hrm_contract_expiry' => ['label' => 'HRM', 'class' => 'erp-notif-badge-hrm'],
+        'hrm_probation_end' => ['label' => 'HRM', 'class' => 'erp-notif-badge-hrm'],
+        'hrm_ot_limit' => ['label' => 'HRM', 'class' => 'erp-notif-badge-hrm'],
+        'advance_disbursed' => ['label' => 'Finance', 'class' => 'erp-notif-badge-hrm'],
+        'loan_settled' => ['label' => 'Finance', 'class' => 'erp-notif-badge-hrm'],
+        'loan_application' => ['label' => 'Finance', 'class' => 'erp-notif-badge-hrm'],
+        'final_settlement_approved' => ['label' => 'F&F', 'class' => 'erp-notif-badge-hrm'],
+        'final_settlement_calculated' => ['label' => 'F&F', 'class' => 'erp-notif-badge-hrm'],
+        'final_settlement_pending' => ['label' => 'F&F', 'class' => 'erp-notif-badge-hrm'],
+        'separation_submitted' => ['label' => 'Exit', 'class' => 'erp-notif-badge-hrm'],
+        'separation_pending_hr' => ['label' => 'Exit', 'class' => 'erp-notif-badge-hrm'],
+        'separation_approved' => ['label' => 'Exit', 'class' => 'erp-notif-badge-hrm'],
+        'separation_rejected' => ['label' => 'Exit', 'class' => 'erp-notif-badge-hrm'],
+        'promotion_pending' => ['label' => 'Promo', 'class' => 'erp-notif-badge-hrm'],
+        'promotion_approved' => ['label' => 'Promo', 'class' => 'erp-notif-badge-hrm'],
+        'promotion_rejected' => ['label' => 'Promo', 'class' => 'erp-notif-badge-hrm'],
+        'recruitment_application' => ['label' => 'Recruit', 'class' => 'erp-notif-badge-hrm'],
+        'roster_published' => ['label' => 'Roster', 'class' => 'erp-notif-badge-hrm'],
+        'hrm_working_hours' => ['label' => 'HRM', 'class' => 'erp-notif-badge-hrm'],
+        'hrm_performance_pending_hr' => ['label' => 'Perf', 'class' => 'erp-notif-badge-hrm'],
+        'hrm_performance_pending_rating' => ['label' => 'Perf', 'class' => 'erp-notif-badge-hrm'],
+        'gate_pass_pending' => ['label' => 'RMG', 'class' => 'erp-notif-badge-hrm'],
+        'proxy_punch_flagged' => ['label' => 'RMG', 'class' => 'erp-notif-badge-hrm'],
+        'worker_transfer_pending' => ['label' => 'RMG', 'class' => 'erp-notif-badge-hrm'],
+        'manpower_variance' => ['label' => 'RMG', 'class' => 'erp-notif-badge-hrm'],
+        'tms_request_submitted' => ['label' => 'TMS', 'class' => 'erp-notif-badge-hrm'],
+        'tms_request_cancelled' => ['label' => 'TMS', 'class' => 'erp-notif-badge-hrm'],
+        'tms_trip_started' => ['label' => 'TMS', 'class' => 'erp-notif-badge-hrm'],
+        'tms_trip_completed' => ['label' => 'TMS', 'class' => 'erp-notif-badge-hrm'],
+        'tms_ot_pending' => ['label' => 'TMS', 'class' => 'erp-notif-badge-hrm'],
+    ];
+@endphp
+<div class="relative" x-data="notificationBell({{ $unreadCount }}, '{{ route('admin.notifications.unread-count') }}')">
 
     <button type="button" @click="open = !open" @click.outside="open = false"
             class="relative p-2 rounded-md text-gray-500 hover:text-brand hover:bg-brand/5 transition"
@@ -64,7 +65,7 @@
                     <span x-text="unreadCount"></span> unread
                 </p>
             </div>
-            @if(auth()->user()->unreadNotifications()->count() > 0)
+            @if($unreadCount > 0)
                 <form method="POST" action="{{ route('admin.notifications.read-all') }}">
                     @csrf @method('PATCH')
                     <button type="submit" class="text-[10px] font-semibold text-brand hover:text-brand-dark uppercase tracking-wide">

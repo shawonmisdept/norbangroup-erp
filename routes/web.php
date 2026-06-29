@@ -833,14 +833,19 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
 
         Route::middleware('permission:tms.maintenance.view')->group(function () {
             Route::get('/maintenance', [\App\Http\Controllers\Admin\Tms\MaintenanceController::class, 'index'])->name('maintenance.index');
+            Route::get('/maintenance/vehicles/{vehicle}/register', [\App\Http\Controllers\Admin\Tms\MaintenanceController::class, 'register'])->name('maintenance.register')->whereNumber('vehicle');
+            Route::get('/maintenance/vehicles/{vehicle}/register/print', [\App\Http\Controllers\Admin\Tms\MaintenanceController::class, 'printRegister'])->name('maintenance.register.print')->whereNumber('vehicle');
+            Route::get('/maintenance/posting', [\App\Http\Controllers\Admin\Tms\MaintenancePostingController::class, 'index'])->name('maintenance.posting');
+            Route::get('/maintenance/posting/print', [\App\Http\Controllers\Admin\Tms\MaintenancePostingController::class, 'print'])->name('maintenance.posting.print');
+            Route::get('/maintenance/posting/export', [\App\Http\Controllers\Admin\Tms\MaintenancePostingController::class, 'export'])->name('maintenance.posting.export');
         });
 
         Route::middleware('permission:tms.maintenance.manage')->group(function () {
-            Route::get('/maintenance/create', [\App\Http\Controllers\Admin\Tms\MaintenanceController::class, 'create'])->name('maintenance.create');
-            Route::post('/maintenance', [\App\Http\Controllers\Admin\Tms\MaintenanceController::class, 'store'])->name('maintenance.store');
-            Route::get('/maintenance/{maintenance}/edit', [\App\Http\Controllers\Admin\Tms\MaintenanceController::class, 'edit'])->name('maintenance.edit')->whereNumber('maintenance');
-            Route::put('/maintenance/{maintenance}', [\App\Http\Controllers\Admin\Tms\MaintenanceController::class, 'update'])->name('maintenance.update')->whereNumber('maintenance');
-            Route::delete('/maintenance/{maintenance}', [\App\Http\Controllers\Admin\Tms\MaintenanceController::class, 'destroy'])->name('maintenance.destroy')->whereNumber('maintenance');
+            Route::get('/maintenance/vehicles/{vehicle}/bills/create', [\App\Http\Controllers\Admin\Tms\MaintenanceController::class, 'createBill'])->name('maintenance.bills.create')->whereNumber('vehicle');
+            Route::post('/maintenance/vehicles/{vehicle}/bills', [\App\Http\Controllers\Admin\Tms\MaintenanceController::class, 'storeBill'])->name('maintenance.bills.store')->whereNumber('vehicle');
+            Route::get('/maintenance/bills/{bill}/edit', [\App\Http\Controllers\Admin\Tms\MaintenanceController::class, 'editBill'])->name('maintenance.bills.edit')->whereNumber('bill');
+            Route::put('/maintenance/bills/{bill}', [\App\Http\Controllers\Admin\Tms\MaintenanceController::class, 'updateBill'])->name('maintenance.bills.update')->whereNumber('bill');
+            Route::delete('/maintenance/bills/{bill}', [\App\Http\Controllers\Admin\Tms\MaintenanceController::class, 'destroyBill'])->name('maintenance.bills.destroy')->whereNumber('bill');
         });
 
         Route::middleware('permission:tms.reports.view')->group(function () {

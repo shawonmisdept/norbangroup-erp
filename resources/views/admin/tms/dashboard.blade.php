@@ -7,8 +7,8 @@
     <div class="erp-panel p-4"><p class="text-xs text-gray-500">Active Trips</p><p class="text-2xl font-bold tabular-nums">{{ $activeTrips }}</p></div>
     <div class="erp-panel p-4"><p class="text-xs text-gray-500">OT Pending</p><p class="text-2xl font-bold tabular-nums">{{ $otPending }}</p></div>
     <div class="erp-panel p-4"><p class="text-xs text-gray-500">Rental Charges Pending</p><p class="text-2xl font-bold tabular-nums">{{ $rentalChargesPending }}</p></div>
-    <div class="erp-panel p-4"><p class="text-xs text-gray-500">Open Maintenance</p><p class="text-2xl font-bold tabular-nums">{{ $openMaintenance }}</p></div>
-    <div class="erp-panel p-4"><p class="text-xs text-gray-500">Vehicles in Maintenance</p><p class="text-2xl font-bold tabular-nums">{{ $vehiclesInMaintenance }}</p></div>
+    <div class="erp-panel p-4"><p class="text-xs text-gray-500">Maintenance Bills (This Month)</p><p class="text-2xl font-bold tabular-nums">{{ $maintenanceBillsThisMonth }}</p></div>
+    <div class="erp-panel p-4"><p class="text-xs text-gray-500">Maintenance Spend (This Month)</p><p class="text-2xl font-bold tabular-nums">৳{{ number_format($maintenanceSpendThisMonth, 0) }}</p></div>
 </div>
 <div class="erp-panel overflow-hidden">
 <table class="erp-table">

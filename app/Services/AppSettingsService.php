@@ -6,6 +6,8 @@ use App\Models\AppSetting;
 
 class AppSettingsService
 {
+    private static ?bool $appSettingsTableExists = null;
+
     public function applyRuntimeConfig(): void
     {
         if (! $this->tableExists()) {
@@ -61,10 +63,16 @@ class AppSettingsService
 
     private function tableExists(): bool
     {
-        try {
-            return \Illuminate\Support\Facades\Schema::hasTable('app_settings');
-        } catch (\Throwable) {
-            return false;
+        if (self::$appSettingsTableExists !== null) {
+            return self::$appSettingsTableExists;
         }
+
+        try {
+            self::$appSettingsTableExists = \Illuminate\Support\Facades\Schema::hasTable('app_settings');
+        } catch (\Throwable) {
+            self::$appSettingsTableExists = false;
+        }
+
+        return self::$appSettingsTableExists;
     }
 }

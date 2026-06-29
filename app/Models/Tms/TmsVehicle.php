@@ -3,6 +3,7 @@
 namespace App\Models\Tms;
 
 use App\Models\Factory;
+use App\Models\Hrm\Employee;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -18,7 +19,7 @@ class TmsVehicle extends Model
     protected $fillable = [
         'factory_id', 'name', 'reg_number', 'type', 'fuel_type', 'passenger_capacity',
         'status', 'rental_vendor_id', 'rental_km_rate', 'fuel_covered_by',
-        'maintenance_covered_by', 'last_odometer_km', 'created_by', 'updated_by',
+        'maintenance_covered_by', 'allocated_employee_id', 'last_odometer_km', 'created_by', 'updated_by',
     ];
 
     protected function casts(): array
@@ -38,6 +39,11 @@ class TmsVehicle extends Model
     public function rentalVendor(): BelongsTo
     {
         return $this->belongsTo(TmsRentalVendor::class, 'rental_vendor_id');
+    }
+
+    public function allocatedEmployee(): BelongsTo
+    {
+        return $this->belongsTo(Employee::class, 'allocated_employee_id');
     }
 
     public function tripLogs(): HasMany
@@ -79,6 +85,44 @@ class TmsVehicle extends Model
     public function displayLabel(): string
     {
         return "{$this->name} ({$this->reg_number})";
+    }
+
+    public function regNumberSuffix(): string
+    {
+        $parts = preg_split('/[\s\-]+/', trim((string) $this->reg_number)) ?: [];
+
+        return (string) (array_pop($parts) ?: $this->reg_number);
+    }
+
+    public function postingCarNoLabel(): string
+    {
+        $suffix = $this->regNumberSuffix();
+
+        if ($this->isRental() && $this->rentalVendor) {
+            return "{$this->rentalVendor->name} Car No: {$suffix}";
+        }
+
+        return "Company Car No: {$suffix}";
+    }
+
+    public function allocatedUserLabel(): ?string
+    {
+        $employee = $this->allocatedEmployee;
+
+        if (! $employee) {
+            return null;
+        }
+
+        $designation = $employee->designation?->name;
+
+        return $designation
+            ? "{$employee->name} ({$designation})"
+            : $employee->name;
+    }
+
+    public function maintenanceBills(): HasMany
+    {
+        return $this->hasMany(TmsMaintenanceBill::class, 'vehicle_id');
     }
 
     public function statusLabel(): string

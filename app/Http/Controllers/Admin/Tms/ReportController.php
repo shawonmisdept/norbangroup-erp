@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Tms\TmsDailyOdometerLog;
 use App\Models\Tms\TmsDriverOvertimePayment;
 use App\Models\Tms\TmsFuelLog;
-use App\Models\Tms\TmsMaintenanceLog;
+use App\Models\Tms\TmsMaintenanceBill;
 use App\Models\Tms\TmsRentalVehicleCharge;
 use App\Models\Tms\TmsTransportRequest;
 use App\Models\Tms\TmsTripLog;
@@ -155,15 +155,15 @@ class ReportController extends Controller
 
     private function maintenanceRows(Request $request, array $filters)
     {
-        $query = TmsMaintenanceLog::with(['vehicle', 'parts']);
+        $query = TmsMaintenanceBill::with(['vehicle', 'items']);
         $this->scopeToUserFactory($query, $request);
-        $this->applyCommonFilters($query, $filters, 'service_date');
+        $this->applyCommonFilters($query, $filters, 'bill_date');
 
         if (! empty($filters['vehicle_id'])) {
             $query->where('vehicle_id', $filters['vehicle_id']);
         }
 
-        return $query->latest('service_date')->paginate(25)->withQueryString();
+        return $query->latest('bill_date')->paginate(25)->withQueryString();
     }
 
     private function rentalChargeRows(Request $request, array $filters)
@@ -305,11 +305,11 @@ class ReportController extends Controller
 
     private function exportMaintenance($out, Request $request, array $filters): void
     {
-        fputcsv($out, ['ID', 'Date', 'Vehicle', 'Type', 'Vendor', 'Labor', 'Parts', 'Total', 'Paid By', 'Status']);
+        fputcsv($out, ['Bill No', 'Date', 'Vehicle', 'Workshop', 'Items', 'Total', 'Paid By']);
 
-        $query = TmsMaintenanceLog::with('vehicle');
+        $query = TmsMaintenanceBill::with('vehicle');
         $this->scopeToUserFactory($query, $request);
-        $this->applyDateFilters($query, 'service_date', $filters);
+        $this->applyDateFilters($query, 'bill_date', $filters);
 
         if (! empty($filters['factory_id'])) {
             $query->where('factory_id', $filters['factory_id']);
@@ -317,16 +317,13 @@ class ReportController extends Controller
 
         foreach ($query->cursor() as $row) {
             fputcsv($out, [
-                $row->id,
-                $row->service_date?->format('Y-m-d'),
+                $row->bill_no,
+                $row->bill_date?->format('Y-m-d'),
                 $row->vehicle?->displayLabel(),
-                $row->service_type,
-                $row->vendor_name,
-                $row->labor_cost,
-                $row->parts_cost,
-                $row->total_cost,
+                $row->workshop_name,
+                $row->itemsDescription(),
+                $row->total_amount,
                 $row->paid_by,
-                $row->status,
             ]);
         }
     }

@@ -104,6 +104,7 @@
             @include('partials.erp.toast')
 
             <main class="flex-1 p-3 sm:p-4 lg:p-6 min-w-0">
+                @include('partials.erp.flash-messages')
                 @yield('admin-content')
             </main>
 

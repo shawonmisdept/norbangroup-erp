@@ -20,6 +20,10 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->trustProxies(at: '*');
 
+        $middleware->web(append: [
+            \App\Http\Middleware\EagerLoadAuthUserRelations::class,
+        ]);
+
         $middleware->alias([
             'permission'          => \App\Http\Middleware\EnsureUserHasPermission::class,
             'master.permission'   => \App\Http\Middleware\EnsureMasterModulePermission::class,

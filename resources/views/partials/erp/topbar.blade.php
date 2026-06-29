@@ -16,6 +16,9 @@
         @else
             <span class="text-xs text-gray-400 hidden sm:block">{{ now()->format('l, d M Y') }}</span>
         @endif
+        @if(config('app.debug'))
+            <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-800 border border-amber-200">DEBUG</span>
+        @endif
     </div>
 
     <div class="flex items-center gap-2 shrink-0">

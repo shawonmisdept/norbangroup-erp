@@ -32,6 +32,7 @@
 <div><label class="erp-label">Maintenance Covered By</label><select name="maintenance_covered_by" class="erp-input"><option value="">—</option>@foreach($paidBy as $k => $l)<option value="{{ $k }}" @selected(old('maintenance_covered_by', $vehicle->maintenance_covered_by) === $k)>{{ $l }}</option>@endforeach</select></div>
 </div>
 </div>
+<div><label class="erp-label">Allocated User</label><select name="allocated_employee_id" class="erp-input"><option value="">—</option>@foreach($employees as $id => $name)<option value="{{ $id }}" @selected(old('allocated_employee_id', $vehicle->allocated_employee_id) == $id)>{{ $name }}</option>@endforeach</select><p class="text-xs text-gray-400 mt-1">HRM employee — shown on Bill For Posting report</p></div>
 <div class="flex gap-2 pt-2">
 <button type="submit" class="erp-btn-primary">Save</button>
 </div>

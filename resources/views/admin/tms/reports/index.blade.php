@@ -105,18 +105,15 @@ $tabs = [
 <td>{{ $o->morning_km ?? '—' }}</td><td>{{ $o->evening_km ?? '—' }}</td><td>{{ $o->dailyKm() ?? '—' }}</td>
 </tr>@empty<tr><td colspan="5" class="text-center py-8 text-gray-400">No records.</td></tr>@endforelse</tbody>
 @elseif($tab === 'maintenance')
-<thead><tr><th>Date</th><th>Vehicle</th><th>Type</th><th>Vendor</th><th>Labor</th><th>Parts</th><th>Total</th><th>Paid By</th><th>Status</th></tr></thead>
+<thead><tr><th>Bill No</th><th>Date</th><th>Vehicle</th><th>Workshop</th><th>Total</th><th>Paid By</th></tr></thead>
 <tbody>@forelse($rows as $m)<tr>
-<td class="text-xs">{{ $m->service_date?->format('d M Y') }}</td>
+<td class="text-xs font-medium">{{ $m->bill_no }}</td>
+<td class="text-xs">{{ $m->bill_date?->format('d M Y') }}</td>
 <td class="text-xs">{{ $m->vehicle?->displayLabel() }}</td>
-<td>{{ $m->serviceTypeLabel() }}</td>
-<td class="text-xs">{{ $m->vendor_name ?? '—' }}</td>
-<td class="tabular-nums">৳{{ number_format($m->labor_cost, 2) }}</td>
-<td class="tabular-nums">৳{{ number_format($m->parts_cost, 2) }}</td>
-<td class="tabular-nums font-medium">৳{{ number_format($m->total_cost, 2) }}</td>
+<td class="text-xs">{{ $m->workshop_name }}</td>
+<td class="tabular-nums font-medium">৳{{ number_format($m->total_amount, 2) }}</td>
 <td class="text-xs">{{ config('tms.fuel_paid_by.' . $m->paid_by, $m->paid_by) }}</td>
-<td><span class="erp-badge {{ $m->statusBadgeClass() }}">{{ $m->statusLabel() }}</span></td>
-</tr>@empty<tr><td colspan="9" class="text-center py-8 text-gray-400">No records.</td></tr>@endforelse</tbody>
+</tr>@empty<tr><td colspan="6" class="text-center py-8 text-gray-400">No records.</td></tr>@endforelse</tbody>
 @elseif($tab === 'rental_charges')
 <thead><tr><th>Date</th><th>Vehicle</th><th>Vendor</th><th>KM</th><th>Rate</th><th>Amount</th><th>Status</th><th>Paid At</th><th></th></tr></thead>
 <tbody>@forelse($rows as $c)<tr>

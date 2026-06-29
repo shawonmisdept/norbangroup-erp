@@ -386,11 +386,86 @@ select.emp-input.tomselected {
 }
 
 .erp-table td {
-    @apply px-4 py-2.5 text-gray-700 align-middle;
+    @apply px-4 py-1 text-gray-700 align-middle;
 }
 
 .erp-table tbody tr {
     @apply border-b border-gray-100 hover:bg-blue-50/40 transition-colors;
+}
+
+/* Maintenance module tables */
+.maintenance-bills-table {
+    @apply w-full text-sm border-collapse;
+    table-layout: fixed;
+}
+
+.maintenance-bills-table col.col-bill-no { width: 8%; }
+.maintenance-bills-table col.col-date { width: 10%; }
+.maintenance-bills-table col.col-workshop { width: 14%; }
+.maintenance-bills-table col.col-item { width: 34%; }
+.maintenance-bills-table col.col-qty { width: 10%; }
+.maintenance-bills-table col.col-amount { width: 12%; }
+.maintenance-bills-table col.col-actions { width: 12%; }
+
+.maintenance-bills-table:not(.has-actions) col.col-item { width: 46%; }
+
+.maintenance-bills-table th,
+.maintenance-bills-table td {
+    border-width: 1px;
+    border-style: solid;
+    border-color: var(--color-erp-border);
+    @apply px-3 py-1.5 text-gray-700 align-middle;
+    overflow-wrap: anywhere;
+}
+
+.maintenance-bills-table thead tr {
+    @apply bg-gray-50;
+}
+
+.maintenance-bills-table th {
+    @apply text-[11px] font-semibold text-gray-500 uppercase tracking-wider whitespace-nowrap;
+}
+
+.maintenance-bills-table tbody tr {
+    @apply hover:bg-blue-50/40 transition-colors;
+}
+
+.maintenance-posting-grid {
+    @apply w-full text-sm border-collapse;
+}
+
+.maintenance-posting-grid th,
+.maintenance-posting-grid td {
+    border-width: 1px;
+    border-style: solid;
+    border-color: var(--color-erp-border);
+    @apply px-2 py-1 text-gray-700 align-middle;
+}
+
+.maintenance-posting-grid .maintenance-posting-title th {
+    border-bottom-width: 0;
+    @apply py-2 text-center;
+}
+
+.maintenance-posting-grid .maintenance-posting-head th {
+    @apply bg-gray-50 text-[11px] font-semibold text-gray-500 uppercase tracking-wider;
+}
+
+.maintenance-posting-grid .maintenance-posting-total td {
+    @apply bg-gray-50 font-semibold;
+}
+
+.maintenance-posting-table .posting-merged {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.maintenance-posting-table tbody tr + tr td.posting-merged {
+    border-top-width: 0;
+}
+
+.maintenance-posting-table tbody tr:not(:last-child) td.posting-merged {
+    border-bottom-width: 0;
 }
 
 .erp-btn-primary {
