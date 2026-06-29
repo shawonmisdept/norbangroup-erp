@@ -2,28 +2,38 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('tms_rental_driver_portal_users', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('rental_driver_id')->unique()->constrained('tms_rental_drivers')->cascadeOnDelete();
-            $table->string('password');
-            $table->boolean('is_active')->default(true);
-            $table->timestamp('last_login_at')->nullable();
-            $table->rememberToken();
-            $table->timestamps();
-        });
+        if (! Schema::hasTable('tms_rental_driver_portal_users')) {
+            Schema::create('tms_rental_driver_portal_users', function (Blueprint $table) {
+                $table->id();
+                $table->foreignId('rental_driver_id')->unique()->constrained('tms_rental_drivers')->cascadeOnDelete();
+                $table->string('password');
+                $table->boolean('is_active')->default(true);
+                $table->timestamp('last_login_at')->nullable();
+                $table->rememberToken();
+                $table->timestamps();
+            });
+        }
 
-        Schema::table('tms_daily_odometer_logs', function (Blueprint $table) {
-            $table->foreignId('morning_entered_by_rental_driver')->nullable()->after('evening_entered_by_employee')
-                ->constrained('tms_rental_drivers')->nullOnDelete();
-            $table->foreignId('evening_entered_by_rental_driver')->nullable()->after('morning_entered_by_rental_driver')
-                ->constrained('tms_rental_drivers')->nullOnDelete();
-        });
+        if (! Schema::hasColumn('tms_daily_odometer_logs', 'morning_entered_by_rental_driver')) {
+            Schema::table('tms_daily_odometer_logs', function (Blueprint $table) {
+                $table->foreignId('morning_entered_by_rental_driver')->nullable()->after('evening_entered_by_employee')
+                    ->constrained('tms_rental_drivers')->nullOnDelete();
+            });
+        }
+
+        if (! Schema::hasColumn('tms_daily_odometer_logs', 'evening_entered_by_rental_driver')) {
+            Schema::table('tms_daily_odometer_logs', function (Blueprint $table) {
+                $table->foreignId('evening_entered_by_rental_driver')->nullable()->after('morning_entered_by_rental_driver')
+                    ->constrained('tms_rental_drivers')->nullOnDelete();
+            });
+        }
 
         if (Schema::getConnection()->getDriverName() === 'sqlite') {
             Schema::rename('tms_rental_vehicle_charges', 'tms_rental_vehicle_charges_legacy');
@@ -47,25 +57,43 @@ return new class extends Migration
                 $table->unique('odometer_log_id');
             });
 
-            \Illuminate\Support\Facades\DB::statement(
+            DB::statement(
                 'INSERT INTO tms_rental_vehicle_charges (id, trip_log_id, factory_id, vehicle_id, rental_vendor_id, total_km, km_rate, amount, payment_status, paid_at, paid_by, created_at, updated_at)
                  SELECT id, trip_log_id, factory_id, vehicle_id, rental_vendor_id, total_km, km_rate, amount, payment_status, paid_at, paid_by, created_at, updated_at
                  FROM tms_rental_vehicle_charges_legacy'
             );
 
             Schema::drop('tms_rental_vehicle_charges_legacy');
-        } else {
+
+            return;
+        }
+
+        if (! Schema::hasColumn('tms_rental_vehicle_charges', 'odometer_log_id')) {
             Schema::table('tms_rental_vehicle_charges', function (Blueprint $table) {
                 $table->foreignId('odometer_log_id')->nullable()->after('trip_log_id')
                     ->constrained('tms_daily_odometer_logs')->nullOnDelete();
+            });
+        }
+
+        if (! Schema::hasColumn('tms_rental_vehicle_charges', 'log_date')) {
+            Schema::table('tms_rental_vehicle_charges', function (Blueprint $table) {
                 $table->date('log_date')->nullable()->after('odometer_log_id');
+            });
+        }
+
+        if (! $this->mysqlIndexExists('tms_rental_vehicle_charges', 'tms_rental_vehicle_charges_odometer_log_id_unique')) {
+            Schema::table('tms_rental_vehicle_charges', function (Blueprint $table) {
                 $table->unique('odometer_log_id');
             });
+        }
 
+        $this->dropMysqlForeignKeyIfExists('tms_rental_vehicle_charges', 'trip_log_id');
+        $this->dropMysqlIndexIfExists('tms_rental_vehicle_charges', 'tms_rental_vehicle_charges_trip_log_id_unique');
+
+        DB::statement('ALTER TABLE tms_rental_vehicle_charges MODIFY trip_log_id BIGINT UNSIGNED NULL');
+
+        if (! $this->mysqlForeignKeyExists('tms_rental_vehicle_charges', 'trip_log_id')) {
             Schema::table('tms_rental_vehicle_charges', function (Blueprint $table) {
-                $table->dropForeign(['trip_log_id']);
-                $table->dropUnique(['trip_log_id']);
-                $table->unsignedBigInteger('trip_log_id')->nullable()->change();
                 $table->foreign('trip_log_id')->references('id')->on('tms_trip_logs')->nullOnDelete();
             });
         }
@@ -74,24 +102,102 @@ return new class extends Migration
     public function down(): void
     {
         if (Schema::getConnection()->getDriverName() !== 'sqlite') {
-            Schema::table('tms_rental_vehicle_charges', function (Blueprint $table) {
-                $table->dropForeign(['trip_log_id']);
-                $table->unsignedBigInteger('trip_log_id')->nullable(false)->change();
-                $table->unique('trip_log_id');
-                $table->foreign('trip_log_id')->references('id')->on('tms_trip_logs')->cascadeOnDelete();
-            });
+            $this->dropMysqlForeignKeyIfExists('tms_rental_vehicle_charges', 'trip_log_id');
+            DB::statement('ALTER TABLE tms_rental_vehicle_charges MODIFY trip_log_id BIGINT UNSIGNED NOT NULL');
+
+            if (! $this->mysqlIndexExists('tms_rental_vehicle_charges', 'tms_rental_vehicle_charges_trip_log_id_unique')) {
+                Schema::table('tms_rental_vehicle_charges', function (Blueprint $table) {
+                    $table->unique('trip_log_id');
+                });
+            }
+
+            if (! $this->mysqlForeignKeyExists('tms_rental_vehicle_charges', 'trip_log_id')) {
+                Schema::table('tms_rental_vehicle_charges', function (Blueprint $table) {
+                    $table->foreign('trip_log_id')->references('id')->on('tms_trip_logs')->cascadeOnDelete();
+                });
+            }
         }
 
         Schema::table('tms_rental_vehicle_charges', function (Blueprint $table) {
-            $table->dropConstrainedForeignId('odometer_log_id');
-            $table->dropColumn('log_date');
+            if (Schema::hasColumn('tms_rental_vehicle_charges', 'odometer_log_id')) {
+                $table->dropConstrainedForeignId('odometer_log_id');
+            }
+            if (Schema::hasColumn('tms_rental_vehicle_charges', 'log_date')) {
+                $table->dropColumn('log_date');
+            }
         });
 
         Schema::table('tms_daily_odometer_logs', function (Blueprint $table) {
-            $table->dropConstrainedForeignId('evening_entered_by_rental_driver');
-            $table->dropConstrainedForeignId('morning_entered_by_rental_driver');
+            if (Schema::hasColumn('tms_daily_odometer_logs', 'evening_entered_by_rental_driver')) {
+                $table->dropConstrainedForeignId('evening_entered_by_rental_driver');
+            }
+            if (Schema::hasColumn('tms_daily_odometer_logs', 'morning_entered_by_rental_driver')) {
+                $table->dropConstrainedForeignId('morning_entered_by_rental_driver');
+            }
         });
 
         Schema::dropIfExists('tms_rental_driver_portal_users');
+    }
+
+    private function mysqlForeignKeyExists(string $table, string $column): bool
+    {
+        return count($this->mysqlForeignKeys($table, $column)) > 0;
+    }
+
+    private function dropMysqlForeignKeyIfExists(string $table, string $column): void
+    {
+        foreach ($this->mysqlForeignKeys($table, $column) as $constraint) {
+            DB::statement("ALTER TABLE `{$table}` DROP FOREIGN KEY `{$constraint}`");
+        }
+    }
+
+    /** @return list<string> */
+    private function mysqlForeignKeys(string $table, string $column): array
+    {
+        if (Schema::getConnection()->getDriverName() !== 'mysql') {
+            return [];
+        }
+
+        $rows = DB::select(
+            'SELECT CONSTRAINT_NAME
+             FROM information_schema.KEY_COLUMN_USAGE
+             WHERE TABLE_SCHEMA = DATABASE()
+               AND TABLE_NAME = ?
+               AND COLUMN_NAME = ?
+               AND REFERENCED_TABLE_NAME IS NOT NULL',
+            [$table, $column]
+        );
+
+        return array_values(array_map(static fn ($row) => $row->CONSTRAINT_NAME, $rows));
+    }
+
+    private function mysqlIndexExists(string $table, string $indexName): bool
+    {
+        if (Schema::getConnection()->getDriverName() !== 'mysql') {
+            return false;
+        }
+
+        $rows = DB::select(
+            'SELECT INDEX_NAME
+             FROM information_schema.STATISTICS
+             WHERE TABLE_SCHEMA = DATABASE()
+               AND TABLE_NAME = ?
+               AND INDEX_NAME = ?
+             LIMIT 1',
+            [$table, $indexName]
+        );
+
+        return count($rows) > 0;
+    }
+
+    private function dropMysqlIndexIfExists(string $table, string $indexName): void
+    {
+        if (! $this->mysqlIndexExists($table, $indexName)) {
+            return;
+        }
+
+        Schema::table($table, function (Blueprint $table) use ($indexName) {
+            $table->dropIndex($indexName);
+        });
     }
 };
