@@ -197,8 +197,9 @@ class TmsWorkflowTest extends TestCase
 
         $this->actingAs($this->authority)
             ->post(route('admin.tms.requests.approve', $transportRequest), [
-                'driver_id'  => $this->driver->id,
-                'vehicle_id' => $this->vehicle->id,
+                'driver_type' => 'company',
+                'driver_id'   => $this->driver->id,
+                'vehicle_id'  => $this->vehicle->id,
             ])
             ->assertRedirect(route('admin.tms.trips.show', TmsTripLog::first()));
 
@@ -238,7 +239,8 @@ class TmsWorkflowTest extends TestCase
 
         $this->actingAs($this->authority)
             ->post(route('admin.tms.requests.approve', $transportRequest), [
-                'driver_id' => $this->driver->id,
+                'driver_type' => 'company',
+                'driver_id'   => $this->driver->id,
             ])
             ->assertRedirect();
 
@@ -260,8 +262,10 @@ class TmsWorkflowTest extends TestCase
         $this->assertSame('completed', $transportRequest->status);
         $this->assertNull($trip->start_km);
         $this->assertNull($trip->end_km);
-        $this->assertSame(4.0, (float) $trip->ot_hours);
-        $this->assertSame(600.0, (float) $trip->ot_amount);
+        $this->assertSame(0.0, (float) $trip->ot_hours);
+        $this->assertSame(120.0, (float) $trip->total_driver_pay);
+        $this->assertSame(120.0, (float) $trip->night_bill_amount);
+        $this->assertSame('night_bill', $trip->bill_type);
     }
 
     public function test_merge_three_requests_into_one_trip_on_three_seater(): void
@@ -285,6 +289,7 @@ class TmsWorkflowTest extends TestCase
         $this->actingAs($this->authority)
             ->post(route('admin.tms.requests.merge'), [
                 'request_ids' => $ids,
+                'driver_type' => 'company',
                 'driver_id'   => $this->driver->id,
             ])
             ->assertRedirect();
@@ -317,6 +322,7 @@ class TmsWorkflowTest extends TestCase
         $this->actingAs($this->authority)
             ->post(route('admin.tms.requests.merge'), [
                 'request_ids' => $ids,
+                'driver_type' => 'company',
                 'driver_id'   => $this->driver->id,
             ])
             ->assertSessionHasErrors('vehicle_id');
@@ -357,7 +363,8 @@ class TmsWorkflowTest extends TestCase
 
         $this->actingAs($this->authority)
             ->post(route('admin.tms.requests.approve', $transportRequest), [
-                'driver_id' => $this->driver->id,
+                'driver_type' => 'company',
+                'driver_id'   => $this->driver->id,
             ]);
 
         $transportRequest->refresh();
@@ -390,7 +397,8 @@ class TmsWorkflowTest extends TestCase
 
         $this->actingAs($this->authority)
             ->post(route('admin.tms.requests.approve', $transportRequest), [
-                'driver_id' => $this->driver->id,
+                'driver_type' => 'company',
+                'driver_id'   => $this->driver->id,
             ]);
 
         $trip = TmsTripLog::first();
@@ -452,7 +460,8 @@ class TmsWorkflowTest extends TestCase
 
         $this->actingAs($this->authority)
             ->post(route('admin.tms.requests.approve', $transportRequest), [
-                'driver_id' => $this->driver->id,
+                'driver_type' => 'company',
+                'driver_id'   => $this->driver->id,
             ]);
 
         $trip = TmsTripLog::first();

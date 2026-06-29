@@ -6,15 +6,16 @@
 <h1 class="text-lg font-bold">My Trips</h1>
 <a href="{{ route('employee.transport.index') }}" class="emp-btn-secondary">← Back</a>
 </div>
-<p class="text-xs text-gray-500">Start/end trip times only — daily KM is recorded by admin separately.</p>
+<p class="text-xs text-gray-500">Rental vehicles use Daily KM Log — no trip-level KM here.</p>
 @forelse($trips as $trip)
 @php
     $requests = $trip->transportRequests->isNotEmpty()
         ? $trip->transportRequests->whereIn('status', ['approved', 'in_progress'])
         : collect($trip->transportRequest && in_array($trip->transportRequest->status, ['approved', 'in_progress'], true) ? [$trip->transportRequest] : []);
+    $isRental = $trip->vehicle?->isRental();
 @endphp
 <div class="emp-card p-4 space-y-3">
-<p class="text-xs text-gray-500 flex flex-wrap items-center gap-2">{{ $trip->vehicle?->displayLabel() }} · {{ $trip->total_passengers }} passenger(s) · @include('partials.erp.tms-status-badge', ['status' => $trip->trip_status, 'label' => $trip->tripStatusLabel(), 'type' => 'trip', 'variant' => 'employee'])</p>
+<p class="text-xs text-gray-500 flex flex-wrap items-center gap-2">{{ $trip->vehicle?->displayLabel() }} @if($isRental)<span class="text-amber-700">· Rental</span>@endif · {{ $trip->total_passengers }} passenger(s) · @include('partials.erp.tms-status-badge', ['status' => $trip->trip_status, 'label' => $trip->tripStatusLabel(), 'type' => 'trip', 'variant' => 'employee'])</p>
 
 <div class="space-y-2">
 @foreach($requests as $req)
@@ -33,12 +34,24 @@
 </div>
 
 @if($trip->trip_status === 'not_started')
-<form method="POST" action="{{ route('employee.transport.trips.start', $trip) }}">@csrf
+<form method="POST" action="{{ route('employee.transport.trips.start', $trip) }}" class="space-y-2">@csrf
+@if(! $isRental)
+<div>
+<label class="text-xs text-gray-600">Start KM</label>
+<input type="number" step="0.01" min="0" name="start_km" class="emp-input w-full mt-1" placeholder="Min {{ number_format($trip->vehicle?->last_odometer_km ?? 0, 2) }}">
+</div>
+@endif
 <button type="submit" class="emp-btn w-full">Start Trip</button>
 </form>
 @elseif($trip->trip_status === 'in_progress')
-<p class="text-xs flex flex-wrap items-center gap-2">Started at @include('partials.erp.datetime-highlight', ['at' => $trip->duty_start_at, 'variant' => 'employee'])</p>
-<form method="POST" action="{{ route('employee.transport.trips.end', $trip) }}">@csrf
+<p class="text-xs flex flex-wrap items-center gap-2">Started at @include('partials.erp.datetime-highlight', ['at' => $trip->duty_start_at, 'variant' => 'employee'])@if($trip->start_km !== null) · Start KM: {{ number_format($trip->start_km, 2) }}@endif</p>
+<form method="POST" action="{{ route('employee.transport.trips.end', $trip) }}" class="space-y-2">@csrf
+@if(! $isRental)
+<div>
+<label class="text-xs text-gray-600">End KM</label>
+<input type="number" step="0.01" min="0" name="end_km" class="emp-input w-full mt-1">
+</div>
+@endif
 <button type="submit" class="emp-btn w-full">End Trip</button>
 </form>
 @endif

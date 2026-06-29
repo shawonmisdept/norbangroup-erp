@@ -279,7 +279,11 @@ class Role extends Model
             config('tms.permissions.trips', []),
             config('tms.permissions.fuel', []),
             config('tms.permissions.reports', []),
-            config('tms.permissions.overtime', [])
+            config('tms.permissions.overtime', []),
+            config('tms.permissions.rental_vendors', []),
+            config('tms.permissions.rental_charges', []),
+            config('tms.permissions.rental_drivers', []),
+            config('tms.permissions.maintenance', [])
         );
 
         foreach (config('tms.submodules', []) as $key => $sub) {

@@ -71,7 +71,8 @@ class HrmRecruitmentTest extends TestCase
         $this->get(route('careers.index'))
             ->assertOk()
             ->assertSee('Sewing Operator')
-            ->assertSee('Build Your Career');
+            ->assertSee('Build Your')
+            ->assertSee('With Norban Group');
     }
 
     public function test_candidate_can_apply_online_with_otp(): void

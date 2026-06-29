@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\Tms;
 
 use App\Http\Controllers\Admin\Hrm\Concerns\ScopesHrmFactory;
 use App\Http\Controllers\Controller;
+use App\Models\Tms\TmsRentalVendor;
 use App\Models\Tms\TmsVehicle;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -14,7 +15,7 @@ class VehicleController extends Controller
 
     public function index(Request $request)
     {
-        $query = TmsVehicle::query()->with('factory')->latest('id');
+        $query = TmsVehicle::query()->with(['factory', 'rentalVendor'])->latest('id');
         $this->scopeToUserFactory($query, $request);
 
         if ($request->filled('factory_id')) {
@@ -41,6 +42,7 @@ class VehicleController extends Controller
             'fuelTypes' => config('tms.fuel_types'),
             'statuses'  => config('tms.vehicle_statuses'),
             'paidBy'    => config('tms.fuel_paid_by'),
+            'vendors'   => $this->vendorOptions($request),
         ]);
     }
 
@@ -62,12 +64,13 @@ class VehicleController extends Controller
         $this->authorizeFactoryAccess($request, $vehicle->factory_id);
 
         return view('admin.tms.vehicles.form', [
-            'vehicle'   => $vehicle,
+            'vehicle'   => $vehicle->load('rentalVendor'),
             'factories' => $this->factoryOptions($request),
             'types'     => config('tms.vehicle_types'),
             'fuelTypes' => config('tms.fuel_types'),
             'statuses'  => config('tms.vehicle_statuses'),
             'paidBy'    => config('tms.fuel_paid_by'),
+            'vendors'   => $this->vendorOptions($request, $vehicle->factory_id),
         ]);
     }
 
@@ -104,18 +107,35 @@ class VehicleController extends Controller
             'fuel_type'              => ['required', 'in:gas,petrol,diesel'],
             'passenger_capacity'     => ['required', 'integer', 'min:1', 'max:100'],
             'status'                 => ['required', 'in:available,on_trip,maintenance'],
-            'rental_company'         => ['nullable', 'string', 'max:255'],
-            'rental_amount'          => ['nullable', 'numeric', 'min:0'],
+            'rental_vendor_id'       => ['nullable', 'exists:tms_rental_vendors,id'],
+            'rental_km_rate'         => ['nullable', 'numeric', 'min:0'],
             'fuel_covered_by'        => ['nullable', 'in:company,rental_party'],
             'maintenance_covered_by' => ['nullable', 'in:company,rental_party'],
         ]);
 
         if ($data['type'] === 'rental') {
             $request->validate([
-                'rental_company' => ['required', 'string', 'max:255'],
+                'rental_vendor_id' => ['required', 'exists:tms_rental_vendors,id'],
             ]);
+        } else {
+            $data['rental_vendor_id'] = null;
+            $data['rental_km_rate'] = null;
         }
 
         return $data;
+    }
+
+    private function vendorOptions(Request $request, ?int $factoryId = null): array
+    {
+        $query = TmsRentalVendor::query()->where('status', 'active')->orderBy('name');
+        $fid = $factoryId ?? $request->user()?->factory_id;
+
+        if ($fid) {
+            $query->where('factory_id', $fid);
+        } elseif ($request->filled('factory_id')) {
+            $query->where('factory_id', $request->factory_id);
+        }
+
+        return $query->pluck('name', 'id')->all();
     }
 }

@@ -78,6 +78,13 @@ class RolePermissionCatalog
             'tms.fuel.manage',
             'tms.reports.view',
             'tms.overtime.manage',
+            'tms.rental_vendors.view',
+            'tms.rental_vendors.manage',
+            'tms.rental_charges.manage',
+            'tms.rental_drivers.view',
+            'tms.rental_drivers.manage',
+            'tms.maintenance.view',
+            'tms.maintenance.manage',
         ]));
     }
 

@@ -30,6 +30,8 @@ return Application::configure(basePath: dirname(__DIR__))
             'tms.any'               => \App\Http\Middleware\EnsureAnyTmsViewPermission::class,
             'adms.push'             => \App\Http\Middleware\EnsureAdmsPushToken::class,
             'factory.scope'         => \App\Http\Middleware\EnsureUserFactoryScope::class,
+            'employee.portal'       => \App\Http\Middleware\EnsureLinkedPortalEmployee::class,
+            'rental.portal'         => \App\Http\Middleware\EnsureLinkedRentalDriver::class,
         ]);
 
         $middleware->redirectGuestsTo(function (Request $request) {
@@ -37,7 +39,27 @@ return Application::configure(basePath: dirname(__DIR__))
                 return route('employee.login');
             }
 
+            if ($request->is('rental') || $request->is('rental/*')) {
+                return route('rental.login');
+            }
+
             return route('login');
+        });
+
+        $middleware->redirectUsersTo(function (Request $request) {
+            if ($request->is('employee') || $request->is('employee/*')) {
+                return route('employee.dashboard');
+            }
+
+            if ($request->is('rental') || $request->is('rental/*')) {
+                return route('rental.dashboard');
+            }
+
+            if ($request->is('admin') || $request->is('admin/*')) {
+                return route('admin.requirements.index');
+            }
+
+            return route('orders.create');
         });
     })
     ->withExceptions(function (Exceptions $exceptions): void {

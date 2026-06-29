@@ -3,15 +3,18 @@
 namespace App\Http\Controllers\Employee\Transport;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Employee\Concerns\ResolvesPortalEmployee;
 use App\Models\Tms\TmsTripLog;
 use App\Services\Tms\TripService;
 use Illuminate\Http\Request;
 
 class TripController extends Controller
 {
+    use ResolvesPortalEmployee;
+
     public function index(Request $request, TripService $tripService)
     {
-        $employee = $request->user('employee')->employee;
+        $employee = $this->portalEmployee($request);
         $driver = $tripService->driverForEmployee($employee);
 
         if (! $driver) {
@@ -30,16 +33,28 @@ class TripController extends Controller
 
     public function start(Request $request, TmsTripLog $trip, TripService $tripService)
     {
-        $employee = $request->user('employee')->employee;
-        $tripService->start($trip, $employee);
+        $employee = $this->portalEmployee($request);
+
+        $validated = $request->validate([
+            'start_km' => ['nullable', 'numeric', 'min:0'],
+        ]);
+
+        $startKm = isset($validated['start_km']) ? (float) $validated['start_km'] : null;
+        $tripService->start($trip, $employee, $startKm);
 
         return redirect()->route('employee.transport.trips')->with('success', 'Trip started.');
     }
 
     public function end(Request $request, TmsTripLog $trip, TripService $tripService)
     {
-        $employee = $request->user('employee')->employee;
-        $tripService->end($trip, $employee);
+        $employee = $this->portalEmployee($request);
+
+        $validated = $request->validate([
+            'end_km' => ['nullable', 'numeric', 'min:0'],
+        ]);
+
+        $endKm = isset($validated['end_km']) ? (float) $validated['end_km'] : null;
+        $tripService->end($trip, $employee, $endKm);
 
         return redirect()->route('employee.transport.trips')->with('success', 'Trip completed.');
     }

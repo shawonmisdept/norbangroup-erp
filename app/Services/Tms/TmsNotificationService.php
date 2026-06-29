@@ -4,10 +4,12 @@ namespace App\Services\Tms;
 
 use App\Models\AppSetting;
 use App\Models\Hrm\EmployeePortalUser;
+use App\Models\Tms\TmsRentalDriverPortalUser;
 use App\Models\Tms\TmsTransportRequest;
 use App\Models\Tms\TmsTripLog;
 use App\Models\User;
 use App\Notifications\PortalTmsDriverTripAssignedNotification;
+use App\Notifications\PortalTmsRentalDriverTripAssignedNotification;
 use App\Notifications\PortalTmsRequestApprovedNotification;
 use App\Notifications\PortalTmsRequestRejectedNotification;
 use App\Notifications\TmsRequestCancelledNotification;
@@ -38,6 +40,10 @@ class TmsNotificationService
 
         if ($request->driver?->employee_id) {
             $this->notifyEmployeePortal($request->driver->employee_id, new PortalTmsDriverTripAssignedNotification($request));
+        }
+
+        if ($request->rental_driver_id) {
+            $this->notifyRentalDriverPortal($request->rental_driver_id, new PortalTmsRentalDriverTripAssignedNotification($request));
         }
     }
 
@@ -85,7 +91,11 @@ class TmsNotificationService
             return;
         }
 
-        $driver = $tripLog->driver?->employee?->name ?? 'Driver';
+        $tripLog->loadMissing(['driver.employee', 'rentalDriver']);
+
+        $driver = $tripLog->rentalDriver?->name
+            ?? $tripLog->driver?->employee?->name
+            ?? 'Driver';
 
         $notification = new class($driver, $tripLog) extends Notification {
             public function __construct(private string $driverName, private TmsTripLog $tripLog) {}
@@ -163,6 +173,15 @@ class TmsNotificationService
     private function notifyEmployeePortal(int $employeeId, Notification $notification): void
     {
         $portalUser = EmployeePortalUser::where('employee_id', $employeeId)->where('is_active', true)->first();
+
+        if ($portalUser) {
+            $portalUser->notify($notification);
+        }
+    }
+
+    private function notifyRentalDriverPortal(int $rentalDriverId, Notification $notification): void
+    {
+        $portalUser = TmsRentalDriverPortalUser::where('rental_driver_id', $rentalDriverId)->where('is_active', true)->first();
 
         if ($portalUser) {
             $portalUser->notify($notification);

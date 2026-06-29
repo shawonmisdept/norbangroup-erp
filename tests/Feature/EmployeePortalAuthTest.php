@@ -90,6 +90,36 @@ class EmployeePortalAuthTest extends TestCase
             ->assertSee('Portal Worker');
     }
 
+    public function test_authenticated_employee_visiting_login_redirects_to_dashboard(): void
+    {
+        $this->actingAs($this->employee->portalUser, 'employee')
+            ->get(route('employee.login'))
+            ->assertRedirect(route('employee.dashboard'));
+    }
+
+    public function test_unlinked_portal_user_is_logged_out_from_dashboard(): void
+    {
+        $temp = Employee::create([
+            'factory_id'    => $this->factory->id,
+            'employee_code' => $this->factory->code . '-TEMP',
+            'name'          => 'Temp Worker',
+            'status'        => 'active',
+        ]);
+
+        $orphan = EmployeePortalUser::create([
+            'employee_id' => $temp->id,
+            'password'    => 'secret-password',
+            'is_active'   => true,
+        ]);
+
+        $temp->delete();
+
+        $this->actingAs($orphan, 'employee')
+            ->get(route('employee.dashboard'))
+            ->assertRedirect(route('employee.login'))
+            ->assertSessionHasErrors('employee_code');
+    }
+
     public function test_authenticated_employee_can_view_dashboard(): void
     {
         $this->actingAs($this->employee->portalUser, 'employee')

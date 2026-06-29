@@ -16,7 +16,7 @@ class TmsTransportRequest extends Model
 
     protected $fillable = [
         'factory_id', 'employee_id', 'pickup_location', 'destination_id', 'destination_custom',
-        'pickup_at', 'purpose', 'passenger_count', 'status', 'vehicle_id', 'driver_id', 'trip_log_id',
+        'pickup_at', 'purpose', 'passenger_count', 'status', 'vehicle_id', 'driver_id', 'rental_driver_id', 'trip_log_id',
         'approved_by', 'approved_at', 'rejected_by', 'rejected_at', 'rejection_reason', 'cancelled_at',
     ];
 
@@ -54,6 +54,20 @@ class TmsTransportRequest extends Model
     public function driver(): BelongsTo
     {
         return $this->belongsTo(TmsDriver::class, 'driver_id');
+    }
+
+    public function rentalDriver(): BelongsTo
+    {
+        return $this->belongsTo(TmsRentalDriver::class, 'rental_driver_id');
+    }
+
+    public function assignedDriverLabel(): string
+    {
+        if ($this->rentalDriver) {
+            return $this->rentalDriver->displayLabel() . ' (Rental)';
+        }
+
+        return $this->driver?->displayLabel() ?? '—';
     }
 
     public function tripLog(): BelongsTo

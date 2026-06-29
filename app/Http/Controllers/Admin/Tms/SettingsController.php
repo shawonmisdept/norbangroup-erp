@@ -20,36 +20,55 @@ class SettingsController extends Controller
             $this->authorizeFactoryAccess($request, $factoryId);
             $settings = TmsSetting::firstOrCreate(
                 ['factory_id' => $factoryId],
-                ['office_start' => '09:00:00', 'office_end' => '17:00:00', 'ot_basis' => 'global_office_time']
+                TmsSetting::defaultValues()
             );
         }
 
         return view('admin.tms.settings.index', [
-            'settings'  => $settings,
-            'factories' => $this->factoryOptions($request),
-            'factoryId' => $factoryId,
-            'otBasis'   => config('tms.ot_basis'),
+            'settings'    => $settings,
+            'factories'   => $this->factoryOptions($request),
+            'factoryId'   => $factoryId,
+            'otBasis'     => config('tms.ot_basis'),
+            'weekdayLabels' => config('tms.weekday_labels'),
         ]);
     }
 
     public function update(Request $request)
     {
         $validated = $request->validate([
-            'factory_id'   => ['required', 'exists:factories,id'],
-            'office_start' => ['required', 'date_format:H:i'],
-            'office_end'   => ['required', 'date_format:H:i'],
-            'ot_basis'     => ['required', 'in:global_office_time,employee_shift_end'],
+            'factory_id'                  => ['required', 'exists:factories,id'],
+            'office_start'                => ['required', 'date_format:H:i'],
+            'office_end'                  => ['required', 'date_format:H:i'],
+            'ot_basis'                    => ['required', 'in:global_office_time,employee_shift_end'],
+            'company_night_bill'          => ['required', 'numeric', 'min:0'],
+            'company_holiday_duty_bill'   => ['required', 'numeric', 'min:0'],
+            'rental_ot_hourly_rate'       => ['required', 'numeric', 'min:0'],
+            'rental_km_rate'              => ['required', 'numeric', 'min:0'],
+            'weekend_days'                => ['nullable', 'array'],
+            'weekend_days.*'              => ['integer', 'min:0', 'max:6'],
         ]);
 
         $this->authorizeFactoryAccess($request, (int) $validated['factory_id']);
 
+        $weekendDays = collect($validated['weekend_days'] ?? [])
+            ->map(fn ($day) => (int) $day)
+            ->unique()
+            ->sort()
+            ->values()
+            ->all();
+
         TmsSetting::updateOrCreate(
             ['factory_id' => $validated['factory_id']],
             [
-                'office_start' => $validated['office_start'] . ':00',
-                'office_end'   => $validated['office_end'] . ':00',
-                'ot_basis'     => $validated['ot_basis'],
-                'updated_by'   => $request->user()->id,
+                'office_start'                => $validated['office_start'] . ':00',
+                'office_end'                  => $validated['office_end'] . ':00',
+                'ot_basis'                    => $validated['ot_basis'],
+                'company_night_bill'          => $validated['company_night_bill'],
+                'company_holiday_duty_bill'   => $validated['company_holiday_duty_bill'],
+                'rental_ot_hourly_rate'       => $validated['rental_ot_hourly_rate'],
+                'rental_km_rate'              => $validated['rental_km_rate'],
+                'weekend_days'                => $weekendDays ?: TmsSetting::defaultValues()['weekend_days'],
+                'updated_by'                  => $request->user()->id,
             ]
         );
 

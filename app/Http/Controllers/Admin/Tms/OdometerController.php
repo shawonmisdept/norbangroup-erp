@@ -6,11 +6,17 @@ use App\Http\Controllers\Admin\Hrm\Concerns\ScopesHrmFactory;
 use App\Http\Controllers\Controller;
 use App\Models\Tms\TmsDailyOdometerLog;
 use App\Models\Tms\TmsVehicle;
+use App\Services\Tms\DailyOdometerService;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class OdometerController extends Controller
 {
     use ScopesHrmFactory;
+
+    public function __construct(
+        private DailyOdometerService $odometerService,
+    ) {}
 
     public function index(Request $request)
     {
@@ -34,7 +40,7 @@ class OdometerController extends Controller
         }
 
         $vehicles = TmsVehicle::query()
-            ->when($request->user()->factory_id, fn ($q, $fid) => $q->where('factory_id', $fid))
+            ->when($request->user()->factory_id, fn ($q) => $q->where('factory_id', $request->user()->factory_id))
             ->orderBy('name')
             ->get();
 
@@ -46,28 +52,69 @@ class OdometerController extends Controller
         ]);
     }
 
-    public function create(Request $request)
+    public function createMorning(Request $request)
     {
-        return view('admin.tms.odometer.form', [
+        return view('admin.tms.odometer.morning-form', [
             'log'       => new TmsDailyOdometerLog(['log_date' => now()->toDateString()]),
             'vehicles'  => $this->vehicleOptions($request),
             'factories' => $this->factoryOptions($request),
         ]);
     }
 
-    public function store(Request $request)
+    public function storeMorning(Request $request)
     {
-        $validated = $this->validateLog($request);
+        $validated = $request->validate([
+            'factory_id' => ['required', 'exists:factories,id'],
+            'vehicle_id' => ['required', 'exists:tms_vehicles,id'],
+            'log_date'   => ['required', 'date'],
+            'morning_km' => ['required', 'numeric', 'min:0'],
+            'notes'      => ['nullable', 'string', 'max:1000'],
+        ]);
+
         $this->authorizeFactoryAccess($request, (int) $validated['factory_id']);
 
-        $log = TmsDailyOdometerLog::updateOrCreate(
-            ['vehicle_id' => $validated['vehicle_id'], 'log_date' => $validated['log_date']],
-            $this->logPayload($request, $validated)
+        try {
+            $log = $this->odometerService->storeMorning($validated, user: $request->user());
+        } catch (ValidationException $e) {
+            throw ValidationException::withMessages([
+                'morning_km' => 'Morning KM is already recorded for this vehicle and date. Use Edit to correct.',
+            ]);
+        }
+
+        return redirect()
+            ->route('admin.tms.odometer.index')
+            ->with('success', 'Morning KM saved for ' . $log->vehicle?->displayLabel() . '.');
+    }
+
+    public function createEvening(Request $request, TmsDailyOdometerLog $odometer)
+    {
+        $this->authorizeFactoryAccess($request, $odometer->factory_id);
+        $this->odometerService->ensureCanRecordEvening($odometer);
+
+        return view('admin.tms.odometer.evening-form', [
+            'log' => $odometer->load('vehicle'),
+        ]);
+    }
+
+    public function storeEvening(Request $request, TmsDailyOdometerLog $odometer)
+    {
+        $this->authorizeFactoryAccess($request, $odometer->factory_id);
+
+        $validated = $request->validate([
+            'evening_km' => ['required', 'numeric', 'min:0'],
+            'notes'      => ['nullable', 'string', 'max:1000'],
+        ]);
+
+        $this->odometerService->storeEvening(
+            $odometer,
+            (float) $validated['evening_km'],
+            $validated['notes'] ?? null,
+            user: $request->user(),
         );
 
-        $this->syncVehicleOdometer($log);
-
-        return redirect()->route('admin.tms.odometer.index')->with('success', 'Daily odometer log saved.');
+        return redirect()
+            ->route('admin.tms.odometer.index')
+            ->with('success', 'Evening KM saved for ' . $odometer->vehicle?->displayLabel() . '.');
     }
 
     public function edit(Request $request, TmsDailyOdometerLog $odometer)
@@ -84,16 +131,8 @@ class OdometerController extends Controller
     public function update(Request $request, TmsDailyOdometerLog $odometer)
     {
         $this->authorizeFactoryAccess($request, $odometer->factory_id);
-        $validated = $this->validateLog($request, $odometer);
-        $odometer->update($this->logPayload($request, $validated, $odometer));
-        $this->syncVehicleOdometer($odometer->fresh());
 
-        return redirect()->route('admin.tms.odometer.index')->with('success', 'Daily odometer log updated.');
-    }
-
-    private function validateLog(Request $request, ?TmsDailyOdometerLog $log = null): array
-    {
-        $data = $request->validate([
+        $validated = $request->validate([
             'factory_id'  => ['required', 'exists:factories,id'],
             'vehicle_id'  => ['required', 'exists:tms_vehicles,id'],
             'log_date'    => ['required', 'date'],
@@ -102,17 +141,13 @@ class OdometerController extends Controller
             'notes'       => ['nullable', 'string', 'max:1000'],
         ]);
 
-        if ($data['morning_km'] !== null && $data['evening_km'] !== null && (float) $data['evening_km'] < (float) $data['morning_km']) {
-            throw \Illuminate\Validation\ValidationException::withMessages([
+        if ($validated['morning_km'] !== null && $validated['evening_km'] !== null
+            && (float) $validated['evening_km'] < (float) $validated['morning_km']) {
+            throw ValidationException::withMessages([
                 'evening_km' => 'Evening KM must be greater than or equal to morning KM.',
             ]);
         }
 
-        return $data;
-    }
-
-    private function logPayload(Request $request, array $validated, ?TmsDailyOdometerLog $existing = null): array
-    {
         $payload = [
             'factory_id' => $validated['factory_id'],
             'vehicle_id' => $validated['vehicle_id'],
@@ -122,26 +157,27 @@ class OdometerController extends Controller
             'notes'      => $validated['notes'] ?? null,
         ];
 
-        if ($request->filled('morning_km')) {
+        if ($request->filled('morning_km') && (float) $validated['morning_km'] !== (float) $odometer->morning_km) {
             $payload['morning_entered_by'] = $request->user()->id;
-        } elseif ($existing) {
-            $payload['morning_entered_by'] = $existing->morning_entered_by;
+            $payload['morning_recorded_at'] = now();
         }
 
-        if ($request->filled('evening_km')) {
+        if ($request->filled('evening_km') && (float) $validated['evening_km'] !== (float) $odometer->evening_km) {
             $payload['evening_entered_by'] = $request->user()->id;
-        } elseif ($existing) {
-            $payload['evening_entered_by'] = $existing->evening_entered_by;
+            $payload['evening_recorded_at'] = now();
         }
 
-        return $payload;
-    }
+        $odometer->update($payload);
+        $log = $odometer->fresh(['vehicle']);
+        $this->odometerService->syncVehicleOdometer($log);
 
-    private function syncVehicleOdometer(TmsDailyOdometerLog $log): void
-    {
-        if ($log->evening_km !== null) {
-            TmsVehicle::whereKey($log->vehicle_id)->update(['last_odometer_km' => $log->evening_km]);
+        if ($log->hasEvening()) {
+            app(\App\Services\Tms\DailyRentalBillingService::class)->syncFromOdometerLog($log);
         }
+
+        return redirect()
+            ->route('admin.tms.odometer.index')
+            ->with('success', 'Daily KM log updated.');
     }
 
     private function vehicleOptions(Request $request, ?int $factoryId = null): \Illuminate\Support\Collection

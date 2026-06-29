@@ -11,6 +11,10 @@
 <span class="font-semibold">Driver Trips</span>
 <p class="text-gray-500 text-xs mt-1">Start or end assigned trips</p>
 </a>
+<a href="{{ route('employee.transport.odometer') }}" class="emp-card block p-4 text-sm">
+<span class="font-semibold">Daily KM Log</span>
+<p class="text-gray-500 text-xs mt-1">Record morning and evening odometer</p>
+</a>
 @endif
 @forelse($requests as $req)
 <a href="{{ route('employee.transport.requests.show', $req) }}" class="emp-card block p-4">

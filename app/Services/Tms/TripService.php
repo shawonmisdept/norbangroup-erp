@@ -5,21 +5,33 @@ namespace App\Services\Tms;
 use App\Models\Hrm\Employee;
 use App\Models\Tms\TmsDriver;
 use App\Models\Tms\TmsDriverOvertimePayment;
+use App\Models\Tms\TmsRentalDriver;
 use App\Models\Tms\TmsTransportRequest;
 use App\Models\Tms\TmsTripLog;
+use App\Models\Tms\TmsVehicle;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 
 class TripService
 {
     public function __construct(
-        private OvertimeCalculator $overtimeCalculator,
+        private DriverPayCalculator $driverPayCalculator,
         private TmsNotificationService $notifications,
     ) {}
 
-    public function start(TmsTripLog $tripLog, Employee $employee): TmsTripLog
-    {
-        $this->assertAssignedDriver($tripLog, $employee);
+    public function start(
+        TmsTripLog $tripLog,
+        ?Employee $employee = null,
+        ?float $startKm = null,
+        ?TmsRentalDriver $rentalDriver = null,
+    ): TmsTripLog {
+        if ($employee !== null) {
+            $this->assertAssignedCompanyDriver($tripLog, $employee);
+        }
+
+        if ($rentalDriver !== null) {
+            $this->assertAssignedRentalDriver($tripLog, $rentalDriver);
+        }
 
         $requests = $this->linkedRequests($tripLog);
 
@@ -35,29 +47,56 @@ class TripService
             throw ValidationException::withMessages(['trip' => 'Trip has already been started.']);
         }
 
-        return DB::transaction(function () use ($tripLog, $requests, $employee) {
-            $now = now();
+        $tripLog->loadMissing('vehicle');
 
-            $tripLog->update([
-                'duty_start_at' => $now,
+        if (! $tripLog->vehicle->isRental()) {
+            $this->validateStartKm($tripLog->vehicle, $startKm);
+        } else {
+            $startKm = null;
+        }
+
+        return DB::transaction(function () use ($tripLog, $requests, $employee, $startKm) {
+            $payload = [
+                'duty_start_at' => now(),
                 'trip_status'   => 'in_progress',
-            ]);
+            ];
+
+            if ($startKm !== null) {
+                $payload['start_km'] = $startKm;
+            }
+
+            $tripLog->update($payload);
 
             foreach ($requests as $request) {
                 $request->update(['status' => 'in_progress']);
-                app(TransportRequestService::class)->recordStatusChange($request, 'approved', 'in_progress', employeeId: $employee->id);
-                $this->notifications->tripStarted($request->fresh(['employee', 'vehicle', 'driver.employee']));
+                app(TransportRequestService::class)->recordStatusChange(
+                    $request,
+                    'approved',
+                    'in_progress',
+                    employeeId: $employee?->id
+                );
+                $this->notifications->tripStarted($request->fresh(['employee', 'vehicle', 'driver.employee', 'rentalDriver']));
             }
 
             $tripLog->vehicle->update(['status' => 'on_trip']);
 
-            return $tripLog->fresh(['transportRequests.employee', 'vehicle', 'driver.employee']);
+            return $tripLog->fresh(['transportRequests.employee', 'vehicle', 'driver.employee', 'rentalDriver']);
         });
     }
 
-    public function end(TmsTripLog $tripLog, Employee $employee): TmsTripLog
-    {
-        $this->assertAssignedDriver($tripLog, $employee);
+    public function end(
+        TmsTripLog $tripLog,
+        ?Employee $employee = null,
+        ?float $endKm = null,
+        ?TmsRentalDriver $rentalDriver = null,
+    ): TmsTripLog {
+        if ($employee !== null) {
+            $this->assertAssignedCompanyDriver($tripLog, $employee);
+        }
+
+        if ($rentalDriver !== null) {
+            $this->assertAssignedRentalDriver($tripLog, $rentalDriver);
+        }
 
         $requests = $this->linkedRequests($tripLog);
 
@@ -65,36 +104,68 @@ class TripService
             throw ValidationException::withMessages(['trip' => 'Trip is not in progress.']);
         }
 
-        return DB::transaction(function () use ($tripLog, $requests, $employee) {
-            $now = now();
+        $tripLog->loadMissing('vehicle');
+        $vehicle = $tripLog->vehicle;
 
+        if ($vehicle->isRental()) {
+            $endKm = null;
+            $totalKm = null;
+        } else {
+            $totalKm = $this->validateEndKm($tripLog, $endKm);
+        }
+
+        return DB::transaction(function () use ($tripLog, $requests, $employee, $endKm, $totalKm, $vehicle) {
             $tripLog->update([
-                'duty_end_at' => $now,
+                'duty_end_at' => now(),
                 'trip_status' => 'completed',
+                'end_km'      => $endKm,
+                'total_km'    => $totalKm,
+                'rental_km_rate'       => null,
+                'rental_charge_amount' => 0,
             ]);
 
-            $ot = $this->overtimeCalculator->calculate($tripLog->fresh());
-            $tripLog->update($ot);
+            $tripLog = $tripLog->fresh();
+
+            $pay = $this->driverPayCalculator->calculate($tripLog);
+
+            $tripLog->update($pay);
+
+            if ($endKm !== null && ! $vehicle->isRental()) {
+                $tripLog->vehicle->update(['last_odometer_km' => $endKm]);
+            }
 
             foreach ($requests as $request) {
                 $request->update(['status' => 'completed']);
-                app(TransportRequestService::class)->recordStatusChange($request, 'in_progress', 'completed', employeeId: $employee->id);
-                $this->notifications->tripCompleted($request->fresh(['employee', 'vehicle', 'driver.employee']));
+                app(TransportRequestService::class)->recordStatusChange(
+                    $request,
+                    'in_progress',
+                    'completed',
+                    employeeId: $employee?->id
+                );
+                $this->notifications->tripCompleted($request->fresh(['employee', 'vehicle', 'driver.employee', 'rentalDriver']));
             }
 
             $tripLog->vehicle->update(['status' => 'available']);
 
-            if ($ot['ot_amount'] > 0) {
+            if ($pay['total_driver_pay'] > 0) {
                 TmsDriverOvertimePayment::updateOrCreate(
                     ['trip_log_id' => $tripLog->id],
                     [
-                        'driver_id'      => $tripLog->driver_id,
-                        'amount'         => $ot['ot_amount'],
+                        'driver_id'         => $tripLog->driver_id,
+                        'rental_driver_id'  => $tripLog->rental_driver_id,
+                        'amount'            => $pay['total_driver_pay'],
+                        'payment_breakdown' => [
+                            'bill_type'           => $pay['bill_type'],
+                            'night_bill_amount'   => $pay['night_bill_amount'],
+                            'holiday_duty_amount' => $pay['holiday_duty_amount'],
+                            'ot_hours'            => $pay['ot_hours'],
+                            'ot_hourly_amount'    => $pay['ot_hourly_amount'],
+                        ],
                         'payment_status' => 'pending',
                     ]
                 );
 
-                $this->notifications->otPendingPayment($tripLog->fresh('driver.employee'));
+                $this->notifications->otPendingPayment($tripLog->fresh(['driver.employee', 'rentalDriver']));
             }
 
             return $tripLog->fresh();
@@ -107,6 +178,11 @@ class TripService
             ->where('factory_id', $employee->factory_id)
             ->where('status', 'active')
             ->first();
+    }
+
+    public function isRentalDriverTrip(TmsTripLog $tripLog): bool
+    {
+        return $tripLog->rental_driver_id !== null;
     }
 
     /** @return \Illuminate\Support\Collection<int, TmsTransportRequest> */
@@ -125,12 +201,53 @@ class TripService
         return collect();
     }
 
-    private function assertAssignedDriver(TmsTripLog $tripLog, Employee $employee): void
+    private function assertAssignedCompanyDriver(TmsTripLog $tripLog, Employee $employee): void
     {
         $driver = $this->driverForEmployee($employee);
 
         if (! $driver || $tripLog->driver_id !== $driver->id) {
             abort(403, 'You are not the assigned driver for this trip.');
         }
+    }
+
+    private function assertAssignedRentalDriver(TmsTripLog $tripLog, TmsRentalDriver $rentalDriver): void
+    {
+        if ((int) $tripLog->rental_driver_id !== (int) $rentalDriver->id) {
+            abort(403, 'You are not the assigned driver for this trip.');
+        }
+    }
+
+    private function validateStartKm(TmsVehicle $vehicle, ?float $startKm): void
+    {
+        if ($startKm === null) {
+            return;
+        }
+
+        if ($startKm < (float) $vehicle->last_odometer_km) {
+            throw ValidationException::withMessages([
+                'start_km' => 'Start KM must be at least ' . number_format((float) $vehicle->last_odometer_km, 2) . ' (last recorded odometer).',
+            ]);
+        }
+    }
+
+    private function validateEndKm(TmsTripLog $tripLog, ?float $endKm): float
+    {
+        if ($endKm === null) {
+            return 0;
+        }
+
+        if ($tripLog->start_km === null) {
+            throw ValidationException::withMessages([
+                'start_km' => 'Start KM must be recorded before entering end KM.',
+            ]);
+        }
+
+        if ($endKm <= (float) $tripLog->start_km) {
+            throw ValidationException::withMessages([
+                'end_km' => 'End KM must be greater than start KM (' . number_format((float) $tripLog->start_km, 2) . ').',
+            ]);
+        }
+
+        return round($endKm - (float) $tripLog->start_km, 2);
     }
 }

@@ -17,7 +17,7 @@ class TmsVehicle extends Model
 
     protected $fillable = [
         'factory_id', 'name', 'reg_number', 'type', 'fuel_type', 'passenger_capacity',
-        'status', 'rental_company', 'rental_amount', 'fuel_covered_by',
+        'status', 'rental_vendor_id', 'rental_km_rate', 'fuel_covered_by',
         'maintenance_covered_by', 'last_odometer_km', 'created_by', 'updated_by',
     ];
 
@@ -25,14 +25,19 @@ class TmsVehicle extends Model
     {
         return [
             'passenger_capacity' => 'integer',
-            'rental_amount'      => 'decimal:2',
-            'last_odometer_km'   => 'decimal:2',
+            'rental_km_rate'   => 'decimal:2',
+            'last_odometer_km' => 'decimal:2',
         ];
     }
 
     public function factory(): BelongsTo
     {
         return $this->belongsTo(Factory::class);
+    }
+
+    public function rentalVendor(): BelongsTo
+    {
+        return $this->belongsTo(TmsRentalVendor::class, 'rental_vendor_id');
     }
 
     public function tripLogs(): HasMany
@@ -59,6 +64,11 @@ class TmsVehicle extends Model
             ->values();
 
         return $names->isNotEmpty() ? $names->implode(', ') : '—';
+    }
+
+    public function isRental(): bool
+    {
+        return $this->type === 'rental';
     }
 
     public function isAvailable(): bool

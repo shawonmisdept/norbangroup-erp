@@ -105,7 +105,7 @@ return new class extends Migration
             $table->foreignId('transport_request_id')->constrained('tms_transport_requests')->cascadeOnDelete();
             $table->foreignId('factory_id')->constrained('factories')->cascadeOnDelete();
             $table->foreignId('vehicle_id')->constrained('tms_vehicles')->cascadeOnDelete();
-            $table->foreignId('driver_id')->constrained('tms_drivers')->cascadeOnDelete();
+            $table->foreignId('driver_id')->nullable()->constrained('tms_drivers')->nullOnDelete();
             $table->decimal('start_km', 10, 2)->nullable();
             $table->decimal('end_km', 10, 2)->nullable();
             $table->decimal('total_km', 10, 2)->nullable();
@@ -155,7 +155,7 @@ return new class extends Migration
         Schema::create('tms_driver_overtime_payments', function (Blueprint $table) {
             $table->id();
             $table->foreignId('trip_log_id')->constrained('tms_trip_logs')->cascadeOnDelete();
-            $table->foreignId('driver_id')->constrained('tms_drivers')->cascadeOnDelete();
+            $table->foreignId('driver_id')->nullable()->constrained('tms_drivers')->nullOnDelete();
             $table->decimal('amount', 12, 2);
             $table->string('payment_status', 16)->default('pending');
             $table->timestamp('paid_at')->nullable();

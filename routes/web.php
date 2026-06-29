@@ -749,6 +749,30 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
             Route::delete('/vehicles/{vehicle}', [\App\Http\Controllers\Admin\Tms\VehicleController::class, 'destroy'])->name('vehicles.destroy')->whereNumber('vehicle');
         });
 
+        Route::middleware('permission:tms.rental_vendors.view')->group(function () {
+            Route::get('/rental-vendors', [\App\Http\Controllers\Admin\Tms\RentalVendorController::class, 'index'])->name('rental-vendors.index');
+        });
+
+        Route::middleware('permission:tms.rental_vendors.manage')->group(function () {
+            Route::get('/rental-vendors/create', [\App\Http\Controllers\Admin\Tms\RentalVendorController::class, 'create'])->name('rental-vendors.create');
+            Route::post('/rental-vendors', [\App\Http\Controllers\Admin\Tms\RentalVendorController::class, 'store'])->name('rental-vendors.store');
+            Route::get('/rental-vendors/{rentalVendor}/edit', [\App\Http\Controllers\Admin\Tms\RentalVendorController::class, 'edit'])->name('rental-vendors.edit')->whereNumber('rentalVendor');
+            Route::put('/rental-vendors/{rentalVendor}', [\App\Http\Controllers\Admin\Tms\RentalVendorController::class, 'update'])->name('rental-vendors.update')->whereNumber('rentalVendor');
+            Route::delete('/rental-vendors/{rentalVendor}', [\App\Http\Controllers\Admin\Tms\RentalVendorController::class, 'destroy'])->name('rental-vendors.destroy')->whereNumber('rentalVendor');
+        });
+
+        Route::middleware('permission:tms.rental_drivers.view')->group(function () {
+            Route::get('/rental-drivers', [\App\Http\Controllers\Admin\Tms\RentalDriverController::class, 'index'])->name('rental-drivers.index');
+        });
+
+        Route::middleware('permission:tms.rental_drivers.manage')->group(function () {
+            Route::get('/rental-drivers/create', [\App\Http\Controllers\Admin\Tms\RentalDriverController::class, 'create'])->name('rental-drivers.create');
+            Route::post('/rental-drivers', [\App\Http\Controllers\Admin\Tms\RentalDriverController::class, 'store'])->name('rental-drivers.store');
+            Route::get('/rental-drivers/{rentalDriver}/edit', [\App\Http\Controllers\Admin\Tms\RentalDriverController::class, 'edit'])->name('rental-drivers.edit')->whereNumber('rentalDriver');
+            Route::put('/rental-drivers/{rentalDriver}', [\App\Http\Controllers\Admin\Tms\RentalDriverController::class, 'update'])->name('rental-drivers.update')->whereNumber('rentalDriver');
+            Route::delete('/rental-drivers/{rentalDriver}', [\App\Http\Controllers\Admin\Tms\RentalDriverController::class, 'destroy'])->name('rental-drivers.destroy')->whereNumber('rentalDriver');
+        });
+
         Route::middleware('permission:tms.drivers.view')->group(function () {
             Route::get('/drivers', [\App\Http\Controllers\Admin\Tms\DriverController::class, 'index'])->name('drivers.index');
         });
@@ -779,14 +803,23 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
         });
 
         Route::middleware('permission:tms.settings.manage')->group(function () {
-            Route::get('/odometer/create', [\App\Http\Controllers\Admin\Tms\OdometerController::class, 'create'])->name('odometer.create');
-            Route::post('/odometer', [\App\Http\Controllers\Admin\Tms\OdometerController::class, 'store'])->name('odometer.store');
+            Route::post('/trips/{trip}/start', [\App\Http\Controllers\Admin\Tms\TripController::class, 'start'])->name('trips.start')->whereNumber('trip');
+            Route::post('/trips/{trip}/end', [\App\Http\Controllers\Admin\Tms\TripController::class, 'end'])->name('trips.end')->whereNumber('trip');
+            Route::get('/odometer/morning/create', [\App\Http\Controllers\Admin\Tms\OdometerController::class, 'createMorning'])->name('odometer.morning.create');
+            Route::post('/odometer/morning', [\App\Http\Controllers\Admin\Tms\OdometerController::class, 'storeMorning'])->name('odometer.morning.store');
+            Route::get('/odometer/{odometer}/evening', [\App\Http\Controllers\Admin\Tms\OdometerController::class, 'createEvening'])->name('odometer.evening.create')->whereNumber('odometer');
+            Route::post('/odometer/{odometer}/evening', [\App\Http\Controllers\Admin\Tms\OdometerController::class, 'storeEvening'])->name('odometer.evening.store')->whereNumber('odometer');
             Route::get('/odometer/{odometer}/edit', [\App\Http\Controllers\Admin\Tms\OdometerController::class, 'edit'])->name('odometer.edit')->whereNumber('odometer');
             Route::put('/odometer/{odometer}', [\App\Http\Controllers\Admin\Tms\OdometerController::class, 'update'])->name('odometer.update')->whereNumber('odometer');
         });
 
         Route::middleware('permission:tms.overtime.manage')->group(function () {
             Route::post('/trips/{trip}/mark-ot-paid', [\App\Http\Controllers\Admin\Tms\TripController::class, 'markOtPaid'])->name('trips.mark-ot-paid')->whereNumber('trip');
+        });
+
+        Route::middleware('permission:tms.rental_charges.manage')->group(function () {
+            Route::post('/trips/{trip}/mark-rental-paid', [\App\Http\Controllers\Admin\Tms\TripController::class, 'markRentalChargePaid'])->name('trips.mark-rental-paid')->whereNumber('trip');
+            Route::post('/rental-charges/{charge}/mark-paid', [\App\Http\Controllers\Admin\Tms\RentalChargeController::class, 'markPaid'])->name('rental-charges.mark-paid')->whereNumber('charge');
         });
 
         Route::middleware('permission:tms.fuel.view')->group(function () {
@@ -796,6 +829,18 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
         Route::middleware('permission:tms.fuel.manage')->group(function () {
             Route::get('/fuel/create', [\App\Http\Controllers\Admin\Tms\FuelController::class, 'create'])->name('fuel.create');
             Route::post('/fuel', [\App\Http\Controllers\Admin\Tms\FuelController::class, 'store'])->name('fuel.store');
+        });
+
+        Route::middleware('permission:tms.maintenance.view')->group(function () {
+            Route::get('/maintenance', [\App\Http\Controllers\Admin\Tms\MaintenanceController::class, 'index'])->name('maintenance.index');
+        });
+
+        Route::middleware('permission:tms.maintenance.manage')->group(function () {
+            Route::get('/maintenance/create', [\App\Http\Controllers\Admin\Tms\MaintenanceController::class, 'create'])->name('maintenance.create');
+            Route::post('/maintenance', [\App\Http\Controllers\Admin\Tms\MaintenanceController::class, 'store'])->name('maintenance.store');
+            Route::get('/maintenance/{maintenance}/edit', [\App\Http\Controllers\Admin\Tms\MaintenanceController::class, 'edit'])->name('maintenance.edit')->whereNumber('maintenance');
+            Route::put('/maintenance/{maintenance}', [\App\Http\Controllers\Admin\Tms\MaintenanceController::class, 'update'])->name('maintenance.update')->whereNumber('maintenance');
+            Route::delete('/maintenance/{maintenance}', [\App\Http\Controllers\Admin\Tms\MaintenanceController::class, 'destroy'])->name('maintenance.destroy')->whereNumber('maintenance');
         });
 
         Route::middleware('permission:tms.reports.view')->group(function () {
@@ -824,7 +869,7 @@ Route::prefix('employee')->name('employee.')->group(function () {
 
     Route::post('/logout', [EmployeeLoginController::class, 'destroy'])->name('logout')->middleware('auth:employee');
 
-    Route::middleware('auth:employee')->group(function () {
+    Route::middleware(['auth:employee', 'employee.portal'])->group(function () {
         Route::redirect('/', '/employee/dashboard');
         Route::get('/dashboard', EmployeeDashboardController::class)->name('dashboard');
         Route::get('/profile', [EmployeeProfileController::class, 'show'])->name('profile');
@@ -874,6 +919,35 @@ Route::prefix('employee')->name('employee.')->group(function () {
             Route::get('/trips', [\App\Http\Controllers\Employee\Transport\TripController::class, 'index'])->name('trips');
             Route::post('/trips/{trip}/start', [\App\Http\Controllers\Employee\Transport\TripController::class, 'start'])->name('trips.start')->whereNumber('trip');
             Route::post('/trips/{trip}/end', [\App\Http\Controllers\Employee\Transport\TripController::class, 'end'])->name('trips.end')->whereNumber('trip');
+            Route::get('/odometer', [\App\Http\Controllers\Employee\Transport\OdometerController::class, 'index'])->name('odometer');
+            Route::post('/odometer/morning', [\App\Http\Controllers\Employee\Transport\OdometerController::class, 'storeMorning'])->name('odometer.morning');
+            Route::post('/odometer/{odometer}/evening', [\App\Http\Controllers\Employee\Transport\OdometerController::class, 'storeEvening'])->name('odometer.evening')->whereNumber('odometer');
         });
+    });
+});
+
+Route::prefix('rental')->name('rental.')->group(function () {
+    Route::middleware('guest:rental_driver')->group(function () {
+        Route::get('/login', [\App\Http\Controllers\Rental\Auth\LoginController::class, 'create'])->name('login');
+        Route::post('/login', [\App\Http\Controllers\Rental\Auth\LoginController::class, 'store'])->name('login.store');
+    });
+
+    Route::post('/logout', [\App\Http\Controllers\Rental\Auth\LoginController::class, 'destroy'])->name('logout')->middleware('auth:rental_driver');
+
+    Route::middleware(['auth:rental_driver', 'rental.portal'])->group(function () {
+        Route::redirect('/', '/rental/dashboard');
+        Route::get('/dashboard', \App\Http\Controllers\Rental\DashboardController::class)->name('dashboard');
+        Route::get('/trips', [\App\Http\Controllers\Rental\TripController::class, 'index'])->name('trips');
+        Route::post('/trips/{trip}/start', [\App\Http\Controllers\Rental\TripController::class, 'start'])->name('trips.start')->whereNumber('trip');
+        Route::post('/trips/{trip}/end', [\App\Http\Controllers\Rental\TripController::class, 'end'])->name('trips.end')->whereNumber('trip');
+        Route::get('/odometer', [\App\Http\Controllers\Rental\OdometerController::class, 'index'])->name('odometer');
+        Route::get('/odometer/morning/create', [\App\Http\Controllers\Rental\OdometerController::class, 'createMorning'])->name('odometer.morning.create');
+        Route::post('/odometer/morning', [\App\Http\Controllers\Rental\OdometerController::class, 'storeMorning'])->name('odometer.morning.store');
+        Route::get('/odometer/{odometer}/evening', [\App\Http\Controllers\Rental\OdometerController::class, 'createEvening'])->name('odometer.evening.create')->whereNumber('odometer');
+        Route::post('/odometer/{odometer}/evening', [\App\Http\Controllers\Rental\OdometerController::class, 'storeEvening'])->name('odometer.evening.store')->whereNumber('odometer');
+        Route::get('/notifications', [\App\Http\Controllers\Rental\NotificationController::class, 'index'])->name('notifications.index');
+        Route::get('/notifications/unread-count', [\App\Http\Controllers\Rental\NotificationController::class, 'unreadCount'])->name('notifications.unread-count');
+        Route::patch('/notifications/read-all', [\App\Http\Controllers\Rental\NotificationController::class, 'markAllRead'])->name('notifications.read-all');
+        Route::patch('/notifications/{id}/read', [\App\Http\Controllers\Rental\NotificationController::class, 'markRead'])->name('notifications.read');
     });
 });

@@ -34,6 +34,21 @@ return [
         'overtime' => [
             'tms.overtime.manage' => 'Mark Driver OT Paid',
         ],
+        'rental_vendors' => [
+            'tms.rental_vendors.view'   => 'View Rental Vendors',
+            'tms.rental_vendors.manage' => 'Manage Rental Vendors',
+        ],
+        'rental_charges' => [
+            'tms.rental_charges.manage' => 'Mark Rental Vehicle Charges Paid',
+        ],
+        'rental_drivers' => [
+            'tms.rental_drivers.view'   => 'View Rental Drivers',
+            'tms.rental_drivers.manage' => 'Manage Rental Drivers',
+        ],
+        'maintenance' => [
+            'tms.maintenance.view'   => 'View Maintenance Logs',
+            'tms.maintenance.manage' => 'Manage Maintenance Logs',
+        ],
     ],
 
     'submodules' => [
@@ -68,12 +83,28 @@ return [
             'icon'       => 'M8 7h8m-8 4h8m-4 8V7m8 4v9a1 1 0 01-1 1H5a1 1 0 01-1-1V7l2-4h14l2 4v9a1 1 0 01-1 1h-3',
             'status'     => 'active',
         ],
+        'rental_vendors' => [
+            'label'      => 'Rental Vendors',
+            'permission' => 'tms.rental_vendors.view',
+            'manage'     => 'tms.rental_vendors.manage',
+            'route'      => 'admin.tms.rental-vendors.index',
+            'icon'       => 'M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4',
+            'status'     => 'active',
+        ],
         'drivers' => [
-            'label'      => 'Drivers',
+            'label'      => 'Company Drivers',
             'permission' => 'tms.drivers.view',
             'manage'     => 'tms.drivers.manage',
             'route'      => 'admin.tms.drivers.index',
             'icon'       => 'M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z',
+            'status'     => 'active',
+        ],
+        'rental_drivers' => [
+            'label'      => 'Rental Drivers',
+            'permission' => 'tms.rental_drivers.view',
+            'manage'     => 'tms.rental_drivers.manage',
+            'route'      => 'admin.tms.rental-drivers.index',
+            'icon'       => 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z',
             'status'     => 'active',
         ],
         'requests' => [
@@ -107,6 +138,14 @@ return [
             'icon'       => 'M13 10V3L4 14h7v7l9-11h-7z',
             'status'     => 'active',
         ],
+        'maintenance' => [
+            'label'      => 'Maintenance',
+            'permission' => 'tms.maintenance.view',
+            'manage'     => 'tms.maintenance.manage',
+            'route'      => 'admin.tms.maintenance.index',
+            'icon'       => 'M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z',
+            'status'     => 'active',
+        ],
         'reports' => [
             'label'      => 'Reports',
             'permission' => 'tms.reports.view',
@@ -118,7 +157,7 @@ return [
 
     'nav_groups' => [
         'Setup' => ['settings', 'destinations'],
-        'Fleet' => ['vehicles', 'drivers', 'odometer'],
+        'Fleet' => ['vehicles', 'rental_vendors', 'drivers', 'rental_drivers', 'odometer', 'maintenance'],
         'Operations' => ['requests', 'trips', 'fuel'],
     ],
 
@@ -186,4 +225,30 @@ return [
     ],
 
     'pickup_grace_minutes' => 0,
+
+    'weekday_labels' => [
+        0 => 'Sunday',
+        1 => 'Monday',
+        2 => 'Tuesday',
+        3 => 'Wednesday',
+        4 => 'Thursday',
+        5 => 'Friday',
+        6 => 'Saturday',
+    ],
+
+    'maintenance_service_types' => [
+        'routine'  => 'Routine Service',
+        'repair'   => 'Repair',
+        'accident' => 'Accident',
+    ],
+
+    'maintenance_statuses' => [
+        'open'   => 'Open',
+        'closed' => 'Closed',
+    ],
+
+    'maintenance_status_colors' => [
+        'open'   => 'bg-amber-100 text-amber-800',
+        'closed' => 'bg-green-100 text-green-800',
+    ],
 ];

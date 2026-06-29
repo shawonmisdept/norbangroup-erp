@@ -7,33 +7,17 @@
 @if(auth()->user()->hasPermission('tms.requests.approve'))
 <form method="POST" action="{{ route('admin.tms.requests.merge') }}" id="merge-form" class="erp-panel p-4 mb-4 space-y-3">
 @csrf
-<div class="grid grid-cols-1 md:grid-cols-3 gap-3 items-end">
-<div>
-<label class="erp-label">Driver (who will actually drive)</label>
-<select name="driver_id" id="merge-driver" class="erp-input" required>
-<option value="">Select driver…</option>
-@foreach($drivers as $d)
-<option value="{{ $d->id }}" data-vehicle="{{ $d->default_vehicle_id }}" data-capacity="{{ $d->defaultVehicle?->passenger_capacity ?? 0 }}">
-{{ $d->displayLabel() }} — default: {{ $d->defaultVehicle?->displayLabel() ?? 'No vehicle' }}
-</option>
-@endforeach
-</select>
-</div>
-<div>
-<label class="erp-label">Vehicle</label>
-<select name="vehicle_id" id="merge-vehicle" class="erp-input">
-<option value="">Use driver's default vehicle</option>
-@foreach($vehicles as $v)
-<option value="{{ $v->id }}" data-capacity="{{ $v->passenger_capacity }}">{{ $v->displayLabel() }} ({{ $v->passenger_capacity }} seats)</option>
-@endforeach
-</select>
-</div>
+@include('admin.tms.requests.partials.driver-assignment-fields', [
+    'drivers' => $drivers,
+    'rentalDrivers' => $rentalDrivers,
+    'vehicles' => $vehicles,
+])
 <div class="flex gap-2">
 <button type="submit" class="erp-btn-primary flex-1" data-confirm="Merge selected requests and assign to this driver?">Merge & Assign</button>
 </div>
-</div>
-<p class="text-xs text-gray-500">Select the driver who will drive today — change vehicle if they use a different car. Selected passengers: <strong id="selected-passengers">0</strong> · Vehicle capacity: <strong id="vehicle-capacity">—</strong></p>
+<p class="text-xs text-gray-500">Selected passengers: <strong id="selected-passengers">0</strong> · Vehicle capacity: <strong id="vehicle-capacity">—</strong></p>
 </form>
+@include('admin.tms.requests.partials.driver-assignment-script')
 @endif
 
 <div class="erp-panel overflow-hidden">
@@ -65,7 +49,6 @@
 @if(auth()->user()->hasPermission('tms.requests.approve'))
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-    const driver = document.getElementById('merge-driver');
     const capEl = document.getElementById('vehicle-capacity');
     const paxEl = document.getElementById('selected-passengers');
     const checks = () => document.querySelectorAll('.merge-check:checked');
@@ -76,29 +59,25 @@ document.addEventListener('DOMContentLoaded', () => {
         paxEl.textContent = total;
     }
 
-    driver?.addEventListener('change', () => {
-        const opt = driver.selectedOptions[0];
-        const vehicle = document.getElementById('merge-vehicle');
-        const defaultVehicleId = opt?.dataset.vehicle;
-        if (vehicle && defaultVehicleId) {
-            vehicle.value = defaultVehicleId;
-        }
-        refreshCapacity();
-    });
-
-    document.getElementById('merge-vehicle')?.addEventListener('change', refreshCapacity);
-
     function refreshCapacity() {
-        const vehicle = document.getElementById('merge-vehicle');
+        const vehicle = document.querySelector('#merge-form .assign-vehicle-select');
         const opt = vehicle?.selectedOptions[0];
         if (opt?.value) {
             capEl.textContent = opt.dataset.capacity || '—';
             return;
         }
-        const driverOpt = driver?.selectedOptions[0];
+        const typeSelect = document.querySelector('#merge-form .driver-type-select');
+        const isCompany = typeSelect?.value === 'company';
+        const driverOpt = isCompany
+            ? document.querySelector('#merge-form .company-driver-select')?.selectedOptions[0]
+            : document.querySelector('#merge-form .rental-driver-select')?.selectedOptions[0];
         capEl.textContent = driverOpt?.dataset.capacity || '—';
     }
 
+    document.querySelector('#merge-form .assign-vehicle-select')?.addEventListener('change', refreshCapacity);
+    document.querySelector('#merge-form .company-driver-select')?.addEventListener('change', refreshCapacity);
+    document.querySelector('#merge-form .rental-driver-select')?.addEventListener('change', refreshCapacity);
+    document.querySelector('#merge-form .driver-type-select')?.addEventListener('change', refreshCapacity);
     document.querySelectorAll('.merge-check').forEach(c => c.addEventListener('change', refresh));
     refreshCapacity();
 });

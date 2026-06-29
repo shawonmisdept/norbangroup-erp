@@ -596,13 +596,13 @@ select.emp-input.tomselected {
         width: 100%;
     }
 
-    /* Stack multi-column grids without responsive prefixes */
+    /* Stack multi-column grids without responsive prefixes (admin ERP only — not employee/rental portal) */
     .erp-panel-body .grid.grid-cols-2:not([class*='sm:']):not([class*='md:']):not([class*='lg:']),
     .erp-panel-body .grid.grid-cols-3:not([class*='sm:']):not([class*='md:']):not([class*='lg:']),
     .erp-panel-body .grid.grid-cols-4:not([class*='sm:']):not([class*='md:']):not([class*='lg:']),
-    main .grid.grid-cols-2:not([class*='sm:']):not([class*='md:']):not([class*='lg:']),
-    main .grid.grid-cols-3:not([class*='sm:']):not([class*='md:']):not([class*='lg:']),
-    main .grid.grid-cols-4:not([class*='sm:']):not([class*='md:']):not([class*='lg:']),
+    main:not(.emp-main) .grid.grid-cols-2:not([class*='sm:']):not([class*='md:']):not([class*='lg:']),
+    main:not(.emp-main) .grid.grid-cols-3:not([class*='sm:']):not([class*='md:']):not([class*='lg:']),
+    main:not(.emp-main) .grid.grid-cols-4:not([class*='sm:']):not([class*='md:']):not([class*='lg:']),
     #salary-view-modal-body .grid.grid-cols-2 {
         grid-template-columns: 1fr;
     }

@@ -2,6 +2,7 @@
 
 use App\Models\User;
 use App\Models\Hrm\EmployeePortalUser;
+use App\Models\Tms\TmsRentalDriverPortalUser;
 
 return [
 
@@ -47,6 +48,10 @@ return [
             'driver' => 'session',
             'provider' => 'employee_portal_users',
         ],
+        'rental_driver' => [
+            'driver' => 'session',
+            'provider' => 'rental_driver_portal_users',
+        ],
     ],
 
     /*
@@ -74,6 +79,10 @@ return [
         'employee_portal_users' => [
             'driver' => 'eloquent',
             'model' => EmployeePortalUser::class,
+        ],
+        'rental_driver_portal_users' => [
+            'driver' => 'eloquent',
+            'model' => TmsRentalDriverPortalUser::class,
         ],
 
         // 'users' => [

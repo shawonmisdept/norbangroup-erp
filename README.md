@@ -1,6 +1,6 @@
 <div align="center">
 
-# Norbangroup ERP Portal
+# Norban Group ERP-HRM Portal
 
 **Commercial ERP · Garments HRM/HRMS · Careers · Employee Self-Service**
 

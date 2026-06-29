@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Employee\Transport;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Employee\Concerns\ResolvesPortalEmployee;
 use App\Models\Tms\TmsDestination;
 use App\Models\Tms\TmsTransportRequest;
 use App\Services\Tms\TransportRequestService;
@@ -13,9 +14,11 @@ use Illuminate\Validation\Rule;
 
 class RequestController extends Controller
 {
+    use ResolvesPortalEmployee;
+
     public function index(Request $request)
     {
-        $employee = $request->user('employee')->employee;
+        $employee = $this->portalEmployee($request);
 
         $requests = TmsTransportRequest::query()
             ->with(['destination', 'vehicle', 'driver.employee', 'tripLog'])
@@ -30,7 +33,7 @@ class RequestController extends Controller
 
     public function create(Request $request)
     {
-        $employee = $request->user('employee')->employee;
+        $employee = $this->portalEmployee($request);
 
         $destinations = TmsDestination::where('factory_id', $employee->factory_id)
             ->where('is_active', true)
@@ -42,7 +45,7 @@ class RequestController extends Controller
 
     public function store(Request $request, TransportRequestService $service)
     {
-        $employee = $request->user('employee')->employee;
+        $employee = $this->portalEmployee($request);
         $grace = (int) config('tms.pickup_grace_minutes', 0);
 
         $validated = $request->validate([
@@ -76,7 +79,7 @@ class RequestController extends Controller
 
     public function show(Request $request, TmsTransportRequest $transportRequest)
     {
-        $employee = $request->user('employee')->employee;
+        $employee = $this->portalEmployee($request);
 
         if ($transportRequest->employee_id !== $employee->id) {
             abort(403);
@@ -89,7 +92,7 @@ class RequestController extends Controller
 
     public function cancel(Request $request, TmsTransportRequest $transportRequest, TransportRequestService $service)
     {
-        $employee = $request->user('employee')->employee;
+        $employee = $this->portalEmployee($request);
         $service->cancel($transportRequest, $employee);
 
         return redirect()->route('employee.transport.index')->with('success', 'Request cancelled.');
