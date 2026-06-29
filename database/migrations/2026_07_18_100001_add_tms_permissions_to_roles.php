@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Role;
+use App\Support\RolePermissionCatalog;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\DB;
 
@@ -32,17 +34,7 @@ return new class extends Migration
     public function up(): void
     {
         $all = $this->tmsPermissions();
-        $authority = [
-            'tms.dashboard.view',
-            'tms.requests.view',
-            'tms.requests.approve',
-            'tms.vehicles.view',
-            'tms.drivers.view',
-            'tms.trips.view',
-            'tms.fuel.view',
-            'tms.fuel.manage',
-            'tms.reports.view',
-        ];
+        $authority = RolePermissionCatalog::transportAuthorityPermissions();
 
         foreach (DB::table('roles')->get() as $role) {
             $permissions = json_decode($role->permissions, true) ?? [];

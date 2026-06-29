@@ -180,6 +180,49 @@ class TmsWorkflowTest extends TestCase
             ->assertSee('Requester');
     }
 
+    public function test_authority_approves_request_and_assigns_driver_and_vehicle(): void
+    {
+        $this->actingAs($this->requesterPortal, 'employee')
+            ->post(route('employee.transport.requests.store'), [
+                'pickup_location'    => 'Main Gate',
+                'destination_custom' => 'Gulshan',
+                'pickup_at'          => '2026-06-18 09:30',
+                'purpose'            => 'Bank work',
+                'passenger_count'    => 2,
+            ])
+            ->assertRedirect(route('employee.transport.index'));
+
+        $transportRequest = TmsTransportRequest::first();
+        $this->assertSame('pending', $transportRequest->status);
+
+        $this->actingAs($this->authority)
+            ->post(route('admin.tms.requests.approve', $transportRequest), [
+                'driver_id'  => $this->driver->id,
+                'vehicle_id' => $this->vehicle->id,
+            ])
+            ->assertRedirect(route('admin.tms.trips.show', TmsTripLog::first()));
+
+        $transportRequest->refresh();
+        $trip = TmsTripLog::first();
+
+        $this->assertSame('approved', $transportRequest->status);
+        $this->assertSame($this->driver->id, $transportRequest->driver_id);
+        $this->assertSame($this->vehicle->id, $transportRequest->vehicle_id);
+        $this->assertSame($trip->id, $transportRequest->trip_log_id);
+        $this->assertSame($this->authority->id, $transportRequest->approved_by);
+        $this->assertNotNull($transportRequest->approved_at);
+        $this->assertSame($this->driver->id, $trip->driver_id);
+        $this->assertSame($this->vehicle->id, $trip->vehicle_id);
+        $this->assertSame(2, $trip->total_passengers);
+        $this->assertSame('not_started', $trip->trip_status);
+
+        $this->actingAs($this->authority)
+            ->get(route('admin.tms.requests.show', $transportRequest))
+            ->assertOk()
+            ->assertSee('Driver One')
+            ->assertSee('Hiace');
+    }
+
     public function test_full_workflow_with_ot_calculation_without_driver_km(): void
     {
         $this->actingAs($this->requesterPortal, 'employee')
