@@ -87,22 +87,13 @@ return new class extends Migration
             });
         }
 
-        $this->dropMysqlForeignKeyIfExists('tms_rental_vehicle_charges', 'trip_log_id');
-        $this->dropMysqlIndexIfExists('tms_rental_vehicle_charges', 'tms_rental_vehicle_charges_trip_log_id_unique');
-
-        DB::statement('ALTER TABLE tms_rental_vehicle_charges MODIFY trip_log_id BIGINT UNSIGNED NULL');
-
-        if (! $this->mysqlForeignKeyExists('tms_rental_vehicle_charges', 'trip_log_id')) {
-            Schema::table('tms_rental_vehicle_charges', function (Blueprint $table) {
-                $table->foreign('trip_log_id')->references('id')->on('tms_trip_logs')->nullOnDelete();
-            });
-        }
+        $this->relaxMysqlTripLogIdColumn('tms_rental_vehicle_charges');
     }
 
     public function down(): void
     {
         if (Schema::getConnection()->getDriverName() !== 'sqlite') {
-            $this->dropMysqlForeignKeyIfExists('tms_rental_vehicle_charges', 'trip_log_id');
+            $this->safeMysqlDropForeignKeys('tms_rental_vehicle_charges', 'trip_log_id');
             DB::statement('ALTER TABLE tms_rental_vehicle_charges MODIFY trip_log_id BIGINT UNSIGNED NOT NULL');
 
             if (! $this->mysqlIndexExists('tms_rental_vehicle_charges', 'tms_rental_vehicle_charges_trip_log_id_unique')) {
@@ -139,36 +130,120 @@ return new class extends Migration
         Schema::dropIfExists('tms_rental_driver_portal_users');
     }
 
-    private function mysqlForeignKeyExists(string $table, string $column): bool
+    private function relaxMysqlTripLogIdColumn(string $table): void
     {
-        return count($this->mysqlForeignKeys($table, $column)) > 0;
-    }
+        if ($this->mysqlColumnIsNullable($table, 'trip_log_id')) {
+            return;
+        }
 
-    private function dropMysqlForeignKeyIfExists(string $table, string $column): void
-    {
-        foreach ($this->mysqlForeignKeys($table, $column) as $constraint) {
-            DB::statement("ALTER TABLE `{$table}` DROP FOREIGN KEY `{$constraint}`");
+        $this->safeMysqlDropForeignKeys($table, 'trip_log_id');
+        $this->safeMysqlDropUniqueIndexesOnColumn($table, 'trip_log_id');
+
+        DB::statement("ALTER TABLE `{$table}` MODIFY `trip_log_id` BIGINT UNSIGNED NULL");
+
+        if (! $this->mysqlForeignKeyExists($table, 'trip_log_id')) {
+            Schema::table($table, function (Blueprint $blueprint) {
+                $blueprint->foreign('trip_log_id')->references('id')->on('tms_trip_logs')->nullOnDelete();
+            });
         }
     }
 
+    private function safeMysqlDropForeignKeys(string $table, string $column): void
+    {
+        foreach ($this->mysqlForeignKeyNames($table, $column) as $constraint) {
+            try {
+                DB::statement("ALTER TABLE `{$table}` DROP FOREIGN KEY `{$constraint}`");
+            } catch (\Throwable) {
+                // Production DBs may report stale/missing FK names — continue.
+            }
+        }
+
+        // Also try Laravel's default name in case information_schema missed it.
+        try {
+            DB::statement("ALTER TABLE `{$table}` DROP FOREIGN KEY `{$table}_{$column}_foreign`");
+        } catch (\Throwable) {
+            // Ignore when the constraint is absent.
+        }
+    }
+
+    private function safeMysqlDropUniqueIndexesOnColumn(string $table, string $column): void
+    {
+        foreach ($this->mysqlUniqueIndexNamesOnColumn($table, $column) as $indexName) {
+            try {
+                DB::statement("ALTER TABLE `{$table}` DROP INDEX `{$indexName}`");
+            } catch (\Throwable) {
+                // Ignore missing or FK-bound indexes.
+            }
+        }
+    }
+
+    private function mysqlColumnIsNullable(string $table, string $column): bool
+    {
+        if (Schema::getConnection()->getDriverName() !== 'mysql') {
+            return false;
+        }
+
+        $rows = DB::select(
+            'SELECT IS_NULLABLE
+             FROM information_schema.COLUMNS
+             WHERE TABLE_SCHEMA = DATABASE()
+               AND TABLE_NAME = ?
+               AND COLUMN_NAME = ?
+             LIMIT 1',
+            [$table, $column]
+        );
+
+        return ($rows[0]->IS_NULLABLE ?? 'NO') === 'YES';
+    }
+
+    private function mysqlForeignKeyExists(string $table, string $column): bool
+    {
+        return count($this->mysqlForeignKeyNames($table, $column)) > 0;
+    }
+
     /** @return list<string> */
-    private function mysqlForeignKeys(string $table, string $column): array
+    private function mysqlForeignKeyNames(string $table, string $column): array
     {
         if (Schema::getConnection()->getDriverName() !== 'mysql') {
             return [];
         }
 
         $rows = DB::select(
-            'SELECT CONSTRAINT_NAME
-             FROM information_schema.KEY_COLUMN_USAGE
-             WHERE TABLE_SCHEMA = DATABASE()
-               AND TABLE_NAME = ?
-               AND COLUMN_NAME = ?
-               AND REFERENCED_TABLE_NAME IS NOT NULL',
+            'SELECT kcu.CONSTRAINT_NAME
+             FROM information_schema.TABLE_CONSTRAINTS tc
+             INNER JOIN information_schema.KEY_COLUMN_USAGE kcu
+                 ON tc.CONSTRAINT_SCHEMA = kcu.CONSTRAINT_SCHEMA
+                AND tc.CONSTRAINT_NAME = kcu.CONSTRAINT_NAME
+                AND tc.TABLE_NAME = kcu.TABLE_NAME
+             WHERE tc.CONSTRAINT_SCHEMA = DATABASE()
+               AND tc.TABLE_NAME = ?
+               AND tc.CONSTRAINT_TYPE = "FOREIGN KEY"
+               AND kcu.COLUMN_NAME = ?',
             [$table, $column]
         );
 
-        return array_values(array_map(static fn ($row) => $row->CONSTRAINT_NAME, $rows));
+        return array_values(array_unique(array_map(static fn ($row) => $row->CONSTRAINT_NAME, $rows)));
+    }
+
+    /** @return list<string> */
+    private function mysqlUniqueIndexNamesOnColumn(string $table, string $column): array
+    {
+        if (Schema::getConnection()->getDriverName() !== 'mysql') {
+            return [];
+        }
+
+        $rows = DB::select(
+            'SELECT DISTINCT INDEX_NAME
+             FROM information_schema.STATISTICS
+             WHERE TABLE_SCHEMA = DATABASE()
+               AND TABLE_NAME = ?
+               AND COLUMN_NAME = ?
+               AND NON_UNIQUE = 0
+               AND INDEX_NAME <> "PRIMARY"',
+            [$table, $column]
+        );
+
+        return array_values(array_map(static fn ($row) => $row->INDEX_NAME, $rows));
     }
 
     private function mysqlIndexExists(string $table, string $indexName): bool
@@ -188,16 +263,5 @@ return new class extends Migration
         );
 
         return count($rows) > 0;
-    }
-
-    private function dropMysqlIndexIfExists(string $table, string $indexName): void
-    {
-        if (! $this->mysqlIndexExists($table, $indexName)) {
-            return;
-        }
-
-        Schema::table($table, function (Blueprint $table) use ($indexName) {
-            $table->dropIndex($indexName);
-        });
     }
 };
