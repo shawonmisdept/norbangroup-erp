@@ -2,7 +2,6 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -50,24 +49,6 @@ return new class extends Migration
                 ->constrained('tms_rental_drivers')->nullOnDelete();
             $table->json('payment_breakdown')->nullable()->after('amount');
         });
-
-        if (Schema::getConnection()->getDriverName() === 'mysql') {
-            Schema::table('tms_trip_logs', function (Blueprint $table) {
-                $table->dropForeign(['driver_id']);
-            });
-            DB::statement('ALTER TABLE tms_trip_logs MODIFY driver_id BIGINT UNSIGNED NULL');
-            Schema::table('tms_trip_logs', function (Blueprint $table) {
-                $table->foreign('driver_id')->references('id')->on('tms_drivers')->nullOnDelete();
-            });
-
-            Schema::table('tms_driver_overtime_payments', function (Blueprint $table) {
-                $table->dropForeign(['driver_id']);
-            });
-            DB::statement('ALTER TABLE tms_driver_overtime_payments MODIFY driver_id BIGINT UNSIGNED NULL');
-            Schema::table('tms_driver_overtime_payments', function (Blueprint $table) {
-                $table->foreign('driver_id')->references('id')->on('tms_drivers')->nullOnDelete();
-            });
-        }
     }
 
     public function down(): void
