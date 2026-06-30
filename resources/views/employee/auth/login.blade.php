@@ -12,19 +12,14 @@
 
     <div class="w-full max-w-sm">
         {{-- App branding --}}
-        <div class="mb-8 text-center">
-            @if(config('portal.frontend_logo') ?: config('portal.navbar_logo'))
-                <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-white/10 p-3 backdrop-blur">
-                    <img src="{{ config('portal.frontend_logo') ?: config('portal.navbar_logo') }}" alt="{{ config('portal.name') }}"
-                         class="h-full w-full object-contain brightness-0 invert">
-                </div>
-            @else
-                <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-white/10 text-2xl font-bold text-white backdrop-blur">
-                    {{ strtoupper(substr(config('portal.name'), 0, 1)) }}
-                </div>
-            @endif
-            <h1 class="text-xl font-bold text-white">{{ config('portal.name') }}</h1>
-            <p class="mt-1 text-sm text-white/50">Employee Self-Service</p>
+        <div class="mb-8">
+            @include('partials.portal.brand-logo', [
+                'size' => 'lg',
+                'variant' => 'employee',
+                'centered' => true,
+                'showName' => true,
+                'subtitle' => 'Employee Self-Service',
+            ])
         </div>
 
         <div class="emp-login-card">

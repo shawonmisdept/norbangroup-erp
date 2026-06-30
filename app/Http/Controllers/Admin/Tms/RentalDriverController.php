@@ -9,6 +9,7 @@ use App\Models\Tms\TmsRentalVendor;
 use App\Models\Tms\TmsVehicle;
 use Illuminate\Http\Request;
 use App\Services\Tms\RentalDriverPortalService;
+use App\Services\Tms\RentalDriverPhotoService;
 use Illuminate\Validation\ValidationException;
 
 class RentalDriverController extends Controller
@@ -53,6 +54,12 @@ class RentalDriverController extends Controller
             'updated_by' => $request->user()->id,
         ]);
 
+        if ($request->hasFile('photo')) {
+            $driver->update([
+                'photo' => RentalDriverPhotoService::store($request->file('photo')),
+            ]);
+        }
+
         $this->syncPortalAccess($driver, $validated);
 
         return redirect()->route('admin.tms.rental-drivers.index')->with('success', 'Rental driver created.');
@@ -79,6 +86,12 @@ class RentalDriverController extends Controller
             'updated_by' => $request->user()->id,
         ]);
 
+        if ($request->hasFile('photo')) {
+            $rentalDriver->update([
+                'photo' => RentalDriverPhotoService::store($request->file('photo'), $rentalDriver->photo),
+            ]);
+        }
+
         $this->syncPortalAccess($rentalDriver->fresh(), $validated);
 
         return redirect()->route('admin.tms.rental-drivers.index')->with('success', 'Rental driver updated.');
@@ -104,6 +117,7 @@ class RentalDriverController extends Controller
             'default_vehicle_id' => ['nullable', 'exists:tms_vehicles,id'],
             'status'             => ['required', 'in:active,inactive'],
             'notes'              => ['nullable', 'string', 'max:2000'],
+            'photo'              => ['nullable', 'image', 'max:5120'],
             'portal_password'    => ['nullable', 'string', 'min:6', 'max:64'],
             'enable_portal'      => ['nullable', 'boolean'],
         ]);

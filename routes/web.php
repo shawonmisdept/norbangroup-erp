@@ -732,6 +732,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
 
     Route::prefix('tms')->name('tms.')->middleware('factory.scope')->group(function () {
         Route::middleware('tms.any')->group(function () {
+            Route::get('/hub', \App\Http\Controllers\Admin\Tms\HubController::class)->name('hub');
             Route::get('/', [\App\Http\Controllers\Admin\Tms\DashboardController::class, 'index'])->name('dashboard');
         });
 

@@ -31,7 +31,7 @@
     ];
 @endphp
 
-<nav class="emp-tabbar safe-bottom" aria-label="Rental driver navigation">
+<nav class="emp-tabbar rental-tabbar safe-bottom" aria-label="Rental driver navigation">
     @foreach($tabs as $tab)
         @php $active = request()->routeIs($tab['match']); @endphp
         <a href="{{ route($tab['route']) }}"

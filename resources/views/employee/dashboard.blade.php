@@ -4,6 +4,14 @@
 
 @section('hero')
 <div class="emp-hero">
+    <div class="mb-4">
+        @include('partials.portal.brand-logo', [
+            'size' => 'sm',
+            'variant' => 'employee',
+            'showName' => true,
+            'subtitle' => 'Employee Self-Service',
+        ])
+    </div>
     <div class="emp-hero-inner relative flex items-start justify-between gap-3">
         <div class="flex min-w-0 items-center gap-3">
             <div class="emp-avatar-ring shrink-0">

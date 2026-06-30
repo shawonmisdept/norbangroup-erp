@@ -8,6 +8,7 @@ use App\Models\Tms\TmsRentalDriver;
 use App\Models\Tms\TmsRentalVendor;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
 use Tests\TestCase;
 
 class TmsRentalDriverTest extends TestCase
@@ -65,5 +66,47 @@ class TmsRentalDriverTest extends TestCase
 
         $this->assertStringContainsString('Karim Mia', $driver->displayLabel());
         $this->assertTrue($driver->isActive());
+    }
+
+    public function test_rental_driver_photo_upload_and_display(): void
+    {
+        $factory = Factory::create(['name' => 'Test Factory', 'is_active' => true]);
+
+        $role = Role::create([
+            'name'        => 'TMS Admin',
+            'permissions' => ['tms.rental_drivers.view', 'tms.rental_drivers.manage'],
+        ]);
+
+        $user = User::create([
+            'name'       => 'Admin',
+            'email'      => 'rental-photo@test.com',
+            'password'   => 'password',
+            'role_id'    => $role->id,
+            'factory_id' => $factory->id,
+        ]);
+
+        $photo = UploadedFile::fake()->image('driver.jpg', 400, 400);
+
+        $this->actingAs($user)
+            ->post(route('admin.tms.rental-drivers.store'), [
+                'factory_id' => $factory->id,
+                'name'       => 'Photo Driver',
+                'mobile'     => '01722222222',
+                'status'     => 'active',
+                'photo'      => $photo,
+            ])
+            ->assertRedirect(route('admin.tms.rental-drivers.index'));
+
+        $driver = TmsRentalDriver::first();
+
+        $this->assertNotNull($driver);
+        $this->assertNotNull($driver->photo);
+        $this->assertNotNull($driver->photoUrl());
+        $this->assertSame('PD', $driver->initials());
+
+        $this->actingAs($user)
+            ->get(route('admin.tms.rental-drivers.index'))
+            ->assertOk()
+            ->assertSee('Photo Driver');
     }
 }

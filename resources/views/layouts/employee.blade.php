@@ -17,6 +17,14 @@
                 @yield('hero')
             @elseif(! View::hasSection('no-header'))
                 <div class="emp-hero emp-hero-sub">
+                    <div class="mb-3">
+                        @include('partials.portal.brand-logo', [
+                            'size' => 'sm',
+                            'variant' => 'employee',
+                            'showName' => true,
+                            'subtitle' => 'Employee Portal',
+                        ])
+                    </div>
                     <div class="emp-hero-row">
                         <div class="min-w-0 flex-1">
                             @hasSection('back')

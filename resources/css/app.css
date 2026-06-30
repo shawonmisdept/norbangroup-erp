@@ -1030,6 +1030,138 @@ select.emp-input.tomselected {
     @apply w-full max-w-sm overflow-hidden rounded-3xl bg-white shadow-2xl;
 }
 
+/* ── Rental Driver Portal — slate + orange transport theme ── */
+.rental-app {
+    @apply min-h-screen antialiased;
+    background: linear-gradient(165deg, #0c1220 0%, #1a2332 38%, #f1f0ec 38%);
+}
+
+@media (min-width: 480px) {
+    .rental-app {
+        @apply py-6 px-4;
+        background: linear-gradient(140deg, #0f172a 0%, #1e293b 55%, #475569 100%);
+    }
+}
+
+.rental-app .emp-shell {
+    @apply bg-[#f8f7f4];
+    box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.55);
+}
+
+@media (min-width: 480px) {
+    .rental-app .emp-shell {
+        @apply border border-orange-500/15;
+    }
+}
+
+.rental-app .emp-hero {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 55%, #9a3412 115%);
+}
+
+.rental-app .emp-hero::after {
+    background: radial-gradient(circle, #f97316 0%, transparent 70%);
+    @apply opacity-25;
+}
+
+.rental-app .emp-card,
+.rental-app .emp-card-padded {
+    @apply border-orange-100/60 shadow-[0_2px_16px_rgba(154,52,18,0.06)];
+}
+
+.rental-app .emp-btn {
+    @apply bg-orange-600 shadow-[0_4px_14px_rgba(234,88,12,0.28)] hover:bg-orange-700;
+}
+
+.rental-app .emp-btn-sm {
+    @apply bg-orange-600 hover:bg-orange-700;
+}
+
+.rental-app .emp-input:focus {
+    @apply border-orange-500 ring-orange-500;
+}
+
+.rental-app .rental-tabbar {
+    @apply border-orange-900/30 bg-slate-800/95;
+    box-shadow: 0 -4px 24px rgba(15, 23, 42, 0.35);
+}
+
+.rental-app .rental-tabbar .emp-tab {
+    @apply text-slate-400;
+}
+
+.rental-app .rental-tabbar .emp-tab-home .emp-tab-icon {
+    @apply bg-orange-500/20 text-orange-400;
+}
+
+.rental-app .rental-tabbar .emp-tab-home.emp-tab-active {
+    @apply text-orange-300;
+}
+
+.rental-app .rental-tabbar .emp-tab-home.emp-tab-active .emp-tab-icon {
+    @apply bg-orange-500/30 text-orange-300 ring-2 ring-orange-400/30;
+}
+
+.rental-app .rental-tabbar .emp-tab-attendance .emp-tab-icon {
+    @apply bg-sky-500/20 text-sky-400;
+}
+
+.rental-app .rental-tabbar .emp-tab-attendance.emp-tab-active {
+    @apply text-sky-300;
+}
+
+.rental-app .rental-tabbar .emp-tab-attendance.emp-tab-active .emp-tab-icon {
+    @apply bg-sky-500/30 text-sky-300 ring-2 ring-sky-400/30;
+}
+
+.rental-app .rental-tabbar .emp-tab-leave .emp-tab-icon {
+    @apply bg-amber-500/20 text-amber-400;
+}
+
+.rental-app .rental-tabbar .emp-tab-leave.emp-tab-active {
+    @apply text-amber-300;
+}
+
+.rental-app .rental-tabbar .emp-tab-leave.emp-tab-active .emp-tab-icon {
+    @apply bg-amber-500/30 text-amber-300 ring-2 ring-amber-400/30;
+}
+
+.rental-app .rental-tabbar .emp-tab-pay .emp-tab-icon {
+    @apply bg-rose-500/20 text-rose-400;
+}
+
+.rental-app .rental-tabbar .emp-tab-pay.emp-tab-active {
+    @apply text-rose-300;
+}
+
+.rental-app .rental-tabbar .emp-tab-pay.emp-tab-active .emp-tab-icon {
+    @apply bg-rose-500/30 text-rose-300 ring-2 ring-rose-400/30;
+}
+
+.rental-login-bg {
+    @apply flex min-h-screen items-center justify-center p-5;
+    background: linear-gradient(165deg, #0c1220 0%, #1e293b 50%, #9a3412 100%);
+}
+
+.rental-login-card {
+    @apply w-full max-w-sm overflow-hidden rounded-3xl bg-white shadow-2xl;
+}
+
+.rental-login-header {
+    background: linear-gradient(135deg, #9a3412 0%, #ea580c 55%, #f97316 100%);
+}
+
+.rental-btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-orange-600 px-4 py-3 text-sm font-semibold text-white shadow-[0_4px_14px_rgba(234,88,12,0.28)] transition active:scale-[0.98] hover:bg-orange-700;
+}
+
+.rental-app .confirm-dialog-card {
+    @apply rounded-2xl;
+}
+
+.rental-app .confirm-dialog-btn-primary {
+    @apply bg-orange-600 hover:bg-orange-700 shadow-sm shadow-orange-600/20;
+}
+
 .payslip-attendance-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1208,4 +1340,48 @@ select.emp-input.tomselected {
 
 .emp-app .confirm-dialog-card {
     @apply rounded-2xl;
+}
+
+.erp-live-clock {
+    @apply flex items-center justify-center select-none;
+}
+
+.erp-live-clock-face {
+    @apply flex flex-col items-end justify-center tabular-nums leading-none;
+    font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
+    gap: 0.15rem;
+    max-height: calc(3.5rem * 0.6);
+}
+
+.erp-live-clock-time {
+    @apply font-extrabold tracking-wide text-brand;
+    font-size: calc(3.5rem * 0.6 * 0.68);
+    line-height: 1;
+}
+
+.erp-live-clock-colon {
+    @apply text-brand/75;
+    animation: erp-clock-blink 1s step-end infinite;
+}
+
+.erp-live-clock-sec {
+    @apply text-gold-dark;
+}
+
+.erp-live-clock-period {
+    @apply ml-1 font-bold tracking-wide text-brand/80;
+    font-size: calc(3.5rem * 0.6 * 0.5);
+    line-height: 1;
+}
+
+.erp-live-clock-date {
+    @apply font-semibold tracking-wider text-gray-600;
+    font-size: calc(3.5rem * 0.6 * 0.42);
+    line-height: 1;
+}
+
+@keyframes erp-clock-blink {
+    50% {
+        opacity: 0.35;
+    }
 }

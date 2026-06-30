@@ -22,6 +22,8 @@
     </div>
 
     <div class="flex items-center gap-2 shrink-0">
+        @include('partials.erp.live-clock')
+
         @if(auth()->user()->canReceiveNotifications())
             @include('partials.erp.notification-bell')
         @endif

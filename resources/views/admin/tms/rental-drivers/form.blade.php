@@ -7,11 +7,22 @@
 ])
 
 <div class="erp-panel p-6 max-w-2xl">
-    <form method="POST" action="{{ $driver->exists ? route('admin.tms.rental-drivers.update', $driver) : route('admin.tms.rental-drivers.store') }}" class="space-y-4">
+    <form method="POST" action="{{ $driver->exists ? route('admin.tms.rental-drivers.update', $driver) : route('admin.tms.rental-drivers.store') }}" enctype="multipart/form-data" class="space-y-4">
         @csrf
         @if($driver->exists)
             @method('PUT')
         @endif
+
+        <div class="flex items-start gap-4 pb-4 border-b border-erp-border">
+            @include('partials.rental-driver-avatar', ['driver' => $driver->exists ? $driver : null, 'size' => '180', 'round' => true])
+            <div class="flex-1">
+                <p class="erp-form-label !mb-0.5">Driver Photo</p>
+                <p class="text-[11px] text-gray-500 mb-2">180 × 180 px — shown in rental portal and admin lists.</p>
+                <input type="file" name="photo" accept="image/jpeg,image/png,image/gif,image/webp"
+                       class="w-full text-xs text-gray-600 file:mr-2 file:py-1.5 file:px-3 file:rounded-sm file:border-0 file:text-xs file:font-medium file:bg-orange-600 file:text-white">
+                @error('photo')<p class="text-xs text-red-500 mt-1">{{ $message }}</p>@enderror
+            </div>
+        </div>
 
         <div>
             <label class="erp-label">Unit</label>

@@ -4,10 +4,18 @@
 
 @section('hero')
 <div class="emp-hero">
+    <div class="mb-4">
+        @include('partials.portal.brand-logo', [
+            'size' => 'sm',
+            'variant' => 'rental',
+            'showName' => true,
+            'subtitle' => 'Rental Driver Portal',
+        ])
+    </div>
     <div class="emp-hero-inner relative flex items-start justify-between gap-3">
         <div class="flex min-w-0 items-center gap-3">
-            <div class="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-white/15 text-lg font-bold text-white ring-2 ring-white/20">
-                {{ strtoupper(substr($driver->name, 0, 1)) }}
+            <div class="emp-avatar-ring shrink-0">
+                @include('partials.rental-driver-avatar', ['driver' => $driver, 'size' => '56', 'round' => true, 'tone' => 'hero'])
             </div>
             <div class="min-w-0">
                 @php
@@ -70,9 +78,12 @@
     <div>
         <p class="emp-section-title">My Profile</p>
         <div class="emp-card overflow-hidden divide-y divide-gray-100">
-            <div class="flex items-start justify-between gap-3 px-4 py-3">
-                <span class="text-xs text-gray-500 shrink-0">Name</span>
-                <span class="text-sm font-medium text-gray-900 text-right">{{ $driver->name }}</span>
+            <div class="flex items-center gap-4 px-4 py-4 bg-gradient-to-r from-orange-50/80 to-white">
+                @include('partials.rental-driver-avatar', ['driver' => $driver, 'size' => '80', 'round' => true])
+                <div class="min-w-0">
+                    <p class="truncate text-base font-bold text-gray-900">{{ $driver->name }}</p>
+                    <p class="truncate text-xs text-gray-500">{{ $driver->mobile ?? '—' }} · {{ $driver->factory?->name ?? '—' }}</p>
+                </div>
             </div>
             <div class="flex items-start justify-between gap-3 px-4 py-3">
                 <span class="text-xs text-gray-500 shrink-0">Mobile</span>
@@ -97,7 +108,7 @@
         <p class="emp-section-title">Quick Actions</p>
         <div class="grid grid-cols-4 gap-2.5">
             <a href="{{ route('rental.dashboard') }}" class="emp-quick">
-                <span class="emp-quick-icon bg-indigo-50 text-indigo-600">
+                <span class="emp-quick-icon bg-orange-50 text-orange-600">
                     @include('employee.partials.tab-icon', ['icon' => 'home'])
                 </span>
                 <span class="text-[10px] font-semibold text-gray-700">Home</span>
@@ -109,13 +120,13 @@
                 <span class="text-[10px] font-semibold text-gray-700">Trips</span>
             </a>
             <a href="{{ route('rental.odometer') }}" class="emp-quick">
-                <span class="emp-quick-icon bg-violet-50 text-violet-600">
+                <span class="emp-quick-icon bg-amber-50 text-amber-700">
                     @include('rental.partials.tab-icon', ['icon' => 'gauge'])
                 </span>
                 <span class="text-[10px] font-semibold text-gray-700">Daily KM</span>
             </a>
             <a href="{{ route('rental.notifications.index') }}" class="emp-quick">
-                <span class="emp-quick-icon bg-emerald-50 text-emerald-600 relative">
+                <span class="emp-quick-icon bg-rose-50 text-rose-600 relative">
                     @include('rental.partials.tab-icon', ['icon' => 'bell'])
                     @if($unreadNotifications > 0)
                         <span class="absolute -top-1 -right-1 min-w-[14px] h-3.5 px-0.5 rounded-full bg-gold text-white text-[8px] font-bold flex items-center justify-center">{{ $unreadNotifications > 9 ? '9+' : $unreadNotifications }}</span>

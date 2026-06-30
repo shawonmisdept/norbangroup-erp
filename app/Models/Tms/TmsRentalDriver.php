@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Storage;
 
 class TmsRentalDriver extends Model
 {
@@ -17,10 +18,19 @@ class TmsRentalDriver extends Model
     protected $table = 'tms_rental_drivers';
 
     protected $fillable = [
-        'factory_id', 'name', 'mobile', 'nid_number', 'license_number',
+        'factory_id', 'name', 'mobile', 'nid_number', 'license_number', 'photo',
         'rental_vendor_id', 'vendor_name', 'vendor_contact', 'default_vehicle_id', 'status', 'notes',
         'created_by', 'updated_by',
     ];
+
+    protected static function booted(): void
+    {
+        static::deleting(function (TmsRentalDriver $driver) {
+            if ($driver->photo) {
+                Storage::disk('public')->delete($driver->photo);
+            }
+        });
+    }
 
     public function factory(): BelongsTo
     {
@@ -78,5 +88,19 @@ class TmsRentalDriver extends Model
         }
 
         return $this->vendor_name ?? '—';
+    }
+
+    public function photoUrl(): ?string
+    {
+        return $this->photo
+            ? Storage::disk('public')->url($this->photo)
+            : null;
+    }
+
+    public function initials(): string
+    {
+        $parts = preg_split('/\s+/', trim($this->name));
+
+        return strtoupper(collect($parts)->take(2)->map(fn ($p) => mb_substr($p, 0, 1))->implode(''));
     }
 }

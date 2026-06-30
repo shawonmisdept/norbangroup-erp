@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1, user-scalable=no">
-    <meta name="theme-color" content="#1e3a5f">
+    <meta name="theme-color" content="#c2410c">
     <title>@yield('title', 'Rental Driver') — {{ config('portal.name') }}</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="emp-app text-gray-900">
+<body class="rental-app text-gray-900">
 
     @auth('rental_driver')
         @php $driver = auth('rental_driver')->user()->rentalDriver; @endphp
@@ -16,6 +16,14 @@
                 @yield('hero')
             @elseif(! View::hasSection('no-header'))
                 <div class="emp-hero emp-hero-sub">
+                    <div class="mb-3">
+                        @include('partials.portal.brand-logo', [
+                            'size' => 'sm',
+                            'variant' => 'rental',
+                            'showName' => true,
+                            'subtitle' => 'Rental Driver Portal',
+                        ])
+                    </div>
                     <div class="emp-hero-row">
                         <div class="min-w-0 flex-1">
                             @hasSection('back')

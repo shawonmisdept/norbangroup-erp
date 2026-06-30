@@ -53,6 +53,14 @@
         </button>
 
         <div x-show="openGroups['tms']" x-cloak class="erp-nav-sub" data-nav-open-key="tms">
+            @if(auth()->user()->hasAnyTmsViewPermission())
+                <a href="{{ route('admin.tms.hub') }}"
+                   data-nav-label="Transport Hub"
+                   class="erp-nav-sub-link {{ request()->routeIs('admin.tms.hub') ? 'erp-nav-sub-link-active' : '' }}">
+                    Hub
+                </a>
+            @endif
+
             @if(isset($submodules['dashboard']) && ($submodules['dashboard']['status'] ?? '') === 'active' && $canView('dashboard'))
                 <a href="{{ route($submodules['dashboard']['route']) }}"
                    data-nav-label="Transport Dashboard"

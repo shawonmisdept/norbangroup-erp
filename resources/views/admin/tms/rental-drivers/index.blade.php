@@ -13,6 +13,7 @@
     <table class="erp-table">
         <thead>
             <tr>
+                <th class="w-14"></th>
                 <th>Unit</th>
                 <th>Name</th>
                 <th>Mobile</th>
@@ -26,6 +27,13 @@
         <tbody>
             @forelse($drivers as $driver)
                 <tr>
+                    <td>
+                        @if($driver->photoUrl())
+                            <img src="{{ $driver->photoUrl() }}" alt="{{ $driver->name }}" class="erp-employee-index-photo">
+                        @else
+                            <div class="erp-employee-index-photo-fallback !bg-orange-600">{{ $driver->initials() }}</div>
+                        @endif
+                    </td>
                     <td class="text-xs">{{ $driver->factory?->name }}</td>
                     <td>{{ $driver->name }}</td>
                     <td class="text-xs">{{ $driver->mobile ?? '—' }}</td>
@@ -47,7 +55,7 @@
                     </td>
                 </tr>
             @empty
-                <tr><td colspan="8" class="text-center py-8 text-gray-400">No rental drivers yet.</td></tr>
+                <tr><td colspan="9" class="text-center py-8 text-gray-400">No rental drivers yet.</td></tr>
             @endforelse
         </tbody>
     </table>
