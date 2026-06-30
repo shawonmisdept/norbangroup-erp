@@ -26,7 +26,10 @@ class MaintenanceController extends Controller
         $this->scopeToUserFactory($query, $request);
 
         if ($request->filled('factory_id')) {
-            $query->where('factory_id', $request->factory_id);
+            $factoryId = $this->resolveFactoryFilter($request, (int) $request->factory_id);
+            if ($factoryId) {
+                $query->where('factory_id', $factoryId);
+            }
         }
 
         return view('admin.tms.maintenance.index', [

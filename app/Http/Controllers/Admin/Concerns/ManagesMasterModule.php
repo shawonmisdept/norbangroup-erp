@@ -369,8 +369,8 @@ trait ManagesMasterModule
             return $data;
         }
 
-        if ($request->user()?->factory_id) {
-            $data['factory_id'] = $request->user()->factory_id;
+        if ($request->user()?->scopedFactoryId()) {
+            $data['factory_id'] = $request->user()->scopedFactoryId();
         } elseif (isset($data['factory_id']) && method_exists($this, 'authorizeFactoryAccess')) {
             $this->authorizeFactoryAccess($request, (int) $data['factory_id']);
         }

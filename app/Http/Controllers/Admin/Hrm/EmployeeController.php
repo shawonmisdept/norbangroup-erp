@@ -501,7 +501,7 @@ class EmployeeController extends Controller
 
     private function authorizeEmployeeAccess(Request $request, Employee $employee): void
     {
-        if ($request->user()?->factory_id && $request->user()->factory_id !== $employee->factory_id) {
+        if (! $request->user()?->canAccessFactory($employee->factory_id)) {
             abort(403, 'You do not have access to this employee record.');
         }
     }

@@ -6,7 +6,7 @@ trait EnforcesUserFactoryScope
 {
     protected function mergeUserFactoryScope(): void
     {
-        $factoryId = $this->user()?->factory_id;
+        $factoryId = $this->user()?->scopedFactoryId();
 
         if (! $factoryId) {
             return;
@@ -17,7 +17,7 @@ trait EnforcesUserFactoryScope
 
     protected function userFactoryIdRule(): array
     {
-        $factoryId = $this->user()?->factory_id;
+        $factoryId = $this->user()?->scopedFactoryId();
 
         if (! $factoryId) {
             return ['required', 'exists:factories,id'];

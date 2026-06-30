@@ -12,11 +12,8 @@ trait BuildsHrmModuleDashboard
     {
         $from = Carbon::parse($request->input('from', now()->startOfMonth()->toDateString()))->startOfDay();
         $to = Carbon::parse($request->input('to', now()->toDateString()))->startOfDay();
-        $factoryId = $request->filled('factory_id') ? (int) $request->factory_id : $request->user()?->factory_id;
-
-        if ($factoryId && ! $request->user()?->factory_id) {
-            $this->authorizeFactoryAccess($request, $factoryId);
-        }
+        $requested = $request->filled('factory_id') ? (int) $request->factory_id : null;
+        $factoryId = $this->resolveFactoryFilter($request, $requested);
 
         return compact('from', 'to', 'factoryId');
     }

@@ -65,16 +65,8 @@ class DashboardController extends Controller
 
     private function resolveFactoryId(Request $request): ?int
     {
-        $factoryId = $request->filled('factory_id') ? (int) $request->factory_id : null;
+        $requested = $request->filled('factory_id') ? (int) $request->factory_id : null;
 
-        if ($request->user()?->factory_id) {
-            return $request->user()->factory_id;
-        }
-
-        if ($factoryId) {
-            $this->authorizeFactoryAccess($request, $factoryId);
-        }
-
-        return $factoryId;
+        return $this->resolveFactoryFilter($request, $requested);
     }
 }

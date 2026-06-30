@@ -50,13 +50,14 @@
 
 @if(isset($factories))
 <div>
-    <label class="erp-form-label">Factory (optional)</label>
+    <label class="erp-form-label">Factory / Unit (optional)</label>
     <select name="factory_id" class="erp-input !text-xs">
-        <option value="">— No factory —</option>
+        <option value="">— All units (group access) —</option>
         @foreach($factories as $id => $name)
             <option value="{{ $id }}" {{ (string) old('factory_id', $user->factory_id ?? '') === (string) $id ? 'selected' : '' }}>{{ $name }}</option>
         @endforeach
     </select>
+    <p class="text-xs text-gray-500 mt-1">Leave empty for group-level roles (HR head, admin). Assign a unit only for unit-scoped users.</p>
     @error('factory_id')<p class="text-xs text-red-500 mt-1">{{ $message }}</p>@enderror
 </div>
 @endif

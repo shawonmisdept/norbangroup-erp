@@ -16,13 +16,12 @@ class RegisterController extends Controller
     public function index(Request $request)
     {
         $factories = $this->factoryOptions($request);
-        $factoryId = (int) ($request->factory_id ?? array_key_first($factories) ?? 0);
+        $factoryId = $this->resolveFactoryFilter(
+            $request,
+            $request->filled('factory_id') ? (int) $request->factory_id : (int) (array_key_first($factories) ?: 0) ?: null,
+        ) ?? 0;
         $year = (int) $request->input('year', now()->year);
         $month = (int) $request->input('month', now()->month);
-
-        if ($factoryId && $request->user()?->factory_id) {
-            $this->authorizeFactoryAccess($request, $factoryId);
-        }
 
         return view('admin.hrm.compliance.registers.index', [
             'factories' => $factories,
@@ -35,11 +34,13 @@ class RegisterController extends Controller
 
     public function export(Request $request, StatutoryRegisterService $registers, string $type): StreamedResponse
     {
-        $factoryId = (int) $request->input('factory_id');
+        $factoryId = $this->requireFactoryFilter(
+            $request,
+            $request->filled('factory_id') ? (int) $request->factory_id : null,
+        );
+
         $year = (int) $request->input('year', now()->year);
         $month = (int) $request->input('month', now()->month);
-
-        $this->authorizeFactoryAccess($request, $factoryId);
 
         $from = Carbon::create($year, $month, 1)->startOfMonth();
         $to = $from->copy()->endOfMonth();

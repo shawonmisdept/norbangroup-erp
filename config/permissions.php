@@ -26,4 +26,14 @@ return [
         'manage' => 'Manage',
     ],
 
+    /*
+    | Users with any of these permissions can access all factory / unit data even when
+    | their user account has factory_id set (group-level operators).
+    */
+    'cross_unit_factory_permissions' => [
+        'users.manage',
+        'roles.manage',
+        'settings.manage',
+    ],
+
 ];

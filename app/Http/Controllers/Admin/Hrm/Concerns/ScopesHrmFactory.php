@@ -9,8 +9,10 @@ trait ScopesHrmFactory
 {
     protected function scopeToUserFactory($query, Request $request): void
     {
-        if ($request->user()?->factory_id) {
-            $query->where('factory_id', $request->user()->factory_id);
+        $factoryId = $request->user()?->scopedFactoryId();
+
+        if ($factoryId) {
+            $query->where($query->getModel()->getTable() . '.factory_id', $factoryId);
         }
     }
 
@@ -18,28 +20,64 @@ trait ScopesHrmFactory
     {
         $query = Factory::where('is_active', true)->orderBy('name');
 
-        if ($request->user()?->factory_id) {
-            $query->where('id', $request->user()->factory_id);
+        $factoryId = $request->user()?->scopedFactoryId();
+
+        if ($factoryId) {
+            $query->where('id', $factoryId);
         }
 
         return $query->pluck('name', 'id')->all();
     }
 
-    protected function authorizeFactoryAccess(Request $request, int $factoryId): void
+    protected function authorizeFactoryAccess(Request $request, mixed $factoryId): void
     {
-        if ($request->user()?->factory_id && $request->user()->factory_id !== $factoryId) {
+        if ($factoryId === null || $factoryId === '') {
+            return;
+        }
+
+        if (! $request->user()?->canAccessFactory((int) $factoryId)) {
             abort(403, 'You do not have access to data for this factory / unit.');
         }
     }
 
     protected function scopedFactoryName(Request $request): ?string
     {
-        $factoryId = $request->user()?->factory_id;
+        $factoryId = $request->user()?->scopedFactoryId();
 
         if (! $factoryId) {
             return null;
         }
 
         return Factory::whereKey($factoryId)->value('name');
+    }
+
+    /** Resolve factory filter for dashboards, reports, and exports. */
+    protected function resolveFactoryFilter(Request $request, ?int $requested = null): ?int
+    {
+        $factoryId = $request->user()?->resolveFactoryFilter($requested);
+
+        if ($factoryId && ! $request->user()?->isUnitScoped()) {
+            $this->authorizeFactoryAccess($request, $factoryId);
+        }
+
+        return $factoryId;
+    }
+
+    /** @return int Factory id or 422 when none could be resolved. */
+    protected function requireFactoryFilter(Request $request, ?int $requested = null): int
+    {
+        $factoryId = $this->resolveFactoryFilter($request, $requested);
+
+        if (! $factoryId) {
+            $options = $this->factoryOptions($request);
+
+            if (count($options) === 1) {
+                return (int) array_key_first($options);
+            }
+
+            abort(422, 'Select a factory / unit.');
+        }
+
+        return $factoryId;
     }
 }

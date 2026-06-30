@@ -48,6 +48,59 @@ class User extends Authenticatable
         return $this->belongsTo(Factory::class);
     }
 
+    /** True when the account is limited to a single factory / unit. */
+    public function isUnitScoped(): bool
+    {
+        return $this->factory_id !== null && ! $this->hasCrossUnitFactoryAccess();
+    }
+
+    /** Group-level access: no unit assignment, or elevated admin permissions. */
+    public function hasCrossUnitFactoryAccess(): bool
+    {
+        if ($this->factory_id === null) {
+            return true;
+        }
+
+        foreach (config('permissions.cross_unit_factory_permissions', []) as $permission) {
+            if ($this->hasPermission($permission)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function canAccessFactory(?int $factoryId): bool
+    {
+        if (! $this->isUnitScoped()) {
+            return true;
+        }
+
+        if ($factoryId === null) {
+            return true;
+        }
+
+        return (int) $this->factory_id === (int) $factoryId;
+    }
+
+    public function scopedFactoryId(): ?int
+    {
+        return $this->isUnitScoped() ? (int) $this->factory_id : null;
+    }
+
+    /**
+     * Resolve a factory filter for list/report screens.
+     * Unit-scoped users always get their assigned factory.
+     */
+    public function resolveFactoryFilter(?int $requested = null): ?int
+    {
+        if ($this->isUnitScoped()) {
+            return (int) $this->factory_id;
+        }
+
+        return $requested ?: null;
+    }
+
     public function hasPermission(string $permission): bool
     {
         return $this->role?->hasPermission($permission) ?? false;

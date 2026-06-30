@@ -11,13 +11,13 @@ class EnsureUserFactoryScope
     public function handle(Request $request, Closure $next): Response
     {
         $user = $request->user();
-        $factoryId = $user?->factory_id;
 
-        if (! $factoryId) {
+        if (! $user?->isUnitScoped()) {
             return $next($request);
         }
 
-        if ($request->has('factory_id') && (int) $request->input('factory_id') !== (int) $factoryId) {
+        if ($request->has('factory_id') && $request->input('factory_id') !== ''
+            && (int) $request->input('factory_id') !== (int) $user->factory_id) {
             abort(403, 'You can only access data for your assigned factory unit.');
         }
 
