@@ -66,8 +66,9 @@ return [
         ],
         [
             'label' => 'ORDER NOW',
-            'url' => 'https://portal.norbangroup.com',
+            'route' => 'orders.create',
             'highlight' => true,
+            'external' => false,
         ],
     ],
 

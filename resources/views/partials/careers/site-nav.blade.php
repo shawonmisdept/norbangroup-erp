@@ -15,13 +15,19 @@
                     </button>
                     <div class="careers-site-nav-menu">
                         @foreach($item['children'] as $child)
-                            <a href="{{ $child['url'] }}" target="_blank" rel="noopener">{{ $child['label'] }}</a>
+                            @php
+                                $childUrl = ! empty($child['route']) ? route($child['route']) : ($child['url'] ?? '#');
+                            @endphp
+                            <a href="{{ $childUrl }}" @if(! empty($child['external'])) target="_blank" rel="noopener" @endif>{{ $child['label'] }}</a>
                         @endforeach
                     </div>
                 </div>
             @else
-                <a href="{{ $item['url'] }}"
-                   @if($item['external'] ?? true) target="_blank" rel="noopener" @endif
+                @php
+                    $itemUrl = ! empty($item['route']) ? route($item['route']) : ($item['url'] ?? '#');
+                @endphp
+                <a href="{{ $itemUrl }}"
+                   @if(! empty($item['external'])) target="_blank" rel="noopener" @endif
                    class="{{ ! empty($item['highlight']) ? 'careers-site-nav-cta' : '' }}">
                     {{ $item['label'] }}
                 </a>
