@@ -435,25 +435,53 @@ select.emp-input.tomselected {
     @apply w-full text-sm border-collapse;
 }
 
-.maintenance-posting-grid th,
-.maintenance-posting-grid td {
-    border-width: 1px;
+.erp-panel.maintenance-posting-table {
+    border: none;
+    box-shadow: none;
+}
+
+.maintenance-posting-table .maintenance-posting-grid th,
+.maintenance-posting-table .maintenance-posting-grid td {
     border-style: solid;
-    border-color: var(--color-erp-border);
+    border-color: #111827;
     @apply px-2 py-1 text-gray-700 align-middle;
 }
 
+.maintenance-posting-table .maintenance-posting-grid th {
+    border-width: 0;
+    border-bottom-width: 1px;
+    border-right-width: 1px;
+}
+
+.maintenance-posting-table .maintenance-posting-grid tbody td {
+    border-width: 0;
+    border-bottom-width: 1px;
+    border-right-width: 1px;
+}
+
+.maintenance-posting-table .maintenance-posting-grid .posting-col-sl {
+    border-left-width: 1px;
+}
+
 .maintenance-posting-grid .maintenance-posting-title th {
-    border-bottom-width: 0;
+    border-width: 0;
+    border-bottom-width: 1px;
+    border-bottom-color: #111827;
     @apply py-2 text-center;
 }
 
-.maintenance-posting-grid .maintenance-posting-head th {
-    @apply bg-gray-50 text-[11px] font-semibold text-gray-500 uppercase tracking-wider;
+.maintenance-posting-table .maintenance-posting-grid .maintenance-posting-head th {
+    @apply bg-gray-50 text-[11px] font-semibold text-gray-500 uppercase tracking-wider py-2.5;
 }
 
-.maintenance-posting-grid .maintenance-posting-total td {
+.maintenance-posting-table .maintenance-posting-report-title {
+    @apply text-lg font-bold mt-1;
+}
+
+.maintenance-posting-table .maintenance-posting-grid .maintenance-posting-total td {
     @apply bg-gray-50 font-semibold;
+    border-top-width: 1px;
+    border-top-color: #111827;
 }
 
 .maintenance-posting-table .posting-merged {
@@ -461,12 +489,26 @@ select.emp-input.tomselected {
     vertical-align: middle;
 }
 
-.maintenance-posting-table tbody tr + tr td.posting-merged {
-    border-top-width: 0;
+.maintenance-posting-table tbody tr:not(:last-child) td.posting-merged:not(.posting-merged-group) {
+    border-bottom-width: 0;
 }
 
-.maintenance-posting-table tbody tr:not(:last-child) td.posting-merged {
+.maintenance-posting-table tbody tr.posting-group-end td,
+.maintenance-posting-table tbody td.posting-merged-group {
     border-bottom-width: 0;
+}
+
+.maintenance-posting-table tbody tr.posting-group-separator td {
+    height: 0;
+    padding: 0;
+    line-height: 0;
+    border-width: 0;
+    border-top: 1px solid #303133;
+    background: transparent;
+}
+
+.maintenance-posting-table tbody tr.posting-group-separator + tr > td {
+    border-top-width: 0;
 }
 
 .erp-btn-primary {
@@ -486,7 +528,7 @@ select.emp-input.tomselected {
 }
 
 .erp-btn-sm-secondary {
-    @apply inline-flex items-center justify-center bg-white hover:bg-gray-50 text-gray-700 text-[11px] font-medium px-2 py-1 rounded-sm border border-erp-border transition whitespace-nowrap;
+    @apply inline-flex items-center justify-center bg-green-200 hover:bg-gray-50 text-gray-700 text-[11px] font-medium px-2 py-1 rounded-sm border border-erp-border transition whitespace-nowrap;
 }
 
 .erp-table-actions {

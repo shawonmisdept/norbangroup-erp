@@ -112,6 +112,37 @@ class TmsMaintenanceTest extends TestCase
         $this->assertSame('ABC Rent-a-Car Car No: 8402', $this->rentalVehicle->postingCarNoLabel());
     }
 
+    public function test_maintenance_index_filters(): void
+    {
+        $response = $this->actingAs($this->user)
+            ->get(route('admin.tms.maintenance.index', ['vehicle_id' => $this->ownVehicle->id]));
+
+        $response->assertOk()
+            ->assertSee('Pickup (DHK-1234-5678)');
+        $this->assertEquals(1, substr_count($response->getContent(), 'Open Register</a>'));
+
+        $response = $this->actingAs($this->user)
+            ->get(route('admin.tms.maintenance.index', ['posting_vehicle_id' => $this->rentalVehicle->id]));
+
+        $response->assertOk()
+            ->assertSee('Hiace (DM-GHA-11-8402)');
+        $this->assertEquals(1, substr_count($response->getContent(), 'Open Register</a>'));
+
+        $response = $this->actingAs($this->user)
+            ->get(route('admin.tms.maintenance.index', ['allocated_employee_id' => $this->ownVehicle->allocated_employee_id]));
+
+        $response->assertOk()
+            ->assertSee('Pickup (DHK-1234-5678)');
+        $this->assertEquals(1, substr_count($response->getContent(), 'Open Register</a>'));
+
+        $response = $this->actingAs($this->user)
+            ->get(route('admin.tms.maintenance.index', ['search' => 'GM']));
+
+        $response->assertOk()
+            ->assertSee('Hiace (DM-GHA-11-8402)');
+        $this->assertEquals(1, substr_count($response->getContent(), 'Open Register</a>'));
+    }
+
     public function test_maintenance_bill_crud_on_vehicle_register(): void
     {
         $this->actingAs($this->user)

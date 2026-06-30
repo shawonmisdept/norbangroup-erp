@@ -22,8 +22,15 @@ class MaintenanceController extends Controller
 
     public function index(Request $request)
     {
-        $query = TmsVehicle::query()->with(['rentalVendor', 'allocatedEmployee.designation', 'allocatedEmployee.department'])->orderBy('name');
+        $filters = $this->indexFilters($request);
+        $filterOptions = $this->indexFilterOptions($request);
+
+        $query = TmsVehicle::query()
+            ->with(['rentalVendor', 'allocatedEmployee.designation', 'allocatedEmployee.department'])
+            ->orderBy('name');
+
         $this->scopeToUserFactory($query, $request);
+        $this->applyIndexFilters($query, $filters);
 
         if ($request->filled('factory_id')) {
             $factoryId = $this->resolveFactoryFilter($request, (int) $request->factory_id);
@@ -33,10 +40,88 @@ class MaintenanceController extends Controller
         }
 
         return view('admin.tms.maintenance.index', [
-            'vehicles'  => $query->paginate(25)->withQueryString(),
-            'factories' => $this->factoryOptions($request),
-            'filters'   => $request->only(['factory_id']),
+            'vehicles'        => $query->paginate(25)->withQueryString(),
+            'factories'       => $this->factoryOptions($request),
+            'filters'         => $filters,
+            'vehicleOptions'  => $filterOptions['vehicles'],
+            'postingCarOptions' => $filterOptions['postingCarNos'],
+            'allocatedUserOptions' => $filterOptions['allocatedUsers'],
         ]);
+    }
+
+    /** @return array{factory_id?: ?int, search?: ?string, vehicle_id?: ?int, posting_vehicle_id?: ?int, allocated_employee_id?: ?int} */
+    private function indexFilters(Request $request): array
+    {
+        return $request->validate([
+            'factory_id'            => ['nullable', 'integer'],
+            'search'                => ['nullable', 'string', 'max:255'],
+            'vehicle_id'            => ['nullable', 'integer', 'exists:tms_vehicles,id'],
+            'posting_vehicle_id'    => ['nullable', 'integer', 'exists:tms_vehicles,id'],
+            'allocated_employee_id' => ['nullable', 'integer', 'exists:hrm_employees,id'],
+        ]);
+    }
+
+    /** @return array{vehicles: array<int, string>, postingCarNos: array<int, string>, allocatedUsers: array<int, string>} */
+    private function indexFilterOptions(Request $request): array
+    {
+        $query = TmsVehicle::query()
+            ->with(['rentalVendor', 'allocatedEmployee.designation'])
+            ->orderBy('name');
+
+        $this->scopeToUserFactory($query, $request);
+
+        if ($request->filled('factory_id')) {
+            $factoryId = $this->resolveFactoryFilter($request, (int) $request->factory_id);
+            if ($factoryId) {
+                $query->where('factory_id', $factoryId);
+            }
+        }
+
+        $vehicles = $query->get();
+
+        return [
+            'vehicles' => $vehicles
+                ->mapWithKeys(fn (TmsVehicle $vehicle) => [$vehicle->id => $vehicle->displayLabel()])
+                ->all(),
+            'postingCarNos' => $vehicles
+                ->mapWithKeys(fn (TmsVehicle $vehicle) => [$vehicle->id => $vehicle->postingCarNoLabel()])
+                ->all(),
+            'allocatedUsers' => $vehicles
+                ->filter(fn (TmsVehicle $vehicle) => $vehicle->allocated_employee_id && $vehicle->allocatedUserLabel())
+                ->unique('allocated_employee_id')
+                ->sortBy(fn (TmsVehicle $vehicle) => $vehicle->allocatedUserLabel())
+                ->mapWithKeys(fn (TmsVehicle $vehicle) => [$vehicle->allocated_employee_id => $vehicle->allocatedUserLabel()])
+                ->all(),
+        ];
+    }
+
+    /** @param  \Illuminate\Database\Eloquent\Builder<TmsVehicle>  $query
+     * @param  array{factory_id?: ?int, search?: ?string, vehicle_id?: ?int, posting_vehicle_id?: ?int, allocated_employee_id?: ?int}  $filters
+     */
+    private function applyIndexFilters($query, array $filters): void
+    {
+        if ($search = trim((string) ($filters['search'] ?? ''))) {
+            $query->where(function ($builder) use ($search) {
+                $builder->where('name', 'like', "%{$search}%")
+                    ->orWhere('reg_number', 'like', "%{$search}%")
+                    ->orWhereHas('allocatedEmployee', fn ($employee) => $employee
+                        ->where('name', 'like', "%{$search}%")
+                        ->orWhereHas('designation', fn ($designation) => $designation->where('name', 'like', "%{$search}%")))
+                    ->orWhereHas('rentalVendor', fn ($vendor) => $vendor->where('name', 'like', "%{$search}%"));
+            });
+        }
+
+        if (! empty($filters['vehicle_id'])) {
+            $query->whereKey($filters['vehicle_id']);
+        }
+
+        if (! empty($filters['posting_vehicle_id'])) {
+            $query->whereKey($filters['posting_vehicle_id']);
+        }
+
+        if (! empty($filters['allocated_employee_id'])) {
+            $query->where('allocated_employee_id', $filters['allocated_employee_id']);
+        }
     }
 
     public function register(Request $request, TmsVehicle $vehicle)
