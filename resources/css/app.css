@@ -1364,17 +1364,10 @@ select.emp-input.tomselected {
     @apply flex items-center justify-center select-none;
 }
 
-.erp-live-clock-face {
-    @apply flex flex-col items-end justify-center tabular-nums leading-none;
-    font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
-    gap: 0.15rem;
-    max-height: calc(3.5rem * 0.6);
-}
-
 .erp-live-clock-time {
-    @apply font-extrabold tracking-wide text-brand;
+    @apply inline-flex items-baseline font-extrabold tabular-nums tracking-wide text-brand leading-none;
+    font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
     font-size: calc(3.5rem * 0.6 * 0.68);
-    line-height: 1;
 }
 
 .erp-live-clock-colon {
@@ -1382,24 +1375,168 @@ select.emp-input.tomselected {
     animation: erp-clock-blink 1s step-end infinite;
 }
 
-.erp-live-clock-sec {
-    @apply text-gold-dark;
-}
-
 .erp-live-clock-period {
-    @apply ml-1 font-bold tracking-wide text-brand/80;
+    @apply ml-1.5 font-bold tracking-wide text-brand/80;
     font-size: calc(3.5rem * 0.6 * 0.5);
-    line-height: 1;
-}
-
-.erp-live-clock-date {
-    @apply font-semibold tracking-wider text-gray-600;
-    font-size: calc(3.5rem * 0.6 * 0.42);
-    line-height: 1;
 }
 
 @keyframes erp-clock-blink {
     50% {
         opacity: 0.35;
     }
+}
+
+/* ── Admin login page ── */
+
+.admin-login-page {
+    @apply min-h-screen bg-erp-bg text-gray-900;
+}
+
+.admin-login-shell {
+    @apply min-h-screen flex flex-col lg:flex-row;
+}
+
+.admin-login-brand {
+    @apply relative hidden lg:flex lg:w-[46%] xl:w-[50%] shrink-0 text-white;
+    background: linear-gradient(155deg, #0a1f38 0%, #152d4a 42%, #1e3a5f 100%);
+}
+
+.admin-login-brand-glow {
+    @apply pointer-events-none absolute -right-20 top-1/4 h-72 w-72 rounded-full opacity-25;
+    background: radial-gradient(circle, #c9a84c 0%, transparent 68%);
+}
+
+.admin-login-brand-inner {
+    @apply relative z-10 flex min-h-full flex-col justify-between p-10 xl:p-12;
+}
+
+.admin-login-logo {
+    @apply mb-12;
+}
+
+.admin-login-logo-fallback {
+    @apply flex h-11 w-11 items-center justify-center rounded-xl bg-gold shadow-lg;
+}
+
+.admin-login-logo-fallback-sm {
+    @apply h-9 w-9 rounded-lg;
+}
+
+.admin-login-hero {
+    @apply space-y-4;
+}
+
+.admin-login-eyebrow {
+    @apply text-[11px] font-semibold uppercase tracking-[0.2em] text-gold-light;
+}
+
+.admin-login-title {
+    @apply text-[2rem] xl:text-[2.35rem] font-bold leading-tight text-white;
+}
+
+.admin-login-tagline {
+    @apply max-w-md text-sm leading-relaxed text-white/55;
+}
+
+.admin-login-highlights {
+    @apply mt-10 space-y-3.5;
+}
+
+.admin-login-highlights li {
+    @apply flex items-center gap-3 text-[13px] text-white/75;
+}
+
+.admin-login-highlight-icon {
+    @apply flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white/10 text-gold-light;
+}
+
+.admin-login-footer {
+    @apply text-[11px] text-white/30;
+}
+
+.admin-login-main {
+    @apply flex flex-1 items-center justify-center p-6 sm:p-10;
+    background:
+        radial-gradient(circle at 85% 10%, rgb(201 168 76 / 0.07), transparent 26%),
+        linear-gradient(180deg, #f6f8fb 0%, #eef2f7 100%);
+}
+
+.admin-login-form-wrap {
+    @apply w-full max-w-[400px];
+}
+
+.admin-login-mobile-head {
+    @apply mb-6 flex items-center gap-3;
+}
+
+.admin-login-card {
+    @apply overflow-hidden rounded-3xl bg-white shadow-[0_24px_60px_-20px_rgba(21,45,74,0.28)];
+}
+
+.admin-login-card-header {
+    @apply px-6 py-5 text-white;
+    background: linear-gradient(135deg, #152d4a 0%, #1e3a5f 55%, #2a5080 100%);
+}
+
+.admin-login-card-body {
+    @apply p-6;
+}
+
+.admin-login-error {
+    @apply mb-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-xs text-red-700;
+}
+
+.admin-login-label {
+    @apply mb-1.5 block text-[11px] font-semibold uppercase tracking-wide text-gray-500;
+}
+
+.admin-login-input-wrap {
+    @apply relative;
+}
+
+.admin-login-input-icon {
+    @apply pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400;
+}
+
+.admin-login-input {
+    @apply w-full rounded-xl border border-erp-border bg-gray-50/80 py-2.5 pl-10 pr-3.5 text-sm text-gray-900 transition placeholder:text-gray-400;
+    @apply focus:border-brand focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand/20;
+}
+
+.admin-login-submit {
+    @apply mt-1 flex w-full items-center justify-center gap-2 rounded-xl bg-brand px-4 py-3 text-sm font-semibold text-white shadow-[0_10px_24px_-8px_rgba(21,45,74,0.55)] transition;
+    @apply hover:bg-brand-dark active:scale-[0.99];
+}
+
+.admin-login-portals {
+    @apply mt-5 grid gap-2.5 sm:grid-cols-2;
+}
+
+.admin-login-portal {
+    @apply flex items-center gap-3 rounded-2xl border border-erp-border bg-white/90 px-3.5 py-3 transition;
+    @apply hover:border-brand/25 hover:bg-white hover:shadow-sm;
+}
+
+.admin-login-portal-rental:hover {
+    @apply border-orange-200;
+}
+
+.admin-login-portal-icon {
+    @apply flex h-9 w-9 shrink-0 items-center justify-center rounded-xl;
+}
+
+.admin-login-portal-icon-emp {
+    @apply bg-brand/10 text-brand;
+}
+
+.admin-login-portal-icon-rental {
+    @apply bg-orange-100 text-orange-600;
+}
+
+.admin-login-portal-title {
+    @apply block text-xs font-bold text-gray-800;
+}
+
+.admin-login-portal-sub {
+    @apply block text-[10px] text-gray-400;
 }

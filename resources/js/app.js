@@ -6,9 +6,7 @@ import { initConfirmHandlers, registerConfirmDialog } from './confirm-dialog';
 Alpine.data('erpLiveClock', (timezone = 'UTC') => ({
     hour: '00',
     minute: '00',
-    second: '00',
     period: 'AM',
-    date: '',
     timer: null,
 
     init() {
@@ -27,20 +25,14 @@ Alpine.data('erpLiveClock', (timezone = 'UTC') => ({
             timeZone: timezone,
             hour: '2-digit',
             minute: '2-digit',
-            second: '2-digit',
             hour12: true,
-            day: '2-digit',
-            month: '2-digit',
-            year: 'numeric',
         }).formatToParts(new Date());
 
         const get = (type) => parts.find((part) => part.type === type)?.value ?? '';
 
         this.hour = get('hour').padStart(2, '0');
         this.minute = get('minute').padStart(2, '0');
-        this.second = get('second').padStart(2, '0');
         this.period = get('dayPeriod').toUpperCase();
-        this.date = `${get('day').padStart(2, '0')}-${get('month').padStart(2, '0')}-${get('year')}`;
     },
 }));
 
