@@ -109,4 +109,38 @@ class TmsRentalDriverTest extends TestCase
             ->assertOk()
             ->assertSee('Photo Driver');
     }
+
+    public function test_rental_driver_show_modal(): void
+    {
+        $factory = Factory::create(['name' => 'Test Factory', 'is_active' => true]);
+
+        $role = Role::create([
+            'name'        => 'TMS Admin',
+            'permissions' => ['tms.rental_drivers.view', 'tms.rental_drivers.manage'],
+        ]);
+
+        $user = User::create([
+            'name'       => 'Admin',
+            'email'      => 'rental-show@test.com',
+            'password'   => 'password',
+            'role_id'    => $role->id,
+            'factory_id' => $factory->id,
+        ]);
+
+        $driver = TmsRentalDriver::create([
+            'factory_id'     => $factory->id,
+            'name'           => 'Show Driver',
+            'mobile'         => '01733333333',
+            'license_number' => 'DL-999',
+            'status'         => 'active',
+        ]);
+
+        $this->actingAs($user)
+            ->get(route('admin.tms.rental-drivers.show', $driver) . '?modal=1', [
+                'X-Requested-With' => 'XMLHttpRequest',
+            ])
+            ->assertOk()
+            ->assertSee('Show Driver')
+            ->assertSee('DL-999');
+    }
 }

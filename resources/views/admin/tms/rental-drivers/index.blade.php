@@ -13,7 +13,7 @@
     <table class="erp-table">
         <thead>
             <tr>
-                <th class="w-14"></th>
+                <th class="w-[48px]"></th>
                 <th>Unit</th>
                 <th>Name</th>
                 <th>Mobile</th>
@@ -29,9 +29,9 @@
                 <tr>
                     <td>
                         @if($driver->photoUrl())
-                            <img src="{{ $driver->photoUrl() }}" alt="{{ $driver->name }}" class="erp-employee-index-photo">
+                            <img src="{{ $driver->photoUrl() }}" alt="{{ $driver->name }}" class="erp-rental-driver-photo">
                         @else
-                            <div class="erp-employee-index-photo-fallback !bg-orange-600">{{ $driver->initials() }}</div>
+                            <div class="erp-rental-driver-photo-fallback">{{ $driver->initials() }}</div>
                         @endif
                     </td>
                     <td class="text-xs">{{ $driver->factory?->name }}</td>
@@ -46,12 +46,15 @@
                         </span>
                     </td>
                     <td class="text-right">
-                        @if(auth()->user()->canManageTmsSubmodule('rental_drivers'))
-                            @include('admin.tms.partials.row-actions', [
-                                'editUrl' => route('admin.tms.rental-drivers.edit', $driver),
-                                'destroyUrl' => route('admin.tms.rental-drivers.destroy', $driver),
-                            ])
-                        @endif
+                        @include('admin.tms.partials.row-actions', [
+                            'viewModalUrl' => route('admin.tms.rental-drivers.show', $driver),
+                            'editUrl' => auth()->user()->canManageTmsSubmodule('rental_drivers')
+                                ? route('admin.tms.rental-drivers.edit', $driver)
+                                : null,
+                            'destroyUrl' => auth()->user()->canManageTmsSubmodule('rental_drivers')
+                                ? route('admin.tms.rental-drivers.destroy', $driver)
+                                : null,
+                        ])
                     </td>
                 </tr>
             @empty
@@ -64,4 +67,6 @@
         <div class="px-4 py-3 border-t">{{ $drivers->links() }}</div>
     @endif
 </div>
+
+@include('admin.tms.partials.view-modal')
 @endsection

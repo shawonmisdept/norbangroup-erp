@@ -626,6 +626,24 @@ select.emp-input.tomselected {
     @apply w-12 h-12 rounded-full flex items-center justify-center bg-brand text-white text-sm font-semibold border-2 border-white shadow-sm shrink-0;
 }
 
+.erp-rental-driver-photo {
+    @apply block rounded-sm border border-erp-border shrink-0;
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    min-height: 48px;
+    object-fit: cover;
+    object-position: center;
+}
+
+.erp-rental-driver-photo-fallback {
+    @apply flex items-center justify-center rounded-sm bg-orange-600 text-white text-sm font-semibold border border-erp-border shrink-0;
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    min-height: 48px;
+}
+
 /* ── Mobile responsive (project-wide) ── */
 
 .safe-top {

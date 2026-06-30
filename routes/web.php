@@ -776,6 +776,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
 
         Route::middleware('permission:tms.rental_drivers.view')->group(function () {
             Route::get('/rental-drivers', [\App\Http\Controllers\Admin\Tms\RentalDriverController::class, 'index'])->name('rental-drivers.index');
+            Route::get('/rental-drivers/{rentalDriver}', [\App\Http\Controllers\Admin\Tms\RentalDriverController::class, 'show'])->name('rental-drivers.show')->whereNumber('rentalDriver');
         });
 
         Route::middleware('permission:tms.rental_drivers.manage')->group(function () {

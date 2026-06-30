@@ -14,7 +14,7 @@
         @endif
 
         <div class="flex items-start gap-4 pb-4 border-b border-erp-border">
-            @include('partials.rental-driver-avatar', ['driver' => $driver->exists ? $driver : null, 'size' => '180', 'round' => true])
+            @include('partials.rental-driver-avatar', ['driver' => $driver->exists ? $driver : null, 'size' => '180'])
             <div class="flex-1">
                 <p class="erp-form-label !mb-0.5">Driver Photo</p>
                 <p class="text-[11px] text-gray-500 mb-2">180 × 180 px — shown in rental portal and admin lists.</p>

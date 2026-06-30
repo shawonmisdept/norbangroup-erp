@@ -1,12 +1,15 @@
 @props([
     'viewUrl' => null,
+    'viewModalUrl' => null,
     'editUrl' => null,
     'destroyUrl' => null,
     'confirm' => 'Delete this record?',
 ])
 
 <div class="erp-table-actions inline-flex gap-1">
-    @if($viewUrl)
+    @if($viewModalUrl)
+        <button type="button" data-tms-view="{{ $viewModalUrl }}" class="erp-btn-sm-secondary">View</button>
+    @elseif($viewUrl)
         <a href="{{ $viewUrl }}" class="erp-btn-sm-secondary">View</a>
     @endif
     @if($editUrl)

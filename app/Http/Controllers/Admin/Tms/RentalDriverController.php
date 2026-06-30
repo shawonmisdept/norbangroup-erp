@@ -32,6 +32,22 @@ class RentalDriverController extends Controller
         ]);
     }
 
+    public function show(Request $request, TmsRentalDriver $rentalDriver)
+    {
+        $this->authorizeFactoryAccess($request, $rentalDriver->factory_id);
+
+        $data = [
+            'driver'    => $rentalDriver->load(['factory', 'defaultVehicle', 'rentalVendor', 'portalUser']),
+            'canManage' => $request->user()?->canManageTmsSubmodule('rental_drivers') ?? false,
+        ];
+
+        if ($request->ajax() || $request->boolean('modal')) {
+            return view('admin.tms.rental-drivers.show-modal', $data);
+        }
+
+        return redirect()->route('admin.tms.rental-drivers.index');
+    }
+
     public function create(Request $request)
     {
         $factoryId = (int) ($request->user()?->factory_id ?: array_key_first($this->factoryOptions($request)));
