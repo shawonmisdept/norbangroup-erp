@@ -401,13 +401,14 @@ select.emp-input.tomselected {
 
 .maintenance-bills-table col.col-bill-no { width: 8%; }
 .maintenance-bills-table col.col-date { width: 10%; }
-.maintenance-bills-table col.col-workshop { width: 14%; }
-.maintenance-bills-table col.col-item { width: 34%; }
-.maintenance-bills-table col.col-qty { width: 10%; }
+.maintenance-bills-table col.col-workshop { width: 12%; }
+.maintenance-bills-table col.col-item { width: 28%; }
+.maintenance-bills-table col.col-qty { width: 8%; }
+.maintenance-bills-table col.col-unit { width: 8%; }
 .maintenance-bills-table col.col-amount { width: 12%; }
 .maintenance-bills-table col.col-actions { width: 12%; }
 
-.maintenance-bills-table:not(.has-actions) col.col-item { width: 46%; }
+.maintenance-bills-table:not(.has-actions) col.col-item { width: 36%; }
 
 .maintenance-bills-table th,
 .maintenance-bills-table td {

@@ -35,18 +35,19 @@
 <div class="overflow-x-auto">
 <table class="maintenance-bills-table {{ $canManageBills ? 'has-actions' : '' }}">
 @include('admin.tms.maintenance.partials.bill-table-cols', ['withActions' => $canManageBills])
-<thead><tr><th>Bill No</th><th>Date</th><th>Workshop</th><th>Item</th><th>Qty</th><th class="text-right">Amount</th>@if($canManageBills)<th></th>@endif</tr></thead>
+<thead><tr><th>Bill No</th><th>Date</th><th>Workshop</th><th>Item</th><th>Qty</th><th>Unit</th><th class="text-center">Amount</th>@if($canManageBills)<th class="text-center"></th>@endif</tr></thead>
 <tbody>
 @foreach($bills as $bill)
 @foreach($bill->items as $index => $item)
 <tr>
 @if($index === 0)
-<td rowspan="{{ $bill->items->count() }}" class="align-top font-medium">{{ $bill->bill_no }}</td>
-<td rowspan="{{ $bill->items->count() }}" class="align-top text-xs whitespace-nowrap">{{ $bill->bill_date?->format('d M Y') }}</td>
-<td rowspan="{{ $bill->items->count() }}" class="align-top text-xs">{{ $bill->workshop_name }}</td>
+<td rowspan="{{ $bill->items->count() }}" class="align-top font-medium text-center">{{ $bill->bill_no }}</td>
+<td rowspan="{{ $bill->items->count() }}" class="align-top text-xs whitespace-nowrap text-center">{{ $bill->bill_date?->format('d M Y') }}</td>
+<td rowspan="{{ $bill->items->count() }}" class="align-top text-xs text-center">{{ $bill->workshop_name }}</td>
 @endif
 <td class="text-xs">{{ $item->item_name }}</td>
-<td class="text-xs">{{ $item->quantityLabel() ?? '—' }}</td>
+<td class="text-xs tabular-nums text-center">{{ $item->formattedQuantity() ?? '—' }}</td>
+<td class="text-xs tabular-nums text-center">{{ $item->unit ?: '—' }}</td>
 <td class="text-right tabular-nums">৳{{ number_format($item->amount, 2) }}</td>
 @if($index === 0 && $canManageBills)
 <td rowspan="{{ $bill->items->count() }}" class="align-top text-right whitespace-nowrap">
@@ -60,7 +61,7 @@
 </tr>
 @endforeach
 <tr class="bg-gray-50">
-<td colspan="5" class="text-right text-xs font-semibold uppercase tracking-wide">Bill Total</td>
+<td colspan="6" class="text-right text-xs font-semibold uppercase tracking-wide">Bill Total</td>
 <td class="text-right tabular-nums font-semibold">৳{{ number_format($bill->total_amount, 2) }}</td>
 @if($canManageBills)<td></td>@endif
 </tr>

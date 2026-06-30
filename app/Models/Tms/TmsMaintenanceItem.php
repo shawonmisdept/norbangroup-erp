@@ -26,13 +26,22 @@ class TmsMaintenanceItem extends Model
         return $this->belongsTo(TmsMaintenanceBill::class, 'maintenance_bill_id');
     }
 
-    public function quantityLabel(): ?string
+    public function formattedQuantity(): ?string
     {
         if ($this->quantity === null) {
             return null;
         }
 
-        $qty = rtrim(rtrim(number_format((float) $this->quantity, 3, '.', ''), '0'), '.');
+        return rtrim(rtrim(number_format((float) $this->quantity, 3, '.', ''), '0'), '.');
+    }
+
+    public function quantityLabel(): ?string
+    {
+        $qty = $this->formattedQuantity();
+
+        if ($qty === null) {
+            return null;
+        }
 
         return $this->unit ? "{$qty} {$this->unit}" : $qty;
     }

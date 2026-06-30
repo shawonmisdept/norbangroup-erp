@@ -14,9 +14,10 @@ table { width: 100%; border-collapse: collapse; margin-bottom: 8px; table-layout
 col.col-bill-no { width: 8%; }
 col.col-date { width: 10%; }
 col.col-workshop { width: 14%; }
-col.col-item { width: 40%; }
-col.col-qty { width: 12%; }
-col.col-amount { width: 16%; }
+col.col-item { width: 36%; }
+col.col-qty { width: 8%; }
+col.col-unit { width: 8%; }
+col.col-amount { width: 14%; }
 th, td { border: 1px solid #333; padding: 6px 8px; vertical-align: top; overflow-wrap: anywhere; }
 thead th { background: #f3f4f6; font-size: 11px; text-transform: uppercase; text-align: left; }
 .text-right { text-align: right; }
@@ -48,6 +49,7 @@ thead th { background: #f3f4f6; font-size: 11px; text-transform: uppercase; text
     <col class="col-workshop">
     <col class="col-item">
     <col class="col-qty">
+    <col class="col-unit">
     <col class="col-amount">
 </colgroup>
 <thead>
@@ -57,6 +59,7 @@ thead th { background: #f3f4f6; font-size: 11px; text-transform: uppercase; text
 <th>Workshop</th>
 <th>Item</th>
 <th>Qty</th>
+<th>Unit</th>
 <th class="text-right">Amount</th>
 </tr>
 </thead>
@@ -70,12 +73,13 @@ thead th { background: #f3f4f6; font-size: 11px; text-transform: uppercase; text
 <td rowspan="{{ $bill->items->count() }}">{{ $bill->workshop_name }}</td>
 @endif
 <td>{{ $item->item_name }}</td>
-<td>{{ $item->quantityLabel() ?? '—' }}</td>
+<td class="text-right">{{ $item->formattedQuantity() ?? '—' }}</td>
+<td>{{ $item->unit ?: '—' }}</td>
 <td class="text-right">{{ number_format($item->amount, 2) }}</td>
 </tr>
 @endforeach
 <tr class="bill-total">
-<td colspan="5" class="text-right">Bill Total</td>
+<td colspan="6" class="text-right">Bill Total</td>
 <td class="text-right">{{ number_format($bill->total_amount, 2) }}</td>
 </tr>
 @endforeach

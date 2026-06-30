@@ -63,6 +63,18 @@ trait ScopesHrmFactory
         return $factoryId;
     }
 
+    /** Resolve factory filter defaulting to the first available unit. */
+    protected function resolveFactoryFilterFromRequest(Request $request, ?array $factories = null): int
+    {
+        $factories ??= $this->factoryOptions($request);
+
+        $requested = $request->filled('factory_id')
+            ? (int) $request->factory_id
+            : ($factories !== [] ? (int) array_key_first($factories) : null);
+
+        return $this->resolveFactoryFilter($request, $requested) ?? 0;
+    }
+
     /** @return int Factory id or 422 when none could be resolved. */
     protected function requireFactoryFilter(Request $request, ?int $requested = null): int
     {

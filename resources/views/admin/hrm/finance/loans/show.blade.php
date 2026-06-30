@@ -30,7 +30,7 @@
 @if($canManage && $loan->status === 'active' && (float) $loan->balance > 0)
 <div class="erp-panel mb-4">
     <div class="erp-panel-head"><h2 class="text-xs font-semibold uppercase text-gray-600">Early Settlement</h2></div>
-    <form method="POST" action="{{ route('admin.hrm.finance.loans.settle', $loan) }}" class="erp-panel-body grid grid-cols-1 md:grid-cols-3 gap-4 items-end" data-confirm="Record early settlement for this loan?">
+    <form method="POST" action="{{ route('admin.hrm.finance.loans.settle', $loan) }}" class="erp-panel-body grid grid-cols-1 md:grid-cols-3 gap-4 items-start" data-confirm="Record early settlement for this loan?">
         @csrf
         <div>
             <label class="erp-form-label">Settlement amount (৳)</label>

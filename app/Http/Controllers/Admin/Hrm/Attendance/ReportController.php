@@ -17,10 +17,7 @@ class ReportController extends Controller
     public function index(Request $request, AttendanceReportService $reports)
     {
         $factories = $this->factoryOptions($request);
-        $factoryId = $this->resolveFactoryFilter(
-            $request,
-            $request->filled('factory_id') ? (int) $request->factory_id : (int) (array_key_first($factories) ?: 0) ?: null,
-        ) ?? 0;
+        $factoryId = $this->resolveFactoryFilterFromRequest($request, $factories);
         $year = (int) $request->input('year', now()->year);
         $month = (int) $request->input('month', now()->month);
 

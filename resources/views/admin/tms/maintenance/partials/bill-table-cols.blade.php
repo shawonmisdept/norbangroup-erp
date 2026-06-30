@@ -4,6 +4,7 @@
     <col class="col-workshop">
     <col class="col-item">
     <col class="col-qty">
+    <col class="col-unit">
     <col class="col-amount">
     @if($withActions ?? false)
         <col class="col-actions">
