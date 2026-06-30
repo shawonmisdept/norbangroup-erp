@@ -2,9 +2,9 @@
 
 # Norban Group ERP-HRM Portal
 
-**Commercial ERP · Garments HRM/HRMS · Careers · Employee Self-Service**
+**Commercial ERP · Garments HRM/HRMS · Transport Management (TMS) · Careers · Employee Self-Service**
 
-Built for multi-unit RMG factories — requirement intake, 5,000+ workforce HR, ZKTeco attendance, payroll & public recruitment.
+Built for multi-unit RMG factories — requirement intake, 5,000+ workforce HR, ZKTeco attendance, payroll, fleet & maintenance, and public recruitment.
 
 <br>
 
@@ -24,7 +24,7 @@ Built for multi-unit RMG factories — requirement intake, 5,000+ workforce HR, 
 
 ## Overview
 
-Single Laravel portal powering Norbangroup's operations — from buyer requirement submissions to full garments HR lifecycle, biometric attendance, payroll, and a public careers site.
+Single Laravel portal powering Norbangroup's operations — from buyer requirement submissions to full garments HR lifecycle, biometric attendance, payroll, transport fleet management, and a public careers site.
 
 ```mermaid
 flowchart TB
@@ -36,6 +36,7 @@ flowchart TB
     subgraph Admin["Admin /admin"]
         C[Commercial ERP]
         D[HRM /admin/hrm]
+        H[TMS /admin/tms]
         E[Masters & Roles]
         F[App Settings]
     end
@@ -47,10 +48,13 @@ flowchart TB
     A --> C
     B --> D
     D --> G
+    H --> C
     E --> C
     E --> D
+    E --> H
     F --> C
     F --> D
+    F --> H
 ```
 
 ---
@@ -76,12 +80,17 @@ flowchart TB
 <tr>
 <td><strong>Users & Roles</strong></td>
 <td><code>/admin/users</code> · <code>/admin/roles</code></td>
-<td>Granular permissions — <code>orders.*</code>, <code>masters.*</code>, <code>hrm.*</code></td>
+<td>Granular permissions — <code>orders.*</code>, <code>masters.*</code>, <code>hrm.*</code>, <code>tms.*</code></td>
 </tr>
 <tr>
 <td><strong>HRM Admin</strong></td>
 <td><code>/admin/hrm</code></td>
 <td>Multi-unit RMG HRMS — see <a href="GARMENTS-HRM.md">GARMENTS-HRM.md</a></td>
+</tr>
+<tr>
+<td><strong>TMS</strong></td>
+<td><code>/admin/tms</code></td>
+<td>Fleet, trips, fuel, odometer, vehicle maintenance register, Bill For Posting</td>
 </tr>
 <tr>
 <td><strong>Careers</strong></td>
@@ -110,6 +119,24 @@ flowchart TB
 | **Compliance** | Festival bonus, gratuity, statutory registers |
 | **Finance** | Tax, PF, loans, final settlement |
 | **RMG Extras** | Worker transfer, gate pass, manpower plan, salary hold |
+
+</details>
+
+<details>
+<summary><strong>TMS sub-modules</strong> (click to expand)</summary>
+
+<br>
+
+| Hub | Capabilities |
+|-----|--------------|
+| **Setup** | Destinations, rental vendors, rental drivers, TMS settings |
+| **Fleet** | Own & rental vehicles, company drivers, allocated user per vehicle |
+| **Operations** | Transport requests, trip logs, daily KM (odometer), fuel logs |
+| **Maintenance** | Per-vehicle register, bill entry, print register, vehicle filters |
+| **Bill For Posting** | Vendor-wise maintenance summary for accounts (filter, print, CSV export) |
+| **Reports** | Fleet cost summary — requests, trips, fuel, odometer, maintenance, rental charges, driver pay |
+
+Permissions use the `tms.*` namespace (e.g. `tms.maintenance.view`, `tms.reports.view`). Assign via **Admin → Roles**.
 
 </details>
 
@@ -151,12 +178,44 @@ php artisan serve    # terminal 2 → http://127.0.0.1:8000
 <td><strong>HRM dashboard</strong></td>
 <td><code>/admin/hrm</code></td>
 </tr>
+<tr>
+<td><strong>TMS dashboard</strong></td>
+<td><code>/admin/tms</code></td>
+</tr>
 </table>
+
+### TMS sample data (optional)
+
+Import fleet and maintenance history from Excel-derived seed files:
+
+```bash
+# 1. Vehicles (required first)
+php artisan db:seed --class=Database\\Seeders\\Tms\\VehicleSeeder
+
+# 2. Maintenance bills & line items
+php artisan db:seed --class=Database\\Seeders\\Tms\\MaintenanceSeeder
+```
+
+To regenerate seed data from source spreadsheets:
+
+```bash
+# Unzip xlsx to storage/app/temp-xlsx/ then:
+php database/seeders/scripts/extract_tms_vehicles.php
+
+# Unzip maintenance workbook to storage/app/temp-maint-xlsx/ then:
+php database/seeders/scripts/extract_tms_maintenance.php
+php artisan db:seed --class=Database\\Seeders\\Tms\\MaintenanceSeeder
+```
+
+Seed files live in `database/seeders/data/` (`tms_vehicles.php`, `tms_maintenance.php`). Both seeders are idempotent (`updateOrCreate`).
 
 ### Tests & background jobs
 
 ```bash
 php artisan test
+
+# TMS feature tests
+php artisan test --filter=TmsMaintenanceTest
 
 # optional — HRM queue worker
 php artisan queue:work database --queue=hrm-sync,hrm-attendance,hrm-payroll,hrm-mail
@@ -243,12 +302,14 @@ php artisan route:cache
 php artisan view:cache
 ```
 
-**6 · HRM checklist**
+**6 · HRM & TMS checklist**
 
 - [ ] Assign `hrm.*` permissions in **Admin → Roles**
+- [ ] Assign `tms.*` permissions in **Admin → Roles**
 - [ ] Configure **App Settings** (mail, logos, notifications)
 - [ ] Set up queue worker + cron — [DEPLOY.md](DEPLOY.md)
 - [ ] Register ZKTeco devices in **HRM Masters → Biometric Devices**
+- [ ] (Optional) Run TMS seeders after migrate — see [TMS sample data](#tms-sample-data-optional)
 
 **7 · Update from Git**
 
