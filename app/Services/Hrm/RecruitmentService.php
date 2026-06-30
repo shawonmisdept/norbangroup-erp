@@ -18,6 +18,7 @@ class RecruitmentService
     public function __construct(
         private HrmNotificationService $notifications,
         private RecruitmentMessagingService $messaging,
+        private JobPostingService $postings,
     ) {}
 
     public function generateApplicationNo(): string
@@ -38,9 +39,10 @@ class RecruitmentService
         ?User $reviewer = null,
         ?UploadedFile $photo = null,
         ?UploadedFile $nidDocument = null,
+        ?UploadedFile $cv = null,
         bool $phoneVerified = false,
     ): RecruitmentApplication {
-        if (! $posting->isOpen() && $source === 'online') {
+        if (! $this->postings->acceptsApplications($posting, $source)) {
             throw ValidationException::withMessages([
                 'job_posting_id' => 'This job posting is no longer accepting applications.',
             ]);
@@ -48,7 +50,7 @@ class RecruitmentService
 
         $this->assertNoDuplicateActiveApplication($posting->id, $data['phone']);
 
-        $application = DB::transaction(function () use ($posting, $data, $source, $reviewer, $photo, $nidDocument, $phoneVerified) {
+        $application = DB::transaction(function () use ($posting, $data, $source, $reviewer, $photo, $nidDocument, $cv, $phoneVerified) {
             $application = RecruitmentApplication::create([
                 'application_no'      => $this->generateApplicationNo(),
                 'job_posting_id'      => $posting->id,
@@ -66,6 +68,7 @@ class RecruitmentService
                 'permanent_address'   => $data['permanent_address'] ?? null,
                 'photo_path'          => $photo?->store('hrm/recruitment/photos', 'public'),
                 'nid_document_path'   => $nidDocument?->store('hrm/recruitment/documents', 'public'),
+                'cv_path'             => $cv?->store('hrm/recruitment/cv', 'public'),
                 'education_history'   => $this->cleanHistoryRows($data['education_history'] ?? [], [
                     'degree', 'institution', 'board_or_university', 'passing_year', 'result',
                 ]),

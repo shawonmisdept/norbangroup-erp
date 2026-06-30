@@ -48,6 +48,39 @@
                 </select>
             </div>
         @endif
+        @if($departments->isNotEmpty())
+            <div class="w-44">
+                <label class="careers-field"><span>Department</span></label>
+                <select name="department_id" class="careers-input">
+                    <option value="">All</option>
+                    @foreach($departments as $id => $name)
+                        <option value="{{ $id }}" {{ (string) ($filters['department_id'] ?? '') === (string) $id ? 'selected' : '' }}>{{ $name }}</option>
+                    @endforeach
+                </select>
+            </div>
+        @endif
+        @if($workerCategories->isNotEmpty())
+            <div class="w-40">
+                <label class="careers-field"><span>Category</span></label>
+                <select name="worker_category_id" class="careers-input">
+                    <option value="">All</option>
+                    @foreach($workerCategories as $id => $name)
+                        <option value="{{ $id }}" {{ (string) ($filters['worker_category_id'] ?? '') === (string) $id ? 'selected' : '' }}>{{ $name }}</option>
+                    @endforeach
+                </select>
+            </div>
+        @endif
+        @if($shiftTypes !== [])
+            <div class="w-36">
+                <label class="careers-field"><span>Shift</span></label>
+                <select name="shift_type" class="careers-input">
+                    <option value="">All</option>
+                    @foreach($shiftTypes as $val => $label)
+                        <option value="{{ $val }}" {{ ($filters['shift_type'] ?? '') === $val ? 'selected' : '' }}>{{ $label }}</option>
+                    @endforeach
+                </select>
+            </div>
+        @endif
         <button type="submit" class="careers-btn careers-btn-primary">Search</button>
     </div>
 </form>

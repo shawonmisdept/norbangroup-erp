@@ -1,23 +1,23 @@
 @extends('layouts.frontend')
 
-@section('title', 'Submit Requirement — ' . config('portal.name'))
+@section('title', 'Submit Requirement')
 
 @section('frontend-content')
 
-<div class="relative text-white py-16 px-4 text-center bg-cover bg-center overflow-hidden"
+<div class="relative text-white portal-requirement-hero bg-cover bg-center overflow-hidden"
      style="background-image: url('{{ config('portal.hero_image') }}')">
     <div class="absolute inset-0 bg-brand/75"></div>
-    <div class="relative z-10">
+    <div class="relative z-10 portal-container">
         <span class="inline-block text-xs tracking-widest uppercase text-gold border border-gold/40
                      bg-gold/10 px-4 py-1 rounded-full mb-4">New Requirement</span>
-        <h1 class="text-4xl font-bold mb-3">Request a <span class="text-gold">Production Quote</span></h1>
-        <p class="text-white/80 max-w-md mx-auto text-sm leading-relaxed">
+        <h1 class="font-bold mb-3">Request a <span class="text-gold">Production Quote</span></h1>
+        <p class="text-white/80 max-w-md mx-auto leading-relaxed">
             Fill in your requirements and {{ config('portal.name') }} will respond within 24 hours.
         </p>
     </div>
 </div>
 
-<div class="max-w-8xl mx-auto px-4 py-10">
+<div class="portal-container portal-section">
     <form method="POST" action="{{ route('orders.store') }}" enctype="multipart/form-data" class="space-y-4">
         @csrf
 

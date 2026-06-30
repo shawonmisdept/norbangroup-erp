@@ -36,6 +36,7 @@ return [
         'recruitment' => [
             'hrm.recruitment.postings.view'            => 'View job postings',
             'hrm.recruitment.postings.manage'          => 'Manage job postings',
+            'hrm.recruitment.postings.approve'         => 'Approve & publish job postings',
             'hrm.recruitment.applications.view'       => 'View recruitment applications',
             'hrm.recruitment.applications.manage'    => 'Manage applications & pipeline',
             'hrm.recruitment.applications.convert'   => 'Convert applicant to employee',
@@ -194,6 +195,58 @@ return [
         'newspaper' => 'Newspaper',
         'friend'    => 'Friend / Referral',
         'other'     => 'Other',
+    ],
+
+    'recruitment_posting_settings' => [
+        'require_approval'       => env('RECRUITMENT_POSTING_REQUIRE_APPROVAL', false),
+        'block_manual_on_closed' => true,
+    ],
+
+    'recruitment_posting_genders' => [
+        'any'    => 'Any',
+        'male'   => 'Male',
+        'female' => 'Female',
+    ],
+
+    'job_posting_shift_types' => [
+        'day'      => 'Day Shift',
+        'night'    => 'Night Shift',
+        'rotating' => 'Rotating Shift',
+    ],
+
+    'job_posting_templates' => [
+        'sewing_operator' => [
+            'label'               => 'Sewing Operator',
+            'title'               => 'Sewing Machine Operator',
+            'shift_type'          => 'day',
+            'requirements'        => '<ul><li>Minimum 1 year experience in sewing</li><li>Ability to meet production targets</li></ul>',
+            'responsibilities'    => '<ul><li>Operate sewing machines safely</li><li>Maintain quality standards</li><li>Follow line supervisor instructions</li></ul>',
+            'employment_status'   => '<p>Full-time · Permanent after probation</p>',
+        ],
+        'helper' => [
+            'label'               => 'Helper',
+            'title'               => 'Production Helper',
+            'shift_type'          => 'day',
+            'requirements'        => '<ul><li>Physically fit</li><li>Willing to work in factory floor</li></ul>',
+            'responsibilities'    => '<ul><li>Assist operators and line staff</li><li>Material handling and housekeeping</li></ul>',
+            'employment_status'   => '<p>Full-time · 3 months probation</p>',
+        ],
+        'qc_inspector' => [
+            'label'               => 'QC Inspector',
+            'title'               => 'Quality Control Inspector',
+            'shift_type'          => 'day',
+            'requirements'        => '<ul><li>Experience in garment QC preferred</li><li>Good attention to detail</li></ul>',
+            'responsibilities'    => '<ul><li>Inline and end-line quality checks</li><li>Record defects and follow AQL standards</li></ul>',
+            'employment_status'   => '<p>Full-time</p>',
+        ],
+        'supervisor' => [
+            'label'               => 'Line Supervisor',
+            'title'               => 'Production Line Supervisor',
+            'shift_type'          => 'day',
+            'requirements'        => '<ul><li>Minimum 3 years RMG experience</li><li>Leadership and communication skills</li></ul>',
+            'responsibilities'    => '<ul><li>Supervise line output and attendance</li><li>Coordinate with IE and production management</li></ul>',
+            'employment_status'   => '<p>Full-time · Management track</p>',
+        ],
     ],
 
     'recruitment_offer_template' => <<<'TXT'

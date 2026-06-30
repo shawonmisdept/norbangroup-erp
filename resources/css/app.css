@@ -24,6 +24,8 @@
     --color-erp-nav: #ffffff;
     --color-erp-nav-muted: #64748b;
     --color-erp-border: #dde3ea;
+
+    --container-8xl: 87.5rem;
 }
 
 /* ERP sidebar shell */

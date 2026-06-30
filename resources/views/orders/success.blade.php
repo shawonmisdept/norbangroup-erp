@@ -1,10 +1,10 @@
 @extends('layouts.frontend')
 
-@section('title', 'Requirement Submitted — ' . config('portal.name'))
+@section('title', 'Requirement Submitted')
 
 @section('frontend-content')
-<div class="min-h-[60vh] flex items-center justify-center px-4 py-16">
-    <div class="bg-white rounded-2xl border border-gray-200 max-w-md w-full p-10 text-center shadow-sm">
+<div class="portal-container portal-section min-h-[60vh] flex items-center justify-center">
+    <div class="bg-white rounded-2xl border border-gray-200 max-w-md w-full p-6 sm:p-10 text-center shadow-sm">
         <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-5">
             <svg class="w-8 h-8 text-green-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                 <polyline points="20 6 9 17 4 12"/>

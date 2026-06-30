@@ -104,6 +104,7 @@ class ApplicationController extends Controller
             $request->user(),
             $request->file('photo'),
             $request->file('nid_document'),
+            $request->file('cv'),
         );
 
         return redirect()->route('admin.hrm.recruitment.applications.show', $application)
@@ -270,6 +271,7 @@ class ApplicationController extends Controller
             'permanent_address' => ['nullable', 'string', 'max:2000'],
             'photo'             => ['nullable', 'image', 'max:2048'],
             'nid_document'      => ['nullable', 'file', 'mimes:jpg,jpeg,png,pdf', 'max:5120'],
+            'cv'                => ['nullable', 'file', 'mimes:pdf,doc,docx', 'max:5120'],
             'education_history' => ['nullable', 'array'],
             'employment_history'=> ['nullable', 'array'],
             'expected_salary'   => ['nullable', 'numeric', 'min:0'],

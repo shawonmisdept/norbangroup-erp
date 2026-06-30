@@ -25,4 +25,50 @@ return [
         'gold_dark' => '#A88930',
     ],
 
+    'careers_nav' => [
+        ['label' => 'HOME', 'url' => 'https://norbangroup.com/'],
+        [
+            'label' => 'ABOUT',
+            'children' => [
+                ['label' => 'About Us', 'url' => 'https://norbangroup.com/about-us/'],
+                ['label' => 'Mission Vision Value', 'url' => 'https://norbangroup.com/mission-vision-value/'],
+                ['label' => 'Sustainability', 'url' => 'https://norbangroup.com/sustainability/'],
+                ['label' => 'Certifications', 'url' => 'https://norbangroup.com/achievements-certifications/'],
+                ['label' => 'Working Environment', 'url' => 'https://norbangroup.com/working-environment/'],
+            ],
+        ],
+        [
+            'label' => 'COMPANY',
+            'children' => [
+                ['label' => 'Norban Comtex Ltd', 'url' => 'https://norbangroup.com/norban-comtex-ltd/'],
+                ['label' => 'Hornbill Apparel Ltd', 'url' => 'https://norbangroup.com/hornbill-apparel-ltd/'],
+                ['label' => 'Filvert Tex Ltd', 'url' => 'https://filverttex.com/'],
+            ],
+        ],
+        [
+            'label' => 'SECTION',
+            'children' => [
+                ['label' => 'Knitting Section', 'url' => 'https://norbangroup.com/knitting/'],
+                ['label' => 'Dyeing Section', 'url' => 'https://norbangroup.com/dyeing/'],
+                ['label' => 'Cutting Section', 'url' => 'https://norbangroup.com/cutting/'],
+                ['label' => 'Printing Section', 'url' => 'https://norbangroup.com/printing/'],
+                ['label' => 'Embroidery Section', 'url' => 'https://norbangroup.com/embroidery/'],
+                ['label' => 'Finishing Section', 'url' => 'https://norbangroup.com/finishing/'],
+                ['label' => 'Quality Section', 'url' => 'https://norbangroup.com/quality/'],
+            ],
+        ],
+        ['label' => 'PRODUCT', 'url' => 'https://norbangroup.com/product/'],
+        [
+            'label' => 'MEDIA',
+            'children' => [
+                ['label' => 'Photo Gallery', 'url' => 'https://norbangroup.com/photo-gallery/'],
+            ],
+        ],
+        [
+            'label' => 'ORDER NOW',
+            'url' => 'https://portal.norbangroup.com',
+            'highlight' => true,
+        ],
+    ],
+
 ];

@@ -56,10 +56,17 @@
         $tmsGroupOpen = [];
         foreach (config('tms.nav_groups', []) as $groupLabel => $keys) {
             $gKey = 'tms_grp_' . str_replace([' ', '&'], ['_', 'and'], $groupLabel);
-            $tmsGroupOpen[$gKey] = collect($keys)->contains(
-                fn (string $key) => request()->routeIs('admin.tms.' . $key . '*')
-                    || request()->routeIs('admin.tms.' . str_replace('_', '-', $key) . '*')
-            );
+            $tmsGroupOpen[$gKey] = collect($keys)->contains(function (string $key) {
+                $sub = config("tms.submodules.{$key}");
+                if (! $sub || ! isset($sub['route'])) {
+                    return request()->routeIs('admin.tms.' . $key . '*')
+                        || request()->routeIs('admin.tms.' . str_replace('_', '-', $key) . '*');
+                }
+
+                $base = preg_replace('/\.(index|hub|dashboard)$/', '', $sub['route']);
+
+                return request()->routeIs($base) || request()->routeIs($base . '.*');
+            });
         }
 
         $initialOpenGroups = array_merge(

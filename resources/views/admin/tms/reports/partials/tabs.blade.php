@@ -7,7 +7,7 @@
         'ot'             => 'Driver Pay',
         'maintenance'    => 'Maintenance',
         'rental_charges' => 'Rental Charges',
-        'fleet_cost'     => 'Fleet Cost',
+        'fleet_cost'     => 'Vehicle Management Cost',
     ];
 @endphp
 

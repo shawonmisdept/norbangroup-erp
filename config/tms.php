@@ -145,6 +145,17 @@ return [
             'route'      => 'admin.tms.maintenance.index',
             'icon'       => 'M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z',
             'status'     => 'active',
+            'active_excludes' => [
+                'admin.tms.maintenance.posting',
+                'admin.tms.maintenance.posting.*',
+            ],
+        ],
+        'maintenance_posting' => [
+            'label'      => 'Bill For Posting',
+            'permission' => 'tms.maintenance.view',
+            'route'      => 'admin.tms.maintenance.posting',
+            'icon'       => 'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z',
+            'status'     => 'active',
         ],
         'reports' => [
             'label'      => 'Reports',
@@ -156,9 +167,9 @@ return [
     ],
 
     'nav_groups' => [
-        'Setup' => ['settings', 'destinations'],
-        'Fleet' => ['vehicles', 'rental_vendors', 'drivers', 'rental_drivers', 'odometer', 'maintenance'],
-        'Operations' => ['requests', 'trips', 'fuel'],
+        'Operations' => ['requests', 'trips', 'odometer', 'fuel'],
+        'Vehicle Management'      => ['vehicles', 'drivers', 'rental_vendors', 'rental_drivers', 'maintenance', 'maintenance_posting'],
+        'Setup'      => ['settings', 'destinations'],
     ],
 
     'request_statuses' => [

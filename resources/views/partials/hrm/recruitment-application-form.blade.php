@@ -96,14 +96,26 @@
                 @if($isPublic)<label class="careers-field"><span>Permanent Address</span></label>@else<label class="erp-form-label">Permanent Address</label>@endif
                 <textarea name="permanent_address" rows="2" class="{{ $inputClass }}">{{ old('permanent_address') }}</textarea>
             </div>
-            <div>
-                @if($isPublic)<label class="careers-field"><span>Photo</span></label>@else<label class="erp-form-label">Photo</label>@endif
-                <input type="file" name="photo" accept="image/*" class="{{ $inputClass }}">
+            <div class="md:col-span-2 grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div>
+                    @if($isPublic)<label class="careers-field"><span>Photo</span></label>@else<label class="erp-form-label">Photo</label>@endif
+                    <input type="file" name="photo" accept="image/*" class="{{ $inputClass }}">
+                </div>
+                <div>
+                    @if($isPublic)<label class="careers-field"><span>NID Document</span></label>@else<label class="erp-form-label">NID Document</label>@endif
+                    <input type="file" name="nid_document" accept=".jpg,.jpeg,.png,.pdf" class="{{ $inputClass }}">
+                </div>
+                <div>
+                    @if($isPublic)<label class="careers-field"><span>CV / Resume</span></label>@else<label class="erp-form-label">CV / Resume</label>@endif
+                    <input type="file" name="cv" accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" class="{{ $inputClass }}">
+                    @error('cv')<p class="text-xs text-red-600 mt-1">{{ $message }}</p>@enderror
+                </div>
             </div>
-            <div>
-                @if($isPublic)<label class="careers-field"><span>NID Document</span></label>@else<label class="erp-form-label">NID Document</label>@endif
-                <input type="file" name="nid_document" accept=".jpg,.jpeg,.png,.pdf" class="{{ $inputClass }}">
-            </div>
+            @if($isPublic)
+                <p class="md:col-span-2 text-[11px] text-[var(--careers-muted)] -mt-2">Photo &amp; NID: JPG/PNG/PDF · CV: PDF/Word · max 5 MB each</p>
+            @else
+                <p class="md:col-span-2 text-[10px] text-gray-400 -mt-2">Max 5 MB per file · CV accepts PDF or Word</p>
+            @endif
         </div>
     </div>
 

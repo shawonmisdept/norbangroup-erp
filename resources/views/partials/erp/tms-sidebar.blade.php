@@ -10,7 +10,17 @@
 
         $base = preg_replace('/\.(index|hub|dashboard)$/', '', $submodules[$key]['route']);
 
-        return request()->routeIs($base) || request()->routeIs($base . '.*');
+        if (! request()->routeIs($base) && ! request()->routeIs($base . '.*')) {
+            return false;
+        }
+
+        foreach ($submodules[$key]['active_excludes'] ?? [] as $pattern) {
+            if (request()->routeIs($pattern)) {
+                return false;
+            }
+        }
+
+        return true;
     };
     $groupKey = fn (string $groupLabel) => 'tms_grp_' . str_replace([' ', '&'], ['_', 'and'], $groupLabel);
     $visibleKeys = array_values(array_filter(

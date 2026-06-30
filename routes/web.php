@@ -280,15 +280,27 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
 
         Route::middleware('permission:hrm.recruitment.postings.view')->group(function () {
             Route::get('/recruitment/postings', [\App\Http\Controllers\Admin\Hrm\Recruitment\JobPostingController::class, 'index'])->name('recruitment.postings.index');
+            Route::get('/recruitment/postings/export', [\App\Http\Controllers\Admin\Hrm\Recruitment\JobPostingController::class, 'export'])->name('recruitment.postings.export');
+            Route::get('/recruitment/postings/form-options', [\App\Http\Controllers\Admin\Hrm\Recruitment\JobPostingController::class, 'formOptionsJson'])->name('recruitment.postings.form-options');
             Route::get('/recruitment/postings/{posting}', [\App\Http\Controllers\Admin\Hrm\Recruitment\JobPostingController::class, 'show'])->name('recruitment.postings.show')->whereNumber('posting');
         });
 
         Route::middleware('permission:hrm.recruitment.postings.manage')->group(function () {
             Route::get('/recruitment/postings/create', [\App\Http\Controllers\Admin\Hrm\Recruitment\JobPostingController::class, 'create'])->name('recruitment.postings.create');
+            Route::get('/recruitment/postings/bulk/create', [\App\Http\Controllers\Admin\Hrm\Recruitment\JobPostingController::class, 'bulkCreateForm'])->name('recruitment.postings.bulk.create');
+            Route::post('/recruitment/postings/bulk', [\App\Http\Controllers\Admin\Hrm\Recruitment\JobPostingController::class, 'bulkStore'])->name('recruitment.postings.bulk.store');
             Route::post('/recruitment/postings', [\App\Http\Controllers\Admin\Hrm\Recruitment\JobPostingController::class, 'store'])->name('recruitment.postings.store');
             Route::get('/recruitment/postings/{posting}/edit', [\App\Http\Controllers\Admin\Hrm\Recruitment\JobPostingController::class, 'edit'])->name('recruitment.postings.edit')->whereNumber('posting');
             Route::put('/recruitment/postings/{posting}', [\App\Http\Controllers\Admin\Hrm\Recruitment\JobPostingController::class, 'update'])->name('recruitment.postings.update')->whereNumber('posting');
             Route::delete('/recruitment/postings/{posting}', [\App\Http\Controllers\Admin\Hrm\Recruitment\JobPostingController::class, 'destroy'])->name('recruitment.postings.destroy')->whereNumber('posting');
+            Route::post('/recruitment/postings/{posting}/publish', [\App\Http\Controllers\Admin\Hrm\Recruitment\JobPostingController::class, 'publish'])->name('recruitment.postings.publish')->whereNumber('posting');
+            Route::post('/recruitment/postings/{posting}/close', [\App\Http\Controllers\Admin\Hrm\Recruitment\JobPostingController::class, 'close'])->name('recruitment.postings.close')->whereNumber('posting');
+            Route::post('/recruitment/postings/{posting}/reopen', [\App\Http\Controllers\Admin\Hrm\Recruitment\JobPostingController::class, 'reopen'])->name('recruitment.postings.reopen')->whereNumber('posting');
+            Route::post('/recruitment/postings/{posting}/duplicate', [\App\Http\Controllers\Admin\Hrm\Recruitment\JobPostingController::class, 'duplicate'])->name('recruitment.postings.duplicate')->whereNumber('posting');
+        });
+
+        Route::middleware('permission:hrm.recruitment.postings.approve')->group(function () {
+            Route::post('/recruitment/postings/{posting}/approve', [\App\Http\Controllers\Admin\Hrm\Recruitment\JobPostingController::class, 'approve'])->name('recruitment.postings.approve')->whereNumber('posting');
         });
 
         Route::middleware('permission:hrm.recruitment.applications.view')->group(function () {

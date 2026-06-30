@@ -4,9 +4,12 @@ namespace App\Http\Controllers\Careers;
 
 use App\Http\Controllers\Controller;
 use App\Models\AppSetting;
+use App\Models\Department;
 use App\Models\Factory;
 use App\Models\Hrm\JobPosting;
 use App\Models\Hrm\RecruitmentApplication;
+use App\Models\Hrm\WorkerCategory;
+use App\Services\Hrm\JobPostingService;
 use App\Services\Hrm\RecruitmentOtpService;
 use App\Services\Hrm\RecruitmentService;
 use Illuminate\Http\JsonResponse;
@@ -17,12 +20,13 @@ class CareersController extends Controller
     public function __construct(
         private RecruitmentService $service,
         private RecruitmentOtpService $otp,
+        private JobPostingService $postings,
     ) {}
 
     public function index(Request $request)
     {
         $query = JobPosting::query()
-            ->open()
+            ->publicOpen()
             ->with(['factory', 'department', 'designation', 'workerCategory'])
             ->latest('published_at');
 
@@ -30,36 +34,54 @@ class CareersController extends Controller
             $query->where('factory_id', $request->factory_id);
         }
 
+        if ($request->filled('department_id')) {
+            $query->where('department_id', $request->department_id);
+        }
+
+        if ($request->filled('worker_category_id')) {
+            $query->where('worker_category_id', $request->worker_category_id);
+        }
+
+        if ($request->filled('shift_type')) {
+            $query->where('shift_type', $request->shift_type);
+        }
+
         if ($request->filled('search')) {
             $search = $request->search;
             $query->where(function ($q) use ($search) {
                 $q->where('title', 'like', "%{$search}%")
-                    ->orWhere('description', 'like', "%{$search}%");
+                    ->orWhere('title_bn', 'like', "%{$search}%")
+                    ->orWhere('description', 'like', "%{$search}%")
+                    ->orWhere('description_bn', 'like', "%{$search}%");
             });
         }
 
         return view('careers.index', [
             'postings'  => $query->paginate(12)->withQueryString(),
-            'openCount' => JobPosting::open()->count(),
+            'openCount' => JobPosting::publicOpen()->count(),
             'factories' => Factory::where('is_active', true)->orderBy('name')->pluck('name', 'id'),
-            'filters'   => $request->only(['factory_id', 'search']),
+            'departments' => Department::where('is_active', true)->orderBy('name')->pluck('name', 'id'),
+            'workerCategories' => WorkerCategory::where('is_active', true)->orderBy('name')->pluck('name', 'id'),
+            'shiftTypes' => config('hrm.job_posting_shift_types', []),
+            'filters'   => $request->only(['factory_id', 'search', 'department_id', 'worker_category_id', 'shift_type']),
         ]);
     }
 
     public function show(JobPosting $posting)
     {
-        if (! $posting->isOpen()) {
+        if (! $posting->isPubliclyOpen()) {
             abort(404);
         }
 
         $posting->load(['factory', 'department', 'designation', 'workerCategory']);
+        $this->postings->recordPageView($posting);
 
         return view('careers.show', compact('posting'));
     }
 
     public function apply(JobPosting $posting)
     {
-        if (! $posting->isOpen()) {
+        if (! $posting->isPubliclyOpen()) {
             return redirect()->route('careers.index')
                 ->with('error', 'This job is no longer accepting applications.');
         }
@@ -85,7 +107,7 @@ class CareersController extends Controller
             return response()->json(['message' => 'Phone verification is currently disabled.'], 422);
         }
 
-        if (! $posting->isOpen()) {
+        if (! $posting->isPubliclyOpen()) {
             return response()->json(['message' => 'This job is closed.'], 422);
         }
 
@@ -110,6 +132,7 @@ class CareersController extends Controller
             'permanent_address' => ['nullable', 'string', 'max:2000'],
             'photo'             => ['nullable', 'image', 'max:2048'],
             'nid_document'      => ['nullable', 'file', 'mimes:jpg,jpeg,png,pdf', 'max:5120'],
+            'cv'                => ['nullable', 'file', 'mimes:pdf,doc,docx', 'max:5120'],
             'education_history' => ['nullable', 'array'],
             'employment_history'=> ['nullable', 'array'],
             'expected_salary'   => ['nullable', 'numeric', 'min:0'],
@@ -137,6 +160,7 @@ class CareersController extends Controller
             null,
             $request->file('photo'),
             $request->file('nid_document'),
+            $request->file('cv'),
             $phoneVerified,
         );
 

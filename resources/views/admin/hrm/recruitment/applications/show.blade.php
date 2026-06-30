@@ -33,10 +33,11 @@
                 <div><p class="text-[10px] text-gray-400 uppercase">NID</p><p>{{ $application->nid_number ?? '—' }}</p></div>
                 <div><p class="text-[10px] text-gray-400 uppercase">Source</p><p>{{ $application->sourceLabel() }}</p></div>
                 <div class="col-span-2"><p class="text-[10px] text-gray-400 uppercase">Present Address</p><p>{{ $application->present_address ?? '—' }}</p></div>
-                @if($application->photoUrl() || $application->nidDocumentUrl())
-                    <div class="col-span-2 flex gap-3">
+                @if($application->photoUrl() || $application->nidDocumentUrl() || $application->cvUrl())
+                    <div class="col-span-2 flex flex-wrap gap-3">
                         @if($application->photoUrl())<a href="{{ $application->photoUrl() }}" target="_blank" class="erp-btn-sm-secondary">Photo</a>@endif
                         @if($application->nidDocumentUrl())<a href="{{ $application->nidDocumentUrl() }}" target="_blank" class="erp-btn-sm-secondary">NID Document</a>@endif
+                        @if($application->cvUrl())<a href="{{ $application->cvUrl() }}" target="_blank" class="erp-btn-sm-secondary">CV / Resume</a>@endif
                     </div>
                 @endif
             </div>

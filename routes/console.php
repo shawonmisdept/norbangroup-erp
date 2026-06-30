@@ -32,3 +32,8 @@ Schedule::command('hrm:notify-recruitment-interviews')
     ->dailyAt('09:00')
     ->withoutOverlapping()
     ->runInBackground();
+
+Schedule::command('hrm:close-expired-job-postings')
+    ->dailyAt('00:15')
+    ->withoutOverlapping()
+    ->runInBackground();

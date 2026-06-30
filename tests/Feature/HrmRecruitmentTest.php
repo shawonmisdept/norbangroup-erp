@@ -31,6 +31,7 @@ class HrmRecruitmentTest extends TestCase
                 'hrm.employees.manage',
                 'hrm.recruitment.postings.view',
                 'hrm.recruitment.postings.manage',
+                'hrm.recruitment.postings.approve',
                 'hrm.recruitment.applications.view',
                 'hrm.recruitment.applications.manage',
                 'hrm.recruitment.applications.convert',
@@ -493,5 +494,196 @@ class HrmRecruitmentTest extends TestCase
             'phone' => '01715151515',
         ])->assertStatus(422)
             ->assertJson(['message' => 'Phone verification is currently disabled.']);
+    }
+
+    public function test_internal_posting_hidden_from_careers_portal(): void
+    {
+        $factory = Factory::create(['name' => 'Internal Factory', 'is_active' => true]);
+        JobPosting::create([
+            'factory_id'   => $factory->id,
+            'title'        => 'Internal Only Role',
+            'slots'        => 2,
+            'status'       => 'open',
+            'is_internal'  => true,
+            'published_at' => now(),
+        ]);
+
+        $this->get(route('careers.index'))
+            ->assertOk()
+            ->assertDontSee('Internal Only Role');
+    }
+
+    public function test_job_posting_records_page_views(): void
+    {
+        $factory = Factory::create(['name' => 'Views Factory', 'is_active' => true]);
+        $posting = $this->openPosting($factory);
+
+        $this->get(route('careers.show', $posting))->assertOk();
+        $this->get(route('careers.show', $posting))->assertOk();
+
+        $this->assertSame(2, $posting->fresh()->page_views);
+    }
+
+    public function test_manual_application_blocked_on_closed_posting(): void
+    {
+        $factory = Factory::create(['name' => 'Closed Factory', 'is_active' => true]);
+        $admin = $this->hrAdmin();
+        $posting = JobPosting::create([
+            'factory_id'   => $factory->id,
+            'title'        => 'Closed Role',
+            'slots'        => 1,
+            'status'       => 'closed',
+            'published_at' => now()->subDay(),
+        ]);
+
+        $this->actingAs($admin)->post(route('admin.hrm.recruitment.applications.store'), [
+            'job_posting_id' => $posting->id,
+            'source'         => 'hr_manual',
+            'name'           => 'Manual Try',
+            'phone'          => '01716161616',
+        ])->assertSessionHasErrors('job_posting_id');
+    }
+
+    public function test_hr_can_publish_close_and_duplicate_posting(): void
+    {
+        $factory = Factory::create(['name' => 'Actions Factory', 'is_active' => true]);
+        $admin = $this->hrAdmin();
+        $posting = JobPosting::create([
+            'factory_id' => $factory->id,
+            'title'      => 'Draft Role',
+            'slots'      => 3,
+            'status'     => 'draft',
+        ]);
+
+        $this->actingAs($admin)->post(route('admin.hrm.recruitment.postings.publish', $posting))
+            ->assertRedirect();
+        $this->assertSame('open', $posting->fresh()->status);
+
+        $this->actingAs($admin)->post(route('admin.hrm.recruitment.postings.close', $posting))
+            ->assertRedirect();
+        $this->assertSame('closed', $posting->fresh()->status);
+
+        $this->actingAs($admin)->post(route('admin.hrm.recruitment.postings.duplicate', $posting))
+            ->assertRedirect();
+
+        $this->assertDatabaseHas('hrm_job_postings', [
+            'title'  => 'Draft Role (Copy)',
+            'status' => 'draft',
+        ]);
+    }
+
+    public function test_close_expired_job_postings_command(): void
+    {
+        $factory = Factory::create(['name' => 'Expire Factory', 'is_active' => true]);
+        $posting = JobPosting::create([
+            'factory_id' => $factory->id,
+            'title'      => 'Expired Role',
+            'slots'      => 2,
+            'status'     => 'open',
+            'closes_at'  => now()->subDay(),
+            'published_at' => now()->subWeek(),
+        ]);
+
+        Artisan::call('hrm:close-expired-job-postings');
+
+        $this->assertSame('closed', $posting->fresh()->status);
+        $this->assertDatabaseHas('hrm_job_posting_logs', [
+            'job_posting_id' => $posting->id,
+            'action'         => 'auto_closed',
+        ]);
+    }
+
+    public function test_posting_index_filters_by_department(): void
+    {
+        $factory = Factory::create(['name' => 'Filter Factory', 'is_active' => true]);
+        $admin = $this->hrAdmin();
+        $department = \App\Models\Department::create([
+            'factory_id' => $factory->id,
+            'name'       => 'Production',
+            'is_active'  => true,
+        ]);
+
+        JobPosting::create([
+            'factory_id'    => $factory->id,
+            'department_id' => $department->id,
+            'title'         => 'Dept Filter Job',
+            'slots'         => 1,
+            'status'        => 'draft',
+        ]);
+        JobPosting::create([
+            'factory_id' => $factory->id,
+            'title'      => 'Other Job',
+            'slots'      => 1,
+            'status'     => 'draft',
+        ]);
+
+        $this->actingAs($admin)->get(route('admin.hrm.recruitment.postings.index', [
+            'department_id' => $department->id,
+        ]))
+            ->assertOk()
+            ->assertSee('Dept Filter Job')
+            ->assertDontSee('Other Job');
+    }
+
+    public function test_demo_job_posting_seeder_creates_expected_openings(): void
+    {
+        Factory::create(['name' => 'Head Office', 'is_active' => true]);
+        Factory::create(['name' => 'Norban Comtex Limited', 'is_active' => true]);
+        Factory::create(['name' => 'Hornbill Apparal Limited', 'is_active' => true]);
+
+        $this->seed(\Database\Seeders\Hrm\DemoJobPostingSeeder::class);
+
+        $this->assertDatabaseHas('hrm_job_postings', [
+            'title'  => 'Full Stack Software Developer',
+            'slots'  => 2,
+            'status' => 'open',
+        ]);
+
+        $operatorSlots = JobPosting::query()
+            ->where('title', 'Sewing Machine Operator')
+            ->sum('slots');
+
+        $supervisorSlots = JobPosting::query()
+            ->where('title', 'Line Supervisor')
+            ->sum('slots');
+
+        $this->assertSame(10, (int) $operatorSlots);
+        $this->assertSame(2, (int) $supervisorSlots);
+
+        $this->get(route('careers.index'))
+            ->assertOk()
+            ->assertSee('Full Stack Software Developer')
+            ->assertSee('Sewing Machine Operator');
+
+        $developer = JobPosting::where('title', 'Full Stack Software Developer')->first();
+        $this->assertNotNull($developer->description);
+        $this->assertNotNull($developer->benefits);
+        $this->assertNotNull($developer->skills_expertise);
+
+        $this->get(route('careers.show', $developer))
+            ->assertOk()
+            ->assertSee('Overview')
+            ->assertSee('Requirements')
+            ->assertSee('Benefits & Perks');
+    }
+
+    public function test_candidate_can_apply_with_cv_attachment(): void
+    {
+        $factory = Factory::create(['name' => 'CV Factory', 'is_active' => true]);
+        $posting = $this->openPosting($factory);
+        $phone = '01717171717';
+        $this->seedOtp($phone);
+
+        $file = \Illuminate\Http\UploadedFile::fake()->create('resume.pdf', 100, 'application/pdf');
+
+        $this->post(route('careers.apply.store', $posting), [
+            'name'  => 'CV Candidate',
+            'phone' => $phone,
+            'otp'   => '123456',
+            'cv'    => $file,
+        ])->assertRedirect();
+
+        $application = RecruitmentApplication::first();
+        $this->assertNotNull($application->cv_path);
     }
 }

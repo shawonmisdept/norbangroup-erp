@@ -225,6 +225,11 @@ class User extends Authenticatable
         return $this->hasPermission($sub['manage'] ?? 'hrm.recruitment.applications.manage');
     }
 
+    public function canApproveRecruitmentPostings(): bool
+    {
+        return $this->hasPermission('hrm.recruitment.postings.approve');
+    }
+
     public function hasAnyRecruitmentViewPermission(): bool
     {
         foreach (array_keys(config('hrm.recruitment_submodules', [])) as $key) {

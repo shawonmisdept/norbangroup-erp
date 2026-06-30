@@ -15,7 +15,7 @@ class RecruitmentApplication extends Model
     protected $fillable = [
         'application_no', 'job_posting_id', 'factory_id', 'source', 'status',
         'name', 'phone', 'email', 'gender', 'date_of_birth', 'nid_number',
-        'present_address', 'permanent_address', 'photo_path', 'nid_document_path',
+        'present_address', 'permanent_address', 'photo_path', 'nid_document_path', 'cv_path',
         'education_history', 'employment_history', 'expected_salary', 'referral_source',
         'notes', 'rejection_reason', 'converted_employee_id', 'reviewed_by',
         'reviewed_at', 'applied_at', 'phone_verified_at',
@@ -103,5 +103,10 @@ class RecruitmentApplication extends Model
     public function nidDocumentUrl(): ?string
     {
         return $this->nid_document_path ? asset('storage/' . $this->nid_document_path) : null;
+    }
+
+    public function cvUrl(): ?string
+    {
+        return $this->cv_path ? asset('storage/' . $this->cv_path) : null;
     }
 }
