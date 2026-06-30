@@ -41,6 +41,13 @@
         max-width: var(--portal-max-width); margin: 0 auto; padding: 0.875rem var(--portal-gutter);
         display: flex; align-items: center; justify-content: space-between; gap: 0.75rem;
     }
+    .careers-header-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+        width: 100%;
+    }
     .careers-brand {
         display: flex; align-items: center; gap: 0.875rem;
         min-width: 0; text-decoration: none;
@@ -77,10 +84,6 @@
         line-height: 1;
     }
 
-    .careers-header-nav-wrap {
-        display: flex; align-items: center; justify-content: flex-end;
-        flex: 1; min-width: 0;
-    }
     .careers-site-nav-toggle {
         display: none;
         align-items: center; justify-content: center;
@@ -93,8 +96,8 @@
     }
     .careers-site-nav-toggle-icon { width: 1.25rem; height: 1.25rem; }
     .careers-site-nav-toggle-close { display: none; }
-    .careers-header-nav-wrap.is-open .careers-site-nav-toggle-open { display: none; }
-    .careers-header-nav-wrap.is-open .careers-site-nav-toggle-close { display: block; }
+    .careers-header-inner.is-nav-open .careers-site-nav-toggle-open { display: none; }
+    .careers-header-inner.is-nav-open .careers-site-nav-toggle-close { display: block; }
 
     .careers-header-nav-panel {
         display: flex; align-items: center; gap: 0.625rem;
@@ -165,6 +168,16 @@
         background: #f1f5f9; color: var(--careers-blue);
     }
     @media (min-width: 1024px) {
+        .careers-header-top { display: contents; }
+        .careers-site-nav-toggle { display: none !important; }
+        .careers-header-nav-panel {
+            display: flex !important;
+            align-items: center;
+            gap: 0.625rem;
+            min-width: 0;
+            flex: 1;
+            justify-content: flex-end;
+        }
         .careers-site-nav-dropdown:hover .careers-site-nav-menu,
         .careers-site-nav-dropdown:focus-within .careers-site-nav-menu,
         .careers-site-nav-dropdown.is-open .careers-site-nav-menu {
@@ -216,21 +229,34 @@
         box-shadow: inset 0 1px 0 rgba(255,255,255,0.12), 0 4px 12px rgba(37,99,235,0.25);
     }
     @media (max-width: 1023px) {
-        .careers-site-nav-toggle { display: inline-flex; }
-        .careers-header-inner { flex-wrap: wrap; position: relative; }
-        .careers-header-nav-wrap {
-            flex: 0 0 auto; flex-wrap: wrap; justify-content: flex-end;
+        .careers-header-inner {
+            flex-direction: column;
+            align-items: stretch;
+            gap: 0;
         }
-        .careers-brand { flex: 1; min-width: 0; }
+        .careers-header-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.75rem;
+            width: 100%;
+        }
+        .careers-brand {
+            flex: 1;
+            min-width: 0;
+        }
+        .careers-site-nav-toggle { display: inline-flex; flex-shrink: 0; }
         .careers-header-nav-panel {
             display: none;
-            flex-basis: 100%;
-            flex-direction: column; align-items: stretch; gap: 0.75rem;
+            width: 100%;
+            flex-direction: column;
+            align-items: stretch;
+            gap: 0.75rem;
             padding: 0.75rem 0 0;
-            max-height: calc(100vh - 5rem);
+            max-height: calc(100vh - 4.5rem);
             overflow-y: auto;
         }
-        .careers-header-nav-wrap.is-open .careers-header-nav-panel { display: flex; }
+        .careers-header-inner.is-nav-open .careers-header-nav-panel { display: flex; }
         .careers-site-nav {
             flex-direction: column; align-items: stretch; gap: 0.25rem;
         }
