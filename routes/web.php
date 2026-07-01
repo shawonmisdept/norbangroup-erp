@@ -1034,5 +1034,9 @@ Route::prefix('rental')->name('rental.')->group(function () {
         Route::get('/notifications/unread-count', [\App\Http\Controllers\Rental\NotificationController::class, 'unreadCount'])->name('notifications.unread-count');
         Route::patch('/notifications/read-all', [\App\Http\Controllers\Rental\NotificationController::class, 'markAllRead'])->name('notifications.read-all');
         Route::patch('/notifications/{id}/read', [\App\Http\Controllers\Rental\NotificationController::class, 'markRead'])->name('notifications.read');
+
+        Route::post('/push/subscribe', [\App\Http\Controllers\Rental\PushSubscriptionController::class, 'store'])->name('push.subscribe');
+        Route::delete('/push/unsubscribe', [\App\Http\Controllers\Rental\PushSubscriptionController::class, 'destroy'])->name('push.unsubscribe');
+        Route::get('/push/vapid-public-key', [\App\Http\Controllers\Rental\PushSubscriptionController::class, 'vapidPublicKey'])->name('push.vapid-public-key');
     });
 });

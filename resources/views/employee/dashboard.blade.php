@@ -148,10 +148,18 @@
             </a>
             <a href="{{ route('employee.transport.index') }}" class="emp-quick">
                 <span class="emp-quick-icon bg-sky-50 text-sky-600">
-                    @include('employee.partials.tab-icon', ['icon' => 'clock'])
+                    @include('employee.partials.tab-icon', ['icon' => 'car'])
                 </span>
                 <span class="text-[10px] font-semibold text-gray-700">Transport</span>
             </a>
+            @if($employee->canInitiateSeparation())
+            <a href="{{ route('employee.separation') }}" class="emp-quick">
+                <span class="emp-quick-icon bg-gray-100 text-gray-600">
+                    @include('employee.partials.tab-icon', ['icon' => 'logout'])
+                </span>
+                <span class="text-[10px] font-semibold text-gray-700">Separation</span>
+            </a>
+            @endif
         </div>
     </div>
 

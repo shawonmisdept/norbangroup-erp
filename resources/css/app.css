@@ -959,6 +959,18 @@ select.emp-input.tomselected {
     @apply bg-violet-100 text-violet-700 ring-2 ring-violet-200/80;
 }
 
+.emp-tab-transport .emp-tab-icon {
+    @apply bg-sky-50 text-sky-600;
+}
+
+.emp-tab-transport.emp-tab-active {
+    @apply text-sky-700;
+}
+
+.emp-tab-transport.emp-tab-active .emp-tab-icon {
+    @apply bg-sky-100 text-sky-700 ring-2 ring-sky-200/80;
+}
+
 .emp-tab-pay .emp-tab-icon {
     @apply bg-emerald-50 text-emerald-600;
 }

@@ -5,9 +5,11 @@ namespace App\Models\Tms;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use NotificationChannels\WebPush\HasPushSubscriptions;
 
 class TmsRentalDriverPortalUser extends Authenticatable
 {
+    use HasPushSubscriptions;
     use Notifiable;
 
     protected $table = 'tms_rental_driver_portal_users';

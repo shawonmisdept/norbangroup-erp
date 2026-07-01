@@ -141,7 +141,7 @@ class RequestController extends Controller
             abort(403);
         }
 
-        $transportRequest->load(['destination', 'vehicle', 'driver.employee', 'tripLog', 'histories.changedByUser', 'histories.changedByEmployee']);
+        $transportRequest->load(['destination', 'vehicle', 'driver.employee', 'rentalDriver.rentalVendor', 'tripLog', 'histories.changedByUser', 'histories.changedByEmployee']);
 
         return view('employee.transport.show', compact('transportRequest', 'employee'));
     }

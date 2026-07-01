@@ -55,4 +55,11 @@
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 3l2.4 4.9 5.4.8-3.9 3.8.9 5.3L12 15.8l-4.8 2.5.9-5.3-3.9-3.8 5.4-.8L12 3z"/>
         </svg>
         @break
+    @case('car')
+        <svg class="{{ $class }}" fill="none" viewBox="0 0 24 24" stroke="{{ $stroke }}" stroke-width="{{ ($active ?? false) ? 2.2 : 1.8 }}">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 11l1.5-4h11L19 11M5 11v6a1 1 0 001 1h1a1 1 0 001-1v-1h8v1a1 1 0 001 1h1a1 1 0 001-1v-6M7 15h.01M17 15h.01"/>
+            <circle cx="7.5" cy="15.5" r="1"/>
+            <circle cx="16.5" cy="15.5" r="1"/>
+        </svg>
+        @break
 @endswitch

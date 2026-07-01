@@ -125,6 +125,13 @@ class RentalDriverPortalTest extends TestCase
         $this->assertSame('completed', $trip->trip_status);
         $this->assertNull($trip->end_km);
         $this->assertSame(0.0, (float) $trip->rental_charge_amount);
+
+        $this->actingAs($this->portalUser, 'rental_driver')
+            ->get(route('rental.trips'))
+            ->assertOk()
+            ->assertSee('Recent Completed')
+            ->assertSee('Requester')
+            ->assertDontSee('Start Trip');
     }
 
     public function test_rental_driver_daily_odometer_creates_billing_charge(): void

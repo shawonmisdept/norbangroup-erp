@@ -13,14 +13,30 @@
 @if($transportRequest->vehicle)<p><span class="text-gray-500">Vehicle:</span> {{ $transportRequest->vehicle->displayLabel() }}</p>@endif
 </div>
 
-@if(in_array($transportRequest->status, ['approved', 'in_progress']) && $transportRequest->driver)
-@php $driverPhone = $transportRequest->driver->contactPhone(); @endphp
+@if(in_array($transportRequest->status, ['approved', 'in_progress']) && ($transportRequest->driver || $transportRequest->rentalDriver))
+@php
+    $isRental = (bool) $transportRequest->rentalDriver;
+    $driverName = $isRental
+        ? $transportRequest->rentalDriver->name
+        : $transportRequest->driver->displayLabel();
+    $driverPhone = $isRental
+        ? $transportRequest->rentalDriver->contactPhone()
+        : $transportRequest->driver->contactPhone();
+@endphp
 <div class="emp-card p-4 space-y-2 border border-indigo-100 bg-indigo-50/50">
-<p class="text-xs font-semibold uppercase tracking-wide text-indigo-700">Assigned Driver</p>
-<p class="font-medium text-gray-900">{{ $transportRequest->driver->displayLabel() }}</p>
+<p class="text-xs font-semibold uppercase tracking-wide text-indigo-700">
+    Assigned Driver
+    @if($isRental)
+        <span class="normal-case font-medium text-indigo-600">(Rental)</span>
+    @endif
+</p>
+<p class="font-medium text-gray-900">{{ $driverName }}</p>
+@if($isRental && $transportRequest->rentalDriver->vendorLabel())
+<p class="text-xs text-gray-600">{{ $transportRequest->rentalDriver->vendorLabel() }}</p>
+@endif
 @if($driverPhone)
 <p class="text-sm tabular-nums text-gray-700">{{ $driverPhone }}</p>
-<a href="tel:{{ preg_replace('/[^0-9+]/', '', $driverPhone) }}" class="emp-btn w-full text-center">Call {{ $transportRequest->driver->displayLabel() }}</a>
+<a href="tel:{{ preg_replace('/[^0-9+]/', '', $driverPhone) }}" class="emp-btn w-full text-center">Call {{ $driverName }}</a>
 @else
 <p class="text-xs text-gray-500">Driver phone not on file — contact admin.</p>
 @endif

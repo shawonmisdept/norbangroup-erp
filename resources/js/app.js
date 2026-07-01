@@ -1,6 +1,7 @@
 import Alpine from 'alpinejs';
 import './searchable-selects';
 import './employee-pwa';
+import './rental-pwa';
 import { initConfirmHandlers, registerConfirmDialog } from './confirm-dialog';
 
 Alpine.data('erpLiveClock', (timezone = 'UTC') => ({

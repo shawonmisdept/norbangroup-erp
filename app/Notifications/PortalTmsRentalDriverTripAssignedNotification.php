@@ -3,16 +3,14 @@
 namespace App\Notifications;
 
 use App\Models\Tms\TmsTransportRequest;
+use App\Notifications\Concerns\DeliversRentalWebPush;
 use Illuminate\Notifications\Notification;
 
 class PortalTmsRentalDriverTripAssignedNotification extends Notification
 {
-    public function __construct(public TmsTransportRequest $request) {}
+    use DeliversRentalWebPush;
 
-    public function via(object $notifiable): array
-    {
-        return ['database'];
-    }
+    public function __construct(public TmsTransportRequest $request) {}
 
     public function toDatabase(object $notifiable): array
     {

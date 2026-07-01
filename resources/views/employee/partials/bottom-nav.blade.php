@@ -22,6 +22,13 @@
             'tone'  => 'leave',
         ],
         [
+            'route' => 'employee.transport.index',
+            'match' => 'employee.transport*',
+            'label' => 'Transport',
+            'icon'  => 'car',
+            'tone'  => 'transport',
+        ],
+        [
             'route' => 'employee.payslips',
             'match' => 'employee.payslips*',
             'label' => 'Pay',

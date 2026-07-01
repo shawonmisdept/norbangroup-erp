@@ -16,14 +16,25 @@ class TripController extends Controller
     {
         $driver = $this->portalRentalDriver($request);
 
-        $trips = TmsTripLog::query()
-            ->with(['transportRequests.employee', 'transportRequests.destination', 'transportRequest.employee', 'transportRequest.destination', 'vehicle'])
+        $tripRelations = ['transportRequests.employee', 'transportRequests.destination', 'transportRequest.employee', 'transportRequest.destination', 'vehicle'];
+
+        $activeTrips = TmsTripLog::query()
+            ->with($tripRelations)
             ->where('rental_driver_id', $driver->id)
             ->whereIn('trip_status', ['not_started', 'in_progress'])
             ->latest('id')
             ->get();
 
-        return view('rental.trips', compact('trips', 'driver'));
+        $completedTrips = TmsTripLog::query()
+            ->with($tripRelations)
+            ->where('rental_driver_id', $driver->id)
+            ->where('trip_status', 'completed')
+            ->latest('duty_end_at')
+            ->latest('id')
+            ->limit(20)
+            ->get();
+
+        return view('rental.trips', compact('activeTrips', 'completedTrips', 'driver'));
     }
 
     public function start(Request $request, TmsTripLog $trip, TripService $tripService)

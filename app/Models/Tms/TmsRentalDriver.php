@@ -73,6 +73,13 @@ class TmsRentalDriver extends Model
         return $label;
     }
 
+    public function contactPhone(): ?string
+    {
+        $phone = trim((string) ($this->mobile ?? ''));
+
+        return $phone !== '' ? $phone : null;
+    }
+
     public function vendorLabel(): string
     {
         if ($this->relationLoaded('rentalVendor') || $this->rental_vendor_id) {

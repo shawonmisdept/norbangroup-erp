@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1, user-scalable=no">
     <meta name="theme-color" content="#c2410c">
+    @include('rental.partials.pwa-head')
     <title>@yield('title', 'Rental Driver') — {{ config('portal.name') }}</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
@@ -53,6 +54,7 @@
             @endif
 
             <main class="emp-main">
+                @include('rental.partials.pwa-install-banner')
                 @if(session('success'))
                     <div class="emp-toast emp-toast-success">{{ session('success') }}</div>
                 @endif
