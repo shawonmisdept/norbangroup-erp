@@ -28,6 +28,10 @@
     --container-8xl: 87.5rem;
 }
 
+[x-cloak] {
+    display: none !important;
+}
+
 /* ERP sidebar shell */
 .erp-sidebar {
     background: linear-gradient(180deg, #fafbfc 0%, #f4f6f9 100%);

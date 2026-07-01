@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1, user-scalable=no">
     <meta name="theme-color" content="#1e3a5f">
+    <style>[x-cloak]{display:none!important}</style>
     @include('employee.partials.pwa-head')
     <title>@yield('title', 'Employee Portal') — {{ config('portal.name') }}</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
