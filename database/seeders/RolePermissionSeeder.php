@@ -11,12 +11,21 @@ class RolePermissionSeeder extends Seeder
     public function run(): void
     {
         $this->syncAdministrator();
+        $this->syncManagement();
         $this->syncManager();
         $this->syncViewer();
         $this->syncHrManager();
         $this->syncTransportAuthority();
 
-        $this->command?->info('Synced role permissions for Administrator, Manager, Viewer, HR Manager, and Transport Authority.');
+        $this->command?->info('Synced role permissions for Administrator, Management, Manager, Viewer, HR Manager, and Transport Authority.');
+    }
+
+    private function syncManagement(): void
+    {
+        Role::updateOrCreate(
+            ['name' => 'Management'],
+            ['permissions' => RolePermissionCatalog::administratorPermissions()]
+        );
     }
 
     private function syncAdministrator(): void

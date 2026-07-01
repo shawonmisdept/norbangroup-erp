@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
     private function seedDemoUsers(): void
     {
         $adminRole = Role::where('name', 'Administrator')->firstOrFail();
+        $managementRole = Role::where('name', 'Management')->firstOrFail();
         $managerRole = Role::where('name', 'Manager')->firstOrFail();
         $viewerRole = Role::where('name', 'Viewer')->firstOrFail();
         $hrManagerRole = Role::where('name', 'HR Manager')->firstOrFail();
@@ -33,6 +34,16 @@ class DatabaseSeeder extends Seeder
         User::updateOrCreate(
             ['email' => 'admin@norbangroup.com'],
             ['name' => 'Admin', 'password' => 'password', 'role_id' => $adminRole->id, 'factory_id' => null]
+        );
+
+        User::updateOrCreate(
+            ['email' => 'mansifsiddiqui@gmail.com'],
+            [
+                'name'       => 'Mansif Siddiqui',
+                'password'   => 'password',
+                'role_id'    => $managementRole->id,
+                'factory_id' => null,
+            ]
         );
 
         User::updateOrCreate(

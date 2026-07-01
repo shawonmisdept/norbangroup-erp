@@ -16,7 +16,7 @@ Built for multi-unit RMG factories — requirement intake, 5,000+ workforce HR, 
 
 <br>
 
-[Live Demo](https://portal.norbangroup.com) · [HRM Blueprint](GARMENTS-HRM.md) · [Deploy Guide](DEPLOY.md)
+[Live Demo](https://portal.norbangroup.com) · [Module Workflows](docs/workflows/README.md) · [HRM Blueprint](GARMENTS-HRM.md) · [Deploy Guide](DEPLOY.md)
 
 </div>
 
