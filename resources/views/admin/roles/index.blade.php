@@ -40,7 +40,15 @@
                        placeholder="Search by role name…" class="erp-input !text-xs" autocomplete="off">
             </div>
             <div class="erp-filter-field">
-                <label for="role-module-filter" class="erp-form-label">Module</label>
+                <label for="role-department-filter" class="erp-form-label">Department</label>
+                <select id="role-department-filter" name="department" class="erp-input !text-xs">
+                    @foreach($departmentOptions as $value => $label)
+                        <option value="{{ $value }}" @selected($filters['department'] === $value)>{{ $label }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="erp-filter-field">
+                <label for="role-module-filter" class="erp-form-label">Module access</label>
                 <select id="role-module-filter" name="module" class="erp-input !text-xs">
                     @foreach(\App\Models\Role::moduleFilterOptions() as $value => $label)
                         <option value="{{ $value }}" @selected($filters['module'] === $value)>{{ $label }}</option>
@@ -55,11 +63,31 @@
                     @endforeach
                 </select>
             </div>
+            <div class="erp-filter-field">
+                <label for="role-per-page-filter" class="erp-form-label">Show</label>
+                <select id="role-per-page-filter" name="per_page" class="erp-input !text-xs">
+                    @foreach(\App\Models\Role::perPageOptions() as $value => $label)
+                        <option value="{{ $value }}" @selected((int) $filters['perPage'] === (int) $value)>{{ $label }}</option>
+                    @endforeach
+                </select>
+            </div>
             <div class="erp-filter-actions">
                 <button type="submit" class="erp-btn-primary">Apply Filter</button>
                 <a href="{{ route('admin.roles.index') }}" class="erp-btn-secondary {{ $hasFilters ? '' : 'pointer-events-none opacity-50' }}">Reset</a>
             </div>
         </form>
+        @if($hasFilters)
+            <div class="mt-3 pt-3 border-t border-erp-border flex flex-wrap items-center gap-2 text-xs">
+                <span class="text-gray-500">
+                    Showing <strong class="text-gray-800">{{ number_format($filteredTotal) }}</strong>
+                    of <strong class="text-gray-800">{{ number_format($stats['total']) }}</strong> roles
+                </span>
+                @foreach($activeFilterLabels as $label)
+                    <span class="erp-badge bg-amber-50 text-amber-800">{{ $label }}</span>
+                @endforeach
+                <a href="{{ route('admin.roles.index') }}" class="text-brand hover:underline ml-auto">Clear all filters</a>
+            </div>
+        @endif
     </div>
 </div>
 
@@ -68,9 +96,9 @@
         <h2 class="text-xs font-semibold text-gray-700 uppercase tracking-wide">Role Directory</h2>
         <span class="text-[11px] text-gray-400">
             @if($hasFilters)
-                {{ $roles->total() }} match(es)
+                {{ number_format($filteredTotal) }} of {{ number_format($stats['total']) }} roles
             @else
-                {{ $roles->total() }} role(s)
+                {{ number_format($stats['total']) }} role(s)
             @endif
         </span>
     </div>

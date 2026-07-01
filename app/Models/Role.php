@@ -464,4 +464,51 @@ class Role extends Model
             default => null,
         };
     }
+
+    public function scopeFilterByDepartmentPrefix($query, ?string $department): void
+    {
+        if ($department === null || $department === '') {
+            return;
+        }
+
+        $query->where(function ($q) use ($department) {
+            $q->where('name', 'like', $department . '-%')
+                ->orWhere('name', $department);
+        });
+    }
+
+    /** @return array<string, string> */
+    public static function departmentFilterOptions(): array
+    {
+        $options = ['' => 'All Departments'];
+
+        static::query()
+            ->orderBy('name')
+            ->pluck('name')
+            ->each(function (string $name) use (&$options) {
+                if (preg_match('/^([^-]+)-/', $name, $matches)) {
+                    $options[$matches[1]] = $matches[1];
+                }
+            });
+
+        ksort($options);
+
+        if (isset($options[''])) {
+            $all = ['' => $options['']];
+            unset($options['']);
+            $options = $all + $options;
+        }
+
+        return $options;
+    }
+
+    /** @return array<string, string> */
+    public static function perPageOptions(): array
+    {
+        return [
+            25  => '25 per page',
+            50  => '50 per page',
+            100 => '100 per page',
+        ];
+    }
 }

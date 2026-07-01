@@ -14,6 +14,8 @@ class RoleController extends Controller
         $search = trim((string) $request->query('search', ''));
         $module = (string) $request->query('module', '');
         $assignment = (string) $request->query('assignment', '');
+        $department = (string) $request->query('department', '');
+        $perPage = (int) $request->query('per_page', 50);
 
         if (! array_key_exists($module, Role::moduleFilterOptions())) {
             $module = '';
@@ -23,13 +25,26 @@ class RoleController extends Controller
             $assignment = '';
         }
 
-        $roles = Role::query()
+        if (! array_key_exists($department, Role::departmentFilterOptions())) {
+            $department = '';
+        }
+
+        if (! array_key_exists($perPage, Role::perPageOptions())) {
+            $perPage = 50;
+        }
+
+        $query = Role::query()
             ->withCount('users')
-            ->when($search !== '', fn ($query) => $query->where('name', 'like', '%' . $search . '%'))
+            ->when($search !== '', fn ($q) => $q->where('name', 'like', '%' . $search . '%'))
             ->filterByModuleArea($module !== '' ? $module : null)
             ->filterByAssignment($assignment !== '' ? $assignment : null)
-            ->orderBy('name')
-            ->paginate(15)
+            ->filterByDepartmentPrefix($department !== '' ? $department : null)
+            ->orderBy('name');
+
+        $filteredTotal = (clone $query)->count();
+
+        $roles = $query
+            ->paginate($perPage)
             ->withQueryString();
 
         $stats = [
@@ -38,10 +53,27 @@ class RoleController extends Controller
             'unassigned' => Role::doesntHave('users')->count(),
         ];
 
-        $filters = compact('search', 'module', 'assignment');
-        $hasFilters = $search !== '' || $module !== '' || $assignment !== '';
+        $filters = compact('search', 'module', 'assignment', 'department', 'perPage');
+        $hasFilters = $search !== '' || $module !== '' || $assignment !== '' || $department !== '';
 
-        return view('admin.roles.index', compact('roles', 'filters', 'hasFilters', 'stats'));
+        $activeFilterLabels = collect([
+            $search !== '' ? 'Name: “' . $search . '”' : null,
+            $module !== '' ? 'Module: ' . (Role::moduleFilterOptions()[$module] ?? $module) : null,
+            $department !== '' ? 'Department: ' . $department : null,
+            $assignment !== '' ? (Role::assignmentFilterOptions()[$assignment] ?? $assignment) : null,
+        ])->filter()->values()->all();
+
+        $departmentOptions = Role::departmentFilterOptions();
+
+        return view('admin.roles.index', compact(
+            'roles',
+            'filters',
+            'hasFilters',
+            'stats',
+            'filteredTotal',
+            'activeFilterLabels',
+            'departmentOptions',
+        ));
     }
 
     public function create()
