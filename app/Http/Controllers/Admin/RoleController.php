@@ -12,10 +12,22 @@ class RoleController extends Controller
     public function index(Request $request)
     {
         $search = trim((string) $request->query('search', ''));
+        $module = (string) $request->query('module', '');
+        $assignment = (string) $request->query('assignment', '');
+
+        if (! array_key_exists($module, Role::moduleFilterOptions())) {
+            $module = '';
+        }
+
+        if (! array_key_exists($assignment, Role::assignmentFilterOptions())) {
+            $assignment = '';
+        }
 
         $roles = Role::query()
             ->withCount('users')
             ->when($search !== '', fn ($query) => $query->where('name', 'like', '%' . $search . '%'))
+            ->filterByModuleArea($module !== '' ? $module : null)
+            ->filterByAssignment($assignment !== '' ? $assignment : null)
             ->orderBy('name')
             ->paginate(15)
             ->withQueryString();
@@ -26,7 +38,10 @@ class RoleController extends Controller
             'unassigned' => Role::doesntHave('users')->count(),
         ];
 
-        return view('admin.roles.index', compact('roles', 'search', 'stats'));
+        $filters = compact('search', 'module', 'assignment');
+        $hasFilters = $search !== '' || $module !== '' || $assignment !== '';
+
+        return view('admin.roles.index', compact('roles', 'filters', 'hasFilters', 'stats'));
     }
 
     public function create()

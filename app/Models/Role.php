@@ -412,4 +412,56 @@ class Role extends Model
             default        => 'bg-gray-100 text-gray-600',
         };
     }
+
+    /** @return array<string, string> */
+    public static function moduleFilterOptions(): array
+    {
+        return [
+            ''             => 'All Modules',
+            'operations'   => 'Operations',
+            'master_data'  => 'Master Data',
+            'hrm'          => 'HRM',
+            'tms'          => 'Transport (TMS)',
+            'system_admin' => 'System Admin',
+        ];
+    }
+
+    /** @return array<string, string> */
+    public static function assignmentFilterOptions(): array
+    {
+        return [
+            ''           => 'All Roles',
+            'assigned'   => 'Assigned to users',
+            'unassigned' => 'Unassigned',
+        ];
+    }
+
+    public function scopeFilterByModuleArea($query, ?string $module): void
+    {
+        if ($module === null || $module === '') {
+            return;
+        }
+
+        match ($module) {
+            'operations' => $query->where('permissions', 'like', '%orders.%'),
+            'master_data' => $query->where('permissions', 'like', '%masters.%'),
+            'hrm' => $query->where('permissions', 'like', '%hrm.%'),
+            'tms' => $query->where('permissions', 'like', '%tms.%'),
+            'system_admin' => $query->where(function ($q) {
+                $q->where('permissions', 'like', '%users.manage%')
+                    ->orWhere('permissions', 'like', '%roles.manage%')
+                    ->orWhere('permissions', 'like', '%settings.manage%');
+            }),
+            default => null,
+        };
+    }
+
+    public function scopeFilterByAssignment($query, ?string $assignment): void
+    {
+        match ($assignment) {
+            'assigned' => $query->has('users'),
+            'unassigned' => $query->doesntHave('users'),
+            default => null,
+        };
+    }
 }

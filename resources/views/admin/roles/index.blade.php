@@ -32,12 +32,22 @@
 </div>
 
 <div class="erp-panel mb-4">
-    <form method="GET" class="erp-panel-body flex flex-wrap gap-2 items-center">
-        <input type="search" name="search" value="{{ $search }}" placeholder="Search role by name…"
+    <form method="GET" class="erp-panel-body erp-filter-bar">
+        <input type="search" name="search" value="{{ $filters['search'] }}" placeholder="Search role by name…"
                class="erp-input flex-1 min-w-48 !text-xs">
-        <button type="submit" class="erp-btn-primary">Search</button>
-        @if($search !== '')
-            <a href="{{ route('admin.roles.index') }}" class="text-xs text-gray-400 hover:text-gray-600 px-2">Clear</a>
+        <select name="module" class="erp-input !w-auto !text-xs min-w-[10rem]">
+            @foreach(\App\Models\Role::moduleFilterOptions() as $value => $label)
+                <option value="{{ $value }}" @selected($filters['module'] === $value)>{{ $label }}</option>
+            @endforeach
+        </select>
+        <select name="assignment" class="erp-input !w-auto !text-xs min-w-[10rem]">
+            @foreach(\App\Models\Role::assignmentFilterOptions() as $value => $label)
+                <option value="{{ $value }}" @selected($filters['assignment'] === $value)>{{ $label }}</option>
+            @endforeach
+        </select>
+        <button type="submit" class="erp-btn-primary">Apply Filter</button>
+        @if($hasFilters)
+            <a href="{{ route('admin.roles.index') }}" class="text-xs text-gray-400 hover:text-gray-600 px-2">Reset</a>
         @endif
     </form>
 </div>
@@ -46,7 +56,7 @@
     <div class="erp-panel-head">
         <h2 class="text-xs font-semibold text-gray-700 uppercase tracking-wide">Role Directory</h2>
         <span class="text-[11px] text-gray-400">
-            @if($search !== '')
+            @if($hasFilters)
                 {{ $roles->total() }} match(es)
             @else
                 {{ $roles->total() }} role(s)
@@ -127,8 +137,8 @@
                 @empty
                     <tr>
                         <td colspan="6" class="text-center py-10 text-gray-400">
-                            @if($search !== '')
-                                No roles match “{{ $search }}”.
+                            @if($hasFilters)
+                                No roles match the current filters.
                             @else
                                 No roles found. Create your first role to get started.
                             @endif
