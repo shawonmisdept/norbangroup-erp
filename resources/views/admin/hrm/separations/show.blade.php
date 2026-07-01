@@ -244,7 +244,7 @@
             <div class="erp-panel">
                 <div class="erp-panel-body text-xs text-gray-500 space-y-2">
                     <p>Employee status: <strong class="text-gray-800">{{ $separation->employee->statusLabel() }}</strong></p>
-                    @if($canManage)
+                    @if($canManageSettlement)
                         <a href="{{ route('admin.hrm.finance.final-settlement.create', ['employee_id' => $separation->employee_id]) }}" class="erp-btn-sm-primary w-full justify-center">Start F&F Settlement</a>
                     @endif
                 </div>

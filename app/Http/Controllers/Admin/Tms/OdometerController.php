@@ -180,6 +180,17 @@ class OdometerController extends Controller
             ->with('success', 'Daily KM log updated.');
     }
 
+    public function destroy(Request $request, TmsDailyOdometerLog $odometer)
+    {
+        $this->authorizeFactoryAccess($request, $odometer->factory_id);
+
+        $this->odometerService->deleteLog($odometer);
+
+        return redirect()
+            ->route('admin.tms.odometer.index')
+            ->with('success', 'Daily KM log deleted.');
+    }
+
     private function vehicleOptions(Request $request, ?int $factoryId = null): \Illuminate\Support\Collection
     {
         $query = TmsVehicle::orderBy('name');

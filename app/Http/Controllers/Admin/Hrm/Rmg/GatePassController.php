@@ -88,6 +88,24 @@ class GatePassController extends Controller
             ->with('success', 'Gate pass approved.');
     }
 
+    public function reject(Request $request, GatePass $gatePass)
+    {
+        $this->authorizeFactoryAccess($request, $gatePass->factory_id);
+
+        if ($gatePass->status !== 'pending') {
+            return back()->with('error', 'Only pending gate passes can be rejected.');
+        }
+
+        $gatePass->update([
+            'status'      => 'rejected',
+            'approved_by' => $request->user()->id,
+            'approved_at' => now(),
+        ]);
+
+        return redirect()->route('admin.hrm.rmg.gate-pass.index')
+            ->with('success', 'Gate pass rejected.');
+    }
+
     private function employeeOptions(Request $request): array
     {
         $query = Employee::query()

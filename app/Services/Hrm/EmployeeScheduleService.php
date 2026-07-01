@@ -4,8 +4,10 @@ namespace App\Services\Hrm;
 
 use App\Models\Hrm\AttendanceDailyLog;
 use App\Models\Hrm\AttendancePolicy;
+use App\Models\Hrm\BuyerHoliday;
 use App\Models\Hrm\Employee;
 use App\Models\Hrm\Holiday;
+use App\Models\Hrm\OsdMovement;
 use App\Models\Hrm\Shift;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
@@ -52,11 +54,50 @@ class EmployeeScheduleService
 
     public function isHoliday(int $factoryId, Carbon $date): bool
     {
-        return Holiday::query()
+        if (Holiday::query()
+            ->where('factory_id', $factoryId)
+            ->where('is_active', true)
+            ->whereDate('date', $date->toDateString())
+            ->exists()) {
+            return true;
+        }
+
+        return BuyerHoliday::query()
             ->where('factory_id', $factoryId)
             ->where('is_active', true)
             ->whereDate('date', $date->toDateString())
             ->exists();
+    }
+
+    public function hasApprovedOsd(Employee $employee, Carbon $date): bool
+    {
+        return OsdMovement::query()
+            ->where('employee_id', $employee->id)
+            ->where('factory_id', $employee->factory_id)
+            ->where('status', 'approved')
+            ->whereDate('start_date', '<=', $date->toDateString())
+            ->whereDate('end_date', '>=', $date->toDateString())
+            ->exists();
+    }
+
+    /** @return list<string> */
+    public function factoryHolidayDates(int $factoryId, Carbon $from, Carbon $to): array
+    {
+        $factoryHolidays = Holiday::query()
+            ->where('factory_id', $factoryId)
+            ->where('is_active', true)
+            ->whereBetween('date', [$from->toDateString(), $to->toDateString()])
+            ->pluck('date')
+            ->map(fn ($d) => Carbon::parse($d)->toDateString());
+
+        $buyerHolidays = BuyerHoliday::query()
+            ->where('factory_id', $factoryId)
+            ->where('is_active', true)
+            ->whereBetween('date', [$from->toDateString(), $to->toDateString()])
+            ->pluck('date')
+            ->map(fn ($d) => Carbon::parse($d)->toDateString());
+
+        return $factoryHolidays->merge($buyerHolidays)->unique()->values()->all();
     }
 
     public function isNonWorkingDay(Employee $employee, Carbon $date): bool

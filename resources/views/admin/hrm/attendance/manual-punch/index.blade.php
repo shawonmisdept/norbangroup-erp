@@ -52,6 +52,9 @@
                     <th>Type</th>
                     <th>Reason</th>
                     <th>Entered By</th>
+                    @if(auth()->user()?->canManageAttendanceSubmodule('manual-punch'))
+                        <th></th>
+                    @endif
                 </tr>
             </thead>
             <tbody>
@@ -65,9 +68,17 @@
                         <td><span class="erp-badge bg-blue-100 text-blue-800">{{ strtoupper($entry->punch_type) }}</span></td>
                         <td class="text-xs text-gray-600 max-w-xs truncate">{{ $entry->reason }}</td>
                         <td class="text-xs">{{ $entry->enteredByUser?->name ?? '—' }}</td>
+                        @if(auth()->user()?->canManageAttendanceSubmodule('manual-punch'))
+                            <td class="text-right">
+                                <form method="POST" action="{{ route('admin.hrm.attendance.manual-punch.destroy', $entry) }}" data-confirm="Remove this manual punch?">
+                                    @csrf @method('DELETE')
+                                    <button type="submit" class="erp-btn-sm-secondary !text-red-600">Remove</button>
+                                </form>
+                            </td>
+                        @endif
                     </tr>
                 @empty
-                    <tr><td colspan="5" class="text-center text-sm text-gray-400 py-10">No manual punches yet.</td></tr>
+                    <tr><td colspan="{{ auth()->user()?->canManageAttendanceSubmodule('manual-punch') ? 6 : 5 }}" class="text-center text-sm text-gray-400 py-10">No manual punches yet.</td></tr>
                 @endforelse
             </tbody>
         </table>

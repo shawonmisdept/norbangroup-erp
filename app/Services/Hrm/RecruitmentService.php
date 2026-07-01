@@ -7,6 +7,7 @@ use App\Models\Hrm\JobPosting;
 use App\Models\Hrm\RecruitmentApplication;
 use App\Models\Hrm\RecruitmentApplicationLog;
 use App\Models\Hrm\RecruitmentInterview;
+use App\Models\Hrm\RecruitmentOfferLetter;
 use App\Models\User;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
@@ -282,10 +283,72 @@ class RecruitmentService
     public function trackApplication(string $applicationNo, string $phone): ?RecruitmentApplication
     {
         return RecruitmentApplication::query()
-            ->with(['jobPosting', 'factory'])
+            ->with(['jobPosting', 'factory', 'offerLetters'])
             ->where('application_no', strtoupper(trim($applicationNo)))
             ->where('phone', $this->normalizePhone($phone))
             ->first();
+    }
+
+    public function respondToOffer(
+        RecruitmentApplication $application,
+        RecruitmentOfferLetter $offerLetter,
+        string $response,
+        ?string $declineReason = null,
+    ): RecruitmentApplication {
+        if ($application->status !== 'offered') {
+            throw ValidationException::withMessages(['response' => 'This application is not awaiting an offer response.']);
+        }
+
+        if ($offerLetter->application_id !== $application->id) {
+            throw ValidationException::withMessages(['response' => 'Invalid offer letter.']);
+        }
+
+        if (! $offerLetter->isPendingResponse()) {
+            throw ValidationException::withMessages(['response' => 'This offer has already been responded to.']);
+        }
+
+        if (! in_array($response, ['accepted', 'declined'], true)) {
+            throw ValidationException::withMessages(['response' => 'Invalid response.']);
+        }
+
+        return DB::transaction(function () use ($application, $offerLetter, $response, $declineReason) {
+            $offerLetter->update([
+                'response'       => $response,
+                'responded_at'   => now(),
+                'decline_reason' => $response === 'declined' ? $declineReason : null,
+            ]);
+
+            $from = $application->status;
+            $notes = $response === 'accepted'
+                ? 'Candidate accepted offer ' . $offerLetter->reference_no . '.'
+                : 'Candidate declined offer ' . $offerLetter->reference_no . '.';
+
+            if ($response === 'declined') {
+                $application->update([
+                    'status'           => 'withdrawn',
+                    'rejection_reason' => $declineReason,
+                    'reviewed_at'      => now(),
+                ]);
+            }
+
+            RecruitmentApplicationLog::create([
+                'application_id' => $application->id,
+                'from_status'    => $from,
+                'to_status'      => $response === 'declined' ? 'withdrawn' : $from,
+                'notes'          => $notes,
+                'user_id'        => null,
+            ]);
+
+            $updated = $application->fresh(['jobPosting', 'factory', 'offerLetters']);
+
+            if ($response === 'declined') {
+                $this->messaging->statusUpdated($updated, $from, $declineReason);
+            }
+
+            $this->notifications->offerResponded($updated, $offerLetter->fresh(), $response);
+
+            return $updated;
+        });
     }
 
     /** @return array<int, array<string, mixed>> */

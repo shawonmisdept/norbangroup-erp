@@ -9,11 +9,24 @@ use Illuminate\Validation\Rule;
 
 class RoleController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $roles = Role::withCount('users')->latest()->get();
+        $search = trim((string) $request->query('search', ''));
 
-        return view('admin.roles.index', compact('roles'));
+        $roles = Role::query()
+            ->withCount('users')
+            ->when($search !== '', fn ($query) => $query->where('name', 'like', '%' . $search . '%'))
+            ->orderBy('name')
+            ->paginate(15)
+            ->withQueryString();
+
+        $stats = [
+            'total'      => Role::count(),
+            'in_use'     => Role::has('users')->count(),
+            'unassigned' => Role::doesntHave('users')->count(),
+        ];
+
+        return view('admin.roles.index', compact('roles', 'search', 'stats'));
     }
 
     public function create()
@@ -31,6 +44,27 @@ class RoleController extends Controller
 
         return redirect()->route('admin.roles.index')
             ->with('success', 'Role created successfully.');
+    }
+
+    public function show(Role $role)
+    {
+        $role->loadCount('users');
+        $role->load(['users' => fn ($query) => $query->orderBy('name')]);
+
+        $granted = collect($role->permissions ?? []);
+        $groupedPermissions = [];
+
+        foreach (Role::permissionGroups() as $groupName => $permissions) {
+            $items = collect($permissions)
+                ->filter(fn ($label, $key) => $granted->contains($key))
+                ->all();
+
+            if ($items !== []) {
+                $groupedPermissions[$groupName] = $items;
+            }
+        }
+
+        return view('admin.roles.show', compact('role', 'groupedPermissions'));
     }
 
     public function edit(Role $role)
@@ -54,7 +88,7 @@ class RoleController extends Controller
     public function destroy(Role $role)
     {
         if ($role->users()->exists()) {
-            return back()->with('success', 'Cannot delete a role that is assigned to users.');
+            return back()->with('error', 'Cannot delete a role that is assigned to users.');
         }
 
         $role->delete();

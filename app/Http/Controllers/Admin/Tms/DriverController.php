@@ -6,12 +6,17 @@ use App\Http\Controllers\Admin\Hrm\Concerns\ScopesHrmFactory;
 use App\Http\Controllers\Controller;
 use App\Models\Hrm\Employee;
 use App\Models\Tms\TmsDriver;
+use App\Services\Tms\DriverOtRateService;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
 class DriverController extends Controller
 {
     use ScopesHrmFactory;
+
+    public function __construct(
+        private DriverOtRateService $otRateService,
+    ) {}
 
     public function index(Request $request)
     {
@@ -44,12 +49,33 @@ class DriverController extends Controller
         $validated = $this->validateDriver($request);
         $this->authorizeFactoryAccess($request, (int) $validated['factory_id']);
 
-        TmsDriver::create($validated + [
+        $driver = TmsDriver::create($validated + [
             'created_by' => $request->user()->id,
             'updated_by' => $request->user()->id,
         ]);
 
+        $this->otRateService->record($driver, $request->user()->id);
+
         return redirect()->route('admin.tms.drivers.index')->with('success', 'Driver created.');
+    }
+
+    public function show(Request $request, TmsDriver $driver)
+    {
+        $this->authorizeFactoryAccess($request, $driver->factory_id);
+
+        $driver->load(['factory', 'employee.designation', 'employee.department', 'defaultVehicle', 'otRateLogs.recordedByUser']);
+
+        $recentTrips = $driver->tripLogs()
+            ->with(['vehicle', 'transportRequests.employee'])
+            ->latest('id')
+            ->limit(10)
+            ->get();
+
+        return view('admin.tms.drivers.show', [
+            'driver'      => $driver,
+            'recentTrips' => $recentTrips,
+            'canManage'   => $request->user()?->canManageTmsSubmodule('drivers') ?? false,
+        ]);
     }
 
     public function edit(Request $request, TmsDriver $driver)
@@ -57,7 +83,7 @@ class DriverController extends Controller
         $this->authorizeFactoryAccess($request, $driver->factory_id);
 
         return view('admin.tms.drivers.form', [
-            'driver'    => $driver->load(['employee', 'defaultVehicle']),
+            'driver'    => $driver->load(['employee', 'defaultVehicle', 'otRateLogs.recordedByUser']),
             'factories' => $this->factoryOptions($request),
             'employees' => $this->employeeOptions($request, $driver->factory_id),
             'vehicles'  => $this->vehicleOptions($request, $driver->factory_id),
@@ -67,9 +93,14 @@ class DriverController extends Controller
     public function update(Request $request, TmsDriver $driver)
     {
         $this->authorizeFactoryAccess($request, $driver->factory_id);
+
+        $before = $driver->fresh();
+
         $driver->update($this->validateDriver($request, $driver) + [
             'updated_by' => $request->user()->id,
         ]);
+
+        $this->otRateService->recordIfPayRulesChanged($driver->fresh(), $before, $request->user()->id);
 
         return redirect()->route('admin.tms.drivers.index')->with('success', 'Driver updated.');
     }

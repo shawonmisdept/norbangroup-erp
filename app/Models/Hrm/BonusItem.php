@@ -10,7 +10,7 @@ class BonusItem extends Model
     protected $table = 'hrm_bonus_items';
 
     protected $fillable = [
-        'bonus_run_id', 'employee_id', 'basic_avg', 'months_worked', 'bonus_amount',
+        'bonus_run_id', 'employee_id', 'basic_avg', 'months_worked', 'bonus_amount', 'payroll_period_id',
     ];
 
     protected $casts = [

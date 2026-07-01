@@ -12,21 +12,14 @@ use Database\Seeders\Masters\ColorSeeder;
 use Database\Seeders\Masters\CompanyCalendarSeeder;
 use Database\Seeders\Masters\CompositionSeeder;
 use Database\Seeders\Masters\DepartmentSeeder;
-use Database\Seeders\Masters\DepartmentDesignationFromEmployeeDataSeeder;
-use Database\Seeders\Masters\FactoryDesignationSeeder;
-use Database\Seeders\Masters\UnitDepartmentsDesignationsSeeder;
 use Database\Seeders\Masters\FabricCategorySeeder;
 use Database\Seeders\Masters\FabricationSeeder;
 use Database\Seeders\Masters\FabricTypeSeeder;
-use Database\Seeders\Hrm\DemoEmployeeSeeder;
-use Database\Seeders\Hrm\HeadOfficeEmployeeSeeder;
-use Database\Seeders\Hrm\DemoPerformanceSeeder;
-use Database\Seeders\Hrm\HrmMasterDataSeeder;
-use Database\Seeders\Hrm\SalaryIncrementSeeder;
-use Database\Seeders\Hrm\SalaryLegacySeeder;
 use Database\Seeders\Masters\FactorySeeder;
 use Database\Seeders\Masters\GarmentProductionStatusSeeder;
 use Database\Seeders\Masters\GsmSeeder;
+use Database\Seeders\Masters\HeadOfficeOrgSeeder;
+use Database\Seeders\Masters\HeadOfficeRoleSeeder;
 use Database\Seeders\Masters\ItemBodyPartSeeder;
 use Database\Seeders\Masters\ItemSeeder;
 use Database\Seeders\Masters\MaterialSeeder;
@@ -49,6 +42,11 @@ use Database\Seeders\Masters\SustainabilitySeeder;
 use Database\Seeders\Masters\TrimsStatusSeeder;
 use Database\Seeders\Masters\WovenStatusSeeder;
 use Database\Seeders\Masters\YarnStatusSeeder;
+use Database\Seeders\Hrm\HeadOfficeEmployeeSeeder;
+use Database\Seeders\Hrm\HeadOfficeUserSeeder;
+use Database\Seeders\Hrm\HrmMasterDataSeeder;
+use Database\Seeders\Hrm\SalaryIncrementSeeder;
+use Database\Seeders\Hrm\SalaryLegacySeeder;
 use Illuminate\Database\Seeder;
 
 class MasterDataSeeder extends Seeder
@@ -59,14 +57,12 @@ class MasterDataSeeder extends Seeder
             FactorySeeder::class,
             HrmMasterDataSeeder::class,
             DepartmentSeeder::class,
-            UnitDepartmentsDesignationsSeeder::class,
-            FactoryDesignationSeeder::class,
-            DepartmentDesignationFromEmployeeDataSeeder::class,
+            HeadOfficeOrgSeeder::class,
+            HeadOfficeRoleSeeder::class,
             CompanyCalendarSeeder::class,
             SalaryLegacySeeder::class,
             HeadOfficeEmployeeSeeder::class,
-            DemoEmployeeSeeder::class,
-            DemoPerformanceSeeder::class,
+            HeadOfficeUserSeeder::class,
             SalaryIncrementSeeder::class,
             BuyerSeeder::class,
             BrandSeeder::class,

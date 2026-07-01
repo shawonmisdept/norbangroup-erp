@@ -194,4 +194,27 @@ class HrmDashboardTest extends TestCase
             ->get(route('admin.hrm.dashboard'))
             ->assertForbidden();
     }
+
+    public function test_dashboard_only_permission_grants_hrm_access(): void
+    {
+        $role = Role::create(['name' => 'MIS Data Entry', 'permissions' => [
+            'orders.view',
+            'orders.download',
+            'hrm.dashboard.view',
+        ]]);
+
+        $user = User::create([
+            'name'     => 'MIS Operator',
+            'email'    => 'mis-dashboard@test.com',
+            'password' => 'password',
+            'role_id'  => $role->id,
+        ]);
+
+        $this->assertTrue($user->hasAnyHrmViewPermission());
+
+        $this->actingAs($user)
+            ->get(route('admin.hrm.dashboard'))
+            ->assertOk()
+            ->assertSee('HRM Dashboard');
+    }
 }

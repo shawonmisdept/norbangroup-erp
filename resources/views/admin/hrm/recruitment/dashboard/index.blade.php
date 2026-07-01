@@ -12,8 +12,14 @@
 @include('partials.erp.page-header', [
     'title' => 'Recruitment Dashboard',
     'subtitle' => $period_label,
-    'actions' => '<a href="' . route('admin.hrm.recruitment.applications.index') . '" class="erp-btn-secondary">Applications</a>'
-        . ' <a href="' . route('admin.hrm.recruitment.applications.export', $filters) . '" class="erp-btn-secondary">Export CSV</a>',
+    'actions' => ($canManagePostings ?? false
+        ? '<a href="' . route('admin.hrm.recruitment.postings.create') . '" class="erp-btn-primary !py-2 !px-4 text-xs">New Posting</a> '
+        : '')
+        . '<a href="' . route('admin.hrm.recruitment.applications.index') . '" class="erp-btn-secondary">Applications</a>'
+        . ' <a href="' . route('admin.hrm.recruitment.applications.export', $filters) . '" class="erp-btn-secondary">Export Applications</a>'
+        . (($canManagePostings ?? false)
+            ? ' <a href="' . route('admin.hrm.recruitment.postings.export', $filters) . '" class="erp-btn-secondary">Export Postings</a>'
+            : ''),
 ])
 
 @if(count($factories) > 1 && ! auth()->user()->factory_id)

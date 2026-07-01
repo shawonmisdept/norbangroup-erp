@@ -65,7 +65,7 @@ class IncrementBandController extends Controller
         return view('admin.hrm.performance.increment-bands.form', [
             'factoryId'   => $factoryId,
             'factoryName' => $this->factoryOptions($request)[$factoryId] ?? 'Factory',
-            'canManage'   => true,
+            'canManage'   => $request->user()?->hasPermission('hrm.performance.increment.manage') ?? false,
             'bands'       => $bands->map(fn (PerformanceIncrementBand $b) => [
                 'name'              => $b->name,
                 'min_score'         => $b->min_score,

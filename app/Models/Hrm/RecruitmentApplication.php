@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class RecruitmentApplication extends Model
 {
@@ -64,6 +65,18 @@ class RecruitmentApplication extends Model
     public function offerLetters(): HasMany
     {
         return $this->hasMany(RecruitmentOfferLetter::class, 'application_id')->latest('issued_at');
+    }
+
+    public function latestOffer(): HasOne
+    {
+        return $this->hasOne(RecruitmentOfferLetter::class, 'application_id')->latestOfMany('issued_at');
+    }
+
+    public function latestOfferLetter(): ?RecruitmentOfferLetter
+    {
+        return $this->relationLoaded('latestOffer')
+            ? $this->latestOffer
+            : $this->offerLetters()->first();
     }
 
     public function upcomingInterview(): ?RecruitmentInterview

@@ -25,7 +25,10 @@ class MaintenancePostingController extends Controller
             'workshop'   => ['nullable', 'string', 'max:255'],
             'from'       => ['nullable', 'date'],
             'to'         => ['nullable', 'date', 'after_or_equal:from'],
+            'unposted_only' => ['sometimes', 'boolean'],
         ]);
+
+        $filters['unposted_only'] = $request->boolean('unposted_only');
 
         if (! empty($filters['factory_id'])) {
             $this->authorizeFactoryAccess($request, (int) $filters['factory_id']);
@@ -92,16 +95,44 @@ class MaintenancePostingController extends Controller
     private function validatedFilters(Request $request): array
     {
         $filters = $request->validate([
-            'factory_id' => ['nullable', 'exists:factories,id'],
-            'workshop'   => ['required', 'string', 'max:255'],
-            'from'       => ['required', 'date'],
-            'to'         => ['required', 'date', 'after_or_equal:from'],
+            'factory_id'    => ['nullable', 'exists:factories,id'],
+            'workshop'      => ['required', 'string', 'max:255'],
+            'from'          => ['required', 'date'],
+            'to'            => ['required', 'date', 'after_or_equal:from'],
+            'unposted_only' => ['sometimes', 'boolean'],
         ]);
+
+        $filters['unposted_only'] = $request->boolean('unposted_only');
 
         if (! empty($filters['factory_id'])) {
             $this->authorizeFactoryAccess($request, (int) $filters['factory_id']);
         }
 
         return $filters;
+    }
+
+    public function bulkPost(Request $request)
+    {
+        $validated = $request->validate([
+            'bill_ids'   => ['required', 'array', 'min:1'],
+            'bill_ids.*' => ['integer', 'exists:tms_maintenance_bills,id'],
+        ]);
+
+        $bills = \App\Models\Tms\TmsMaintenanceBill::whereIn('id', $validated['bill_ids'])->get();
+
+        foreach ($bills as $bill) {
+            $this->authorizeFactoryAccess($request, $bill->factory_id);
+        }
+
+        $count = $this->maintenanceService->bulkMarkPostedToFinance(
+            $validated['bill_ids'],
+            $request->user()->id,
+        );
+
+        return redirect()
+            ->route('admin.tms.maintenance.posting', array_filter($request->only([
+                'factory_id', 'workshop', 'from', 'to', 'unposted_only',
+            ]), fn ($v) => $v !== null && $v !== ''))
+            ->with('success', "{$count} bill(s) marked as posted to finance.");
     }
 }

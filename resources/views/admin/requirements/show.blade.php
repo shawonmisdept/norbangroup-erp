@@ -84,7 +84,7 @@
                     @csrf @method('PATCH')
                     <label class="erp-form-label">Requirement Status</label>
                     <select name="status" class="erp-input !text-xs mb-3">
-                        @foreach(\App\Models\Order::STATUSES as $s)
+                        @foreach(\App\Models\Order::availableStatuses() as $s)
                             <option value="{{ $s }}" {{ $order->status === $s ? 'selected' : '' }}>{{ $s }}</option>
                         @endforeach
                     </select>
@@ -94,6 +94,42 @@
                     <button type="submit" class="erp-btn-primary w-full justify-center !py-2.5">
                         Save & Notify Client
                     </button>
+                </form>
+            </div>
+        </div>
+
+        <div class="erp-panel mt-4">
+            <div class="erp-panel-head">
+                <h2 class="text-xs font-semibold text-gray-700 uppercase tracking-wide">Assignment & Quote</h2>
+            </div>
+            <div class="erp-panel-body">
+                <form method="POST" action="{{ route('admin.requirements.workflow', $order) }}">
+                    @csrf @method('PATCH')
+                    <label class="erp-form-label">Assigned To</label>
+                    <select name="assigned_to_user_id" class="erp-input !text-xs mb-3">
+                        <option value="">— Unassigned —</option>
+                        @foreach($assignees as $id => $name)
+                            <option value="{{ $id }}" {{ (string) $order->assigned_to_user_id === (string) $id ? 'selected' : '' }}>{{ $name }}</option>
+                        @endforeach
+                    </select>
+
+                    <label class="erp-form-label">Quote Amount (৳)</label>
+                    <input type="number" step="0.01" name="quote_amount" value="{{ old('quote_amount', $order->quote_amount) }}" class="erp-input !text-xs mb-3" min="0" placeholder="0.00">
+
+                    <label class="erp-form-label">Quote Notes</label>
+                    <textarea name="quote_notes" rows="3" class="erp-input !text-xs mb-3" placeholder="Pricing breakdown, lead time…">{{ old('quote_notes', $order->quote_notes) }}</textarea>
+
+                    @if($order->quoted_at)
+                        <p class="text-[11px] text-gray-500 mb-3">Quoted on {{ $order->quoted_at->format('d M Y H:i') }}</p>
+                    @endif
+
+                    <label class="flex items-center gap-2 text-xs mb-4">
+                        <input type="hidden" name="send_quote" value="0">
+                        <input type="checkbox" name="send_quote" value="1" class="rounded border-gray-300">
+                        Mark as Quoted & email quote to client
+                    </label>
+
+                    <button type="submit" class="erp-btn-secondary w-full justify-center !py-2.5">Save Workflow</button>
                 </form>
             </div>
         </div>

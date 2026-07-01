@@ -74,6 +74,7 @@ class RolePermissionCatalog
             'tms.drivers.view',
             'tms.drivers.manage',
             'tms.trips.view',
+            'tms.trips.manage',
             'tms.fuel.view',
             'tms.fuel.manage',
             'tms.reports.view',

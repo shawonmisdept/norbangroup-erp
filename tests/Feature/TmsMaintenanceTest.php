@@ -112,6 +112,48 @@ class TmsMaintenanceTest extends TestCase
         $this->assertSame('ABC Rent-a-Car Car No: 8402', $this->rentalVehicle->postingCarNoLabel());
     }
 
+    public function test_bulk_post_and_unpost_maintenance_bills(): void
+    {
+        $bill1 = $this->seedBill($this->rentalVehicle, '14811', '2026-06-10', 40400, [['Spark Plug', 1400]]);
+        $bill2 = $this->seedBill($this->ownVehicle, '20001', '2026-06-05', 10350, [['Engine Oil', 10350]]);
+
+        $this->actingAs($this->user)
+            ->post(route('admin.tms.maintenance.posting.bulk-post'), [
+                'bill_ids' => [$bill1->id, $bill2->id],
+                'workshop' => 'JK Motors',
+                'from'     => '2026-06-01',
+                'to'       => '2026-06-30',
+            ])
+            ->assertRedirect();
+
+        $this->assertNotNull($bill1->fresh()->posted_to_finance_at);
+        $this->assertNotNull($bill2->fresh()->posted_to_finance_at);
+
+        $this->actingAs($this->user)
+            ->post(route('admin.tms.maintenance.bills.unpost', $bill1))
+            ->assertRedirect();
+
+        $this->assertNull($bill1->fresh()->posted_to_finance_at);
+        $this->assertNotNull($bill2->fresh()->posted_to_finance_at);
+    }
+
+    public function test_posting_report_shows_finance_status_column(): void
+    {
+        $posted = $this->seedBill($this->rentalVehicle, '14811', '2026-06-10', 40400, [['Spark Plug', 1400]]);
+        $posted->update(['posted_to_finance_at' => now(), 'posted_to_finance_by' => $this->user->id]);
+        $this->seedBill($this->ownVehicle, '20001', '2026-06-05', 10350, [['Engine Oil', 10350]]);
+
+        $this->actingAs($this->user)
+            ->get(route('admin.tms.maintenance.posting', [
+                'workshop' => 'JK Motors',
+                'from'     => '2026-06-01',
+                'to'       => '2026-06-30',
+            ]))
+            ->assertOk()
+            ->assertSee('Posted')
+            ->assertSee('Unposted');
+    }
+
     public function test_maintenance_index_filters(): void
     {
         $response = $this->actingAs($this->user)

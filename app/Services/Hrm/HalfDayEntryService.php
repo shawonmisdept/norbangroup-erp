@@ -64,4 +64,17 @@ class HalfDayEntryService
             ]
         );
     }
+
+    public function remove(AttendanceDailyLog $log): void
+    {
+        $period = $log->period ?? AttendancePeriod::find($log->attendance_period_id);
+
+        if ($period?->isFrozen()) {
+            throw ValidationException::withMessages([
+                'attendance_date' => 'Attendance period is frozen. Cannot remove half day entry.',
+            ]);
+        }
+
+        $log->delete();
+    }
 }

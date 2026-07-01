@@ -15,6 +15,7 @@ class TmsSetting extends Model
         'factory_id', 'office_start', 'office_end', 'ot_basis',
         'company_night_bill', 'company_holiday_duty_bill',
         'rental_ot_hourly_rate', 'rental_km_rate', 'weekend_days',
+        'gps_tracking_enabled', 'gps_provider',
         'updated_by',
     ];
 
@@ -26,6 +27,7 @@ class TmsSetting extends Model
             'rental_ot_hourly_rate'     => 'decimal:2',
             'rental_km_rate'            => 'decimal:2',
             'weekend_days'              => 'array',
+            'gps_tracking_enabled'      => 'boolean',
         ];
     }
 
@@ -41,6 +43,8 @@ class TmsSetting extends Model
             'rental_ot_hourly_rate'      => 120,
             'rental_km_rate'              => 12,
             'weekend_days'                => [5, 6],
+            'gps_tracking_enabled'        => false,
+            'gps_provider'                => 'none',
         ];
     }
 

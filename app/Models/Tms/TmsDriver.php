@@ -50,6 +50,11 @@ class TmsDriver extends Model
         return $this->hasMany(TmsTripLog::class, 'driver_id');
     }
 
+    public function otRateLogs(): HasMany
+    {
+        return $this->hasMany(TmsDriverOtRateLog::class, 'driver_id')->latest('id');
+    }
+
     public function isActive(): bool
     {
         return $this->status === 'active';

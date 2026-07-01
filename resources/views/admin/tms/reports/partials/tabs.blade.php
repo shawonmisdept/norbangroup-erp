@@ -6,8 +6,11 @@
         'odometer'       => 'Daily KM',
         'ot'             => 'Driver Pay',
         'maintenance'    => 'Maintenance',
-        'rental_charges' => 'Rental Charges',
-        'fleet_cost'     => 'Vehicle Management Cost',
+        'rental_charges'       => 'Rental Charges',
+        'fleet_cost'           => 'Vehicle Management Cost',
+        'requests_by_department' => 'Requests by Dept',
+        'department_chargeback'  => 'Dept Charge-back',
+        'payroll_ot'             => 'Payroll OT Export',
     ];
 @endphp
 

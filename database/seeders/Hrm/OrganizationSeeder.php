@@ -31,7 +31,13 @@ class OrganizationSeeder extends Seeder
             ],
         ];
 
-        foreach (Factory::where('is_active', true)->get() as $factory) {
+        $skipFactories = [
+            'Head Office',
+            'Norban Comtex Limited',
+            'Hornbill Apparal Limited',
+        ];
+
+        foreach (Factory::where('is_active', true)->whereNotIn('name', $skipFactories)->get() as $factory) {
             $buildingNames = array_keys($structure);
 
             foreach ($structure as $buildingName => $floors) {

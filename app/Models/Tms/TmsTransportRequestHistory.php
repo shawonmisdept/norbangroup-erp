@@ -37,4 +37,31 @@ class TmsTransportRequestHistory extends Model
     {
         return $this->belongsTo(Employee::class, 'changed_by_employee_id');
     }
+
+    public function actorLabel(): string
+    {
+        if ($this->changedByUser) {
+            return $this->changedByUser->name . ' (Admin)';
+        }
+
+        if ($this->changedByEmployee) {
+            return $this->changedByEmployee->name . ' (Employee)';
+        }
+
+        return 'System';
+    }
+
+    public function fromStatusLabel(): string
+    {
+        if ($this->from_status === null) {
+            return '—';
+        }
+
+        return config("tms.request_statuses.{$this->from_status}", ucfirst($this->from_status));
+    }
+
+    public function toStatusLabel(): string
+    {
+        return config("tms.request_statuses.{$this->to_status}", ucfirst($this->to_status));
+    }
 }

@@ -158,6 +158,10 @@ class User extends Authenticatable
 
     public function hasAnyHrmViewPermission(): bool
     {
+        if ($this->hasPermission('hrm.dashboard.view')) {
+            return true;
+        }
+
         return $this->hasAnyHrmMasterViewPermission()
             || $this->hasAnyEmployeeViewPermission()
             || $this->hasAnyRecruitmentViewPermission()

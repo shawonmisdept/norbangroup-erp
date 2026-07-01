@@ -109,6 +109,11 @@ class TmsTripLog extends Model
         return $this->hasMany(TmsFuelLog::class, 'trip_log_id');
     }
 
+    public function gpsPositions(): HasMany
+    {
+        return $this->hasMany(TmsGpsPosition::class, 'trip_log_id')->orderBy('recorded_at');
+    }
+
     public function tripStatusLabel(): string
     {
         return config("tms.trip_statuses.{$this->trip_status}", ucfirst((string) $this->trip_status));

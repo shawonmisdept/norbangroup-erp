@@ -5,7 +5,9 @@
 @section('breadcrumbs')
     <a href="{{ route('admin.roles.index') }}" class="hover:text-brand">Roles</a>
     <span>/</span>
-    <span class="text-gray-800 font-medium">{{ $role->name }}</span>
+    <a href="{{ route('admin.roles.show', $role) }}" class="hover:text-brand">{{ $role->name }}</a>
+    <span>/</span>
+    <span class="text-gray-800 font-medium">Edit</span>
 @endsection
 
 @section('admin-content')

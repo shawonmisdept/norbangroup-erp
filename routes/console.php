@@ -37,3 +37,23 @@ Schedule::command('hrm:close-expired-job-postings')
     ->dailyAt('00:15')
     ->withoutOverlapping()
     ->runInBackground();
+
+Schedule::command('hrm:allocate-leave')
+    ->monthlyOn(1, '06:00')
+    ->withoutOverlapping()
+    ->runInBackground();
+
+Schedule::command('tms:notify-odometer-reminders --type=morning')
+    ->dailyAt('10:00')
+    ->withoutOverlapping()
+    ->runInBackground();
+
+Schedule::command('tms:notify-odometer-reminders --type=evening')
+    ->dailyAt('18:00')
+    ->withoutOverlapping()
+    ->runInBackground();
+
+Schedule::command('tms:sync-rental-billing')
+    ->dailyAt('18:30')
+    ->withoutOverlapping()
+    ->runInBackground();

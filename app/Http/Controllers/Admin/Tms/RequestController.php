@@ -161,6 +161,43 @@ class RequestController extends Controller
         return redirect()->route('admin.tms.requests.show', $transportRequest)->with('success', 'Request rejected.');
     }
 
+    public function cancel(Request $request, TmsTransportRequest $transportRequest, TransportRequestService $service)
+    {
+        $this->authorizeFactoryAccess($request, $transportRequest->factory_id);
+
+        $validated = $request->validate([
+            'reason' => ['nullable', 'string', 'max:1000'],
+        ]);
+
+        $service->adminCancelApproved($transportRequest, $request->user(), $validated['reason'] ?? null);
+
+        return redirect()->route('admin.tms.requests.show', $transportRequest)->with('success', 'Request cancelled.');
+    }
+
+    public function reassign(Request $request, TmsTransportRequest $transportRequest, TransportRequestService $service)
+    {
+        $this->authorizeFactoryAccess($request, $transportRequest->factory_id);
+
+        if (! $transportRequest->trip_log_id) {
+            return back()->withErrors(['trip' => 'Request is not assigned to a trip.']);
+        }
+
+        $validated = $this->validateAssignment($request);
+
+        $trip = $service->reassignTrip(
+            $transportRequest->tripLog()->firstOrFail(),
+            $request->user(),
+            $validated['driver_type'],
+            $validated['driver_id'] ?? null,
+            $validated['rental_driver_id'] ?? null,
+            isset($validated['vehicle_id']) ? (int) $validated['vehicle_id'] : null,
+        );
+
+        return redirect()
+            ->route('admin.tms.trips.show', $trip)
+            ->with('success', 'Driver and vehicle reassigned for trip #' . $trip->id . '.');
+    }
+
     /** @return array<string, mixed> */
     private function validateAssignment(Request $request): array
     {

@@ -32,10 +32,13 @@ class MaintenancePostingReportService
                     $grandTotal += (float) $bill->total_amount;
 
                     return [
+                        'id'          => $bill->id,
                         'bill_no'     => $bill->bill_no,
                         'bill_date'   => $bill->bill_date?->format('d M Y'),
                         'description' => $bill->itemsDescription(),
                         'amount'      => (float) $bill->total_amount,
+                        'posted'      => $bill->isPostedToFinance(),
+                        'posted_at'   => $bill->posted_to_finance_at?->format('d M Y'),
                     ];
                 })->values();
 
@@ -86,6 +89,10 @@ class MaintenancePostingReportService
 
         if (! empty($filters['to'])) {
             $query->whereDate('bill_date', '<=', $filters['to']);
+        }
+
+        if (! empty($filters['unposted_only'])) {
+            $query->whereNull('posted_to_finance_at');
         }
 
         return $query;

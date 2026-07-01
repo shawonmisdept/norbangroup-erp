@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Tms;
 use App\Http\Controllers\Admin\Hrm\Concerns\ScopesHrmFactory;
 use App\Http\Controllers\Controller;
 use App\Models\Tms\TmsMaintenanceBill;
+use App\Models\Tms\TmsMaintenancePartCatalog;
 use App\Models\Tms\TmsVehicle;
 use App\Services\Tms\MaintenanceService;
 use Illuminate\Database\QueryException;
@@ -192,8 +193,9 @@ class MaintenanceController extends Controller
                 'bill_date'  => now()->toDateString(),
                 'paid_by'    => $this->maintenanceService->defaultPaidBy($vehicle),
             ]),
-            'units'   => config('tms.maintenance_item_units', []),
-            'paidBy'  => config('tms.fuel_paid_by'),
+            'units'         => config('tms.maintenance_item_units', []),
+            'paidBy'        => config('tms.fuel_paid_by'),
+            'catalogParts'  => $this->catalogParts($vehicle->factory_id),
         ]);
     }
 
@@ -227,17 +229,27 @@ class MaintenanceController extends Controller
     {
         $this->authorizeFactoryAccess($request, $bill->factory_id);
 
+        if ($bill->isPostedToFinance()) {
+            return redirect()->route('admin.tms.maintenance.register', $bill->vehicle_id)
+                ->with('error', 'Posted bills cannot be edited.');
+        }
+
         return view('admin.tms.maintenance.bill-form', [
             'vehicle' => $bill->vehicle()->with('rentalVendor')->firstOrFail(),
             'bill'    => $bill->load('items'),
-            'units'   => config('tms.maintenance_item_units', []),
-            'paidBy'  => config('tms.fuel_paid_by'),
+            'units'         => config('tms.maintenance_item_units', []),
+            'paidBy'        => config('tms.fuel_paid_by'),
+            'catalogParts'  => $this->catalogParts($vehicle->factory_id),
         ]);
     }
 
     public function updateBill(Request $request, TmsMaintenanceBill $bill)
     {
         $this->authorizeFactoryAccess($request, $bill->factory_id);
+
+        if ($bill->isPostedToFinance()) {
+            return back()->with('error', 'Posted bills cannot be edited.');
+        }
 
         $validated = $this->validateBill($request, $bill->vehicle, $bill);
 
@@ -264,12 +276,45 @@ class MaintenanceController extends Controller
     {
         $this->authorizeFactoryAccess($request, $bill->factory_id);
 
+        if ($bill->isPostedToFinance()) {
+            return back()->with('error', 'Posted bills cannot be deleted.');
+        }
+
         $vehicleId = $bill->vehicle_id;
         $bill->delete();
 
         return redirect()
             ->route('admin.tms.maintenance.register', $vehicleId)
             ->with('success', 'Maintenance bill deleted.');
+    }
+
+    public function markPostedToFinance(Request $request, TmsMaintenanceBill $bill)
+    {
+        $this->authorizeFactoryAccess($request, $bill->factory_id);
+
+        if ($bill->isPostedToFinance()) {
+            return back()->with('error', 'This bill is already posted to finance.');
+        }
+
+        $bill->update([
+            'posted_to_finance_at' => now(),
+            'posted_to_finance_by' => $request->user()->id,
+        ]);
+
+        return redirect()
+            ->route('admin.tms.maintenance.register', $bill->vehicle_id)
+            ->with('success', 'Bill marked as posted to finance.');
+    }
+
+    public function unpostFromFinance(Request $request, TmsMaintenanceBill $bill)
+    {
+        $this->authorizeFactoryAccess($request, $bill->factory_id);
+
+        $this->maintenanceService->unmarkPostedFromFinance($bill);
+
+        return redirect()
+            ->route('admin.tms.maintenance.register', $bill->vehicle_id)
+            ->with('success', 'Bill unmarked from finance posting.');
     }
 
     private function validateBill(Request $request, TmsVehicle $vehicle, ?TmsMaintenanceBill $bill = null): array
@@ -289,6 +334,7 @@ class MaintenanceController extends Controller
             'notes'         => ['nullable', 'string', 'max:2000'],
             'items'         => ['required', 'array', 'min:1'],
             'items.*.item_name' => ['required', 'string', 'max:255'],
+            'items.*.part_catalog_id' => ['nullable', 'integer', 'exists:tms_maintenance_part_catalog,id'],
             'items.*.quantity'  => ['nullable', 'numeric', 'min:0'],
             'items.*.unit'      => ['nullable', 'string', 'max:16'],
             'items.*.amount'    => ['required', 'numeric', 'min:0'],
@@ -300,6 +346,23 @@ class MaintenanceController extends Controller
             'factory_id' => $vehicle->factory_id,
             'vehicle_id' => $vehicle->id,
         ];
+    }
+
+    /** @return array<int, array{id: int, label: string, unit: ?string, price: ?float}> */
+    private function catalogParts(int $factoryId): array
+    {
+        return TmsMaintenancePartCatalog::query()
+            ->where('factory_id', $factoryId)
+            ->where('is_active', true)
+            ->orderBy('name')
+            ->get()
+            ->map(fn (TmsMaintenancePartCatalog $part) => [
+                'id'    => $part->id,
+                'label' => $part->displayLabel(),
+                'unit'  => $part->unit,
+                'price' => $part->default_unit_price !== null ? (float) $part->default_unit_price : null,
+            ])
+            ->all();
     }
 
     private function throwIfDuplicateBillNo(QueryException $e): never

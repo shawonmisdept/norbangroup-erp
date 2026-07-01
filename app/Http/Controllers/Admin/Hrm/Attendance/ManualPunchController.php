@@ -83,6 +83,23 @@ class ManualPunchController extends Controller
             ->with('success', 'Manual punch saved and attendance updated.');
     }
 
+    public function destroy(Request $request, \App\Models\Hrm\AttendanceRawPunch $manualPunch, AttendancePunchService $punchService)
+    {
+        abort_unless($manualPunch->source === 'manual_hr', 404);
+
+        $employee = $manualPunch->employee ?? Employee::findOrFail($manualPunch->employee_id);
+        $this->authorizeEmployeeFactory($request, $employee);
+
+        $punchedAt = $manualPunch->punched_at;
+        $manualPunch->delete();
+
+        $punchService->reprocessDay($employee, $punchedAt);
+
+        return redirect()
+            ->route('admin.hrm.attendance.manual-punch.index')
+            ->with('success', 'Manual punch removed and attendance recalculated.');
+    }
+
     private function authorizeEmployeeFactory(Request $request, Employee $employee): void
     {
         if ($request->user()?->factory_id && $request->user()->factory_id !== $employee->factory_id) {

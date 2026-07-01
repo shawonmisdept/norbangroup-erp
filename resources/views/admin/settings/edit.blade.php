@@ -15,14 +15,15 @@
     'subtitle' => 'Configure branding, timezone, currency, mail and notification preferences',
 ])
 
-<form method="POST" action="{{ route('admin.settings.update') }}" enctype="multipart/form-data" class="max-w-4xl space-y-5"
-      x-data="{ tab: 'general', mailer: '{{ old('mail_mailer', $settings->mail_mailer) }}', smsProvider: '{{ old('sms_provider', $settings->sms_provider ?? 'log') }}' }">
+<div class="max-w-4xl" x-data="{ tab: 'general', mailer: '{{ old('mail_mailer', $settings->mail_mailer) }}', smsProvider: '{{ old('sms_provider', $settings->sms_provider ?? 'log') }}', whatsappProvider: '{{ old('whatsapp_provider', $settings->whatsapp_provider ?? 'log') }}' }">
+
+<form method="POST" action="{{ route('admin.settings.update') }}" enctype="multipart/form-data" class="space-y-5">
     @csrf @method('PUT')
 
     {{-- Tabs --}}
     <div class="erp-panel overflow-hidden">
         <div class="flex border-b border-erp-border bg-gray-50/80 overflow-x-auto">
-            @foreach(['general' => 'General', 'mail' => 'Mail', 'sms' => 'SMS Gateway', 'notifications' => 'Notifications'] as $key => $label)
+            @foreach(['general' => 'General', 'mail' => 'Mail', 'sms' => 'SMS Gateway', 'whatsapp' => 'WhatsApp Gateway', 'notifications' => 'Notifications'] as $key => $label)
                 <button type="button" @click="tab = '{{ $key }}'"
                         class="px-4 py-3 text-xs font-semibold uppercase tracking-wide border-b-2 transition whitespace-nowrap"
                         :class="tab === '{{ $key }}' ? 'border-gold text-brand bg-white' : 'border-transparent text-gray-400 hover:text-gray-600'">
@@ -197,8 +198,14 @@
                     </div>
                 </div>
 
-                <div x-show="mailer === 'gmail' || mailer === 'smtp'" class="border-t border-erp-border pt-4">
-                    <p class="text-[11px] text-gray-400">Save settings first, then use "Send Test Email" below to verify your mail configuration.</p>
+                <div x-show="mailer === 'gmail' || mailer === 'smtp'" class="border-t border-erp-border pt-4 space-y-3">
+                    <p class="text-[11px] text-gray-400">Save settings first, then send a test email to verify your mail configuration.</p>
+                    @if($settings->usesSmtpTransport())
+                        <div class="flex flex-wrap items-center gap-3">
+                            <button type="submit" form="settings-test-mail-form" class="erp-btn-secondary !text-xs">Send Test Email to Me</button>
+                            <p class="text-[11px] text-gray-400">Sends a test message to {{ auth()->user()->email }} using saved Gmail/SMTP settings.</p>
+                        </div>
+                    @endif
                 </div>
             </div>
 
@@ -243,8 +250,79 @@
 
                 <p class="text-[11px] text-gray-400 border-t border-erp-border pt-4">
                     Enable recruitment SMS in the <button type="button" @click="tab = 'notifications'" class="text-brand font-semibold hover:underline">Notifications</button> tab.
-                    Save settings first, then send a test SMS below.
+                    Save settings first, then send a test SMS.
                 </p>
+
+                <div class="border-t border-erp-border pt-4 flex flex-wrap items-end gap-3">
+                    <div>
+                        <label class="erp-form-label">Test SMS Phone</label>
+                        <input type="text" form="settings-test-sms-form" name="test_sms_phone" required class="erp-input !text-xs w-44" placeholder="01XXXXXXXXX">
+                    </div>
+                    <button type="submit" form="settings-test-sms-form" class="erp-btn-secondary !text-xs">Send Test SMS</button>
+                    <p class="text-[11px] text-gray-400 w-full">Uses saved SMS Gateway settings. Log driver writes to Laravel log only.</p>
+                </div>
+            </div>
+
+            {{-- WhatsApp Gateway --}}
+            <div x-show="tab === 'whatsapp'" x-cloak class="space-y-4">
+                <p class="text-sm text-gray-500">Configure WhatsApp provider for TMS transport notifications. Supports Meta Cloud API and Bangladesh BSP operators (SSL Wireless, GreenWeb, BulkSMSBD) plus custom HTTP.</p>
+
+                <div class="grid sm:grid-cols-2 gap-4">
+                    <div class="sm:col-span-2">
+                        <label class="erp-form-label">WhatsApp Provider</label>
+                        <select name="whatsapp_provider" x-model="whatsappProvider" class="erp-input">
+                            @foreach(config('whatsapp.providers', []) as $key => $provider)
+                                <option value="{{ $key }}" {{ old('whatsapp_provider', $settings->whatsapp_provider ?? 'log') === $key ? 'selected' : '' }}>
+                                    {{ $provider['label'] }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+
+                @foreach(config('whatsapp.providers', []) as $key => $provider)
+                    <div x-show="whatsappProvider === '{{ $key }}'" x-cloak class="rounded-sm border border-erp-border bg-gray-50/60 px-4 py-3 text-xs text-gray-600">
+                        {{ $provider['description'] }}
+                    </div>
+                @endforeach
+
+                <div x-show="whatsappProvider !== 'log'" class="grid sm:grid-cols-2 gap-4 border-t border-erp-border pt-4">
+                    <div x-show="['meta_cloud', 'sslwireless', 'greenweb', 'bulksmsbd', 'custom'].includes(whatsappProvider)" class="sm:col-span-2">
+                        <label class="erp-form-label" x-text="whatsappProvider === 'meta_cloud' ? 'Permanent Access Token' : 'API Key / Token'"></label>
+                        <input type="password" name="whatsapp_api_token" class="erp-input" placeholder="Leave blank to keep current" autocomplete="new-password">
+                    </div>
+                    <div x-show="whatsappProvider === 'meta_cloud'">
+                        <label class="erp-form-label">Phone Number ID</label>
+                        <input type="text" name="whatsapp_phone_number_id" value="{{ old('whatsapp_phone_number_id', $settings->whatsapp_phone_number_id) }}" class="erp-input" placeholder="Meta Phone Number ID">
+                    </div>
+                    <div x-show="whatsappProvider === 'meta_cloud'">
+                        <label class="erp-form-label">Business Account ID <span class="text-gray-400 font-normal">(optional)</span></label>
+                        <input type="text" name="whatsapp_business_account_id" value="{{ old('whatsapp_business_account_id', $settings->whatsapp_business_account_id) }}" class="erp-input" placeholder="WABA ID">
+                    </div>
+                    <div x-show="['sslwireless', 'bulksmsbd', 'custom'].includes(whatsappProvider)">
+                        <label class="erp-form-label">Sender / Instance ID</label>
+                        <input type="text" name="whatsapp_sender_id" value="{{ old('whatsapp_sender_id', $settings->whatsapp_sender_id) }}" class="erp-input" maxlength="64" placeholder="Provider sender ID">
+                    </div>
+                    <div x-show="whatsappProvider === 'custom'" class="sm:col-span-2">
+                        <label class="erp-form-label">Custom API URL</label>
+                        <input type="url" name="whatsapp_custom_url" value="{{ old('whatsapp_custom_url', $settings->whatsapp_custom_url) }}" class="erp-input" placeholder="https://your-whatsapp-provider.com/api/send">
+                        <p class="text-[11px] text-gray-400 mt-1">POST JSON: phone/to, message/text, optional sender</p>
+                    </div>
+                </div>
+
+                <p class="text-[11px] text-gray-400 border-t border-erp-border pt-4">
+                    Enable TMS WhatsApp in the <button type="button" @click="tab = 'notifications'" class="text-brand font-semibold hover:underline">Notifications</button> tab under Transport (TMS).
+                    Operator endpoints can be overridden via <code class="text-[10px] bg-gray-100 px-1 rounded">WHATSAPP_*_URL</code> env vars — see <code class="text-[10px] bg-gray-100 px-1 rounded">TMS-PHASE2.md</code>.
+                </p>
+
+                <div class="border-t border-erp-border pt-4 flex flex-wrap items-end gap-3">
+                    <div>
+                        <label class="erp-form-label">Test WhatsApp Phone</label>
+                        <input type="text" form="settings-test-whatsapp-form" name="test_whatsapp_phone" required class="erp-input !text-xs w-44" placeholder="01XXXXXXXXX">
+                    </div>
+                    <button type="submit" form="settings-test-whatsapp-form" class="erp-btn-secondary !text-xs">Send Test WhatsApp</button>
+                    <p class="text-[11px] text-gray-400 w-full">Log provider writes to Laravel log. Other providers call the operator API using saved credentials.</p>
+                </div>
             </div>
 
             {{-- Notifications --}}
@@ -363,6 +441,40 @@
                     @endforeach
                 </div>
 
+                <p class="text-[11px] font-bold text-gray-500 uppercase tracking-wide pt-2">Transport (TMS)</p>
+                <p class="text-xs text-gray-400 rounded-sm border border-erp-border bg-gray-50 px-3 py-2 mb-2">
+                    In-app alerts use the master popup toggle above. SMS uses the
+                    <button type="button" @click="tab = 'sms'" class="text-brand font-semibold hover:underline">SMS Gateway</button> tab.
+                    WhatsApp uses the
+                    <button type="button" @click="tab = 'whatsapp'" class="text-brand font-semibold hover:underline">WhatsApp Gateway</button> tab.
+                </p>
+                <div class="divide-y divide-erp-border border border-erp-border rounded-sm">
+                    @foreach([
+                        ['notify_popup_tms', 'Popup — TMS master toggle', 'Enable in-app bell alerts for transport events'],
+                        ['notify_popup_tms_request_submitted', 'Popup — new transport request', 'Notify approvers when an employee submits a request'],
+                        ['notify_popup_tms_request_approved', 'Popup — request approved', 'Notify employee and driver when a request is approved'],
+                        ['notify_popup_tms_request_rejected', 'Popup — request rejected', 'Notify employee when a request is rejected'],
+                        ['notify_popup_tms_request_cancelled', 'Popup — request cancelled', 'Notify approvers when a request is cancelled'],
+                        ['notify_popup_tms_trip_started', 'Popup — trip started', 'Notify authority when driver starts a trip'],
+                        ['notify_popup_tms_trip_completed', 'Popup — trip completed', 'Notify employee and authority when a trip ends'],
+                        ['notify_popup_tms_ot_pending', 'Popup — driver OT pending', 'Notify OT manager when payment is due'],
+                        ['notify_popup_tms_odometer_reminder', 'Popup — daily KM reminder', 'Morning/evening KM missing alerts'],
+                        ['notify_sms_tms', 'SMS — transport updates', 'Send SMS to employee/driver phones on approve/reject/trip events'],
+                        ['notify_whatsapp_tms', 'WhatsApp — transport updates', 'Send WhatsApp using the WhatsApp Gateway tab (Log or Meta stub)'],
+                    ] as [$field, $title, $desc])
+                        <label class="flex items-start gap-3 px-4 py-3 cursor-pointer hover:bg-gray-50/80">
+                            <input type="hidden" name="{{ $field }}" value="0">
+                            <input type="checkbox" name="{{ $field }}" value="1"
+                                   {{ old($field, $settings->{$field}) ? 'checked' : '' }}
+                                   class="mt-0.5 rounded border-gray-300 text-brand focus:ring-brand">
+                            <span>
+                                <span class="block text-sm font-medium text-gray-800">{{ $title }}</span>
+                                <span class="block text-xs text-gray-400 mt-0.5">{{ $desc }}</span>
+                            </span>
+                        </label>
+                    @endforeach
+                </div>
+
                 <p class="text-[11px] font-bold text-gray-500 uppercase tracking-wide pt-2">HRM Employment</p>
                 <div class="divide-y divide-erp-border border border-erp-border rounded-sm">
                     @foreach([
@@ -390,21 +502,9 @@
     </div>
 </form>
 
-@if($settings->usesSmtpTransport())
-    <form method="POST" action="{{ route('admin.settings.test-mail') }}" class="max-w-4xl mt-3 flex flex-wrap items-center gap-3">
-        @csrf
-        <button type="submit" class="erp-btn-secondary !text-xs">Send Test Email to Me</button>
-        <p class="text-[11px] text-gray-400">Sends a test message to {{ auth()->user()->email }} using saved Gmail/SMTP settings.</p>
-    </form>
-@endif
+<form id="settings-test-mail-form" method="POST" action="{{ route('admin.settings.test-mail') }}" class="hidden">@csrf</form>
+<form id="settings-test-sms-form" method="POST" action="{{ route('admin.settings.test-sms') }}" class="hidden">@csrf</form>
+<form id="settings-test-whatsapp-form" method="POST" action="{{ route('admin.settings.test-whatsapp') }}" class="hidden">@csrf</form>
 
-<form method="POST" action="{{ route('admin.settings.test-sms') }}" class="max-w-4xl mt-3 flex flex-wrap items-end gap-3">
-    @csrf
-    <div>
-        <label class="erp-form-label">Test SMS Phone</label>
-        <input type="text" name="test_sms_phone" required class="erp-input !text-xs w-44" placeholder="01XXXXXXXXX">
-    </div>
-    <button type="submit" class="erp-btn-secondary !text-xs">Send Test SMS</button>
-    <p class="text-[11px] text-gray-400 w-full">Uses saved SMS Gateway settings. Log driver writes to Laravel log only.</p>
-</form>
+</div>
 @endsection

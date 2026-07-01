@@ -28,6 +28,11 @@
                         @csrf
                         <button type="submit" class="erp-btn-sm-primary" data-confirm="Mark as paid?">Mark Paid</button>
                     </form>
+                @elseif($c->payment_status === 'paid' && auth()->user()->hasPermission('tms.rental_charges.manage'))
+                    <form method="POST" action="{{ route('admin.tms.rental-charges.unmark-paid', $c) }}" class="inline">
+                        @csrf
+                        <button type="submit" class="erp-btn-sm-secondary" data-confirm="Unmark as paid?">Unmark Paid</button>
+                    </form>
                 @endif
             </td>
         </tr>

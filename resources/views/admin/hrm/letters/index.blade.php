@@ -12,7 +12,8 @@
 @include('partials.erp.page-header', [
     'title' => 'HR Letters',
     'subtitle' => 'Issue appointment, confirmation, warning & exit letters',
-    'actions' => ($canManage ? '<a href="' . route('admin.hrm.letters.create') . '" class="erp-btn-primary !py-2 !px-4 text-xs">Issue Letter</a>' : ''),
+    'actions' => ($canManage ? '<a href="' . route('admin.hrm.letters.create') . '" class="erp-btn-primary !py-2 !px-4 text-xs">Issue Letter</a>' : '')
+        . '<a href="' . route('admin.hrm.letter-templates.index') . '" class="erp-btn-secondary ml-2 !py-2 !px-4 text-xs">Templates</a>',
 ])
 
 <div class="erp-panel mb-4">
@@ -68,13 +69,19 @@
                     <th>Type</th>
                     <th>Issued</th>
                     <th>By</th>
+                    <th>Status</th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
                 @forelse($letters as $letter)
-                    <tr>
-                        <td><code class="text-xs">{{ $letter->reference_no }}</code></td>
+                    <tr class="{{ $letter->isVoided() ? 'opacity-70' : '' }}">
+                        <td>
+                            <code class="text-xs">{{ $letter->reference_no }}</code>
+                            @if($letter->reissued_from_id)
+                                <span class="erp-badge bg-blue-100 text-blue-700 text-[10px] ml-1">Reissued</span>
+                            @endif
+                        </td>
                         <td>
                             <p class="font-medium text-sm">{{ $letter->employee->name }}</p>
                             <code class="text-xs text-gray-500">{{ $letter->employee->employee_code }}</code>
@@ -82,12 +89,19 @@
                         <td>{{ $letter->typeLabel() }}</td>
                         <td class="text-xs text-gray-600">{{ $letter->issued_at->format('d M Y') }}</td>
                         <td class="text-xs text-gray-600">{{ $letter->issuer?->name ?? '—' }}</td>
+                        <td>
+                            @if($letter->isVoided())
+                                <span class="erp-badge bg-red-100 text-red-700 text-[10px]">Voided</span>
+                            @else
+                                <span class="erp-badge bg-green-100 text-green-700 text-[10px]">Active</span>
+                            @endif
+                        </td>
                         <td class="text-right">
                             <a href="{{ route('admin.hrm.letters.show', $letter) }}" class="erp-btn-sm-secondary">View</a>
                         </td>
                     </tr>
                 @empty
-                    <tr><td colspan="6" class="text-center text-gray-400 py-8">No letters issued yet.</td></tr>
+                    <tr><td colspan="7" class="text-center text-gray-400 py-8">No letters issued yet.</td></tr>
                 @endforelse
             </tbody>
         </table>

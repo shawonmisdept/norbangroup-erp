@@ -53,6 +53,9 @@
                     <th>Pay Ratio</th>
                     <th>Source</th>
                     <th>Notes</th>
+                    @if(auth()->user()?->canManageAttendanceSubmodule('half-day-entry'))
+                        <th></th>
+                    @endif
                 </tr>
             </thead>
             <tbody>
@@ -73,9 +76,19 @@
                             @endif
                         </td>
                         <td class="text-xs text-gray-500 max-w-xs truncate">{{ $entry->half_day_notes ?? '—' }}</td>
+                        @if(auth()->user()?->canManageAttendanceSubmodule('half-day-entry'))
+                            <td class="text-right">
+                                @if($entry->is_manual_half_day)
+                                    <form method="POST" action="{{ route('admin.hrm.attendance.half-day-entry.destroy', $entry) }}" data-confirm="Remove this half day entry?">
+                                        @csrf @method('DELETE')
+                                        <button type="submit" class="erp-btn-sm-secondary !text-red-600">Remove</button>
+                                    </form>
+                                @endif
+                            </td>
+                        @endif
                     </tr>
                 @empty
-                    <tr><td colspan="6" class="text-center py-10 text-gray-400">No half day records yet.</td></tr>
+                    <tr><td colspan="{{ auth()->user()?->canManageAttendanceSubmodule('half-day-entry') ? 7 : 6 }}" class="text-center py-10 text-gray-400">No half day records yet.</td></tr>
                 @endforelse
             </tbody>
         </table>

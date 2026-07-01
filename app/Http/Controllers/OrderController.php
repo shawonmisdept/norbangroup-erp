@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreOrderRequest;
 use App\Models\AppSetting;
 use App\Models\Order;
+use App\Models\User;
 use App\Services\OrderNotificationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -90,7 +91,11 @@ class OrderController extends Controller
 
     public function show(Order $order)
     {
-        return view('admin.requirements.show', compact('order'));
+        $order->load('assignedTo');
+
+        $assignees = User::query()->orderBy('name')->pluck('name', 'id');
+
+        return view('admin.requirements.show', compact('order', 'assignees'));
     }
 
     public function destroy(Order $order)
@@ -103,8 +108,13 @@ class OrderController extends Controller
 
     public function update(Request $request, Order $order, OrderNotificationService $notifications)
     {
+        $allowedStatuses = array_values(array_unique([
+            ...Order::availableStatuses(),
+            $order->status,
+        ]));
+
         $request->validate([
-            'status' => ['required', Rule::in(Order::STATUSES)],
+            'status' => ['required', Rule::in($allowedStatuses)],
         ]);
 
         $previousStatus = $order->status;
@@ -120,6 +130,51 @@ class OrderController extends Controller
         $message = "Status updated to '{$request->status}'.";
         if (AppSetting::current()->notify_mail_client_on_status) {
             $message .= " Email sent to {$order->email}.";
+        }
+
+        return back()->with('success', $message);
+    }
+
+    public function updateWorkflow(Request $request, Order $order, OrderNotificationService $notifications)
+    {
+        $validated = $request->validate([
+            'assigned_to_user_id' => ['nullable', 'exists:users,id'],
+            'quote_amount'        => ['nullable', 'numeric', 'min:0'],
+            'quote_notes'         => ['nullable', 'string', 'max:5000'],
+            'send_quote'          => ['sometimes', 'boolean'],
+        ]);
+
+        $updates = [
+            'assigned_to_user_id' => ($validated['assigned_to_user_id'] ?? null) ?: null,
+            'quote_amount'        => $validated['quote_amount'] ?? null,
+            'quote_notes'         => $validated['quote_notes'] ?? null,
+        ];
+
+        $sendQuote = $request->boolean('send_quote') && filled($validated['quote_amount']);
+        $previousStatus = $order->status;
+
+        if ($sendQuote) {
+            $updates['quoted_at'] = now();
+            if (in_array($order->status, ['New', 'Under Review'], true)) {
+                $updates['status'] = 'Quoted';
+            }
+        }
+
+        $order->update($updates);
+        $order->refresh();
+
+        $message = 'Workflow details saved.';
+
+        if ($sendQuote) {
+            $notifications->quoteSent($order);
+
+            if ($order->status !== $previousStatus) {
+                $notifications->statusUpdated($order, $previousStatus);
+            }
+
+            if (AppSetting::current()->notify_mail_client_on_status) {
+                $message .= " Quote email sent to {$order->email}.";
+            }
         }
 
         return back()->with('success', $message);

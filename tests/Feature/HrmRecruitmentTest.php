@@ -397,6 +397,42 @@ class HrmRecruitmentTest extends TestCase
         ]);
     }
 
+    public function test_candidate_can_accept_offer_on_careers_portal(): void
+    {
+        $factory = Factory::create(['name' => 'Offer Portal Factory', 'is_active' => true]);
+        $admin = $this->hrAdmin();
+        $posting = $this->openPosting($factory);
+
+        $application = RecruitmentApplication::create([
+            'application_no' => 'APP-2026-00999',
+            'job_posting_id' => $posting->id,
+            'factory_id'     => $factory->id,
+            'source'         => 'online',
+            'status'         => 'selected',
+            'name'           => 'Portal Offer Candidate',
+            'phone'          => '01790909090',
+            'applied_at'     => now(),
+        ]);
+
+        $this->actingAs($admin)->post(route('admin.hrm.recruitment.applications.offer-letter.store', $application), [
+            'offered_salary' => 22000,
+            'joining_date'   => now()->addDays(7)->toDateString(),
+        ])->assertRedirect();
+
+        $application->refresh();
+        $offer = $application->latestOfferLetter();
+        $this->assertNotNull($offer);
+
+        $this->post(route('careers.offer.respond'), [
+            'application_no' => $application->application_no,
+            'phone'          => $application->phone,
+            'response'       => 'accepted',
+        ])->assertRedirect(route('careers.track'));
+
+        $this->assertSame('accepted', $offer->fresh()->response);
+        $this->assertSame('offered', $application->fresh()->status);
+    }
+
     public function test_recruitment_dashboard_loads(): void
     {
         $admin = $this->hrAdmin();

@@ -51,12 +51,17 @@
                 <input type="number" step="0.01" name="ot_rate" class="erp-input" value="{{ old('ot_rate', $driver->ot_rate) }}" required>
             </div>
             <div>
-                <label class="erp-label">Status</label>
-                <select name="status" class="erp-input">
-                    <option value="active" @selected(old('status', $driver->status) === 'active')>Active</option>
-                    <option value="inactive" @selected(old('status', $driver->status) === 'inactive')>Inactive</option>
-                </select>
+                <label class="erp-label">OT Rate Effective From</label>
+                <input type="date" name="ot_rate_effective_from" class="erp-input" value="{{ old('ot_rate_effective_from', $driver->ot_rate_effective_from?->format('Y-m-d')) }}">
             </div>
+        </div>
+
+        <div>
+            <label class="erp-label">Status</label>
+            <select name="status" class="erp-input">
+                <option value="active" @selected(old('status', $driver->status) === 'active')>Active</option>
+                <option value="inactive" @selected(old('status', $driver->status) === 'inactive')>Inactive</option>
+            </select>
         </div>
 
         <label class="flex items-center gap-2 text-sm">
@@ -68,5 +73,35 @@
             <button type="submit" class="erp-btn-primary">Save</button>
         </div>
     </form>
+
+    @if($driver->exists && $driver->otRateLogs->isNotEmpty())
+        <div class="mt-8 pt-6 border-t border-erp-border">
+            <h3 class="font-semibold mb-3">OT Rate History</h3>
+            <div class="overflow-x-auto">
+                <table class="erp-table text-sm">
+                    <thead>
+                        <tr>
+                            <th>Recorded</th>
+                            <th>Rate (BDT/hr)</th>
+                            <th>Effective From</th>
+                            <th>OT Active</th>
+                            <th>By</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($driver->otRateLogs as $log)
+                            <tr>
+                                <td class="tabular-nums">{{ $log->created_at->format('d M Y H:i') }}</td>
+                                <td class="tabular-nums">৳{{ number_format((float) $log->ot_rate, 2) }}</td>
+                                <td class="tabular-nums">{{ $log->effective_from?->format('d M Y') ?? '—' }}</td>
+                                <td>{{ $log->is_overtime_active ? 'Yes' : 'No' }}</td>
+                                <td>{{ $log->recordedByUser?->name ?? '—' }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    @endif
 </div>
 @endsection

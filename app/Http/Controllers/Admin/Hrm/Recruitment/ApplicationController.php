@@ -22,7 +22,7 @@ class ApplicationController extends Controller
         $this->ensureCanView($request);
 
         $query = RecruitmentApplication::query()
-            ->with(['jobPosting', 'factory'])
+            ->with(['jobPosting', 'factory', 'latestOffer'])
             ->latest('applied_at');
 
         $this->scopeToUserFactory($query, $request);

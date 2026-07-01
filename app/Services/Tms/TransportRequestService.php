@@ -62,6 +62,145 @@ class TransportRequestService
         };
     }
 
+    public function updatePending(Employee $employee, TmsTransportRequest $request, array $data): TmsTransportRequest
+    {
+        if ($request->employee_id !== $employee->id) {
+            abort(403);
+        }
+
+        if ($request->status !== 'pending') {
+            throw ValidationException::withMessages([
+                'status' => 'Only pending requests can be edited.',
+            ]);
+        }
+
+        $request->update([
+            'pickup_location'    => $data['pickup_location'],
+            'destination_id'     => $data['destination_id'] ?? null,
+            'destination_custom' => $data['destination_custom'] ?? null,
+            'pickup_at'          => $data['pickup_at'],
+            'purpose'            => $data['purpose'],
+            'passenger_count'    => $data['passenger_count'],
+        ]);
+
+        $this->recordHistory($request, 'pending', 'pending', employeeId: $employee->id, notes: 'Updated by employee');
+
+        return $request->fresh();
+    }
+
+    public function adminCancelApproved(TmsTransportRequest $request, User $user, ?string $reason = null): TmsTransportRequest
+    {
+        if ($request->status !== 'approved') {
+            throw ValidationException::withMessages([
+                'status' => 'Only approved requests can be cancelled by admin.',
+            ]);
+        }
+
+        $trip = $request->tripLog;
+
+        if (! $trip || $trip->trip_status !== 'not_started') {
+            throw ValidationException::withMessages([
+                'status' => 'Trip has already started. Use trip abort to force-close.',
+            ]);
+        }
+
+        return $this->detachApprovedRequestFromTrip(
+            $request,
+            $trip,
+            userId: $user->id,
+            notes: $reason ? 'Cancelled by admin: ' . $reason : 'Cancelled by admin before trip start',
+        );
+    }
+
+    public function reassignTrip(
+        TmsTripLog $trip,
+        User $user,
+        string $driverType,
+        ?int $companyDriverId,
+        ?int $rentalDriverId,
+        ?int $vehicleIdOverride = null,
+    ): TmsTripLog {
+        if ($trip->trip_status !== 'not_started') {
+            throw ValidationException::withMessages([
+                'trip' => 'Can only reassign trips that have not started.',
+            ]);
+        }
+
+        $requests = TmsTransportRequest::with(['employee', 'destination'])
+            ->where('trip_log_id', $trip->id)
+            ->where('status', 'approved')
+            ->get();
+
+        if ($requests->isEmpty()) {
+            throw ValidationException::withMessages([
+                'trip' => 'No approved requests linked to this trip.',
+            ]);
+        }
+
+        $factoryId = (int) $trip->factory_id;
+        $totalPassengers = (int) $requests->sum('passenger_count');
+        $first = $requests->first();
+
+        return DB::transaction(function () use (
+            $trip,
+            $requests,
+            $user,
+            $driverType,
+            $companyDriverId,
+            $rentalDriverId,
+            $vehicleIdOverride,
+            $factoryId,
+            $totalPassengers,
+            $first,
+        ) {
+            if ($driverType === 'company') {
+                $driver = TmsDriver::with(['employee', 'defaultVehicle'])->findOrFail($companyDriverId);
+                $vehicle = $this->resolveVehicleForCompanyDriver($driver, $vehicleIdOverride, $factoryId);
+                $this->validateCompanyAssignment($first, $vehicle, $driver, $totalPassengers);
+
+                $trip->update([
+                    'vehicle_id'       => $vehicle->id,
+                    'driver_id'          => $driver->id,
+                    'rental_driver_id'   => null,
+                    'driver_type'        => 'company',
+                ]);
+                $rentalDriver = null;
+            } else {
+                $rentalDriver = TmsRentalDriver::with('defaultVehicle')->findOrFail($rentalDriverId);
+                $vehicle = $this->resolveVehicleForRentalDriver($rentalDriver, $vehicleIdOverride, $factoryId);
+                $this->validateRentalAssignment($first, $vehicle, $rentalDriver, $totalPassengers);
+                $driver = null;
+
+                $trip->update([
+                    'vehicle_id'       => $vehicle->id,
+                    'driver_id'          => null,
+                    'rental_driver_id'   => $rentalDriver->id,
+                    'driver_type'        => 'rental',
+                ]);
+            }
+
+            foreach ($requests as $request) {
+                $request->update([
+                    'vehicle_id'       => $vehicle->id,
+                    'driver_id'        => $driver?->id ?? null,
+                    'rental_driver_id' => $rentalDriver?->id ?? null,
+                ]);
+
+                $this->recordHistory(
+                    $request,
+                    'approved',
+                    'approved',
+                    userId: $user->id,
+                    notes: 'Reassigned driver/vehicle (trip #' . $trip->id . ')',
+                );
+
+                $this->notifications->requestApproved($request->fresh(['employee', 'driver.employee', 'rentalDriver', 'vehicle']));
+            }
+
+            return $trip->fresh(['vehicle', 'driver.employee', 'rentalDriver', 'transportRequests.employee']);
+        });
+    }
+
     private function cancelPending(TmsTransportRequest $request, Employee $employee): TmsTransportRequest
     {
         if ($request->status !== 'pending') {
@@ -92,7 +231,22 @@ class TransportRequestService
             ]);
         }
 
-        return DB::transaction(function () use ($request, $employee, $trip) {
+        return $this->detachApprovedRequestFromTrip(
+            $request,
+            $trip,
+            employeeId: $employee->id,
+            notes: 'Cancelled by employee before trip start',
+        );
+    }
+
+    private function detachApprovedRequestFromTrip(
+        TmsTransportRequest $request,
+        TmsTripLog $trip,
+        ?int $userId = null,
+        ?int $employeeId = null,
+        ?string $notes = null,
+    ): TmsTransportRequest {
+        return DB::transaction(function () use ($request, $trip, $userId, $employeeId, $notes) {
             $remaining = TmsTransportRequest::query()
                 ->where('trip_log_id', $trip->id)
                 ->where('id', '!=', $request->id)
@@ -112,8 +266,9 @@ class TransportRequestService
                 $request,
                 'approved',
                 'cancelled',
-                employeeId: $employee->id,
-                notes: 'Cancelled by employee before trip start',
+                userId: $userId,
+                employeeId: $employeeId,
+                notes: $notes,
             );
 
             if ($remaining->isEmpty()) {

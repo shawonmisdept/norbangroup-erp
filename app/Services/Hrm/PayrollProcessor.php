@@ -29,6 +29,7 @@ class PayrollProcessor
         private OtCalculator $otCalculator,
         private StatutoryPayrollService $statutoryPayroll,
         private SalaryHoldService $salaryHold,
+        private PayrollAdjustmentResolver $adjustments,
     ) {}
 
     public function calculatePeriod(PayrollPeriod $period, User $user): PayrollRun
@@ -53,6 +54,8 @@ class PayrollProcessor
 
         return DB::transaction(function () use ($period, $user, $attendancePeriod) {
             $period->update(['attendance_period_id' => $attendancePeriod->id]);
+
+            $this->adjustments->clearPeriodLinks($period);
 
             $run = PayrollRun::create([
                 'payroll_period_id' => $period->id,
@@ -86,12 +89,16 @@ class PayrollProcessor
                 $stats = $this->attendanceStats($employee->id, $period);
                 $built = $this->buildPayrollItem($period, $run, $employee, $structure, $stats);
                 $statutory = $built['statutory'] ?? null;
-                unset($built['statutory']);
+                $bonusItemIds = $built['bonus_item_ids'] ?? [];
+                $performanceBonusItemIds = $built['performance_bonus_item_ids'] ?? [];
+                unset($built['statutory'], $built['bonus_item_ids'], $built['performance_bonus_item_ids']);
 
                 PayrollItem::updateOrCreate(
                     ['employee_id' => $employee->id, 'payroll_period_id' => $period->id],
                     $built
                 );
+
+                $this->adjustments->linkItems($period, $bonusItemIds, $performanceBonusItemIds);
 
                 if ($statutory !== null) {
                     $this->statutoryPayroll->persistLedgers($employee, $period, $statutory);
@@ -241,13 +248,21 @@ class PayrollProcessor
         $lateForgivenDays = $lateResult['forgiven_days'];
         $lateChargeDays = $lateResult['charged_days'];
 
+        $payrollAdjustments = $this->adjustments->resolve($employee, $period);
+        $canteenDeduction = $payrollAdjustments['canteen'];
+        $bonusEarnings = $payrollAdjustments['festival_bonus']
+            + $payrollAdjustments['performance_bonus']
+            + $payrollAdjustments['production_incentive'];
+
+        $grossPay = round($grossPay + $bonusEarnings, 2);
+
         $headDeduction = $this->resolveHeadDeductions($structure);
         $statutory = $this->statutoryPayroll->apply($employee, $period, $structure, $grossPay, $basicAmount);
         $statutoryDeduction = $statutory['statutory_total'];
-        $otherDeduction = round($headDeduction + $statutoryDeduction, 2);
+        $otherDeduction = round($headDeduction + $statutoryDeduction + $canteenDeduction, 2);
         $netPay = max(0, round($grossPay - $absentDeduction - $lateDeduction - $otherDeduction, 2));
 
-        $headBreakdown = $this->buildHeadBreakdown($structure, $otAmount, $absentDeduction, $lateDeduction, $headDeduction);
+        $headBreakdown = $this->buildHeadBreakdown($structure, $otAmount, $absentDeduction, $lateDeduction, $headDeduction + $canteenDeduction);
         $headBreakdown['late_summary'] = [
             'total_late'    => $late,
             'forgiven_days' => $lateForgivenDays,
@@ -269,6 +284,18 @@ class PayrollProcessor
         }
         if ($statutory['loan_deduction'] > 0) {
             $headBreakdown['deductions']['LOAN'] = $statutory['loan_deduction'];
+        }
+        if ($canteenDeduction > 0) {
+            $headBreakdown['deductions']['CANTEEN'] = $canteenDeduction;
+        }
+        if ($payrollAdjustments['festival_bonus'] > 0) {
+            $headBreakdown['earnings']['FEST_BONUS'] = $payrollAdjustments['festival_bonus'];
+        }
+        if ($payrollAdjustments['performance_bonus'] > 0) {
+            $headBreakdown['earnings']['PERF_BONUS'] = $payrollAdjustments['performance_bonus'];
+        }
+        if ($payrollAdjustments['production_incentive'] > 0) {
+            $headBreakdown['earnings']['PROD_INCENTIVE'] = $payrollAdjustments['production_incentive'];
         }
 
         unset($statutory['statutory_total']);
@@ -306,6 +333,8 @@ class PayrollProcessor
             'statutory'         => $statutory,
             'payment_method'    => $structure->payment_method,
             'bank_account'      => $structure->bank_account,
+            'bonus_item_ids'    => $payrollAdjustments['bonus_item_ids'],
+            'performance_bonus_item_ids' => $payrollAdjustments['performance_bonus_item_ids'],
         ];
     }
 

@@ -12,7 +12,7 @@ class PerformanceBonusItem extends Model
     protected $fillable = [
         'performance_bonus_run_id', 'employee_id', 'performance_review_id',
         'overall_score', 'band_name', 'bonus_percent', 'base_amount',
-        'bonus_amount', 'override_amount', 'final_amount', 'notes',
+        'bonus_amount', 'override_amount', 'final_amount', 'notes', 'payroll_period_id',
     ];
 
     protected $casts = [

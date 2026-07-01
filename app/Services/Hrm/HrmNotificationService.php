@@ -622,6 +622,22 @@ class HrmNotificationService
         );
     }
 
+    public function offerResponded(
+        \App\Models\Hrm\RecruitmentApplication $application,
+        \App\Models\Hrm\RecruitmentOfferLetter $offerLetter,
+        string $response,
+    ): void {
+        if (! AppSetting::current()->notify_popup_enabled) {
+            return;
+        }
+
+        $this->notifyPermission(
+            'hrm.recruitment.applications.view',
+            new \App\Notifications\RecruitmentOfferRespondedNotification($application, $offerLetter, $response),
+            $application->factory_id
+        );
+    }
+
     public function separationPendingHr(EmployeeSeparation $separation): void
     {
         if (! AppSetting::current()->notify_popup_enabled) {

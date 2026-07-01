@@ -6,6 +6,7 @@ use App\Models\Hrm\Employee;
 use App\Models\Tms\TmsDailyOdometerLog;
 use App\Models\Tms\TmsDriver;
 use App\Models\Tms\TmsRentalDriver;
+use App\Models\Tms\TmsRentalVehicleCharge;
 use App\Models\Tms\TmsVehicle;
 use App\Models\User;
 use Illuminate\Validation\ValidationException;
@@ -136,5 +137,35 @@ class DailyOdometerService
         if ($log->evening_km !== null) {
             TmsVehicle::whereKey($log->vehicle_id)->update(['last_odometer_km' => $log->evening_km]);
         }
+    }
+
+    public function deleteLog(TmsDailyOdometerLog $log): void
+    {
+        $charge = TmsRentalVehicleCharge::where('odometer_log_id', $log->id)->first();
+
+        if ($charge?->payment_status === 'paid') {
+            throw ValidationException::withMessages([
+                'odometer' => 'Cannot delete — a paid rental charge is linked to this log.',
+            ]);
+        }
+
+        $vehicleId = (int) $log->vehicle_id;
+
+        if ($charge) {
+            $charge->delete();
+        }
+
+        $log->delete();
+
+        $latest = TmsDailyOdometerLog::query()
+            ->where('vehicle_id', $vehicleId)
+            ->whereNotNull('evening_km')
+            ->orderByDesc('log_date')
+            ->orderByDesc('id')
+            ->first();
+
+        TmsVehicle::whereKey($vehicleId)->update([
+            'last_odometer_km' => $latest?->evening_km ?? 0,
+        ]);
     }
 }

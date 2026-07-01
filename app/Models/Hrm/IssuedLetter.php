@@ -14,10 +14,12 @@ class IssuedLetter extends Model
     protected $fillable = [
         'factory_id', 'employee_id', 'template_id', 'letter_type',
         'reference_no', 'content', 'notes', 'issued_at', 'issued_by',
+        'voided_at', 'voided_by', 'void_reason', 'reissued_from_id',
     ];
 
     protected $casts = [
         'issued_at' => 'datetime',
+        'voided_at' => 'datetime',
     ];
 
     public function factory(): BelongsTo
@@ -38,6 +40,21 @@ class IssuedLetter extends Model
     public function issuer(): BelongsTo
     {
         return $this->belongsTo(User::class, 'issued_by');
+    }
+
+    public function voidedBy(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'voided_by');
+    }
+
+    public function reissuedFrom(): BelongsTo
+    {
+        return $this->belongsTo(self::class, 'reissued_from_id');
+    }
+
+    public function isVoided(): bool
+    {
+        return $this->voided_at !== null;
     }
 
     public function typeLabel(): string

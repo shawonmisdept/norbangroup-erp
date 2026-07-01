@@ -10,7 +10,7 @@ class TmsMaintenanceItem extends Model
     protected $table = 'tms_maintenance_items';
 
     protected $fillable = [
-        'maintenance_bill_id', 'item_name', 'quantity', 'unit', 'amount', 'sort_order',
+        'maintenance_bill_id', 'part_catalog_id', 'item_name', 'quantity', 'unit', 'amount', 'sort_order',
     ];
 
     protected function casts(): array
@@ -24,6 +24,11 @@ class TmsMaintenanceItem extends Model
     public function bill(): BelongsTo
     {
         return $this->belongsTo(TmsMaintenanceBill::class, 'maintenance_bill_id');
+    }
+
+    public function partCatalog(): BelongsTo
+    {
+        return $this->belongsTo(TmsMaintenancePartCatalog::class, 'part_catalog_id');
     }
 
     public function formattedQuantity(): ?string

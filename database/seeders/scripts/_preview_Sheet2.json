@@ -1,0 +1,42 @@
+[
+  [
+    "Unit",
+    "Department",
+    "Building",
+    "Floor",
+    "Designation",
+    "Role"
+  ],
+  [
+    "Head Office",
+    "Admin & HR",
+    "Main Building",
+    "3rd Floor",
+    "GM",
+    "Admin-GM"
+  ],
+  [
+    "",
+    "IT",
+    "Shwapno Building",
+    "4th Floor",
+    "AGM",
+    "Admin-AGM"
+  ],
+  [
+    "",
+    "Accounts & Finance",
+    "",
+    "Ground Floor",
+    "Sr.Manager",
+    "Admin-Sr.Manager"
+  ],
+  [
+    "",
+    "Audit",
+    "",
+    "",
+    "Manager (Comp)",
+    "Admin-Manager (Comp)"
+  ]
+]

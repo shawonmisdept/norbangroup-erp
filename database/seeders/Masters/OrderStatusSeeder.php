@@ -15,11 +15,13 @@ class OrderStatusSeeder extends Seeder
     protected function records(): array
     {
         return [
-            ['name' => 'Confirmed'],
+            ['name' => 'New'],
+            ['name' => 'Under Review'],
+            ['name' => 'Quoted'],
+            ['name' => 'Approved'],
             ['name' => 'In Production'],
-            ['name' => 'Partial Shipment'],
             ['name' => 'Shipped'],
-            ['name' => 'Completed'],
+            ['name' => 'Closed'],
             ['name' => 'Cancelled'],
         ];
     }

@@ -43,6 +43,14 @@
     <div>
         <button type="submit" class="erp-btn-primary w-full">Generate</button>
     </div>
+
+    <div class="md:col-span-2">
+        <label class="flex items-center gap-2 text-sm">
+            <input type="hidden" name="unposted_only" value="0">
+            <input type="checkbox" name="unposted_only" value="1" class="rounded border-gray-300" {{ ! empty($filters['unposted_only']) ? 'checked' : '' }}>
+            Unposted bills only
+        </label>
+    </div>
 </form>
 
 @if($report)

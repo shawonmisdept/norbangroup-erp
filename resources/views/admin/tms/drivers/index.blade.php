@@ -37,7 +37,8 @@
                             {{ ucfirst($d->status) }}
                         </span>
                     </td>
-                    <td class="text-right">
+                    <td class="text-right space-x-1">
+                        <a href="{{ route('admin.tms.drivers.show', $d) }}" class="erp-btn-sm-secondary">View</a>
                         @if(auth()->user()->canManageTmsSubmodule('drivers'))
                             @include('admin.tms.partials.row-actions', [
                                 'editUrl' => route('admin.tms.drivers.edit', $d),

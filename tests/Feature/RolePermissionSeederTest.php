@@ -35,6 +35,7 @@ class RolePermissionSeederTest extends TestCase
         foreach ([
             'tms.settings.view',
             'tms.settings.manage',
+            'tms.trips.manage',
             'tms.vehicles.manage',
             'tms.drivers.manage',
             'tms.overtime.manage',

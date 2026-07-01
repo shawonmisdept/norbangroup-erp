@@ -128,7 +128,7 @@ class LetterController extends Controller
         $this->ensureCanView($request);
         $this->authorizeFactoryAccess($request, $letter->factory_id);
 
-        $letter->load(['employee.factory', 'employee.department', 'employee.designation', 'template', 'issuer']);
+        $letter->load(['employee.factory', 'employee.department', 'employee.designation', 'template', 'issuer', 'reissuedFrom', 'voidedBy']);
 
         return view('admin.hrm.letters.show', [
             'letter'    => $letter,
@@ -144,6 +144,32 @@ class LetterController extends Controller
         $letter->load(['employee.factory', 'employee.department', 'employee.designation', 'issuer']);
 
         return view('admin.hrm.letters.print', compact('letter'));
+    }
+
+    public function void(Request $request, IssuedLetter $letter)
+    {
+        $this->ensureCanManage($request);
+        $this->authorizeFactoryAccess($request, $letter->factory_id);
+
+        $validated = $request->validate([
+            'void_reason' => ['nullable', 'string', 'max:2000'],
+        ]);
+
+        $this->service->void($letter, $request->user(), $validated['void_reason'] ?? null);
+
+        return redirect()->route('admin.hrm.letters.show', $letter)
+            ->with('success', 'Letter voided.');
+    }
+
+    public function reissue(Request $request, IssuedLetter $letter)
+    {
+        $this->ensureCanManage($request);
+        $this->authorizeFactoryAccess($request, $letter->factory_id);
+
+        $newLetter = $this->service->reissue($letter, $request->user());
+
+        return redirect()->route('admin.hrm.letters.show', $newLetter)
+            ->with('success', 'Letter reissued as ' . $newLetter->reference_no . '.');
     }
 
     /** @return array<int, string> */

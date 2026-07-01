@@ -77,6 +77,62 @@ class RequestController extends Controller
         return redirect()->route('employee.transport.index')->with('success', 'Transport request submitted.');
     }
 
+    public function edit(Request $request, TmsTransportRequest $transportRequest)
+    {
+        $employee = $this->portalEmployee($request);
+
+        if ($transportRequest->employee_id !== $employee->id) {
+            abort(403);
+        }
+
+        if ($transportRequest->status !== 'pending') {
+            return redirect()
+                ->route('employee.transport.requests.show', $transportRequest)
+                ->with('error', 'Only pending requests can be edited.');
+        }
+
+        $destinations = TmsDestination::where('factory_id', $employee->factory_id)
+            ->where('is_active', true)
+            ->orderBy('name')
+            ->get();
+
+        return view('employee.transport.edit', compact('employee', 'destinations', 'transportRequest'));
+    }
+
+    public function update(Request $request, TmsTransportRequest $transportRequest, TransportRequestService $service)
+    {
+        $employee = $this->portalEmployee($request);
+        $grace = (int) config('tms.pickup_grace_minutes', 0);
+
+        $validated = $request->validate([
+            'pickup_location'    => ['required', 'string', 'max:500'],
+            'destination_id'     => ['nullable', 'exists:tms_destinations,id'],
+            'destination_custom' => ['nullable', 'string', 'max:500'],
+            'pickup_at'          => ['required', 'date', 'after_or_equal:' . now()->subMinutes($grace)->toDateTimeString()],
+            'purpose'            => ['required', 'string', 'max:1000'],
+            'passenger_count'    => ['required', 'integer', 'min:1', 'max:100'],
+        ]);
+
+        if (empty($validated['destination_id']) && empty($validated['destination_custom'])) {
+            return back()->withErrors(['destination_custom' => 'Select a destination or enter a custom destination.'])->withInput();
+        }
+
+        if (! empty($validated['destination_id'])) {
+            $exists = TmsDestination::where('id', $validated['destination_id'])
+                ->where('factory_id', $employee->factory_id)
+                ->exists();
+            if (! $exists) {
+                abort(403);
+            }
+        }
+
+        $validated['pickup_at'] = Carbon::parse($validated['pickup_at'], config('app.timezone'));
+
+        $service->updatePending($employee, $transportRequest, $validated);
+
+        return redirect()->route('employee.transport.requests.show', $transportRequest)->with('success', 'Request updated.');
+    }
+
     public function show(Request $request, TmsTransportRequest $transportRequest)
     {
         $employee = $this->portalEmployee($request);
@@ -85,7 +141,7 @@ class RequestController extends Controller
             abort(403);
         }
 
-        $transportRequest->load(['destination', 'vehicle', 'driver.employee', 'tripLog', 'histories']);
+        $transportRequest->load(['destination', 'vehicle', 'driver.employee', 'tripLog', 'histories.changedByUser', 'histories.changedByEmployee']);
 
         return view('employee.transport.show', compact('transportRequest', 'employee'));
     }

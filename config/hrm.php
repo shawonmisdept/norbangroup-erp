@@ -13,6 +13,11 @@ use App\Models\Hrm\WorkerCategory;
 
 return [
 
+    /*
+    | Default admin portal password for users auto-created from Head Office employees.
+    */
+    'head_office_default_user_password' => env('HRM_HEAD_OFFICE_DEFAULT_USER_PASSWORD', 'password'),
+
     'permissions' => [
         'global' => [
             'hrm.masters.view'   => 'View all HRM master modules',

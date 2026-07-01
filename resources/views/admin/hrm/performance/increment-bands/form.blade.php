@@ -50,9 +50,11 @@
     </div>
 </form>
 
+@if($canManage)
 <form method="POST" action="{{ route('admin.hrm.performance.increment-bands.reset') }}" class="mt-4" data-confirm="Reset to default bands?">
     @csrf
     <input type="hidden" name="factory_id" value="{{ $factoryId }}">
     <button type="submit" class="erp-btn-secondary !text-xs text-red-600">Reset to Defaults</button>
 </form>
+@endif
 @endsection

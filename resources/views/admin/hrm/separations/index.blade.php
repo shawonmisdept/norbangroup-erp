@@ -99,7 +99,16 @@
                             @endif
                         </td>
                         <td class="tabular-nums text-xs text-gray-500">{{ $row->applied_at?->format('d M Y') }}</td>
-                        <td>@include('partials.erp.table-actions', ['viewUrl' => route('admin.hrm.separations.show', $row)])</td>
+                        <td class="text-right whitespace-nowrap">
+                            @include('partials.erp.table-actions', ['viewUrl' => route('admin.hrm.separations.show', $row)])
+                            @if($canManage && $row->isPending())
+                                <form method="POST" action="{{ route('admin.hrm.separations.cancel', $row) }}" class="inline ml-1" data-confirm="Cancel this separation request?">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="erp-btn-sm-secondary !text-amber-700">Cancel</button>
+                                </form>
+                            @endif
+                        </td>
                     </tr>
                 @empty
                     <tr><td colspan="6" class="text-center py-8 text-gray-400">No separation requests yet.</td></tr>

@@ -30,6 +30,18 @@ class FuelController extends Controller
         ]);
     }
 
+    public function show(Request $request, TmsFuelLog $fuelLog)
+    {
+        $this->authorizeFactoryAccess($request, $fuelLog->factory_id);
+
+        $fuelLog->load(['vehicle', 'tripLog.transportRequest.employee', 'factory']);
+
+        return view('admin.tms.fuel.show', [
+            'fuelLog'   => $fuelLog,
+            'canManage' => $request->user()?->canManageTmsSubmodule('fuel') ?? false,
+        ]);
+    }
+
     public function create(Request $request)
     {
         return view('admin.tms.fuel.form', [
@@ -57,6 +69,68 @@ class FuelController extends Controller
         TmsFuelLog::create($validated);
 
         return redirect()->route('admin.tms.fuel.index')->with('success', 'Fuel entry recorded.');
+    }
+
+    public function edit(Request $request, TmsFuelLog $fuelLog)
+    {
+        $this->authorizeFactoryAccess($request, $fuelLog->factory_id);
+
+        return view('admin.tms.fuel.form', [
+            'fuelLog'   => $fuelLog,
+            'factories' => $this->factoryOptions($request),
+            'fuelTypes' => config('tms.fuel_types'),
+            'paidBy'    => config('tms.fuel_paid_by'),
+            'trips'     => $this->completedTrips($request),
+            'vehicles'  => $this->vehicles($request),
+        ]);
+    }
+
+    public function update(Request $request, TmsFuelLog $fuelLog)
+    {
+        $this->authorizeFactoryAccess($request, $fuelLog->factory_id);
+
+        $validated = $this->validateFuel($request);
+        $this->authorizeFactoryAccess($request, (int) $validated['factory_id']);
+
+        if ($request->hasFile('receipt')) {
+            if ($fuelLog->receipt_path) {
+                Storage::disk('public')->delete($fuelLog->receipt_path);
+            }
+            $validated['receipt_path'] = $request->file('receipt')->store('tms/fuel-receipts', 'public');
+        }
+
+        $validated['amount'] = round($validated['quantity'] * $validated['unit_price'], 2);
+
+        $fuelLog->update($validated);
+
+        return redirect()->route('admin.tms.fuel.index')->with('success', 'Fuel entry updated.');
+    }
+
+    public function destroy(Request $request, TmsFuelLog $fuelLog)
+    {
+        $this->authorizeFactoryAccess($request, $fuelLog->factory_id);
+
+        if ($fuelLog->receipt_path) {
+            Storage::disk('public')->delete($fuelLog->receipt_path);
+        }
+
+        $fuelLog->delete();
+
+        return redirect()->route('admin.tms.fuel.index')->with('success', 'Fuel entry deleted.');
+    }
+
+    public function downloadReceipt(Request $request, TmsFuelLog $fuelLog)
+    {
+        $this->authorizeFactoryAccess($request, $fuelLog->factory_id);
+
+        if (! $fuelLog->receipt_path || ! Storage::disk('public')->exists($fuelLog->receipt_path)) {
+            abort(404, 'Receipt file not found.');
+        }
+
+        $extension = pathinfo($fuelLog->receipt_path, PATHINFO_EXTENSION) ?: 'bin';
+        $filename = 'fuel-receipt-' . $fuelLog->id . ($fuelLog->receipt_number ? '-' . preg_replace('/[^a-zA-Z0-9_-]/', '', $fuelLog->receipt_number) : '') . '.' . $extension;
+
+        return Storage::disk('public')->download($fuelLog->receipt_path, $filename);
     }
 
     private function validateFuel(Request $request): array

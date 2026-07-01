@@ -41,7 +41,29 @@
 <form method="POST" action="{{ route('admin.hrm.rmg.salary-hold.release', $record) }}" class="inline">@csrf<button type="submit" class="erp-btn-primary !py-1 !px-2 text-[10px]">Release</button></form>
 @elseif($canManage && $submodule === 'production-incentive' && $record->status === 'draft')
 <form method="POST" action="{{ route('admin.hrm.rmg.production-incentive.approve', $record) }}" class="inline">@csrf<button type="submit" class="erp-btn-primary !py-1 !px-2 text-[10px]">Approve</button></form>
-@endIf
+@elseif($canManage && $submodule === 'osd-movement' && $record->status === 'pending')
+<form method="POST" action="{{ route('admin.hrm.rmg.osd-movement.approve', $record) }}" class="inline">@csrf<button type="submit" class="erp-btn-primary !py-1 !px-2 text-[10px]">Approve</button></form>
+<form method="POST" action="{{ route('admin.hrm.rmg.osd-movement.reject', $record) }}" class="inline ml-1" data-confirm="Reject this OSD movement?">@csrf<button type="submit" class="erp-btn-secondary !py-1 !px-2 text-[10px] !text-red-600">Reject</button></form>
+@endif
+@php
+    $canEdit = $canManage && (
+        in_array($submodule, ['canteen', 'medical', 'training', 'buyer-holiday', 'sub-contract'], true)
+        || ($submodule === 'osd-movement' && $record->status === 'pending')
+        || ($submodule === 'production-incentive' && $record->status === 'draft')
+    );
+    $canDelete = $canManage && (
+        in_array($submodule, ['canteen', 'medical', 'training', 'buyer-holiday', 'sub-contract'], true)
+        || ($submodule === 'osd-movement' && in_array($record->status, ['pending', 'rejected'], true))
+        || ($submodule === 'salary-hold' && $record->status === 'released')
+        || ($submodule === 'production-incentive' && $record->status === 'draft')
+    );
+@endphp
+@if($canEdit || $canDelete)
+    @include('partials.erp.table-actions', [
+        'editUrl' => $canEdit ? route('admin.hrm.rmg.' . $submodule . '.edit', $record) : null,
+        'destroyUrl' => $canDelete ? route('admin.hrm.rmg.' . $submodule . '.destroy', $record) : null,
+    ])
+@endif
 </td></tr>
 @empty<tr><td colspan="{{ count($columns) + 1 }}" class="text-center py-8 text-gray-400">No records yet.</td></tr>@endforelse</tbody></table></div>
 <div class="p-3">{{ $records->links() }}</div></div>

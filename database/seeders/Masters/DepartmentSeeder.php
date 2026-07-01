@@ -2,7 +2,6 @@
 
 namespace Database\Seeders\Masters;
 
-use App\Models\Department;
 use App\Models\Factory;
 use Illuminate\Database\Seeder;
 
@@ -10,8 +9,19 @@ class DepartmentSeeder extends Seeder
 {
     public function run(): void
     {
-        $unitData = require database_path('seeders/data/unit_departments_designations.php');
-        $excelFactories = $unitData['factories'];
+        $skipFactories = [
+            'Head Office',
+            'Norban Comtex Limited',
+            'Hornbill Apparal Limited',
+        ];
+
+        $factories = Factory::where('is_active', true)->whereNotIn('name', $skipFactories)->get();
+
+        if ($factories->isEmpty()) {
+            $this->command?->info('DepartmentSeeder: no non–Head Office factories to seed (unit factories deferred).');
+
+            return;
+        }
 
         $departments = [
             'Merchandising',
@@ -31,15 +41,15 @@ class DepartmentSeeder extends Seeder
             'Maintenance',
         ];
 
-        foreach (Factory::where('is_active', true)->whereNotIn('name', $excelFactories)->get() as $factory) {
+        foreach ($factories as $factory) {
             foreach ($departments as $name) {
-                Department::updateOrCreate(
+                \App\Models\Department::updateOrCreate(
                     ['name' => $name, 'factory_id' => $factory->id],
                     ['is_active' => true]
                 );
             }
 
-            Department::where('factory_id', $factory->id)
+            \App\Models\Department::where('factory_id', $factory->id)
                 ->whereNotIn('name', $departments)
                 ->update(['is_active' => false]);
         }

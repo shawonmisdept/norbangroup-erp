@@ -123,8 +123,15 @@
                             @include('partials.erp.table-actions', [
                                 'viewUrl' => route('admin.hrm.salary.process.show', $period),
                             ])
-                            @if($period->status === 'calculated')
-                                <a href="{{ route('admin.hrm.salary.close.index') }}" class="text-xs text-gray-500">→ Close</a>
+                            @if($period->status === 'calculated' && auth()->user()->hasPermission('hrm.salary.approve'))
+                                <form method="POST" action="{{ route('admin.hrm.salary.close.freeze', $period) }}" class="inline"
+                                      data-confirm="Close {{ $period->periodLabel() }} and email payslips?"
+                                      data-confirm-variant="warning"
+                                      data-confirm-ok="Yes, close">
+                                    @csrf
+                                    <input type="hidden" name="send_payslips" value="1">
+                                    <button type="submit" class="erp-btn-primary !py-1 !px-2 text-xs">Close</button>
+                                </form>
                             @elseif($period->isFrozen())
                                 <span class="text-[11px] text-green-700">Closed</span>
                             @endif

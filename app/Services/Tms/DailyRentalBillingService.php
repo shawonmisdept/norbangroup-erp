@@ -48,4 +48,36 @@ class DailyRentalBillingService
             ]
         );
     }
+
+    /** @return array{processed: int, created: int, skipped: int} */
+    public function catchUpMissingCharges(?string $fromDate = null, ?string $toDate = null): array
+    {
+        $from = $fromDate ?? now()->subDays(7)->toDateString();
+        $to = $toDate ?? now()->toDateString();
+
+        $query = TmsDailyOdometerLog::query()
+            ->with(['vehicle.rentalVendor'])
+            ->whereDate('log_date', '>=', $from)
+            ->whereDate('log_date', '<=', $to)
+            ->whereNotNull('evening_km')
+            ->whereHas('vehicle', fn ($q) => $q->where('type', 'rental'))
+            ->whereDoesntHave('rentalCharge');
+
+        $processed = 0;
+        $created = 0;
+
+        foreach ($query->cursor() as $log) {
+            $processed++;
+            $charge = $this->syncFromOdometerLog($log);
+            if ($charge) {
+                $created++;
+            }
+        }
+
+        return [
+            'processed' => $processed,
+            'created'   => $created,
+            'skipped'   => $processed - $created,
+        ];
+    }
 }

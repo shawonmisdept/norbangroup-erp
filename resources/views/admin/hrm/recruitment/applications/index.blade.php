@@ -62,6 +62,7 @@
                     <th>Job</th>
                     <th>Source</th>
                     <th>Status</th>
+                    <th>Offer Response</th>
                     <th>Applied</th>
                     <th></th>
                 </tr>
@@ -77,11 +78,18 @@
                         <td class="text-xs">{{ $row->jobPosting?->title }}</td>
                         <td class="text-xs">{{ $row->sourceLabel() }}</td>
                         <td><span class="erp-badge bg-gray-100 text-gray-700 text-[10px]">{{ $row->statusLabel() }}</span></td>
+                        <td class="text-xs">
+                            @if($row->latestOffer)
+                                @include('admin.hrm.recruitment.partials.offer-response-badge', ['letter' => $row->latestOffer])
+                            @else
+                                <span class="text-gray-400">—</span>
+                            @endif
+                        </td>
                         <td class="text-xs text-gray-600">{{ $row->applied_at->format('d M Y') }}</td>
                         <td class="text-right"><a href="{{ route('admin.hrm.recruitment.applications.show', $row) }}" class="erp-btn-sm-secondary">View</a></td>
                     </tr>
                 @empty
-                    <tr><td colspan="7" class="text-center text-gray-400 py-8">No applications yet.</td></tr>
+                    <tr><td colspan="8" class="text-center text-gray-400 py-8">No applications yet.</td></tr>
                 @endforelse
             </tbody>
         </table>

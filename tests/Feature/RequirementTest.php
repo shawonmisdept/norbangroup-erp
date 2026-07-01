@@ -163,4 +163,38 @@ class RequirementTest extends TestCase
             ->get('/admin/orders')
             ->assertRedirect('/admin/requirements');
     }
+
+    public function test_sending_quote_emails_client_when_enabled(): void
+    {
+        Mail::fake();
+
+        AppSetting::current()->update([
+            'notify_mail_client_on_status' => true,
+            'mail_mailer'                  => 'log',
+        ]);
+        AppSetting::clearCache();
+
+        $order = Order::create([
+            'ref_code'  => 'NOR-QUOTE1',
+            'name'      => 'Quote Client',
+            'email'     => 'quote@example.com',
+            'phone'     => '+8801712345678',
+            'item_name' => 'Polo Shirt',
+            'quantity'  => 1000,
+            'status'    => 'Under Review',
+        ]);
+
+        $this->actingAs($this->admin)->patch(route('admin.requirements.workflow', $order), [
+            'quote_amount' => 150000,
+            'quote_notes'  => 'Includes sampling cost.',
+            'send_quote'   => 1,
+        ])->assertRedirect();
+
+        Mail::assertSent(\App\Mail\OrderQuoteMail::class, fn ($mail) => $mail->hasTo('quote@example.com'));
+        Mail::assertSent(\App\Mail\StatusUpdatedMail::class);
+
+        $order->refresh();
+        $this->assertSame('Quoted', $order->status);
+        $this->assertSame('150000.00', $order->quote_amount);
+    }
 }

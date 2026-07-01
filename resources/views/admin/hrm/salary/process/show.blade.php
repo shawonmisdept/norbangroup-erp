@@ -20,16 +20,27 @@
     };
 @endphp
 
+@php
+    $processActions = '<div class="flex flex-wrap gap-2 items-center">'
+        . '<span class="erp-badge ' . $statusBadge . '">' . e($period->statusLabel()) . '</span>'
+        . '<a href="' . route('admin.hrm.salary.process.index') . '" class="erp-btn-secondary">← Periods</a>';
+    if ($period->status === 'calculated' && auth()->user()->hasPermission('hrm.salary.approve')) {
+        $processActions .= '<form method="POST" action="' . route('admin.hrm.salary.close.freeze', $period) . '" class="inline"'
+            . ' data-confirm="Close ' . e($period->periodLabel()) . ' and email payslips?" data-confirm-variant="warning" data-confirm-ok="Yes, close">'
+            . csrf_field()
+            . '<input type="hidden" name="send_payslips" value="1">'
+            . '<button type="submit" class="erp-btn-primary !py-2 !px-4 text-xs">Close Period</button></form>';
+    }
+    if ($period->isFrozen() && auth()->user()->hasPermission('hrm.salary.approve')) {
+        $processActions .= '<a href="' . route('admin.hrm.salary.close.bank-advise', $period) . '" class="erp-btn-secondary">Bank Advise CSV</a>';
+    }
+    $processActions .= '</div>';
+@endphp
+
 @include('partials.erp.page-header', [
     'title' => $period->periodLabel() . ' Payroll',
     'subtitle' => $period->factory?->name . ' · ' . $period->start_date->format('d M') . ' – ' . $period->end_date->format('d M Y'),
-    'actions' => '<div class="flex flex-wrap gap-2 items-center">'
-        . '<span class="erp-badge ' . $statusBadge . '">' . e($period->statusLabel()) . '</span>'
-        . '<a href="' . route('admin.hrm.salary.process.index') . '" class="erp-btn-secondary">← Periods</a>'
-        . ($period->isFrozen() && auth()->user()->hasPermission('hrm.salary.approve')
-            ? '<a href="' . route('admin.hrm.salary.close.bank-advise', $period) . '" class="erp-btn-secondary">Bank Advise CSV</a>'
-            : '')
-        . '</div>',
+    'actions' => $processActions,
 ])
 
 <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-4">

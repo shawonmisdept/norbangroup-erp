@@ -39,4 +39,27 @@ class TmsFuelLog extends Model
     {
         return $this->belongsTo(TmsTripLog::class, 'trip_log_id');
     }
+
+    public function hasReceipt(): bool
+    {
+        return $this->receipt_path
+            && \Illuminate\Support\Facades\Storage::disk('public')->exists($this->receipt_path);
+    }
+
+    public function receiptUrl(): ?string
+    {
+        return $this->hasReceipt()
+            ? \Illuminate\Support\Facades\Storage::disk('public')->url($this->receipt_path)
+            : null;
+    }
+
+    public function receiptIsImage(): bool
+    {
+        return $this->receipt_path && (bool) preg_match('/\.(jpe?g|png|gif|webp)$/i', $this->receipt_path);
+    }
+
+    public function receiptIsPdf(): bool
+    {
+        return $this->receipt_path && str_ends_with(strtolower($this->receipt_path), '.pdf');
+    }
 }

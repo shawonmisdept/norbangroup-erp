@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Services\Sms\SmsGatewayFactory;
+use App\Services\Whatsapp\WhatsAppGatewayFactory;
 use App\Http\Requests\UpdateAppSettingsRequest;
 use App\Models\AppSetting;
 use App\Services\AppSettingLogoService;
@@ -44,6 +45,10 @@ class AppSettingsController extends Controller
 
         if (empty($data['sms_api_secret'])) {
             unset($data['sms_api_secret']);
+        }
+
+        if (empty($data['whatsapp_api_token'])) {
+            unset($data['whatsapp_api_token']);
         }
 
         if ($data['mail_mailer'] === 'gmail') {
@@ -140,5 +145,28 @@ class AppSettingsController extends Controller
         }
 
         return back()->with('success', 'Test SMS sent to ' . $validated['test_sms_phone'] . '.');
+    }
+
+    public function sendTestWhatsApp(Request $request, WhatsAppGatewayFactory $factory): RedirectResponse
+    {
+        abort_unless($request->user()?->hasPermission('settings.manage'), 403);
+
+        $validated = $request->validate([
+            'test_whatsapp_phone' => ['required', 'string', 'max:20'],
+        ]);
+
+        $settings = AppSetting::current();
+
+        if (! $settings->canSendWhatsApp()) {
+            return back()->with('error', 'WhatsApp provider credentials are incomplete. Save token and Phone Number ID first, or use Log provider.');
+        }
+
+        $message = 'Test WhatsApp from ' . config('app.name') . '. Your WhatsApp gateway stub is configured correctly.';
+
+        if (! $factory->make($settings)->send($validated['test_whatsapp_phone'], $message)) {
+            return back()->with('error', 'Failed to send test WhatsApp. Check provider credentials, endpoint URL, and Laravel logs.');
+        }
+
+        return back()->with('success', 'Test WhatsApp sent to ' . $validated['test_whatsapp_phone'] . '.');
     }
 }

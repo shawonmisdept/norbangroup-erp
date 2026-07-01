@@ -14,7 +14,7 @@
 <td class="tabular-nums">{{ number_format($policy->days_per_year, 1) }}</td>
 <td class="text-xs">{{ $policy->min_days_notice }} days</td>
 <td><span class="erp-badge {{ $policy->is_active ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-600' }}">{{ $policy->is_active ? 'Yes' : 'No' }}</span></td>
-<td class="text-right">@if(auth()->user()->canManageLeaveSubmodule('policies'))@include('partials.erp.table-actions', ['editUrl' => route('admin.hrm.leave.policies.edit', $policy)])@endif</td>
+<td class="text-right">@if(auth()->user()->canManageLeaveSubmodule('policies'))@include('partials.erp.table-actions', ['editUrl' => route('admin.hrm.leave.policies.edit', $policy), 'destroyUrl' => route('admin.hrm.leave.policies.destroy', $policy), 'destroyConfirm' => 'Delete this leave policy?'])@endif</td>
 </tr>
 @empty<tr><td colspan="6" class="text-center py-8 text-gray-400">No policies yet.</td></tr>@endforelse
 </tbody></table>

@@ -54,7 +54,7 @@
     </div>
 </form>
 
-@if($canManage ?? true)
+@if($canManage)
     <form method="POST" action="{{ route('admin.hrm.performance.bonus-bands.reset') }}" class="mt-4" data-confirm="Reset to default bands?">
         @csrf
         <input type="hidden" name="factory_id" value="{{ $factoryId }}">

@@ -61,6 +61,25 @@ class VehicleController extends Controller
         return redirect()->route('admin.tms.vehicles.index')->with('success', 'Vehicle created.');
     }
 
+    public function show(Request $request, TmsVehicle $vehicle)
+    {
+        $this->authorizeFactoryAccess($request, $vehicle->factory_id);
+
+        $vehicle->load(['factory', 'rentalVendor', 'allocatedEmployee.designation', 'defaultDrivers.employee']);
+
+        $recentTrips = $vehicle->tripLogs()
+            ->with(['driver.employee', 'rentalDriver', 'transportRequests.employee'])
+            ->latest('id')
+            ->limit(10)
+            ->get();
+
+        return view('admin.tms.vehicles.show', [
+            'vehicle'     => $vehicle,
+            'recentTrips' => $recentTrips,
+            'canManage'   => $request->user()?->canManageTmsSubmodule('vehicles') ?? false,
+        ]);
+    }
+
     public function edit(Request $request, TmsVehicle $vehicle)
     {
         $this->authorizeFactoryAccess($request, $vehicle->factory_id);

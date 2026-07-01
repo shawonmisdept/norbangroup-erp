@@ -138,10 +138,12 @@
                         <td class="text-xs tabular-nums">{{ number_format($row->page_views) }}</td>
                         <td><span class="erp-badge {{ $badge }}">{{ $row->statusLabel() }}</span></td>
                         <td class="text-right whitespace-nowrap">
-                            <a href="{{ route('admin.hrm.recruitment.postings.show', $row) }}" class="erp-btn-sm-secondary">View</a>
-                            @if($canManage)
-                                <a href="{{ route('admin.hrm.recruitment.postings.edit', $row) }}" class="erp-btn-sm-secondary">Edit</a>
-                            @endif
+                            @include('partials.erp.table-actions', [
+                                'viewUrl' => route('admin.hrm.recruitment.postings.show', $row),
+                                'editUrl' => $canManage ? route('admin.hrm.recruitment.postings.edit', $row) : null,
+                                'destroyUrl' => ($canManage && ($row->applications_count ?? 0) === 0) ? route('admin.hrm.recruitment.postings.destroy', $row) : null,
+                                'destroyConfirm' => 'Delete this job posting permanently?',
+                            ])
                         </td>
                     </tr>
                 @empty

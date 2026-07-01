@@ -31,6 +31,11 @@
             <form method="POST" action="{{ route('admin.hrm.recruitment.postings.duplicate', $posting) }}">@csrf
                 <button type="submit" class="erp-btn-secondary !py-2 !px-4 text-xs">Duplicate</button>
             </form>
+            @if(($posting->applications_count ?? 0) === 0)
+                <form method="POST" action="{{ route('admin.hrm.recruitment.postings.destroy', $posting) }}" data-confirm="Delete this job posting permanently?">@csrf @method('DELETE')
+                    <button type="submit" class="erp-btn-secondary !py-2 !px-4 text-xs !text-red-600">Delete</button>
+                </form>
+            @endif
         @endif
     </div>
 @endif

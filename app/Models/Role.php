@@ -344,4 +344,72 @@ class Role extends Model
 
         return $options;
     }
+
+    public function permissionCount(): int
+    {
+        return count($this->permissions ?? []);
+    }
+
+    /** @return list<string> */
+    public function moduleAccessAreas(): array
+    {
+        $areas = [];
+
+        foreach ($this->permissions ?? [] as $permission) {
+            $label = static::permissionAreaLabel($permission);
+
+            if ($label !== null) {
+                $areas[$label] = true;
+            }
+        }
+
+        $order = ['System Admin', 'Operations', 'Master Data', 'HRM', 'TMS'];
+        $result = array_keys($areas);
+
+        usort($result, function (string $a, string $b) use ($order): int {
+            $indexA = array_search($a, $order, true);
+            $indexB = array_search($b, $order, true);
+
+            return ($indexA === false ? 99 : $indexA) <=> ($indexB === false ? 99 : $indexB);
+        });
+
+        return $result;
+    }
+
+    public static function permissionAreaLabel(string $permission): ?string
+    {
+        if (in_array($permission, ['users.manage', 'roles.manage', 'settings.manage'], true)) {
+            return 'System Admin';
+        }
+
+        if (str_starts_with($permission, 'orders.')) {
+            return 'Operations';
+        }
+
+        if (str_starts_with($permission, 'masters.')) {
+            return 'Master Data';
+        }
+
+        if (str_starts_with($permission, 'hrm.')) {
+            return 'HRM';
+        }
+
+        if (str_starts_with($permission, 'tms.')) {
+            return 'TMS';
+        }
+
+        return null;
+    }
+
+    public static function moduleAreaBadgeClass(string $area): string
+    {
+        return match ($area) {
+            'System Admin' => 'bg-brand/10 text-brand',
+            'Operations'   => 'bg-blue-50 text-blue-700',
+            'Master Data'  => 'bg-gray-100 text-gray-600',
+            'HRM'          => 'bg-emerald-50 text-emerald-700',
+            'TMS'          => 'bg-violet-50 text-violet-700',
+            default        => 'bg-gray-100 text-gray-600',
+        };
+    }
 }

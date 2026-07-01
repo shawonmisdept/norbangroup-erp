@@ -122,13 +122,7 @@ class AttendanceProcessor
             ->whereIn('status', ['active', 'probation'])
             ->get(['id', 'factory_id', 'shift_id', 'weekend_days', 'weekend_ot_allowed', 'half_day_pay_ratio']);
 
-        $holidays = Holiday::query()
-            ->where('factory_id', $factoryId)
-            ->where('is_active', true)
-            ->whereBetween('date', [$from->toDateString(), $to->toDateString()])
-            ->pluck('date')
-            ->map(fn ($d) => Carbon::parse($d)->toDateString())
-            ->all();
+        $holidays = $this->schedule->factoryHolidayDates($factoryId, $from, $to);
 
         foreach (CarbonPeriod::create($from, $to) as $date) {
             if (in_array($date->toDateString(), $holidays, true)) {
@@ -163,6 +157,23 @@ class AttendanceProcessor
                 }
 
                 if ($existingEmployeeIds->contains($employee->id)) {
+                    continue;
+                }
+
+                if ($this->schedule->hasApprovedOsd($employee, $date)) {
+                    AttendanceDailyLog::create([
+                        'factory_id'           => $factoryId,
+                        'employee_id'          => $employee->id,
+                        'attendance_period_id' => $period?->id,
+                        'shift_id'             => $employee->shift_id,
+                        'attendance_date'      => $date->toDateString(),
+                        'status'               => 'present',
+                        'punch_count'          => 0,
+                        'notes'                => 'Official duty (OSD)',
+                        'is_manual'            => true,
+                    ]);
+                    $count++;
+
                     continue;
                 }
 

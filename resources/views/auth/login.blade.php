@@ -56,7 +56,12 @@
                     </li>
                 </ul>
 
-                <p class="admin-login-footer">&copy; 1990 – {{ date('Y') }} Norban Group · Data State Ltd.</p>
+                <p class="admin-login-footer">
+                    &copy; 1990 – {{ date('Y') }} Norban Group ·
+                    <a href="https://datastateltd.com/" target="_blank" rel="noopener noreferrer">
+                        Data State Ltd.
+                    </a>
+                </p>
             </div>
         </aside>
 

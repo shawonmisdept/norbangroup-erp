@@ -25,6 +25,13 @@ class AppSetting extends Model
         'notify_popup_hrm_recruitment', 'notify_mail_hrm_recruitment_candidate', 'notify_sms_hrm_recruitment',
         'notify_popup_hrm_worker_transfer', 'notify_popup_hrm_gate_pass', 'notify_popup_hrm_proxy_punch',
         'notify_popup_hrm_manpower_variance', 'notify_popup_hrm_performance',
+        'notify_popup_tms', 'notify_popup_tms_request_submitted', 'notify_popup_tms_request_approved',
+        'notify_popup_tms_request_rejected', 'notify_popup_tms_request_cancelled',
+        'notify_popup_tms_trip_started', 'notify_popup_tms_trip_completed',
+        'notify_popup_tms_ot_pending', 'notify_popup_tms_odometer_reminder',
+        'notify_sms_tms', 'notify_whatsapp_tms',
+        'whatsapp_provider', 'whatsapp_api_token', 'whatsapp_phone_number_id', 'whatsapp_business_account_id',
+        'whatsapp_custom_url', 'whatsapp_sender_id',
         'recruitment_otp_enabled',
         'sms_provider', 'sms_api_key', 'sms_api_secret', 'sms_sender_id', 'sms_custom_url',
     ];
@@ -56,10 +63,21 @@ class AppSetting extends Model
         'notify_popup_hrm_proxy_punch'     => 'boolean',
         'notify_popup_hrm_manpower_variance' => 'boolean',
         'notify_popup_hrm_performance'       => 'boolean',
+        'notify_popup_tms'                   => 'boolean',
+        'notify_popup_tms_request_submitted' => 'boolean',
+        'notify_popup_tms_request_approved'=> 'boolean',
+        'notify_popup_tms_request_rejected'  => 'boolean',
+        'notify_popup_tms_request_cancelled' => 'boolean',
+        'notify_popup_tms_trip_started'      => 'boolean',
+        'notify_popup_tms_trip_completed'    => 'boolean',
+        'notify_popup_tms_ot_pending'        => 'boolean',
+        'notify_popup_tms_odometer_reminder' => 'boolean',
+        'notify_sms_tms'                     => 'boolean',
+        'notify_whatsapp_tms'                => 'boolean',
         'recruitment_otp_enabled'          => 'boolean',
     ];
 
-    protected $hidden = ['mail_password', 'sms_api_key', 'sms_api_secret'];
+    protected $hidden = ['mail_password', 'sms_api_key', 'sms_api_secret', 'whatsapp_api_token'];
 
     public static function current(): self
     {
@@ -123,6 +141,18 @@ class AppSetting extends Model
             'notify_popup_hrm_proxy_punch'     => true,
             'notify_popup_hrm_manpower_variance' => true,
             'notify_popup_hrm_performance'       => true,
+            'notify_popup_tms'                   => true,
+            'notify_popup_tms_request_submitted' => true,
+            'notify_popup_tms_request_approved'=> true,
+            'notify_popup_tms_request_rejected'=> true,
+            'notify_popup_tms_request_cancelled' => true,
+            'notify_popup_tms_trip_started'      => true,
+            'notify_popup_tms_trip_completed'    => true,
+            'notify_popup_tms_ot_pending'        => true,
+            'notify_popup_tms_odometer_reminder' => true,
+            'notify_sms_tms'                     => false,
+            'notify_whatsapp_tms'                => false,
+            'whatsapp_provider'                  => 'log',
             'recruitment_otp_enabled'          => true,
             'sms_provider'                     => 'log',
         ];
@@ -169,6 +199,41 @@ class AppSetting extends Model
     public function smsApiSecretPlain(): ?string
     {
         return $this->decryptAttribute('sms_api_secret');
+    }
+
+    public function setWhatsappApiTokenAttribute(?string $value): void
+    {
+        $this->encryptAttribute('whatsapp_api_token', $value);
+    }
+
+    public function whatsappApiTokenPlain(): ?string
+    {
+        return $this->decryptAttribute('whatsapp_api_token');
+    }
+
+    public function canSendWhatsApp(): bool
+    {
+        if ($this->whatsapp_provider === 'log') {
+            return true;
+        }
+
+        if ($this->whatsapp_provider === 'meta_cloud') {
+            return filled($this->whatsappApiTokenPlain()) && filled($this->whatsapp_phone_number_id);
+        }
+
+        if ($this->whatsapp_provider === 'greenweb') {
+            return filled($this->whatsappApiTokenPlain());
+        }
+
+        if ($this->whatsapp_provider === 'custom') {
+            return filled($this->whatsapp_custom_url);
+        }
+
+        if (in_array($this->whatsapp_provider, ['sslwireless', 'bulksmsbd'], true)) {
+            return filled($this->whatsappApiTokenPlain());
+        }
+
+        return false;
     }
 
     public function canSendSms(): bool

@@ -125,28 +125,39 @@
                 @if($application->convertedEmployee)
                     <a href="{{ route('admin.hrm.employees.show', $application->convertedEmployee) }}" class="erp-btn-sm-primary w-full justify-center">View Employee</a>
                 @endif
+                @if($application->latestOfferLetter())
+                    <div class="pt-2 border-t border-erp-border">
+                        <p class="text-[10px] text-gray-400 uppercase mb-1">Latest Offer Response</p>
+                        @include('admin.hrm.recruitment.partials.offer-response-badge', ['letter' => $application->latestOfferLetter()])
+                    </div>
+                @endif
             </div>
         </div>
 
-        @if($canManage && ! $application->isTerminal())
+        @if($application->offerLetters->isNotEmpty() || ($canManage && ! $application->isTerminal()))
             <div class="erp-panel">
                 <div class="erp-panel-head"><h2 class="text-xs font-semibold uppercase">Offer Letters</h2></div>
                 <div class="erp-panel-body space-y-2">
                     @forelse($application->offerLetters as $letter)
-                        <div class="flex items-center justify-between gap-2 border border-erp-border rounded-sm p-2 text-sm">
-                            <div>
-                                <p class="font-medium">{{ $letter->reference_no }}</p>
-                                <p class="text-xs text-gray-500">{{ $letter->issued_at->format('d M Y') }}</p>
+                        <div class="border border-erp-border rounded-sm p-2 text-sm space-y-1">
+                            <div class="flex items-center justify-between gap-2">
+                                <div>
+                                    <p class="font-medium">{{ $letter->reference_no }}</p>
+                                    <p class="text-xs text-gray-500">{{ $letter->issued_at->format('d M Y') }}</p>
+                                </div>
+                                <div class="flex gap-2">
+                                    <a href="{{ route('admin.hrm.recruitment.offer-letters.show', $letter) }}" class="erp-btn-sm-secondary">View</a>
+                                    <a href="{{ route('admin.hrm.recruitment.offer-letters.print', $letter) }}" target="_blank" class="erp-btn-sm-secondary">Print</a>
+                                </div>
                             </div>
-                            <div class="flex gap-2">
-                                <a href="{{ route('admin.hrm.recruitment.offer-letters.show', $letter) }}" class="erp-btn-sm-secondary">View</a>
-                                <a href="{{ route('admin.hrm.recruitment.offer-letters.print', $letter) }}" target="_blank" class="erp-btn-sm-secondary">Print</a>
-                            </div>
+                            <div>@include('admin.hrm.recruitment.partials.offer-response-badge', ['letter' => $letter])</div>
                         </div>
                     @empty
                         <p class="text-sm text-gray-400">No offer letter issued yet.</p>
                     @endforelse
+                    @if($canManage && ! $application->isTerminal())
                     <a href="{{ route('admin.hrm.recruitment.applications.offer-letter.create', $application) }}" class="erp-btn-sm-primary w-full justify-center">Issue Offer Letter</a>
+                    @endif
                 </div>
             </div>
         @endif

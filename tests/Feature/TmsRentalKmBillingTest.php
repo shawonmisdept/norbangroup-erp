@@ -356,4 +356,50 @@ class TmsRentalKmBillingTest extends TestCase
         $charge = app(\App\Services\Tms\DailyRentalBillingService::class)->syncFromOdometerLog($log);
         $this->assertNull($charge);
     }
+
+    public function test_rental_charges_hub_and_unmark_paid(): void
+    {
+        $vendor = TmsRentalVendor::create([
+            'factory_id' => $this->factory->id,
+            'name'       => 'ABC Rent',
+            'status'     => 'active',
+        ]);
+
+        $charge = TmsRentalVehicleCharge::create([
+            'factory_id'       => $this->factory->id,
+            'vehicle_id'       => TmsVehicle::create([
+                'factory_id'       => $this->factory->id,
+                'name'             => 'Rent Van',
+                'reg_number'       => 'RNT-400',
+                'type'             => 'rental',
+                'rental_vendor_id' => $vendor->id,
+                'status'           => 'available',
+            ])->id,
+            'rental_vendor_id' => $vendor->id,
+            'log_date'         => '2026-06-17',
+            'total_km'         => 50,
+            'km_rate'          => 10,
+            'amount'           => 500,
+            'payment_status'   => 'pending',
+        ]);
+
+        $this->actingAs($this->authority)
+            ->get(route('admin.tms.rental-charges.index'))
+            ->assertOk()
+            ->assertSee('Rent Van');
+
+        $this->actingAs($this->authority)
+            ->post(route('admin.tms.rental-charges.mark-paid', $charge))
+            ->assertRedirect();
+
+        $this->assertSame('paid', $charge->fresh()->payment_status);
+
+        $this->actingAs($this->authority)
+            ->post(route('admin.tms.rental-charges.unmark-paid', $charge))
+            ->assertRedirect();
+
+        $charge->refresh();
+        $this->assertSame('pending', $charge->payment_status);
+        $this->assertNull($charge->paid_at);
+    }
 }

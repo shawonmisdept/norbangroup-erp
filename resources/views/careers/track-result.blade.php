@@ -56,6 +56,46 @@
         @if($application->status === 'rejected' && $application->rejection_reason)
             <div class="mt-4 p-3 bg-red-50 border border-red-100 rounded-lg text-sm text-red-800">{{ $application->rejection_reason }}</div>
         @endif
+
+        @if($application->status === 'offered' && ($latestOffer ?? null))
+            <div class="mt-6 p-4 border border-[var(--careers-blue)]/20 rounded-xl bg-blue-50/50">
+                <p class="careers-section-title mb-2">Job Offer</p>
+                <dl class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm mb-4">
+                    <div><dt class="text-gray-500">Reference</dt><dd class="font-mono font-medium">{{ $latestOffer->reference_no }}</dd></div>
+                    @if($latestOffer->offered_salary)
+                        <div><dt class="text-gray-500">Offered Salary</dt><dd class="font-medium">৳{{ number_format($latestOffer->offered_salary, 2) }}</dd></div>
+                    @endif
+                    @if($latestOffer->joining_date)
+                        <div><dt class="text-gray-500">Joining Date</dt><dd>{{ $latestOffer->joining_date->format('d M Y') }}</dd></div>
+                    @endif
+                    @if($latestOffer->response)
+                        <div><dt class="text-gray-500">Your Response</dt><dd class="font-medium">{{ $latestOffer->responseLabel() }} · {{ $latestOffer->responded_at?->format('d M Y') }}</dd></div>
+                    @endif
+                </dl>
+
+                @if($latestOffer->isPendingResponse())
+                    <p class="text-sm text-gray-600 mb-4">Please confirm whether you accept this offer.</p>
+                    <form method="POST" action="{{ route('careers.offer.respond') }}" class="space-y-3">
+                        @csrf
+                        <input type="hidden" name="application_no" value="{{ $application->application_no }}">
+                        <input type="hidden" name="phone" value="{{ $application->phone }}">
+
+                        <div class="flex flex-wrap gap-3">
+                            <button type="submit" name="response" value="accepted" class="careers-btn careers-btn-primary">Accept Offer</button>
+                            <button type="button" onclick="document.getElementById('decline-offer-panel').classList.toggle('hidden')" class="careers-btn careers-btn-secondary">Decline Offer</button>
+                        </div>
+
+                        <div id="decline-offer-panel" class="hidden space-y-2 pt-2">
+                            <label class="text-sm font-medium text-gray-700">Reason for declining (optional)</label>
+                            <textarea name="decline_reason" rows="2" class="w-full rounded-lg border-gray-300 text-sm" placeholder="Brief reason…"></textarea>
+                            <button type="submit" name="response" value="declined" class="careers-btn careers-btn-secondary !text-red-700">Confirm Decline</button>
+                        </div>
+                    </form>
+                @elseif($latestOffer->response === 'accepted')
+                    <p class="text-sm text-green-800 font-medium">You accepted this offer. HR will contact you with joining instructions.</p>
+                @endif
+            </div>
+        @endif
         </div>
     </div>
 </div>

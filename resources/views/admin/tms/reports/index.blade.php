@@ -13,6 +13,12 @@
         <table class="erp-table">
             @if($tab === 'requests')
                 @include('admin.tms.reports.partials.requests-table')
+            @elseif($tab === 'requests_by_department')
+                @include('admin.tms.reports.partials.departments-table')
+            @elseif($tab === 'department_chargeback')
+                @include('admin.tms.reports.partials.chargeback-table')
+            @elseif($tab === 'payroll_ot')
+                @include('admin.tms.reports.partials.payroll-ot-table')
             @elseif($tab === 'trips')
                 @include('admin.tms.reports.partials.trips-table')
             @elseif($tab === 'fuel')
@@ -28,7 +34,7 @@
             @endif
         </table>
 
-        @if($rows && $rows->hasPages())
+        @if($rows instanceof \Illuminate\Contracts\Pagination\Paginator && $rows->hasPages())
             <div class="px-4 py-3 border-t">{{ $rows->links() }}</div>
         @endif
     </div>

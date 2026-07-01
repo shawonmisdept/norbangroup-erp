@@ -23,6 +23,18 @@
         </div>
     @endif
 
+    @if(in_array($tab, ['requests', 'requests_by_department', 'department_chargeback']))
+        <div>
+            <label class="erp-label">Department</label>
+            <select name="department_id" class="erp-input">
+                <option value="">All</option>
+                @foreach($departments as $id => $name)
+                    <option value="{{ $id }}" @selected(($filters['department_id'] ?? '') == $id)>{{ $name }}</option>
+                @endforeach
+            </select>
+        </div>
+    @endif
+
     @if($tab === 'requests')
         <div>
             <label class="erp-label">Status</label>
@@ -35,7 +47,7 @@
         </div>
     @endif
 
-    @if(in_array($tab, ['ot', 'rental_charges']))
+    @if(in_array($tab, ['ot', 'rental_charges', 'payroll_ot']))
         <div>
             <label class="erp-label">Payment</label>
             <select name="payment_status" class="erp-input">

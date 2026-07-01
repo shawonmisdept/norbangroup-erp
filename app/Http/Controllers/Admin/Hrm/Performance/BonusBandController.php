@@ -68,7 +68,7 @@ class BonusBandController extends Controller
         return view('admin.hrm.performance.bonus-bands.form', [
             'factoryId' => $factoryId,
             'factoryName' => $this->factoryOptions($request)[$factoryId] ?? 'Factory',
-            'canManage' => true,
+            'canManage' => $request->user()?->hasPermission('hrm.performance.bonus.manage') ?? false,
             'bands' => $bands->map(fn (PerformanceBonusBand $b) => [
                 'name'          => $b->name,
                 'min_score'     => $b->min_score,

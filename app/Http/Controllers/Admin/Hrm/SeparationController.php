@@ -123,7 +123,8 @@ class SeparationController extends Controller
 
         return view('admin.hrm.separations.show', [
             'separation' => $separation,
-            'canManage'  => $request->user()?->hasPermission('hrm.employees.separation.manage') ?? false,
+            'canManage'          => $request->user()?->hasPermission('hrm.employees.separation.manage') ?? false,
+            'canManageSettlement'=> $request->user()?->canManageFinanceSubmodule('final-settlement') ?? false,
             'canApprove' => $request->user()?->hasPermission('hrm.employees.separation.approve') ?? false,
         ]);
     }

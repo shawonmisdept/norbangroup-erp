@@ -98,7 +98,7 @@
                         </td>
                         <td class="text-sm">{{ $row->effective_date->format('d M Y') }}</td>
                         <td><span class="inline-flex px-2 py-0.5 rounded text-xs font-medium {{ $statusClass }}">{{ $row->statusLabel() }}</span></td>
-                        <td class="text-right">
+                        <td class="text-right whitespace-nowrap">
                             <a href="{{ route('admin.hrm.promotions.show', $row) }}" class="text-brand text-xs hover:underline">View</a>
                             @if($canApprove && $row->isPending())
                                 <form method="POST" action="{{ route('admin.hrm.promotions.approve', $row) }}" class="inline ml-2"
@@ -107,6 +107,14 @@
                                       data-confirm-ok="Yes, approve">
                                     @csrf
                                     <button type="submit" class="text-green-600 text-xs hover:underline">Approve</button>
+                                </form>
+                                <a href="{{ route('admin.hrm.promotions.show', $row) }}#reject" class="text-red-600 text-xs hover:underline ml-2">Reject</a>
+                            @endif
+                            @if($canManage && $row->isPending())
+                                <form method="POST" action="{{ route('admin.hrm.promotions.cancel', $row) }}" class="inline ml-2" data-confirm="Cancel this request?">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="text-gray-500 text-xs hover:underline">Cancel</button>
                                 </form>
                             @endif
                         </td>

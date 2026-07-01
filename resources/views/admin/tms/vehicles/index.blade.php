@@ -31,7 +31,8 @@
                     <td class="text-xs capitalize">{{ $v->type }}</td>
                     <td class="tabular-nums">{{ $v->passenger_capacity }}</td>
                     <td><span class="erp-badge {{ $v->statusBadgeClass() }}">{{ $v->statusLabel() }}</span></td>
-                    <td class="text-right">
+                    <td class="text-right space-x-1">
+                        <a href="{{ route('admin.tms.vehicles.show', $v) }}" class="erp-btn-sm-secondary">View</a>
                         @if(auth()->user()->canManageTmsSubmodule('vehicles'))
                             @include('admin.tms.partials.row-actions', [
                                 'editUrl' => route('admin.tms.vehicles.edit', $v),

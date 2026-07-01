@@ -45,13 +45,12 @@ class ProcessPayrollJob implements ShouldQueue
             return;
         }
 
-        PayrollRun::create([
-            'payroll_period_id' => $period->id,
-            'status'            => 'failed',
-            'started_at'        => now(),
-            'completed_at'      => now(),
-            'run_by'            => $this->userId,
-            'notes'             => $exception?->getMessage(),
-        ]);
+        PayrollRun::where('payroll_period_id', $period->id)
+            ->where('status', 'running')
+            ->update([
+                'status'       => 'failed',
+                'completed_at' => now(),
+                'notes'        => $exception?->getMessage(),
+            ]);
     }
 }

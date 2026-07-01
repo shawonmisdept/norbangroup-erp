@@ -6,6 +6,7 @@ use App\Models\Factory;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class TmsDailyOdometerLog extends Model
 {
@@ -38,6 +39,11 @@ class TmsDailyOdometerLog extends Model
     public function vehicle(): BelongsTo
     {
         return $this->belongsTo(TmsVehicle::class, 'vehicle_id');
+    }
+
+    public function rentalCharge(): HasOne
+    {
+        return $this->hasOne(TmsRentalVehicleCharge::class, 'odometer_log_id');
     }
 
     public function dailyKm(): ?float

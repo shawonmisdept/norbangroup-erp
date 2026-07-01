@@ -22,7 +22,8 @@ return [
             'tms.requests.approve' => 'Approve / Reject / Assign Requests',
         ],
         'trips' => [
-            'tms.trips.view' => 'View Trip Logs',
+            'tms.trips.view'   => 'View Trip Logs',
+            'tms.trips.manage' => 'Manage Trips (Start/End, Odometer)',
         ],
         'fuel' => [
             'tms.fuel.view'   => 'View Fuel Logs',
@@ -135,7 +136,7 @@ return [
             'label'       => 'Daily KM',
             'description' => 'Morning & evening km readings per vehicle',
             'permission'  => 'tms.trips.view',
-            'manage'      => 'tms.settings.manage',
+            'manage'      => 'tms.trips.manage',
             'route'       => 'admin.tms.odometer.index',
             'icon'        => 'M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z',
             'status'      => 'active',
@@ -170,6 +171,23 @@ return [
             'icon'        => 'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z',
             'status'      => 'active',
         ],
+        'maintenance_parts' => [
+            'label'       => 'Parts Catalog',
+            'description' => 'Reusable maintenance parts & services master',
+            'permission'  => 'tms.maintenance.view',
+            'manage'      => 'tms.maintenance.manage',
+            'route'       => 'admin.tms.maintenance.parts.index',
+            'icon'        => 'M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z',
+            'status'      => 'active',
+        ],
+        'rental_charges' => [
+            'label'       => 'Rental Charges',
+            'description' => 'Pending & paid rental vehicle KM charges',
+            'permission'  => 'tms.rental_charges.manage',
+            'route'       => 'admin.tms.rental-charges.index',
+            'icon'        => 'M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z',
+            'status'      => 'active',
+        ],
         'reports' => [
             'label'       => 'Reports',
             'description' => 'Fleet cost, trips, fuel & odometer analytics',
@@ -178,12 +196,37 @@ return [
             'icon'        => 'M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z',
             'status'      => 'active',
         ],
+        'gps_tracking' => [
+            'label'       => 'GPS Tracking',
+            'description' => 'Vehicle location history (Phase 2 — coming soon)',
+            'permission'  => 'tms.settings.view',
+            'route'       => 'admin.tms.gps.index',
+            'icon'        => 'M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z',
+            'status'      => 'active',
+        ],
     ],
 
     'nav_groups' => [
         'Operations' => ['requests', 'trips', 'odometer', 'fuel'],
-        'Vehicle Management'      => ['vehicles', 'drivers', 'rental_vendors', 'rental_drivers', 'maintenance', 'maintenance_posting'],
-        'Setup'      => ['settings', 'destinations'],
+        'Vehicle Management'      => ['vehicles', 'drivers', 'rental_vendors', 'rental_drivers', 'maintenance', 'maintenance_parts', 'maintenance_posting', 'rental_charges'],
+        'Setup'      => ['settings', 'destinations', 'gps_tracking'],
+    ],
+
+    'gps_providers' => [
+        'none' => [
+            'label'       => 'None',
+            'description' => 'GPS tracking disabled — no positions recorded.',
+        ],
+        'device_api' => [
+            'label'       => 'GPS Device / Telematics API (Coming Soon)',
+            'description' => 'Future integration with vehicle GPS hardware or fleet telematics vendors.',
+            'stub'        => true,
+        ],
+        'browser' => [
+            'label'       => 'Driver Mobile GPS (Coming Soon)',
+            'description' => 'Capture coordinates from driver phone browser during trip start/end.',
+            'stub'        => true,
+        ],
     ],
 
     'request_statuses' => [

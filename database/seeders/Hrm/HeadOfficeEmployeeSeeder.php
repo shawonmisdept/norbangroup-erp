@@ -5,8 +5,10 @@ namespace Database\Seeders\Hrm;
 use App\Models\Department;
 use App\Models\Designation;
 use App\Models\Factory;
+use App\Models\Hrm\Building;
 use App\Models\Hrm\Employee;
 use App\Models\Hrm\EmploymentType;
+use App\Models\Hrm\Floor;
 use App\Models\Hrm\WorkerCategory;
 use Illuminate\Database\Seeder;
 
@@ -27,19 +29,11 @@ class HeadOfficeEmployeeSeeder extends Seeder
             return;
         }
 
-        $this->deleteExistingEmployees($factory);
-
-        $employmentType = EmploymentType::query()
-            ->where('name', 'Permanent')
-            ->where('is_active', true)
-            ->first();
-
-        $workerCategory = WorkerCategory::query()
-            ->where('name', 'Staff')
-            ->where('is_active', true)
-            ->first();
+        $employmentTypes = EmploymentType::query()->where('is_active', true)->pluck('id', 'name');
+        $workerCategories = WorkerCategory::query()->where('is_active', true)->pluck('id', 'name');
 
         $seeded = 0;
+        $skipped = 0;
 
         foreach ($data['employees'] as $row) {
             $department = Department::query()
@@ -48,24 +42,45 @@ class HeadOfficeEmployeeSeeder extends Seeder
                 ->first();
 
             if (! $department) {
-                $this->command?->warn("Department \"{$row['department']}\" not found for {$factory->name} — employee {$row['employee_code']} skipped.");
+                $this->command?->warn("Department \"{$row['department']}\" not found — employee {$row['employee_code']} skipped.");
+                $skipped++;
 
                 continue;
             }
 
             $designation = Designation::query()
                 ->where('name', $row['designation'])
-                ->where(function ($query) use ($department) {
-                    $query->whereNull('department_id')
-                        ->orWhere('department_id', $department->id);
-                })
+                ->where('department_id', $department->id)
                 ->first();
 
             if (! $designation) {
-                $this->command?->warn("Designation \"{$row['designation']}\" not found — employee {$row['employee_code']} skipped.");
+                $this->command?->warn("Designation \"{$row['designation']}\" not found for {$row['department']} — employee {$row['employee_code']} skipped.");
+                $skipped++;
 
                 continue;
             }
+
+            $buildingId = null;
+            $floorId = null;
+
+            if (! empty($row['building'])) {
+                $building = Building::query()
+                    ->where('factory_id', $factory->id)
+                    ->where('name', $row['building'])
+                    ->first();
+
+                $buildingId = $building?->id;
+
+                if ($building && ! empty($row['floor'])) {
+                    $floorId = Floor::query()
+                        ->where('building_id', $building->id)
+                        ->where('name', $row['floor'])
+                        ->value('id');
+                }
+            }
+
+            $employmentTypeName = $row['employment_type'] ?? 'Permanent';
+            $workerCategoryName = $row['worker_category'] ?? 'Staff';
 
             Employee::withTrashed()->updateOrCreate(
                 ['employee_code' => $row['employee_code']],
@@ -73,8 +88,10 @@ class HeadOfficeEmployeeSeeder extends Seeder
                     'factory_id'         => $factory->id,
                     'department_id'      => $department->id,
                     'designation_id'     => $designation->id,
-                    'employment_type_id' => $employmentType?->id,
-                    'worker_category_id' => $workerCategory?->id,
+                    'building_id'        => $buildingId,
+                    'floor_id'           => $floorId,
+                    'employment_type_id' => $employmentTypes[$employmentTypeName] ?? null,
+                    'worker_category_id' => $workerCategories[$workerCategoryName] ?? null,
                     'name'               => $row['name'],
                     'phone'              => $row['phone'] ?? null,
                     'email'              => $row['email'] ?? null,
@@ -90,21 +107,6 @@ class HeadOfficeEmployeeSeeder extends Seeder
             $seeded++;
         }
 
-        $this->command?->info("Seeded {$seeded} employees for {$factory->name}.");
-    }
-
-    private function deleteExistingEmployees(Factory $factory): void
-    {
-        $deleted = Employee::withTrashed()
-            ->where('factory_id', $factory->id)
-            ->count();
-
-        Employee::withTrashed()
-            ->where('factory_id', $factory->id)
-            ->each(fn (Employee $employee) => $employee->forceDelete());
-
-        if ($deleted > 0) {
-            $this->command?->info("Removed {$deleted} existing {$factory->name} employee(s).");
-        }
+        $this->command?->info("Seeded {$seeded} Head Office employee(s)." . ($skipped ? " Skipped {$skipped}." : ''));
     }
 }

@@ -82,6 +82,26 @@
                 </div>
             </div>
 
+            <div class="border-t pt-4 space-y-4 opacity-90">
+                <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide">GPS Tracking <span class="normal-case font-normal text-amber-600">(Phase 2 — coming soon)</span></p>
+                <p class="text-xs text-gray-500 rounded-sm border border-erp-border bg-gray-50 px-3 py-2">
+                    Schema and position history are ready. Enable when your GPS device or mobile provider is configured.
+                    View positions under <strong>GPS Tracking</strong> in the TMS menu.
+                </p>
+                <label class="flex items-center gap-2 text-sm">
+                    <input type="checkbox" name="gps_tracking_enabled" value="1" @checked(old('gps_tracking_enabled', $settings->gps_tracking_enabled))>
+                    Enable GPS tracking (stub mode — records via future integrations only)
+                </label>
+                <div>
+                    <label class="erp-label">GPS Provider</label>
+                    <select name="gps_provider" class="erp-input">
+                        @foreach($gpsProviders as $key => $provider)
+                            <option value="{{ $key }}" @selected(old('gps_provider', $settings->gps_provider ?? 'none') === $key)>{{ $provider['label'] }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+
             @if(auth()->user()->canManageTmsSubmodule('settings'))
                 <button type="submit" class="erp-btn-primary">Save Settings</button>
             @endif

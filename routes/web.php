@@ -121,6 +121,10 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
         ->name('requirements.update')
         ->middleware('permission:orders.update');
 
+    Route::patch('/requirements/{order}/workflow', [OrderController::class, 'updateWorkflow'])
+        ->name('requirements.workflow')
+        ->middleware('permission:orders.update');
+
     Route::delete('/requirements/{order}', [OrderController::class, 'destroy'])
         ->name('requirements.destroy')
         ->middleware('permission:orders.delete');
@@ -141,7 +145,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     });
 
     Route::middleware('permission:roles.manage')->group(function () {
-        Route::resource('roles', RoleController::class)->except(['show']);
+        Route::resource('roles', RoleController::class);
     });
 
     Route::middleware('permission:settings.manage')->group(function () {
@@ -149,6 +153,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
         Route::put('/settings', [AppSettingsController::class, 'update'])->name('settings.update');
         Route::post('/settings/test-mail', [AppSettingsController::class, 'sendTestMail'])->name('settings.test-mail');
         Route::post('/settings/test-sms', [AppSettingsController::class, 'sendTestSms'])->name('settings.test-sms');
+        Route::post('/settings/test-whatsapp', [AppSettingsController::class, 'sendTestWhatsApp'])->name('settings.test-whatsapp');
     });
 
     Route::middleware('auth')->prefix('notifications')->name('notifications.')->group(function () {
@@ -260,11 +265,19 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
             Route::get('/letters', [\App\Http\Controllers\Admin\Hrm\LetterController::class, 'index'])->name('letters.index');
             Route::get('/letters/{letter}', [\App\Http\Controllers\Admin\Hrm\LetterController::class, 'show'])->name('letters.show')->whereNumber('letter');
             Route::get('/letters/{letter}/print', [\App\Http\Controllers\Admin\Hrm\LetterController::class, 'print'])->name('letters.print')->whereNumber('letter');
+            Route::get('/letter-templates', [\App\Http\Controllers\Admin\Hrm\LetterTemplateController::class, 'index'])->name('letter-templates.index');
         });
 
         Route::middleware('permission:hrm.employees.letters.manage')->group(function () {
             Route::get('/letters/create', [\App\Http\Controllers\Admin\Hrm\LetterController::class, 'create'])->name('letters.create');
             Route::post('/letters', [\App\Http\Controllers\Admin\Hrm\LetterController::class, 'store'])->name('letters.store');
+            Route::post('/letters/{letter}/void', [\App\Http\Controllers\Admin\Hrm\LetterController::class, 'void'])->name('letters.void')->whereNumber('letter');
+            Route::post('/letters/{letter}/reissue', [\App\Http\Controllers\Admin\Hrm\LetterController::class, 'reissue'])->name('letters.reissue')->whereNumber('letter');
+            Route::get('/letter-templates/create', [\App\Http\Controllers\Admin\Hrm\LetterTemplateController::class, 'create'])->name('letter-templates.create');
+            Route::post('/letter-templates', [\App\Http\Controllers\Admin\Hrm\LetterTemplateController::class, 'store'])->name('letter-templates.store');
+            Route::get('/letter-templates/{letterTemplate}/edit', [\App\Http\Controllers\Admin\Hrm\LetterTemplateController::class, 'edit'])->name('letter-templates.edit')->whereNumber('letterTemplate');
+            Route::put('/letter-templates/{letterTemplate}', [\App\Http\Controllers\Admin\Hrm\LetterTemplateController::class, 'update'])->name('letter-templates.update')->whereNumber('letterTemplate');
+            Route::delete('/letter-templates/{letterTemplate}', [\App\Http\Controllers\Admin\Hrm\LetterTemplateController::class, 'destroy'])->name('letter-templates.destroy')->whereNumber('letterTemplate');
         });
 
         Route::middleware('permission:hrm.employees.discipline.view')->group(function () {
@@ -362,6 +375,8 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
             Route::post('/attendance/half-day-entry', [AttendanceHalfDayEntryController::class, 'store'])->name('attendance.half-day-entry.store');
             Route::get('/attendance/manual-punch/create', [AttendanceManualPunchController::class, 'create'])->name('attendance.manual-punch.create');
             Route::post('/attendance/manual-punch', [AttendanceManualPunchController::class, 'store'])->name('attendance.manual-punch.store');
+            Route::delete('/attendance/manual-punch/{manualPunch}', [AttendanceManualPunchController::class, 'destroy'])->name('attendance.manual-punch.destroy');
+            Route::delete('/attendance/half-day-entry/{halfDayEntry}', [AttendanceHalfDayEntryController::class, 'destroy'])->name('attendance.half-day-entry.destroy');
             Route::get('/attendance/gate-points/create', [AttendanceGatePointController::class, 'create'])->name('attendance.gate-points.create');
             Route::post('/attendance/gate-points', [AttendanceGatePointController::class, 'store'])->name('attendance.gate-points.store');
             Route::get('/attendance/gate-points/{gatePoint}/edit', [AttendanceGatePointController::class, 'edit'])->name('attendance.gate-points.edit');
@@ -640,13 +655,16 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
             Route::get('/finance/loans/{loan}', [FinanceLoanController::class, 'show'])->name('finance.loans.show')->whereNumber('loan');
         });
 
-        Route::middleware('hrm.any')->group(function () {
+        Route::middleware('permission:hrm.finance.settlement.view')->group(function () {
             Route::get('/finance/final-settlement', [FinanceFinalSettlementController::class, 'index'])->name('finance.final-settlement.index');
             Route::get('/finance/final-settlement/export', [FinanceFinalSettlementController::class, 'export'])->name('finance.final-settlement.export');
-            Route::get('/finance/final-settlement/create', [FinanceFinalSettlementController::class, 'create'])->name('finance.final-settlement.create');
-            Route::post('/finance/final-settlement', [FinanceFinalSettlementController::class, 'store'])->name('finance.final-settlement.store');
             Route::get('/finance/final-settlement/{finalSettlement}', [FinanceFinalSettlementController::class, 'show'])->name('finance.final-settlement.show')->whereNumber('finalSettlement');
             Route::get('/finance/final-settlement/{finalSettlement}/print', [FinanceFinalSettlementController::class, 'print'])->name('finance.final-settlement.print')->whereNumber('finalSettlement');
+        });
+
+        Route::middleware('permission:hrm.finance.settlement.manage')->group(function () {
+            Route::get('/finance/final-settlement/create', [FinanceFinalSettlementController::class, 'create'])->name('finance.final-settlement.create');
+            Route::post('/finance/final-settlement', [FinanceFinalSettlementController::class, 'store'])->name('finance.final-settlement.store');
             Route::post('/finance/final-settlement/{finalSettlement}/calculate', [FinanceFinalSettlementController::class, 'calculate'])->name('finance.final-settlement.calculate')->whereNumber('finalSettlement');
             Route::put('/finance/final-settlement/{finalSettlement}/adjustments', [FinanceFinalSettlementController::class, 'updateAdjustments'])->name('finance.final-settlement.adjustments')->whereNumber('finalSettlement');
             Route::put('/finance/final-settlement/{finalSettlement}/clearance', [FinanceFinalSettlementController::class, 'updateClearance'])->name('finance.final-settlement.clearance')->whereNumber('finalSettlement');
@@ -695,11 +713,15 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
             Route::post('/rmg/worker-transfer', [RmgWorkerTransferController::class, 'store'])->name('rmg.worker-transfer.store');
             Route::post('/rmg/worker-transfer/{workerTransfer}/approve', [RmgWorkerTransferController::class, 'approve'])
                 ->name('rmg.worker-transfer.approve')->whereNumber('workerTransfer');
+            Route::post('/rmg/worker-transfer/{workerTransfer}/reject', [RmgWorkerTransferController::class, 'reject'])
+                ->name('rmg.worker-transfer.reject')->whereNumber('workerTransfer');
 
             Route::get('/rmg/gate-pass/create', [RmgGatePassController::class, 'create'])->name('rmg.gate-pass.create');
             Route::post('/rmg/gate-pass', [RmgGatePassController::class, 'store'])->name('rmg.gate-pass.store');
             Route::post('/rmg/gate-pass/{gatePass}/approve', [RmgGatePassController::class, 'approve'])
                 ->name('rmg.gate-pass.approve')->whereNumber('gatePass');
+            Route::post('/rmg/gate-pass/{gatePass}/reject', [RmgGatePassController::class, 'reject'])
+                ->name('rmg.gate-pass.reject')->whereNumber('gatePass');
 
             Route::get('/rmg/manpower-planning/create', [RmgManpowerPlanningController::class, 'create'])->name('rmg.manpower-planning.create');
             Route::post('/rmg/manpower-planning', [RmgManpowerPlanningController::class, 'store'])->name('rmg.manpower-planning.store');
@@ -716,12 +738,28 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
                 Route::post('/rmg/' . $rmgSub, [GenericRmgController::class, 'store'])
                     ->defaults('submodule', $rmgSub)
                     ->name('rmg.' . $rmgSub . '.store');
+                Route::get('/rmg/' . $rmgSub . '/{record}/edit', [GenericRmgController::class, 'edit'])
+                    ->defaults('submodule', $rmgSub)
+                    ->name('rmg.' . $rmgSub . '.edit')
+                    ->whereNumber('record');
+                Route::put('/rmg/' . $rmgSub . '/{record}', [GenericRmgController::class, 'update'])
+                    ->defaults('submodule', $rmgSub)
+                    ->name('rmg.' . $rmgSub . '.update')
+                    ->whereNumber('record');
+                Route::delete('/rmg/' . $rmgSub . '/{record}', [GenericRmgController::class, 'destroy'])
+                    ->defaults('submodule', $rmgSub)
+                    ->name('rmg.' . $rmgSub . '.destroy')
+                    ->whereNumber('record');
             }
 
             Route::post('/rmg/salary-hold/{salaryHold}/release', [GenericRmgController::class, 'release'])
                 ->name('rmg.salary-hold.release')->whereNumber('salaryHold');
             Route::post('/rmg/production-incentive/{productionIncentive}/approve', [GenericRmgController::class, 'approveIncentive'])
                 ->name('rmg.production-incentive.approve')->whereNumber('productionIncentive');
+            Route::post('/rmg/osd-movement/{osdMovement}/approve', [GenericRmgController::class, 'approveOsd'])
+                ->name('rmg.osd-movement.approve')->whereNumber('osdMovement');
+            Route::post('/rmg/osd-movement/{osdMovement}/reject', [GenericRmgController::class, 'rejectOsd'])
+                ->name('rmg.osd-movement.reject')->whereNumber('osdMovement');
         });
 
         // Legacy payroll redirects
@@ -739,6 +777,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
         Route::middleware('permission:tms.settings.view')->group(function () {
             Route::get('/settings', [\App\Http\Controllers\Admin\Tms\SettingsController::class, 'index'])->name('settings.index');
             Route::get('/destinations', [\App\Http\Controllers\Admin\Tms\DestinationController::class, 'index'])->name('destinations.index');
+            Route::get('/gps', [\App\Http\Controllers\Admin\Tms\GpsController::class, 'index'])->name('gps.index');
         });
 
         Route::middleware('permission:tms.settings.manage')->group(function () {
@@ -752,6 +791,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
 
         Route::middleware('permission:tms.vehicles.view')->group(function () {
             Route::get('/vehicles', [\App\Http\Controllers\Admin\Tms\VehicleController::class, 'index'])->name('vehicles.index');
+            Route::get('/vehicles/{vehicle}', [\App\Http\Controllers\Admin\Tms\VehicleController::class, 'show'])->name('vehicles.show')->whereNumber('vehicle');
         });
 
         Route::middleware('permission:tms.vehicles.manage')->group(function () {
@@ -789,6 +829,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
 
         Route::middleware('permission:tms.drivers.view')->group(function () {
             Route::get('/drivers', [\App\Http\Controllers\Admin\Tms\DriverController::class, 'index'])->name('drivers.index');
+            Route::get('/drivers/{driver}', [\App\Http\Controllers\Admin\Tms\DriverController::class, 'show'])->name('drivers.show')->whereNumber('driver');
         });
 
         Route::middleware('permission:tms.drivers.manage')->group(function () {
@@ -808,6 +849,8 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
             Route::post('/requests/merge', [\App\Http\Controllers\Admin\Tms\RequestController::class, 'merge'])->name('requests.merge');
             Route::post('/requests/{transportRequest}/approve', [\App\Http\Controllers\Admin\Tms\RequestController::class, 'approve'])->name('requests.approve')->whereNumber('transportRequest');
             Route::post('/requests/{transportRequest}/reject', [\App\Http\Controllers\Admin\Tms\RequestController::class, 'reject'])->name('requests.reject')->whereNumber('transportRequest');
+            Route::post('/requests/{transportRequest}/cancel', [\App\Http\Controllers\Admin\Tms\RequestController::class, 'cancel'])->name('requests.cancel')->whereNumber('transportRequest');
+            Route::post('/requests/{transportRequest}/reassign', [\App\Http\Controllers\Admin\Tms\RequestController::class, 'reassign'])->name('requests.reassign')->whereNumber('transportRequest');
         });
 
         Route::middleware('permission:tms.trips.view')->group(function () {
@@ -816,33 +859,44 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
             Route::get('/odometer', [\App\Http\Controllers\Admin\Tms\OdometerController::class, 'index'])->name('odometer.index');
         });
 
-        Route::middleware('permission:tms.settings.manage')->group(function () {
+        Route::middleware('permission:tms.trips.manage')->group(function () {
             Route::post('/trips/{trip}/start', [\App\Http\Controllers\Admin\Tms\TripController::class, 'start'])->name('trips.start')->whereNumber('trip');
             Route::post('/trips/{trip}/end', [\App\Http\Controllers\Admin\Tms\TripController::class, 'end'])->name('trips.end')->whereNumber('trip');
+            Route::post('/trips/{trip}/abort', [\App\Http\Controllers\Admin\Tms\TripController::class, 'abort'])->name('trips.abort')->whereNumber('trip');
             Route::get('/odometer/morning/create', [\App\Http\Controllers\Admin\Tms\OdometerController::class, 'createMorning'])->name('odometer.morning.create');
             Route::post('/odometer/morning', [\App\Http\Controllers\Admin\Tms\OdometerController::class, 'storeMorning'])->name('odometer.morning.store');
             Route::get('/odometer/{odometer}/evening', [\App\Http\Controllers\Admin\Tms\OdometerController::class, 'createEvening'])->name('odometer.evening.create')->whereNumber('odometer');
             Route::post('/odometer/{odometer}/evening', [\App\Http\Controllers\Admin\Tms\OdometerController::class, 'storeEvening'])->name('odometer.evening.store')->whereNumber('odometer');
             Route::get('/odometer/{odometer}/edit', [\App\Http\Controllers\Admin\Tms\OdometerController::class, 'edit'])->name('odometer.edit')->whereNumber('odometer');
             Route::put('/odometer/{odometer}', [\App\Http\Controllers\Admin\Tms\OdometerController::class, 'update'])->name('odometer.update')->whereNumber('odometer');
+            Route::delete('/odometer/{odometer}', [\App\Http\Controllers\Admin\Tms\OdometerController::class, 'destroy'])->name('odometer.destroy')->whereNumber('odometer');
         });
 
         Route::middleware('permission:tms.overtime.manage')->group(function () {
             Route::post('/trips/{trip}/mark-ot-paid', [\App\Http\Controllers\Admin\Tms\TripController::class, 'markOtPaid'])->name('trips.mark-ot-paid')->whereNumber('trip');
+            Route::post('/trips/{trip}/unmark-ot-paid', [\App\Http\Controllers\Admin\Tms\TripController::class, 'unmarkOtPaid'])->name('trips.unmark-ot-paid')->whereNumber('trip');
         });
 
         Route::middleware('permission:tms.rental_charges.manage')->group(function () {
+            Route::get('/rental-charges', [\App\Http\Controllers\Admin\Tms\RentalChargeController::class, 'index'])->name('rental-charges.index');
             Route::post('/trips/{trip}/mark-rental-paid', [\App\Http\Controllers\Admin\Tms\TripController::class, 'markRentalChargePaid'])->name('trips.mark-rental-paid')->whereNumber('trip');
+            Route::post('/trips/{trip}/unmark-rental-paid', [\App\Http\Controllers\Admin\Tms\TripController::class, 'unmarkRentalChargePaid'])->name('trips.unmark-rental-paid')->whereNumber('trip');
             Route::post('/rental-charges/{charge}/mark-paid', [\App\Http\Controllers\Admin\Tms\RentalChargeController::class, 'markPaid'])->name('rental-charges.mark-paid')->whereNumber('charge');
+            Route::post('/rental-charges/{charge}/unmark-paid', [\App\Http\Controllers\Admin\Tms\RentalChargeController::class, 'markUnpaid'])->name('rental-charges.unmark-paid')->whereNumber('charge');
         });
 
         Route::middleware('permission:tms.fuel.view')->group(function () {
             Route::get('/fuel', [\App\Http\Controllers\Admin\Tms\FuelController::class, 'index'])->name('fuel.index');
+            Route::get('/fuel/{fuelLog}', [\App\Http\Controllers\Admin\Tms\FuelController::class, 'show'])->name('fuel.show')->whereNumber('fuelLog');
+            Route::get('/fuel/{fuelLog}/receipt', [\App\Http\Controllers\Admin\Tms\FuelController::class, 'downloadReceipt'])->name('fuel.receipt')->whereNumber('fuelLog');
         });
 
         Route::middleware('permission:tms.fuel.manage')->group(function () {
             Route::get('/fuel/create', [\App\Http\Controllers\Admin\Tms\FuelController::class, 'create'])->name('fuel.create');
             Route::post('/fuel', [\App\Http\Controllers\Admin\Tms\FuelController::class, 'store'])->name('fuel.store');
+            Route::get('/fuel/{fuelLog}/edit', [\App\Http\Controllers\Admin\Tms\FuelController::class, 'edit'])->name('fuel.edit')->whereNumber('fuelLog');
+            Route::put('/fuel/{fuelLog}', [\App\Http\Controllers\Admin\Tms\FuelController::class, 'update'])->name('fuel.update')->whereNumber('fuelLog');
+            Route::delete('/fuel/{fuelLog}', [\App\Http\Controllers\Admin\Tms\FuelController::class, 'destroy'])->name('fuel.destroy')->whereNumber('fuelLog');
         });
 
         Route::middleware('permission:tms.maintenance.view')->group(function () {
@@ -852,14 +906,23 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
             Route::get('/maintenance/posting', [\App\Http\Controllers\Admin\Tms\MaintenancePostingController::class, 'index'])->name('maintenance.posting');
             Route::get('/maintenance/posting/print', [\App\Http\Controllers\Admin\Tms\MaintenancePostingController::class, 'print'])->name('maintenance.posting.print');
             Route::get('/maintenance/posting/export', [\App\Http\Controllers\Admin\Tms\MaintenancePostingController::class, 'export'])->name('maintenance.posting.export');
+            Route::get('/maintenance/parts', [\App\Http\Controllers\Admin\Tms\MaintenancePartController::class, 'index'])->name('maintenance.parts.index');
         });
 
         Route::middleware('permission:tms.maintenance.manage')->group(function () {
+            Route::get('/maintenance/parts/create', [\App\Http\Controllers\Admin\Tms\MaintenancePartController::class, 'create'])->name('maintenance.parts.create');
+            Route::post('/maintenance/parts', [\App\Http\Controllers\Admin\Tms\MaintenancePartController::class, 'store'])->name('maintenance.parts.store');
+            Route::get('/maintenance/parts/{part}/edit', [\App\Http\Controllers\Admin\Tms\MaintenancePartController::class, 'edit'])->name('maintenance.parts.edit')->whereNumber('part');
+            Route::put('/maintenance/parts/{part}', [\App\Http\Controllers\Admin\Tms\MaintenancePartController::class, 'update'])->name('maintenance.parts.update')->whereNumber('part');
+            Route::delete('/maintenance/parts/{part}', [\App\Http\Controllers\Admin\Tms\MaintenancePartController::class, 'destroy'])->name('maintenance.parts.destroy')->whereNumber('part');
+            Route::post('/maintenance/posting/bulk-post', [\App\Http\Controllers\Admin\Tms\MaintenancePostingController::class, 'bulkPost'])->name('maintenance.posting.bulk-post');
             Route::get('/maintenance/vehicles/{vehicle}/bills/create', [\App\Http\Controllers\Admin\Tms\MaintenanceController::class, 'createBill'])->name('maintenance.bills.create')->whereNumber('vehicle');
             Route::post('/maintenance/vehicles/{vehicle}/bills', [\App\Http\Controllers\Admin\Tms\MaintenanceController::class, 'storeBill'])->name('maintenance.bills.store')->whereNumber('vehicle');
             Route::get('/maintenance/bills/{bill}/edit', [\App\Http\Controllers\Admin\Tms\MaintenanceController::class, 'editBill'])->name('maintenance.bills.edit')->whereNumber('bill');
             Route::put('/maintenance/bills/{bill}', [\App\Http\Controllers\Admin\Tms\MaintenanceController::class, 'updateBill'])->name('maintenance.bills.update')->whereNumber('bill');
             Route::delete('/maintenance/bills/{bill}', [\App\Http\Controllers\Admin\Tms\MaintenanceController::class, 'destroyBill'])->name('maintenance.bills.destroy')->whereNumber('bill');
+            Route::post('/maintenance/bills/{bill}/post', [\App\Http\Controllers\Admin\Tms\MaintenanceController::class, 'markPostedToFinance'])->name('maintenance.bills.post')->whereNumber('bill');
+            Route::post('/maintenance/bills/{bill}/unpost', [\App\Http\Controllers\Admin\Tms\MaintenanceController::class, 'unpostFromFinance'])->name('maintenance.bills.unpost')->whereNumber('bill');
         });
 
         Route::middleware('permission:tms.reports.view')->group(function () {
@@ -873,6 +936,7 @@ Route::prefix('careers')->name('careers.')->group(function () {
     Route::get('/', [\App\Http\Controllers\Careers\CareersController::class, 'index'])->name('index');
     Route::get('/track', [\App\Http\Controllers\Careers\CareersController::class, 'trackForm'])->name('track');
     Route::post('/track', [\App\Http\Controllers\Careers\CareersController::class, 'track'])->name('track.submit')->middleware('throttle:10,1');
+    Route::post('/offer-response', [\App\Http\Controllers\Careers\CareersController::class, 'respondToOffer'])->name('offer.respond')->middleware('throttle:10,1');
     Route::get('/success/{application}', [\App\Http\Controllers\Careers\CareersController::class, 'success'])->name('success')->whereNumber('application');
     Route::get('/{posting}', [\App\Http\Controllers\Careers\CareersController::class, 'show'])->name('show')->whereNumber('posting');
     Route::get('/{posting}/apply', [\App\Http\Controllers\Careers\CareersController::class, 'apply'])->name('apply')->whereNumber('posting');
@@ -934,6 +998,8 @@ Route::prefix('employee')->name('employee.')->group(function () {
             Route::get('/requests/create', [\App\Http\Controllers\Employee\Transport\RequestController::class, 'create'])->name('requests.create');
             Route::post('/requests', [\App\Http\Controllers\Employee\Transport\RequestController::class, 'store'])->name('requests.store');
             Route::get('/requests/{transportRequest}', [\App\Http\Controllers\Employee\Transport\RequestController::class, 'show'])->name('requests.show')->whereNumber('transportRequest');
+            Route::get('/requests/{transportRequest}/edit', [\App\Http\Controllers\Employee\Transport\RequestController::class, 'edit'])->name('requests.edit')->whereNumber('transportRequest');
+            Route::put('/requests/{transportRequest}', [\App\Http\Controllers\Employee\Transport\RequestController::class, 'update'])->name('requests.update')->whereNumber('transportRequest');
             Route::post('/requests/{transportRequest}/cancel', [\App\Http\Controllers\Employee\Transport\RequestController::class, 'cancel'])->name('requests.cancel')->whereNumber('transportRequest');
             Route::get('/trips', [\App\Http\Controllers\Employee\Transport\TripController::class, 'index'])->name('trips');
             Route::post('/trips/{trip}/start', [\App\Http\Controllers\Employee\Transport\TripController::class, 'start'])->name('trips.start')->whereNumber('trip');

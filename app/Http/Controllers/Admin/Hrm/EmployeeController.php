@@ -251,6 +251,18 @@ class EmployeeController extends Controller
     {
         $this->authorizeEmployeeAccess($request, $employee);
 
+        if ($employee->separations()->whereIn('status', ['pending', 'approved'])->exists()) {
+            return back()->with('error', 'Cannot delete employee with an active or pending separation request.');
+        }
+
+        if ($employee->loanAccounts()->where('status', 'active')->exists()) {
+            return back()->with('error', 'Cannot delete employee with an active loan account. Settle loans first.');
+        }
+
+        if ($employee->payrollItems()->whereHas('period', fn ($q) => $q->where('status', 'frozen'))->exists()) {
+            return back()->with('error', 'Cannot delete employee with frozen payroll history.');
+        }
+
         $employee->delete();
 
         return redirect()->route('admin.hrm.employees.index')

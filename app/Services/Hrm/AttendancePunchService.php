@@ -3,6 +3,7 @@
 namespace App\Services\Hrm;
 
 use App\Models\Factory;
+use App\Models\Hrm\AttendanceDailyLog;
 use App\Models\Hrm\AttendancePeriod;
 use App\Models\Hrm\AttendanceRawPunch;
 use App\Models\Hrm\BiometricDevice;
@@ -255,6 +256,37 @@ class AttendancePunchService
             in_array($value, ['1', 'out', 'check_out', 'checkout'], true) => 'out',
             default => 'unknown',
         };
+    }
+
+    public function reprocessDay(Employee $employee, Carbon $punchedAt): void
+    {
+        $date = $punchedAt->copy()->startOfDay();
+        $period = AttendancePeriod::getOrCreateForMonth($employee->factory_id, $date->year, $date->month);
+
+        if ($period->isFrozen()) {
+            throw ValidationException::withMessages([
+                'attendance_date' => 'Attendance period is frozen.',
+            ]);
+        }
+
+        AttendanceRawPunch::query()
+            ->where('employee_id', $employee->id)
+            ->whereDate('punched_at', $date->toDateString())
+            ->update(['processed_at' => null]);
+
+        AttendanceDailyLog::query()
+            ->where('employee_id', $employee->id)
+            ->whereDate('attendance_date', $date->toDateString())
+            ->delete();
+
+        $this->processor->processDate($employee->factory_id, $date, $period);
+        $this->processor->markAbsences($employee->factory_id, $date, $date, $period);
+
+        AttendanceRawPunch::query()
+            ->where('employee_id', $employee->id)
+            ->whereDate('punched_at', $date->toDateString())
+            ->whereNotNull('processed_at')
+            ->update(['processed_at' => now()]);
     }
 
     private function autoProcess(AttendanceRawPunch $punch): void

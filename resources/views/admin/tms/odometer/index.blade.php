@@ -79,6 +79,11 @@
                             @endif
                             @if(auth()->user()->canManageTmsSubmodule('odometer'))
                                 <a href="{{ route('admin.tms.odometer.edit', $log) }}" class="erp-btn-sm-secondary">Edit</a>
+                                <form method="POST" action="{{ route('admin.tms.odometer.destroy', $log) }}" class="inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="erp-btn-sm-secondary" data-confirm="Delete this daily KM log?">Delete</button>
+                                </form>
                             @endif
                         </div>
                     </td>

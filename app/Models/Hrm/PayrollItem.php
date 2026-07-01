@@ -107,6 +107,10 @@ class PayrollItem extends Model
             'TDS'    => 'Income Tax (TDS)',
             'PF'     => 'Provident Fund',
             'LOAN'   => 'Loan Recovery',
+            'CANTEEN'=> 'Canteen Deduction',
+            'FEST_BONUS' => 'Festival Bonus',
+            'PERF_BONUS' => 'Performance Bonus',
+            'PROD_INCENTIVE' => 'Production Incentive',
             default  => $this->headLabels()[$code] ?? $code,
         };
     }

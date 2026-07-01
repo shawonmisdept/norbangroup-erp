@@ -35,6 +35,7 @@ class DashboardController extends Controller
                     'from'       => $from->toDateString(),
                     'to'         => $to->toDateString(),
                 ],
+                'canManagePostings' => $request->user()?->hasPermission('hrm.recruitment.postings.manage') ?? false,
             ]
         ));
     }

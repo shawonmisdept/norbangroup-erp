@@ -195,9 +195,51 @@ class CareersController extends Controller
                 ->withErrors(['application_no' => 'No application found with these details.']);
         }
 
-        $application->load(['jobPosting', 'factory', 'interviews']);
+        $application->load(['jobPosting', 'factory', 'interviews', 'offerLetters']);
         $upcomingInterview = $application->upcomingInterview();
+        $latestOffer = $application->latestOfferLetter();
 
-        return view('careers.track-result', compact('application', 'upcomingInterview'));
+        return view('careers.track-result', compact('application', 'upcomingInterview', 'latestOffer'));
+    }
+
+    public function respondToOffer(Request $request)
+    {
+        $validated = $request->validate([
+            'application_no' => ['required', 'string', 'max:30'],
+            'phone'          => ['required', 'string', 'max:20'],
+            'response'       => ['required', 'in:accepted,declined'],
+            'decline_reason' => ['nullable', 'required_if:response,declined', 'string', 'max:1000'],
+        ]);
+
+        $application = $this->service->trackApplication(
+            $validated['application_no'],
+            $validated['phone'],
+        );
+
+        if (! $application) {
+            return back()
+                ->withInput()
+                ->withErrors(['application_no' => 'No application found with these details.']);
+        }
+
+        $latestOffer = $application->latestOfferLetter();
+
+        if (! $latestOffer) {
+            return back()->with('error', 'No offer letter found for this application.');
+        }
+
+        $this->service->respondToOffer(
+            $application,
+            $latestOffer,
+            $validated['response'],
+            $validated['decline_reason'] ?? null,
+        );
+
+        $message = $validated['response'] === 'accepted'
+            ? 'Thank you! Your acceptance has been recorded. HR will contact you with next steps.'
+            : 'Your response has been recorded. Thank you for letting us know.';
+
+        return redirect()->route('careers.track')
+            ->with('success', $message);
     }
 }

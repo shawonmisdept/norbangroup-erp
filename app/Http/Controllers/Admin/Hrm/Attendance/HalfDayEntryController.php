@@ -74,4 +74,17 @@ class HalfDayEntryController extends Controller
             ->route('admin.hrm.attendance.half-day-entry.index')
             ->with('success', 'Half day entry saved.');
     }
+
+    public function destroy(Request $request, \App\Models\Hrm\AttendanceDailyLog $halfDayEntry, HalfDayEntryService $service)
+    {
+        abort_unless($halfDayEntry->status === 'half_day' && $halfDayEntry->is_manual_half_day, 404);
+
+        $this->authorizeFactoryAccess($request, $halfDayEntry->factory_id);
+
+        $service->remove($halfDayEntry);
+
+        return redirect()
+            ->route('admin.hrm.attendance.half-day-entry.index')
+            ->with('success', 'Half day entry removed.');
+    }
 }

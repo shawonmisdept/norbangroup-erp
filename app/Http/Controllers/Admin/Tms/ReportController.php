@@ -11,7 +11,10 @@ use App\Models\Tms\TmsMaintenanceBill;
 use App\Models\Tms\TmsRentalVehicleCharge;
 use App\Models\Tms\TmsTransportRequest;
 use App\Models\Tms\TmsTripLog;
+use App\Services\Tms\DepartmentChargebackReportService;
+use App\Services\Tms\DepartmentRequestReportService;
 use App\Services\Tms\FleetCostReportService;
+use App\Services\Tms\PayrollOtExportService;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
@@ -21,12 +24,15 @@ class ReportController extends Controller
 
     public function __construct(
         private FleetCostReportService $fleetCostReport,
+        private DepartmentRequestReportService $departmentRequestReport,
+        private DepartmentChargebackReportService $departmentChargebackReport,
+        private PayrollOtExportService $payrollOtExport,
     ) {}
 
     public function index(Request $request)
     {
         $tab = $request->input('tab', 'requests');
-        $filters = $request->only(['factory_id', 'from', 'to', 'status', 'destination', 'driver_id', 'vehicle_id', 'payment_status']);
+        $filters = $request->only(['factory_id', 'from', 'to', 'status', 'destination', 'driver_id', 'vehicle_id', 'payment_status', 'department_id']);
 
         $summary = null;
         if ($tab === 'fleet_cost') {
@@ -34,34 +40,39 @@ class ReportController extends Controller
         }
 
         $data = match ($tab) {
-            'trips'          => $this->tripRows($request, $filters),
-            'fuel'           => $this->fuelRows($request, $filters),
-            'odometer'       => $this->odometerRows($request, $filters),
-            'ot'             => $this->otRows($request, $filters),
-            'maintenance'    => $this->maintenanceRows($request, $filters),
-            'rental_charges' => $this->rentalChargeRows($request, $filters),
-            'fleet_cost'     => null,
-            default          => $this->requestRows($request, $filters),
+            'trips'                 => $this->tripRows($request, $filters),
+            'fuel'                  => $this->fuelRows($request, $filters),
+            'odometer'              => $this->odometerRows($request, $filters),
+            'ot'                    => $this->otRows($request, $filters),
+            'maintenance'           => $this->maintenanceRows($request, $filters),
+            'rental_charges'        => $this->rentalChargeRows($request, $filters),
+            'fleet_cost'            => null,
+            'requests_by_department'=> $this->departmentRequestReport->build($request, $filters),
+            'department_chargeback' => $this->departmentChargebackReport->build($request, $filters),
+            'payroll_ot'            => $this->payrollOtExport->rows($request, $filters),
+            default                 => $this->requestRows($request, $filters),
         };
 
         return view('admin.tms.reports.index', [
-            'tab'       => $tab,
-            'factories' => $this->factoryOptions($request),
-            'filters'   => $filters,
-            'rows'      => $data,
-            'summary'   => $summary,
-            'statuses'  => config('tms.request_statuses'),
+            'tab'         => $tab,
+            'factories'   => $this->factoryOptions($request),
+            'departments' => $this->departmentOptions($request, $filters['factory_id'] ?? null),
+            'filters'     => $filters,
+            'rows'        => $data,
+            'summary'     => $summary,
+            'statuses'    => config('tms.request_statuses'),
         ]);
     }
 
     public function export(Request $request): StreamedResponse
     {
         $validated = $request->validate([
-            'report'         => ['required', 'in:requests,trips,fuel,odometer,ot,maintenance,rental_charges,fleet_cost'],
+            'report'         => ['required', 'in:requests,trips,fuel,odometer,ot,maintenance,rental_charges,fleet_cost,requests_by_department,department_chargeback,payroll_ot'],
             'factory_id'     => ['nullable', 'exists:factories,id'],
             'from'           => ['nullable', 'date'],
             'to'             => ['nullable', 'date', 'after_or_equal:from'],
             'payment_status' => ['nullable', 'in:pending,paid'],
+            'department_id'  => ['nullable', 'integer'],
         ]);
 
         if (! empty($validated['factory_id'])) {
@@ -80,8 +91,11 @@ class ReportController extends Controller
                 'odometer'       => $this->exportOdometer($out, $request, $validated),
                 'ot'             => $this->exportOt($out, $request, $validated),
                 'maintenance'    => $this->exportMaintenance($out, $request, $validated),
-                'rental_charges' => $this->exportRentalCharges($out, $request, $validated),
-                'fleet_cost'     => $this->exportFleetCost($out, $request, $validated),
+                'rental_charges'        => $this->exportRentalCharges($out, $request, $validated),
+                'fleet_cost'            => $this->exportFleetCost($out, $request, $validated),
+                'requests_by_department'=> $this->exportRequestsByDepartment($out, $request, $validated),
+                'department_chargeback' => $this->exportDepartmentChargeback($out, $request, $validated),
+                'payroll_ot'            => $this->exportPayrollOt($out, $request, $validated),
             };
 
             fclose($out);
@@ -96,6 +110,16 @@ class ReportController extends Controller
 
         if (! empty($filters['status'])) {
             $query->where('status', $filters['status']);
+        }
+
+        if (! empty($filters['department_id'])) {
+            $query->whereHas('employee', function ($q) use ($filters) {
+                if ((int) $filters['department_id'] === 0) {
+                    $q->whereNull('department_id');
+                } else {
+                    $q->where('department_id', $filters['department_id']);
+                }
+            });
         }
 
         return $query->latest('pickup_at')->paginate(25)->withQueryString();
@@ -368,6 +392,84 @@ class ReportController extends Controller
         fputcsv($out, ['Driver Pay', $summary['driver_pay_total'], '', '', $summary['driver_pay_paid'], $summary['driver_pay_pending']]);
         fputcsv($out, ['Maintenance', $summary['maintenance_total'], $summary['maintenance_company'], $summary['maintenance_rental_party'], '', '']);
         fputcsv($out, ['Grand Total', $summary['grand_total'], '', '', '', '']);
+    }
+
+    private function exportRequestsByDepartment($out, Request $request, array $filters): void
+    {
+        fputcsv($out, [
+            'Department', 'Requests', 'Passengers', 'Pending', 'Approved', 'In Progress', 'Completed', 'Cancelled', 'Rejected',
+        ]);
+
+        foreach ($this->departmentRequestReport->build($request, $filters) as $row) {
+            fputcsv($out, [
+                $row->department_name,
+                $row->request_count,
+                $row->passenger_count,
+                $row->pending_count,
+                $row->approved_count,
+                $row->in_progress_count,
+                $row->completed_count,
+                $row->cancelled_count,
+                $row->rejected_count,
+            ]);
+        }
+    }
+
+    private function exportDepartmentChargeback($out, Request $request, array $filters): void
+    {
+        fputcsv($out, ['Department', 'Completed Trips', 'Passengers', 'Driver Pay Total', 'OT Hours']);
+
+        foreach ($this->departmentChargebackReport->build($request, $filters) as $row) {
+            fputcsv($out, [
+                $row->department_name,
+                $row->trip_count,
+                $row->passenger_count,
+                $row->driver_pay_total,
+                $row->ot_hours_total,
+            ]);
+        }
+    }
+
+    private function exportPayrollOt($out, Request $request, array $filters): void
+    {
+        fputcsv($out, [
+            'Period', 'Duty Date', 'Trip ID', 'Employee Code', 'Employee Name', 'Driver Type',
+            'Vehicle', 'OT Hours', 'OT Hourly', 'Night Bill', 'Holiday Bill', 'Total Pay', 'Status', 'Paid At',
+        ]);
+
+        foreach ($this->payrollOtExport->rows($request, $filters) as $row) {
+            fputcsv($out, [
+                $row->period,
+                $row->duty_date,
+                $row->trip_id,
+                $row->employee_code,
+                $row->employee_name,
+                $row->driver_type,
+                $row->vehicle,
+                $row->ot_hours,
+                $row->ot_hourly_amount,
+                $row->night_bill_amount,
+                $row->holiday_duty_amount,
+                $row->total_driver_pay,
+                $row->payment_status,
+                $row->paid_at,
+            ]);
+        }
+    }
+
+    /** @return array<int, string> */
+    private function departmentOptions(Request $request, ?int $factoryId = null): array
+    {
+        $query = \App\Models\Department::query()
+            ->where('is_active', true)
+            ->orderBy('name');
+
+        $fid = $factoryId ?? $request->user()?->factory_id;
+        if ($fid) {
+            $query->where('factory_id', $fid);
+        }
+
+        return [0 => 'Unassigned'] + $query->pluck('name', 'id')->all();
     }
 
     private function applyFactoryScope($query, Request $request, ?string $via = null): void

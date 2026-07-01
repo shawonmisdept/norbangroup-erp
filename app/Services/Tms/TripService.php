@@ -9,6 +9,7 @@ use App\Models\Tms\TmsRentalDriver;
 use App\Models\Tms\TmsTransportRequest;
 use App\Models\Tms\TmsTripLog;
 use App\Models\Tms\TmsVehicle;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 
@@ -169,6 +170,61 @@ class TripService
             }
 
             return $tripLog->fresh();
+        });
+    }
+
+    public function adminAbort(TmsTripLog $tripLog, User $user, string $reason): TmsTripLog
+    {
+        $requests = $this->linkedRequests($tripLog);
+
+        if ($tripLog->trip_status !== 'in_progress') {
+            throw ValidationException::withMessages([
+                'trip' => 'Only in-progress trips can be aborted.',
+            ]);
+        }
+
+        return DB::transaction(function () use ($tripLog, $requests, $user, $reason) {
+            $tripLog->loadMissing('vehicle');
+
+            $tripLog->update([
+                'duty_end_at'          => now(),
+                'trip_status'          => 'completed',
+                'end_km'               => null,
+                'total_km'             => null,
+                'ot_hours'             => 0,
+                'ot_amount'            => 0,
+                'ot_hourly_amount'     => 0,
+                'night_bill_amount'    => 0,
+                'holiday_duty_amount'  => 0,
+                'total_driver_pay'     => 0,
+                'bill_type'            => 'none',
+                'rental_km_rate'       => null,
+                'rental_charge_amount' => 0,
+            ]);
+
+            if ($tripLog->vehicle) {
+                $tripLog->vehicle->update(['status' => 'available']);
+            }
+
+            foreach ($requests as $request) {
+                $from = $request->status;
+                $request->update([
+                    'status'       => 'cancelled',
+                    'cancelled_at' => now(),
+                ]);
+
+                app(TransportRequestService::class)->recordStatusChange(
+                    $request,
+                    $from,
+                    'cancelled',
+                    userId: $user->id,
+                    notes: 'Aborted by admin: ' . $reason,
+                );
+
+                $this->notifications->requestCancelled($request->fresh(['employee', 'driver.employee', 'rentalDriver']));
+            }
+
+            return $tripLog->fresh(['transportRequests.employee', 'vehicle', 'driver.employee', 'rentalDriver']);
         });
     }
 

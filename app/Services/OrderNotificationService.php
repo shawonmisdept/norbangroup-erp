@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Mail\AdminOrderNotificationMail;
+use App\Mail\OrderQuoteMail;
 use App\Mail\OrderReceivedMail;
 use App\Mail\StatusUpdatedMail;
 use App\Models\AppSetting;
@@ -46,6 +47,17 @@ class OrderNotificationService
         if ($settings->notify_popup_enabled && $settings->notify_popup_admin_on_status) {
             $this->notifyAdmins(new RequirementStatusNotification($order, $previousStatus));
         }
+    }
+
+    public function quoteSent(Order $order): void
+    {
+        $settings = AppSetting::current();
+
+        if (! $settings->notify_mail_client_on_status || ! $order->quote_amount) {
+            return;
+        }
+
+        $this->sendMail($order->email, new OrderQuoteMail($order));
     }
 
     private function sendMail(string $recipient, object $mailable): void

@@ -118,6 +118,88 @@ class GenericRmgController extends Controller
             ->with('success', $label . ' record saved.');
     }
 
+    public function edit(Request $request, string $submodule, int $record)
+    {
+        $this->assertGenericSubmodule($submodule);
+        $model = $this->findRecord($submodule, $record);
+        $this->authorizeFactoryAccess($request, $model->factory_id);
+
+        if (! $this->canEditRecord($submodule, $model)) {
+            return redirect()->route("admin.hrm.rmg.{$submodule}.index")
+                ->with('error', 'This record cannot be edited.');
+        }
+
+        $config = config("hrm.rmg_submodules.{$submodule}");
+
+        return view('admin.hrm.rmg.generic.form', [
+            'submodule' => $submodule,
+            'config'    => $config,
+            'record'    => $model,
+            'factories' => $this->factoryOptions($request),
+            'employees' => $this->employeeOptions($request, $model->employee_id ?? null),
+            'lines'     => $this->lineOptions($request),
+            'buyers'    => Buyer::orderBy('name')->pluck('name', 'id')->all(),
+            'periods'   => $this->payrollPeriodOptions($request),
+            'types'     => $this->typeOptions($submodule),
+        ]);
+    }
+
+    public function update(Request $request, string $submodule, int $record)
+    {
+        $this->assertGenericSubmodule($submodule);
+        $model = $this->findRecord($submodule, $record);
+        $this->authorizeFactoryAccess($request, $model->factory_id);
+
+        if (! $this->canEditRecord($submodule, $model)) {
+            return back()->with('error', 'This record cannot be edited.');
+        }
+
+        $validated = $this->validateStore($request, $submodule);
+        $this->authorizeFactoryAccess($request, (int) $validated['factory_id']);
+
+        if (isset($validated['employee_id'])) {
+            $employee = Employee::findOrFail($validated['employee_id']);
+            abort_if($employee->factory_id !== (int) $validated['factory_id'], 422);
+        }
+
+        if ($submodule === 'production-incentive') {
+            $validated['total_amount'] = (float) $validated['output_qty'] * (float) $validated['incentive_rate'];
+        }
+
+        if ($submodule === 'buyer-holiday') {
+            $validated['is_active'] = $request->boolean('is_active', true);
+        }
+
+        if ($submodule === 'sub-contract') {
+            $validated['status'] = $validated['status'] ?? $model->status;
+        }
+
+        $model->update($validated);
+
+        $label = config("hrm.rmg_submodules.{$submodule}.label", ucfirst($submodule));
+
+        return redirect()->route("admin.hrm.rmg.{$submodule}.index")
+            ->with('success', $label . ' record updated.');
+    }
+
+    public function destroy(Request $request, string $submodule, int $record)
+    {
+        $this->assertGenericSubmodule($submodule);
+        $model = $this->findRecord($submodule, $record);
+        $this->authorizeFactoryAccess($request, $model->factory_id);
+
+        if (! $this->canDeleteRecord($submodule, $model)) {
+            return back()->with('error', 'This record cannot be deleted.');
+        }
+
+        $model->delete();
+
+        $label = config("hrm.rmg_submodules.{$submodule}.label", ucfirst($submodule));
+
+        return redirect()->route("admin.hrm.rmg.{$submodule}.index")
+            ->with('success', $label . ' record deleted.');
+    }
+
     public function release(Request $request, SalaryHold $salaryHold)
     {
         $this->authorizeFactoryAccess($request, $salaryHold->factory_id);
@@ -151,6 +233,40 @@ class GenericRmgController extends Controller
 
         return redirect()->route('admin.hrm.rmg.production-incentive.index')
             ->with('success', 'Production incentive approved.');
+    }
+
+    public function approveOsd(Request $request, OsdMovement $osdMovement)
+    {
+        $this->authorizeFactoryAccess($request, $osdMovement->factory_id);
+
+        if ($osdMovement->status !== 'pending') {
+            return back()->with('error', 'Only pending OSD movements can be approved.');
+        }
+
+        $osdMovement->update([
+            'status'      => 'approved',
+            'approved_by' => $request->user()->id,
+        ]);
+
+        return redirect()->route('admin.hrm.rmg.osd-movement.index')
+            ->with('success', 'OSD movement approved.');
+    }
+
+    public function rejectOsd(Request $request, OsdMovement $osdMovement)
+    {
+        $this->authorizeFactoryAccess($request, $osdMovement->factory_id);
+
+        if ($osdMovement->status !== 'pending') {
+            return back()->with('error', 'Only pending OSD movements can be rejected.');
+        }
+
+        $osdMovement->update([
+            'status'      => 'rejected',
+            'approved_by' => $request->user()->id,
+        ]);
+
+        return redirect()->route('admin.hrm.rmg.osd-movement.index')
+            ->with('success', 'OSD movement rejected.');
     }
 
     private function assertGenericSubmodule(string $submodule): void
@@ -345,11 +461,19 @@ class GenericRmgController extends Controller
         return $validated;
     }
 
-    private function employeeOptions(Request $request): array
+    /** @return array<int, string> */
+    private function employeeOptions(Request $request, ?int $includeId = null): array
     {
-        $query = Employee::query()
-            ->whereIn('status', ['active', 'probation'])
-            ->orderBy('name');
+        $query = Employee::query()->orderBy('name');
+
+        if ($includeId) {
+            $query->where(function ($q) use ($includeId) {
+                $q->whereIn('status', ['active', 'probation'])
+                    ->orWhere('id', $includeId);
+            });
+        } else {
+            $query->whereIn('status', ['active', 'probation']);
+        }
 
         $this->scopeToUserFactory($query, $request);
 
@@ -370,5 +494,32 @@ class GenericRmgController extends Controller
         $this->scopeToUserFactory($query, $request);
 
         return $query->get()->mapWithKeys(fn (PayrollPeriod $p) => [$p->id => $p->periodLabel()])->all();
+    }
+
+    private function findRecord(string $submodule, int $id): Model
+    {
+        return $this->modelClass($submodule)::findOrFail($id);
+    }
+
+    private function canEditRecord(string $submodule, Model $record): bool
+    {
+        return match ($submodule) {
+            'canteen', 'medical', 'training', 'buyer-holiday', 'sub-contract' => true,
+            'osd-movement'         => $record->status === 'pending',
+            'salary-hold'          => false,
+            'production-incentive' => $record->status === 'draft',
+            default                => false,
+        };
+    }
+
+    private function canDeleteRecord(string $submodule, Model $record): bool
+    {
+        return match ($submodule) {
+            'canteen', 'medical', 'training', 'buyer-holiday', 'sub-contract' => true,
+            'osd-movement'         => in_array($record->status, ['pending', 'rejected'], true),
+            'salary-hold'          => $record->status === 'released',
+            'production-incentive' => $record->status === 'draft',
+            default                => false,
+        };
     }
 }

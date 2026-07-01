@@ -61,6 +61,7 @@ class TmsWorkflowTest extends TestCase
                 'tms.vehicles.view',
                 'tms.drivers.view',
                 'tms.trips.view',
+                'tms.trips.manage',
             ],
         ]);
 
@@ -477,5 +478,180 @@ class TmsWorkflowTest extends TestCase
         $trip->refresh();
         $this->assertSame(0.0, (float) $trip->ot_hours);
         $this->assertSame(0.0, (float) $trip->ot_amount);
+    }
+
+    public function test_employee_can_edit_pending_request(): void
+    {
+        $transportRequest = TmsTransportRequest::create([
+            'factory_id'         => $this->factory->id,
+            'employee_id'        => $this->requester->id,
+            'pickup_location'    => 'Gate',
+            'destination_custom' => 'City',
+            'pickup_at'          => '2026-06-17 10:00',
+            'purpose'            => 'Test',
+            'passenger_count'    => 1,
+            'status'             => 'pending',
+        ]);
+
+        $this->actingAs($this->requesterPortal, 'employee')
+            ->put(route('employee.transport.requests.update', $transportRequest), [
+                'pickup_location'    => 'Main Gate Updated',
+                'destination_custom' => 'Airport',
+                'pickup_at'          => '2026-06-17 14:00',
+                'purpose'            => 'Updated purpose',
+                'passenger_count'    => 2,
+            ])
+            ->assertRedirect(route('employee.transport.requests.show', $transportRequest));
+
+        $transportRequest->refresh();
+        $this->assertSame('Main Gate Updated', $transportRequest->pickup_location);
+        $this->assertSame(2, $transportRequest->passenger_count);
+        $this->assertSame('pending', $transportRequest->status);
+    }
+
+    public function test_admin_can_cancel_approved_request_before_trip_starts(): void
+    {
+        $transportRequest = TmsTransportRequest::create([
+            'factory_id'         => $this->factory->id,
+            'employee_id'        => $this->requester->id,
+            'pickup_location'    => 'Gate',
+            'destination_custom' => 'City',
+            'pickup_at'          => '2026-06-17 10:00',
+            'purpose'            => 'Test',
+            'passenger_count'    => 1,
+            'status'             => 'pending',
+        ]);
+
+        $this->actingAs($this->authority)
+            ->post(route('admin.tms.requests.approve', $transportRequest), [
+                'driver_type' => 'company',
+                'driver_id'   => $this->driver->id,
+            ]);
+
+        $transportRequest->refresh();
+        $tripId = $transportRequest->trip_log_id;
+
+        $this->actingAs($this->authority)
+            ->post(route('admin.tms.requests.cancel', $transportRequest), [
+                'reason' => 'No longer needed',
+            ])
+            ->assertRedirect(route('admin.tms.requests.show', $transportRequest));
+
+        $transportRequest->refresh();
+        $this->assertSame('cancelled', $transportRequest->status);
+        $this->assertNull($transportRequest->trip_log_id);
+        $this->assertNull(TmsTripLog::find($tripId));
+    }
+
+    public function test_admin_can_reassign_driver_before_trip_starts(): void
+    {
+        $secondDriverEmployee = Employee::create([
+            'factory_id'    => $this->factory->id,
+            'shift_id'      => $this->requester->shift_id,
+            'employee_code' => 'TMS-D002',
+            'name'          => 'Driver Two',
+            'status'        => 'active',
+        ]);
+
+        $secondDriver = TmsDriver::create([
+            'factory_id'         => $this->factory->id,
+            'employee_id'        => $secondDriverEmployee->id,
+            'default_vehicle_id' => $this->smallVehicle->id,
+            'ot_rate'            => 120,
+            'is_overtime_active' => true,
+            'status'             => 'active',
+        ]);
+
+        $transportRequest = TmsTransportRequest::create([
+            'factory_id'         => $this->factory->id,
+            'employee_id'        => $this->requester->id,
+            'pickup_location'    => 'Gate',
+            'destination_custom' => 'City',
+            'pickup_at'          => '2026-06-17 10:00',
+            'purpose'            => 'Test',
+            'passenger_count'    => 1,
+            'status'             => 'pending',
+        ]);
+
+        $this->actingAs($this->authority)
+            ->post(route('admin.tms.requests.approve', $transportRequest), [
+                'driver_type' => 'company',
+                'driver_id'   => $this->driver->id,
+            ]);
+
+        $transportRequest->refresh();
+
+        $this->actingAs($this->authority)
+            ->post(route('admin.tms.requests.reassign', $transportRequest), [
+                'driver_type' => 'company',
+                'driver_id'   => $secondDriver->id,
+            ])
+            ->assertRedirect();
+
+        $transportRequest->refresh();
+        $trip = TmsTripLog::first();
+
+        $this->assertSame($secondDriver->id, $transportRequest->driver_id);
+        $this->assertSame($this->smallVehicle->id, $transportRequest->vehicle_id);
+        $this->assertSame($secondDriver->id, $trip->driver_id);
+        $this->assertSame($this->smallVehicle->id, $trip->vehicle_id);
+    }
+
+    public function test_admin_can_abort_in_progress_trip(): void
+    {
+        $transportRequest = TmsTransportRequest::create([
+            'factory_id'         => $this->factory->id,
+            'employee_id'        => $this->requester->id,
+            'pickup_location'    => 'Gate',
+            'destination_custom' => 'City',
+            'pickup_at'          => '2026-06-17 10:00',
+            'purpose'            => 'Test',
+            'passenger_count'    => 1,
+            'status'             => 'pending',
+        ]);
+
+        $this->actingAs($this->authority)
+            ->post(route('admin.tms.requests.approve', $transportRequest), [
+                'driver_type' => 'company',
+                'driver_id'   => $this->driver->id,
+            ]);
+
+        $trip = TmsTripLog::first();
+
+        $this->actingAs($this->driverPortal, 'employee')
+            ->post(route('employee.transport.trips.start', $trip));
+
+        $this->actingAs($this->authority)
+            ->post(route('admin.tms.trips.abort', $trip), [
+                'reason' => 'Vehicle breakdown',
+            ])
+            ->assertRedirect(route('admin.tms.trips.show', $trip));
+
+        $transportRequest->refresh();
+        $trip->refresh();
+
+        $this->assertSame('cancelled', $transportRequest->status);
+        $this->assertSame('completed', $trip->trip_status);
+        $this->assertSame('available', $this->vehicle->fresh()->status);
+    }
+
+    public function test_request_show_displays_status_history(): void
+    {
+        $this->actingAs($this->requesterPortal, 'employee')
+            ->post(route('employee.transport.requests.store'), [
+                'pickup_location'    => 'Factory Gate',
+                'destination_custom' => 'Airport',
+                'pickup_at'          => '2026-06-17 14:00',
+                'purpose'            => 'Client visit',
+                'passenger_count'    => 1,
+            ]);
+
+        $transportRequest = TmsTransportRequest::first();
+
+        $this->actingAs($this->authority)
+            ->get(route('admin.tms.requests.show', $transportRequest))
+            ->assertOk()
+            ->assertSee('Status History')
+            ->assertSee('Submitted');
     }
 }

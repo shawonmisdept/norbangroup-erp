@@ -35,7 +35,7 @@
                class="erp-input flex-1 min-w-48 !text-xs">
         <select name="status" class="erp-input !w-auto !text-xs">
             <option value="">All Status</option>
-            @foreach(\App\Models\Order::STATUSES as $s)
+            @foreach(\App\Models\Order::availableStatuses() as $s)
                 <option value="{{ $s }}" {{ request('status') === $s ? 'selected' : '' }}>{{ $s }}</option>
             @endforeach
         </select>

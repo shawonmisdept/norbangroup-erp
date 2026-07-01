@@ -11,6 +11,9 @@
 
     <form method="POST" action="{{ route('careers.track.submit') }}" class="careers-card">
         <div class="careers-card-body space-y-4">
+            @if(session('success'))
+                <div class="p-3 bg-green-50 border border-green-100 rounded-lg text-sm text-green-800">{{ session('success') }}</div>
+            @endif
             @csrf
             <div>
                 <label class="careers-field"><span>Application Number *</span></label>

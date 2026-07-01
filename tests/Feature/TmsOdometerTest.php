@@ -31,7 +31,7 @@ class TmsOdometerTest extends TestCase
 
         $role = Role::create([
             'name'        => 'TMS Admin',
-            'permissions' => ['tms.trips.view', 'tms.settings.manage'],
+            'permissions' => ['tms.trips.view', 'tms.trips.manage'],
         ]);
 
         $this->user = User::create([
@@ -161,5 +161,40 @@ class TmsOdometerTest extends TestCase
         $this->assertSame(1048.0, (float) $log->morning_km);
         $this->assertSame(1118.0, (float) $log->evening_km);
         $this->assertSame(70.0, $log->dailyKm());
+    }
+
+    public function test_authority_can_delete_odometer_log(): void
+    {
+        $log = TmsDailyOdometerLog::create([
+            'factory_id'         => $this->factory->id,
+            'vehicle_id'         => $this->vehicle->id,
+            'log_date'           => '2026-06-24',
+            'morning_km'         => 1050,
+            'evening_km'         => 1120,
+            'morning_entered_by' => $this->user->id,
+            'evening_entered_by' => $this->user->id,
+        ]);
+
+        $this->vehicle->update(['last_odometer_km' => 1120]);
+
+        $this->actingAs($this->user)
+            ->delete(route('admin.tms.odometer.destroy', $log))
+            ->assertRedirect(route('admin.tms.odometer.index'));
+
+        $this->assertNull(TmsDailyOdometerLog::find($log->id));
+        $this->assertSame(0.0, (float) $this->vehicle->fresh()->last_odometer_km);
+    }
+
+    public function test_odometer_reminder_command_notifies_missing_morning(): void
+    {
+        \App\Models\AppSetting::current()->update(['notify_popup_enabled' => true]);
+
+        $this->artisan('tms:notify-odometer-reminders', ['--type' => 'morning'])
+            ->assertSuccessful();
+
+        $this->assertDatabaseHas('notifications', [
+            'notifiable_type' => User::class,
+            'notifiable_id'   => $this->user->id,
+        ]);
     }
 }

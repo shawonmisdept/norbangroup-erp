@@ -25,4 +25,17 @@
     'referenceNo' => $letter->reference_no,
     'issuedAt'    => $letter->issued_at,
 ])
+
+<div class="erp-panel mt-4 max-w-3xl">
+    <div class="erp-panel-head"><h2 class="text-xs font-semibold uppercase">Candidate Response</h2></div>
+    <div class="erp-panel-body text-sm space-y-2">
+        @include('admin.hrm.recruitment.partials.offer-response-badge', ['letter' => $letter])
+        @if($letter->offered_salary)
+            <p><span class="text-gray-500">Offered Salary:</span> ৳{{ number_format($letter->offered_salary, 2) }}</p>
+        @endif
+        @if($letter->joining_date)
+            <p><span class="text-gray-500">Joining Date:</span> {{ $letter->joining_date->format('d M Y') }}</p>
+        @endif
+    </div>
+</div>
 @endsection

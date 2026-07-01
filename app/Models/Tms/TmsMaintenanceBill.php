@@ -16,13 +16,15 @@ class TmsMaintenanceBill extends Model
     protected $fillable = [
         'factory_id', 'vehicle_id', 'bill_no', 'bill_date', 'workshop_name',
         'total_amount', 'paid_by', 'notes', 'created_by', 'updated_by',
+        'posted_to_finance_at', 'posted_to_finance_by',
     ];
 
     protected function casts(): array
     {
         return [
-            'bill_date'    => 'date',
-            'total_amount' => 'decimal:2',
+            'bill_date'            => 'date',
+            'total_amount'         => 'decimal:2',
+            'posted_to_finance_at' => 'datetime',
         ];
     }
 
@@ -51,6 +53,16 @@ class TmsMaintenanceBill extends Model
     public function createdByUser(): BelongsTo
     {
         return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function postedToFinanceByUser(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'posted_to_finance_by');
+    }
+
+    public function isPostedToFinance(): bool
+    {
+        return $this->posted_to_finance_at !== null;
     }
 
     public function monthKey(): string

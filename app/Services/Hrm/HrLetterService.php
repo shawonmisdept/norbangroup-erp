@@ -8,6 +8,7 @@ use App\Models\Hrm\IssuedLetter;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
 
 class HrLetterService
 {
@@ -145,6 +146,45 @@ class HrLetterService
             'issued_at'    => now(),
             'issued_by'    => $issuer->id,
         ]);
+    }
+
+    public function void(IssuedLetter $letter, User $issuer, ?string $reason = null): IssuedLetter
+    {
+        if ($letter->isVoided()) {
+            throw ValidationException::withMessages(['letter' => 'This letter is already voided.']);
+        }
+
+        $letter->update([
+            'voided_at'   => now(),
+            'voided_by'   => $issuer->id,
+            'void_reason' => $reason,
+        ]);
+
+        return $letter->fresh();
+    }
+
+    public function reissue(IssuedLetter $letter, User $issuer, ?string $notes = null): IssuedLetter
+    {
+        if (! $letter->isVoided()) {
+            throw ValidationException::withMessages(['letter' => 'Void the letter before reissuing.']);
+        }
+
+        $letter->loadMissing(['employee', 'template']);
+
+        if (! $letter->template) {
+            throw ValidationException::withMessages(['letter' => 'Original template is unavailable for reissue.']);
+        }
+
+        $newLetter = $this->issue(
+            $letter->employee,
+            $letter->template,
+            $issuer,
+            $notes ?? $letter->notes,
+        );
+
+        $newLetter->update(['reissued_from_id' => $letter->id]);
+
+        return $newLetter->fresh(['employee', 'template', 'issuer', 'reissuedFrom']);
     }
 
     public function templatesForEmployee(Employee $employee): \Illuminate\Support\Collection

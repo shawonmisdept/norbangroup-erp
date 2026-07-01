@@ -8,6 +8,7 @@ use App\Models\Tms\TmsDriverOvertimePayment;
 use App\Models\Tms\TmsRentalVehicleCharge;
 use App\Models\Tms\TmsTripLog;
 use App\Services\Tms\TripService;
+use App\Services\Tms\TmsGpsService;
 use Illuminate\Http\Request;
 
 class TripController extends Controller
@@ -32,16 +33,20 @@ class TripController extends Controller
         ]);
     }
 
-    public function show(Request $request, TmsTripLog $trip)
+    public function show(Request $request, TmsTripLog $trip, TmsGpsService $gpsService)
     {
         $this->authorizeFactoryAccess($request, $trip->factory_id);
 
         $trip->load([
             'transportRequests.employee', 'transportRequest.employee', 'vehicle.rentalVendor',
             'driver.employee', 'rentalDriver', 'overtimePayment', 'rentalVehicleCharge.rentalVendor', 'fuelLogs',
+            'gpsPositions',
         ]);
 
-        return view('admin.tms.trips.show', ['trip' => $trip]);
+        return view('admin.tms.trips.show', [
+            'trip'        => $trip,
+            'gpsEnabled'  => $gpsService->isEnabled($trip->factory_id),
+        ]);
     }
 
     public function start(Request $request, TmsTripLog $trip, TripService $tripService)
@@ -87,6 +92,25 @@ class TripController extends Controller
         return redirect()->route('admin.tms.trips.show', $trip)->with('success', 'OT marked as paid.');
     }
 
+    public function unmarkOtPaid(Request $request, TmsTripLog $trip)
+    {
+        $this->authorizeFactoryAccess($request, $trip->factory_id);
+
+        $payment = TmsDriverOvertimePayment::where('trip_log_id', $trip->id)->firstOrFail();
+
+        if ($payment->payment_status !== 'paid') {
+            return back()->with('error', 'Driver payment is not marked as paid.');
+        }
+
+        $payment->update([
+            'payment_status' => 'pending',
+            'paid_at'        => null,
+            'paid_by'        => null,
+        ]);
+
+        return redirect()->route('admin.tms.trips.show', $trip)->with('success', 'Driver payment unmarked as paid.');
+    }
+
     public function markRentalChargePaid(Request $request, TmsTripLog $trip)
     {
         $this->authorizeFactoryAccess($request, $trip->factory_id);
@@ -100,5 +124,37 @@ class TripController extends Controller
         ]);
 
         return redirect()->route('admin.tms.trips.show', $trip)->with('success', 'Rental charge marked as paid.');
+    }
+
+    public function unmarkRentalChargePaid(Request $request, TmsTripLog $trip)
+    {
+        $this->authorizeFactoryAccess($request, $trip->factory_id);
+
+        $charge = TmsRentalVehicleCharge::where('trip_log_id', $trip->id)->firstOrFail();
+
+        if ($charge->payment_status !== 'paid') {
+            return back()->with('error', 'Rental charge is not marked as paid.');
+        }
+
+        $charge->update([
+            'payment_status' => 'pending',
+            'paid_at'        => null,
+            'paid_by'        => null,
+        ]);
+
+        return redirect()->route('admin.tms.trips.show', $trip)->with('success', 'Rental charge unmarked as paid.');
+    }
+
+    public function abort(Request $request, TmsTripLog $trip, TripService $tripService)
+    {
+        $this->authorizeFactoryAccess($request, $trip->factory_id);
+
+        $validated = $request->validate([
+            'reason' => ['required', 'string', 'max:1000'],
+        ]);
+
+        $tripService->adminAbort($trip, $request->user(), $validated['reason']);
+
+        return redirect()->route('admin.tms.trips.show', $trip)->with('success', 'Trip aborted and passengers cancelled.');
     }
 }

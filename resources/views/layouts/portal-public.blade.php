@@ -29,9 +29,15 @@
 
     <footer class="careers-footer">
         <div class="portal-container">
-            <p>&copy; {{ date('Y') }} {{ config('portal.name', config('app.name')) }}. — A Product of Data State Ltd.</p>
-        </div>
-    </footer>
+        <p>
+            &copy; {{ date('Y') }} {{ config('portal.name', config('app.name')) }}.
+            — A Product of
+            <a href="https://datastateltd.com/" target="_blank" rel="noopener noreferrer">
+                Data State Ltd.
+            </a>
+        </p>
+    </div>
+</footer>
     @stack('scripts')
 </body>
 </html>

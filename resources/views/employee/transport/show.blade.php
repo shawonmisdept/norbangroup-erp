@@ -34,5 +34,11 @@
 @elseif($transportRequest->status === 'approved')
 <p class="text-xs text-amber-700 bg-amber-50 border border-amber-100 rounded-lg p-3">Trip has started — contact transport admin to cancel.</p>
 @endif
+
+@if($transportRequest->status === 'pending')
+<a href="{{ route('employee.transport.requests.edit', $transportRequest) }}" class="emp-btn w-full text-center block">Edit Request</a>
+@endif
+
+@include('employee.transport.partials.request-history', ['histories' => $transportRequest->histories])
 </div>
 @endsection

@@ -39,7 +39,7 @@ class TmsDriverPayTest extends TestCase
 
         $role = Role::create([
             'name'        => 'TMS Admin',
-            'permissions' => ['tms.requests.approve', 'tms.settings.manage', 'tms.trips.view'],
+            'permissions' => ['tms.requests.approve', 'tms.trips.manage', 'tms.trips.view'],
         ]);
 
         $this->authority = User::create([

@@ -18,6 +18,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(\App\Contracts\SmsGateway::class, function ($app) {
             return $app->make(SmsGatewayFactory::class)->make();
         });
+
+        $this->app->singleton(\App\Contracts\WhatsAppGateway::class, function ($app) {
+            return $app->make(\App\Services\Whatsapp\WhatsAppGatewayFactory::class)->make();
+        });
     }
 
     /**

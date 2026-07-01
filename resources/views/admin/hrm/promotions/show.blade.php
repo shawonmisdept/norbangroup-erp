@@ -144,7 +144,7 @@
                             @csrf
                             <button type="submit" class="erp-btn-primary w-full">Approve</button>
                         </form>
-                        <form method="POST" action="{{ route('admin.hrm.promotions.reject', $promotion) }}" class="space-y-2">
+                        <form method="POST" action="{{ route('admin.hrm.promotions.reject', $promotion) }}" class="space-y-2" id="reject">
                             @csrf
                             <textarea name="rejection_reason" rows="2" class="erp-input text-xs" placeholder="Rejection reason…" required></textarea>
                             <button type="submit" class="erp-btn-secondary w-full text-red-600">Reject</button>

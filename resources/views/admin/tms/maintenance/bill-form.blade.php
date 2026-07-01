@@ -52,20 +52,38 @@
             <div id="items-container" class="space-y-2">
                 @php
                     $items = old('items', $bill->exists
-                        ? $bill->items->map(fn($i) => ['item_name' => $i->item_name, 'quantity' => $i->quantity, 'unit' => $i->unit, 'amount' => $i->amount])->all()
-                        : [['item_name' => '', 'quantity' => '', 'unit' => '', 'amount' => '']]);
+                        ? $bill->items->map(fn($i) => [
+                            'part_catalog_id' => $i->part_catalog_id,
+                            'item_name' => $i->item_name,
+                            'quantity' => $i->quantity,
+                            'unit' => $i->unit,
+                            'amount' => $i->amount,
+                        ])->all()
+                        : [['part_catalog_id' => '', 'item_name' => '', 'quantity' => '', 'unit' => '', 'amount' => '']]);
                 @endphp
 
                 @foreach($items as $i => $item)
                     <div class="grid grid-cols-12 gap-2 item-row">
-                        <div class="col-span-5">
-                            <input type="text" name="items[{{ $i }}][item_name]" class="erp-input" placeholder="Item / service" value="{{ $item['item_name'] ?? '' }}" required>
+                        <div class="col-span-3">
+                            <select name="items[{{ $i }}][part_catalog_id]" class="erp-input catalog-select text-xs">
+                                <option value="">— Catalog —</option>
+                                @foreach($catalogParts as $part)
+                                    <option value="{{ $part['id'] }}"
+                                            data-name="{{ $part['label'] }}"
+                                            data-unit="{{ $part['unit'] ?? '' }}"
+                                            data-price="{{ $part['price'] ?? '' }}"
+                                            @selected(($item['part_catalog_id'] ?? '') == $part['id'])>{{ $part['label'] }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-span-3">
+                            <input type="text" name="items[{{ $i }}][item_name]" class="erp-input item-name" placeholder="Item / service" value="{{ $item['item_name'] ?? '' }}" required>
                         </div>
                         <div class="col-span-2">
                             <input type="number" step="0.001" min="0" name="items[{{ $i }}][quantity]" class="erp-input" placeholder="Qty" value="{{ $item['quantity'] ?? '' }}">
                         </div>
                         <div class="col-span-2">
-                            <select name="items[{{ $i }}][unit]" class="erp-input">
+                            <select name="items[{{ $i }}][unit]" class="erp-input item-unit">
                                 <option value="">—</option>
                                 @foreach($units as $unit)
                                     <option value="{{ $unit }}" @selected(($item['unit'] ?? '') === $unit)>{{ $unit }}</option>
@@ -73,7 +91,7 @@
                             </select>
                         </div>
                         <div class="col-span-2">
-                            <input type="number" step="0.01" min="0" name="items[{{ $i }}][amount]" class="erp-input" placeholder="Amount" value="{{ $item['amount'] ?? '' }}" required>
+                            <input type="number" step="0.01" min="0" name="items[{{ $i }}][amount]" class="erp-input item-amount" placeholder="Amount" value="{{ $item['amount'] ?? '' }}" required>
                         </div>
                         <div class="col-span-1 flex items-center">
                             <button type="button" class="text-xs text-red-600 remove-item-row">×</button>
@@ -99,18 +117,40 @@ document.addEventListener('DOMContentLoaded', () => {
     const container = document.getElementById('items-container');
     let itemIndex = {{ count($items) }};
     const units = @json(array_values($units));
+    const catalogParts = @json($catalogParts);
+
+    const catalogOptions = catalogParts.map(p =>
+        `<option value="${p.id}" data-name="${p.label}" data-unit="${p.unit || ''}" data-price="${p.price ?? ''}">${p.label}</option>`
+    ).join('');
+
+    function bindCatalogSelect(row) {
+        row.querySelector('.catalog-select')?.addEventListener('change', (e) => {
+            const opt = e.target.selectedOptions[0];
+            if (!opt?.value) return;
+            const nameInput = row.querySelector('.item-name');
+            const unitSelect = row.querySelector('.item-unit');
+            const amountInput = row.querySelector('.item-amount');
+            if (nameInput && opt.dataset.name) nameInput.value = opt.dataset.name.replace(/ \(.+\)$/, '');
+            if (unitSelect && opt.dataset.unit) unitSelect.value = opt.dataset.unit;
+            if (amountInput && opt.dataset.price) amountInput.value = opt.dataset.price;
+        });
+    }
+
+    container.querySelectorAll('.item-row').forEach(bindCatalogSelect);
 
     document.getElementById('add-item-row')?.addEventListener('click', () => {
         const unitOptions = units.map(u => `<option value="${u}">${u}</option>`).join('');
         const row = document.createElement('div');
         row.className = 'grid grid-cols-12 gap-2 item-row';
         row.innerHTML = `
-            <div class="col-span-5"><input type="text" name="items[${itemIndex}][item_name]" class="erp-input" placeholder="Item / service" required></div>
+            <div class="col-span-3"><select name="items[${itemIndex}][part_catalog_id]" class="erp-input catalog-select text-xs"><option value="">— Catalog —</option>${catalogOptions}</select></div>
+            <div class="col-span-3"><input type="text" name="items[${itemIndex}][item_name]" class="erp-input item-name" placeholder="Item / service" required></div>
             <div class="col-span-2"><input type="number" step="0.001" min="0" name="items[${itemIndex}][quantity]" class="erp-input" placeholder="Qty"></div>
-            <div class="col-span-2"><select name="items[${itemIndex}][unit]" class="erp-input"><option value="">—</option>${unitOptions}</select></div>
-            <div class="col-span-2"><input type="number" step="0.01" min="0" name="items[${itemIndex}][amount]" class="erp-input" placeholder="Amount" required></div>
+            <div class="col-span-2"><select name="items[${itemIndex}][unit]" class="erp-input item-unit"><option value="">—</option>${unitOptions}</select></div>
+            <div class="col-span-2"><input type="number" step="0.01" min="0" name="items[${itemIndex}][amount]" class="erp-input item-amount" placeholder="Amount" required></div>
             <div class="col-span-1 flex items-center"><button type="button" class="text-xs text-red-600 remove-item-row">×</button></div>`;
         container.appendChild(row);
+        bindCatalogSelect(row);
         itemIndex++;
     });
 

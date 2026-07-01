@@ -95,6 +95,24 @@ class WorkerTransferController extends Controller
             ->with('success', 'Transfer approved and employee assignment updated.');
     }
 
+    public function reject(Request $request, WorkerTransfer $workerTransfer)
+    {
+        $this->authorizeFactoryAccess($request, $workerTransfer->factory_id);
+
+        if ($workerTransfer->status !== 'pending') {
+            return back()->with('error', 'Only pending transfers can be rejected.');
+        }
+
+        $workerTransfer->update([
+            'status'      => 'rejected',
+            'approved_by' => $request->user()->id,
+            'approved_at' => now(),
+        ]);
+
+        return redirect()->route('admin.hrm.rmg.worker-transfer.index')
+            ->with('success', 'Transfer request rejected.');
+    }
+
     private function employeeOptions(Request $request): array
     {
         $query = Employee::query()

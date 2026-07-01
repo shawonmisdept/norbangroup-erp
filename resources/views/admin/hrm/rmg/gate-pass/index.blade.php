@@ -19,6 +19,7 @@
 <td class="text-right">
 @if($canManage && $pass->status === 'pending')
 <form method="POST" action="{{ route('admin.hrm.rmg.gate-pass.approve', $pass) }}" class="inline">@csrf<button type="submit" class="erp-btn-primary !py-1 !px-2 text-[10px]">Approve</button></form>
+<form method="POST" action="{{ route('admin.hrm.rmg.gate-pass.reject', $pass) }}" class="inline ml-1" data-confirm="Reject this gate pass?">@csrf<button type="submit" class="erp-btn-secondary !py-1 !px-2 text-[10px] !text-red-600">Reject</button></form>
 @endIf
 </td></tr>
 @empty<tr><td colspan="7" class="text-center py-8 text-gray-400">No gate passes yet.</td></tr>@endforelse</tbody></table></div>
