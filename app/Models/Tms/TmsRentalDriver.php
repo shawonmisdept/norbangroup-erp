@@ -32,6 +32,13 @@ class TmsRentalDriver extends Model
         });
     }
 
+    protected function casts(): array
+    {
+        return [
+            'factory_id' => 'integer',
+        ];
+    }
+
     public function factory(): BelongsTo
     {
         return $this->belongsTo(Factory::class);

@@ -28,6 +28,8 @@ class TmsTransportRequest extends Model
             'rejected_at'     => 'datetime',
             'cancelled_at'    => 'datetime',
             'passenger_count' => 'integer',
+            'factory_id'      => 'integer',
+            'employee_id'     => 'integer',
         ];
     }
 

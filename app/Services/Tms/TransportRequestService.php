@@ -49,7 +49,7 @@ class TransportRequestService
 
     public function cancel(TmsTransportRequest $request, Employee $employee): TmsTransportRequest
     {
-        if ($request->employee_id !== $employee->id) {
+        if ((int) $request->employee_id !== (int) $employee->id) {
             abort(403);
         }
 
@@ -64,7 +64,7 @@ class TransportRequestService
 
     public function updatePending(Employee $employee, TmsTransportRequest $request, array $data): TmsTransportRequest
     {
-        if ($request->employee_id !== $employee->id) {
+        if ((int) $request->employee_id !== (int) $employee->id) {
             abort(403);
         }
 
@@ -328,7 +328,7 @@ class TransportRequestService
 
         $this->assertMergeable($requests);
 
-        $factoryId = $requests->first()->factory_id;
+        $factoryId = (int) $requests->first()->factory_id;
         $totalPassengers = (int) $requests->sum('passenger_count');
 
         if ($driverType === 'company') {
@@ -447,7 +447,7 @@ class TransportRequestService
             ]);
         }
 
-        if ($vehicle->factory_id !== $factoryId || $driver->factory_id !== $factoryId) {
+        if ((int) $vehicle->factory_id !== $factoryId || (int) $driver->factory_id !== $factoryId) {
             throw ValidationException::withMessages(['vehicle_id' => 'Vehicle must belong to the same unit.']);
         }
 
@@ -466,7 +466,7 @@ class TransportRequestService
             ]);
         }
 
-        if ($vehicle->factory_id !== $factoryId || $driver->factory_id !== $factoryId) {
+        if ((int) $vehicle->factory_id !== $factoryId || (int) $driver->factory_id !== $factoryId) {
             throw ValidationException::withMessages(['vehicle_id' => 'Vehicle must belong to the same unit.']);
         }
 
@@ -481,7 +481,7 @@ class TransportRequestService
     ): void {
         $passengers = $totalPassengers ?? $request->passenger_count;
 
-        if ($vehicle->factory_id !== $request->factory_id || $driver->factory_id !== $request->factory_id) {
+        if ((int) $vehicle->factory_id !== (int) $request->factory_id || (int) $driver->factory_id !== (int) $request->factory_id) {
             throw ValidationException::withMessages(['factory' => 'Vehicle and driver must belong to the same unit.']);
         }
 
@@ -521,7 +521,7 @@ class TransportRequestService
     ): void {
         $passengers = $totalPassengers ?? $request->passenger_count;
 
-        if ($vehicle->factory_id !== $request->factory_id || $driver->factory_id !== $request->factory_id) {
+        if ((int) $vehicle->factory_id !== (int) $request->factory_id || (int) $driver->factory_id !== (int) $request->factory_id) {
             throw ValidationException::withMessages(['factory' => 'Vehicle and driver must belong to the same unit.']);
         }
 

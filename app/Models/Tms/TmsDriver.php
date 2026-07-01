@@ -24,6 +24,7 @@ class TmsDriver extends Model
     protected function casts(): array
     {
         return [
+            'factory_id'             => 'integer',
             'ot_rate'               => 'decimal:2',
             'is_overtime_active'    => 'boolean',
             'ot_rate_effective_from' => 'date',

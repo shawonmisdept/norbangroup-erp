@@ -81,7 +81,7 @@ class RequestController extends Controller
     {
         $employee = $this->portalEmployee($request);
 
-        if ($transportRequest->employee_id !== $employee->id) {
+        if ((int) $transportRequest->employee_id !== (int) $employee->id) {
             abort(403);
         }
 
@@ -137,7 +137,7 @@ class RequestController extends Controller
     {
         $employee = $this->portalEmployee($request);
 
-        if ($transportRequest->employee_id !== $employee->id) {
+        if ((int) $transportRequest->employee_id !== (int) $employee->id) {
             abort(403);
         }
 

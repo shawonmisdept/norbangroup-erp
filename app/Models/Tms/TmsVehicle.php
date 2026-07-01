@@ -26,6 +26,7 @@ class TmsVehicle extends Model
     {
         return [
             'passenger_capacity' => 'integer',
+            'factory_id'         => 'integer',
             'rental_km_rate'   => 'decimal:2',
             'last_odometer_km' => 'decimal:2',
         ];
