@@ -32,24 +32,35 @@
 </div>
 
 <div class="erp-panel mb-4">
-    <form method="GET" class="erp-panel-body erp-filter-bar">
-        <input type="search" name="search" value="{{ $filters['search'] }}" placeholder="Search role by name…"
-               class="erp-input flex-1 min-w-48 !text-xs">
-        <select name="module" class="erp-input !w-auto !text-xs min-w-[10rem]">
-            @foreach(\App\Models\Role::moduleFilterOptions() as $value => $label)
-                <option value="{{ $value }}" @selected($filters['module'] === $value)>{{ $label }}</option>
-            @endforeach
-        </select>
-        <select name="assignment" class="erp-input !w-auto !text-xs min-w-[10rem]">
-            @foreach(\App\Models\Role::assignmentFilterOptions() as $value => $label)
-                <option value="{{ $value }}" @selected($filters['assignment'] === $value)>{{ $label }}</option>
-            @endforeach
-        </select>
-        <button type="submit" class="erp-btn-primary">Apply Filter</button>
-        @if($hasFilters)
-            <a href="{{ route('admin.roles.index') }}" class="text-xs text-gray-400 hover:text-gray-600 px-2">Reset</a>
-        @endif
-    </form>
+    <div class="erp-panel-body">
+        <form method="GET" action="{{ route('admin.roles.index') }}" class="erp-filter-bar">
+            <div class="erp-filter-field erp-filter-field-grow">
+                <label for="role-name-filter" class="erp-form-label">Role name</label>
+                <input type="search" id="role-name-filter" name="search" value="{{ $filters['search'] }}"
+                       placeholder="Search by role name…" class="erp-input !text-xs" autocomplete="off">
+            </div>
+            <div class="erp-filter-field">
+                <label for="role-module-filter" class="erp-form-label">Module</label>
+                <select id="role-module-filter" name="module" class="erp-input !text-xs">
+                    @foreach(\App\Models\Role::moduleFilterOptions() as $value => $label)
+                        <option value="{{ $value }}" @selected($filters['module'] === $value)>{{ $label }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="erp-filter-field">
+                <label for="role-assignment-filter" class="erp-form-label">Assignment</label>
+                <select id="role-assignment-filter" name="assignment" class="erp-input !text-xs">
+                    @foreach(\App\Models\Role::assignmentFilterOptions() as $value => $label)
+                        <option value="{{ $value }}" @selected($filters['assignment'] === $value)>{{ $label }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="erp-filter-actions">
+                <button type="submit" class="erp-btn-primary">Apply Filter</button>
+                <a href="{{ route('admin.roles.index') }}" class="erp-btn-secondary {{ $hasFilters ? '' : 'pointer-events-none opacity-50' }}">Reset</a>
+            </div>
+        </form>
+    </div>
 </div>
 
 <div class="erp-panel overflow-hidden">
