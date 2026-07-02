@@ -43,7 +43,7 @@ class TmsBatchFTest extends TestCase
         ]);
     }
 
-    public function test_gps_index_page_shows_coming_soon_when_disabled(): void
+    public function test_gps_index_page_shows_disabled_notice_when_tracking_off(): void
     {
         TmsSetting::create(array_merge(
             ['factory_id' => $this->factory->id],
@@ -53,7 +53,7 @@ class TmsBatchFTest extends TestCase
         $this->actingAs($this->user)
             ->get(route('admin.tms.gps.index', ['factory_id' => $this->factory->id]))
             ->assertOk()
-            ->assertSee('Coming soon')
+            ->assertSee('GPS tracking disabled')
             ->assertSee('GPS Tracking');
     }
 

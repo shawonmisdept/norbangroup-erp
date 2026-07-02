@@ -2,6 +2,8 @@ import Alpine from 'alpinejs';
 import './searchable-selects';
 import './employee-pwa';
 import './rental-pwa';
+import './tms-trip-gps';
+import { registerCommercialQuoteBreakdown } from './commercial-quote';
 import { initConfirmHandlers, registerConfirmDialog } from './confirm-dialog';
 
 Alpine.data('erpLiveClock', (timezone = 'UTC') => ({
@@ -803,5 +805,6 @@ Alpine.data('employeeIndexFilters', () => ({
 window.Alpine = Alpine;
 
 registerConfirmDialog(Alpine);
+registerCommercialQuoteBreakdown(Alpine);
 Alpine.start();
 initConfirmHandlers();

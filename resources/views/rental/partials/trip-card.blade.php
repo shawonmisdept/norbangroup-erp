@@ -22,12 +22,14 @@
 
     @if($active)
         @if($trip->trip_status === 'not_started')
-            <form method="POST" action="{{ route('rental.trips.start', $trip) }}">@csrf
+            <form method="POST" action="{{ route('rental.trips.start', $trip) }}" data-tms-trip-gps>@csrf
+                @include('partials.tms.trip-gps-fields')
                 <button type="submit" class="emp-btn w-full">Start Trip</button>
             </form>
         @elseif($trip->trip_status === 'in_progress')
             <p class="text-xs">Started at @include('partials.erp.datetime-highlight', ['at' => $trip->duty_start_at, 'variant' => 'employee'])</p>
-            <form method="POST" action="{{ route('rental.trips.end', $trip) }}">@csrf
+            <form method="POST" action="{{ route('rental.trips.end', $trip) }}" data-tms-trip-gps>@csrf
+                @include('partials.tms.trip-gps-fields')
                 <button type="submit" class="emp-btn w-full">End Trip</button>
             </form>
         @endif

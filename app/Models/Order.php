@@ -13,9 +13,12 @@ use Illuminate\Support\Str;
 class Order extends Model
 {
     use HasFileMetadata;
+    public const STATUS_COMMERCIAL_QUOTE = 'Commercial Quote';
+
     public const STATUSES = [
         'New',
         'Under Review',
+        self::STATUS_COMMERCIAL_QUOTE,
         'Quoted',
         'Approved',
         'In Production',
@@ -28,6 +31,8 @@ class Order extends Model
         'name', 'company', 'email', 'phone',
         'item_name', 'quantity', 'notes', 'status',
         'assigned_to_user_id', 'quote_amount', 'quote_notes', 'quoted_at',
+        'quote_garment_type', 'quote_basis', 'quote_currency', 'quote_price_per_pc',
+        'quote_breakdown', 'quote_lead_time_days', 'quote_valid_until', 'quote_payment_terms',
         'techpack_files', 'artwork_files',
     ];
 
@@ -36,6 +41,10 @@ class Order extends Model
         'artwork_files'  => 'array',
         'quote_amount'   => 'decimal:2',
         'quoted_at'        => 'datetime',
+        'quote_price_per_pc' => 'decimal:4',
+        'quote_breakdown'  => 'array',
+        'quote_valid_until' => 'date',
+        'quote_lead_time_days' => 'integer',
     ];
 
     protected static function booted(): void
@@ -98,6 +107,7 @@ class Order extends Model
         $defaults = [
             'New'           => 'bg-blue-100 text-blue-700',
             'Under Review'  => 'bg-amber-100 text-amber-700',
+            self::STATUS_COMMERCIAL_QUOTE => 'bg-indigo-100 text-indigo-800',
             'Quoted'        => 'bg-purple-100 text-purple-700',
             'Approved'      => 'bg-green-100 text-green-700',
             'In Production' => 'bg-teal-100 text-teal-700',
@@ -111,5 +121,24 @@ class Order extends Model
         }
 
         return $defaults;
+    }
+
+    public function currencySymbol(): string
+    {
+        return match ($this->quote_currency) {
+            'USD'   => '$',
+            default => '৳',
+        };
+    }
+
+    public function hasQuoteBreakdown(): bool
+    {
+        return is_array($this->quote_breakdown) && ($this->quote_breakdown['sections'] ?? []) !== [];
+    }
+
+    /** Commercial costing form — only when status is Commercial Quote. */
+    public function showsCommercialQuoteEditor(): bool
+    {
+        return $this->status === self::STATUS_COMMERCIAL_QUOTE;
     }
 }

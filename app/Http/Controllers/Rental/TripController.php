@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Rental;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Employee\Transport\Concerns\CapturesTripGpsInput;
 use App\Http\Controllers\Rental\Concerns\ResolvesPortalRentalDriver;
 use App\Models\Tms\TmsTripLog;
 use App\Services\Tms\TripService;
@@ -10,6 +11,7 @@ use Illuminate\Http\Request;
 
 class TripController extends Controller
 {
+    use CapturesTripGpsInput;
     use ResolvesPortalRentalDriver;
 
     public function index(Request $request)
@@ -41,7 +43,7 @@ class TripController extends Controller
     {
         $driver = $this->portalRentalDriver($request);
 
-        $tripService->start($trip, rentalDriver: $driver);
+        $tripService->start($trip, rentalDriver: $driver, gps: $this->tripGpsInput($request));
 
         return redirect()->route('rental.trips')->with('success', 'Trip started.');
     }
@@ -50,7 +52,7 @@ class TripController extends Controller
     {
         $driver = $this->portalRentalDriver($request);
 
-        $tripService->end($trip, rentalDriver: $driver);
+        $tripService->end($trip, rentalDriver: $driver, gps: $this->tripGpsInput($request));
 
         return redirect()->route('rental.trips')->with('success', 'Trip completed.');
     }

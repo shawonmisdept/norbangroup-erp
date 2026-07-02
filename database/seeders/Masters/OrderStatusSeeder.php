@@ -17,6 +17,7 @@ class OrderStatusSeeder extends Seeder
         return [
             ['name' => 'New'],
             ['name' => 'Under Review'],
+            ['name' => 'Commercial Quote'],
             ['name' => 'Quoted'],
             ['name' => 'Approved'],
             ['name' => 'In Production'],

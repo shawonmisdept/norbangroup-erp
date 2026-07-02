@@ -3,15 +3,15 @@
 @section('admin-content')
 @include('partials.erp.page-header', [
     'title' => 'GPS Tracking',
-    'subtitle' => 'Live vehicle location — Phase 2 foundation',
+    'subtitle' => 'Driver mobile and telematics device positions',
 ])
 
 @if($settings && ! $settings->gps_tracking_enabled)
     <div class="erp-panel p-4 mb-4 border-l-4 border-amber-400 bg-amber-50/60 text-sm text-amber-900">
-        <p class="font-semibold">Coming soon</p>
-        <p class="mt-1 text-amber-800/90">GPS tracking is not enabled for this unit. Enable it under
+        <p class="font-semibold">GPS tracking disabled</p>
+        <p class="mt-1 text-amber-800/90">Enable GPS under
             <a href="{{ route('admin.tms.settings.index', ['factory_id' => $factoryId]) }}" class="font-semibold underline">TMS Settings</a>
-            when your device provider is ready. Positions will appear here once integrated.
+            and choose <strong>Driver Mobile GPS</strong> or <strong>Telematics API</strong>.
         </p>
     </div>
 @endif
@@ -52,7 +52,7 @@
         <div>
             <span class="text-[11px] font-semibold uppercase tracking-wide text-gray-400 block">Status</span>
             <span class="erp-badge {{ $settings->gps_tracking_enabled ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-600' }}">
-                {{ $settings->gps_tracking_enabled ? 'Enabled (stub)' : 'Disabled' }}
+                {{ $settings->gps_tracking_enabled ? 'Enabled' : 'Disabled' }}
             </span>
         </div>
         <div>
@@ -90,7 +90,9 @@
                             —
                         @endif
                     </td>
-                    <td class="tabular-nums text-xs">{{ $pos->coordinatesLabel() }}</td>
+                    <td class="tabular-nums text-xs">
+                        <a href="{{ $pos->googleMapsUrl() }}" target="_blank" rel="noopener" class="text-indigo-600">{{ $pos->coordinatesLabel() }}</a>
+                    </td>
                     <td class="text-right tabular-nums">{{ $pos->speed_kmh !== null ? number_format((float) $pos->speed_kmh, 1) . ' km/h' : '—' }}</td>
                     <td><span class="erp-badge bg-gray-100 text-gray-600">{{ $pos->source }}</span></td>
                 </tr>

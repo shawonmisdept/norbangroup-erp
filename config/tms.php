@@ -196,9 +196,9 @@ return [
             'icon'        => 'M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z',
             'status'      => 'active',
         ],
-        'gps_tracking' => [
-            'label'       => 'GPS Tracking',
-            'description' => 'Vehicle location history (Phase 2 — coming soon)',
+        'device_api' => [
+            'label'       => 'GPS Device / Telematics API',
+            'description' => 'Vehicle location history via telematics API',
             'permission'  => 'tms.settings.view',
             'route'       => 'admin.tms.gps.index',
             'icon'        => 'M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z',
@@ -218,16 +218,19 @@ return [
             'description' => 'GPS tracking disabled — no positions recorded.',
         ],
         'device_api' => [
-            'label'       => 'GPS Device / Telematics API (Coming Soon)',
-            'description' => 'Future integration with vehicle GPS hardware or fleet telematics vendors.',
-            'stub'        => true,
+            'label'       => 'GPS Device / Telematics API',
+            'description' => 'POST positions to /api/tms/gps/positions with TMS_GPS_API_TOKEN.',
         ],
         'browser' => [
-            'label'       => 'Driver Mobile GPS (Coming Soon)',
-            'description' => 'Capture coordinates from driver phone browser during trip start/end.',
-            'stub'        => true,
+            'label'       => 'Driver Mobile GPS',
+            'description' => 'Capture coordinates from driver phone when trip starts/ends.',
         ],
     ],
+
+    /*
+    | Bearer token for telematics vendors POSTing to /api/tms/gps/positions
+    */
+    'gps_api_token' => env('TMS_GPS_API_TOKEN'),
 
     'request_statuses' => [
         'pending'     => 'Pending',

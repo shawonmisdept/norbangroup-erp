@@ -1,6 +1,7 @@
 import TomSelect from 'tom-select';
 
 const ENHANCE_SELECTOR = 'select.erp-input, select.emp-input';
+let scrollCloseBound = false;
 
 function isVisible(el) {
     if (! el?.isConnected) {
@@ -42,6 +43,45 @@ function syncNativeToTomSelect(el) {
     }
 }
 
+function closeOtherTomSelects(exceptEl) {
+    document.querySelectorAll(ENHANCE_SELECTOR).forEach((select) => {
+        if (select === exceptEl || ! select.tomselect?.isOpen) {
+            return;
+        }
+
+        select.tomselect.close();
+    });
+}
+
+function closeAllTomSelects() {
+    document.querySelectorAll(ENHANCE_SELECTOR).forEach((select) => {
+        select.tomselect?.close();
+    });
+}
+
+function bindScrollClose() {
+    if (scrollCloseBound) {
+        return;
+    }
+
+    scrollCloseBound = true;
+    window.addEventListener('scroll', closeAllTomSelects, { capture: true, passive: true });
+}
+
+function syncDropdownWidth(el, dropdown) {
+    const wrapper = el.closest('.ts-wrapper') || el.parentElement;
+    const control = wrapper?.querySelector('.ts-control');
+
+    if (! control || ! dropdown) {
+        return;
+    }
+
+    const { width } = control.getBoundingClientRect();
+
+    dropdown.style.width = `${width}px`;
+    dropdown.style.minWidth = `${width}px`;
+}
+
 export function enhanceSelect(el) {
     if (! shouldEnhanceSelect(el)) {
         return null;
@@ -67,18 +107,14 @@ export function enhanceSelect(el) {
                 el.dispatchEvent(new Event('change', { bubbles: true }));
             },
             onDropdownOpen(dropdown) {
-                const wrapper = el.closest('.ts-wrapper') || el.parentElement;
-                const control = wrapper?.querySelector('.ts-control');
-
-                if (control && dropdown) {
-                    dropdown.style.width = `${control.getBoundingClientRect().width}px`;
-                    dropdown.style.minWidth = `${control.getBoundingClientRect().width}px`;
-                }
+                closeOtherTomSelects(el);
+                syncDropdownWidth(el, dropdown);
             },
         });
 
         syncNativeToTomSelect(el);
         el.dataset.tsEnhanced = '1';
+        bindScrollClose();
 
         return ts;
     } catch (error) {

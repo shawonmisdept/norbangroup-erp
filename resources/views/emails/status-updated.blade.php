@@ -13,6 +13,7 @@ The status of your requirement **{{ $order->ref_code }}** has been updated.
 @php
 $messages = [
     'Under Review'  => 'Our team is reviewing your requirement.',
+    'Commercial Quote' => 'We are preparing a commercial quotation for your requirement.',
     'Quoted'        => 'A quotation has been prepared and will be sent to you shortly.',
     'Approved'      => 'Your requirement has been approved. Production is being scheduled.',
     'In Production' => 'Production of your garments has started.',

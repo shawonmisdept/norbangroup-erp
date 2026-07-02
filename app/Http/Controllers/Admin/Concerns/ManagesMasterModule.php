@@ -238,11 +238,19 @@ trait ManagesMasterModule
 
             $this->scopeRelationQuery($query, $model);
 
-            $options[$field] = $displayWith
-                ? $query->get()->mapWithKeys(fn ($record) => [
-                    $record->id => RelationDisplay::label($record, $display, $displayWith),
-                ])
-                : $query->pluck($display, 'id');
+            $options[$field] = $query->get()
+                ->unique('id')
+                ->mapWithKeys(function ($record) use ($display, $displayWith) {
+                    if (method_exists($record, 'displayLabel')) {
+                        return [$record->id => $record->displayLabel()];
+                    }
+
+                    if ($displayWith) {
+                        return [$record->id => RelationDisplay::label($record, $display, $displayWith)];
+                    }
+
+                    return [$record->id => $record->{$display}];
+                });
         }
 
         return $options;

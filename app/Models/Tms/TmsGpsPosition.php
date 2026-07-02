@@ -47,4 +47,9 @@ class TmsGpsPosition extends Model
     {
         return number_format((float) $this->latitude, 6) . ', ' . number_format((float) $this->longitude, 6);
     }
+
+    public function googleMapsUrl(): string
+    {
+        return 'https://www.google.com/maps?q=' . urlencode((float) $this->latitude . ',' . (float) $this->longitude);
+    }
 }

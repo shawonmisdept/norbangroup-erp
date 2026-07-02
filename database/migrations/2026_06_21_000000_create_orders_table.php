@@ -18,16 +18,7 @@ return new class extends Migration
             $table->string('item_name');
             $table->unsignedInteger('quantity')->nullable();
             $table->text('notes')->nullable();
-            $table->enum('status', [
-                'New',
-                'Under Review',
-                'Quoted',
-                'Approved',
-                'In Production',
-                'Shipped',
-                'Closed',
-                'Cancelled',
-            ])->default('New');
+            $table->string('status', 50)->default('New');
             $table->json('techpack_files')->nullable();
             $table->json('artwork_files')->nullable();
             $table->timestamps();

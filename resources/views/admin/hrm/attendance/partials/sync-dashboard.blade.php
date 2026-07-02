@@ -63,15 +63,39 @@
         <h2 class="text-xs font-semibold text-brand uppercase tracking-wide">SpeedFace V5L Setup (Cloud Server)</h2>
     </div>
     <div class="erp-panel-body text-xs text-gray-700 space-y-2">
+        @php
+            $host = parse_url(config('app.url'), PHP_URL_HOST) ?: request()->getHost();
+            $isHttps = str_starts_with(config('app.url'), 'https://');
+            $cloudPort = $isHttps ? '443' : '80';
+        @endphp
         <p>On the device: <strong>Menu → COMM. → Cloud Server Setting</strong></p>
         <ol class="list-decimal list-inside space-y-1 text-gray-600">
-            <li><strong>Server Address:</strong> <code class="bg-white px-1.5 py-0.5 rounded border">{{ parse_url(url('/'), PHP_URL_HOST) ?: request()->getHost() }}</code></li>
-            <li><strong>Server Port:</strong> <code class="bg-white px-1.5 py-0.5 rounded border">{{ request()->getPort() ?: '8000' }}</code></li>
+            <li><strong>Server Mode:</strong> ADMS</li>
+            <li><strong>Enable Domain Name:</strong> ON (recommended)</li>
+            <li><strong>Server Address:</strong> <code class="bg-white px-1.5 py-0.5 rounded border">{{ $host }}</code> — not <code class="bg-white px-1.5 py-0.5 rounded border">0.0.0.0</code></li>
+            <li><strong>Server Port:</strong> <code class="bg-white px-1.5 py-0.5 rounded border">{{ $cloudPort }}</code> @if($isHttps)(HTTPS)@else(HTTP — use 443 on production with SSL)@endif</li>
             <li>Register device serial in <a href="{{ route('admin.hrm.masters.index', ['module' => 'hrm-biometric-devices']) }}" class="text-brand font-semibold">Biometric Devices</a> (must match device SN)</li>
             <li>Map employee <strong>Biometric ID</strong> = device PIN (face enrolled user ID)</li>
         </ol>
         <p class="pt-1 text-gray-500">Device pushes to <code class="bg-white px-1.5 py-0.5 rounded border">{{ url('/iclock/cdata') }}</code> — attendance updates <strong>instantly</strong> (no manual Process needed).</p>
         <p class="text-emerald-700 font-medium">✓ When connected, a cloud icon appears on the device standby screen.</p>
+    </div>
+</div>
+
+<div class="erp-panel mb-4 border border-amber-200 bg-amber-50/40">
+    <div class="erp-panel-head">
+        <h2 class="text-xs font-semibold text-amber-800 uppercase tracking-wide">Ethernet — fix before Cloud Server</h2>
+    </div>
+    <div class="erp-panel-body text-xs text-gray-700 space-y-2">
+        <p>On the device: <strong>Menu → COMM. → Ethernet</strong></p>
+        <ul class="list-disc list-inside space-y-1 text-gray-600">
+            <li><strong>Gateway</strong> must be your router IP (e.g. <code class="bg-white px-1 rounded border">192.168.1.1</code>) — not <code class="bg-white px-1 rounded border">0.0.0.0</code></li>
+            <li><strong>DNS</strong> — use <code class="bg-white px-1 rounded border">8.8.8.8</code> or your office DNS — not <code class="bg-white px-1 rounded border">0.0.0.0</code></li>
+            <li>Static IP (e.g. <code class="bg-white px-1 rounded border">192.168.1.201</code>) is fine if it does not conflict with other devices</li>
+            <li>Or enable <strong>DHCP</strong> if your network assigns IPs automatically</li>
+        </ul>
+        <p class="text-amber-800">Without gateway/DNS the device cannot reach the internet or <code class="bg-white px-1 rounded border">{{ $host }}</code>.</p>
+        <p class="text-gray-500"><strong>PC Connection</strong> (port 4370) is for ZKTeco desktop software on LAN — separate from ADMS cloud push.</p>
     </div>
 </div>
 

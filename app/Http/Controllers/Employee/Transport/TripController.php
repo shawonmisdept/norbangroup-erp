@@ -4,12 +4,14 @@ namespace App\Http\Controllers\Employee\Transport;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Employee\Concerns\ResolvesPortalEmployee;
+use App\Http\Controllers\Employee\Transport\Concerns\CapturesTripGpsInput;
 use App\Models\Tms\TmsTripLog;
 use App\Services\Tms\TripService;
 use Illuminate\Http\Request;
 
 class TripController extends Controller
 {
+    use CapturesTripGpsInput;
     use ResolvesPortalEmployee;
 
     public function index(Request $request, TripService $tripService)
@@ -40,7 +42,7 @@ class TripController extends Controller
         ]);
 
         $startKm = isset($validated['start_km']) ? (float) $validated['start_km'] : null;
-        $tripService->start($trip, $employee, $startKm);
+        $tripService->start($trip, $employee, $startKm, gps: $this->tripGpsInput($request));
 
         return redirect()->route('employee.transport.trips')->with('success', 'Trip started.');
     }
@@ -54,7 +56,7 @@ class TripController extends Controller
         ]);
 
         $endKm = isset($validated['end_km']) ? (float) $validated['end_km'] : null;
-        $tripService->end($trip, $employee, $endKm);
+        $tripService->end($trip, $employee, $endKm, gps: $this->tripGpsInput($request));
 
         return redirect()->route('employee.transport.trips')->with('success', 'Trip completed.');
     }

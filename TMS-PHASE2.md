@@ -1,23 +1,25 @@
-# TMS Phase 2 — GPS & WhatsApp Integration Notes
+# TMS Phase 2 — GPS & WhatsApp (Production)
 
-## WhatsApp (Transport notifications)
+## WhatsApp go-live checklist
 
-### Supported providers (App Settings → WhatsApp Gateway)
+### 1. App Settings → WhatsApp Gateway
 
-| Provider key | Operator | Credentials |
-|--------------|----------|-------------|
-| `log` | Development | None — writes to Laravel log |
-| `meta_cloud` | Meta WhatsApp Cloud API | Access token + Phone Number ID |
+| Provider | When to use | Required fields |
+|----------|-------------|-----------------|
+| `meta_cloud` | Meta WhatsApp Business Cloud API | Access token + Phone Number ID |
 | `sslwireless` | SSL Wireless (Bangladesh) | API token + Sender/Instance ID |
 | `greenweb` | GreenWeb (Bangladesh) | API token |
 | `bulksmsbd` | BulkSMSBD.net | API key + Sender ID |
-| `custom` | Any HTTP BSP | Custom URL + optional API token & sender |
+| `custom` | Any HTTP BSP | Custom URL (+ optional token & sender) |
+| `log` | Development only | None |
 
-Enable delivery under **Notifications → Transport (TMS) → WhatsApp — transport updates**.
+### 2. Enable transport notifications
 
-### Environment overrides (optional)
+**Admin → App Settings → Notifications → Transport (TMS)**
 
-Default operator URLs are in `config/whatsapp.php`. Override in `.env` if your vendor gives a different endpoint:
+- Turn on **WhatsApp — transport updates** (`notify_whatsapp_tms`)
+
+### 3. Optional `.env` overrides
 
 ```env
 WHATSAPP_SSLWIRELESS_URL=https://...
@@ -25,38 +27,97 @@ WHATSAPP_GREENWEB_URL=https://...
 WHATSAPP_BULKSMSBD_URL=https://...
 ```
 
-### Meta Cloud API
+Defaults are in `config/whatsapp.php`. Confirm exact URL and JSON fields with your BSP before go-live.
 
-- POST `https://graph.facebook.com/v21.0/{phone_number_id}/messages`
-- Phone numbers normalized to `8801XXXXXXXXX` format
-- Template messages may be required for production — currently sends session `text` type only
+### 4. Meta Cloud API notes
 
-### Custom HTTP API
+- Endpoint: `https://graph.facebook.com/v21.0/{phone_number_id}/messages`
+- Phone numbers normalized to `8801XXXXXXXXX`
+- Production may require **approved message templates** — session `text` works for dev/testing
 
-POST JSON body includes: `phone`, `to`, `message`, `text`, and optional `sender` / `sender_id`.
+### 5. Verify
 
-Confirm payload field names with your operator and adjust `HttpWhatsAppGateway` if needed.
-
-### Bangladesh BSP note
-
-SSL Wireless, GreenWeb, and BulkSMSBD WhatsApp endpoints vary by account. **Confirm the exact URL and JSON fields with your provider** before go-live. Update `config/whatsapp.php` or env vars accordingly.
+1. Set provider + credentials in App Settings
+2. Submit/reject a test transport request with employee phone on file
+3. Check Laravel log (`log` driver) or BSP delivery report
 
 ---
 
-## GPS Tracking
+## GPS tracking (implemented)
 
-### Current behaviour
-- **TMS Settings → GPS Tracking** — enable stub mode and select provider
-- **TMS → GPS Tracking** — view position history
-- Table: `tms_gps_positions`
-- Service: `App\Services\Tms\TmsGpsService`
+### Admin setup per unit
 
-### Future providers
-| Provider key | Planned source |
-|--------------|----------------|
-| `device_api` | Telematics vendor webhook |
-| `browser` | Driver mobile geolocation on trip start/end |
+**TMS → Settings → GPS Tracking**
+
+| Provider | Behaviour |
+|----------|-----------|
+| **Driver Mobile GPS** | Browser geolocation when driver starts/ends trip (Employee + Rental portals) |
+| **GPS Device / Telematics API** | External systems POST positions to API |
+| **None** | Disabled |
+
+### Telematics API
+
+**Endpoint:** `POST /api/tms/gps/positions`
+
+**Auth:** Bearer token or header `X-Tms-Gps-Token`
+
+```env
+TMS_GPS_API_TOKEN=<generate-strong-random-token>
+```
+
+**Example payload:**
+
+```json
+{
+  "vehicle_id": 12,
+  "trip_log_id": 45,
+  "latitude": 23.8103,
+  "longitude": 90.4125,
+  "speed_kmh": 40,
+  "heading": 180,
+  "accuracy_m": 5,
+  "recorded_at": "2026-06-24T10:30:00+06:00"
+}
+```
+
+**Responses:**
+
+- `200` — `{ "success": true, "id": 123 }`
+- `401` — invalid/missing token
+- `422` — GPS disabled or provider mismatch for unit
+
+### Driver mobile GPS
+
+- Forms on **Employee → Transport → Trips** and **Rental Driver → Trips**
+- JS captures `navigator.geolocation` on submit (`resources/js/tms-trip-gps.js`)
+- Stored as `browser_start` / `browser_end` in `tms_gps_positions`
+
+### View positions
+
+**TMS → GPS Tracking** — filter by unit/vehicle  
+**TMS → Trips → Show** — positions for that trip with Google Maps links
+
+### Production checklist
+
+- [ ] Enable GPS for each factory in TMS Settings
+- [ ] Choose provider (`browser` or `device_api`)
+- [ ] Set `TMS_GPS_API_TOKEN` in production `.env` if using telematics
+- [ ] Drivers use HTTPS portal (geolocation requires secure context on mobile)
+- [ ] Test trip start/end from phone; confirm position in admin
 
 ---
 
-*Updated June 2026 — WhatsApp multi-operator support added.*
+## Code reference
+
+| Component | Path |
+|-----------|------|
+| GPS service | `app/Services/Tms/TmsGpsService.php` |
+| Trip integration | `app/Services/Tms/TripService.php` |
+| Device API | `app/Http/Controllers/Api/Tms/GpsPositionController.php` |
+| Mobile JS | `resources/js/tms-trip-gps.js` |
+| WhatsApp messaging | `app/Services/Tms/TmsMessagingService.php` |
+| Tests | `tests/Feature/TmsGpsIntegrationTest.php` |
+
+---
+
+*Updated June 2026 — GPS device/mobile integration live.*

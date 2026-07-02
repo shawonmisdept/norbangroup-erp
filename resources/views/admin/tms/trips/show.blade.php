@@ -85,19 +85,24 @@
         <div class="flex items-center justify-between gap-2 mb-2">
             <p class="text-gray-500 font-medium">GPS Tracking</p>
             @if($gpsEnabled)
-                <span class="erp-badge bg-sky-100 text-sky-800 text-[10px]">Stub enabled</span>
+                <span class="erp-badge bg-green-100 text-green-800 text-[10px]">Enabled</span>
             @else
-                <a href="{{ route('admin.tms.gps.index', ['factory_id' => $trip->factory_id]) }}" class="text-xs text-indigo-600">Configure</a>
+                <a href="{{ route('admin.tms.settings.index', ['factory_id' => $trip->factory_id]) }}" class="text-xs text-indigo-600">Enable in Settings</a>
             @endif
         </div>
         @if($trip->gpsPositions->isNotEmpty())
-            <ul class="space-y-1 text-xs tabular-nums">
+            <ul class="space-y-2 text-xs">
                 @foreach($trip->gpsPositions as $pos)
-                    <li>{{ $pos->recorded_at->format('H:i') }} — {{ $pos->coordinatesLabel() }} @if($pos->speed_kmh)({{ number_format((float) $pos->speed_kmh, 1) }} km/h)@endif</li>
+                    <li class="flex flex-wrap items-center gap-2 tabular-nums">
+                        <span>{{ $pos->recorded_at->format('H:i') }} — {{ $pos->coordinatesLabel() }}</span>
+                        @if($pos->speed_kmh)<span class="text-gray-500">({{ number_format((float) $pos->speed_kmh, 1) }} km/h)</span>@endif
+                        <span class="erp-badge bg-gray-100 text-gray-600">{{ $pos->source }}</span>
+                        <a href="{{ $pos->googleMapsUrl() }}" target="_blank" rel="noopener" class="text-indigo-600">Map</a>
+                    </li>
                 @endforeach
             </ul>
         @else
-            <p class="text-xs text-gray-400">No GPS positions for this trip. Live tracking requires device or mobile GPS integration (Phase 2).</p>
+            <p class="text-xs text-gray-400">No GPS positions yet. Driver mobile GPS records on trip start/end when enabled; telematics devices POST to the GPS API.</p>
         @endif
     </div>
 

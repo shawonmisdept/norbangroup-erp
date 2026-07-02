@@ -18,6 +18,7 @@ class TripService
     public function __construct(
         private DriverPayCalculator $driverPayCalculator,
         private TmsNotificationService $notifications,
+        private TmsGpsService $gpsService,
     ) {}
 
     public function start(
@@ -25,6 +26,7 @@ class TripService
         ?Employee $employee = null,
         ?float $startKm = null,
         ?TmsRentalDriver $rentalDriver = null,
+        ?array $gps = null,
     ): TmsTripLog {
         if ($employee !== null) {
             $this->assertAssignedCompanyDriver($tripLog, $employee);
@@ -56,7 +58,7 @@ class TripService
             $startKm = null;
         }
 
-        return DB::transaction(function () use ($tripLog, $requests, $employee, $startKm) {
+        return DB::transaction(function () use ($tripLog, $requests, $employee, $startKm, $gps) {
             $payload = [
                 'duty_start_at' => now(),
                 'trip_status'   => 'in_progress',
@@ -81,7 +83,10 @@ class TripService
 
             $tripLog->vehicle->update(['status' => 'on_trip']);
 
-            return $tripLog->fresh(['transportRequests.employee', 'vehicle', 'driver.employee', 'rentalDriver']);
+            $fresh = $tripLog->fresh(['transportRequests.employee', 'vehicle', 'driver.employee', 'rentalDriver']);
+            $this->gpsService->recordDriverCoords($fresh, $gps, 'browser_start');
+
+            return $fresh;
         });
     }
 
@@ -90,6 +95,7 @@ class TripService
         ?Employee $employee = null,
         ?float $endKm = null,
         ?TmsRentalDriver $rentalDriver = null,
+        ?array $gps = null,
     ): TmsTripLog {
         if ($employee !== null) {
             $this->assertAssignedCompanyDriver($tripLog, $employee);
@@ -115,7 +121,7 @@ class TripService
             $totalKm = $this->validateEndKm($tripLog, $endKm);
         }
 
-        return DB::transaction(function () use ($tripLog, $requests, $employee, $endKm, $totalKm, $vehicle) {
+        return DB::transaction(function () use ($tripLog, $requests, $employee, $endKm, $totalKm, $vehicle, $gps) {
             $tripLog->update([
                 'duty_end_at' => now(),
                 'trip_status' => 'completed',
@@ -169,7 +175,10 @@ class TripService
                 $this->notifications->otPendingPayment($tripLog->fresh(['driver.employee', 'rentalDriver']));
             }
 
-            return $tripLog->fresh();
+            $fresh = $tripLog->fresh();
+            $this->gpsService->recordDriverCoords($fresh, $gps, 'browser_end');
+
+            return $fresh;
         });
     }
 

@@ -82,15 +82,16 @@
                 </div>
             </div>
 
-            <div class="border-t pt-4 space-y-4 opacity-90">
-                <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide">GPS Tracking <span class="normal-case font-normal text-amber-600">(Phase 2 — coming soon)</span></p>
+            <div class="border-t pt-4 space-y-4">
+                <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide">GPS Tracking</p>
                 <p class="text-xs text-gray-500 rounded-sm border border-erp-border bg-gray-50 px-3 py-2">
-                    Schema and position history are ready. Enable when your GPS device or mobile provider is configured.
-                    View positions under <strong>GPS Tracking</strong> in the TMS menu.
+                    <strong>Driver Mobile GPS</strong> — driver phone location on trip start/end (Employee &amp; Rental portals).<br>
+                    <strong>Telematics API</strong> — POST to <code class="bg-white px-1 rounded border">{{ url('/api/tms/gps/positions') }}</code> with bearer token <code class="bg-white px-1 rounded border">TMS_GPS_API_TOKEN</code>.
+                    View history under <strong>GPS Tracking</strong> in the TMS menu.
                 </p>
                 <label class="flex items-center gap-2 text-sm">
                     <input type="checkbox" name="gps_tracking_enabled" value="1" @checked(old('gps_tracking_enabled', $settings->gps_tracking_enabled))>
-                    Enable GPS tracking (stub mode — records via future integrations only)
+                    Enable GPS tracking for this unit
                 </label>
                 <div>
                     <label class="erp-label">GPS Provider</label>

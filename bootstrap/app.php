@@ -33,6 +33,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'hrm.any'               => \App\Http\Middleware\EnsureAnyHrmViewPermission::class,
             'tms.any'               => \App\Http\Middleware\EnsureAnyTmsViewPermission::class,
             'adms.push'             => \App\Http\Middleware\EnsureAdmsPushToken::class,
+            'tms.gps'               => \App\Http\Middleware\EnsureTmsGpsApiToken::class,
             'factory.scope'         => \App\Http\Middleware\EnsureUserFactoryScope::class,
             'employee.portal'       => \App\Http\Middleware\EnsureLinkedPortalEmployee::class,
             'rental.portal'         => \App\Http\Middleware\EnsureLinkedRentalDriver::class,

@@ -379,6 +379,19 @@ select.emp-input.tomselected {
     @apply p-4;
 }
 
+.erp-sidebar-sticky {
+    @apply sticky top-[4.5rem] z-30 bg-white overflow-visible;
+}
+
+.erp-sidebar-sticky .erp-panel-body {
+    overflow: visible;
+}
+
+.erp-sidebar-sticky .ts-wrapper.input-active {
+    position: relative;
+    z-index: 40;
+}
+
 .erp-table {
     @apply w-full text-sm;
 }
