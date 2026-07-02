@@ -339,6 +339,7 @@
                         ['notify_popup_enabled', 'Enable popup notifications', 'Master toggle for in-app notification bell alerts'],
                         ['notify_popup_admin_on_order', 'Popup — new requirement', 'Notify admin users when a client submits a requirement'],
                         ['notify_popup_admin_on_status', 'Popup — status change', 'Notify admin users when requirement status is updated'],
+                        ['notify_popup_admin_on_assignment', 'Popup — assignment change', 'Notify assignee and admin team when a requirement is assigned or reassigned'],
                         ['notify_mail_client_on_order', 'Email — client confirmation', 'Send confirmation email to client on submission'],
                         ['notify_mail_admin_on_order', 'Email — admin alert', 'Send email to admin when a new requirement arrives'],
                         ['notify_mail_client_on_status', 'Email — client status update', 'Send email to client when status changes'],

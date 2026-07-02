@@ -1,4 +1,4 @@
-<header class="h-14 bg-white border-b border-erp-border flex items-center justify-between px-3 sm:px-4 lg:px-6 shrink-0 sticky top-0 z-30 safe-top">
+<header class="h-14 bg-white border-b border-erp-border flex items-center justify-between px-3 sm:px-4 lg:px-6 shrink-0 sticky top-0 z-40 safe-top">
 
     <div class="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
         <button type="button" @click="sidebarOpen = !sidebarOpen"

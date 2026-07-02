@@ -53,17 +53,33 @@ Alpine.data('notificationBell', (initialCount = 0, pollUrl = '', useFixedPanel =
         }
 
         if (this.useFixedPanel) {
-            window.addEventListener('resize', () => {
+            this._onResize = () => {
                 if (this.open) {
                     this.updatePanelPosition();
                 }
-            });
+            };
+            this._onScroll = () => {
+                if (this.open) {
+                    this.updatePanelPosition();
+                }
+            };
+
+            window.addEventListener('resize', this._onResize);
+            window.addEventListener('scroll', this._onScroll, true);
         }
     },
 
     destroy() {
         if (this.pollTimer) {
             clearInterval(this.pollTimer);
+        }
+
+        if (this._onResize) {
+            window.removeEventListener('resize', this._onResize);
+        }
+
+        if (this._onScroll) {
+            window.removeEventListener('scroll', this._onScroll, true);
         }
     },
 

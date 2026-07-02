@@ -108,6 +108,16 @@ class RecruitmentApplication extends Model
             && ! $this->converted_employee_id;
     }
 
+    public function canEdit(): bool
+    {
+        return ! $this->converted_employee_id;
+    }
+
+    public function canDelete(): bool
+    {
+        return ! $this->converted_employee_id;
+    }
+
     public function photoUrl(): ?string
     {
         return $this->photo_path ? asset('storage/' . $this->photo_path) : null;

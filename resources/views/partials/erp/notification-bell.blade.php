@@ -4,6 +4,7 @@
     $typeMeta = [
         'new_requirement' => ['label' => 'Order', 'class' => 'erp-notif-badge-order'],
         'status_updated' => ['label' => 'Order', 'class' => 'erp-notif-badge-order'],
+        'requirement_assigned' => ['label' => 'Order', 'class' => 'erp-notif-badge-order'],
         'hrm_late_acceptance' => ['label' => 'HRM', 'class' => 'erp-notif-badge-hrm'],
         'hrm_unmapped_punch' => ['label' => 'HRM', 'class' => 'erp-notif-badge-hrm'],
         'hrm_manual_punch' => ['label' => 'HRM', 'class' => 'erp-notif-badge-hrm'],
@@ -43,9 +44,9 @@
         'tms_ot_pending' => ['label' => 'TMS', 'class' => 'erp-notif-badge-hrm'],
     ];
 @endphp
-<div class="relative" x-data="notificationBell({{ $unreadCount }}, '{{ route('admin.notifications.unread-count') }}')">
+<div class="relative z-50 shrink-0" x-data="notificationBell({{ $unreadCount }}, '{{ route('admin.notifications.unread-count') }}', true)">
 
-    <button type="button" @click="open = !open" @click.outside="open = false"
+    <button type="button" x-ref="trigger" @click="toggle()" @click.outside="open = false"
             class="relative p-2 rounded-md text-gray-500 hover:text-brand hover:bg-brand/5 transition"
             title="Notifications">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24">
@@ -57,7 +58,8 @@
     </button>
 
     <div x-show="open" x-cloak x-transition
-         class="absolute right-0 mt-2 w-96 max-w-[calc(100vw-1.5rem)] bg-white border border-erp-border rounded-lg shadow-xl z-50 overflow-hidden">
+         :style="panelStyle"
+         class="fixed z-[200] w-96 max-w-[calc(100vw-1.5rem)] bg-white border border-erp-border rounded-lg shadow-xl overflow-hidden">
         <div class="flex items-center justify-between px-4 py-3 border-b border-erp-border bg-gradient-to-r from-brand/[0.04] to-gold/5">
             <div>
                 <p class="text-xs font-bold text-gray-800 uppercase tracking-wide">Notifications</p>

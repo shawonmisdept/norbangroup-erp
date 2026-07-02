@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreOrderRequest;
 use App\Models\AppSetting;
 use App\Models\Order;
-use App\Models\User;
 use App\Services\Commercial\QuoteBreakdownService;
 use App\Services\OrderNotificationService;
 use App\Support\RequirementAssigneeOptions;
@@ -145,8 +144,16 @@ class OrderController extends Controller
 
     public function updateWorkflow(Request $request, Order $order, OrderNotificationService $notifications, QuoteBreakdownService $quoteBreakdown)
     {
+        $request->merge([
+            'assigned_to_user_id' => $request->filled('assigned_to_user_id')
+                ? (int) $request->input('assigned_to_user_id')
+                : null,
+        ]);
+
+        $allowedAssignees = RequirementAssigneeOptions::allowedIds($order);
+
         $validated = $request->validate([
-            'assigned_to_user_id' => ['nullable', 'exists:users,id'],
+            'assigned_to_user_id' => ['nullable', 'integer', Rule::in($allowedAssignees)],
             'quote_garment_type'  => ['nullable', Rule::in(array_keys($quoteBreakdown->garmentTypes()))],
             'quote_basis'         => ['nullable', Rule::in(array_keys($quoteBreakdown->quoteBases()))],
             'quote_currency'      => ['nullable', Rule::in(array_keys($quoteBreakdown->currencies()))],
@@ -160,10 +167,17 @@ class OrderController extends Controller
             'send_quote'          => ['sometimes', 'boolean'],
         ]);
 
+        $newAssigneeId = ($validated['assigned_to_user_id'] ?? null) ?: null;
+        $previousAssigneeId = $order->assigned_to_user_id;
+
         if (! $request->filled('quote_breakdown')) {
-            $order->update([
-                'assigned_to_user_id' => ($validated['assigned_to_user_id'] ?? null) ?: null,
-            ]);
+            if ((int) $previousAssigneeId === (int) $newAssigneeId) {
+                return back()->with('success', 'Assignment is unchanged.');
+            }
+
+            $order->update(['assigned_to_user_id' => $newAssigneeId]);
+            $order->refresh()->load('assignedTo');
+            $notifications->assignmentUpdated($order, $previousAssigneeId, $request->user());
 
             return back()->with('success', 'Assignment updated.');
         }
@@ -188,7 +202,7 @@ class OrderController extends Controller
         $pricePerPc = $summary['price_per_pc'] ?? ($validated['quote_price_per_pc'] ?? null);
 
         $updates = [
-            'assigned_to_user_id' => ($validated['assigned_to_user_id'] ?? null) ?: null,
+            'assigned_to_user_id' => $newAssigneeId,
             'quote_garment_type'  => $breakdown['garment_type'],
             'quote_basis'         => $breakdown['quote_basis'],
             'quote_currency'      => $breakdown['currency'],
@@ -212,7 +226,11 @@ class OrderController extends Controller
         }
 
         $order->update($updates);
-        $order->refresh();
+        $order->refresh()->load('assignedTo');
+
+        if ((int) $previousAssigneeId !== (int) $newAssigneeId) {
+            $notifications->assignmentUpdated($order, $previousAssigneeId, $request->user());
+        }
 
         $message = 'Quote and workflow details saved.';
 

@@ -111,6 +111,73 @@ class ApplicationController extends Controller
             ->with('success', 'Application recorded.');
     }
 
+    public function edit(Request $request, RecruitmentApplication $application)
+    {
+        $this->ensureCanManage($request);
+        $this->authorizeFactoryAccess($request, $application->factory_id);
+
+        if (! $application->canEdit()) {
+            return redirect()->route('admin.hrm.recruitment.applications.show', $application)
+                ->with('error', 'This application is linked to an employee and cannot be edited.');
+        }
+
+        return view('admin.hrm.recruitment.applications.form', [
+            'application'      => $application,
+            'postings'         => $this->postingOptions($request),
+            'selectedPosting'  => $application->job_posting_id,
+            'genders'          => config('hrm.employee_options.genders', []),
+            'referralSources'  => config('hrm.recruitment_referral_sources', []),
+            'isPublic'         => false,
+            'isEdit'           => true,
+        ]);
+    }
+
+    public function update(Request $request, RecruitmentApplication $application)
+    {
+        $this->ensureCanManage($request);
+        $this->authorizeFactoryAccess($request, $application->factory_id);
+
+        if (! $application->canEdit()) {
+            return back()->with('error', 'This application is linked to an employee and cannot be edited.');
+        }
+
+        $validated = $this->validateApplication($request);
+        $posting = JobPosting::findOrFail($validated['job_posting_id']);
+        $this->authorizeFactoryAccess($request, $posting->factory_id);
+
+        if ($application->source === 'online') {
+            $validated['source'] = 'online';
+        }
+
+        $this->service->updateApplication(
+            $application,
+            $posting,
+            $validated,
+            $request->user(),
+            $request->file('photo'),
+            $request->file('nid_document'),
+            $request->file('cv'),
+        );
+
+        return redirect()->route('admin.hrm.recruitment.applications.show', $application)
+            ->with('success', 'Application updated.');
+    }
+
+    public function destroy(Request $request, RecruitmentApplication $application)
+    {
+        $this->ensureCanManage($request);
+        $this->authorizeFactoryAccess($request, $application->factory_id);
+
+        if (! $application->canDelete()) {
+            return back()->with('error', 'This application is linked to an employee and cannot be deleted.');
+        }
+
+        $this->service->deleteApplication($application);
+
+        return redirect()->route('admin.hrm.recruitment.applications.index')
+            ->with('success', 'Application deleted.');
+    }
+
     public function show(Request $request, RecruitmentApplication $application)
     {
         $this->ensureCanView($request);
@@ -126,6 +193,8 @@ class ApplicationController extends Controller
             'interviewResults' => \App\Models\Hrm\RecruitmentInterview::RESULTS,
             'canManage'      => $request->user()?->hasPermission('hrm.recruitment.applications.manage') ?? false,
             'canConvert'     => $request->user()?->hasPermission('hrm.recruitment.applications.convert') ?? false,
+            'canEdit'        => ($request->user()?->hasPermission('hrm.recruitment.applications.manage') ?? false) && $application->canEdit(),
+            'canDelete'      => ($request->user()?->hasPermission('hrm.recruitment.applications.manage') ?? false) && $application->canDelete(),
         ]);
     }
 
@@ -177,13 +246,21 @@ class ApplicationController extends Controller
             'rejection_reason' => ['nullable', 'required_if:status,rejected', 'string', 'max:2000'],
         ]);
 
-        $this->service->updateStatus(
+        $wasConverted = (bool) $application->converted_employee_id;
+
+        $updated = $this->service->updateStatus(
             $application,
             $validated['status'],
             $request->user(),
             $validated['notes'] ?? null,
             $validated['rejection_reason'] ?? null,
         );
+
+        if ($validated['status'] === 'hired' && ! $wasConverted && $updated->converted_employee_id) {
+            return redirect()
+                ->route('admin.hrm.employees.show', $updated->convertedEmployee)
+                ->with('success', 'Application marked Hired and employee enrolled automatically.');
+        }
 
         return back()->with('success', 'Application status updated.');
     }

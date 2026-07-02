@@ -9,6 +9,7 @@ use App\Models\Role;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 
 class RequirementTest extends TestCase
@@ -394,5 +395,120 @@ class RequirementTest extends TestCase
             ->assertSee('Karim — Commercial Manager')
             ->assertSee('Test Admin — Test Admin')
             ->assertDontSee('Read Only — Viewer Only');
+    }
+
+    public function test_assignment_update_notifies_assignee(): void
+    {
+        Notification::fake();
+
+        $assigneeRole = Role::create([
+            'name'        => 'Assignee',
+            'permissions' => ['orders.view', 'orders.update'],
+        ]);
+
+        $assignee = User::create([
+            'name'     => 'Assignee User',
+            'email'    => 'assignee@test.com',
+            'password' => 'password',
+            'role_id'  => $assigneeRole->id,
+        ]);
+
+        $order = Order::create([
+            'ref_code'  => 'NOR-NOTIF1',
+            'name'      => 'Notify Test',
+            'email'     => 'notify@example.com',
+            'phone'     => '+8801712345678',
+            'item_name' => 'Shirt',
+            'status'    => 'New',
+        ]);
+
+        $this->actingAs($this->admin)->patch(route('admin.requirements.workflow', $order), [
+            'assigned_to_user_id' => $assignee->id,
+        ])->assertRedirect();
+
+        Notification::assertSentTo(
+            $assignee,
+            \App\Notifications\RequirementAssignedNotification::class,
+            fn ($notification) => $notification->order->is($order->fresh())
+        );
+
+        Notification::assertNotSentTo($this->admin, \App\Notifications\RequirementAssignedNotification::class);
+    }
+
+    public function test_assignment_update_skips_notification_when_unchanged(): void
+    {
+        Notification::fake();
+
+        $order = Order::create([
+            'ref_code'            => 'NOR-NOTIF2',
+            'name'                => 'No Change',
+            'email'               => 'nochange@example.com',
+            'phone'               => '+8801712345678',
+            'item_name'           => 'Shirt',
+            'status'              => 'New',
+            'assigned_to_user_id' => $this->admin->id,
+        ]);
+
+        $this->actingAs($this->admin)->patch(route('admin.requirements.workflow', $order), [
+            'assigned_to_user_id' => $this->admin->id,
+        ])->assertRedirect();
+
+        Notification::assertNothingSent();
+    }
+
+    public function test_viewer_cannot_update_assignment_workflow(): void
+    {
+        $viewerRole = Role::create([
+            'name'        => 'Viewer Only',
+            'permissions' => ['orders.view', 'orders.download'],
+        ]);
+
+        $viewer = User::create([
+            'name'     => 'Viewer',
+            'email'    => 'viewer-workflow@test.com',
+            'password' => 'password',
+            'role_id'  => $viewerRole->id,
+        ]);
+
+        $order = Order::create([
+            'ref_code'  => 'NOR-VIEW1',
+            'name'      => 'Viewer Test',
+            'email'     => 'viewer@example.com',
+            'phone'     => '+8801712345678',
+            'item_name' => 'Shirt',
+            'status'    => 'New',
+        ]);
+
+        $this->actingAs($viewer)->patch(route('admin.requirements.workflow', $order), [
+            'assigned_to_user_id' => $viewer->id,
+        ])->assertForbidden();
+    }
+
+    public function test_assignment_rejects_user_without_orders_update_permission(): void
+    {
+        $viewerRole = Role::create([
+            'name'        => 'Viewer Only',
+            'permissions' => ['orders.view', 'orders.download'],
+        ]);
+
+        $viewer = User::create([
+            'name'     => 'Viewer',
+            'email'    => 'viewer-invalid@test.com',
+            'password' => 'password',
+            'role_id'  => $viewerRole->id,
+        ]);
+
+        $order = Order::create([
+            'ref_code'  => 'NOR-INV1',
+            'name'      => 'Invalid Assignee',
+            'email'     => 'invalid@example.com',
+            'phone'     => '+8801712345678',
+            'item_name' => 'Shirt',
+            'status'    => 'New',
+        ]);
+
+        $this->actingAs($this->admin)->patch(route('admin.requirements.workflow', $order), [
+            'assigned_to_user_id' => $viewer->id,
+        ])->assertSessionHasErrors('assigned_to_user_id');
     }
 }

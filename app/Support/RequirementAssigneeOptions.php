@@ -2,6 +2,7 @@
 
 namespace App\Support;
 
+use App\Models\AppSetting;
 use App\Models\Order;
 use App\Models\Role;
 use App\Models\User;
@@ -9,6 +10,17 @@ use Illuminate\Support\Collection;
 
 class RequirementAssigneeOptions
 {
+    /** @return list<int> */
+    public static function allowedIds(?Order $order = null): array
+    {
+        return array_map('intval', array_keys(self::forOrder($order)));
+    }
+
+    public static function isAllowed(?int $userId, ?Order $order = null): bool
+    {
+        return $userId === null || in_array($userId, self::allowedIds($order), true);
+    }
+
     /** @return array<int, string> */
     public static function forOrder(?Order $order = null): array
     {

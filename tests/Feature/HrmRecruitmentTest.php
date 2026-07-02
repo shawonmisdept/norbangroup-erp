@@ -722,4 +722,243 @@ class HrmRecruitmentTest extends TestCase
         $application = RecruitmentApplication::first();
         $this->assertNotNull($application->cv_path);
     }
+
+    public function test_hired_status_auto_enrolls_employee(): void
+    {
+        $factory = Factory::create(['name' => 'Auto Enroll Factory', 'is_active' => true]);
+        $admin = $this->hrAdmin();
+        $posting = $this->openPosting($factory);
+
+        $application = RecruitmentApplication::create([
+            'application_no'    => 'APP-2026-00300',
+            'job_posting_id'    => $posting->id,
+            'factory_id'        => $factory->id,
+            'source'            => 'online',
+            'status'            => 'selected',
+            'name'              => 'Auto Hire Candidate',
+            'phone'             => '01730303030',
+            'email'             => 'auto-hire@test.com',
+            'nid_number'        => '9988776655',
+            'education_history' => [
+                ['degree' => 'SSC', 'institution' => 'Test School', 'passing_year' => '2018'],
+            ],
+            'applied_at'        => now(),
+        ]);
+
+        $this->actingAs($admin)->post(route('admin.hrm.recruitment.applications.status', $application), [
+            'status' => 'hired',
+            'notes'  => 'Welcome aboard',
+        ])->assertRedirect(route('admin.hrm.employees.show', Employee::first()));
+
+        $application->refresh();
+        $employee = $application->convertedEmployee;
+
+        $this->assertSame('hired', $application->status);
+        $this->assertNotNull($employee);
+        $this->assertSame('APP202600300', $employee->employee_code);
+        $this->assertSame('Auto Hire Candidate', $employee->name);
+        $this->assertSame('01730303030', $employee->phone);
+        $this->assertSame('probation', $employee->status);
+        $this->assertSame(1, $posting->fresh()->openings_filled);
+        $this->assertDatabaseHas('hrm_employee_education_histories', [
+            'employee_id' => $employee->id,
+            'degree'      => 'SSC',
+        ]);
+    }
+
+    public function test_hired_status_auto_closes_posting_when_slots_filled(): void
+    {
+        $factory = Factory::create(['name' => 'Auto Close Factory', 'is_active' => true]);
+        $admin = $this->hrAdmin();
+        $posting = JobPosting::create([
+            'factory_id'   => $factory->id,
+            'title'        => 'Single Slot Auto Hire',
+            'slots'        => 1,
+            'status'       => 'open',
+            'published_at' => now(),
+        ]);
+
+        $application = RecruitmentApplication::create([
+            'application_no' => 'APP-2026-00301',
+            'job_posting_id' => $posting->id,
+            'factory_id'     => $factory->id,
+            'source'         => 'online',
+            'status'         => 'offered',
+            'name'           => 'Slot Fill Candidate',
+            'phone'          => '01731313131',
+            'applied_at'     => now(),
+        ]);
+
+        $this->actingAs($admin)->post(route('admin.hrm.recruitment.applications.status', $application), [
+            'status' => 'hired',
+        ])->assertRedirect();
+
+        $this->assertSame('closed', $posting->fresh()->status);
+        $this->assertSame(1, $posting->fresh()->openings_filled);
+    }
+
+    public function test_hired_status_blocks_when_active_employee_exists(): void
+    {
+        $factory = Factory::create(['name' => 'Conflict Factory', 'is_active' => true]);
+        $admin = $this->hrAdmin();
+        $posting = $this->openPosting($factory);
+
+        Employee::create([
+            'factory_id'    => $factory->id,
+            'employee_code' => 'EXIST-1',
+            'name'          => 'Existing Worker',
+            'phone'         => '01732323232',
+            'status'        => 'active',
+            'joining_date'  => now()->toDateString(),
+        ]);
+
+        $application = RecruitmentApplication::create([
+            'application_no' => 'APP-2026-00302',
+            'job_posting_id' => $posting->id,
+            'factory_id'     => $factory->id,
+            'source'         => 'online',
+            'status'         => 'selected',
+            'name'           => 'Duplicate Phone Candidate',
+            'phone'          => '01732323232',
+            'applied_at'     => now(),
+        ]);
+
+        $this->actingAs($admin)->post(route('admin.hrm.recruitment.applications.status', $application), [
+            'status' => 'hired',
+        ])->assertSessionHasErrors('status');
+
+        $this->assertSame('selected', $application->fresh()->status);
+        $this->assertNull($application->fresh()->converted_employee_id);
+    }
+
+    public function test_hired_status_requires_employee_manage_permission(): void
+    {
+        $factory = Factory::create(['name' => 'Perm Factory', 'is_active' => true]);
+        $role = Role::create([
+            'name'        => 'Recruitment Only',
+            'permissions' => [
+                'hrm.recruitment.applications.view',
+                'hrm.recruitment.applications.manage',
+            ],
+        ]);
+        $user = User::create([
+            'name'     => 'Recruitment Manager',
+            'email'    => 'recruit-only@test.com',
+            'password' => 'password',
+            'role_id'  => $role->id,
+        ]);
+        $posting = $this->openPosting($factory);
+
+        $application = RecruitmentApplication::create([
+            'application_no' => 'APP-2026-00303',
+            'job_posting_id' => $posting->id,
+            'factory_id'     => $factory->id,
+            'source'         => 'online',
+            'status'         => 'selected',
+            'name'           => 'Perm Test Candidate',
+            'phone'          => '01733343434',
+            'applied_at'     => now(),
+        ]);
+
+        $this->actingAs($user)->post(route('admin.hrm.recruitment.applications.status', $application), [
+            'status' => 'hired',
+        ])->assertSessionHasErrors('status');
+
+        $this->assertSame('selected', $application->fresh()->status);
+    }
+
+    public function test_hr_can_edit_application(): void
+    {
+        $factory = Factory::create(['name' => 'Edit Factory', 'is_active' => true]);
+        $admin = $this->hrAdmin();
+        $posting = $this->openPosting($factory);
+
+        $application = RecruitmentApplication::create([
+            'application_no' => 'APP-2026-00400',
+            'job_posting_id' => $posting->id,
+            'factory_id'     => $factory->id,
+            'source'         => 'walk_in',
+            'status'         => 'screening',
+            'name'           => 'Before Edit',
+            'phone'          => '01740404040',
+            'applied_at'     => now(),
+        ]);
+
+        $this->actingAs($admin)->put(route('admin.hrm.recruitment.applications.update', $application), [
+            'job_posting_id' => $posting->id,
+            'source'         => 'walk_in',
+            'name'           => 'After Edit',
+            'phone'          => '01740404040',
+            'notes'          => 'Updated by HR',
+        ])->assertRedirect(route('admin.hrm.recruitment.applications.show', $application));
+
+        $application->refresh();
+        $this->assertSame('After Edit', $application->name);
+        $this->assertSame('Updated by HR', $application->notes);
+        $this->assertDatabaseHas('hrm_recruitment_application_logs', [
+            'application_id' => $application->id,
+            'notes'          => 'Application details updated by HR.',
+        ]);
+    }
+
+    public function test_hr_can_delete_application(): void
+    {
+        $factory = Factory::create(['name' => 'Delete Factory', 'is_active' => true]);
+        $admin = $this->hrAdmin();
+        $posting = $this->openPosting($factory);
+
+        $application = RecruitmentApplication::create([
+            'application_no' => 'APP-2026-00401',
+            'job_posting_id' => $posting->id,
+            'factory_id'     => $factory->id,
+            'source'         => 'online',
+            'status'         => 'rejected',
+            'name'           => 'Delete Me',
+            'phone'          => '01741414141',
+            'applied_at'     => now(),
+        ]);
+
+        $this->actingAs($admin)->delete(route('admin.hrm.recruitment.applications.destroy', $application))
+            ->assertRedirect(route('admin.hrm.recruitment.applications.index'));
+
+        $this->assertDatabaseMissing('hrm_recruitment_applications', [
+            'id' => $application->id,
+        ]);
+    }
+
+    public function test_cannot_delete_application_linked_to_employee(): void
+    {
+        $factory = Factory::create(['name' => 'Linked Delete Factory', 'is_active' => true]);
+        $admin = $this->hrAdmin();
+        $posting = $this->openPosting($factory);
+
+        $employee = Employee::create([
+            'factory_id'    => $factory->id,
+            'employee_code' => 'LINK-1',
+            'name'          => 'Linked Employee',
+            'phone'         => '01742424242',
+            'status'        => 'probation',
+            'joining_date'  => now()->toDateString(),
+        ]);
+
+        $application = RecruitmentApplication::create([
+            'application_no'        => 'APP-2026-00402',
+            'job_posting_id'        => $posting->id,
+            'factory_id'            => $factory->id,
+            'source'                => 'online',
+            'status'                => 'hired',
+            'name'                  => 'Linked Candidate',
+            'phone'                 => '01742424242',
+            'converted_employee_id' => $employee->id,
+            'applied_at'            => now(),
+        ]);
+
+        $this->actingAs($admin)->delete(route('admin.hrm.recruitment.applications.destroy', $application))
+            ->assertRedirect()
+            ->assertSessionHas('error');
+
+        $this->assertDatabaseHas('hrm_recruitment_applications', [
+            'id' => $application->id,
+        ]);
+    }
 }

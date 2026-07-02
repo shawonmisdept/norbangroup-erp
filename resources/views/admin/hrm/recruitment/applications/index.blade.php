@@ -86,7 +86,14 @@
                             @endif
                         </td>
                         <td class="text-xs text-gray-600">{{ $row->applied_at->format('d M Y') }}</td>
-                        <td class="text-right"><a href="{{ route('admin.hrm.recruitment.applications.show', $row) }}" class="erp-btn-sm-secondary">View</a></td>
+                        <td class="text-right">
+                            <div class="inline-flex items-center gap-1">
+                                <a href="{{ route('admin.hrm.recruitment.applications.show', $row) }}" class="erp-btn-sm-secondary">View</a>
+                                @if($canManage && $row->canEdit())
+                                    <a href="{{ route('admin.hrm.recruitment.applications.edit', $row) }}" class="erp-btn-sm-secondary">Edit</a>
+                                @endif
+                            </div>
+                        </td>
                     </tr>
                 @empty
                     <tr><td colspan="8" class="text-center text-gray-400 py-8">No applications yet.</td></tr>

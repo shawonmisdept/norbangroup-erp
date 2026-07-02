@@ -11,6 +11,7 @@ use App\Models\Hrm\RecruitmentOfferLetter;
 use App\Models\User;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
@@ -20,6 +21,7 @@ class RecruitmentService
         private HrmNotificationService $notifications,
         private RecruitmentMessagingService $messaging,
         private JobPostingService $postings,
+        private EmployeeServiceHistoryService $serviceHistory,
     ) {}
 
     public function generateApplicationNo(): string
@@ -103,6 +105,103 @@ class RecruitmentService
         return $application;
     }
 
+    public function updateApplication(
+        RecruitmentApplication $application,
+        JobPosting $posting,
+        array $data,
+        User $user,
+        ?UploadedFile $photo = null,
+        ?UploadedFile $nidDocument = null,
+        ?UploadedFile $cv = null,
+    ): RecruitmentApplication {
+        if (! $application->canEdit()) {
+            throw ValidationException::withMessages([
+                'application' => 'This application is linked to an employee and cannot be edited.',
+            ]);
+        }
+
+        $this->assertNoDuplicateActiveApplication($posting->id, $data['phone'], $application->id);
+
+        return DB::transaction(function () use ($application, $posting, $data, $user, $photo, $nidDocument, $cv) {
+            $updates = [
+                'job_posting_id'     => $posting->id,
+                'factory_id'         => $posting->factory_id,
+                'source'             => $data['source'] ?? $application->source,
+                'name'               => $data['name'],
+                'phone'              => $this->normalizePhone($data['phone']),
+                'email'              => $data['email'] ?? null,
+                'gender'             => $data['gender'] ?? null,
+                'date_of_birth'      => $data['date_of_birth'] ?? null,
+                'nid_number'         => $data['nid_number'] ?? null,
+                'present_address'    => $data['present_address'] ?? null,
+                'permanent_address'  => $data['permanent_address'] ?? null,
+                'education_history'  => $this->cleanHistoryRows($data['education_history'] ?? [], [
+                    'degree', 'institution', 'board_or_university', 'passing_year', 'result',
+                ]),
+                'employment_history' => $this->cleanHistoryRows($data['employment_history'] ?? [], [
+                    'company_name', 'designation', 'department', 'joining_date', 'leaving_date', 'reason_for_leaving',
+                ]),
+                'expected_salary'    => $data['expected_salary'] ?? null,
+                'referral_source'    => $data['referral_source'] ?? null,
+                'notes'              => $data['notes'] ?? null,
+                'reviewed_by'        => $user->id,
+                'reviewed_at'        => now(),
+            ];
+
+            if ($photo) {
+                $this->deleteApplicationFile($application->photo_path);
+                $updates['photo_path'] = $photo->store('hrm/recruitment/photos', 'public');
+            }
+
+            if ($nidDocument) {
+                $this->deleteApplicationFile($application->nid_document_path);
+                $updates['nid_document_path'] = $nidDocument->store('hrm/recruitment/documents', 'public');
+            }
+
+            if ($cv) {
+                $this->deleteApplicationFile($application->cv_path);
+                $updates['cv_path'] = $cv->store('hrm/recruitment/cv', 'public');
+            }
+
+            $application->update($updates);
+
+            RecruitmentApplicationLog::create([
+                'application_id' => $application->id,
+                'from_status'    => $application->status,
+                'to_status'      => $application->status,
+                'notes'          => 'Application details updated by HR.',
+                'user_id'        => $user->id,
+            ]);
+
+            return $application->fresh(['jobPosting', 'factory']);
+        });
+    }
+
+    public function deleteApplication(RecruitmentApplication $application): void
+    {
+        if (! $application->canDelete()) {
+            throw ValidationException::withMessages([
+                'application' => 'This application is linked to an employee and cannot be deleted.',
+            ]);
+        }
+
+        DB::transaction(function () use ($application) {
+            if ($application->status === 'hired' && $application->jobPosting) {
+                $posting = $application->jobPosting;
+                if ($posting->openings_filled > 0) {
+                    $posting->decrement('openings_filled');
+                    $posting->refreshAvailability();
+                }
+            }
+
+            foreach (['photo_path', 'nid_document_path', 'cv_path'] as $field) {
+                $this->deleteApplicationFile($application->{$field});
+            }
+
+            $application->delete();
+        });
+    }
+
     public function scheduleInterview(
         RecruitmentApplication $application,
         array $data,
@@ -170,6 +269,27 @@ class RecruitmentService
 
         $from = $application->status;
 
+        if ($newStatus === 'hired' && ! $application->converted_employee_id) {
+            return DB::transaction(function () use ($application, $from, $user, $notes, $rejectionReason, $notifyCandidate) {
+                $employee = $this->createEmployeeFromApplication($application, $user);
+                $this->linkConvertedEmployee(
+                    $application,
+                    $employee,
+                    $user,
+                    $from,
+                    $notes ?? ('Auto-enrolled as employee ' . $employee->employee_code),
+                );
+
+                $updated = $application->fresh(['jobPosting', 'factory', 'logs.user', 'convertedEmployee']);
+
+                if ($notifyCandidate) {
+                    $this->messaging->statusUpdated($updated, $from, $notes);
+                }
+
+                return $updated;
+            });
+        }
+
         return DB::transaction(function () use ($application, $newStatus, $from, $user, $notes, $rejectionReason, $notifyCandidate) {
             $application->update([
                 'status'           => $newStatus,
@@ -177,14 +297,6 @@ class RecruitmentService
                 'reviewed_by'      => $user->id,
                 'reviewed_at'      => now(),
             ]);
-
-            if ($newStatus === 'hired' && $application->converted_employee_id) {
-                $posting = $application->jobPosting;
-                if ($posting) {
-                    $posting->increment('openings_filled');
-                    $posting->refreshAvailability();
-                }
-            }
 
             RecruitmentApplicationLog::create([
                 'application_id' => $application->id,
@@ -213,25 +325,15 @@ class RecruitmentService
 
             $from = $application->status;
 
-            $application->update([
-                'status'                => 'hired',
-                'converted_employee_id' => $employee->id,
-                'reviewed_by'           => $user->id,
-                'reviewed_at'           => now(),
-            ]);
+            $this->linkConvertedEmployee(
+                $application,
+                $employee,
+                $user,
+                $from,
+                'Converted to employee ' . $employee->employee_code,
+            );
 
-            $application->jobPosting?->increment('openings_filled');
-            $application->jobPosting?->refreshAvailability();
-
-            RecruitmentApplicationLog::create([
-                'application_id' => $application->id,
-                'from_status'                => $from,
-                'to_status'                  => 'hired',
-                'notes'                      => 'Converted to employee ' . $employee->employee_code,
-                'user_id'                    => $user->id,
-            ]);
-
-            return $application->fresh();
+            return $application->fresh(['convertedEmployee']);
         });
     }
 
@@ -254,10 +356,39 @@ class RecruitmentService
             'designation_id'     => $application->jobPosting?->designation_id,
             'worker_category_id' => $application->jobPosting?->worker_category_id,
             'status'             => 'probation',
-            'joining_date'       => now()->toDateString(),
+            'joining_date'       => $this->resolveJoiningDate($application),
             'education_history'  => $application->education_history ?? [],
             'employment_history' => $application->employment_history ?? [],
         ];
+    }
+
+    public function createEmployeeFromApplication(RecruitmentApplication $application, User $user): Employee
+    {
+        if (! $user->hasPermission('hrm.employees.manage')) {
+            throw ValidationException::withMessages([
+                'status' => 'Employee manage permission is required to enroll on Hired status.',
+            ]);
+        }
+
+        $application->loadMissing(['jobPosting', 'offerLetters']);
+
+        $this->assertNoActiveEmployeeConflict($application);
+
+        $prefill = $this->employeePrefillFromApplication($application);
+        $educationHistory = $prefill['education_history'] ?? [];
+        $employmentHistory = $prefill['employment_history'] ?? [];
+        unset($prefill['education_history'], $prefill['employment_history']);
+
+        $prefill['employee_code'] = $this->generateEmployeeCode($application);
+        $prefill['photo'] = $this->copyApplicationFile($application->photo_path, 'photos');
+        $prefill['nid_document'] = $this->copyApplicationFile($application->nid_document_path, 'nid');
+
+        $employee = Employee::create($prefill);
+        $this->serviceHistory->recordEnrollment($employee);
+        $this->syncEducationHistories($employee, $educationHistory);
+        $this->syncEmploymentHistories($employee, $employmentHistory);
+
+        return $employee->fresh();
     }
 
     /** @return Employee|null Former employee match by NID or phone (info only, no block) */
@@ -377,23 +508,193 @@ class RecruitmentService
         return $clean;
     }
 
-    private function assertNoDuplicateActiveApplication(int $postingId, string $phone): void
+    private function assertNoDuplicateActiveApplication(int $postingId, string $phone, ?int $excludeApplicationId = null): void
     {
-        $exists = RecruitmentApplication::query()
+        $query = RecruitmentApplication::query()
             ->where('job_posting_id', $postingId)
             ->where('phone', $this->normalizePhone($phone))
-            ->whereNotIn('status', ['rejected', 'withdrawn'])
-            ->exists();
+            ->whereNotIn('status', ['rejected', 'withdrawn']);
 
-        if ($exists) {
+        if ($excludeApplicationId) {
+            $query->where('id', '!=', $excludeApplicationId);
+        }
+
+        if ($query->exists()) {
             throw ValidationException::withMessages([
                 'phone' => 'An active application already exists for this phone number on this job posting.',
             ]);
         }
     }
 
+    private function deleteApplicationFile(?string $path): void
+    {
+        if ($path) {
+            Storage::disk('public')->delete($path);
+        }
+    }
+
     private function normalizePhone(string $phone): string
     {
         return preg_replace('/\s+/', '', trim($phone)) ?? trim($phone);
+    }
+
+    private function linkConvertedEmployee(
+        RecruitmentApplication $application,
+        Employee $employee,
+        User $user,
+        string $fromStatus,
+        string $notes,
+    ): void {
+        $wasAlreadyConverted = (bool) $application->converted_employee_id;
+
+        $application->update([
+            'status'                => 'hired',
+            'converted_employee_id' => $employee->id,
+            'reviewed_by'           => $user->id,
+            'reviewed_at'           => now(),
+        ]);
+
+        if (! $wasAlreadyConverted) {
+            $application->jobPosting?->increment('openings_filled');
+            $application->jobPosting?->refreshAvailability();
+        }
+
+        RecruitmentApplicationLog::create([
+            'application_id' => $application->id,
+            'from_status'    => $fromStatus,
+            'to_status'      => 'hired',
+            'notes'          => $notes,
+            'user_id'        => $user->id,
+        ]);
+    }
+
+    private function resolveJoiningDate(RecruitmentApplication $application): string
+    {
+        $application->loadMissing('offerLetters');
+
+        $offerJoiningDate = $application->offerLetters
+            ->sortByDesc('issued_at')
+            ->first(fn (RecruitmentOfferLetter $letter) => $letter->joining_date !== null)
+            ?->joining_date;
+
+        return $offerJoiningDate?->toDateString() ?? now()->toDateString();
+    }
+
+    private function generateEmployeeCode(RecruitmentApplication $application): string
+    {
+        $base = str_replace('-', '', $application->application_no);
+
+        if (! Employee::where('employee_code', $base)->exists()) {
+            return $base;
+        }
+
+        for ($suffix = 2; $suffix <= 99; $suffix++) {
+            $code = Str::limit($base, 27, '') . '-' . $suffix;
+
+            if (! Employee::where('employee_code', $code)->exists()) {
+                return $code;
+            }
+        }
+
+        throw ValidationException::withMessages([
+            'status' => 'Could not generate a unique employee code from this application.',
+        ]);
+    }
+
+    private function assertNoActiveEmployeeConflict(RecruitmentApplication $application): void
+    {
+        if (! $application->phone && ! $application->nid_number) {
+            return;
+        }
+
+        $query = Employee::query()
+            ->whereNotIn('status', Employee::SEPARATED_STATUSES);
+
+        $query->where(function ($builder) use ($application) {
+            if ($application->phone) {
+                $builder->where('phone', $application->phone);
+            }
+
+            if ($application->nid_number) {
+                if ($application->phone) {
+                    $builder->orWhere('nid_number', $application->nid_number);
+                } else {
+                    $builder->where('nid_number', $application->nid_number);
+                }
+            }
+        });
+
+        $existing = $query->first();
+
+        if ($existing) {
+            throw ValidationException::withMessages([
+                'status' => 'An active employee already exists with this phone or NID (' . $existing->employee_code . '). Use Convert to Employee to review details first.',
+            ]);
+        }
+    }
+
+    private function copyApplicationFile(?string $sourcePath, string $folder): ?string
+    {
+        if (! $sourcePath || ! Storage::disk('public')->exists($sourcePath)) {
+            return null;
+        }
+
+        $extension = pathinfo($sourcePath, PATHINFO_EXTENSION) ?: 'bin';
+        $destination = sprintf('employees/%s/%s.%s', $folder, uniqid('rec_', true), $extension);
+
+        Storage::disk('public')->copy($sourcePath, $destination);
+
+        return $destination;
+    }
+
+    /** @param array<int, array<string, mixed>> $rows */
+    private function syncEducationHistories(Employee $employee, array $rows): void
+    {
+        foreach (array_values($rows) as $index => $row) {
+            if (! is_array($row) || $this->historyRowIsEmpty($row, ['degree', 'institution', 'board_or_university', 'passing_year', 'result'])) {
+                continue;
+            }
+
+            $employee->educationHistories()->create([
+                'degree'              => $row['degree'] ?? null,
+                'institution'         => $row['institution'] ?? null,
+                'board_or_university' => $row['board_or_university'] ?? null,
+                'passing_year'        => $row['passing_year'] ?? null,
+                'result'              => $row['result'] ?? null,
+                'sort_order'          => $index,
+            ]);
+        }
+    }
+
+    /** @param array<int, array<string, mixed>> $rows */
+    private function syncEmploymentHistories(Employee $employee, array $rows): void
+    {
+        foreach (array_values($rows) as $index => $row) {
+            if (! is_array($row) || $this->historyRowIsEmpty($row, ['company_name', 'designation', 'department', 'joining_date', 'leaving_date', 'reason_for_leaving'])) {
+                continue;
+            }
+
+            $employee->employmentHistories()->create([
+                'company_name'       => $row['company_name'] ?? null,
+                'designation'        => $row['designation'] ?? null,
+                'department'         => $row['department'] ?? null,
+                'joining_date'       => $row['joining_date'] ?? null,
+                'leaving_date'       => $row['leaving_date'] ?? null,
+                'reason_for_leaving' => $row['reason_for_leaving'] ?? null,
+                'sort_order'         => $index,
+            ]);
+        }
+    }
+
+    /** @param array<string, mixed> $row */
+    private function historyRowIsEmpty(array $row, array $fields): bool
+    {
+        foreach ($fields as $field) {
+            if (filled($row[$field] ?? null)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

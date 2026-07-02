@@ -10,7 +10,9 @@ use App\Models\AppSetting;
 use App\Models\Order;
 use App\Models\User;
 use App\Notifications\NewRequirementNotification;
+use App\Notifications\RequirementAssignedNotification;
 use App\Notifications\RequirementStatusNotification;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Throwable;
@@ -60,6 +62,32 @@ class OrderNotificationService
         $this->sendMail($order->email, new OrderQuoteMail($order));
     }
 
+    public function assignmentUpdated(Order $order, ?int $previousAssigneeId, ?User $assignedBy = null): void
+    {
+        $settings = AppSetting::current();
+
+        if (! $settings->notify_popup_enabled || ! $settings->notify_popup_admin_on_assignment) {
+            return;
+        }
+
+        $notification = new RequirementAssignedNotification($order, $previousAssigneeId, $assignedBy);
+        $actorId = $assignedBy?->id ?? Auth::id();
+        $newAssigneeId = $order->assigned_to_user_id ? (int) $order->assigned_to_user_id : null;
+
+        User::query()
+            ->with('role')
+            ->get()
+            ->filter(fn (User $user) => $user->hasPermission('orders.view'))
+            ->filter(function (User $user) use ($actorId, $newAssigneeId) {
+                if ($newAssigneeId !== null && (int) $user->id === $newAssigneeId) {
+                    return true;
+                }
+
+                return $actorId === null || (int) $user->id !== (int) $actorId;
+            })
+            ->each(fn (User $user) => $user->notify($notification));
+    }
+
     private function sendMail(string $recipient, object $mailable): void
     {
         $settings = AppSetting::current();
@@ -86,12 +114,15 @@ class OrderNotificationService
         }
     }
 
-    private function notifyAdmins(object $notification): void
+    private function notifyAdmins(object $notification, ?int $exceptUserId = null): void
     {
+        $actorId = $exceptUserId ?? Auth::id();
+
         User::query()
             ->with('role')
             ->get()
             ->filter(fn (User $user) => $user->hasPermission('orders.view'))
+            ->filter(fn (User $user) => $actorId === null || (int) $user->id !== (int) $actorId)
             ->each(fn (User $user) => $user->notify($notification));
     }
 }

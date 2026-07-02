@@ -1,9 +1,22 @@
 @php
     $isPublic = $isPublic ?? false;
+    $isEdit = $isEdit ?? false;
     $postings = $postings ?? null;
     $selectedPosting = $selectedPosting ?? ($posting->id ?? null);
-    $educationRows = old('education_history', [['degree' => '', 'institution' => '', 'board_or_university' => '', 'passing_year' => '', 'result' => '']]);
-    $employmentRows = old('employment_history', [['company_name' => '', 'designation' => '', 'department' => '', 'joining_date' => '', 'leaving_date' => '', 'reason_for_leaving' => '']]);
+    $educationRows = old('education_history');
+    if ($educationRows === null) {
+        $educationRows = $application->education_history ?? [];
+    }
+    if ($educationRows === []) {
+        $educationRows = [['degree' => '', 'institution' => '', 'board_or_university' => '', 'passing_year' => '', 'result' => '']];
+    }
+    $employmentRows = old('employment_history');
+    if ($employmentRows === null) {
+        $employmentRows = $application->employment_history ?? [];
+    }
+    if ($employmentRows === []) {
+        $employmentRows = [['company_name' => '', 'designation' => '', 'department' => '', 'joining_date' => '', 'leaving_date' => '', 'reason_for_leaving' => '']];
+    }
     $inputClass = $isPublic ? 'careers-input' : 'erp-input !text-xs';
     $sectionClass = $isPublic ? 'careers-form-section' : 'erp-panel';
     $sectionHead = $isPublic ? 'careers-form-section-head' : 'erp-panel-head';
@@ -31,13 +44,18 @@
                 </div>
                 <div>
                     <label class="erp-form-label">Source</label>
-                    <select name="source" class="erp-input !text-xs">
-                        @foreach(config('hrm.recruitment_sources', []) as $val => $label)
-                            @if($val !== 'online')
-                                <option value="{{ $val }}" {{ old('source', $application->source ?? 'hr_manual') === $val ? 'selected' : '' }}>{{ $label }}</option>
-                            @endif
-                        @endforeach
-                    </select>
+                    @if($isEdit && ($application->source ?? '') === 'online')
+                        <input type="hidden" name="source" value="online">
+                        <p class="text-sm text-gray-700 py-2">{{ config('hrm.recruitment_sources.online', 'Online') }}</p>
+                    @else
+                        <select name="source" class="erp-input !text-xs">
+                            @foreach(config('hrm.recruitment_sources', []) as $val => $label)
+                                @if($val !== 'online')
+                                    <option value="{{ $val }}" {{ old('source', $application->source ?? 'hr_manual') === $val ? 'selected' : '' }}>{{ $label }}</option>
+                                @endif
+                            @endforeach
+                        </select>
+                    @endif
                 </div>
             </div>
         </div>
@@ -50,11 +68,11 @@
         <div class="{{ $sectionBody }} grid grid-cols-1 md:grid-cols-2 gap-4">
             <div class="md:col-span-2">
                 @if($isPublic)<label class="careers-field"><span>Full Name *</span></label>@else<label class="erp-form-label">Full Name *</label>@endif
-                <input type="text" name="name" required value="{{ old('name') }}" class="{{ $inputClass }}">
+                <input type="text" name="name" required value="{{ old('name', $application->name ?? '') }}" class="{{ $inputClass }}">
             </div>
             <div>
                 @if($isPublic)<label class="careers-field"><span>Phone *</span></label>@else<label class="erp-form-label">Phone *</label>@endif
-                <input type="text" name="phone" id="recruitment-phone" required value="{{ old('phone') }}" class="{{ $inputClass }}" placeholder="01XXXXXXXXX">
+                <input type="text" name="phone" id="recruitment-phone" required value="{{ old('phone', $application->phone ?? '') }}" class="{{ $inputClass }}" placeholder="01XXXXXXXXX">
             </div>
             @if($isPublic && ($otpSendUrl ?? null))
                 <div>
@@ -69,33 +87,41 @@
             @endif
             <div>
                 @if($isPublic)<label class="careers-field"><span>Email</span></label>@else<label class="erp-form-label">Email</label>@endif
-                <input type="email" name="email" value="{{ old('email') }}" class="{{ $inputClass }}">
+                <input type="email" name="email" value="{{ old('email', $application->email ?? '') }}" class="{{ $inputClass }}">
             </div>
             <div>
                 @if($isPublic)<label class="careers-field"><span>Gender</span></label>@else<label class="erp-form-label">Gender</label>@endif
                 <select name="gender" class="{{ $inputClass }}">
                     <option value="">Select…</option>
                     @foreach($genders as $val => $label)
-                        <option value="{{ $val }}" {{ old('gender') === $val ? 'selected' : '' }}>{{ $label }}</option>
+                        <option value="{{ $val }}" {{ old('gender', $application->gender ?? '') === $val ? 'selected' : '' }}>{{ $label }}</option>
                     @endforeach
                 </select>
             </div>
             <div>
                 @if($isPublic)<label class="careers-field"><span>Date of Birth</span></label>@else<label class="erp-form-label">Date of Birth</label>@endif
-                <input type="date" name="date_of_birth" value="{{ old('date_of_birth') }}" class="{{ $inputClass }}">
+                <input type="date" name="date_of_birth" value="{{ old('date_of_birth', $application->date_of_birth?->format('Y-m-d')) }}" class="{{ $inputClass }}">
             </div>
             <div>
                 @if($isPublic)<label class="careers-field"><span>NID Number</span></label>@else<label class="erp-form-label">NID Number</label>@endif
-                <input type="text" name="nid_number" value="{{ old('nid_number') }}" class="{{ $inputClass }}">
+                <input type="text" name="nid_number" value="{{ old('nid_number', $application->nid_number ?? '') }}" class="{{ $inputClass }}">
             </div>
             <div class="md:col-span-2">
                 @if($isPublic)<label class="careers-field"><span>Present Address</span></label>@else<label class="erp-form-label">Present Address</label>@endif
-                <textarea name="present_address" rows="2" class="{{ $inputClass }}">{{ old('present_address') }}</textarea>
+                <textarea name="present_address" rows="2" class="{{ $inputClass }}">{{ old('present_address', $application->present_address ?? '') }}</textarea>
             </div>
             <div class="md:col-span-2">
                 @if($isPublic)<label class="careers-field"><span>Permanent Address</span></label>@else<label class="erp-form-label">Permanent Address</label>@endif
-                <textarea name="permanent_address" rows="2" class="{{ $inputClass }}">{{ old('permanent_address') }}</textarea>
+                <textarea name="permanent_address" rows="2" class="{{ $inputClass }}">{{ old('permanent_address', $application->permanent_address ?? '') }}</textarea>
             </div>
+            @if($isEdit && ($application->photoUrl() || $application->nidDocumentUrl() || $application->cvUrl()))
+                <div class="md:col-span-2 flex flex-wrap gap-2 text-xs text-gray-500">
+                    <span class="uppercase tracking-wide text-[10px] text-gray-400 w-full">Current files</span>
+                    @if($application->photoUrl())<a href="{{ $application->photoUrl() }}" target="_blank" class="erp-btn-sm-secondary">Photo</a>@endif
+                    @if($application->nidDocumentUrl())<a href="{{ $application->nidDocumentUrl() }}" target="_blank" class="erp-btn-sm-secondary">NID Document</a>@endif
+                    @if($application->cvUrl())<a href="{{ $application->cvUrl() }}" target="_blank" class="erp-btn-sm-secondary">CV / Resume</a>@endif
+                </div>
+            @endif
             <div class="md:col-span-2 grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
                     @if($isPublic)<label class="careers-field"><span>Photo</span></label>@else<label class="erp-form-label">Photo</label>@endif
@@ -169,21 +195,21 @@
         <div class="{{ $sectionBody }} grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
                 @if($isPublic)<label class="careers-field"><span>Expected Salary (BDT)</span></label>@else<label class="erp-form-label">Expected Salary (BDT)</label>@endif
-                <input type="number" name="expected_salary" min="0" step="0.01" value="{{ old('expected_salary') }}" class="{{ $inputClass }}">
+                <input type="number" name="expected_salary" min="0" step="0.01" value="{{ old('expected_salary', $application->expected_salary) }}" class="{{ $inputClass }}">
             </div>
             <div>
                 @if($isPublic)<label class="careers-field"><span>How did you hear about us?</span></label>@else<label class="erp-form-label">How did you hear about us?</label>@endif
                 <select name="referral_source" class="{{ $inputClass }}">
                     <option value="">Select…</option>
                     @foreach($referralSources as $val => $label)
-                        <option value="{{ $val }}" {{ old('referral_source') === $val ? 'selected' : '' }}>{{ $label }}</option>
+                        <option value="{{ $val }}" {{ old('referral_source', $application->referral_source ?? '') === $val ? 'selected' : '' }}>{{ $label }}</option>
                     @endforeach
                 </select>
             </div>
             @if(! $isPublic)
                 <div class="md:col-span-2">
                     <label class="erp-form-label">HR Notes (internal)</label>
-                    <textarea name="notes" rows="2" class="erp-input !text-xs">{{ old('notes') }}</textarea>
+                    <textarea name="notes" rows="2" class="erp-input !text-xs">{{ old('notes', $application->notes ?? '') }}</textarea>
                 </div>
             @endif
         </div>

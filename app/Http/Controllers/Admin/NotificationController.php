@@ -62,7 +62,7 @@ class NotificationController extends Controller
             'proxy_punch_flagged' => route('admin.hrm.rmg.proxy-punch.index'),
             'worker_transfer_pending' => route('admin.hrm.rmg.worker-transfer.index'),
             'manpower_variance'   => route('admin.hrm.rmg.manpower-planning.index'),
-            'new_requirement', 'status_updated' => route('admin.requirements.index'),
+            'new_requirement', 'status_updated', 'requirement_assigned' => route('admin.requirements.index'),
             'tms_request_submitted', 'tms_request_cancelled', 'tms_trip_started', 'tms_trip_completed' => route('admin.tms.requests.index'),
             'tms_ot_pending' => route('admin.tms.trips.index'),
             default => $user?->hasAnyTmsViewPermission()
