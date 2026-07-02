@@ -208,19 +208,28 @@
                 <div class="erp-panel-head">
                     <h2 class="text-xs font-semibold text-gray-700 uppercase tracking-wide">Education</h2>
                 </div>
-                <div class="erp-panel-body space-y-3">
-                    @foreach($application->education_history as $edu)
-                        <div class="relative pl-4 border-l-2 border-brand/30 py-1">
-                            <div class="absolute -left-[5px] top-2 w-2 h-2 rounded-full bg-brand"></div>
-                            <p class="text-sm font-medium text-gray-900">{{ $edu['degree'] ?? '—' }}</p>
-                            <p class="text-xs text-gray-500 mt-0.5">
-                                {{ $edu['institution'] ?? '' }}
-                                @if($edu['board_or_university'] ?? null) · {{ $edu['board_or_university'] }} @endif
-                                @if($edu['passing_year'] ?? null) · {{ $edu['passing_year'] }} @endif
-                                @if($edu['result'] ?? null) · {{ $edu['result'] }} @endif
-                            </p>
-                        </div>
-                    @endforeach
+                <div class="erp-panel-body">
+                    <div class="space-y-0">
+                        @foreach($application->education_history as $edu)
+                            <div class="flex gap-3 {{ $loop->last ? '' : 'pb-4' }}">
+                                <div class="flex flex-col items-center shrink-0 w-3">
+                                    <span class="mt-1.5 block h-2.5 w-2.5 rounded-full bg-brand ring-2 ring-white"></span>
+                                    @if(! $loop->last)
+                                        <span class="mt-1 w-px flex-1 min-h-[2.5rem] bg-brand/25"></span>
+                                    @endif
+                                </div>
+                                <div class="flex-1 min-w-0 pt-0.5">
+                                    <p class="text-sm font-medium text-gray-900">{{ $edu['degree'] ?? '—' }}</p>
+                                    <p class="text-xs text-gray-500 mt-0.5 leading-relaxed">
+                                        {{ $edu['institution'] ?? '—' }}
+                                        @if($edu['board_or_university'] ?? null) · {{ $edu['board_or_university'] }} @endif
+                                        @if($edu['passing_year'] ?? null) · {{ $edu['passing_year'] }} @endif
+                                        @if($edu['result'] ?? null) · {{ $edu['result'] }} @endif
+                                    </p>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
                 </div>
             </div>
         @endif
@@ -232,21 +241,45 @@
                 </div>
                 <div class="erp-panel-body space-y-3">
                     @foreach($application->employment_history as $emp)
-                        <div class="rounded-lg border border-erp-border p-3 bg-gray-50/50">
-                            <div class="flex flex-wrap items-start justify-between gap-2">
-                                <div>
-                                    <p class="text-sm font-medium text-gray-900">{{ $emp['company_name'] ?? '—' }}</p>
-                                    <p class="text-xs text-gray-500 mt-0.5">{{ $emp['designation'] ?? '' }} @if($emp['department'] ?? null) · {{ $emp['department'] }} @endif</p>
-                                </div>
-                                @if(($emp['joining_date'] ?? null) || ($emp['leaving_date'] ?? null))
-                                    <span class="text-[10px] font-medium text-gray-400 tabular-nums">
-                                        {{ $emp['joining_date'] ?? '?' }} → {{ $emp['leaving_date'] ?? 'Present' }}
-                                    </span>
+                        @php
+                            $isPresent = blank($emp['leaving_date'] ?? null)
+                                && (filled($emp['company_name'] ?? null) || filled($emp['joining_date'] ?? null));
+                        @endphp
+                        <div class="rounded-lg border border-erp-border p-4 bg-gray-50/50">
+                            <div class="flex flex-wrap items-start justify-between gap-2 mb-3">
+                                <p class="text-[10px] font-semibold uppercase tracking-wide text-gray-400">Experience {{ $loop->iteration }}</p>
+                                @if(($emp['joining_date'] ?? null) || ($emp['leaving_date'] ?? null) || $isPresent)
+                                    <div class="flex flex-wrap items-center gap-1.5 text-[11px] tabular-nums">
+                                        @if($emp['joining_date'] ?? null)
+                                            <span class="text-gray-500">{{ $emp['joining_date'] }}</span>
+                                            <span class="text-gray-300">→</span>
+                                        @endif
+                                        @if($isPresent)
+                                            <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">Present</span>
+                                        @elseif($emp['leaving_date'] ?? null)
+                                            <span class="text-gray-600 font-medium">{{ $emp['leaving_date'] }}</span>
+                                        @endif
+                                    </div>
                                 @endif
                             </div>
-                            @if($emp['reason_for_leaving'] ?? null)
-                                <p class="text-xs text-gray-500 mt-2 pt-2 border-t border-gray-200">{{ $emp['reason_for_leaving'] }}</p>
-                            @endif
+                            <dl class="grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-2.5 text-sm">
+                                <div>
+                                    <dt class="text-[10px] uppercase tracking-wide text-gray-400 mb-0.5">Company</dt>
+                                    <dd class="font-medium text-gray-900">{{ $emp['company_name'] ?? '—' }}</dd>
+                                </div>
+                                <div>
+                                    <dt class="text-[10px] uppercase tracking-wide text-gray-400 mb-0.5">Department</dt>
+                                    <dd class="font-medium text-gray-900">{{ $emp['department'] ?? '—' }}</dd>
+                                </div>
+                                <div>
+                                    <dt class="text-[10px] uppercase tracking-wide text-gray-400 mb-0.5">Designation</dt>
+                                    <dd class="font-medium text-gray-900">{{ $emp['designation'] ?? '—' }}</dd>
+                                </div>
+                                <div>
+                                    <dt class="text-[10px] uppercase tracking-wide text-gray-400 mb-0.5">Reason</dt>
+                                    <dd class="text-gray-700 leading-relaxed">{{ $emp['reason_for_leaving'] ?? '—' }}</dd>
+                                </div>
+                            </dl>
                         </div>
                     @endforeach
                 </div>

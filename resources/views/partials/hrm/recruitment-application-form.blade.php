@@ -17,6 +17,22 @@
     if ($employmentRows === []) {
         $employmentRows = [['company_name' => '', 'designation' => '', 'department' => '', 'joining_date' => '', 'leaving_date' => '', 'reason_for_leaving' => '']];
     }
+    $employmentRows = array_values(array_map(function ($row) {
+        $row = is_array($row) ? $row : [];
+        $row = array_merge([
+            'company_name'       => '',
+            'designation'        => '',
+            'department'         => '',
+            'joining_date'       => '',
+            'leaving_date'       => '',
+            'reason_for_leaving' => '',
+        ], $row);
+
+        $row['is_present'] = blank($row['leaving_date'])
+            && (filled($row['company_name']) || filled($row['joining_date']));
+
+        return $row;
+    }, $employmentRows));
     $inputClass = $isPublic ? 'careers-input' : 'erp-input !text-xs';
     $sectionClass = $isPublic ? 'careers-form-section' : 'erp-panel';
     $sectionHead = $isPublic ? 'careers-form-section-head' : 'erp-panel-head';
@@ -169,7 +185,22 @@
 
     <div class="{{ $sectionClass }}" x-data="{
         employment: @js($employmentRows),
-        addEmp() { this.employment.push({company_name:'',designation:'',department:'',joining_date:'',leaving_date:'',reason_for_leaving:''}); }
+        addEmp() {
+            this.employment.push({
+                company_name: '', designation: '', department: '',
+                joining_date: '', leaving_date: '', reason_for_leaving: '', is_present: false,
+            });
+        },
+        setPresent(row) {
+            if (row.is_present) {
+                row.leaving_date = '';
+            }
+        },
+        setLeavingDate(row) {
+            if (row.leaving_date) {
+                row.is_present = false;
+            }
+        },
     }">
         <div class="{{ $sectionHead }} flex justify-between items-center">
             <span>Employment History (Optional)</span>
@@ -178,13 +209,39 @@
         </div>
         <div class="{{ $sectionBody }} space-y-3">
             <template x-for="(row, index) in employment" :key="'emp-'+index">
-                <div class="grid grid-cols-2 md:grid-cols-3 gap-2 border border-gray-200 rounded-lg p-3 bg-gray-50/50">
-                    <input type="text" :name="'employment_history['+index+'][company_name]'" x-model="row.company_name" placeholder="Company" class="{{ $inputClass }}">
-                    <input type="text" :name="'employment_history['+index+'][designation]'" x-model="row.designation" placeholder="Designation" class="{{ $inputClass }}">
-                    <input type="text" :name="'employment_history['+index+'][department]'" x-model="row.department" placeholder="Department" class="{{ $inputClass }}">
-                    <input type="date" :name="'employment_history['+index+'][joining_date]'" x-model="row.joining_date" class="{{ $inputClass }}">
-                    <input type="date" :name="'employment_history['+index+'][leaving_date]'" x-model="row.leaving_date" class="{{ $inputClass }}">
-                    <input type="text" :name="'employment_history['+index+'][reason_for_leaving]'" x-model="row.reason_for_leaving" placeholder="Reason for leaving" class="{{ $inputClass }}">
+                <div class="border border-gray-200 rounded-lg p-3 bg-gray-50/50 space-y-2">
+                    <div class="overflow-x-auto -mx-1 px-1">
+                        <div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-3 min-w-[720px] xl:min-w-0">
+                            <div>
+                                <label class="block text-[10px] font-semibold uppercase tracking-wide text-gray-400 mb-1">Company</label>
+                                <input type="text" :name="'employment_history['+index+'][company_name]'" x-model="row.company_name" placeholder="Company name" class="{{ $inputClass }}">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-semibold uppercase tracking-wide text-gray-400 mb-1">Department</label>
+                                <input type="text" :name="'employment_history['+index+'][department]'" x-model="row.department" placeholder="Department" class="{{ $inputClass }}">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-semibold uppercase tracking-wide text-gray-400 mb-1">Designation</label>
+                                <input type="text" :name="'employment_history['+index+'][designation]'" x-model="row.designation" placeholder="Designation" class="{{ $inputClass }}">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-semibold uppercase tracking-wide text-gray-400 mb-1">Reason</label>
+                                <input type="text" :name="'employment_history['+index+'][reason_for_leaving]'" x-model="row.reason_for_leaving" placeholder="Reason for leaving" class="{{ $inputClass }}">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-semibold uppercase tracking-wide text-gray-400 mb-1">From</label>
+                                <input type="date" :name="'employment_history['+index+'][joining_date]'" x-model="row.joining_date" class="{{ $inputClass }}" title="Join date">
+                            </div>
+                            <div x-show="! row.is_present" x-cloak>
+                                <label class="block text-[10px] font-semibold uppercase tracking-wide text-gray-400 mb-1">To</label>
+                                <input type="date" :name="'employment_history['+index+'][leaving_date]'" x-model="row.leaving_date" @change="setLeavingDate(row)" class="{{ $inputClass }}" title="Leaving date">
+                            </div>
+                        </div>
+                    </div>
+                    <label class="inline-flex items-center gap-1.5 text-[11px] font-medium text-gray-600 cursor-pointer select-none whitespace-nowrap">
+                        <input type="checkbox" x-model="row.is_present" @change="setPresent(row)" class="h-3.5 w-3.5 rounded border-gray-300 text-brand focus:ring-brand/30">
+                        <span>Present</span>
+                    </label>
                 </div>
             </template>
         </div>
