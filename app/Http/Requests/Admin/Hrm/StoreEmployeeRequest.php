@@ -5,6 +5,7 @@ namespace App\Http\Requests\Admin\Hrm;
 use App\Http\Requests\Concerns\EnforcesUserFactoryScope;
 use App\Models\Hrm\AttendancePolicy;
 use App\Models\Hrm\Employee;
+use App\Models\Hrm\SalaryGrade;
 use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -104,6 +105,9 @@ class StoreEmployeeRequest extends FormRequest
             'weekend_days.*'           => ['integer', 'min:0', 'max:6'],
             'weekend_ot_allowed'       => ['nullable', 'boolean'],
             'half_day_pay_ratio'       => ['nullable', 'numeric', 'min:0.01', 'max:1'],
+            'attendance_bonus_enabled' => ['nullable', 'boolean'],
+            'attendance_bonus_amount'  => ['nullable', 'numeric', 'min:0', 'max:999999.99'],
+            'salary_grade_id'          => ['nullable', Rule::exists('hrm_salary_grades', 'id')],
             'notes'                    => ['nullable', 'string', 'max:5000'],
             'photo'                    => ['nullable', 'image', 'max:5120'],
             'enable_portal'            => ['nullable', 'boolean'],
@@ -144,19 +148,27 @@ class StoreEmployeeRequest extends FormRequest
             $dob = $this->input('date_of_birth');
             $factoryId = (int) $this->input('factory_id');
 
-            if (! $dob || ! $factoryId) {
-                return;
+            if ($dob && $factoryId) {
+                $policy = AttendancePolicy::forFactory($factoryId);
+                $minAge = (int) ($policy->min_employment_age ?? 18);
+                $age = Carbon::parse($dob)->age;
+
+                if ($age < $minAge) {
+                    $validator->errors()->add(
+                        'date_of_birth',
+                        "Employee must be at least {$minAge} years old (current age: {$age}). Bangladesh child labour prevention."
+                    );
+                }
             }
 
-            $policy = AttendancePolicy::forFactory($factoryId);
-            $minAge = (int) ($policy->min_employment_age ?? 18);
-            $age = Carbon::parse($dob)->age;
+            $gradeId = $this->input('salary_grade_id');
 
-            if ($age < $minAge) {
-                $validator->errors()->add(
-                    'date_of_birth',
-                    "Employee must be at least {$minAge} years old (current age: {$age}). Bangladesh child labour prevention."
-                );
+            if ($gradeId && $factoryId) {
+                $grade = SalaryGrade::find($gradeId);
+
+                if (! $grade || (int) $grade->factory_id !== $factoryId) {
+                    $validator->errors()->add('salary_grade_id', 'Selected salary grade does not belong to this factory.');
+                }
             }
         });
     }

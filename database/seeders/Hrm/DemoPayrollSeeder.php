@@ -29,10 +29,10 @@ class DemoPayrollSeeder extends Seeder
 
     public function run(): void
     {
-        $factory = Factory::where('name', 'Norban Comtex Limited')->where('is_active', true)->first();
+        $factory = Factory::where('name', 'Head Office')->where('is_active', true)->first();
 
         if (! $factory) {
-            $this->command?->warn('Norban Comtex Limited not found. Run db:seed first.');
+            $this->command?->warn('Head Office not found. Run db:seed first.');
 
             return;
         }

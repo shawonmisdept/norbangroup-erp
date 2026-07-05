@@ -11,7 +11,7 @@ class SalaryIncrementSeeder extends Seeder
 {
     public function run(): void
     {
-        $factory = Factory::where('name', 'Norban Comtex Limited')->where('is_active', true)->first();
+        $factory = Factory::where('name', 'Head Office')->where('is_active', true)->first();
 
         if (! $factory) {
             return;

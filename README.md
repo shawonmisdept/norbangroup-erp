@@ -16,7 +16,7 @@ Built for multi-unit RMG factories — requirement intake, 5,000+ workforce HR, 
 
 <br>
 
-[Live Demo](https://portal.norbangroup.com) · [Module Workflows](docs/workflows/README.md) · [HRM Blueprint](GARMENTS-HRM.md) · [Deploy Guide](DEPLOY.md)
+[Live Demo](https://portal.norbangroup.com) · [Module Workflows](docs/workflows/README.md) · [HRM Blueprint](GARMENTS-HRM.md) · [Deploy Guide](DEPLOY.md) · [Mobile APK Guide](docs/MOBILE-APP-APK.md)
 
 </div>
 
@@ -359,6 +359,7 @@ git push
 |----------|-------------|
 | [GARMENTS-HRM.md](GARMENTS-HRM.md) | Full HRM blueprint, permissions, architecture |
 | [DEPLOY.md](DEPLOY.md) | Production deploy, queue, cron, mail, ADMS |
+| [MOBILE-APP-APK.md](docs/MOBILE-APP-APK.md) | Single APK (Employee + Rental) — Capacitor, software setup, checklist |
 
 ---
 

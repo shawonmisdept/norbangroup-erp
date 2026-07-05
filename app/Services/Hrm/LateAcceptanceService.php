@@ -14,6 +14,14 @@ class LateAcceptanceService
 
     public function apply(Employee $employee, array $data): LateAcceptanceApplication
     {
+        $employee->loadMissing('salaryStructure');
+
+        if ($employee->salaryStructure?->pay_type === 'wages') {
+            throw ValidationException::withMessages([
+                'attendance_date' => 'Late acceptance is only available for salaried staff.',
+            ]);
+        }
+
         $date = $data['attendance_date'];
 
         $log = AttendanceDailyLog::query()

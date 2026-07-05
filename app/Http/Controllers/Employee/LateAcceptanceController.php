@@ -13,6 +13,11 @@ class LateAcceptanceController extends Controller
     public function index(Request $request)
     {
         $employee = $request->user('employee')->employee;
+        $employee->loadMissing('salaryStructure');
+
+        if ($employee->salaryStructure?->pay_type === 'wages') {
+            abort(403, 'Late acceptance is only available for salaried staff.');
+        }
 
         $applications = LateAcceptanceApplication::query()
             ->where('employee_id', $employee->id)
@@ -33,6 +38,11 @@ class LateAcceptanceController extends Controller
     public function create(Request $request)
     {
         $employee = $request->user('employee')->employee;
+        $employee->loadMissing('salaryStructure');
+
+        if ($employee->salaryStructure?->pay_type === 'wages') {
+            abort(403, 'Late acceptance is only available for salaried staff.');
+        }
 
         $lateDays = AttendanceDailyLog::query()
             ->where('employee_id', $employee->id)
@@ -52,6 +62,11 @@ class LateAcceptanceController extends Controller
     public function store(Request $request, LateAcceptanceService $service)
     {
         $employee = $request->user('employee')->employee;
+        $employee->loadMissing('salaryStructure');
+
+        if ($employee->salaryStructure?->pay_type === 'wages') {
+            abort(403, 'Late acceptance is only available for salaried staff.');
+        }
 
         $validated = $request->validate([
             'attendance_date' => ['required', 'date'],

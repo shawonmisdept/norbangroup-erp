@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1, user-scalable=no">
     <meta name="theme-color" content="#c2410c">
+    @include('rental.partials.pwa-head')
+    @if(request('source') === 'app')
+        <meta name="portal-shell" content="app">
+        <script>try{sessionStorage.setItem('portal-shell','1');}catch(e){}</script>
+    @endif
     <title>Sign In — Rental Driver</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
@@ -53,8 +58,12 @@
             </div>
         </div>
 
-        <p class="mt-6 text-center">
-            <a href="{{ route('employee.login') }}" class="text-xs font-medium text-orange-200/40 transition hover:text-orange-100/80">Employee portal →</a>
+        <p class="mt-6 text-center space-y-2">
+            @if(request('source') === 'app')
+                <a href="{{ route('mobile.landing') }}" class="mobile-app-switch-link block">← Switch portal</a>
+            @else
+                <a href="{{ route('employee.login') }}" class="text-xs font-medium text-orange-200/40 transition hover:text-orange-100/80">Employee portal →</a>
+            @endif
         </p>
     </div>
 

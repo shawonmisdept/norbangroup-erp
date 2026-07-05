@@ -1,10 +1,10 @@
 <?php
 
 /**
- * 20 demo employees + salary structures for Norban Comtex Limited.
+ * 20 demo employees + salary structures for Head Office.
  */
 return [
-    'factory' => 'Norban Comtex Limited',
+    'factory' => 'Head Office',
 
     'employees' => [
         [

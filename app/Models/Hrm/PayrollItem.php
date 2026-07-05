@@ -111,6 +111,7 @@ class PayrollItem extends Model
             'FEST_BONUS' => 'Festival Bonus',
             'PERF_BONUS' => 'Performance Bonus',
             'PROD_INCENTIVE' => 'Production Incentive',
+            'ATT_BONUS' => 'Attendance Bonus',
             default  => $this->headLabels()[$code] ?? $code,
         };
     }

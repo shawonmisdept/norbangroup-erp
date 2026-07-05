@@ -26,14 +26,22 @@ class EmployeeSalaryController extends Controller
             ->orderBy('name')
             ->get(['id', 'factory_id', 'code', 'name']);
 
-        $selectedGradeId = $request->integer('salary_grade_id') ?: $grades->first()?->id;
+        $selectedEmployee = null;
+        $structure = null;
+
+        if ($request->filled('employee_id')) {
+            $selectedEmployee = Employee::with('salaryStructure')->find($request->employee_id);
+            $structure = $selectedEmployee?->salaryStructure;
+        }
+
+        $selectedGradeId = $request->integer('salary_grade_id')
+            ?: $structure?->salary_grade_id
+            ?: $grades->first()?->id;
         $selectedGrade = $grades->firstWhere('id', $selectedGradeId);
 
         $employees = collect();
         $gradeDetails = collect();
         $heads = collect();
-        $structure = null;
-        $selectedEmployee = null;
 
         if ($selectedGrade) {
             $gradeDetails = SalaryGradeDetail::query()
@@ -51,6 +59,7 @@ class EmployeeSalaryController extends Controller
             $employeeQuery = Employee::query()
                 ->where('factory_id', $selectedGrade->factory_id)
                 ->whereIn('status', ['active', 'probation'])
+                ->whereHas('salaryStructure', fn ($q) => $q->where('salary_grade_id', $selectedGrade->id))
                 ->with('salaryStructure')
                 ->orderBy('employee_code');
 

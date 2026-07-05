@@ -9,6 +9,7 @@ use App\Models\Hrm\Building;
 use App\Models\Hrm\Employee;
 use App\Models\Hrm\EmploymentType;
 use App\Models\Hrm\Floor;
+use App\Models\Hrm\Shift;
 use App\Models\Hrm\WorkerCategory;
 use Illuminate\Database\Seeder;
 
@@ -31,6 +32,11 @@ class HeadOfficeEmployeeSeeder extends Seeder
 
         $employmentTypes = EmploymentType::query()->where('is_active', true)->pluck('id', 'name');
         $workerCategories = WorkerCategory::query()->where('is_active', true)->pluck('id', 'name');
+        $dayShiftId = Shift::query()
+            ->where('factory_id', $factory->id)
+            ->where('name', config('hrm.employee_defaults.shift_name', 'Day Shift'))
+            ->where('is_active', true)
+            ->value('id');
 
         $seeded = 0;
         $skipped = 0;
@@ -92,6 +98,7 @@ class HeadOfficeEmployeeSeeder extends Seeder
                     'floor_id'           => $floorId,
                     'employment_type_id' => $employmentTypes[$employmentTypeName] ?? null,
                     'worker_category_id' => $workerCategories[$workerCategoryName] ?? null,
+                    'shift_id'           => $dayShiftId,
                     'name'               => $row['name'],
                     'phone'              => $row['phone'] ?? null,
                     'email'              => $row['email'] ?? null,

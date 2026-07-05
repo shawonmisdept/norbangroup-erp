@@ -90,6 +90,13 @@
                     <div><p class="erp-form-label !mb-0.5">Weekend Days</p><p class="font-medium">{{ app(\App\Services\Hrm\EmployeeScheduleService::class)->weekendDaysLabel($employee) }}</p></div>
                     <div><p class="erp-form-label !mb-0.5">Weekend OT</p><p class="font-medium">{{ $employee->weekend_ot_allowed ? 'Allowed' : 'Not allowed' }}</p></div>
                     <div><p class="erp-form-label !mb-0.5">Half Day Pay Ratio</p><p class="font-medium tabular-nums">{{ $employee->half_day_pay_ratio !== null ? number_format((float) $employee->half_day_pay_ratio, 2) : 'Policy default' }}</p></div>
+                    <div><p class="erp-form-label !mb-0.5">Attendance Bonus</p><p class="font-medium">{{ $employee->attendance_bonus_enabled ? '৳' . number_format((float) $employee->attendance_bonus_amount, 2) : 'Not eligible' }}</p></div>
+                    <div><p class="erp-form-label !mb-0.5">Salary Grade</p><p class="font-medium">{{ $employee->salaryStructure?->salaryGrade?->name ?? '—' }}@if($employee->salaryStructure?->salaryGrade) <code class="text-[10px] text-gray-400">{{ $employee->salaryStructure->salaryGrade->code }}</code>@endif</p></div>
+                    @if($employee->salaryStructure?->salary_grade_id)
+                        <div class="md:col-span-2">
+                            <a href="{{ route('admin.hrm.salary.employee-salary.index', ['employee_id' => $employee->id, 'salary_grade_id' => $employee->salaryStructure->salary_grade_id]) }}" class="text-xs text-brand hover:underline">Configure salary (gross, payment, heads) →</a>
+                        </div>
+                    @endif
                     <div><p class="erp-form-label !mb-0.5">Reporting Person</p><p class="font-medium">{{ $employee->reportingTo?->name ?? '—' }}@if($employee->reportingTo) <code class="text-[10px] text-gray-400">{{ $employee->reportingTo->employee_code }}</code>@endif</p></div>
                     <div><p class="erp-form-label !mb-0.5">Joining Date</p><p class="font-medium tabular-nums">{{ $employee->joining_date?->format('d M Y') ?? '—' }}</p></div>
                     <div><p class="erp-form-label !mb-0.5">Confirmation Date</p><p class="font-medium tabular-nums">{{ $employee->confirmation_date?->format('d M Y') ?? '—' }}</p></div>

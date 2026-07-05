@@ -42,6 +42,8 @@ use Database\Seeders\Masters\SustainabilitySeeder;
 use Database\Seeders\Masters\TrimsStatusSeeder;
 use Database\Seeders\Masters\WovenStatusSeeder;
 use Database\Seeders\Masters\YarnStatusSeeder;
+use Database\Seeders\Hrm\AssignEmployeesToHeadOfficeSeeder;
+use Database\Seeders\Hrm\EmployeeDefaultsSeeder;
 use Database\Seeders\Hrm\HeadOfficeEmployeeSeeder;
 use Database\Seeders\Hrm\HeadOfficeUserSeeder;
 use Database\Seeders\Hrm\HrmMasterDataSeeder;
@@ -62,6 +64,8 @@ class MasterDataSeeder extends Seeder
             CompanyCalendarSeeder::class,
             SalaryLegacySeeder::class,
             HeadOfficeEmployeeSeeder::class,
+            AssignEmployeesToHeadOfficeSeeder::class,
+            EmployeeDefaultsSeeder::class,
             HeadOfficeUserSeeder::class,
             SalaryIncrementSeeder::class,
             BuyerSeeder::class,

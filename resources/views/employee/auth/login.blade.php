@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1, user-scalable=no">
     <meta name="theme-color" content="#1e3a5f">
     @include('employee.partials.pwa-head')
+    @if(request('source') === 'app')
+        <meta name="portal-shell" content="app">
+        <script>try{sessionStorage.setItem('portal-shell','1');}catch(e){}</script>
+    @endif
     <title>Sign In — {{ config('portal.name') }}</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
@@ -57,8 +61,12 @@
             </div>
         </div>
 
-        <p class="mt-6 text-center">
-            <a href="{{ route('login') }}" class="text-xs font-medium text-white/40 transition hover:text-white/70">HR / Admin sign in →</a>
+        <p class="mt-6 text-center space-y-2">
+            @if(request('source') === 'app')
+                <a href="{{ route('mobile.landing') }}" class="mobile-app-switch-link block">← Switch portal</a>
+            @else
+                <a href="{{ route('login') }}" class="text-xs font-medium text-white/40 transition hover:text-white/70">HR / Admin sign in →</a>
+            @endif
         </p>
     </div>
 

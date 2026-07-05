@@ -40,6 +40,7 @@ class Employee extends Model
         'biometric_user_id', 'photo',
         'joining_date', 'confirmation_date', 'probation_passed_at', 'probation_end_date', 'contract_end_date',
         'separation_date', 'last_working_day', 'status', 'late_acceptance_enabled',
+        'attendance_bonus_enabled', 'attendance_bonus_amount',
         'weekend_days', 'weekend_ot_allowed', 'half_day_pay_ratio', 'notes',
     ];
 
@@ -51,8 +52,10 @@ class Employee extends Model
         'contract_end_date'  => 'date',
         'separation_date'    => 'date',
         'last_working_day'   => 'date',
-        'late_acceptance_enabled' => 'boolean',
-        'weekend_days'            => 'array',
+        'late_acceptance_enabled'   => 'boolean',
+        'attendance_bonus_enabled'  => 'boolean',
+        'attendance_bonus_amount'   => 'decimal:2',
+        'weekend_days'              => 'array',
         'weekend_ot_allowed'      => 'boolean',
         'half_day_pay_ratio'      => 'decimal:2',
     ];
@@ -291,5 +294,16 @@ class Employee extends Model
         $parts = preg_split('/\s+/', trim($this->name));
 
         return strtoupper(collect($parts)->take(2)->map(fn ($p) => mb_substr($p, 0, 1))->implode(''));
+    }
+
+    public function isTrainee(): bool
+    {
+        $this->loadMissing('employmentType');
+
+        if (! $this->employmentType) {
+            return false;
+        }
+
+        return str_contains(strtolower(trim($this->employmentType->name)), 'trainee');
     }
 }

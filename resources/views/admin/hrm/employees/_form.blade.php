@@ -53,6 +53,14 @@
         $employmentRows = $recruitmentPrefill['employment_history'];
     }
 
+    $salaryStructure = $employee?->salaryStructure;
+    $salaryGradesList = collect($salaryGrades ?? [])->map(fn ($grade) => [
+        'id'         => $grade->id,
+        'factory_id' => $grade->factory_id,
+        'code'       => $grade->code,
+        'name'       => $grade->name,
+    ])->values()->all();
+
     $employeeFormConfig = [
         'tab'               => $initialStep,
         'steps'             => array_keys($wizardSteps),
@@ -61,7 +69,7 @@
         'designationId'     => (string) old('designation_id', $employee->designation_id ?? ''),
         'buildingId'        => (string) old('building_id', $employee->building_id ?? ''),
         'floorId'           => (string) old('floor_id', $employee->floor_id ?? ''),
-        'shiftId'           => (string) old('shift_id', $employee->shift_id ?? ''),
+        'shiftId'           => (string) old('shift_id', $employee?->shift_id ?? ($employee ? '' : ($defaultShiftId ?? ''))),
         'lineId'            => (string) old('line_id', $employee->line_id ?? ''),
         'departments'       => $departments,
         'designations'      => $designations,
@@ -77,6 +85,11 @@
         'educationRows'     => $educationRows,
         'employmentRows'    => $employmentRows,
         'nomineePhotoPreview' => null,
+        'salaryGrades'      => $salaryGradesList,
+        'salaryGradeId'     => (string) old('salary_grade_id', $salaryStructure?->salary_grade_id ?? ($employee ? '' : ($defaultSalaryGradeId ?? ''))),
+        'isEdit'            => (bool) ($employee?->exists),
+        'defaultShiftName'  => config('hrm.employee_defaults.shift_name', 'Day Shift'),
+        'defaultGradeCode'  => config('hrm.employee_defaults.salary_grade_code', 'SR-01'),
     ];
 @endphp
 
@@ -340,6 +353,25 @@
                                 <p class="text-[10px] text-gray-400 mt-1">Leave blank to use factory policy default</p>
                                 @error('half_day_pay_ratio')<p class="text-xs text-red-500 mt-1">{{ $message }}</p>@enderror
                             </div>
+                            <div>
+                                <label class="flex items-center gap-2 text-xs text-gray-700 mt-1">
+                                    <input type="hidden" name="attendance_bonus_enabled" value="0">
+                                    <input type="checkbox" name="attendance_bonus_enabled" value="1"
+                                        {{ old('attendance_bonus_enabled', $employee->attendance_bonus_enabled ?? false) ? 'checked' : '' }}
+                                        class="rounded border-gray-300 text-brand shrink-0">
+                                    Attendance bonus eligible
+                                </label>
+                                <p class="text-[10px] text-gray-400 mt-1">Per-employee monthly bonus when attendance rules are met</p>
+                            </div>
+                            <div>
+                                <label class="erp-form-label">Bonus Amount (৳)</label>
+                                <input type="number" step="0.01" min="0" name="attendance_bonus_amount"
+                                    value="{{ old('attendance_bonus_amount', $employee->attendance_bonus_amount ?? '') }}"
+                                    placeholder="e.g. 500"
+                                    class="erp-input !text-xs">
+                                <p class="text-[10px] text-gray-400 mt-1">Paid if no absent/leave/half-day and late &lt; 3 days</p>
+                                @error('attendance_bonus_amount')<p class="text-xs text-red-500 mt-1">{{ $message }}</p>@enderror
+                            </div>
                         </div>
                     </div>
                     <div class="md:col-span-2 pt-2 border-t border-erp-border">
@@ -374,6 +406,27 @@
                                     @endforeach
                                 </select>
                                 @error('line_id')<p class="text-xs text-red-500 mt-1">{{ $message }}</p>@enderror
+                            </div>
+                        </div>
+                    </div>
+                    <div class="md:col-span-2 pt-2 border-t border-erp-border">
+                        <p class="text-[11px] font-semibold text-gray-500 uppercase tracking-wide mb-2">Salary Grade</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="erp-form-label">Salary Grade</label>
+                                <select name="salary_grade_id" x-model="salaryGradeId" x-ref="salaryGradeSelect"
+                                    data-searchable="true" data-factory-filter="true" class="erp-input !text-xs">
+                                    <option value="">Choose one</option>
+                                    @foreach($salaryGrades ?? [] as $grade)
+                                        <option value="{{ $grade->id }}"
+                                            data-factory-id="{{ $grade->factory_id }}"
+                                            @selected((string) old('salary_grade_id', $salaryStructure?->salary_grade_id ?? '') === (string) $grade->id)>
+                                            {{ $grade->name }} ({{ $grade->code }})
+                                        </option>
+                                    @endforeach
+                                </select>
+                                <p class="text-[10px] text-gray-400 mt-1">Grade list filters by selected factory. Gross, pay type &amp; heads are set in <a href="{{ route('admin.hrm.salary.employee-salary.index') }}" class="text-brand hover:underline">Salary → Employee Salary</a>.</p>
+                                @error('salary_grade_id')<p class="text-xs text-red-500 mt-1">{{ $message }}</p>@enderror
                             </div>
                         </div>
                     </div>

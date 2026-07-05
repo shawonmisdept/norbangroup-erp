@@ -1,3 +1,5 @@
+import { isNativeShell } from './portal-shell';
+
 const csrfToken = () => document.querySelector('meta[name="csrf-token"]')?.content ?? '';
 
 const SW_URL = '/employee/sw.js';
@@ -204,6 +206,16 @@ document.addEventListener('alpine:init', () => {
         },
 
         syncState() {
+            if (isNativeShell()) {
+                this.canInstall = false;
+                this.canPush = 'Notification' in window && 'PushManager' in window
+                    && Notification.permission !== 'granted'
+                    && !! document.querySelector('meta[name="vapid-public-key"]')?.content;
+                this.visible = this.canPush;
+
+                return;
+            }
+
             this.canPush = 'Notification' in window && 'PushManager' in window
                 && Notification.permission !== 'granted'
                 && !! document.querySelector('meta[name="vapid-public-key"]')?.content;

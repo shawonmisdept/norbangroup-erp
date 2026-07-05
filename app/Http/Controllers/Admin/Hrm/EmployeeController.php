@@ -15,11 +15,13 @@ use App\Models\Hrm\RecruitmentApplication;
 use App\Models\Hrm\EmploymentType;
 use App\Models\Hrm\Floor;
 use App\Models\Hrm\Line;
+use App\Models\Hrm\SalaryGrade;
 use App\Models\Hrm\Shift;
 use App\Models\Hrm\WorkerCategory;
 use App\Services\EmployeeDocumentService;
 use App\Services\EmployeePhotoService;
 use App\Services\EmployeePortalService;
+use App\Services\Hrm\EmployeeSalarySetupService;
 use App\Services\Hrm\EmployeeServiceHistoryService;
 use App\Services\Hrm\RecruitmentService;
 use Illuminate\Http\Request;
@@ -30,6 +32,7 @@ class EmployeeController extends Controller
 
     public function __construct(
         private EmployeeServiceHistoryService $serviceHistory,
+        private EmployeeSalarySetupService $salarySetup,
     ) {}
     public function index(Request $request)
     {
@@ -135,6 +138,7 @@ class EmployeeController extends Controller
 
         $data = $this->normalizeNullableIds($data);
         $data = $this->normalizeScheduleFields($data, $request);
+        $salaryData = $this->extractSalaryFields($data);
 
         $this->authorizeFactoryAccess($request, (int) $data['factory_id']);
 
@@ -146,6 +150,7 @@ class EmployeeController extends Controller
 
         $employee = Employee::create($data);
         $this->serviceHistory->recordEnrollment($employee);
+        $this->salarySetup->assignGrade($employee, isset($salaryData['salary_grade_id']) ? (int) $salaryData['salary_grade_id'] : null);
         $this->syncEducationHistories($employee, $educationHistory);
         $this->syncEmploymentHistories($employee, $employmentHistory);
 
@@ -180,6 +185,7 @@ class EmployeeController extends Controller
         $employee->load([
             'factory', 'department', 'designation', 'workerCategory', 'employmentType',
             'building', 'floor', 'line', 'shift', 'reportingTo', 'portalUser',
+            'salaryStructure.salaryGrade',
             'educationHistories', 'employmentHistories', 'serviceHistories.recordedByUser',
             'gratuitySettlement', 'finalSettlement', 'pendingSeparation', 'latestSeparation',
             'issuedLetters.template', 'disciplinaryRecords.recorder',
@@ -201,7 +207,7 @@ class EmployeeController extends Controller
     {
         $this->authorizeEmployeeAccess($request, $employee);
 
-        $employee->load(['educationHistories', 'employmentHistories', 'department.factory', 'designation.department.factory', 'shift.factory']);
+        $employee->load(['educationHistories', 'employmentHistories', 'department.factory', 'designation.department.factory', 'shift.factory', 'salaryStructure.salaryGrade']);
 
         return view('admin.hrm.employees.edit', array_merge(
             ['employee' => $employee],
@@ -222,6 +228,7 @@ class EmployeeController extends Controller
 
         $data = $this->normalizeNullableIds($data);
         $data = $this->normalizeScheduleFields($data, $request);
+        $salaryData = $this->extractSalaryFields($data);
 
         $this->handleDocumentUploads($request, $data, $employee);
 
@@ -232,6 +239,7 @@ class EmployeeController extends Controller
         $original = $employee->getOriginal();
         $employee->update($data);
         $this->serviceHistory->recordChanges($employee->fresh(), $original);
+        $this->salarySetup->assignGrade($employee->fresh(), isset($salaryData['salary_grade_id']) ? (int) $salaryData['salary_grade_id'] : null);
 
         if ($request->has('education_history')) {
             $this->syncEducationHistories($employee, $educationHistory);
@@ -460,8 +468,12 @@ class EmployeeController extends Controller
             }
         };
 
+        $factoryIdForDefaults = (int) ($selectedFactoryId ?: Factory::query()->where('is_active', true)->orderBy('id')->value('id'));
+
         return [
             'employee'              => $employee,
+            'defaultShiftId'        => $this->defaultShiftId($factoryIdForDefaults),
+            'defaultSalaryGradeId'  => $this->defaultSalaryGradeId($factoryIdForDefaults),
             'factories'             => $this->factoryOptions($request),
             'departments'           => $this->serializeDepartments(
                 Department::where('is_active', true)->with('factory')->tap($scopeOrgData)->orderBy('name')->get(),
@@ -480,6 +492,10 @@ class EmployeeController extends Controller
                 Shift::where('is_active', true)->with('factory')->tap($scopeOrgData)->orderBy('name')->get(),
                 $employee
             ),
+            'salaryGrades'          => SalaryGrade::where('is_active', true)
+                ->when($userFactoryId, fn ($q) => $q->where('factory_id', $userFactoryId))
+                ->orderBy('name')
+                ->get(['id', 'factory_id', 'code', 'name']),
             'reportingCandidates'   => $reportingQuery->get(['id', 'name', 'employee_code', 'factory_id']),
             'statuses'              => $this->editableStatuses($employee),
             'weekdayLabels'         => \App\Services\Hrm\EmployeeScheduleService::WEEKDAY_LABELS,
@@ -494,12 +510,37 @@ class EmployeeController extends Controller
         $weekendDays = $data['weekend_days'] ?? [0];
         $data['weekend_days'] = array_values(array_unique(array_map('intval', (array) $weekendDays)));
         $data['weekend_ot_allowed'] = $request->boolean('weekend_ot_allowed');
+        $data['attendance_bonus_enabled'] = $request->boolean('attendance_bonus_enabled');
+
+        if (! $data['attendance_bonus_enabled']) {
+            $data['attendance_bonus_amount'] = 0;
+        } elseif (array_key_exists('attendance_bonus_amount', $data)) {
+            $data['attendance_bonus_amount'] = $data['attendance_bonus_amount'] === '' || $data['attendance_bonus_amount'] === null
+                ? 0
+                : $data['attendance_bonus_amount'];
+        }
 
         if (array_key_exists('half_day_pay_ratio', $data) && ($data['half_day_pay_ratio'] === '' || $data['half_day_pay_ratio'] === null)) {
             $data['half_day_pay_ratio'] = null;
         }
 
         return $data;
+    }
+
+    /** @return array<string, mixed> */
+    private function extractSalaryFields(array &$data): array
+    {
+        if (! array_key_exists('salary_grade_id', $data)) {
+            return [];
+        }
+
+        $gradeId = $data['salary_grade_id'] === '' || $data['salary_grade_id'] === null
+            ? null
+            : (int) $data['salary_grade_id'];
+
+        unset($data['salary_grade_id']);
+
+        return ['salary_grade_id' => $gradeId];
     }
 
     private function editableStatuses(?Employee $employee = null): array
@@ -573,5 +614,31 @@ class EmployeeController extends Controller
             ])
             ->values()
             ->all();
+    }
+
+    private function defaultShiftId(int $factoryId): ?int
+    {
+        if ($factoryId <= 0) {
+            return null;
+        }
+
+        return Shift::query()
+            ->where('factory_id', $factoryId)
+            ->where('name', config('hrm.employee_defaults.shift_name', 'Day Shift'))
+            ->where('is_active', true)
+            ->value('id');
+    }
+
+    private function defaultSalaryGradeId(int $factoryId): ?int
+    {
+        if ($factoryId <= 0) {
+            return null;
+        }
+
+        return SalaryGrade::query()
+            ->where('factory_id', $factoryId)
+            ->where('code', config('hrm.employee_defaults.salary_grade_code', 'SR-01'))
+            ->where('is_active', true)
+            ->value('id');
     }
 }

@@ -37,7 +37,7 @@
                 @if($selectedEmployee)
                     <input type="hidden" name="employee_id" value="{{ $selectedEmployee->id }}">
                 @endif
-                <button type="submit" class="erp-btn-secondary w-full">Filter</button>
+                <button type="submit" class="erp-btn-primary w-full">Filter</button>
             </form>
 
             <div class="max-h-[420px] overflow-y-auto border border-erp-border rounded">
@@ -51,7 +51,7 @@
                         @endif
                     </a>
                 @empty
-                    <p class="p-4 text-center text-gray-400 text-xs">No employees found.</p>
+                    <p class="p-4 text-center text-gray-400 text-xs">No employees assigned to this grade yet. Set grade on Employee edit/create first.</p>
                 @endforelse
             </div>
         </div>

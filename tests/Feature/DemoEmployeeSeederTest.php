@@ -27,7 +27,7 @@ class DemoEmployeeSeederTest extends TestCase
             SalaryLegacySeeder::class,
         ]);
 
-        $factory = Factory::where('name', 'Norban Comtex Limited')->first();
+        $factory = Factory::where('name', 'Head Office')->first();
         $this->assertNotNull($factory);
 
         Employee::create([
@@ -45,6 +45,7 @@ class DemoEmployeeSeederTest extends TestCase
         $this->assertNotNull($employee);
         $this->assertNull($employee->deleted_at);
         $this->assertSame('Fatema Begum', $employee->name);
+        $this->assertSame($factory->id, $employee->factory_id);
         $this->assertSame(1, Employee::withTrashed()->where('employee_code', 'NCL-D002')->count());
     }
 }

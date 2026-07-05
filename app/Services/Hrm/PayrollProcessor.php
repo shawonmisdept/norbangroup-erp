@@ -24,6 +24,7 @@ class PayrollProcessor
 
     public function __construct(
         private LateDeductionCalculator $lateCalculator,
+        private AttendanceBonusCalculator $attendanceBonus,
         private EmployeeScheduleService $schedule,
         private HrmNotificationService $notifications,
         private OtCalculator $otCalculator,
@@ -254,7 +255,16 @@ class PayrollProcessor
             + $payrollAdjustments['performance_bonus']
             + $payrollAdjustments['production_incentive'];
 
-        $grossPay = round($grossPay + $bonusEarnings, 2);
+        $attendanceBonusResult = $this->attendanceBonus->calculate(
+            $employee,
+            $absent,
+            $leave,
+            $halfDay,
+            $late,
+        );
+        $attendanceBonusAmount = $attendanceBonusResult['amount'];
+
+        $grossPay = round($grossPay + $bonusEarnings + $attendanceBonusAmount, 2);
 
         $headDeduction = $this->resolveHeadDeductions($structure);
         $statutory = $this->statutoryPayroll->apply($employee, $period, $structure, $grossPay, $basicAmount);
@@ -297,6 +307,14 @@ class PayrollProcessor
         if ($payrollAdjustments['production_incentive'] > 0) {
             $headBreakdown['earnings']['PROD_INCENTIVE'] = $payrollAdjustments['production_incentive'];
         }
+        if ($attendanceBonusAmount > 0) {
+            $headBreakdown['earnings']['ATT_BONUS'] = $attendanceBonusAmount;
+        }
+        $headBreakdown['attendance_bonus'] = [
+            'eligible' => $attendanceBonusResult['eligible'],
+            'amount'   => $attendanceBonusAmount,
+            'reason'   => $attendanceBonusResult['reason'],
+        ];
 
         unset($statutory['statutory_total']);
 

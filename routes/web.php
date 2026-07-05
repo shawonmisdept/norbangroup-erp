@@ -72,6 +72,7 @@ use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\MobileAppController;
 use App\Http\Controllers\Employee\AttendanceController as EmployeeAttendanceController;
 use App\Http\Controllers\Employee\CheckInController as EmployeeCheckInController;
 use App\Http\Controllers\Employee\Auth\LoginController as EmployeeLoginController;
@@ -934,6 +935,28 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
         });
     });
 });
+
+Route::get('/app', [MobileAppController::class, 'landing'])->name('mobile.landing');
+
+Route::get('/app-manifest.webmanifest', function () {
+    $path = public_path('app-manifest.webmanifest');
+
+    abort_unless(is_file($path), 404);
+
+    return response(file_get_contents($path), 200, [
+        'Content-Type' => 'application/manifest+json',
+    ]);
+})->name('mobile.manifest');
+
+Route::get('/.well-known/assetlinks.json', function () {
+    $path = public_path('.well-known/assetlinks.json');
+
+    abort_unless(is_file($path), 404);
+
+    return response(file_get_contents($path), 200, [
+        'Content-Type' => 'application/json',
+    ]);
+})->name('mobile.assetlinks');
 
 Route::prefix('careers')->name('careers.')->group(function () {
     Route::get('/', [\App\Http\Controllers\Careers\CareersController::class, 'index'])->name('index');

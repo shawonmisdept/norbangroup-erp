@@ -12,10 +12,10 @@ class SalaryLegacySeeder extends Seeder
 {
     public function run(): void
     {
-        $factory = Factory::where('name', 'Norban Comtex Limited')->where('is_active', true)->first();
+        $factory = Factory::where('name', 'Head Office')->where('is_active', true)->first();
 
         if (! $factory) {
-            $this->command?->warn('Norban Comtex Limited not found.');
+            $this->command?->warn('Head Office not found.');
 
             return;
         }
@@ -27,12 +27,8 @@ class SalaryLegacySeeder extends Seeder
             ['code' => 'GROSS', 'name' => 'Gross', 'head_type' => 'E', 'sort_order' => 1, 'description' => 'Total monthly salary'],
             ['code' => 'BASIC', 'name' => 'Basic', 'head_type' => 'E', 'sort_order' => 2, 'description' => 'Basic salary'],
             ['code' => 'HOUSE RENT', 'name' => 'House Rent', 'head_type' => 'E', 'sort_order' => 3],
-            ['code' => 'CONVEYANCE', 'name' => 'Conveyance', 'head_type' => 'E', 'sort_order' => 4],
-            ['code' => 'FOOD ALLOWANCE', 'name' => 'Food Allowance', 'head_type' => 'E', 'sort_order' => 5],
-            ['code' => 'MEDICAL', 'name' => 'Medical', 'head_type' => 'E', 'sort_order' => 6],
-            ['code' => 'PERFORMANCE BONUS', 'name' => 'Performance Bonus', 'head_type' => 'E', 'sort_order' => 7],
-            ['code' => 'STAMP', 'name' => 'Stamp', 'head_type' => 'D', 'sort_order' => 20],
-            ['code' => 'ABSENTEEISM', 'name' => 'Absenteeism', 'head_type' => 'D', 'sort_order' => 21],
+            ['code' => 'MEDICAL', 'name' => 'Medical', 'head_type' => 'E', 'sort_order' => 4],
+            ['code' => 'OTHER ALLOWANCE', 'name' => 'Other Allowance', 'head_type' => 'E', 'sort_order' => 5],
         ];
 
         $headIds = [];
@@ -52,16 +48,17 @@ class SalaryLegacySeeder extends Seeder
 
         $details = [
             ['head' => 'GROSS', 'detail_type' => 'F', 'is_fixed' => false, 'amount' => 0],
-            ['head' => 'BASIC', 'detail_type' => 'M', 'is_fixed' => false, 'formula' => '(<GROSS>-(<MEDICAL>+<FOOD ALLOWANCE>+<CONVEYANCE>))/1.4'],
-            ['head' => 'CONVEYANCE', 'detail_type' => 'F', 'is_fixed' => true, 'amount' => 200],
-            ['head' => 'FOOD ALLOWANCE', 'detail_type' => 'F', 'is_fixed' => true, 'amount' => 650],
-            ['head' => 'MEDICAL', 'detail_type' => 'F', 'is_fixed' => true, 'amount' => 250],
-            ['head' => 'HOUSE RENT', 'detail_type' => 'P', 'is_fixed' => false, 'percentage' => 40, 'parent' => 'BASIC'],
-            ['head' => 'STAMP', 'detail_type' => 'F', 'is_fixed' => true, 'amount' => 20],
-            ['head' => 'PERFORMANCE BONUS', 'detail_type' => 'F', 'is_fixed' => true, 'amount' => 0],
+            ['head' => 'BASIC', 'detail_type' => 'P', 'is_fixed' => false, 'percentage' => 50, 'parent' => 'GROSS'],
+            ['head' => 'HOUSE RENT', 'detail_type' => 'P', 'is_fixed' => false, 'percentage' => 25, 'parent' => 'BASIC'],
+            ['head' => 'MEDICAL', 'detail_type' => 'P', 'is_fixed' => false, 'percentage' => 10, 'parent' => 'BASIC'],
+            ['head' => 'OTHER ALLOWANCE', 'detail_type' => 'P', 'is_fixed' => false, 'percentage' => 15, 'parent' => 'BASIC'],
         ];
 
+        $activeHeadIds = [];
+
         foreach ($details as $row) {
+            $activeHeadIds[] = $headIds[$row['head']];
+
             SalaryGradeDetail::updateOrCreate(
                 ['salary_grade_id' => $grade->id, 'salary_head_id' => $headIds[$row['head']]],
                 [
@@ -70,11 +67,21 @@ class SalaryLegacySeeder extends Seeder
                     'amount'                 => $row['amount'] ?? 0,
                     'percentage'             => $row['percentage'] ?? null,
                     'percentage_of_head_id'  => isset($row['parent']) ? $headIds[$row['parent']] : null,
-                    'formula'                => $row['formula'] ?? null,
+                    'formula'                => null,
                 ]
             );
         }
 
-        $this->command?->info("Seeded SR-01 salary grade with legacy heads for {$factory->name}.");
+        SalaryGradeDetail::query()
+            ->where('salary_grade_id', $grade->id)
+            ->whereNotIn('salary_head_id', $activeHeadIds)
+            ->delete();
+
+        SalaryHead::query()
+            ->where('factory_id', $factory->id)
+            ->whereNotIn('id', array_values($headIds))
+            ->update(['is_active' => false]);
+
+        $this->command?->info("Seeded SR-01 salary grade with standard heads for {$factory->name}.");
     }
 }

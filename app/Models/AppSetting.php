@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Storage;
 
 class AppSetting extends Model
@@ -88,14 +89,14 @@ class AppSetting extends Model
         }
 
         $id = Cache::rememberForever('app_settings_id', function () {
-            return static::query()->firstOrCreate([], static::defaults())->id;
+            return static::query()->firstOrCreate([], static::defaultsForSchema())->id;
         });
 
         $settings = static::query()->find($id);
 
         if (! $settings) {
             Cache::forget('app_settings_id');
-            $settings = static::query()->firstOrCreate([], static::defaults());
+            $settings = static::query()->firstOrCreate([], static::defaultsForSchema());
             Cache::forever('app_settings_id', $settings->id);
         }
 
@@ -159,6 +160,20 @@ class AppSetting extends Model
             'recruitment_otp_enabled'          => true,
             'sms_provider'                     => 'log',
         ];
+    }
+
+    /** @return array<string, mixed> */
+    public static function defaultsForSchema(): array
+    {
+        $defaults = static::defaults();
+
+        if (! Schema::hasTable('app_settings')) {
+            return $defaults;
+        }
+
+        $columns = array_flip(Schema::getColumnListing('app_settings'));
+
+        return array_intersect_key($defaults, $columns);
     }
 
     public static function clearCache(): void

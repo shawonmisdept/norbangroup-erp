@@ -280,6 +280,11 @@ Human Resources Department
 {{factory_name}}
 TXT,
 
+    'employee_defaults' => [
+        'shift_name'        => 'Day Shift',
+        'salary_grade_code' => 'SR-01',
+    ],
+
     'employee_wizard_steps' => [
         'setup'      => 'Employee Setup',
         'official'   => 'Official Setup',
@@ -308,6 +313,7 @@ TXT,
             'building_id', 'floor_id', 'line_id', 'shift_id',
             'joining_date', 'confirmation_date', 'probation_end_date', 'contract_end_date',
             'reporting_to_id', 'enable_portal', 'portal_password', 'notes',
+            'salary_grade_id',
         ],
         'official' => [
             'photo', 'nid_number', 'nid_document', 'birth_certificate_no',
@@ -1275,6 +1281,14 @@ TXT,
 
     'sync' => [
         'stale_push_minutes' => (int) env('HRM_DEVICE_STALE_MINUTES', 60),
+    ],
+
+    /*
+    | Payroll calculation rules (attendance bonus, daily rate divisors).
+    */
+    'payroll_processing' => [
+        'attendance_bonus_max_late_days' => 3,
+        'wage_divisor_days'              => 30,
     ],
 
 ];

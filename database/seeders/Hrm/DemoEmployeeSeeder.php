@@ -29,7 +29,11 @@ class DemoEmployeeSeeder extends Seeder
             return;
         }
 
-        $shift = Shift::where('factory_id', $factory->id)->where('is_active', true)->orderBy('name')->first();
+        $shift = Shift::where('factory_id', $factory->id)
+            ->where('name', config('hrm.employee_defaults.shift_name', 'Day Shift'))
+            ->where('is_active', true)
+            ->first()
+            ?? Shift::where('factory_id', $factory->id)->where('is_active', true)->orderBy('name')->first();
         $line = Line::where('factory_id', $factory->id)->where('is_active', true)->orderBy('name')->first();
 
         $staffGrade = SalaryGrade::where('factory_id', $factory->id)->where('code', 'SR-01')->first();

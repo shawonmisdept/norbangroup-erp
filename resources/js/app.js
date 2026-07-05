@@ -1,5 +1,6 @@
 import Alpine from 'alpinejs';
 import './searchable-selects';
+import './portal-shell';
 import './employee-pwa';
 import './rental-pwa';
 import './tms-trip-gps';
@@ -271,6 +272,11 @@ Alpine.data('employeeForm', (config = {}) => {
         displayEmployeeId: config.displayEmployeeId || '',
         displayPhone: config.displayPhone || '',
         status: config.status || 'active',
+        salaryGrades: config.salaryGrades || [],
+        salaryGradeId: config.salaryGradeId || '',
+        isEdit: config.isEdit ?? false,
+        defaultShiftName: config.defaultShiftName || 'Day Shift',
+        defaultGradeCode: config.defaultGradeCode || 'SR-01',
         submitError: '',
         _prevDepartmentId: null,
         init() {
@@ -283,6 +289,7 @@ Alpine.data('employeeForm', (config = {}) => {
             this.lineId = String(this.lineId || '');
             this.reportingToId = String(this.reportingToId || '');
             this.status = String(this.status || 'active');
+            this.salaryGradeId = String(this.salaryGradeId || '');
             this._prevDepartmentId = this.departmentId;
 
             this.$nextTick(() => {
@@ -301,7 +308,7 @@ Alpine.data('employeeForm', (config = {}) => {
                 });
             });
 
-            ['designationId', 'buildingId', 'floorId', 'lineId', 'shiftId', 'status'].forEach((field) => {
+            ['designationId', 'buildingId', 'floorId', 'lineId', 'shiftId', 'salaryGradeId', 'status'].forEach((field) => {
                 this.$watch(field, () => {
                     this.$nextTick(() => window.syncTomSelects?.(this.$root));
                 });
@@ -368,6 +375,8 @@ Alpine.data('employeeForm', (config = {}) => {
                                 window.enhanceSelect?.(el);
                             }
                         });
+
+                        this.filterSalaryGradeOptions();
                     }
 
                     window.syncTomSelects?.(this.$root);
@@ -504,6 +513,62 @@ Alpine.data('employeeForm', (config = {}) => {
             this.populateSelect(this.$refs.departmentSelect, this.filteredDepartments(), this.departmentId);
             this.populateSelect(this.$refs.designationSelect, this.filteredDesignations(), this.designationId);
             this.populateSelect(this.$refs.shiftSelect, this.filteredShifts(), this.shiftId);
+            this.filterSalaryGradeOptions();
+        },
+        filterSalaryGradeOptions() {
+            const select = this.$refs.salaryGradeSelect;
+
+            if (! select) {
+                return;
+            }
+
+            const factoryId = String(this.factoryId || '');
+            let hasVisible = false;
+
+            Array.from(select.options).forEach((option) => {
+                if (! option.value) {
+                    option.hidden = false;
+                    option.disabled = false;
+
+                    return;
+                }
+
+                const matches = ! factoryId || String(option.dataset.factoryId || '') === factoryId;
+                option.hidden = ! matches;
+                option.disabled = ! matches;
+
+                if (matches) {
+                    hasVisible = true;
+                }
+            });
+
+            if (this.salaryGradeId) {
+                const selected = select.querySelector(`option[value="${CSS.escape(String(this.salaryGradeId))}"]`);
+
+                if (selected?.disabled) {
+                    this.salaryGradeId = '';
+                    select.value = '';
+                }
+            }
+
+            if (select.tomselect) {
+                const ts = select.tomselect;
+                ts.clearOptions();
+                Array.from(select.options).forEach((option) => {
+                    if (option.hidden || option.disabled) {
+                        return;
+                    }
+
+                    ts.addOption({ value: option.value, text: option.textContent.trim() });
+                });
+                ts.refreshOptions(false);
+
+                if (this.salaryGradeId && select.querySelector(`option[value="${CSS.escape(String(this.salaryGradeId))}"]:not([disabled])`)) {
+                    ts.setValue(String(this.salaryGradeId), true);
+                } else {
+                    ts.clear(true);
+                }
+            }
         },
         filteredBuildings() {
             if (! this.factoryId) {
@@ -547,10 +612,26 @@ Alpine.data('employeeForm', (config = {}) => {
             this.designationId = '';
             this.buildingId = '';
             this.floorId = '';
-            this.shiftId = '';
             this.lineId = '';
             this.reportingToId = '';
+
+            if (! this.isEdit) {
+                this.applyEmployeeDefaults();
+            } else {
+                this.shiftId = '';
+                this.salaryGradeId = '';
+            }
+
             this.refreshDynamicSelects();
+        },
+        applyEmployeeDefaults() {
+            const dayShift = this.filteredShifts().find((shift) => shift.name === this.defaultShiftName);
+            this.shiftId = dayShift ? String(dayShift.id) : '';
+
+            const grade = this.salaryGrades.find(
+                (item) => String(item.factory_id) === String(this.factoryId) && item.code === this.defaultGradeCode
+            );
+            this.salaryGradeId = grade ? String(grade.id) : '';
         },
         onDepartmentChange() {
             if (this._prevDepartmentId !== null && String(this._prevDepartmentId) !== String(this.departmentId)) {
