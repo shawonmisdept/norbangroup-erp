@@ -35,7 +35,7 @@ class DashboardController extends Controller
         $latestPayslip = PayrollItem::query()
             ->with('period')
             ->where('employee_id', $employee->id)
-            ->whereHas('period', fn ($q) => $q->where('status', 'frozen'))
+            ->whereHas('period', fn ($q) => $q->whereIn('status', ['calculated', 'frozen']))
             ->latest('id')
             ->first();
 

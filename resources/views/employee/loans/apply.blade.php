@@ -10,7 +10,7 @@
         @csrf
         <div>
             <label class="block text-xs font-medium text-gray-600 mb-1">Type</label>
-            <select name="loan_type" class="w-full rounded-xl border border-gray-200 px-3 py-2.5 text-sm">
+            <select name="loan_type" class="emp-input">
                 @foreach($types as $k => $label)
                     <option value="{{ $k }}" {{ old('loan_type', $loan->loan_type) === $k ? 'selected' : '' }}>{{ $label }}</option>
                 @endforeach

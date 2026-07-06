@@ -11,7 +11,9 @@
            class="rounded-xl bg-white/15 px-3 py-1.5 text-xs font-semibold text-white backdrop-blur transition hover:bg-white/25">
             Save PDF
         </a>
-        <span class="emp-badge bg-emerald-400/25 text-emerald-100">Final</span>
+        <span class="emp-badge {{ $payslip->period->isFrozen() ? 'bg-emerald-400/25 text-emerald-100' : 'bg-amber-400/25 text-amber-100' }}">
+            {{ $payslip->period->isFrozen() ? 'Final' : 'Provisional' }}
+        </span>
     </div>
 @endsection
 

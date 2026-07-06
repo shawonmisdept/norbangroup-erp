@@ -24,17 +24,15 @@ class LeaveController extends Controller
             ->sortBy(fn ($balance) => $balance->leaveType->name);
 
         $applications = LeaveApplication::query()
-            ->with(['leaveType', 'employee.reportingTo'])
+            ->with(['leaveType', 'employee.reportingTo', 'approvals.actedByEmployee', 'approvals.actedByUser'])
             ->where('employee_id', $employee->id)
             ->latest('applied_at')
             ->paginate(15);
 
         $pendingApprovals = $leaveService->pendingApprovalsForManager($employee);
-        $pendingSeparationApprovals = app(\App\Services\Hrm\EmployeeSeparationService::class)
-            ->pendingApprovalsForManager($employee);
 
         return view('employee.leave.index', compact(
-            'employee', 'balances', 'applications', 'year', 'pendingApprovals', 'pendingSeparationApprovals'
+            'employee', 'balances', 'applications', 'year', 'pendingApprovals'
         ));
     }
 

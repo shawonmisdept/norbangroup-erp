@@ -16,9 +16,13 @@ class ProfileController extends Controller
         $portalUser = Auth::guard('employee')->user();
         $employee = $this->portalEmployee($request)->load([
             'factory', 'department', 'designation', 'workerCategory', 'employmentType',
-            'building', 'floor', 'line', 'shift',
+            'building', 'floor', 'line', 'shift', 'salaryStructure.salaryGrade',
+            'serviceHistories' => fn ($q) => $q->limit(20),
+            'employmentHistories',
         ]);
 
-        return view('employee.profile', compact('employee', 'portalUser'));
+        $letters = $employee->portalVisibleLetters()->limit(10)->get();
+
+        return view('employee.profile', compact('employee', 'portalUser', 'letters'));
     }
 }

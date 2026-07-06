@@ -255,21 +255,21 @@
                     </div>
                     <div>
                         <label class="erp-form-label">Department</label>
-                        <select x-ref="departmentSelect" class="erp-input !text-xs" x-model="departmentId" @change="onDepartmentChange()" data-dynamic-options="true" data-searchable="false">
+                        <select x-ref="departmentSelect" class="erp-input !text-xs" x-model="departmentId" @change="onDepartmentChange()" data-dynamic-options="true">
                             <option value="">Choose one</option>
                         </select>
                         @error('department_id')<p class="text-xs text-red-500 mt-1">{{ $message }}</p>@enderror
                     </div>
                     <div>
                         <label class="erp-form-label">Designation</label>
-                        <select x-ref="designationSelect" class="erp-input !text-xs" x-model="designationId" data-searchable="true" data-dynamic-options="true">
+                        <select x-ref="designationSelect" class="erp-input !text-xs" x-model="designationId" data-dynamic-options="true">
                             <option value="">Choose one</option>
                         </select>
                         @error('designation_id')<p class="text-xs text-red-500 mt-1">{{ $message }}</p>@enderror
                     </div>
                     <div>
                         <label class="erp-form-label">Duty Schedule (Shift)</label>
-                        <select x-ref="shiftSelect" class="erp-input !text-xs" x-model="shiftId" data-dynamic-options="true" data-searchable="false">
+                        <select x-ref="shiftSelect" class="erp-input !text-xs" x-model="shiftId" data-dynamic-options="true">
                             <option value="">Choose one</option>
                         </select>
                         @error('shift_id')<p class="text-xs text-red-500 mt-1">{{ $message }}</p>@enderror
@@ -309,7 +309,7 @@
                     </div>
                     <div>
                         <label class="erp-form-label">Status <span class="text-red-500">*</span></label>
-                        <select name="status" x-model="status" data-step-required="setup" data-searchable="false" class="erp-input !text-xs">
+                        <select name="status" x-model="status" data-step-required="setup" class="erp-input !text-xs">
                             @foreach($statuses as $value => $label)
                                 <option value="{{ $value }}" {{ old('status', $employee->status ?? 'active') === $value ? 'selected' : '' }}>{{ $label }}</option>
                             @endforeach

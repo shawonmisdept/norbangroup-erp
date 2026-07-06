@@ -20,7 +20,7 @@ class PortalSeparationStatusNotification extends Notification
             'type'    => 'separation_status',
             'title'   => 'Resignation ' . $this->statusLabel,
             'message' => 'Your separation request has been ' . strtolower($this->statusLabel) . '.',
-            'url'     => route('employee.separation'),
+            'url'     => route('employee.exit'),
         ];
     }
 }

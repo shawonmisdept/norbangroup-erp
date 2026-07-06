@@ -1,4 +1,4 @@
-<div x-data="toastHub()" x-init="init()" class="fixed top-4 right-4 z-[100] space-y-2 w-full max-w-sm pointer-events-none">
+<div x-data="toastHub()" class="fixed top-4 right-4 z-[100] space-y-2 w-full max-w-sm pointer-events-none">
     <template x-for="toast in toasts" :key="toast.id">
         <div x-show="toast.visible"
              x-transition:enter="transition ease-out duration-300"
@@ -33,7 +33,4 @@
 @endif
 @if(session('error'))
     <span id="flash-error" class="hidden">{{ session('error') }}</span>
-@endif
-@if($errors->any())
-    <span id="flash-error" class="hidden">{{ $errors->first() }}</span>
 @endif

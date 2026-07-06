@@ -182,7 +182,7 @@
                 <form method="POST" action="{{ route('admin.requirements.update', $order) }}">
                     @csrf @method('PATCH')
                     <label class="erp-form-label">Requirement Status</label>
-                    <select name="status" class="erp-input !text-xs mb-2" x-model="selectedStatus" data-searchable="false">
+                    <select name="status" class="erp-input !text-xs mb-2" x-model="selectedStatus">
                         @foreach(\App\Models\Order::availableStatuses() as $s)
                             <option value="{{ $s }}" {{ $order->status === $s ? 'selected' : '' }}>{{ $s }}</option>
                         @endforeach

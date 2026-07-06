@@ -152,14 +152,20 @@
                 </span>
                 <span class="text-[10px] font-semibold text-gray-700">Transport</span>
             </a>
-            @if($employee->canInitiateSeparation())
-            <a href="{{ route('employee.separation') }}" class="emp-quick">
+            @if($employee->isLineManager())
+            <a href="{{ route('employee.team') }}" class="emp-quick">
+                <span class="emp-quick-icon bg-violet-50 text-violet-600">
+                    @include('employee.partials.tab-icon', ['icon' => 'user'])
+                </span>
+                <span class="text-[10px] font-semibold text-gray-700">Team</span>
+            </a>
+            @endif
+            <a href="{{ route('employee.exit') }}" class="emp-quick">
                 <span class="emp-quick-icon bg-gray-100 text-gray-600">
                     @include('employee.partials.tab-icon', ['icon' => 'logout'])
                 </span>
-                <span class="text-[10px] font-semibold text-gray-700">Separation</span>
+                <span class="text-[10px] font-semibold text-gray-700">Exit</span>
             </a>
-            @endif
         </div>
     </div>
 

@@ -207,12 +207,14 @@ Alpine.data('toastHub', () => ({
         const success = document.getElementById('flash-success');
         const error = document.getElementById('flash-error');
 
-        if (success?.textContent) {
-            this.push(success.textContent, 'success');
+        if (success?.textContent?.trim()) {
+            this.push(success.textContent.trim(), 'success');
+            success.remove();
         }
 
-        if (error?.textContent) {
-            this.push(error.textContent, 'error');
+        if (error?.textContent?.trim()) {
+            this.push(error.textContent.trim(), 'error');
+            error.remove();
         }
     },
 
@@ -322,7 +324,7 @@ Alpine.data('employeeForm', (config = {}) => {
                 this.rebuildOrgSelects();
 
                 this.$root.querySelectorAll('select[data-dynamic-options]').forEach((el) => {
-                    if (el.dataset.searchable !== 'true') {
+                    if (el.dataset.searchable === 'false') {
                         if (el.tomselect) {
                             window.destroySearchableSelect?.(el);
                         }
@@ -332,6 +334,8 @@ Alpine.data('employeeForm', (config = {}) => {
 
                     if (! el.tomselect) {
                         window.enhanceSelect?.(el);
+                    } else {
+                        window.syncTomSelects?.(el);
                     }
                 });
 
@@ -364,19 +368,19 @@ Alpine.data('employeeForm', (config = {}) => {
                     const panel = this.$root.querySelector(`[data-wizard-step="${this.step}"]`);
 
                     if (panel) {
+                        this.rebuildOrgSelects();
+
                         panel.querySelectorAll('select.erp-input, select.emp-input').forEach((el) => {
-                            if (el.dataset.dynamicOptions === 'true') {
+                            if (el.dataset.searchable === 'false') {
                                 return;
                             }
 
                             if (el.tomselect) {
-                                window.refreshSearchableSelect?.(el);
+                                window.syncTomSelects?.(el);
                             } else {
                                 window.enhanceSelect?.(el);
                             }
                         });
-
-                        this.filterSalaryGradeOptions();
                     }
 
                     window.syncTomSelects?.(this.$root);

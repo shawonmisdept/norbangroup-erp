@@ -193,6 +193,23 @@ class Employee extends Model
         return $this->hasMany(EmployeePromotion::class)->latest('id');
     }
 
+    public function salaryIncrementLogs(): HasMany
+    {
+        return $this->hasMany(SalaryIncrementLog::class)->latest('applied_at');
+    }
+
+    public function contractRenewals(): HasMany
+    {
+        return $this->hasMany(ContractRenewal::class)->latest('id');
+    }
+
+    public function pendingContractRenewal(): HasOne
+    {
+        return $this->hasOne(ContractRenewal::class)
+            ->where('status', 'pending')
+            ->latest('id');
+    }
+
     public function pendingPromotion(): HasOne
     {
         return $this->hasOne(EmployeePromotion::class)
@@ -240,6 +257,20 @@ class Employee extends Model
     public function canInitiateSeparation(): bool
     {
         return in_array($this->status, ['active', 'probation', 'suspended'], true);
+    }
+
+    public function isLineManager(): bool
+    {
+        return $this->reportees()
+            ->whereIn('status', ['active', 'probation'])
+            ->exists();
+    }
+
+    public function portalVisibleLetters()
+    {
+        return $this->issuedLetters()
+            ->whereNull('voided_at')
+            ->latest('issued_at');
     }
 
     public function pfAccount(): HasOne

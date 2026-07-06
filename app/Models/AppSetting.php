@@ -106,7 +106,7 @@ class AppSetting extends Model
     public static function defaults(): array
     {
         return [
-            'app_name'                     => config('portal.name', 'Norbangroup'),
+            'app_name'                     => config('portal.name', 'Norban Group'),
             'app_tagline'                  => config('portal.tagline', 'Manufacturer'),
             'timezone'                     => config('app.timezone', 'Asia/Dhaka'),
             'currency_code'                => 'BDT',

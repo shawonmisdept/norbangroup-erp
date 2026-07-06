@@ -17,7 +17,7 @@ class PortalFinalSettlementPaidNotification extends Notification
             'type'    => 'final_settlement_paid',
             'title'   => 'Final Settlement Processed',
             'message' => 'Your full & final settlement of ৳' . number_format((float) $this->settlement->net_payable, 2) . ' has been disbursed.',
-            'url'     => route('employee.notifications.index'),
+            'url'     => route('employee.exit.settlement'),
         ];
     }
 }

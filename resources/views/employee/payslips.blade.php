@@ -30,6 +30,9 @@
                     <div class="min-w-0 flex-1">
                         <p class="text-sm font-semibold text-gray-900">{{ $payslip->period->periodLabel() }}</p>
                         <p class="text-xs text-gray-500">{{ $payslip->paidDays() }} paid days · {{ ucfirst($payslip->pay_type) }}</p>
+                        @unless($payslip->period->isFrozen())
+                            <p class="text-[10px] font-semibold text-amber-700">Provisional — subject to HR freeze</p>
+                        @endunless
                     </div>
                     <div class="text-right">
                         <p class="text-sm font-bold tabular-nums text-gray-900">৳{{ number_format((float) $payslip->net_pay, 0) }}</p>
@@ -46,7 +49,7 @@
                         @include('employee.partials.tab-icon', ['icon' => 'wallet'])
                     </div>
                     <p class="text-sm font-medium text-gray-600">No payslips yet</p>
-                    <p class="mt-1 text-xs text-gray-400">Payslips appear after HR freezes payroll.</p>
+                    <p class="mt-1 text-xs text-gray-400">Payslips appear after payroll is calculated by HR.</p>
                 </div>
             @endforelse
         </div>

@@ -272,6 +272,13 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
             Route::get('/letter-templates', [\App\Http\Controllers\Admin\Hrm\LetterTemplateController::class, 'index'])->name('letter-templates.index');
         });
 
+        Route::middleware('permission:hrm.employees.manage')->group(function () {
+            Route::get('/contract-renewals', [\App\Http\Controllers\Admin\Hrm\ContractRenewalController::class, 'index'])->name('contract-renewals.index');
+            Route::post('/employees/{employee}/contract-renewals', [\App\Http\Controllers\Admin\Hrm\ContractRenewalController::class, 'store'])->name('employees.contract-renewals.store');
+            Route::post('/contract-renewals/{renewal}/approve', [\App\Http\Controllers\Admin\Hrm\ContractRenewalController::class, 'approve'])->name('contract-renewals.approve')->whereNumber('renewal');
+            Route::post('/contract-renewals/{renewal}/reject', [\App\Http\Controllers\Admin\Hrm\ContractRenewalController::class, 'reject'])->name('contract-renewals.reject')->whereNumber('renewal');
+        });
+
         Route::middleware('permission:hrm.employees.letters.manage')->group(function () {
             Route::get('/letters/create', [\App\Http\Controllers\Admin\Hrm\LetterController::class, 'create'])->name('letters.create');
             Route::post('/letters', [\App\Http\Controllers\Admin\Hrm\LetterController::class, 'store'])->name('letters.store');
@@ -1212,11 +1219,22 @@ Route::prefix('employee')->name('employee.')->group(function () {
         Route::get('/pf', [EmployeePfController::class, 'index'])->name('pf');
         Route::get('/performance', [EmployeePerformanceController::class, 'index'])->name('performance');
         Route::get('/performance/{review}', [EmployeePerformanceController::class, 'show'])->name('performance.show')->whereNumber('review');
-        Route::get('/separation', [\App\Http\Controllers\Employee\SeparationController::class, 'index'])->name('separation');
-        Route::post('/separation', [\App\Http\Controllers\Employee\SeparationController::class, 'store'])->name('separation.store');
-        Route::delete('/separation', [\App\Http\Controllers\Employee\SeparationController::class, 'cancel'])->name('separation.cancel');
-        Route::post('/separation/{separation}/approve', [\App\Http\Controllers\Employee\SeparationController::class, 'approve'])->name('separation.approve')->whereNumber('separation');
-        Route::post('/separation/{separation}/reject', [\App\Http\Controllers\Employee\SeparationController::class, 'reject'])->name('separation.reject')->whereNumber('separation');
+        Route::get('/career/promotions', [\App\Http\Controllers\Employee\CareerController::class, 'promotions'])->name('career.promotions');
+        Route::get('/career/promotions/{promotion}', [\App\Http\Controllers\Employee\CareerController::class, 'showPromotion'])->name('career.promotions.show')->whereNumber('promotion');
+        Route::get('/career/increments', [\App\Http\Controllers\Employee\CareerController::class, 'increments'])->name('career.increments');
+        Route::get('/career/increments/{increment}', [\App\Http\Controllers\Employee\CareerController::class, 'showIncrement'])->name('career.increments.show')->whereNumber('increment');
+        Route::get('/letters/{letter}', [\App\Http\Controllers\Employee\LetterController::class, 'show'])->name('letters.show')->whereNumber('letter');
+        Route::get('/letters/{letter}/print', [\App\Http\Controllers\Employee\LetterController::class, 'print'])->name('letters.print')->whereNumber('letter');
+        Route::get('/exit', [\App\Http\Controllers\Employee\ExitController::class, 'index'])->name('exit');
+        Route::get('/exit/settlement', [\App\Http\Controllers\Employee\ExitController::class, 'settlement'])->name('exit.settlement');
+        Route::get('/exit/settlement/print', [\App\Http\Controllers\Employee\ExitController::class, 'settlementPrint'])->name('exit.settlement.print');
+        Route::get('/exit/contracts', [\App\Http\Controllers\Employee\ExitController::class, 'contracts'])->name('exit.contracts');
+        Route::redirect('/separation', '/employee/exit')->name('separation');
+        Route::get('/team', [\App\Http\Controllers\Employee\TeamController::class, 'index'])->name('team');
+        Route::post('/team/leave/{application}/approve', [EmployeeLeaveController::class, 'approve'])->name('team.leave.approve');
+        Route::post('/team/leave/{application}/reject', [EmployeeLeaveController::class, 'reject'])->name('team.leave.reject');
+        Route::post('/team/separation/{separation}/approve', [\App\Http\Controllers\Employee\SeparationController::class, 'approve'])->name('team.separation.approve')->whereNumber('separation');
+        Route::post('/team/separation/{separation}/reject', [\App\Http\Controllers\Employee\SeparationController::class, 'reject'])->name('team.separation.reject')->whereNumber('separation');
         Route::get('/notifications', [EmployeeNotificationController::class, 'index'])->name('notifications.index');
         Route::get('/notifications/unread-count', [EmployeeNotificationController::class, 'unreadCount'])->name('notifications.unread-count');
         Route::patch('/notifications/read-all', [EmployeeNotificationController::class, 'markAllRead'])->name('notifications.read-all');

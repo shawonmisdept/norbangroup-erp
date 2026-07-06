@@ -26,7 +26,7 @@ class PortalPromotionStatusNotification extends Notification
                     ? ' to ' . $this->promotion->toDesignation->name
                     : '')
                 . ' has been ' . strtolower($this->statusLabel) . '.',
-            'url'     => route('employee.dashboard'),
+            'url'     => route('employee.career.promotions.show', $this->promotion),
         ];
     }
 }

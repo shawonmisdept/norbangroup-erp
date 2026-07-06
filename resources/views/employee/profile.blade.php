@@ -7,7 +7,6 @@
 @section('content')
 <div class="space-y-5">
 
-    {{-- Profile card --}}
     <div class="emp-card overflow-hidden -mt-1">
         <div class="bg-gradient-to-br from-brand to-brand-light px-5 pb-12 pt-6 text-white">
             <div class="flex items-center gap-4">
@@ -34,6 +33,14 @@
                     <p class="font-semibold text-gray-900">{{ $employee->department?->name ?? '—' }}</p>
                 </div>
                 <div>
+                    <p class="emp-label !mb-0.5">Designation</p>
+                    <p class="font-semibold text-gray-900">{{ $employee->designation?->name ?? '—' }}</p>
+                </div>
+                <div>
+                    <p class="emp-label !mb-0.5">Salary Grade</p>
+                    <p class="font-semibold text-gray-900">{{ $employee->salaryStructure?->salaryGrade?->name ?? '—' }}</p>
+                </div>
+                <div>
                     <p class="emp-label !mb-0.5">Line</p>
                     <p class="font-semibold text-gray-900">{{ $employee->line?->name ?? '—' }}</p>
                 </div>
@@ -45,7 +52,24 @@
         </div>
     </div>
 
-    {{-- Contact & emergency --}}
+    <div>
+        <p class="emp-section-title">Official Info</p>
+        <div class="emp-card divide-y divide-gray-100">
+            @foreach([
+                ['Email', $employee->email ?? '—'],
+                ['NID', $employee->nid_number ?? '—'],
+                ['Joining Date', $employee->joining_date?->format('d M Y') ?? '—'],
+                ['Employment Type', $employee->employmentType?->name ?? '—'],
+                ['Contract End', $employee->contract_end_date?->format('d M Y') ?? '—'],
+            ] as [$label, $value])
+                <div class="flex items-center justify-between gap-3 px-4 py-3.5">
+                    <span class="text-xs text-gray-500">{{ $label }}</span>
+                    <span class="text-sm font-semibold text-gray-900 text-right">{{ $value }}</span>
+                </div>
+            @endforeach
+        </div>
+    </div>
+
     <div>
         <p class="emp-section-title">Personal Info</p>
         <div class="emp-card divide-y divide-gray-100">
@@ -63,14 +87,90 @@
         </div>
     </div>
 
-    @if($employee->canInitiateSeparation())
+    @if($letters->isNotEmpty())
         <div>
-            <p class="emp-section-title">Employment</p>
-            <a href="{{ route('employee.separation') }}" class="emp-card flex items-center justify-between px-4 py-3.5 text-sm font-semibold text-gray-900">
-                Resignation / Separation
+            <p class="emp-section-title">HR Letters</p>
+            <div class="emp-card overflow-hidden divide-y divide-gray-100">
+                @foreach($letters as $letter)
+                    <a href="{{ route('employee.letters.show', $letter) }}" class="flex items-center justify-between gap-3 px-4 py-3.5 active:bg-gray-50">
+                        <div class="min-w-0">
+                            <p class="text-sm font-semibold text-gray-900">{{ $letter->typeLabel() }}</p>
+                            <p class="text-[10px] text-gray-500">{{ $letter->reference_no }} · {{ $letter->issued_at->format('d M Y') }}</p>
+                        </div>
+                        @include('employee.partials.tab-icon', ['icon' => 'chevron-right'])
+                    </a>
+                @endforeach
+            </div>
+        </div>
+    @endif
+
+    @if($employee->serviceHistories->isNotEmpty())
+        <div>
+            <p class="emp-section-title">Service History</p>
+            <div class="emp-card overflow-hidden">
+                @foreach($employee->serviceHistories as $entry)
+                    <div class="px-4 py-3.5 {{ !$loop->last ? 'border-b border-gray-100' : '' }}">
+                        <div class="flex items-start justify-between gap-3">
+                            <div class="min-w-0">
+                                <p class="text-sm font-semibold text-gray-900">{{ $entry->description }}</p>
+                                @if($entry->old_value || $entry->new_value)
+                                    <p class="mt-0.5 text-[10px] text-gray-500">{{ $entry->old_value ?? '—' }} → {{ $entry->new_value ?? '—' }}</p>
+                                @endif
+                            </div>
+                            <span class="shrink-0 text-[10px] text-gray-400 tabular-nums">{{ $entry->effective_date?->format('d M Y') ?? $entry->created_at->format('d M Y') }}</span>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    @endif
+
+    @if($employee->employmentHistories->isNotEmpty())
+        <div>
+            <p class="emp-section-title">Prior Employment</p>
+            <div class="emp-card overflow-hidden">
+                @foreach($employee->employmentHistories as $job)
+                    <div class="px-4 py-3.5 {{ !$loop->last ? 'border-b border-gray-100' : '' }}">
+                        <p class="text-sm font-semibold text-gray-900">{{ $job->company_name }}</p>
+                        <p class="text-xs text-gray-600">{{ $job->designation ?? '—' }} · {{ $job->department ?? '—' }}</p>
+                        <p class="mt-1 text-[10px] text-gray-500 tabular-nums">
+                            {{ $job->joining_date?->format('M Y') ?? '—' }} – {{ $job->leaving_date?->format('M Y') ?? 'Present' }}
+                        </p>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    @endif
+
+    <div>
+        <p class="emp-section-title">Career & Exit</p>
+        <div class="emp-card divide-y divide-gray-100">
+            <a href="{{ route('employee.career.promotions') }}" class="flex items-center justify-between px-4 py-3.5 text-sm font-semibold text-gray-900">
+                Promotions & Movements
                 @include('employee.partials.tab-icon', ['icon' => 'chevron-right'])
             </a>
+            <a href="{{ route('employee.career.increments') }}" class="flex items-center justify-between px-4 py-3.5 text-sm font-semibold text-gray-900">
+                Salary Increments
+                @include('employee.partials.tab-icon', ['icon' => 'chevron-right'])
+            </a>
+            <a href="{{ route('employee.exit') }}" class="flex items-center justify-between px-4 py-3.5 text-sm font-semibold text-gray-900">
+                Exit & Clearance
+                @include('employee.partials.tab-icon', ['icon' => 'chevron-right'])
+            </a>
+            @if($employee->contract_end_date)
+                <a href="{{ route('employee.exit.contracts') }}" class="flex items-center justify-between px-4 py-3.5 text-sm font-semibold text-gray-900">
+                    Contract Renewals
+                    @include('employee.partials.tab-icon', ['icon' => 'chevron-right'])
+                </a>
+            @endif
         </div>
+    </div>
+
+    @if($employee->isLineManager())
+        <a href="{{ route('employee.team') }}" class="emp-card flex items-center justify-between px-4 py-3.5 text-sm font-semibold text-gray-900">
+            Team Approvals
+            @include('employee.partials.tab-icon', ['icon' => 'chevron-right'])
+        </a>
     @endif
 
     <form method="POST" action="{{ route('employee.logout') }}">
