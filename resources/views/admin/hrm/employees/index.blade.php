@@ -13,7 +13,7 @@
 @include('partials.erp.page-header', [
     'title' => 'Employee Registry',
     'subtitle' => 'Enrolled workers across all factory units',
-    'actions' => auth()->user()->hasPermission('hrm.employees.manage')
+    'actions' => auth()->user()->canManageEmployeeSubmodule('employees')
         ? '<a href="' . route('admin.hrm.employees.create') . '" class="erp-btn-primary">+ Add Employee</a>'
         : '',
 ])

@@ -55,7 +55,11 @@
                     <td><span class="erp-badge {{ $part->is_active ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-600' }}">{{ $part->is_active ? 'Active' : 'Inactive' }}</span></td>
                     <td class="text-right">
                         @if($canManage ?? false)
-                            <a href="{{ route('admin.tms.maintenance.parts.edit', $part) }}" class="erp-btn-sm-secondary">Edit</a>
+                            @include('admin.tms.partials.row-actions', [
+                                'editUrl' => route('admin.tms.maintenance.parts.edit', $part),
+                                'destroyUrl' => route('admin.tms.maintenance.parts.destroy', $part),
+                                'confirm' => 'Delete this part? Parts used on bills will be deactivated instead.',
+                            ])
                         @endif
                     </td>
                 </tr>

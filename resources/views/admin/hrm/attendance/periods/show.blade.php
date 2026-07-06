@@ -25,7 +25,7 @@
 @php
     $periodActions = '<span class="erp-badge ' . $badge . '">' . e($period->statusLabel()) . '</span>'
         . '<a href="' . route('admin.hrm.attendance.periods') . '" class="erp-btn-secondary">← Periods</a>';
-    if (auth()->user()->hasPermission('hrm.attendance.manage') && ! $period->isFrozen()) {
+    if (auth()->user()->canManageAttendanceSubmodule('periods') && ! $period->isFrozen()) {
         $periodActions .= '<form method="POST" action="' . route('admin.hrm.attendance.periods.freeze', $period) . '" class="inline" data-confirm="Freeze ' . e($period->periodLabel()) . '? This cannot be undone.">'
             . csrf_field()
             . '<button type="submit" class="erp-btn-primary !py-2 !px-4 text-xs">Freeze Period</button></form>';

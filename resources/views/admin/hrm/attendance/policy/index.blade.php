@@ -44,7 +44,7 @@
                             @endif
                         </td>
                         <td class="text-right">
-                            @if(auth()->user()->hasPermission('hrm.attendance.manage'))
+                            @if(auth()->user()->canManageAttendanceSubmodule('policy'))
                                 @include('partials.erp.table-actions', [
                                     'editUrl' => route('admin.hrm.attendance.policy.edit', $policy),
                                 ])

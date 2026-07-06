@@ -8,7 +8,7 @@ use App\Models\Factory;
 use App\Models\Hrm\Employee;
 use Database\Seeders\Hrm\HeadOfficeEmployeeSeeder;
 use Database\Seeders\Masters\FactorySeeder;
-use Database\Seeders\Masters\UnitDepartmentsDesignationsSeeder;
+use Database\Seeders\Masters\HeadOfficeOrgSeeder;
 use Database\Seeders\Hrm\HrmMasterDataSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -22,7 +22,7 @@ class HeadOfficeEmployeeSeederTest extends TestCase
         $this->seed([
             FactorySeeder::class,
             HrmMasterDataSeeder::class,
-            UnitDepartmentsDesignationsSeeder::class,
+            \Database\Seeders\Masters\HeadOfficeOrgSeeder::class,
         ]);
 
         $factory = Factory::where('name', 'Head Office')->firstOrFail();

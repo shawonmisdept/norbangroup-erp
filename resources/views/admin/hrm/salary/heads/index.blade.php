@@ -4,7 +4,7 @@
 @include('partials.erp.page-header', [
     'title' => 'Salary Heads',
     'subtitle' => 'Earning, deduction & statutory components',
-    'actions' => auth()->user()->hasPermission('hrm.salary.manage')
+    'actions' => auth()->user()->canManageSalarySubmodule('heads')
         ? '<a href="' . route('admin.hrm.salary.heads.create') . '" class="erp-btn-primary !py-2 !px-4 text-xs">+ Add Head</a>'
         : '',
 ])

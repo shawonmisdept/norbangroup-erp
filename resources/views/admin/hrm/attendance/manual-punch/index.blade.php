@@ -37,7 +37,7 @@
                     </select>
                 </div>
             @endif
-            <button type="submit" class="erp-btn-secondary">Filter</button>
+            <button type="submit" class="erp-btn-primary">Filter</button>
         </form>
     </div>
 </div>
@@ -47,38 +47,89 @@
         <table class="erp-table">
             <thead>
                 <tr>
-                    <th>Date & Time</th>
+                    <th>Date</th>
                     <th>Employee</th>
-                    <th>Type</th>
+                    <th>Check In</th>
+                    <th>Check Out</th>
                     <th>Reason</th>
                     <th>Entered By</th>
                     @if(auth()->user()?->canManageAttendanceSubmodule('manual-punch'))
-                        <th></th>
+                        <th class="text-right">Actions</th>
                     @endif
                 </tr>
             </thead>
             <tbody>
-                @forelse($entries as $entry)
+                @forelse($entries as $row)
                     <tr>
-                        <td class="text-xs tabular-nums">{{ $entry->punched_at->format('d M Y H:i') }}</td>
+                        <td class="text-xs tabular-nums whitespace-nowrap">{{ $row->date->format('d M Y') }}</td>
                         <td>
-                            <p class="font-medium text-xs">{{ $entry->employee?->name ?? '—' }}</p>
-                            <p class="text-[10px] text-gray-400 font-mono">{{ $entry->employee?->employee_code }}</p>
+                            <p class="font-medium text-xs">{{ $row->employee?->name ?? '—' }}</p>
+                            <p class="text-[10px] text-gray-400 font-mono">{{ $row->employee?->employee_code }}</p>
                         </td>
-                        <td><span class="erp-badge bg-blue-100 text-blue-800">{{ strtoupper($entry->punch_type) }}</span></td>
-                        <td class="text-xs text-gray-600 max-w-xs truncate">{{ $entry->reason }}</td>
-                        <td class="text-xs">{{ $entry->enteredByUser?->name ?? '—' }}</td>
+                        <td class="text-xs tabular-nums whitespace-nowrap">
+                            @if($row->in)
+                                <span class="erp-badge bg-emerald-100 text-emerald-800 mr-1">IN</span>
+                                {{ $row->in->punched_at->format('h:i A') }}
+                            @else
+                                <span class="text-gray-400">—</span>
+                            @endif
+                        </td>
+                        <td class="text-xs tabular-nums whitespace-nowrap">
+                            @if($row->out)
+                                <span class="erp-badge bg-amber-100 text-amber-800 mr-1">OUT</span>
+                                {{ $row->out->punched_at->format('h:i A') }}
+                            @else
+                                <span class="text-gray-400">—</span>
+                            @endif
+                        </td>
+                        <td class="text-xs text-gray-600 max-w-xs">
+                            @if($row->in)
+                                <p class="truncate" title="{{ $row->in->reason }}"><span class="text-[10px] text-gray-400">IN:</span> {{ $row->in->reason }}</p>
+                            @endif
+                            @if($row->out)
+                                <p class="truncate {{ $row->in ? 'mt-0.5' : '' }}" title="{{ $row->out->reason }}"><span class="text-[10px] text-gray-400">OUT:</span> {{ $row->out->reason }}</p>
+                            @endif
+                            @if(! $row->in && ! $row->out)
+                                —
+                            @endif
+                        </td>
+                        <td class="text-xs max-w-[160px]">
+                            @if($row->in)
+                                <p class="font-medium">{{ $row->in->enteredByUser?->name ?? '—' }}</p>
+                                <p class="text-[10px] text-gray-400 tabular-nums">{{ $row->in->created_at?->format('d M Y h:i A') }}</p>
+                            @endif
+                            @if($row->out)
+                                <p class="font-medium {{ $row->in ? 'mt-1' : '' }}">{{ $row->out->enteredByUser?->name ?? '—' }}</p>
+                                <p class="text-[10px] text-gray-400 tabular-nums">{{ $row->out->created_at?->format('d M Y h:i A') }}</p>
+                            @endif
+                        </td>
                         @if(auth()->user()?->canManageAttendanceSubmodule('manual-punch'))
-                            <td class="text-right">
-                                <form method="POST" action="{{ route('admin.hrm.attendance.manual-punch.destroy', $entry) }}" data-confirm="Remove this manual punch?">
-                                    @csrf @method('DELETE')
-                                    <button type="submit" class="erp-btn-sm-secondary !text-red-600">Remove</button>
-                                </form>
+                            <td class="text-right align-top">
+                                <div class="flex flex-col items-end gap-1">
+                                    @if($row->in)
+                                        <div class="flex items-center gap-1">
+                                            <a href="{{ route('admin.hrm.attendance.manual-punch.edit', $row->in) }}" class="erp-btn-sm-secondary !py-0.5 !px-2 text-[10px]">Edit IN</a>
+                                            <form method="POST" action="{{ route('admin.hrm.attendance.manual-punch.destroy', $row->in) }}" data-confirm="Remove this check-in punch?">
+                                                @csrf @method('DELETE')
+                                                <button type="submit" class="erp-btn-danger !py-0.5 !px-2 text-[10px]">Remove</button>
+                                            </form>
+                                        </div>
+                                    @endif
+                                    @if($row->out)
+                                        <div class="flex items-center gap-1">
+                                            <a href="{{ route('admin.hrm.attendance.manual-punch.edit', $row->out) }}" class="erp-btn-sm-secondary !py-0.5 !px-2 text-[10px]">Edit OUT</a>
+                                            <form method="POST" action="{{ route('admin.hrm.attendance.manual-punch.destroy', $row->out) }}" data-confirm="Remove this check-out punch?">
+                                                @csrf @method('DELETE')
+                                                <button type="submit" class="erp-btn-danger !py-0.5 !px-2 text-[10px]">Remove</button>
+                                            </form>
+                                        </div>
+                                    @endif
+                                </div>
                             </td>
                         @endif
                     </tr>
                 @empty
-                    <tr><td colspan="{{ auth()->user()?->canManageAttendanceSubmodule('manual-punch') ? 6 : 5 }}" class="text-center text-sm text-gray-400 py-10">No manual punches yet.</td></tr>
+                    <tr><td colspan="{{ auth()->user()?->canManageAttendanceSubmodule('manual-punch') ? 7 : 6 }}" class="text-center text-sm text-gray-400 py-10">No manual punches yet.</td></tr>
                 @endforelse
             </tbody>
         </table>

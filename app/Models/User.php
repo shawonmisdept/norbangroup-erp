@@ -329,7 +329,11 @@ class User extends Authenticatable
 
     public function canViewAttendanceSubmodule(string $key): bool
     {
-        if ($this->hasPermission('hrm.attendance.view') || $this->hasPermission('hrm.attendance.sync')) {
+        if ($this->hasPermission('hrm.attendance.view')) {
+            return true;
+        }
+
+        if ($key === 'sync' && $this->hasPermission('hrm.attendance.sync')) {
             return true;
         }
 

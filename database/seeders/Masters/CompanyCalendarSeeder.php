@@ -3,16 +3,12 @@
 namespace Database\Seeders\Masters;
 
 use App\Models\CompanyCalendar;
-use App\Models\Factory;
 use Illuminate\Database\Seeder;
 
 class CompanyCalendarSeeder extends Seeder
 {
     public function run(): void
     {
-        $norban   = Factory::where('name', 'Norban Comtex Limited')->value('id');
-        $hornbill = Factory::where('name', 'Hornbill Apparal Limited')->value('id');
-
         $records = [
             [
                 'name'          => 'International Mother Language Day',
@@ -53,22 +49,6 @@ class CompanyCalendarSeeder extends Seeder
                 'end_date'      => '2026-05-30',
                 'description'   => 'Eid-ul-Adha holidays — all factories closed.',
                 'factory_id'    => null,
-            ],
-            [
-                'name'          => 'Norban Comtex — Annual Maintenance',
-                'calendar_type' => 'Factory Off',
-                'start_date'    => '2026-06-15',
-                'end_date'      => '2026-06-16',
-                'description'   => 'Scheduled machine maintenance and electrical inspection.',
-                'factory_id'    => $norban,
-            ],
-            [
-                'name'          => 'Hornbill Apparel — Annual Maintenance',
-                'calendar_type' => 'Factory Off',
-                'start_date'    => '2026-07-10',
-                'end_date'      => '2026-07-11',
-                'description'   => 'Scheduled machine maintenance and line overhaul.',
-                'factory_id'    => $hornbill,
             ],
             [
                 'name'          => 'Victory Day',

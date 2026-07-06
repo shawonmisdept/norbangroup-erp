@@ -50,7 +50,7 @@
                         <td class="text-right">
                             <div class="erp-table-actions">
                                 <a href="{{ route('admin.hrm.employees.show', $employee) }}" class="erp-btn-sm-secondary">View</a>
-                                @if(auth()->user()->hasPermission('hrm.employees.manage'))
+                                @if(auth()->user()->canManageEmployeeSubmodule('employees'))
                                     <a href="{{ route('admin.hrm.employees.edit', $employee) }}" class="erp-btn-sm-primary">Edit</a>
                                     <form method="POST" action="{{ route('admin.hrm.employees.destroy', $employee) }}" class="inline"
                                           data-confirm="Remove employee &quot;{{ $employee->name }}&quot; ({{ $employee->employee_code }})?"

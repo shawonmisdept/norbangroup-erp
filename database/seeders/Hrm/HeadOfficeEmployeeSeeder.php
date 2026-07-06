@@ -38,6 +38,17 @@ class HeadOfficeEmployeeSeeder extends Seeder
             ->where('is_active', true)
             ->value('id');
 
+        $seedCodes = collect($data['employees'])
+            ->pluck('employee_code')
+            ->filter()
+            ->unique()
+            ->values()
+            ->all();
+
+        Employee::where('factory_id', $factory->id)
+            ->whereNotIn('employee_code', $seedCodes)
+            ->forceDelete();
+
         $seeded = 0;
         $skipped = 0;
 

@@ -9,6 +9,33 @@
         : '',
 ])
 
+<form method="GET" class="erp-panel p-4 mb-4 grid grid-cols-2 md:grid-cols-5 gap-3 items-end">
+    @if($factories !== [])
+        <div>
+            <label class="erp-label">Unit</label>
+            <select name="factory_id" class="erp-input">
+                <option value="">All</option>
+                @foreach($factories as $id => $name)
+                    <option value="{{ $id }}" @selected(($filters['factory_id'] ?? '') == $id)>{{ $name }}</option>
+                @endforeach
+            </select>
+        </div>
+    @endif
+    <div>
+        <label class="erp-label">Status</label>
+        <select name="status" class="erp-input">
+            <option value="">All</option>
+            @foreach($statuses as $value => $label)
+                <option value="{{ $value }}" @selected(($filters['status'] ?? '') === $value)>{{ $label }}</option>
+            @endforeach
+        </select>
+    </div>
+    <div class="flex gap-2">
+        <button type="submit" class="erp-btn-primary">Apply</button>
+        <a href="{{ route('admin.tms.vehicles.index') }}" class="erp-btn-secondary">Reset</a>
+    </div>
+</form>
+
 <div class="erp-panel overflow-hidden">
     <table class="erp-table">
         <thead>

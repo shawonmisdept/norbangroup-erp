@@ -1,4 +1,4 @@
-@if(auth()->user()->hasPermission('hrm.employees.manage'))
+@if(auth()->user()->canManageEmployeeSubmodule('employees'))
     <div class="erp-panel">
         <div class="erp-panel-head">
             <h2 class="text-xs font-semibold text-gray-700 uppercase tracking-wide">Employee Portal</h2>

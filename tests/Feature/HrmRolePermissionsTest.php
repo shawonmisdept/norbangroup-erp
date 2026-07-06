@@ -47,6 +47,93 @@ class HrmRolePermissionsTest extends TestCase
         $this->assertFalse($role->hasPermission('hrm.finance.loans.manage'));
     }
 
+    public function test_granular_leave_policies_manage_allows_policy_routes_but_not_rules(): void
+    {
+        $role = Role::create([
+            'name'        => 'Leave Policies Manager',
+            'permissions' => ['hrm.leave.policies.view', 'hrm.leave.policies.manage'],
+        ]);
+
+        $user = User::create([
+            'name'     => 'Policies Manager',
+            'email'    => 'leave-policies@test.com',
+            'password' => 'password',
+            'role_id'  => $role->id,
+        ]);
+
+        $this->actingAs($user)
+            ->get(route('admin.hrm.leave.policies.create'))
+            ->assertOk();
+
+        $this->actingAs($user)
+            ->get(route('admin.hrm.leave.rules.create'))
+            ->assertForbidden();
+    }
+
+    public function test_attendance_sync_permission_only_grants_sync_submodule_view(): void
+    {
+        $role = Role::create([
+            'name'        => 'Sync Operator',
+            'permissions' => ['hrm.attendance.sync'],
+        ]);
+
+        $user = User::create([
+            'name'     => 'Sync Operator',
+            'email'    => 'attendance-sync@test.com',
+            'password' => 'password',
+            'role_id'  => $role->id,
+        ]);
+
+        $this->assertTrue($user->canViewAttendanceSubmodule('sync'));
+        $this->assertFalse($user->canViewAttendanceSubmodule('manual-punch'));
+    }
+
+    public function test_granular_manual_punch_manage_allows_create_route(): void
+    {
+        $role = Role::create([
+            'name'        => 'Manual Punch Manager',
+            'permissions' => ['hrm.attendance.manual-punch.view', 'hrm.attendance.manual-punch.manage'],
+        ]);
+
+        $user = User::create([
+            'name'     => 'Manual Punch Manager',
+            'email'    => 'manual-punch@test.com',
+            'password' => 'password',
+            'role_id'  => $role->id,
+        ]);
+
+        $this->actingAs($user)
+            ->get(route('admin.hrm.attendance.manual-punch.create'))
+            ->assertOk();
+
+        $this->actingAs($user)
+            ->get(route('admin.hrm.attendance.half-day-entry.create'))
+            ->assertForbidden();
+    }
+
+    public function test_granular_leave_policies_view_allows_index_but_not_rules(): void
+    {
+        $role = Role::create([
+            'name'        => 'Leave Policies Viewer',
+            'permissions' => ['hrm.leave.policies.view'],
+        ]);
+
+        $user = User::create([
+            'name'     => 'Leave Policies Viewer',
+            'email'    => 'leave-policies-view@test.com',
+            'password' => 'password',
+            'role_id'  => $role->id,
+        ]);
+
+        $this->actingAs($user)
+            ->get(route('admin.hrm.leave.policies.index'))
+            ->assertOk();
+
+        $this->actingAs($user)
+            ->get(route('admin.hrm.leave.rules.index'))
+            ->assertForbidden();
+    }
+
     public function test_promotion_permissions_granted_to_administrator(): void
     {
         $admin = Role::where('name', 'Administrator')->firstOrFail();

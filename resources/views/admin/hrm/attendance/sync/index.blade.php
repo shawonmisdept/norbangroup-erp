@@ -19,7 +19,7 @@
             . '<button type="submit" class="erp-btn-primary">Sync All Devices</button>'
             . '</form>';
     }
-    if (auth()->user()->hasPermission('hrm.attendance.manage')) {
+    if (auth()->user()->canManageAttendanceSubmodule('periods')) {
         $syncActions .= '<form method="POST" action="' . route('admin.hrm.attendance.process-today') . '" class="inline">'
             . csrf_field()
             . '<button type="submit" class="erp-btn-secondary">Process Today</button>'

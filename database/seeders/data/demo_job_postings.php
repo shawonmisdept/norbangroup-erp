@@ -3,10 +3,7 @@
 $content = require __DIR__ . '/demo_job_posting_content.php';
 
 /**
- * Demo open job postings — merges commercial copy from demo_job_posting_content.php.
- *
- * Unit totals (option B):
- * - Norban Comtex + Hornbill combined: 10 Sewing Operators, 2 Line Supervisors
+ * Demo open job postings — Head Office roles only.
  */
 return [
     array_merge($content['software_developer'], [
@@ -44,61 +41,5 @@ return [
         'shift_type'        => 'day',
         'salary_text'       => 'Negotiable',
         'salary_negotiable' => true,
-    ]),
-    array_merge($content['sewing_operator'], [
-        'factory'           => 'Norban Comtex Limited',
-        'title'             => 'Sewing Machine Operator',
-        'content_profile'   => 'sewing_operator',
-        'slots'             => 6,
-        'department'        => 'Sewing',
-        'designation'       => 'Sewing Machine Operator',
-        'worker_category'   => 'Operator',
-        'shift_type'        => 'day',
-        'salary_text'       => 'As per factory grade',
-        'salary_negotiable' => true,
-        'template_key'      => 'sewing_operator',
-        'min_age'           => 18,
-        'max_age'           => 40,
-    ]),
-    array_merge($content['sewing_operator'], [
-        'factory'           => 'Hornbill Apparal Limited',
-        'title'             => 'Sewing Machine Operator',
-        'content_profile'   => 'sewing_operator',
-        'slots'             => 4,
-        'department'        => 'Sewing',
-        'designation'       => 'Sewing Machine Operator',
-        'worker_category'   => 'Operator',
-        'shift_type'        => 'day',
-        'salary_text'       => 'As per factory grade',
-        'salary_negotiable' => true,
-        'template_key'      => 'sewing_operator',
-        'min_age'           => 18,
-        'max_age'           => 40,
-    ]),
-    array_merge($content['line_supervisor'], [
-        'factory'           => 'Norban Comtex Limited',
-        'title'             => 'Line Supervisor',
-        'content_profile'   => 'line_supervisor',
-        'slots'             => 1,
-        'department'        => 'Sewing',
-        'designation'       => 'Line Supervisor',
-        'worker_category'   => 'Supervisor',
-        'shift_type'        => 'day',
-        'salary_text'       => 'Tk. 28,000 – 35,000 (Monthly)',
-        'salary_negotiable' => true,
-        'template_key'      => 'supervisor',
-    ]),
-    array_merge($content['line_supervisor'], [
-        'factory'           => 'Hornbill Apparal Limited',
-        'title'             => 'Line Supervisor',
-        'content_profile'   => 'line_supervisor',
-        'slots'             => 1,
-        'department'        => 'Sewing',
-        'designation'       => 'Line Supervisor',
-        'worker_category'   => 'Supervisor',
-        'shift_type'        => 'day',
-        'salary_text'       => 'Tk. 28,000 – 35,000 (Monthly)',
-        'salary_negotiable' => true,
-        'template_key'      => 'supervisor',
     ]),
 ];

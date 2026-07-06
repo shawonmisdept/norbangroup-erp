@@ -31,11 +31,10 @@ class OrganizationSeeder extends Seeder
             ],
         ];
 
-        $skipFactories = [
-            'Head Office',
-            'Norban Comtex Limited',
-            'Hornbill Apparal Limited',
-        ];
+        /** @var array{factory: string} $headOfficeOrg */
+        $headOfficeOrg = require database_path('seeders/data/head_office_org.php');
+
+        $skipFactories = [$headOfficeOrg['factory']];
 
         foreach (Factory::where('is_active', true)->whereNotIn('name', $skipFactories)->get() as $factory) {
             $buildingNames = array_keys($structure);

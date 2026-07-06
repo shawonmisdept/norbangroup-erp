@@ -12,6 +12,7 @@ use App\Models\Hrm\EmployeePortalUser;
 use App\Models\Hrm\Shift;
 use App\Models\Role;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -126,6 +127,8 @@ class AttendanceMultiChannelTest extends TestCase
 
     public function test_employee_mobile_check_in_with_geofence(): void
     {
+        Carbon::setTestNow('2026-06-24 08:05:00');
+
         $photo = 'data:image/jpeg;base64,' . base64_encode(str_repeat('x', 100));
 
         $this->actingAs($this->portalUser, 'employee')
@@ -144,11 +147,56 @@ class AttendanceMultiChannelTest extends TestCase
         ]);
 
         $log = AttendanceDailyLog::where('employee_id', $this->employee->id)
-            ->whereDate('attendance_date', today())
+            ->whereDate('attendance_date', '2026-06-24')
             ->first();
 
         $this->assertNotNull($log);
         $this->assertContains($log->status, ['present', 'late']);
+    }
+
+    public function test_employee_mobile_check_out_updates_daily_log_after_check_in(): void
+    {
+        Carbon::setTestNow('2026-06-24 08:05:00');
+
+        $photo = 'data:image/jpeg;base64,' . base64_encode(str_repeat('x', 100));
+
+        $this->actingAs($this->portalUser, 'employee')
+            ->post(route('employee.attendance.check-in.store'), [
+                'punch_type' => 'in',
+                'latitude'   => 23.8104000,
+                'longitude'  => 90.4126000,
+                'photo'      => $photo,
+            ])
+            ->assertRedirect(route('employee.attendance'));
+
+        $log = AttendanceDailyLog::where('employee_id', $this->employee->id)
+            ->whereDate('attendance_date', '2026-06-24')
+            ->first();
+
+        $this->assertNotNull($log);
+        $this->assertNotNull($log->check_in);
+        $this->assertNull($log->check_out);
+        $this->assertSame(1, $log->punch_count);
+        $checkInTime = $log->check_in->copy();
+
+        Carbon::setTestNow('2026-06-24 17:05:00');
+
+        $this->actingAs($this->portalUser, 'employee')
+            ->post(route('employee.attendance.check-in.store'), [
+                'punch_type' => 'out',
+                'latitude'   => 23.8104000,
+                'longitude'  => 90.4126000,
+                'photo'      => $photo,
+            ])
+            ->assertRedirect(route('employee.attendance'));
+
+        $log->refresh();
+
+        $this->assertSame($checkInTime->format('H:i:s'), $log->check_in->format('H:i:s'));
+        $this->assertNotNull($log->check_out);
+        $this->assertSame('17:05:00', $log->check_out->format('H:i:s'));
+        $this->assertSame(2, $log->punch_count);
+        $this->assertGreaterThan(0, $log->work_minutes);
     }
 
     public function test_qr_gate_check_in(): void
@@ -202,6 +250,45 @@ class AttendanceMultiChannelTest extends TestCase
 
         $this->assertNotNull($log);
         $this->assertNotNull($log->check_in);
+    }
+
+    public function test_hr_can_edit_manual_punch_and_recalculate_attendance(): void
+    {
+        $this->actingAs($this->hrUser)
+            ->post(route('admin.hrm.attendance.manual-punch.store'), [
+                'employee_id'     => $this->employee->id,
+                'attendance_date' => '2026-06-19',
+                'punch_time'      => '08:00',
+                'punch_type'      => 'in',
+                'reason'          => 'Device was offline',
+            ]);
+
+        $punch = AttendanceRawPunch::where('employee_id', $this->employee->id)
+            ->where('source', 'manual_hr')
+            ->first();
+
+        $this->assertNotNull($punch);
+
+        $this->actingAs($this->hrUser)
+            ->put(route('admin.hrm.attendance.manual-punch.update', $punch), [
+                'employee_id'     => $this->employee->id,
+                'attendance_date' => '2026-06-19',
+                'punch_time'      => '09:30',
+                'punch_type'      => 'in',
+                'reason'          => 'Corrected time',
+            ])
+            ->assertRedirect(route('admin.hrm.attendance.manual-punch.index'));
+
+        $punch->refresh();
+
+        $this->assertSame('09:30:00', $punch->punched_at->format('H:i:s'));
+        $this->assertSame('Corrected time', $punch->reason);
+
+        $log = AttendanceDailyLog::where('employee_id', $this->employee->id)
+            ->whereDate('attendance_date', '2026-06-19')
+            ->first();
+
+        $this->assertSame('09:30:00', $log->check_in->format('H:i:s'));
     }
 
     public function test_iclock_getrequest_returns_ok(): void

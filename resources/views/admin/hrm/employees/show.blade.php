@@ -12,10 +12,10 @@
 @include('partials.erp.page-header', [
     'title' => $employee->name,
     'subtitle' => $employee->employee_code . ' · ' . ($employee->factory?->name ?? 'No unit'),
-    'actions' => auth()->user()->hasPermission('hrm.employees.manage')
+    'actions' => auth()->user()->canManageEmployeeSubmodule('employees')
         ? '<a href="' . route('admin.hrm.employees.edit', $employee) . '" class="erp-btn-primary">Edit</a>'
           . '<a href="' . route('admin.hrm.employees.id-card', $employee) . '" class="erp-btn-secondary" target="_blank">ID Card</a>'
-        : (auth()->user()->hasPermission('hrm.employees.view')
+        : (auth()->user()->canViewEmployeeSubmodule('employees')
             ? '<a href="' . route('admin.hrm.employees.id-card', $employee) . '" class="erp-btn-secondary" target="_blank">ID Card</a>'
             : ''),
 ])
@@ -237,7 +237,7 @@
         @include('admin.hrm.employees.partials.final-settlement-card')
         @include('admin.hrm.employees.partials.portal-card')
 
-        @if(auth()->user()->hasPermission('hrm.employees.manage'))
+        @if(auth()->user()->canManageEmployeeSubmodule('employees'))
             <a href="{{ route('admin.hrm.employees.edit', $employee) }}" class="erp-btn-primary w-full justify-center !py-2.5">Edit Employee</a>
             <form method="POST" action="{{ route('admin.hrm.employees.destroy', $employee) }}"
                   data-confirm="Remove this employee record?"

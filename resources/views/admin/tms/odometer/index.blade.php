@@ -9,7 +9,18 @@
         : '',
 ])
 
-<form method="GET" class="erp-panel p-4 mb-4 grid grid-cols-2 md:grid-cols-5 gap-3 items-end">
+<form method="GET" class="erp-panel p-4 mb-4 grid grid-cols-2 md:grid-cols-6 gap-3 items-end">
+    @if($factories !== [])
+        <div>
+            <label class="erp-label">Unit</label>
+            <select name="factory_id" class="erp-input">
+                <option value="">All</option>
+                @foreach($factories as $id => $name)
+                    <option value="{{ $id }}" @selected(($filters['factory_id'] ?? '') == $id)>{{ $name }}</option>
+                @endforeach
+            </select>
+        </div>
+    @endif
     <div>
         <label class="erp-label">From</label>
         <input type="date" name="from" class="erp-input" value="{{ $filters['from'] ?? '' }}">
@@ -27,7 +38,10 @@
             @endforeach
         </select>
     </div>
-    <button type="submit" class="erp-btn-primary">Filter</button>
+    <div class="flex gap-2">
+        <button type="submit" class="erp-btn-primary">Apply</button>
+        <a href="{{ route('admin.tms.odometer.index') }}" class="erp-btn-secondary">Reset</a>
+    </div>
 </form>
 
 <div class="erp-panel overflow-hidden">

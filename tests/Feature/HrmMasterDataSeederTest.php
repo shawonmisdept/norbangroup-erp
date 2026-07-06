@@ -27,11 +27,12 @@ class HrmMasterDataSeederTest extends TestCase
 
         $factoryCount = Factory::where('is_active', true)->count();
 
+        $this->assertSame(1, $factoryCount);
         $this->assertSame(7, WorkerCategory::count());
         $this->assertSame(5, EmploymentType::count());
-        $this->assertSame(8, LeaveType::count());
-        $this->assertSame($factoryCount * 2, Building::where('is_active', true)->count());
-        $this->assertSame($factoryCount * 13, Line::where('is_active', true)->count());
+        $this->assertSame(5, LeaveType::where('is_active', true)->count());
+        $this->assertSame(0, Building::where('is_active', true)->count());
+        $this->assertSame(0, Line::where('is_active', true)->count());
         $this->assertSame($factoryCount * 2, Shift::where('is_active', true)->count());
         $this->assertSame($factoryCount * 10, Holiday::count());
         $this->assertSame($factoryCount * 2, BiometricDevice::where('is_active', true)->count());
@@ -49,6 +50,6 @@ class HrmMasterDataSeederTest extends TestCase
 
         $this->assertSame(7, WorkerCategory::count());
         $this->assertSame(5, EmploymentType::count());
-        $this->assertSame(8, LeaveType::count());
+        $this->assertSame(5, LeaveType::where('is_active', true)->count());
     }
 }

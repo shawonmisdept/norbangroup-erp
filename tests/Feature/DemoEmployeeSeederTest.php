@@ -7,9 +7,8 @@ use App\Models\Hrm\Employee;
 use Database\Seeders\Hrm\DemoEmployeeSeeder;
 use Database\Seeders\Hrm\HrmMasterDataSeeder;
 use Database\Seeders\Hrm\SalaryLegacySeeder;
-use Database\Seeders\Masters\FactoryDesignationSeeder;
 use Database\Seeders\Masters\FactorySeeder;
-use Database\Seeders\Masters\UnitDepartmentsDesignationsSeeder;
+use Database\Seeders\Masters\HeadOfficeOrgSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -22,8 +21,7 @@ class DemoEmployeeSeederTest extends TestCase
         $this->seed([
             FactorySeeder::class,
             HrmMasterDataSeeder::class,
-            UnitDepartmentsDesignationsSeeder::class,
-            FactoryDesignationSeeder::class,
+            \Database\Seeders\Masters\HeadOfficeOrgSeeder::class,
             SalaryLegacySeeder::class,
         ]);
 

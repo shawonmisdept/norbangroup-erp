@@ -13,11 +13,14 @@ class PlannedController extends Controller
 
         abort_unless($config && ($config['status'] ?? '') === 'planned', 404);
 
-        return view('admin.hrm.attendance.planned', [
+        abort_unless($request->user()->canViewAttendanceSubmodule($module), 403);
+
+        return view('admin.hrm.partials.planned', [
             'module'      => $module,
-            'config'      => $config,
+            'label'       => $config['label'],
+            'description' => $config['description'],
             'hubRoute'    => 'admin.hrm.attendance.hub',
-            'sectionLabel'=> 'Attendance',
+            'section'     => 'Attendance',
         ]);
     }
 }

@@ -209,7 +209,7 @@ return [
     'nav_groups' => [
         'Operations' => ['requests', 'trips', 'odometer', 'fuel'],
         'Vehicle Management'      => ['vehicles', 'drivers', 'rental_vendors', 'rental_drivers', 'maintenance', 'maintenance_parts', 'maintenance_posting', 'rental_charges'],
-        'Setup'      => ['settings', 'destinations', 'gps_tracking'],
+        'Setup'      => ['settings', 'destinations', 'device_api'],
     ],
 
     'gps_providers' => [

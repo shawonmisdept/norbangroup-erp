@@ -101,8 +101,17 @@ class AttendanceProcessor
                 continue;
             }
 
-            $this->upsertDailyLog($employee, $date, $employeePunches, $policy, $period);
-            AttendanceRawPunch::whereIn('id', $employeePunches->pluck('id'))
+            $allPunches = AttendanceRawPunch::query()
+                ->where('employee_id', $employee->id)
+                ->whereDate('punched_at', $date->toDateString())
+                ->orderBy('punched_at')
+                ->get();
+
+            $this->upsertDailyLog($employee, $date, $allPunches, $policy, $period, $existing);
+            AttendanceRawPunch::query()
+                ->where('employee_id', $employee->id)
+                ->whereDate('punched_at', $date->toDateString())
+                ->whereNull('processed_at')
                 ->update(['processed_at' => now()]);
             $processed++;
         }
@@ -206,7 +215,8 @@ class AttendanceProcessor
         Carbon $date,
         Collection $punches,
         AttendancePolicy $policy,
-        ?AttendancePeriod $period
+        ?AttendancePeriod $period,
+        ?AttendanceDailyLog $existing = null
     ): AttendanceDailyLog {
         $sorted = $punches->sortBy('punched_at')->values();
         $checkIn = $sorted->first()->punched_at;
@@ -217,52 +227,61 @@ class AttendanceProcessor
         $isHoliday = $this->schedule->isHoliday($employee->factory_id, $date);
 
         if (($isWeekend || $isHoliday) && ! $this->schedule->allowsWeekendOt($employee)) {
-            return AttendanceDailyLog::updateOrCreate(
-                [
-                    'employee_id'     => $employee->id,
-                    'attendance_date' => $date->toDateString(),
-                ],
-                [
-                    'factory_id'           => $employee->factory_id,
-                    'attendance_period_id' => $period?->id,
-                    'shift_id'             => $shift?->id,
-                    'check_in'             => $checkIn,
-                    'check_out'            => $checkOut,
-                    'status'               => $isHoliday ? 'holiday' : 'off_day',
-                    'punch_count'          => $sorted->count(),
-                    'work_minutes'         => 0,
-                ]
-            );
-        }
-
-        $metrics = $this->calculateMetrics($employee, $date, $checkIn, $checkOut, $shift, $policy);
-
-        return AttendanceDailyLog::updateOrCreate(
-            [
-                'employee_id'     => $employee->id,
-                'attendance_date' => $date->toDateString(),
-            ],
-            [
+            $data = [
                 'factory_id'           => $employee->factory_id,
                 'attendance_period_id' => $period?->id,
                 'shift_id'             => $shift?->id,
                 'check_in'             => $checkIn,
                 'check_out'            => $checkOut,
-                'expected_in'          => $shift?->start_time,
-                'expected_out'         => $shift?->end_time,
-                'work_minutes'         => $metrics['work_minutes'],
-                'late_minutes'         => $metrics['late_minutes'],
-                'early_leave_minutes'  => $metrics['early_leave_minutes'],
-                'break_minutes'        => $metrics['break_minutes'],
+                'status'               => $isHoliday ? 'holiday' : 'off_day',
                 'punch_count'          => $sorted->count(),
-                'status'               => $metrics['status'],
-                'half_day_type'        => $metrics['half_day_type'],
-                'half_day_pay_ratio'   => $metrics['status'] === 'half_day'
-                    ? $this->schedule->halfDayPayRatio($employee, null, $policy)
-                    : null,
-                'is_manual_half_day'   => false,
-            ]
-        );
+                'work_minutes'         => 0,
+            ];
+
+            return $this->saveDailyLog($employee, $date, $data, $existing);
+        }
+
+        $metrics = $this->calculateMetrics($employee, $date, $checkIn, $checkOut, $shift, $policy);
+
+        return $this->saveDailyLog($employee, $date, [
+            'factory_id'           => $employee->factory_id,
+            'attendance_period_id' => $period?->id,
+            'shift_id'             => $shift?->id,
+            'check_in'             => $checkIn,
+            'check_out'            => $checkOut,
+            'expected_in'          => $shift?->start_time,
+            'expected_out'         => $shift?->end_time,
+            'work_minutes'         => $metrics['work_minutes'],
+            'late_minutes'         => $metrics['late_minutes'],
+            'early_leave_minutes'  => $metrics['early_leave_minutes'],
+            'break_minutes'        => $metrics['break_minutes'],
+            'punch_count'          => $sorted->count(),
+            'status'               => $metrics['status'],
+            'half_day_type'        => $metrics['half_day_type'],
+            'half_day_pay_ratio'   => $metrics['status'] === 'half_day'
+                ? $this->schedule->halfDayPayRatio($employee, null, $policy)
+                : null,
+            'is_manual_half_day'   => false,
+        ], $existing);
+    }
+
+    /** @param array<string, mixed> $data */
+    private function saveDailyLog(
+        Employee $employee,
+        Carbon $date,
+        array $data,
+        ?AttendanceDailyLog $existing = null
+    ): AttendanceDailyLog {
+        if ($existing) {
+            $existing->update($data);
+
+            return $existing->refresh();
+        }
+
+        return AttendanceDailyLog::create(array_merge([
+            'employee_id'     => $employee->id,
+            'attendance_date' => $date->toDateString(),
+        ], $data));
     }
 
     private function calculateMetrics(

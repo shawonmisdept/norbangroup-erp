@@ -170,6 +170,59 @@ class AttendancePunchService
         return $punch;
     }
 
+    public function updateManual(
+        AttendanceRawPunch $punch,
+        Employee $employee,
+        Carbon $punchedAt,
+        string $punchType,
+        string $reason
+    ): AttendanceRawPunch {
+        abort_unless($punch->source === 'manual_hr', 404);
+
+        $oldEmployee = $punch->employee ?? Employee::findOrFail($punch->employee_id);
+        $oldPunchedAt = $punch->punched_at->copy();
+
+        foreach ([[$oldEmployee, $oldPunchedAt], [$employee, $punchedAt]] as [$emp, $date]) {
+            $period = AttendancePeriod::getOrCreateForMonth($emp->factory_id, $date->year, $date->month);
+
+            if ($period->isFrozen()) {
+                throw ValidationException::withMessages([
+                    'attendance_date' => 'Attendance period is frozen. Cannot edit manual punch.',
+                ]);
+            }
+        }
+
+        $externalId = sha1("manual|{$employee->id}|{$punchedAt->toDateTimeString()}|{$punchType}");
+
+        if (AttendanceRawPunch::query()
+            ->where('external_id', $externalId)
+            ->whereKeyNot($punch->id)
+            ->exists()) {
+            throw ValidationException::withMessages([
+                'punch_time' => 'This punch already exists.',
+            ]);
+        }
+
+        $punch->update([
+            'factory_id'        => $employee->factory_id,
+            'employee_id'       => $employee->id,
+            'biometric_user_id' => (string) ($employee->biometric_user_id ?: $employee->employee_code),
+            'punched_at'        => $punchedAt,
+            'punch_type'        => $punchType,
+            'external_id'       => $externalId,
+            'reason'            => $reason,
+            'processed_at'      => null,
+        ]);
+
+        $this->reprocessDay($oldEmployee, $oldPunchedAt);
+
+        if ($oldEmployee->id !== $employee->id || ! $oldPunchedAt->isSameDay($punchedAt)) {
+            $this->reprocessDay($employee, $punchedAt);
+        }
+
+        return $punch->refresh();
+    }
+
     /** @param list<array<string, mixed>> $records */
     public function importDeviceRecords(BiometricDevice $device, array $records, string $source): array
     {

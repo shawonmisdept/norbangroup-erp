@@ -20,7 +20,7 @@
 
 @include('admin.hrm.partials.submodule-nav', ['section' => 'salary', 'current' => 'process'])
 
-@if(auth()->user()->hasPermission('hrm.salary.manage'))
+@if(auth()->user()->canManageSalarySubmodule('process'))
 <div class="erp-panel mb-4">
     <div class="erp-panel-head">
         <h2 class="text-xs font-semibold text-gray-700 uppercase tracking-wide">Calculate Payroll</h2>

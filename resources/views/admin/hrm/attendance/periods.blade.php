@@ -17,7 +17,7 @@
 ])
 
 <div class="grid grid-cols-1 xl:grid-cols-3 gap-4 mb-4">
-    @if(auth()->user()->hasPermission('hrm.attendance.manage'))
+    @if(auth()->user()->canManageAttendanceSubmodule('periods'))
         <div class="erp-panel xl:col-span-2">
             <div class="erp-panel-head">
                 <h2 class="text-xs font-semibold text-gray-700 uppercase tracking-wide">Process Period</h2>
@@ -151,7 +151,7 @@
                             @include('partials.erp.table-actions', [
                                 'viewUrl' => route('admin.hrm.attendance.periods.show', $period),
                             ])
-                            @if(auth()->user()->hasPermission('hrm.attendance.manage') && ! $period->isFrozen())
+                            @if(auth()->user()->canManageAttendanceSubmodule('periods') && ! $period->isFrozen())
                                 <form method="POST" action="{{ route('admin.hrm.attendance.periods.freeze', $period) }}" class="inline" data-confirm="Freeze {{ $period->periodLabel() }}? This cannot be undone.">
                                     @csrf
                                     <button type="submit" class="erp-btn-primary !py-1 !px-2 text-xs">Freeze</button>

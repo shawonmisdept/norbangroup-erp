@@ -1,12 +1,12 @@
 <?php
 
 /**
- * Demo performance cycles, reviews & run scenarios for Norban Comtex Limited.
+ * Demo performance cycles, reviews & run scenarios for Head Office.
  *
  * @see DemoPerformanceSeeder
  */
 return [
-    'factory' => 'Norban Comtex Limited',
+    'factory' => 'Head Office',
     'year'    => 2026,
     'prefix'  => '[Demo]',
 

@@ -9,16 +9,15 @@ class DepartmentSeeder extends Seeder
 {
     public function run(): void
     {
-        $skipFactories = [
-            'Head Office',
-            'Norban Comtex Limited',
-            'Hornbill Apparal Limited',
-        ];
+        /** @var array{factory: string} $headOfficeOrg */
+        $headOfficeOrg = require database_path('seeders/data/head_office_org.php');
+
+        $skipFactories = [$headOfficeOrg['factory']];
 
         $factories = Factory::where('is_active', true)->whereNotIn('name', $skipFactories)->get();
 
         if ($factories->isEmpty()) {
-            $this->command?->info('DepartmentSeeder: no non–Head Office factories to seed (unit factories deferred).');
+            $this->command?->info('DepartmentSeeder: no generic unit factories to seed (Head Office uses HeadOfficeOrgSeeder).');
 
             return;
         }

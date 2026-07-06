@@ -99,18 +99,9 @@ class DemoJobPostingSeeder extends Seeder
             $created++;
         }
 
-        $operatorSlots = collect($rows)
-            ->filter(fn ($r) => str_contains($r['title'], 'Sewing'))
-            ->sum('slots');
-        $supervisorSlots = collect($rows)
-            ->filter(fn ($r) => str_contains($r['title'], 'Line Supervisor'))
-            ->sum('slots');
-
         $this->command?->info(sprintf(
-            'Seeded %d demo job posting(s) — %d open operator + %d supervisor slots across Norban Comtex & Hornbill.',
+            'Seeded %d demo job posting(s) for Head Office.',
             $created,
-            $operatorSlots,
-            $supervisorSlots,
         ));
     }
 }

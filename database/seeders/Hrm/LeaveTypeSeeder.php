@@ -19,4 +19,24 @@ class LeaveTypeSeeder extends Seeder
     {
         return $this->recordsFromDataFile('hrm_leave_types.php');
     }
+
+    public function run(): void
+    {
+        $records = $this->records();
+        $activeNames = collect($records)->pluck('name')->all();
+        $model = $this->modelClass();
+
+        foreach ($records as $record) {
+            $attributes = array_merge(['is_active' => true], $record);
+
+            $model::updateOrCreate(
+                ['name' => $attributes['name']],
+                $attributes
+            );
+        }
+
+        LeaveType::query()
+            ->whereNotIn('name', $activeNames)
+            ->update(['is_active' => false]);
+    }
 }

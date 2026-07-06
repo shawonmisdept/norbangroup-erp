@@ -12,6 +12,7 @@ class HrmMasterDataSeeder extends Seeder
             WorkerCategorySeeder::class,
             EmploymentTypeSeeder::class,
             LeaveTypeSeeder::class,
+            LeavePolicySeeder::class,
             OrganizationSeeder::class,
             ShiftSeeder::class,
             HolidaySeeder::class,
