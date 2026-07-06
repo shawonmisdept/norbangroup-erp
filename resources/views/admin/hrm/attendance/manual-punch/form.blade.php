@@ -58,7 +58,7 @@
                     <label class="erp-form-label">Time</label>
                     <input type="time"
                            name="punch_time"
-                           value="{{ old('punch_time', $punch->punched_at?->format('H:i') ?? '08:00') }}"
+                           value="{{ old('punch_time', isset($punch) ? \App\Support\TimeInput::formatForInput($punch->punched_at) : '08:00') }}"
                            required
                            class="erp-input !text-xs">
                     @error('punch_time')<p class="text-xs text-red-500 mt-1">{{ $message }}</p>@enderror
@@ -79,7 +79,7 @@
             @if($editing && $punch->enteredByUser)
                 <div class="rounded border border-erp-border bg-gray-50 px-3 py-2 text-xs text-gray-600">
                     Entered by <span class="font-medium text-gray-900">{{ $punch->enteredByUser->name }}</span>
-                    at {{ $punch->created_at->format('d M Y h:i A') }}
+                    at @portalDateTime($punch->created_at)
                 </div>
             @endif
             <div class="flex gap-2">

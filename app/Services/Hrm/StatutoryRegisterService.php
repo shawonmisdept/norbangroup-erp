@@ -7,6 +7,7 @@ use App\Models\Hrm\AttendancePolicy;
 use App\Models\Hrm\Employee;
 use App\Models\Hrm\LeaveApplication;
 use App\Models\Hrm\PayrollItem;
+use App\Support\PortalDateTime;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 
@@ -27,8 +28,8 @@ class StatutoryRegisterService
                 'employee_name'  => $log->employee?->name,
                 'department'     => $log->employee?->department?->name,
                 'status'         => $log->status,
-                'check_in'       => $log->check_in?->format('H:i'),
-                'check_out'      => $log->check_out?->format('H:i'),
+                'check_in'       => PortalDateTime::time($log->check_in),
+                'check_out'      => PortalDateTime::time($log->check_out),
                 'work_hours'     => round((int) $log->work_minutes / 60, 2),
                 'late_minutes'   => (int) $log->late_minutes,
             ]);

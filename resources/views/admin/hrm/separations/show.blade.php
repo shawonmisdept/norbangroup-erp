@@ -114,7 +114,7 @@
                                 <p class="text-xs text-gray-500">Approver: {{ $approval->approverEmployee->name }}</p>
                             @endif
                             @if($approval->actorName())
-                                <p class="text-xs text-gray-500">By {{ $approval->actorName() }} · {{ $approval->acted_at?->format('d M Y H:i') }}</p>
+                                <p class="text-xs text-gray-500">By {{ $approval->actorName() }} · @portalDateTime($approval->acted_at)</p>
                             @endif
                             @if($approval->notes)
                                 <p class="text-xs text-gray-600 mt-1">{{ $approval->notes }}</p>
@@ -157,7 +157,7 @@
                             <label class="erp-form-label">Exit Interview Notes</label>
                             <textarea name="exit_interview_notes" rows="4" class="erp-input !text-xs" placeholder="Feedback, reason for leaving, handover notes…">{{ old('exit_interview_notes', $separation->exit_interview_notes) }}</textarea>
                             @if($separation->exit_interview_at)
-                                <p class="text-[10px] text-gray-400 mt-1">Last saved {{ $separation->exit_interview_at->format('d M Y H:i') }}</p>
+                                <p class="text-[10px] text-gray-400 mt-1">Last saved @portalDateTime($separation->exit_interview_at)</p>
                             @endif
                         </div>
                         <button type="submit" class="erp-btn-secondary !py-2 !px-4 text-xs">Save Exit Data</button>

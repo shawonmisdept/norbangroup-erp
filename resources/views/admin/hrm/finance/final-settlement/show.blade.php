@@ -181,7 +181,7 @@
 @if($settlement->paid_at)
 <div class="erp-panel">
     <div class="erp-panel-body text-xs text-gray-500">
-        Paid on {{ $settlement->paid_at->format('d M Y H:i') }}
+        Paid on @portalDateTime($settlement->paid_at)
         @if($settlement->approver) · Approved by {{ $settlement->approver->name }} @endif
     </div>
 </div>

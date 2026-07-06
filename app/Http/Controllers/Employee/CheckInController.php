@@ -3,22 +3,16 @@
 namespace App\Http\Controllers\Employee;
 
 use App\Http\Controllers\Controller;
-use App\Models\Hrm\AttendanceDailyLog;
 use App\Models\Hrm\AttendanceGatePoint;
-use App\Models\Hrm\AttendanceRawPunch;
 use App\Services\Hrm\AttendancePunchService;
+use App\Services\Hrm\EmployeeCheckInStatusService;
 use Illuminate\Http\Request;
 
 class CheckInController extends Controller
 {
-    public function create(Request $request)
+    public function create(Request $request, EmployeeCheckInStatusService $statusService)
     {
         $employee = $request->user('employee')->employee->load('factory', 'shift');
-
-        $todayLog = AttendanceDailyLog::query()
-            ->where('employee_id', $employee->id)
-            ->whereDate('attendance_date', today())
-            ->first();
 
         $gate = null;
         if ($request->filled('gate')) {
@@ -29,9 +23,9 @@ class CheckInController extends Controller
                 ->first();
         }
 
-        $nextAction = $this->resolveNextAction($employee->id);
+        $checkInStatus = $statusService->forEmployee($employee);
 
-        return view('employee.attendance.check-in', compact('employee', 'todayLog', 'gate', 'nextAction'));
+        return view('employee.attendance.check-in', compact('employee', 'gate', 'checkInStatus'));
     }
 
     public function store(Request $request, AttendancePunchService $punchService)
@@ -69,23 +63,7 @@ class CheckInController extends Controller
         $label = $validated['punch_type'] === 'in' ? 'Check-in' : 'Check-out';
 
         return redirect()
-            ->route('employee.attendance')
+            ->route('employee.dashboard')
             ->with('success', "{$label} recorded successfully.");
-    }
-
-    private function resolveNextAction(int $employeeId): string
-    {
-        $lastPunch = AttendanceRawPunch::query()
-            ->where('employee_id', $employeeId)
-            ->whereIn('source', ['mobile_gps', 'qr_scan'])
-            ->whereDate('punched_at', today())
-            ->latest('punched_at')
-            ->first();
-
-        if (! $lastPunch || $lastPunch->punch_type === 'out') {
-            return 'in';
-        }
-
-        return 'out';
     }
 }

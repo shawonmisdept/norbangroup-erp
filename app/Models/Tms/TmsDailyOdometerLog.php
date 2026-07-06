@@ -4,6 +4,7 @@ namespace App\Models\Tms;
 
 use App\Models\Factory;
 use App\Models\User;
+use App\Support\PortalDateTime;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -118,11 +119,15 @@ class TmsDailyOdometerLog extends Model
 
     public function morningRecordedTime(): ?string
     {
-        return $this->morning_recorded_at?->format('h:i A');
+        return $this->morning_recorded_at
+            ? PortalDateTime::time($this->morning_recorded_at)
+            : null;
     }
 
     public function eveningRecordedTime(): ?string
     {
-        return $this->evening_recorded_at?->format('h:i A');
+        return $this->evening_recorded_at
+            ? PortalDateTime::time($this->evening_recorded_at)
+            : null;
     }
 }

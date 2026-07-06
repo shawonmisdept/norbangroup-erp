@@ -63,13 +63,23 @@
     @error($field)<p class="text-xs text-red-500 mt-1">{{ $message }}</p>@enderror
 
 @elseif($meta['type'] === 'time')
+    @php
+        $timeFieldValue = old($field);
+        if ($timeFieldValue === null && isset($record)) {
+            $timeFieldValue = $record->{$field};
+        }
+        $timeFieldValue = \App\Support\TimeInput::formatForInput($timeFieldValue);
+    @endphp
     <label class="erp-form-label">
         {{ $meta['label'] }}
         @if($meta['required'] ?? false)<span class="text-red-400">*</span>@endif
     </label>
     <input type="time" name="{{ $field }}" class="erp-input"
-           value="{{ old($field, isset($record) ? $record->{$field} : '') }}"
+           value="{{ $timeFieldValue }}"
            {{ ($meta['required'] ?? false) ? 'required' : '' }}>
+    @if(! empty($meta['help']))
+        <p class="text-[11px] text-gray-400 mt-1">{{ $meta['help'] }}</p>
+    @endif
     @error($field)<p class="text-xs text-red-500 mt-1">{{ $message }}</p>@enderror
 
 @elseif($meta['type'] === 'boolean')

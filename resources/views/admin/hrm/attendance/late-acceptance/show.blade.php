@@ -47,7 +47,7 @@
             </div>
             <div>
                 <p class="text-[10px] text-gray-400 uppercase">Applied</p>
-                <p>{{ $application->applied_at?->format('d M Y H:i') ?? '—' }}</p>
+                <p>@portalDateTime($application->applied_at)</p>
             </div>
             <div class="col-span-2">
                 <p class="text-[10px] text-gray-400 uppercase">Reason</p>

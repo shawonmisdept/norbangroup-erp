@@ -89,6 +89,19 @@ class RentalDriverPortalTest extends TestCase
         $this->portalUser = TmsRentalDriverPortalUser::where('rental_driver_id', $this->rentalDriver->id)->firstOrFail();
     }
 
+    public function test_rental_root_redirects_guest_to_login(): void
+    {
+        $this->get('/rental')
+            ->assertRedirect(route('rental.login'));
+    }
+
+    public function test_rental_root_redirects_authenticated_driver_to_dashboard(): void
+    {
+        $this->actingAs($this->portalUser, 'rental_driver')
+            ->get('/rental')
+            ->assertRedirect(route('rental.dashboard'));
+    }
+
     public function test_rental_driver_can_login_and_view_dashboard(): void
     {
         $this->post(route('rental.login.store'), [

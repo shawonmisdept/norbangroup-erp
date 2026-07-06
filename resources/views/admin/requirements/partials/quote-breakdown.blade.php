@@ -230,7 +230,7 @@
             <textarea name="quote_notes" rows="4" class="erp-input !text-sm" placeholder="Notes included in the quotation email…">{{ old('quote_notes', $order->quote_notes) }}</textarea>
         </div>
         @if($order->quoted_at)
-            <p class="text-xs text-gray-500">Last sent: {{ $order->quoted_at->format('d M Y H:i') }}</p>
+            <p class="text-xs text-gray-500">Last sent: @portalDateTime($order->quoted_at)</p>
         @endif
         <label class="flex items-center gap-2 text-sm">
             <input type="hidden" name="send_quote" value="0">

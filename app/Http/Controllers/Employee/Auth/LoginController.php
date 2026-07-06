@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Employee\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\Hrm\Employee;
 use App\Models\Hrm\EmployeePortalUser;
+use App\Support\PortalLoginRedirect;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
@@ -53,7 +54,7 @@ class LoginController extends Controller
 
         $portalUser->update(['last_login_at' => now()]);
 
-        return redirect()->intended(route('employee.dashboard'));
+        return PortalLoginRedirect::afterLogin('/employee', route('employee.dashboard'));
     }
 
     public function destroy(Request $request)

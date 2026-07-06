@@ -73,6 +73,8 @@ use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\MobileAppController;
+use App\Http\Controllers\PortalRootController;
+use App\Http\Controllers\PortalServiceWorkerController;
 use App\Http\Controllers\Employee\AttendanceController as EmployeeAttendanceController;
 use App\Http\Controllers\Employee\CheckInController as EmployeeCheckInController;
 use App\Http\Controllers\Employee\Auth\LoginController as EmployeeLoginController;
@@ -1184,7 +1186,12 @@ Route::prefix('careers')->name('careers.')->group(function () {
     Route::post('/{posting}/apply', [\App\Http\Controllers\Careers\CareersController::class, 'storeApply'])->name('apply.store')->whereNumber('posting')->middleware('throttle:3,60');
 });
 
+Route::get('/employee/sw.js', [PortalServiceWorkerController::class, 'employee']);
+Route::get('/rental/sw.js', [PortalServiceWorkerController::class, 'rental']);
+
 Route::prefix('employee')->name('employee.')->group(function () {
+    Route::get('/', [PortalRootController::class, 'employee'])->name('home');
+
     Route::middleware('guest:employee')->group(function () {
         Route::get('/login', [EmployeeLoginController::class, 'create'])->name('login');
         Route::post('/login', [EmployeeLoginController::class, 'store'])->name('login.store');
@@ -1193,7 +1200,6 @@ Route::prefix('employee')->name('employee.')->group(function () {
     Route::post('/logout', [EmployeeLoginController::class, 'destroy'])->name('logout')->middleware('auth:employee');
 
     Route::middleware(['auth:employee', 'employee.portal'])->group(function () {
-        Route::redirect('/', '/employee/dashboard');
         Route::get('/dashboard', EmployeeDashboardController::class)->name('dashboard');
         Route::get('/profile', [EmployeeProfileController::class, 'show'])->name('profile');
         Route::get('/attendance', [EmployeeAttendanceController::class, 'index'])->name('attendance');
@@ -1263,6 +1269,8 @@ Route::prefix('employee')->name('employee.')->group(function () {
 });
 
 Route::prefix('rental')->name('rental.')->group(function () {
+    Route::get('/', [PortalRootController::class, 'rental'])->name('home');
+
     Route::middleware('guest:rental_driver')->group(function () {
         Route::get('/login', [\App\Http\Controllers\Rental\Auth\LoginController::class, 'create'])->name('login');
         Route::post('/login', [\App\Http\Controllers\Rental\Auth\LoginController::class, 'store'])->name('login.store');
@@ -1271,7 +1279,6 @@ Route::prefix('rental')->name('rental.')->group(function () {
     Route::post('/logout', [\App\Http\Controllers\Rental\Auth\LoginController::class, 'destroy'])->name('logout')->middleware('auth:rental_driver');
 
     Route::middleware(['auth:rental_driver', 'rental.portal'])->group(function () {
-        Route::redirect('/', '/rental/dashboard');
         Route::get('/dashboard', \App\Http\Controllers\Rental\DashboardController::class)->name('dashboard');
         Route::get('/trips', [\App\Http\Controllers\Rental\TripController::class, 'index'])->name('trips');
         Route::post('/trips/{trip}/start', [\App\Http\Controllers\Rental\TripController::class, 'start'])->name('trips.start')->whereNumber('trip');

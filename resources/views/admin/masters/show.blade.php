@@ -129,7 +129,7 @@
                                 <span class="text-xs text-gray-400">No</span>
                             @endif
                         @elseif($meta['type'] === 'time' && $record->{$field})
-                            <span class="tabular-nums">{{ $record->{$field} }}</span>
+                            <span class="tabular-nums">{{ \App\Support\TimeInput::formatForDisplay($record->{$field}) }}</span>
                         @else
                             {{ $record->{$field} ?? '—' }}
                         @endif
@@ -189,11 +189,11 @@
                 </div>
                 <div class="flex justify-between">
                     <span class="text-gray-400">Created</span>
-                    <span class="tabular-nums text-gray-600">{{ $record->created_at->format('d M Y, H:i') }}</span>
+                    <span class="tabular-nums text-gray-600">@portalDateCommaTime($record->created_at)</span>
                 </div>
                 <div class="flex justify-between">
                     <span class="text-gray-400">Last Modified</span>
-                    <span class="tabular-nums text-gray-600">{{ $record->updated_at->format('d M Y, H:i') }}</span>
+                    <span class="tabular-nums text-gray-600">@portalDateCommaTime($record->updated_at)</span>
                 </div>
             </div>
         </div>

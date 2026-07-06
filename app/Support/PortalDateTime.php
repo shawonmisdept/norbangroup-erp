@@ -35,8 +35,27 @@ class PortalDateTime
         return self::inAppTimezone($value)?->format('g:i A') ?? '—';
     }
 
+    /** e.g. 06 Jul 2026 3:45 PM */
     public static function dateTime(CarbonInterface|string|null $value): string
     {
         return self::inAppTimezone($value)?->format('d M Y g:i A') ?? '—';
+    }
+
+    /** e.g. 06 Jul 3:45 PM */
+    public static function dateTimeShort(CarbonInterface|string|null $value): string
+    {
+        return self::inAppTimezone($value)?->format('d M g:i A') ?? '—';
+    }
+
+    /** e.g. 06 Jul 2026, 3:45 PM */
+    public static function dateCommaTime(CarbonInterface|string|null $value): string
+    {
+        return self::inAppTimezone($value)?->format('d M Y, g:i A') ?? '—';
+    }
+
+    /** e.g. 06 Jul 2026 3:45:08 PM */
+    public static function dateTimeWithSeconds(CarbonInterface|string|null $value): string
+    {
+        return self::inAppTimezone($value)?->format('d M Y g:i:s A') ?? '—';
     }
 }

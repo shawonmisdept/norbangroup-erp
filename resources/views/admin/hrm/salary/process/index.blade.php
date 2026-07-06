@@ -117,7 +117,7 @@
                         <td><span class="erp-badge {{ $badge }}">{{ $period->statusLabel() }}</span></td>
                         <td class="text-sm tabular-nums">{{ $period->items_count }}</td>
                         <td class="text-xs text-gray-500">
-                            {{ $period->calculated_at?->format('d M Y H:i') ?? '—' }}
+                            @portalDateTime($period->calculated_at)
                         </td>
                         <td class="text-right space-x-2">
                             @include('partials.erp.table-actions', [

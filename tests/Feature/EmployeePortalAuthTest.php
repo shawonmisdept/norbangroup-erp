@@ -45,6 +45,19 @@ class EmployeePortalAuthTest extends TestCase
             ->assertSee('Welcome back');
     }
 
+    public function test_employee_root_redirects_guest_to_login(): void
+    {
+        $this->get('/employee')
+            ->assertRedirect(route('employee.login'));
+    }
+
+    public function test_employee_root_redirects_authenticated_user_to_dashboard(): void
+    {
+        $this->actingAs($this->employee->portalUser, 'employee')
+            ->get('/employee')
+            ->assertRedirect(route('employee.dashboard'));
+    }
+
     public function test_employee_can_login_with_code_and_password(): void
     {
         $this->post(route('employee.login.store'), [
@@ -126,6 +139,32 @@ class EmployeePortalAuthTest extends TestCase
             ->get(route('employee.dashboard'))
             ->assertOk()
             ->assertSee('Portal Worker');
+    }
+
+    public function test_employee_login_ignores_stale_admin_intended_url(): void
+    {
+        session(['url.intended' => route('admin.requirements.index')]);
+
+        $this->post(route('employee.login.store'), [
+            'employee_code' => $this->employee->employee_code,
+            'password'      => 'secret-password',
+        ])
+            ->assertRedirect(route('employee.dashboard'));
+
+        $this->assertAuthenticatedAs($this->employee->portalUser, 'employee');
+    }
+
+    public function test_employee_login_honours_employee_intended_url(): void
+    {
+        session(['url.intended' => route('employee.profile')]);
+
+        $this->post(route('employee.login.store'), [
+            'employee_code' => $this->employee->employee_code,
+            'password'      => 'secret-password',
+        ])
+            ->assertRedirect(route('employee.profile'));
+
+        $this->assertAuthenticatedAs($this->employee->portalUser, 'employee');
     }
 
     public function test_admin_web_user_cannot_access_employee_dashboard(): void

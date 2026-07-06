@@ -196,7 +196,7 @@
                 <div class="erp-panel-body text-xs space-y-2 text-gray-600">
                     <p>Rated by: {{ $review->ratedByUser?->name ?? '—' }}</p>
                     @if($review->ratedOnBehalfOf)<p>On behalf of: {{ $review->ratedOnBehalfOf->name }}</p>@endif
-                    <p>At: {{ $review->rated_at->format('d M Y H:i') }}</p>
+                    <p>At: @portalDateTime($review->rated_at)</p>
                 </div>
             </div>
         @endif

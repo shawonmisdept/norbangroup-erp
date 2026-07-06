@@ -8,6 +8,7 @@ use App\Models\Hrm\AttendanceRawPunch;
 use App\Models\Hrm\Employee;
 use App\Models\Hrm\ProxyPunchFlag;
 use App\Services\Hrm\HrmNotificationService;
+use App\Support\PortalDateTime;
 use Illuminate\Http\Request;
 
 class ProxyPunchController extends Controller
@@ -112,7 +113,7 @@ class ProxyPunchController extends Controller
         $this->scopeToUserFactory($query, $request);
 
         return $query->get()->mapWithKeys(function (AttendanceRawPunch $punch) {
-            $label = $punch->id . ' — ' . ($punch->punch_time?->format('d M H:i') ?? '—');
+            $label = $punch->id . ' — ' . PortalDateTime::dateTimeShort($punch->punch_time);
 
             return [$punch->id => $label];
         })->all();

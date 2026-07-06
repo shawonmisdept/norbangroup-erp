@@ -25,7 +25,7 @@
         <div class="emp-card p-4">
             <p class="text-xs text-gray-500">Today so far</p>
             <p class="mt-1 text-sm font-semibold tabular-nums text-gray-900">
-                {{ $todayLog->check_in?->format('H:i') ?? '—' }} – {{ $todayLog->check_out?->format('H:i') ?? '—' }}
+                @portalTime($todayLog->check_in) – @portalTime($todayLog->check_out)
             </p>
             <span class="emp-badge mt-2 inline-block bg-gray-100 text-gray-700">{{ $todayLog->statusLabel() }}</span>
         </div>

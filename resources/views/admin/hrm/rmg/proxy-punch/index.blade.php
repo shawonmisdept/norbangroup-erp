@@ -11,7 +11,7 @@
 <tbody>@forelse($flags as $flag)
 <tr>
 <td>{{ $flag->employee?->name ?? '—' }}</td>
-<td>{{ $flag->punch?->punch_time?->format('d M H:i') ?? $flag->attendance_raw_punch_id }}</td>
+<td>@if($flag->punch?->punch_time)@portalDateTimeShort($flag->punch->punch_time)@else{{ $flag->attendance_raw_punch_id }}@endif</td>
 <td>{{ Str::limit($flag->reason ?? '—', 40) }}</td>
 <td>{{ $flag->statusLabel() }}</td>
 <td class="text-right">

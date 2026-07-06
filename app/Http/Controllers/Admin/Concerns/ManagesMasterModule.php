@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Concerns;
 use App\Models\Item;
 use App\Services\MasterImageService;
 use App\Support\RelationDisplay;
+use App\Support\TimeInput;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -85,6 +86,7 @@ trait ManagesMasterModule
     public function store(Request $request, string $module)
     {
         $config = $this->moduleConfig($module);
+        $this->normalizeRequestTimes($request, $config);
         $data = $this->normalizeData($request->validate($this->validationRules($config, $module)), $config);
 
         if ($request->hasFile('image')) {
@@ -125,6 +127,7 @@ trait ManagesMasterModule
     {
         $config = $this->moduleConfig($module);
         $record = $this->findRecord($config, $id);
+        $this->normalizeRequestTimes($request, $config);
         $data = $this->normalizeData($request->validate($this->validationRules($config, $module, $record)), $config);
 
         if ($request->hasFile('image')) {
@@ -332,6 +335,27 @@ trait ManagesMasterModule
         }
 
         return $data;
+    }
+
+    private function normalizeRequestTimes(Request $request, array $config): void
+    {
+        $merge = [];
+
+        foreach ($config['fields'] as $field => $meta) {
+            if (($meta['type'] ?? '') !== 'time' || ! $request->has($field)) {
+                continue;
+            }
+
+            $normalized = TimeInput::normalize($request->input($field));
+
+            if ($normalized !== null) {
+                $merge[$field] = $normalized;
+            }
+        }
+
+        if ($merge !== []) {
+            $request->merge($merge);
+        }
     }
 
     private function applyBooleanFields(Request $request, array $config, array $data): array

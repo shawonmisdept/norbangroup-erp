@@ -17,7 +17,7 @@
             </div>
             <div>
                 <span class="text-[11px] font-semibold uppercase tracking-wide text-gray-400 block">Date</span>
-                <span class="font-medium tabular-nums">{{ $fuelLog->created_at?->format('d M Y, H:i') ?? '—' }}</span>
+                <span class="font-medium tabular-nums">@portalDateCommaTime($fuelLog->created_at)</span>
             </div>
             <div>
                 <span class="text-[11px] font-semibold uppercase tracking-wide text-gray-400 block">Vehicle</span>

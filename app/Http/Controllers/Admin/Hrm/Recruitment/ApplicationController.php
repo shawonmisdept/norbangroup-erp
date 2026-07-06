@@ -8,6 +8,7 @@ use App\Models\Hrm\JobPosting;
 use App\Models\Hrm\RecruitmentApplication;
 use App\Services\Hrm\RecruitmentDashboardService;
 use App\Services\Hrm\RecruitmentService;
+use App\Support\PortalDateTime;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
@@ -291,7 +292,7 @@ class ApplicationController extends Controller
                     $app->factory?->name,
                     $app->sourceLabel(),
                     $app->statusLabel(),
-                    $app->applied_at?->format('Y-m-d H:i'),
+                    $app->applied_at ? PortalDateTime::dateTime($app->applied_at) : '',
                     $app->expected_salary,
                     $app->nid_number,
                     $app->rejection_reason,

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Rental\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\Tms\TmsRentalDriver;
 use App\Models\Tms\TmsRentalDriverPortalUser;
+use App\Support\PortalLoginRedirect;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
@@ -53,7 +54,7 @@ class LoginController extends Controller
 
         $portalUser->update(['last_login_at' => now()]);
 
-        return redirect()->intended(route('rental.dashboard'));
+        return PortalLoginRedirect::afterLogin('/rental', route('rental.dashboard'));
     }
 
     public function destroy(Request $request)

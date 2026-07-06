@@ -13,6 +13,7 @@ use App\Models\Tms\TmsTransportRequest;
 use App\Models\Tms\TmsTripLog;
 use App\Services\Tms\DepartmentChargebackReportService;
 use App\Services\Tms\DepartmentRequestReportService;
+use App\Support\PortalDateTime;
 use App\Services\Tms\FleetCostReportService;
 use App\Services\Tms\PayrollOtExportService;
 use Illuminate\Http\Request;
@@ -231,7 +232,7 @@ class ReportController extends Controller
         foreach ($query->cursor() as $row) {
             fputcsv($out, [
                 $row->id, $row->employee?->name, $row->pickup_location, $row->destinationLabel(),
-                $row->pickup_at?->format('Y-m-d H:i'), $row->passenger_count, $row->status,
+                $row->pickup_at ? PortalDateTime::dateTime($row->pickup_at) : '', $row->passenger_count, $row->status,
                 $row->trip_log_id, $row->vehicle?->displayLabel(), $row->assignedDriverLabel(),
             ]);
         }
@@ -257,8 +258,8 @@ class ReportController extends Controller
                 $row->vehicle?->displayLabel(),
                 $row->assignedDriverLabel(),
                 $row->total_km,
-                $row->duty_start_at?->format('Y-m-d H:i'),
-                $row->duty_end_at?->format('Y-m-d H:i'),
+                $row->duty_start_at ? PortalDateTime::dateTime($row->duty_start_at) : '',
+                $row->duty_end_at ? PortalDateTime::dateTime($row->duty_end_at) : '',
                 $row->total_driver_pay ?: $row->ot_amount,
                 $row->rental_charge_amount,
                 $row->trip_status,
@@ -322,7 +323,7 @@ class ReportController extends Controller
                 $breakdown['ot_hourly_amount'] ?? $trip?->ot_hourly_amount,
                 $row->amount,
                 $row->payment_status,
-                $row->paid_at?->format('Y-m-d H:i'),
+                $row->paid_at ? PortalDateTime::dateTime($row->paid_at) : '',
             ]);
         }
     }
@@ -376,7 +377,7 @@ class ReportController extends Controller
                 $row->km_rate,
                 $row->amount,
                 $row->payment_status,
-                $row->paid_at?->format('Y-m-d H:i'),
+                $row->paid_at ? PortalDateTime::dateTime($row->paid_at) : '',
             ]);
         }
     }

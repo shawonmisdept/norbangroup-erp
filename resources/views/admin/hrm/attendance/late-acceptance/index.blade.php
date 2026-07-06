@@ -77,7 +77,7 @@
                         <td class="text-sm tabular-nums">{{ $application->attendance_date->format('d M Y') }}</td>
                         <td class="text-xs text-gray-600 max-w-xs truncate">{{ $application->reason ?? '—' }}</td>
                         <td><span class="erp-badge {{ $badge }}">{{ $application->statusLabel() }}</span></td>
-                        <td class="text-xs text-gray-500">{{ $application->applied_at?->format('d M Y H:i') ?? '—' }}</td>
+                        <td class="text-xs text-gray-500">@portalDateTime($application->applied_at)</td>
                         <td class="text-right">
                             @include('partials.erp.table-actions', [
                                 'viewUrl' => route('admin.hrm.attendance.late-acceptance.show', $application),

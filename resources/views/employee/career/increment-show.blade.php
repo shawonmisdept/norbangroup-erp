@@ -16,7 +16,7 @@
     </div>
 
     <div class="emp-card divide-y divide-gray-100 text-sm">
-        <div class="flex justify-between px-4 py-3"><span class="text-gray-500">Applied on</span><span class="font-semibold">{{ $increment->applied_at->format('d M Y H:i') }}</span></div>
+        <div class="flex justify-between px-4 py-3"><span class="text-gray-500">Applied on</span><span class="font-semibold">@portalDateTime($increment->applied_at)</span></div>
         <div class="flex justify-between px-4 py-3"><span class="text-gray-500">Rule / source</span><span class="font-semibold">{{ $increment->rule?->name ?? 'Direct revision' }}</span></div>
         @if($increment->performanceReview)
             <div class="flex justify-between px-4 py-3"><span class="text-gray-500">Performance review</span><span class="font-semibold">{{ $increment->performanceReview->cycle?->name ?? 'Linked review' }}</span></div>

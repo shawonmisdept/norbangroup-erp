@@ -164,8 +164,8 @@
                         <td class="text-xs">{{ $employee?->department?->name ?? '—' }}</td>
                         <td class="text-xs">{{ $employee?->designation?->name ?? '—' }}</td>
                         <td class="text-xs">{{ $employee?->line?->name ?? '—' }}</td>
-                        <td class="text-xs tabular-nums">{{ $log->check_in?->format('H:i') ?? '—' }}</td>
-                        <td class="text-xs tabular-nums">{{ $log->check_out?->format('H:i') ?? '—' }}</td>
+                        <td class="text-xs tabular-nums">@portalTime($log->check_in)</td>
+                        <td class="text-xs tabular-nums">@portalTime($log->check_out)</td>
                         <td class="text-xs tabular-nums">{{ $log->late_minutes > 0 ? $log->late_minutes . 'm' : '—' }}</td>
                         <td class="text-xs tabular-nums">{{ $log->early_leave_minutes > 0 ? $log->early_leave_minutes . 'm' : '—' }}</td>
                         <td><span class="erp-badge {{ $badge }}">{{ $log->displayStatusLabel() }}</span></td>

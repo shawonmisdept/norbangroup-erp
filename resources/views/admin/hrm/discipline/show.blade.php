@@ -63,7 +63,7 @@
                 </div>
                 <div>
                     <p class="text-[10px] text-gray-400 uppercase">Recorded</p>
-                    <p>{{ $record->created_at->format('d M Y H:i') }}</p>
+                    <p>@portalDateTime($record->created_at)</p>
                     @if($record->recorder)
                         <p class="text-xs text-gray-500">By {{ $record->recorder->name }}</p>
                     @endif

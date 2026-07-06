@@ -12,20 +12,24 @@ class ShiftSeeder extends Seeder
     {
         $shifts = [
             [
-                'name'          => 'Day Shift',
-                'start_time'    => '08:00:00',
-                'end_time'      => '17:00:00',
-                'break_minutes' => 60,
-                'is_night'      => false,
-                'description'   => 'Standard 8-hour day shift with 1-hour break',
+                'name'              => 'Day Shift',
+                'start_time'        => '09:45:00',
+                'end_time'          => '19:00:00',
+                'break_minutes'     => 60,
+                'break_start_time'  => '13:00:00',
+                'break_end_time'    => '14:00:00',
+                'is_night'          => false,
+                'description'       => 'Office 9:45 AM – 7:00 PM with lunch 1:00–2:00 PM',
             ],
             [
-                'name'          => 'Night Shift',
-                'start_time'    => '20:00:00',
-                'end_time'      => '05:00:00',
-                'break_minutes' => 60,
-                'is_night'      => true,
-                'description'   => 'Night shift with night allowance eligibility',
+                'name'              => 'Night Shift',
+                'start_time'        => '20:00:00',
+                'end_time'          => '05:00:00',
+                'break_minutes'     => 60,
+                'break_start_time'  => '01:00:00',
+                'break_end_time'    => '02:00:00',
+                'is_night'          => true,
+                'description'       => 'Night shift with night allowance eligibility',
             ],
         ];
 

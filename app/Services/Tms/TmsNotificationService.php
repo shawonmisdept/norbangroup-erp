@@ -9,6 +9,7 @@ use App\Models\Tms\TmsTransportRequest;
 use App\Models\Tms\TmsTripLog;
 use App\Models\Tms\TmsVehicle;
 use App\Models\User;
+use App\Support\PortalDateTime;
 use App\Notifications\PortalTmsDriverTripAssignedNotification;
 use App\Notifications\PortalTmsRentalDriverTripAssignedNotification;
 use App\Notifications\PortalTmsRequestApprovedNotification;
@@ -162,7 +163,7 @@ class TmsNotificationService
     {
         $label = $event === 'started' ? 'Trip Started' : 'Trip Completed';
         $message = $event === 'started'
-            ? 'Driver started the trip for ' . $request->pickup_at->format('d M Y H:i')
+            ? 'Driver started the trip for ' . PortalDateTime::dateTime($request->pickup_at)
             : 'Your transport trip has been completed.';
 
         $url = $portal

@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Services\AppSettingsService;
 use App\Services\Sms\SmsGatewayFactory;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
@@ -43,5 +44,11 @@ class AppServiceProvider extends ServiceProvider
         }
 
         $this->app->make(AppSettingsService::class)->applyRuntimeConfig();
+
+        Blade::directive('portalTime', fn (string $expression) => "<?php echo e(\\App\\Support\\PortalDateTime::time($expression)); ?>");
+        Blade::directive('portalDateTime', fn (string $expression) => "<?php echo e(\\App\\Support\\PortalDateTime::dateTime($expression)); ?>");
+        Blade::directive('portalDateTimeShort', fn (string $expression) => "<?php echo e(\\App\\Support\\PortalDateTime::dateTimeShort($expression)); ?>");
+        Blade::directive('portalDateCommaTime', fn (string $expression) => "<?php echo e(\\App\\Support\\PortalDateTime::dateCommaTime($expression)); ?>");
+        Blade::directive('portalDateTimeSeconds', fn (string $expression) => "<?php echo e(\\App\\Support\\PortalDateTime::dateTimeWithSeconds($expression)); ?>");
     }
 }

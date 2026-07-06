@@ -9,6 +9,7 @@ use App\Models\Hrm\LeaveApplication;
 use App\Models\Hrm\LoanAccount;
 use App\Models\Hrm\PayrollItem;
 use App\Models\Hrm\PfAccount;
+use App\Services\Hrm\EmployeeCheckInStatusService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,10 +17,12 @@ class DashboardController extends Controller
 {
     use ResolvesPortalEmployee;
 
-    public function __invoke(Request $request)
+    public function __invoke(Request $request, EmployeeCheckInStatusService $checkInStatusService)
     {
         $portalUser = Auth::guard('employee')->user();
         $employee = $this->portalEmployee($request)->load(['factory', 'line', 'shift', 'workerCategory']);
+
+        $checkInStatus = $checkInStatusService->forEmployee($employee);
 
         $month = now()->month;
         $year = now()->year;
@@ -59,6 +62,7 @@ class DashboardController extends Controller
         return view('employee.dashboard', compact(
             'employee',
             'portalUser',
+            'checkInStatus',
             'attendanceSummary',
             'pendingLeave',
             'latestPayslip',

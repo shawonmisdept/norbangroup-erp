@@ -12,8 +12,8 @@
 <tr>
 <td>{{ $pass->employee?->name }}</td>
 <td>{{ $pass->pass_date?->format('d M Y') }}</td>
-<td>{{ $pass->out_time ?? '—' }}</td>
-<td>{{ $pass->expected_in_time ?? '—' }}</td>
+<td>@if($pass->out_time){{ \App\Support\TimeInput::formatForDisplay($pass->out_time) }}@else—@endif</td>
+<td>@if($pass->expected_in_time){{ \App\Support\TimeInput::formatForDisplay($pass->expected_in_time) }}@else—@endif</td>
 <td>{{ $pass->destination ?? '—' }}</td>
 <td>{{ $pass->statusLabel() }}</td>
 <td class="text-right">

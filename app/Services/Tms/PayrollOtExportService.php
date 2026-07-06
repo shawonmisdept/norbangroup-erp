@@ -3,6 +3,7 @@
 namespace App\Services\Tms;
 
 use App\Models\Tms\TmsDriverOvertimePayment;
+use App\Support\PortalDateTime;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
@@ -39,7 +40,7 @@ class PayrollOtExportService
                     'holiday_duty_amount' => (float) ($breakdown['holiday_duty_amount'] ?? $trip?->holiday_duty_amount ?? 0),
                     'total_driver_pay'    => (float) $payment->amount,
                     'payment_status'      => $payment->payment_status,
-                    'paid_at'             => $payment->paid_at?->format('Y-m-d H:i'),
+                    'paid_at'             => $payment->paid_at ? PortalDateTime::dateTime($payment->paid_at) : '',
                 ];
             });
     }

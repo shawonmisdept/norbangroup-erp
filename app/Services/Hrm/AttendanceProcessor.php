@@ -15,7 +15,10 @@ use Illuminate\Support\Collection;
 
 class AttendanceProcessor
 {
-    public function __construct(private EmployeeScheduleService $schedule) {}
+    public function __construct(
+        private EmployeeScheduleService $schedule,
+        private ShiftWorkCalculator $shiftWork,
+    ) {}
 
     public function processPeriod(AttendancePeriod $period, ?int $userId = null, bool $markAbsences = true): array
     {
@@ -292,15 +295,11 @@ class AttendanceProcessor
         ?Shift $shift,
         AttendancePolicy $policy
     ): array {
-        $breakMinutes = (int) ($shift?->break_minutes ?? 0);
-        $workMinutes = 0;
+        $breakMinutes = $this->shiftWork->resolvedBreakMinutes($date, $shift);
+        $workMinutes = $this->shiftWork->workMinutes($checkIn, $checkOut, $date, $shift);
         $lateMinutes = 0;
         $earlyLeaveMinutes = 0;
         $halfDayType = null;
-
-        if ($checkOut && $checkOut->greaterThan($checkIn)) {
-            $workMinutes = max(0, $checkIn->diffInMinutes($checkOut) - $breakMinutes);
-        }
 
         $isWeekendOt = $this->schedule->isWeekend($employee, $date)
             && $this->schedule->allowsWeekendOt($employee);
@@ -315,7 +314,8 @@ class AttendanceProcessor
         }
 
         if ($shift?->end_time && $checkOut && ! $isWeekendOt) {
-            $expectedOut = Carbon::parse($date->toDateString() . ' ' . $shift->end_time);
+            $expectedOut = $this->shiftWork->shiftEndAt($date, $shift)
+                ?? Carbon::parse($date->toDateString() . ' ' . $shift->end_time);
             $graceStart = $expectedOut->copy()->subMinutes($policy->early_leave_grace_minutes);
 
             if ($checkOut->lessThan($graceStart)) {
@@ -329,7 +329,12 @@ class AttendanceProcessor
             $status = 'late';
         }
 
-        if (! $isWeekendOt && $workMinutes > 0 && $workMinutes < (int) $policy->min_half_day_minutes) {
+        $lunchHalfDay = $this->shiftWork->lunchHalfDay($date, $checkIn, $checkOut, $shift);
+
+        if (! $isWeekendOt && $lunchHalfDay['is_half_day']) {
+            $status = 'half_day';
+            $halfDayType = $lunchHalfDay['type'];
+        } elseif (! $isWeekendOt && $workMinutes > 0 && $workMinutes < (int) $policy->min_half_day_minutes) {
             $status = 'half_day';
             $halfDayType = $this->schedule->detectHalfDayType($date, $checkIn, $checkOut, $shift);
         }

@@ -49,7 +49,7 @@
                     <p class="font-semibold text-gray-900">{{ $device->name }} <span class="text-gray-400 font-normal">· {{ $device->factory?->name }}</span></p>
                     <p class="text-red-600 mt-1">{{ $device->last_sync_message ?? 'Sync failed' }}</p>
                     @if($device->last_synced_at)
-                        <p class="text-gray-400 mt-0.5 tabular-nums">Last attempt {{ $device->last_synced_at->format('d M Y H:i') }}</p>
+                        <p class="text-gray-400 mt-0.5 tabular-nums">Last attempt @portalDateTime($device->last_synced_at)</p>
                     @endif
                     @if($device->hasAdmsEndpoint())
                         <form method="POST" action="{{ route('admin.hrm.attendance.devices.sync', $device) }}" class="mt-2">
@@ -110,7 +110,7 @@
                         <td class="font-medium">{{ $log->biometricDevice?->name ?? '—' }}</td>
                         <td class="text-xs">{{ $log->biometricDevice?->factory?->name ?? '—' }}</td>
                         <td class="text-xs text-red-700">{{ $log->message }}</td>
-                        <td class="text-xs tabular-nums text-gray-500">{{ $log->started_at->format('d M Y H:i') }}</td>
+                        <td class="text-xs tabular-nums text-gray-500">@portalDateTime($log->started_at)</td>
                     </tr>
                 @empty
                     <tr><td colspan="4" class="text-center py-8 text-gray-400">No failed sync runs logged.</td></tr>

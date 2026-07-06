@@ -111,7 +111,7 @@
                 @forelse($upcoming_interviews as $interview)
                     <a href="{{ route('admin.hrm.recruitment.applications.show', $interview->application) }}" class="block border border-erp-border rounded-sm p-2 hover:border-brand/40 text-sm">
                         <p class="font-medium">{{ $interview->application?->name }}</p>
-                        <p class="text-xs text-gray-500">{{ $interview->scheduled_at->format('d M, h:i A') }}</p>
+                        <p class="text-xs text-gray-500">@portalDateTime($interview->scheduled_at)</p>
                         <p class="text-xs text-gray-400">{{ $interview->application?->jobPosting?->title }}</p>
                     </a>
                 @empty

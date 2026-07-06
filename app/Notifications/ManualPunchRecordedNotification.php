@@ -3,6 +3,7 @@
 namespace App\Notifications;
 
 use App\Models\Hrm\AttendanceRawPunch;
+use App\Support\PortalDateTime;
 use Illuminate\Notifications\Notification;
 
 class ManualPunchRecordedNotification extends Notification
@@ -23,7 +24,7 @@ class ManualPunchRecordedNotification extends Notification
             'title'   => 'Manual Punch Recorded',
             'message' => strtoupper($this->punch->punch_type) . ' for '
                 . ($employee?->employee_code ?? 'employee') . ' at '
-                . $this->punch->punched_at->format('d M Y H:i'),
+                . PortalDateTime::dateTime($this->punch->punched_at),
             'url'     => route('admin.hrm.attendance.manual-punch.index'),
         ];
     }

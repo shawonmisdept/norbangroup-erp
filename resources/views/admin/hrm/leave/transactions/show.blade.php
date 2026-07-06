@@ -119,7 +119,7 @@
                                     <span class="block text-[10px] text-gray-400">Awaiting: {{ $approval->approverEmployee->name }}</span>
                                 @endif
                             </td>
-                            <td class="text-xs text-gray-500 tabular-nums">{{ $approval->acted_at?->format('d M Y H:i') ?? '—' }}</td>
+                            <td class="text-xs text-gray-500 tabular-nums">@portalDateTime($approval->acted_at)</td>
                             <td class="text-xs text-gray-600">{{ $approval->notes ?? '—' }}</td>
                         </tr>
                     @endforeach

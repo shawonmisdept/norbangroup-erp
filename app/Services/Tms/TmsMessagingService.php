@@ -7,6 +7,7 @@ use App\Contracts\WhatsAppGateway;
 use App\Models\AppSetting;
 use App\Models\Tms\TmsTransportRequest;
 use App\Models\Tms\TmsTripLog;
+use App\Support\PortalDateTime;
 
 class TmsMessagingService
 {
@@ -20,7 +21,7 @@ class TmsMessagingService
         $request->loadMissing(['employee', 'driver.employee', 'destination']);
 
         $destination = $request->destinationLabel();
-        $when = $request->pickup_at->format('d M Y H:i');
+        $when = PortalDateTime::dateTime($request->pickup_at);
         $app = config('app.name');
 
         if ($request->employee?->phone) {

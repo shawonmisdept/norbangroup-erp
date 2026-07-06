@@ -21,7 +21,7 @@
                         <span class="erp-badge bg-gray-100 text-gray-600">Portal disabled</span>
                     @endif
                     @if($employee->portalUser->last_login_at)
-                        <span class="text-xs text-gray-500">Last login {{ $employee->portalUser->last_login_at->format('d M Y H:i') }}</span>
+                        <span class="text-xs text-gray-500">Last login @portalDateTime($employee->portalUser->last_login_at)</span>
                     @else
                         <span class="text-xs text-gray-500">Never signed in</span>
                     @endif

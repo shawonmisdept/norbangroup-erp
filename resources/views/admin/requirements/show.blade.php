@@ -245,8 +245,8 @@
                 <h2 class="text-xs font-semibold text-gray-700 uppercase tracking-wide">Meta</h2>
             </div>
             <div class="erp-panel-body space-y-2 text-xs">
-                <div class="flex justify-between"><span class="text-gray-400">Submitted</span><span class="tabular-nums">{{ $order->created_at->format('d M Y H:i') }}</span></div>
-                <div class="flex justify-between"><span class="text-gray-400">Last Updated</span><span class="tabular-nums">{{ $order->updated_at->format('d M Y H:i') }}</span></div>
+                <div class="flex justify-between"><span class="text-gray-400">Submitted</span><span class="tabular-nums">@portalDateTime($order->created_at)</span></div>
+                <div class="flex justify-between"><span class="text-gray-400">Last Updated</span><span class="tabular-nums">@portalDateTime($order->updated_at)</span></div>
             </div>
         </div>
     </div>

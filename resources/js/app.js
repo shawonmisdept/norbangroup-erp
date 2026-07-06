@@ -2,6 +2,7 @@ import Alpine from 'alpinejs';
 import './searchable-selects';
 import './portal-shell';
 import './employee-pwa';
+import { registerEmployeeCheckIn } from './employee-check-in';
 import './rental-pwa';
 import './tms-trip-gps';
 import { registerCommercialQuoteBreakdown } from './commercial-quote';
@@ -907,5 +908,6 @@ window.Alpine = Alpine;
 
 registerConfirmDialog(Alpine);
 registerCommercialQuoteBreakdown(Alpine);
+registerEmployeeCheckIn(Alpine);
 Alpine.start();
 initConfirmHandlers();

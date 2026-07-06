@@ -38,7 +38,7 @@
                         <div class="min-w-0 flex-1">
                             <p class="text-sm font-semibold text-gray-800">{{ $data['title'] ?? 'Notification' }}</p>
                             <p class="text-xs text-gray-500 mt-0.5">{{ $data['message'] ?? '' }}</p>
-                            <p class="text-[10px] text-gray-400 mt-1">{{ $notification->created_at->format('d M Y H:i') }} · {{ $notification->created_at->diffForHumans() }}</p>
+                            <p class="text-[10px] text-gray-400 mt-1">@portalDateTime($notification->created_at) · {{ $notification->created_at->diffForHumans() }}</p>
                         </div>
                     </div>
                 </button>

@@ -158,6 +158,12 @@ class EmployeeScheduleService
 
     public function detectHalfDayType(Carbon $date, Carbon $checkIn, ?Carbon $checkOut, ?Shift $shift): string
     {
+        $lunchHalfDay = app(ShiftWorkCalculator::class)->lunchHalfDay($date, $checkIn, $checkOut, $shift);
+
+        if ($lunchHalfDay['is_half_day'] && $lunchHalfDay['type']) {
+            return $lunchHalfDay['type'];
+        }
+
         if (! $shift?->start_time || ! $shift?->end_time) {
             return 'auto';
         }

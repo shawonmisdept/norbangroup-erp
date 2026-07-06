@@ -69,7 +69,7 @@
                         <td class="text-xs tabular-nums whitespace-nowrap">
                             @if($row->in)
                                 <span class="erp-badge bg-emerald-100 text-emerald-800 mr-1">IN</span>
-                                {{ $row->in->punched_at->format('h:i A') }}
+                                @portalTime($row->in->punched_at)
                             @else
                                 <span class="text-gray-400">—</span>
                             @endif
@@ -77,7 +77,7 @@
                         <td class="text-xs tabular-nums whitespace-nowrap">
                             @if($row->out)
                                 <span class="erp-badge bg-amber-100 text-amber-800 mr-1">OUT</span>
-                                {{ $row->out->punched_at->format('h:i A') }}
+                                @portalTime($row->out->punched_at)
                             @else
                                 <span class="text-gray-400">—</span>
                             @endif
@@ -96,11 +96,11 @@
                         <td class="text-xs max-w-[160px]">
                             @if($row->in)
                                 <p class="font-medium">{{ $row->in->enteredByUser?->name ?? '—' }}</p>
-                                <p class="text-[10px] text-gray-400 tabular-nums">{{ $row->in->created_at?->format('d M Y h:i A') }}</p>
+                                <p class="text-[10px] text-gray-400 tabular-nums">@portalDateTime($row->in->created_at)</p>
                             @endif
                             @if($row->out)
                                 <p class="font-medium {{ $row->in ? 'mt-1' : '' }}">{{ $row->out->enteredByUser?->name ?? '—' }}</p>
-                                <p class="text-[10px] text-gray-400 tabular-nums">{{ $row->out->created_at?->format('d M Y h:i A') }}</p>
+                                <p class="text-[10px] text-gray-400 tabular-nums">@portalDateTime($row->out->created_at)</p>
                             @endif
                         </td>
                         @if(auth()->user()?->canManageAttendanceSubmodule('manual-punch'))

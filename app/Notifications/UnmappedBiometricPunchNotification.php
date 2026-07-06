@@ -3,6 +3,7 @@
 namespace App\Notifications;
 
 use App\Models\Hrm\AttendanceRawPunch;
+use App\Support\PortalDateTime;
 use Illuminate\Notifications\Notification;
 
 class UnmappedBiometricPunchNotification extends Notification
@@ -20,7 +21,7 @@ class UnmappedBiometricPunchNotification extends Notification
             'type'    => 'hrm_unmapped_punch',
             'title'   => 'Unmapped Biometric Punch',
             'message' => 'PIN ' . $this->punch->biometric_user_id . ' punched at '
-                . $this->punch->punched_at->format('d M Y H:i') . ' — employee not mapped',
+                . PortalDateTime::dateTime($this->punch->punched_at) . ' — employee not mapped',
             'url'     => route('admin.hrm.attendance.punches'),
         ];
     }

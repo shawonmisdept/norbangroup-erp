@@ -137,7 +137,7 @@
                                     <span class="erp-badge {{ $device->last_sync_status === 'success' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
                                         {{ ucfirst($device->last_sync_status ?? 'unknown') }}
                                     </span>
-                                    <p class="text-gray-400 mt-0.5 tabular-nums">{{ $device->last_synced_at->format('d M H:i') }}</p>
+                                    <p class="text-gray-400 mt-0.5 tabular-nums">@portalDateTimeShort($device->last_synced_at)</p>
                                 @else
                                     <span class="text-gray-400">Waiting for device…</span>
                                 @endif
@@ -176,7 +176,7 @@
                             <p class="font-medium text-gray-900">{{ $punch->employee?->name ?? 'Unmapped' }}</p>
                             <p class="text-gray-400 font-mono">{{ $punch->biometric_user_id }} · {{ $punch->punchTypeLabel() }} · {{ $punch->sourceLabel() }}</p>
                         </div>
-                        <p class="text-gray-500 tabular-nums shrink-0">{{ $punch->punched_at->format('d M H:i') }}</p>
+                        <p class="text-gray-500 tabular-nums shrink-0">@portalDateTimeShort($punch->punched_at)</p>
                     </div>
                 @empty
                     <p class="px-4 py-8 text-center text-gray-400">No punches yet. Configure SpeedFace V5L cloud server.</p>
@@ -196,7 +196,7 @@
                             <span class="erp-badge {{ $log->status === 'success' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">{{ ucfirst($log->status) }}</span>
                         </div>
                         <p class="text-gray-500 mt-1">{{ $log->message }}</p>
-                        <p class="text-gray-400 mt-0.5 tabular-nums">{{ $log->started_at->format('d M Y H:i') }}</p>
+                        <p class="text-gray-400 mt-0.5 tabular-nums">@portalDateTime($log->started_at)</p>
                     </div>
                 @empty
                     <p class="px-4 py-8 text-center text-gray-400">No sync runs yet.</p>

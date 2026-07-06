@@ -5,7 +5,7 @@
             @foreach($histories->sortByDesc('created_at') as $history)
                 <li class="border-b border-gray-100 pb-3 last:border-0 last:pb-0">
                     <p class="font-medium text-gray-900">{{ $history->fromStatusLabel() }} → {{ $history->toStatusLabel() }}</p>
-                    <p class="text-xs text-gray-500 mt-0.5">{{ $history->created_at?->format('d M Y, H:i') }} · {{ $history->actorLabel() }}</p>
+                    <p class="text-xs text-gray-500 mt-0.5">@portalDateCommaTime($history->created_at) · {{ $history->actorLabel() }}</p>
                     @if($history->notes)
                         <p class="text-xs text-gray-600 mt-1">{{ $history->notes }}</p>
                     @endif

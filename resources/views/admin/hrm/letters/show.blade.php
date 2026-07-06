@@ -35,7 +35,7 @@
             @if($letter->isVoided())
                 <div class="p-3 bg-red-50 border border-red-100 rounded-lg">
                     <p class="text-xs font-semibold text-red-700 uppercase">Voided</p>
-                    <p class="text-xs text-red-800 mt-1">{{ $letter->voided_at->format('d M Y H:i') }}</p>
+                    <p class="text-xs text-red-800 mt-1">@portalDateTime($letter->voided_at)</p>
                     @if($letter->void_reason)
                         <p class="text-xs text-red-700 mt-1">{{ $letter->void_reason }}</p>
                     @endif
@@ -56,7 +56,7 @@
             </div>
             <div>
                 <p class="text-[10px] text-gray-400 uppercase">Issued</p>
-                <p>{{ $letter->issued_at->format('d M Y H:i') }}</p>
+                <p>@portalDateTime($letter->issued_at)</p>
                 @if($letter->issuer)
                     <p class="text-xs text-gray-500">By {{ $letter->issuer->name }}</p>
                 @endif

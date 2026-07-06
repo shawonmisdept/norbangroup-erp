@@ -69,11 +69,11 @@
     <div class="erp-panel-body text-xs text-gray-600">
         Attendance period: <span class="font-medium">{{ $period->attendancePeriod->statusLabel() }}</span>
         @if($period->calculated_at)
-            · Calculated {{ $period->calculated_at->format('d M Y H:i') }}
+            · Calculated @portalDateTime($period->calculated_at)
             @if($period->calculatedByUser) by {{ $period->calculatedByUser->name }} @endif
         @endif
         @if($period->frozen_at)
-            · Frozen {{ $period->frozen_at->format('d M Y H:i') }}
+            · Frozen @portalDateTime($period->frozen_at)
             @if($period->frozenByUser) by {{ $period->frozenByUser->name }} @endif
         @endif
     </div>

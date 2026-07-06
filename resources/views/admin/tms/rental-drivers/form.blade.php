@@ -96,7 +96,7 @@
                 <p class="text-xs text-green-700">
                     Portal account active
                     @if($driver->portalUser->last_login_at)
-                        · last login {{ $driver->portalUser->last_login_at->format('d M Y H:i') }}
+                        · last login @portalDateTime($driver->portalUser->last_login_at)
                     @endif
                 </p>
             @endif

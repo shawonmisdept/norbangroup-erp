@@ -91,7 +91,7 @@
                     <tbody>
                         @foreach($driver->otRateLogs as $log)
                             <tr>
-                                <td class="tabular-nums">{{ $log->created_at->format('d M Y H:i') }}</td>
+                                <td class="tabular-nums">@portalDateTime($log->created_at)</td>
                                 <td class="tabular-nums">৳{{ number_format((float) $log->ot_rate, 2) }}</td>
                                 <td class="tabular-nums">{{ $log->effective_from?->format('d M Y') ?? '—' }}</td>
                                 <td>{{ $log->is_overtime_active ? 'Yes' : 'No' }}</td>

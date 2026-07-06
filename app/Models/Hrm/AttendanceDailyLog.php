@@ -6,6 +6,7 @@ use App\Models\Factory;
 use App\Services\Hrm\EmployeeScheduleService;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class AttendanceDailyLog extends Model
 {
@@ -68,6 +69,15 @@ class AttendanceDailyLog extends Model
         return $this->belongsTo(LateAcceptanceApplication::class);
     }
 
+    public function mobileCheckInPhotoPunch(): HasOne
+    {
+        return $this->hasOne(AttendanceRawPunch::class, 'employee_id', 'employee_id')
+            ->where('punch_type', 'in')
+            ->whereNotNull('photo_path')
+            ->whereIn('source', ['mobile_gps', 'qr_scan'])
+            ->latest('punched_at');
+    }
+
     public function halfDayTypeLabel(): string
     {
         if ($this->status !== 'half_day') {
@@ -89,7 +99,13 @@ class AttendanceDailyLog extends Model
     public function displayStatusLabel(): string
     {
         if ($this->status === 'half_day') {
-            return $this->halfDayTypeLabel();
+            $label = $this->halfDayTypeLabel();
+
+            if ($this->late_minutes > 0) {
+                return $label . ' · Late';
+            }
+
+            return $label;
         }
 
         return $this->lateStatusLabel();
@@ -119,13 +135,19 @@ class AttendanceDailyLog extends Model
 
     public function workHoursFormatted(): string
     {
-        if ($this->work_minutes <= 0) {
+        $minutes = (int) $this->work_minutes;
+
+        if ($minutes <= 0 && $this->check_in && $this->check_out && $this->check_out->greaterThan($this->check_in)) {
+            $minutes = $this->check_in->diffInMinutes($this->check_out);
+        }
+
+        if ($minutes <= 0) {
             return '—';
         }
 
-        $hours = intdiv($this->work_minutes, 60);
-        $mins = $this->work_minutes % 60;
+        $hours = intdiv($minutes, 60);
+        $mins = $minutes % 60;
 
-        return sprintf('%d:%02d', $hours, $mins);
+        return sprintf('%dh %02dm', $hours, $mins);
     }
 }

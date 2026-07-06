@@ -81,7 +81,7 @@
         <tbody>
             @forelse($positions as $pos)
                 <tr>
-                    <td class="tabular-nums whitespace-nowrap">{{ $pos->recorded_at->format('d M Y H:i') }}</td>
+                    <td class="tabular-nums whitespace-nowrap">@portalDateTime($pos->recorded_at)</td>
                     <td>{{ $pos->vehicle?->displayLabel() ?? '—' }}</td>
                     <td>
                         @if($pos->trip_log_id)

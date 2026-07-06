@@ -142,7 +142,7 @@
                         <td class="text-xs tabular-nums">{{ $period->start_date->format('d M') }} – {{ $period->end_date->format('d M Y') }}</td>
                         <td><span class="erp-badge {{ $badge }}">{{ $period->statusLabel() }}</span></td>
                         <td class="text-xs text-gray-500">
-                            {{ $period->processed_at?->format('d M Y H:i') ?? '—' }}
+                            @portalDateTime($period->processed_at)
                             @if($period->processedByUser)
                                 <br><span class="text-gray-400">{{ $period->processedByUser->name }}</span>
                             @endif

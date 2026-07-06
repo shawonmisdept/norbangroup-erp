@@ -74,4 +74,9 @@ class AttendanceRawPunch extends Model
     {
         return static::SOURCES[$this->source] ?? ucfirst($this->source);
     }
+
+    public function photoUrl(): ?string
+    {
+        return $this->photo_path ? asset('storage/' . $this->photo_path) : null;
+    }
 }

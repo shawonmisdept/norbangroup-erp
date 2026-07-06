@@ -40,8 +40,10 @@
     @endif
 @elseif($column === 'date' && $record->{$column})
     <span class="text-gray-600">{{ $record->{$column}->format('d M Y') }}</span>
-@elseif(in_array($column, ['start_time', 'end_time'], true) && $record->{$column})
-    <span class="text-gray-600">{{ $record->{$column} }}</span>
+@elseif(in_array($column, ['start_time', 'end_time', 'break_start_time', 'break_end_time', 'out_time', 'expected_in_time'], true) && $record->{$column})
+    <span class="text-gray-600">{{ \App\Support\TimeInput::formatForDisplay($record->{$column}) }}</span>
+@elseif(str_ends_with($column, '_time') && $record->{$column})
+    <span class="text-gray-600">{{ \App\Support\TimeInput::formatForDisplay($record->{$column}) }}</span>
 @elseif(in_array($column, ['calendar_type', 'branch', 'account_number', 'swift_code'], true) && $record->{$column})
     <span class="text-gray-600">{{ $record->{$column} }}</span>
 @else

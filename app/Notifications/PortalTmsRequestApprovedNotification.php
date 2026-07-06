@@ -4,6 +4,7 @@ namespace App\Notifications;
 
 use App\Models\Tms\TmsTransportRequest;
 use App\Notifications\Concerns\DeliversEmployeeWebPush;
+use App\Support\PortalDateTime;
 use Illuminate\Notifications\Notification;
 
 class PortalTmsRequestApprovedNotification extends Notification
@@ -16,7 +17,7 @@ class PortalTmsRequestApprovedNotification extends Notification
         return [
             'type'    => 'tms_request_approved',
             'title'   => 'Transport Request Approved',
-            'message' => 'Your transport request for ' . $this->request->pickup_at->format('d M Y H:i') . ' has been approved.',
+            'message' => 'Your transport request for ' . PortalDateTime::dateTime($this->request->pickup_at) . ' has been approved.',
             'url'     => route('employee.transport.requests.show', $this->request),
         ];
     }

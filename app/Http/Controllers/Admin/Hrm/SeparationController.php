@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Hrm\Employee;
 use App\Models\Hrm\EmployeeSeparation;
 use App\Services\Hrm\EmployeeSeparationService;
+use App\Support\PortalDateTime;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
@@ -210,7 +211,7 @@ class SeparationController extends Controller
                         $row->statusLabel(),
                         $row->application_date->format('Y-m-d'),
                         $row->last_working_day->format('Y-m-d'),
-                        $row->applied_at?->format('Y-m-d H:i'),
+                        $row->applied_at ? PortalDateTime::dateTime($row->applied_at) : '',
                     ]);
                 }
             });

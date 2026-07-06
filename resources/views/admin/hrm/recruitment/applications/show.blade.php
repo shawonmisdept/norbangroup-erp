@@ -309,7 +309,7 @@
                     <div class="rounded-lg border border-erp-border border-l-4 p-4 {{ $resultStyle }}">
                         <div class="flex flex-wrap items-start justify-between gap-2">
                             <div>
-                                <p class="text-sm font-semibold text-gray-900">{{ $interview->scheduled_at->format('d M Y, h:i A') }}</p>
+                                <p class="text-sm font-semibold text-gray-900">@portalDateTime($interview->scheduled_at)</p>
                                 <p class="text-xs text-gray-500 mt-1">
                                     {{ $interview->typeLabel() }}
                                     @if($interview->location) · {{ $interview->location }} @endif
@@ -386,7 +386,7 @@
                                             {{ ucfirst($log->to_status) }}
                                         @endif
                                     </span>
-                                    <span class="text-[10px] text-gray-400">{{ $log->created_at->format('d M Y, H:i') }}</span>
+                                    <span class="text-[10px] text-gray-400">@portalDateCommaTime($log->created_at)</span>
                                 </div>
                                 @if($log->user)
                                     <p class="text-[11px] text-gray-500 mt-0.5">by {{ $log->user->name }}</p>

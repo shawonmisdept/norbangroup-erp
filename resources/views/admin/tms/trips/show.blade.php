@@ -94,7 +94,7 @@
             <ul class="space-y-2 text-xs">
                 @foreach($trip->gpsPositions as $pos)
                     <li class="flex flex-wrap items-center gap-2 tabular-nums">
-                        <span>{{ $pos->recorded_at->format('H:i') }} — {{ $pos->coordinatesLabel() }}</span>
+                        <span>@portalTime($pos->recorded_at) — {{ $pos->coordinatesLabel() }}</span>
                         @if($pos->speed_kmh)<span class="text-gray-500">({{ number_format((float) $pos->speed_kmh, 1) }} km/h)</span>@endif
                         <span class="erp-badge bg-gray-100 text-gray-600">{{ $pos->source }}</span>
                         <a href="{{ $pos->googleMapsUrl() }}" target="_blank" rel="noopener" class="text-indigo-600">Map</a>

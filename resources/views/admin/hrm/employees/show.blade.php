@@ -211,7 +211,7 @@
                                 <span class="erp-badge bg-brand/10 text-brand text-[10px] uppercase">{{ str_replace('_', ' ', $history->event_type) }}</span>
                             </div>
                             <div class="flex flex-wrap gap-x-4 gap-y-1 text-xs text-gray-500">
-                                <span>{{ $history->created_at->format('d M Y H:i') }}</span>
+                                <span>@portalDateTime($history->created_at)</span>
                                 @if($history->recordedByUser)
                                     <span>By {{ $history->recordedByUser->name }}</span>
                                 @endif
@@ -250,7 +250,7 @@
         <div class="erp-panel">
             <div class="erp-panel-body text-xs text-gray-500 space-y-1">
                 <p>Enrolled {{ $employee->created_at->format('d M Y') }}</p>
-                <p>Last updated {{ $employee->updated_at->format('d M Y H:i') }}</p>
+                <p>Last updated @portalDateTime($employee->updated_at)</p>
             </div>
         </div>
     </div>

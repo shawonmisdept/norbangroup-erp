@@ -218,7 +218,7 @@
                     <div class="min-w-0 flex-1">
                         <p class="text-sm font-medium text-gray-900">{{ $log->attendance_date->format('l') }}</p>
                         <p class="text-xs text-gray-500 tabular-nums">
-                            {{ $log->check_in?->format('H:i') ?? '—' }} – {{ $log->check_out?->format('H:i') ?? '—' }}
+                            @portalTime($log->check_in) – @portalTime($log->check_out)
                         </p>
                     </div>
                     <span class="emp-badge {{ $badgeClass }}">{{ $label }}</span>

@@ -176,7 +176,7 @@
             <div class="erp-panel">
                 <div class="erp-panel-body text-sm">
                     <p class="text-[10px] text-gray-400 uppercase">Approved</p>
-                    <p>{{ $promotion->approved_at->format('d M Y H:i') }}</p>
+                    <p>@portalDateTime($promotion->approved_at)</p>
                     <p class="text-gray-500">{{ $promotion->approvedByUser?->name }}</p>
                 </div>
             </div>

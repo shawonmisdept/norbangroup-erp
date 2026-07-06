@@ -4,6 +4,7 @@ namespace App\Notifications;
 
 use App\Models\Tms\TmsTransportRequest;
 use App\Notifications\Concerns\DeliversEmployeeWebPush;
+use App\Support\PortalDateTime;
 use Illuminate\Notifications\Notification;
 
 class PortalTmsDriverTripAssignedNotification extends Notification
@@ -16,7 +17,7 @@ class PortalTmsDriverTripAssignedNotification extends Notification
         return [
             'type'    => 'tms_trip_assigned',
             'title'   => 'New Trip Assigned',
-            'message' => 'You have been assigned a trip on ' . $this->request->pickup_at->format('d M Y H:i'),
+            'message' => 'You have been assigned a trip on ' . PortalDateTime::dateTime($this->request->pickup_at),
             'url'     => route('employee.transport.trips'),
         ];
     }

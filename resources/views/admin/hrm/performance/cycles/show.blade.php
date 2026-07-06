@@ -41,7 +41,7 @@
                 <div><p class="text-[10px] text-gray-400 uppercase">Template</p><p>{{ $cycle->template?->name ?? '—' }}</p></div>
                 <div><p class="text-[10px] text-gray-400 uppercase">Reviews Generated</p><p class="font-bold text-brand">{{ $cycle->review_count }}</p></div>
                 <div><p class="text-[10px] text-gray-400 uppercase">Opened By</p><p>{{ $cycle->openedByUser?->name ?? '—' }}</p></div>
-                <div><p class="text-[10px] text-gray-400 uppercase">Opened At</p><p>{{ $cycle->opened_at?->format('d M Y H:i') ?? '—' }}</p></div>
+                <div><p class="text-[10px] text-gray-400 uppercase">Opened At</p><p>@portalDateTime($cycle->opened_at)</p></div>
             </div>
         </div>
 

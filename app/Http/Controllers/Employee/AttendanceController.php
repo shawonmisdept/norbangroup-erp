@@ -4,13 +4,16 @@ namespace App\Http\Controllers\Employee;
 
 use App\Http\Controllers\Controller;
 use App\Models\Hrm\AttendanceDailyLog;
+use App\Services\Hrm\EmployeeCheckInStatusService;
 use Illuminate\Http\Request;
 
 class AttendanceController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request, EmployeeCheckInStatusService $checkInStatusService)
     {
-        $employee = $request->user('employee')->employee;
+        $employee = $request->user('employee')->employee->load('factory', 'shift');
+
+        $checkInStatus = $checkInStatusService->forEmployee($employee);
 
         $logs = AttendanceDailyLog::query()
             ->where('employee_id', $employee->id)
@@ -24,6 +27,6 @@ class AttendanceController extends Controller
             'half_day' => AttendanceDailyLog::where('employee_id', $employee->id)->where('status', 'half_day')->whereMonth('attendance_date', now()->month)->count(),
         ];
 
-        return view('employee.attendance', compact('employee', 'logs', 'summary'));
+        return view('employee.attendance', compact('employee', 'logs', 'summary', 'checkInStatus'));
     }
 }

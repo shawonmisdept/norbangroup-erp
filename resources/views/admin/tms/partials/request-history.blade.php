@@ -15,7 +15,7 @@
                 <tbody>
                     @foreach($histories->sortByDesc('created_at') as $history)
                         <tr>
-                            <td class="tabular-nums text-xs whitespace-nowrap">{{ $history->created_at?->format('d M Y, H:i') ?? '—' }}</td>
+                            <td class="tabular-nums text-xs whitespace-nowrap">@portalDateCommaTime($history->created_at)</td>
                             <td>{{ $history->fromStatusLabel() }}</td>
                             <td>{{ $history->toStatusLabel() }}</td>
                             <td class="text-xs">{{ $history->actorLabel() }}</td>

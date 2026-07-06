@@ -38,7 +38,7 @@
             @if($driver->portalUser)
                 <span class="text-green-700 font-medium">Active</span>
                 @if($driver->portalUser->last_login_at)
-                    <span class="block text-xs text-gray-500 mt-0.5">Last login {{ $driver->portalUser->last_login_at->format('d M Y, H:i') }}</span>
+                    <span class="block text-xs text-gray-500 mt-0.5">Last login @portalDateCommaTime($driver->portalUser->last_login_at)</span>
                 @endif
             @else
                 <span class="text-gray-400">Not enabled</span>
@@ -46,11 +46,11 @@
         </div>
         <div>
             <span class="text-[11px] font-semibold uppercase tracking-wide text-gray-400 block">Created</span>
-            {{ $driver->created_at?->format('d M Y, H:i') ?? '—' }}
+            @portalDateCommaTime($driver->created_at)
         </div>
         <div>
             <span class="text-[11px] font-semibold uppercase tracking-wide text-gray-400 block">Last Updated</span>
-            {{ $driver->updated_at?->format('d M Y, H:i') ?? '—' }}
+            @portalDateCommaTime($driver->updated_at)
         </div>
     </div>
 

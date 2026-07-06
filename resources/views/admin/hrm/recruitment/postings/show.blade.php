@@ -84,7 +84,7 @@
                 <div class="erp-panel-body space-y-2 text-xs">
                     @foreach($posting->logs as $log)
                         <div class="border-b border-erp-border pb-2 last:border-0">
-                            <p class="font-medium">{{ ucfirst(str_replace('_', ' ', $log->action)) }} · {{ $log->created_at->format('d M Y H:i') }}</p>
+                            <p class="font-medium">{{ ucfirst(str_replace('_', ' ', $log->action)) }} · @portalDateTime($log->created_at)</p>
                             @if($log->notes)<p class="text-gray-600">{{ $log->notes }}</p>@endif
                             @if($log->user)<p class="text-gray-400">By {{ $log->user->name }}</p>@endif
                         </div>

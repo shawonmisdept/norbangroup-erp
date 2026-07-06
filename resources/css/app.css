@@ -890,6 +890,26 @@ select.emp-input.tomselected {
     @apply mb-2.5 px-0.5 text-[11px] font-bold uppercase tracking-widest text-gray-400;
 }
 
+.emp-checkin-widget {
+    @apply shadow-[0_4px_24px_rgba(30,58,95,0.08)];
+}
+
+.emp-checkin-btn {
+    @apply inline-flex items-center justify-center rounded-full px-6 py-3.5 text-sm font-semibold transition active:scale-[0.98];
+}
+
+.emp-checkin-btn-in {
+    @apply bg-emerald-50 text-emerald-800 hover:bg-emerald-100;
+}
+
+.emp-checkin-btn-out {
+    @apply bg-rose-50 text-rose-900 hover:bg-rose-100;
+}
+
+.emp-checkin-btn-done {
+    @apply cursor-not-allowed bg-gray-100 text-gray-500 opacity-80;
+}
+
 .emp-page-title {
     @apply text-xl font-bold tracking-tight text-gray-900;
 }

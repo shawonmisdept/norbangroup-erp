@@ -10,6 +10,7 @@ use App\Models\Hrm\AttendancePeriod;
 use App\Models\Hrm\AttendanceRawPunch;
 use App\Models\Hrm\BiometricDevice;
 use App\Models\Hrm\BiometricSyncLog;
+use App\Services\Hrm\AttendanceDailyLogPhotoService;
 use App\Services\Hrm\AttendanceProcessor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -241,7 +242,7 @@ class AttendanceController extends Controller
         ]);
     }
 
-    public function daily(Request $request)
+    public function daily(Request $request, AttendanceDailyLogPhotoService $photoService)
     {
         $query = AttendanceDailyLog::query()
             ->with(['employee', 'shift', 'period', 'lateAcceptanceApplication'])
@@ -274,6 +275,7 @@ class AttendanceController extends Controller
         }
 
         $logs = $query->paginate(25)->withQueryString();
+        $photoService->attachMobileCheckInPhotos($logs);
 
         return view('admin.hrm.attendance.daily', [
             'logs'      => $logs,

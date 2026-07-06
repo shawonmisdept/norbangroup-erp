@@ -83,7 +83,7 @@
             <tbody>
                 @forelse($punches as $punch)
                     <tr>
-                        <td class="text-xs tabular-nums whitespace-nowrap">{{ $punch->punched_at->format('d M Y H:i:s') }}</td>
+                        <td class="text-xs tabular-nums whitespace-nowrap">@portalDateTimeSeconds($punch->punched_at)</td>
                         <td class="text-sm">
                             @if($punch->employee)
                                 <a href="{{ route('admin.hrm.employees.show', $punch->employee) }}" class="text-brand hover:underline">{{ $punch->employee->name }}</a>

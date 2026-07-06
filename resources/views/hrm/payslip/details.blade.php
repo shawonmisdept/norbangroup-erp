@@ -201,7 +201,7 @@
             </div>
             <div class="text-xs text-gray-500 sm:text-right space-y-1">
                 @if($payslip->payslip_sent_at ?? null)
-                    <p>Emailed {{ $payslip->payslip_sent_at->format('d M Y H:i') }}</p>
+                    <p>Emailed @portalDateTime($payslip->payslip_sent_at)</p>
                 @endif
                 @if($payslip->notes)
                     <p class="text-gray-600">{{ $payslip->notes }}</p>

@@ -138,7 +138,7 @@ class AttendanceMultiChannelTest extends TestCase
                 'longitude'  => 90.4126000,
                 'photo'      => $photo,
             ])
-            ->assertRedirect(route('employee.attendance'));
+            ->assertRedirect(route('employee.dashboard'));
 
         $this->assertDatabaseHas('hrm_attendance_raw_punches', [
             'employee_id' => $this->employee->id,
@@ -167,7 +167,7 @@ class AttendanceMultiChannelTest extends TestCase
                 'longitude'  => 90.4126000,
                 'photo'      => $photo,
             ])
-            ->assertRedirect(route('employee.attendance'));
+            ->assertRedirect(route('employee.dashboard'));
 
         $log = AttendanceDailyLog::where('employee_id', $this->employee->id)
             ->whereDate('attendance_date', '2026-06-24')
@@ -186,9 +186,8 @@ class AttendanceMultiChannelTest extends TestCase
                 'punch_type' => 'out',
                 'latitude'   => 23.8104000,
                 'longitude'  => 90.4126000,
-                'photo'      => $photo,
             ])
-            ->assertRedirect(route('employee.attendance'));
+            ->assertRedirect(route('employee.dashboard'));
 
         $log->refresh();
 
@@ -197,6 +196,44 @@ class AttendanceMultiChannelTest extends TestCase
         $this->assertSame('17:05:00', $log->check_out->format('H:i:s'));
         $this->assertSame(2, $log->punch_count);
         $this->assertGreaterThan(0, $log->work_minutes);
+    }
+
+    public function test_short_mobile_shift_still_records_work_minutes_after_check_out(): void
+    {
+        Carbon::setTestNow('2026-06-24 15:23:00');
+
+        $photo = 'data:image/jpeg;base64,' . base64_encode(str_repeat('x', 100));
+
+        $this->actingAs($this->portalUser, 'employee')
+            ->post(route('employee.attendance.check-in.store'), [
+                'punch_type' => 'in',
+                'latitude'   => 23.8104000,
+                'longitude'  => 90.4126000,
+                'photo'      => $photo,
+            ])
+            ->assertRedirect(route('employee.dashboard'));
+
+        Carbon::setTestNow('2026-06-24 15:52:00');
+
+        $this->actingAs($this->portalUser, 'employee')
+            ->post(route('employee.attendance.check-in.store'), [
+                'punch_type' => 'out',
+                'latitude'   => 23.8104000,
+                'longitude'  => 90.4126000,
+            ])
+            ->assertRedirect(route('employee.dashboard'));
+
+        $log = AttendanceDailyLog::where('employee_id', $this->employee->id)
+            ->whereDate('attendance_date', '2026-06-24')
+            ->first();
+
+        $this->assertNotNull($log);
+        $this->assertSame('15:23:00', $log->check_in->format('H:i:s'));
+        $this->assertSame('15:52:00', $log->check_out->format('H:i:s'));
+        $this->assertSame(29, $log->work_minutes);
+        $this->assertSame('0h 29m', $log->workHoursFormatted());
+
+        Carbon::setTestNow();
     }
 
     public function test_qr_gate_check_in(): void
@@ -218,7 +255,7 @@ class AttendanceMultiChannelTest extends TestCase
                 'longitude'  => 90.4125100,
                 'gate'       => $gate->qr_token,
             ])
-            ->assertRedirect(route('employee.attendance'));
+            ->assertRedirect(route('employee.dashboard'));
 
         $this->assertDatabaseHas('hrm_attendance_raw_punches', [
             'employee_id'  => $this->employee->id,
