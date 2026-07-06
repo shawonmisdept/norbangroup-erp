@@ -1,6 +1,10 @@
 <?php
 
 use App\Http\Controllers\Admin\AppSettingsController;
+use App\Http\Controllers\Admin\Kb\ArticleController as KbArticleController;
+use App\Http\Controllers\Admin\Kb\HubController as KbHubController;
+use App\Http\Controllers\Admin\Kb\ManageController as KbManageController;
+use App\Http\Controllers\Admin\Kb\ModuleController as KbModuleController;
 use App\Http\Controllers\Admin\Hrm\AttendanceController;
 use App\Http\Controllers\Admin\Hrm\Attendance\HubController as AttendanceHubController;
 use App\Http\Controllers\Admin\Hrm\Attendance\GatePointController as AttendanceGatePointController;
@@ -164,6 +168,20 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
         Route::get('/unread-count', [NotificationController::class, 'unreadCount'])->name('unread-count');
         Route::patch('/read-all', [NotificationController::class, 'markAllRead'])->name('read-all');
         Route::patch('/{id}/read', [NotificationController::class, 'markRead'])->name('read');
+    });
+
+    Route::prefix('kb')->name('kb.')->middleware('kb.view')->group(function () {
+        Route::get('/', KbHubController::class)->name('hub');
+        Route::get('/modules/{code}', [KbModuleController::class, 'show'])->name('module');
+        Route::get('/modules/{code}/{submodule}', [KbArticleController::class, 'show'])->name('article');
+    });
+
+    Route::prefix('kb/manage')->name('kb.manage.')->middleware('kb.manage')->group(function () {
+        Route::get('/', [KbManageController::class, 'index'])->name('index');
+        Route::get('/create', [KbManageController::class, 'create'])->name('create');
+        Route::post('/', [KbManageController::class, 'store'])->name('store');
+        Route::get('/{article}/edit', [KbManageController::class, 'edit'])->name('edit');
+        Route::put('/{article}', [KbManageController::class, 'update'])->name('update');
     });
 
     Route::middleware('master.any')->group(function () {

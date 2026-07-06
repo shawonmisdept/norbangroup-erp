@@ -318,6 +318,8 @@ class Role extends Model
             }
         }
 
+        $groups['Knowledge Base'] = config('permissions.groups.Knowledge Base', []);
+
         $groups['Administration'] = config('permissions.groups.Administration', []);
 
         return $groups;
@@ -363,7 +365,7 @@ class Role extends Model
             }
         }
 
-        $order = ['System Admin', 'Operations', 'Master Data', 'HRM', 'TMS'];
+        $order = ['System Admin', 'Operations', 'Master Data', 'HRM', 'TMS', 'Knowledge Base'];
         $result = array_keys($areas);
 
         usort($result, function (string $a, string $b) use ($order): int {
@@ -398,6 +400,10 @@ class Role extends Model
             return 'TMS';
         }
 
+        if (str_starts_with($permission, 'kb.')) {
+            return 'Knowledge Base';
+        }
+
         return null;
     }
 
@@ -408,8 +414,9 @@ class Role extends Model
             'Operations'   => 'bg-blue-50 text-blue-700',
             'Master Data'  => 'bg-gray-100 text-gray-600',
             'HRM'          => 'bg-emerald-50 text-emerald-700',
-            'TMS'          => 'bg-violet-50 text-violet-700',
-            default        => 'bg-gray-100 text-gray-600',
+            'TMS'            => 'bg-violet-50 text-violet-700',
+            'Knowledge Base' => 'bg-sky-50 text-sky-700',
+            default          => 'bg-gray-100 text-gray-600',
         };
     }
 

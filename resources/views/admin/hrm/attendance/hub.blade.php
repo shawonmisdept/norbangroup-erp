@@ -11,6 +11,7 @@
 @include('partials.erp.page-header', [
     'title' => 'Attendance Management',
     'subtitle' => 'Device sync, daily logs, periods, policy, and late acceptance',
+    'actions' => view('partials.admin.kb-workflow-link', ['module' => 'hrm-attendance'])->render(),
 ])
 
 <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3">

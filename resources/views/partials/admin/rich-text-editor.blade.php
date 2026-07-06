@@ -26,7 +26,7 @@
             CKEDITOR.replace(textarea, {
                 height: 280,
                 versionCheck: false,
-                removePlugins: 'elementspath',
+                removePlugins: 'elementspath,exportpdf',
                 resize_enabled: true,
                 toolbar: [
                     { name: 'document', items: ['Source', '-', 'Preview', 'Print'] },

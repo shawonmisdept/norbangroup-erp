@@ -106,6 +106,31 @@ class User extends Authenticatable
         return $this->role?->hasPermission($permission) ?? false;
     }
 
+    public function adminPortalUrl(): ?string
+    {
+        if ($this->hasPermission('orders.view')) {
+            return route('admin.requirements.index');
+        }
+
+        if ($this->hasAnyHrmViewPermission()) {
+            return route('admin.hrm.dashboard');
+        }
+
+        if ($this->hasAnyTmsViewPermission()) {
+            return route('admin.tms.dashboard');
+        }
+
+        if ($this->hasAnyMasterViewPermission() || $this->hasAnyHrmMasterViewPermission()) {
+            return route('admin.masters.hub');
+        }
+
+        if ($this->hasPermission('kb.view') || $this->hasPermission('kb.manage')) {
+            return route('admin.kb.hub');
+        }
+
+        return null;
+    }
+
     public function canViewMaster(string $module): bool
     {
         return $this->hasPermission("masters.{$module}.view");

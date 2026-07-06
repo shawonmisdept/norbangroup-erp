@@ -14,6 +14,10 @@ return [
             'roles.manage'    => 'Manage custom roles',
             'settings.manage' => 'Manage application settings',
         ],
+        'Knowledge Base' => [
+            'kb.view'   => 'View knowledge base articles',
+            'kb.manage' => 'Create and edit knowledge base articles',
+        ],
     ],
 
     'master_global' => [

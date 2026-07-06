@@ -110,6 +110,7 @@ class RolePermissionCatalog
                 'hrm.recruitment.applications.manage',
                 'hrm.recruitment.applications.convert',
                 'hrm.performance.approve',
+                'kb.view',
             ]
         );
 
@@ -149,6 +150,7 @@ class RolePermissionCatalog
             'hrm.employees.promotion.view',
             'hrm.employees.letters.view',
             'hrm.employees.discipline.view',
+            'kb.view',
         ]));
     }
 

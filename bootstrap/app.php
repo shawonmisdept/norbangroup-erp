@@ -36,6 +36,8 @@ return Application::configure(basePath: dirname(__DIR__))
             'tms.any'               => \App\Http\Middleware\EnsureAnyTmsViewPermission::class,
             'adms.push'             => \App\Http\Middleware\EnsureAdmsPushToken::class,
             'tms.gps'               => \App\Http\Middleware\EnsureTmsGpsApiToken::class,
+            'kb.view'               => \App\Http\Middleware\EnsureKbViewPermission::class,
+            'kb.manage'             => \App\Http\Middleware\EnsureKbManagePermission::class,
             'factory.scope'         => \App\Http\Middleware\EnsureUserFactoryScope::class,
             'employee.portal'       => \App\Http\Middleware\EnsureLinkedPortalEmployee::class,
             'rental.portal'         => \App\Http\Middleware\EnsureLinkedRentalDriver::class,
@@ -60,6 +62,14 @@ return Application::configure(basePath: dirname(__DIR__))
 
             if ($request->is('rental') || $request->is('rental/*')) {
                 return route('rental.dashboard');
+            }
+
+            if ($request->is('login') && $request->user()) {
+                $adminUrl = $request->user()->adminPortalUrl();
+
+                if ($adminUrl) {
+                    return $adminUrl;
+                }
             }
 
             if ($request->is('admin') || $request->is('admin/*')) {
