@@ -26,9 +26,10 @@
     'subtitle' => '৩টি section — কাজ · ব্যবহারকারী/department · step-by-step workflow (BN + EN)',
 ])
 
+<div class="erp-panel">
 <form method="POST"
-      action="{{ $isEdit ? route('admin.kb.manage.update', $article) : route('admin.kb.manage.store') }}"
-      class="erp-panel">
+      id="kb-article-form"
+      action="{{ $isEdit ? route('admin.kb.manage.update', $article) : route('admin.kb.manage.store') }}">
     @csrf
     @if($isEdit)
         @method('PUT')
@@ -99,12 +100,26 @@
             <label for="is_published" class="text-xs text-gray-700">Publish (visible to users with module access)</label>
         </div>
     </div>
-
-    <div class="erp-panel-footer flex justify-end gap-2">
-        <a href="{{ route('admin.kb.manage.index') }}" class="erp-btn-secondary">Cancel</a>
-        <button type="submit" class="erp-btn-primary">{{ $isEdit ? 'Update' : 'Create' }}</button>
-    </div>
 </form>
+
+    <div class="erp-panel-footer flex justify-between gap-2">
+        @if($isEdit && \Illuminate\Support\Facades\Route::has('admin.kb.manage.destroy'))
+            <form method="POST"
+                  action="{{ route('admin.kb.manage.destroy', $article) }}"
+                  data-confirm="Delete this article permanently?">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="erp-btn-secondary text-red-600">Delete</button>
+            </form>
+        @else
+            <span></span>
+        @endif
+        <div class="flex gap-2">
+            <a href="{{ route('admin.kb.manage.index') }}" class="erp-btn-secondary">Cancel</a>
+            <button type="submit" form="kb-article-form" class="erp-btn-primary">{{ $isEdit ? 'Update' : 'Create' }}</button>
+        </div>
+    </div>
+</div>
 @endsection
 
 @include('partials.admin.rich-text-editor')

@@ -33,7 +33,7 @@
             <tbody>
                 @forelse($articles as $article)
                     <tr>
-                        <td class="text-xs">{{ $article->module->label_en }}</td>
+                        <td class="text-xs">{{ $article->module?->label_en ?? '—' }}</td>
                         <td class="text-xs">{{ $article->isOverview() ? 'Overview' : $article->submodule_key }}</td>
                         <td class="text-xs">{{ $article->title_en }}</td>
                         <td>
@@ -42,7 +42,19 @@
                             </span>
                         </td>
                         <td class="text-right">
-                            <a href="{{ route('admin.kb.manage.edit', $article) }}" class="erp-btn-sm-secondary">Edit</a>
+                            <div class="flex items-center justify-end gap-2">
+                                <a href="{{ route('admin.kb.manage.edit', $article) }}" class="erp-btn-sm-secondary">Edit</a>
+                                @if(\Illuminate\Support\Facades\Route::has('admin.kb.manage.destroy'))
+                                    <form method="POST"
+                                          action="{{ route('admin.kb.manage.destroy', $article) }}"
+                                          class="inline"
+                                          data-confirm="{{ 'Delete «' . $article->title_en . '»? This cannot be undone.' }}">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="erp-btn-sm-secondary text-red-600">Delete</button>
+                                    </form>
+                                @endif
+                            </div>
                         </td>
                     </tr>
                 @empty

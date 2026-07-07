@@ -182,6 +182,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
         Route::post('/', [KbManageController::class, 'store'])->name('store');
         Route::get('/{article}/edit', [KbManageController::class, 'edit'])->name('edit');
         Route::put('/{article}', [KbManageController::class, 'update'])->name('update');
+        Route::delete('/{article}', [KbManageController::class, 'destroy'])->name('destroy');
     });
 
     Route::middleware('master.any')->group(function () {

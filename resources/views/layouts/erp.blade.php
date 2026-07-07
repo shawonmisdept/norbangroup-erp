@@ -87,6 +87,21 @@
                 'recruitment' => request()->routeIs('admin.hrm.recruitment.*'),
                 'performance' => request()->routeIs('admin.hrm.performance.*'),
                 'tms'         => request()->routeIs('admin.tms.*'),
+                'dashboards'  => request()->routeIs(
+                    'admin.hrm.dashboard',
+                    'admin.hrm.dashboard.*',
+                    'admin.hrm.employee.dashboard',
+                    'admin.hrm.recruitment.dashboard',
+                    'admin.hrm.attendance.dashboard',
+                    'admin.hrm.leave.dashboard',
+                    'admin.hrm.performance.dashboard',
+                    'admin.hrm.salary.dashboard',
+                    'admin.hrm.compliance.dashboard',
+                    'admin.hrm.finance.dashboard',
+                    'admin.hrm.rmg.dashboard',
+                    'admin.tms.dashboard',
+                    'admin.requirements.*',
+                ),
             ]
         );
 

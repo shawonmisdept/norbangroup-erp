@@ -14,7 +14,7 @@
         $moduleActions .= view('partials.admin.kb-manage-link', [
             'label' => 'Add article',
             'route' => route('admin.kb.manage.create') . '?module=' . urlencode($module->code),
-            'class' => 'erp-btn-secondary ml-2',
+            'linkClass' => 'erp-btn-secondary ml-2',
         ])->render();
     }
 @endphp

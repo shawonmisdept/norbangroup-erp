@@ -70,14 +70,6 @@
                 Hub
             </a>
 
-            @if(isset($submodules['dashboard']) && ($submodules['dashboard']['status'] ?? '') === 'active' && $canView('dashboard'))
-                <a href="{{ route($submodules['dashboard']['route']) }}"
-                   data-nav-label="HRM {{ $label }} Dashboard"
-                   class="erp-nav-sub-link {{ $routeMatch('dashboard') ? 'erp-nav-sub-link-active' : '' }}">
-                    Dashboard
-                </a>
-            @endif
-
             @if($navGroups !== [])
                 @foreach($navGroups as $groupLabel => $keys)
                     @php

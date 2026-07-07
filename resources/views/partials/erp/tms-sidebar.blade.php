@@ -61,14 +61,6 @@
                 </a>
             @endif
 
-            @if(isset($submodules['dashboard']) && ($submodules['dashboard']['status'] ?? '') === 'active' && $canView('dashboard'))
-                <a href="{{ route($submodules['dashboard']['route']) }}"
-                   data-nav-label="Transport Dashboard"
-                   class="erp-nav-sub-link {{ $routeMatch('dashboard') ? 'erp-nav-sub-link-active' : '' }}">
-                    Dashboard
-                </a>
-            @endif
-
             @foreach($navGroups as $groupLabel => $keys)
                 @php
                     $groupVisible = array_values(array_filter(

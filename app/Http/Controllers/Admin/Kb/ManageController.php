@@ -107,4 +107,13 @@ class ManageController extends Controller
             ])
             ->with('success', 'Article updated.');
     }
+
+    public function destroy(KbArticle $article)
+    {
+        $article->delete();
+
+        return redirect()
+            ->route('admin.kb.manage.index')
+            ->with('success', 'Article deleted.');
+    }
 }
