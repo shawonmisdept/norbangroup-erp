@@ -8,13 +8,20 @@
 @endsection
 
 @section('admin-content')
+@php
+    $moduleActions = '<a href="' . route('admin.kb.hub') . '" class="erp-btn-secondary">← Back</a>';
+    if ($canManage) {
+        $moduleActions .= view('partials.admin.kb-manage-link', [
+            'label' => 'Add article',
+            'route' => route('admin.kb.manage.create') . '?module=' . urlencode($module->code),
+            'class' => 'erp-btn-secondary ml-2',
+        ])->render();
+    }
+@endphp
 @include('partials.erp.page-header', [
     'title' => $module->label_en,
     'subtitle' => $module->label_bn,
-    'actions' => $canManage ? view('partials.admin.kb-manage-link', [
-        'label' => 'Add article',
-        'route' => route('admin.kb.manage.create') . '?module=' . urlencode($module->code),
-    ])->render() : null,
+    'actions' => $moduleActions,
 ])
 
 <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3">

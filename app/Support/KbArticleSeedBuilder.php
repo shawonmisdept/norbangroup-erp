@@ -24,8 +24,8 @@ class KbArticleSeedBuilder
             purposeBn: $this->expandModulePurposeBn($basePurposeBn, $module, $submodules),
             audienceEn: $profile['audience_en'] ?? $this->fallbackAudienceEn($module),
             audienceBn: $profile['audience_bn'] ?? $this->fallbackAudienceBn($module),
-            usageRulesEn: $profile['usage_rules_en'] ?? $this->fallbackRulesEn($module),
-            usageRulesBn: $profile['usage_rules_bn'] ?? $this->fallbackRulesBn($module),
+            usageRulesEn: $this->expandModuleWorkflowEn($profile, $module, $submodules),
+            usageRulesBn: $this->expandModuleWorkflowBn($profile, $module, $submodules),
         );
     }
 
@@ -48,8 +48,8 @@ class KbArticleSeedBuilder
             purposeBn: $this->submodulePurposeBn($module, $key, $label, $description, $subConfig),
             audienceEn: $this->submoduleAudienceEn($module, $key, $label, $permission, $manage, $profile),
             audienceBn: $this->submoduleAudienceBn($module, $key, $label, $permission, $manage, $profile),
-            usageRulesEn: $this->submoduleRulesEn($key, $label, $permission, $manage, $profile),
-            usageRulesBn: $this->submoduleRulesBn($key, $label, $permission, $manage, $profile),
+            usageRulesEn: $this->submoduleWorkflowEn($module, $key, $label, $description, $permission, $manage, $subConfig, $profile),
+            usageRulesBn: $this->submoduleWorkflowBn($module, $key, $label, $description, $permission, $manage, $subConfig, $profile),
         );
     }
 
@@ -369,19 +369,320 @@ class KbArticleSeedBuilder
     }
 
     /** @param array<string, mixed> $profile */
-    private function submoduleRulesEn(string $key, string $label, ?string $permission, ?string $manage, array $profile): string
+    /** @param array<string, array<string, mixed>> $submodules */
+    private function expandModuleWorkflowEn(array $profile, KbModule $module, array $submodules): string
     {
-        return $this->submoduleRules($key, $label, $permission, $manage, $profile, 'en');
+        $custom = config('kb-screen-workflows.' . $module->code . '.overview.workflow_en');
+        if ($custom) {
+            return trim($custom);
+        }
+
+        $parts = [];
+        if (! empty($profile['usage_rules_en'])) {
+            $parts[] = $profile['usage_rules_en'];
+        }
+
+        $parts[] = $this->defaultModuleWorkflowEn($module, $submodules);
+
+        return implode("\n", $parts);
     }
 
     /** @param array<string, mixed> $profile */
-    private function submoduleRulesBn(string $key, string $label, ?string $permission, ?string $manage, array $profile): string
+    /** @param array<string, array<string, mixed>> $submodules */
+    private function expandModuleWorkflowBn(array $profile, KbModule $module, array $submodules): string
     {
-        return $this->submoduleRules($key, $label, $permission, $manage, $profile, 'bn');
+        $custom = config('kb-screen-workflows.' . $module->code . '.overview.workflow_bn');
+        if ($custom) {
+            return trim($custom);
+        }
+
+        $parts = [];
+        if (! empty($profile['usage_rules_bn'])) {
+            $parts[] = $profile['usage_rules_bn'];
+        }
+
+        $parts[] = $this->defaultModuleWorkflowBn($module, $submodules);
+
+        return implode("\n", $parts);
+    }
+
+    /** @param array<string, array<string, mixed>> $submodules */
+    private function defaultModuleWorkflowEn(KbModule $module, array $submodules): string
+    {
+        $parts = ['<h3>End-to-end module workflow</h3><ol>'];
+        $step = 1;
+
+        foreach ($submodules as $key => $sub) {
+            if (($sub['status'] ?? 'active') === 'planned') {
+                continue;
+            }
+            $label = $sub['label'] ?? $key;
+            $parts[] = '<li><strong>Step ' . $step . ' — ' . e($label) . ':</strong> '
+                . e($sub['description'] ?? 'Complete tasks on this screen') . '</li>';
+            $step++;
+        }
+
+        $parts[] = '</ol>';
+        $parts[] = '<p><em>Open each sub-module article below for step-by-step instructions (who does what, and what happens after each action).</em></p>';
+
+        return implode("\n", $parts);
+    }
+
+    /** @param array<string, array<string, mixed>> $submodules */
+    private function defaultModuleWorkflowBn(KbModule $module, array $submodules): string
+    {
+        $parts = ['<h3>End-to-end module workflow</h3><ol>'];
+        $step = 1;
+
+        foreach ($submodules as $key => $sub) {
+            if (($sub['status'] ?? 'active') === 'planned') {
+                continue;
+            }
+            $label = $sub['label'] ?? $key;
+            $parts[] = '<li><strong>Step ' . $step . ' — ' . e($label) . ':</strong> '
+                . e($sub['description'] ?? 'এই screen-এ কাজ complete করুন') . '</li>';
+            $step++;
+        }
+
+        $parts[] = '</ol>';
+        $parts[] = '<p><em>নিচের প্রতিটি sub-module article-এ step-by-step নির্দেশনা আছে (কে কী করবেন, প্রতিটি action-এর পর কী হবে)।</em></p>';
+
+        return implode("\n", $parts);
+    }
+
+    /** @param array<string, mixed> $subConfig */
+    /** @param array<string, mixed> $profile */
+    private function submoduleWorkflowEn(
+        KbModule $module,
+        string $key,
+        string $label,
+        string $description,
+        ?string $permission,
+        ?string $manage,
+        array $subConfig,
+        array $profile,
+    ): string {
+        return $this->submoduleWorkflow($module, $key, $label, $description, $permission, $manage, $subConfig, $profile, 'en');
+    }
+
+    /** @param array<string, mixed> $subConfig */
+    /** @param array<string, mixed> $profile */
+    private function submoduleWorkflowBn(
+        KbModule $module,
+        string $key,
+        string $label,
+        string $description,
+        ?string $permission,
+        ?string $manage,
+        array $subConfig,
+        array $profile,
+    ): string {
+        return $this->submoduleWorkflow($module, $key, $label, $description, $permission, $manage, $subConfig, $profile, 'bn');
+    }
+
+    /** @param array<string, mixed> $subConfig */
+    /** @param array<string, mixed> $profile */
+    private function submoduleWorkflow(
+        KbModule $module,
+        string $key,
+        string $label,
+        string $description,
+        ?string $permission,
+        ?string $manage,
+        array $subConfig,
+        array $profile,
+        string $lang,
+    ): string {
+        $customKey = 'kb-screen-workflows.' . $module->code . '.' . $key . '.workflow_' . $lang;
+        $custom = config($customKey);
+        if ($custom) {
+            return trim($custom);
+        }
+
+        $route = $subConfig['route'] ?? null;
+        $steps = $this->defaultWorkflowSteps($module, $key, $label, $description, $route, $manage, $lang);
+        $parts = [$this->workflowTable($steps, $lang)];
+
+        $parts[] = $this->workflowRulesBlock($key, $label, $permission, $manage, $profile, $lang);
+
+        return implode("\n", $parts);
+    }
+
+    /**
+     * @return list<array{step: string, who: string, action: string, result: string}>
+     */
+    private function defaultWorkflowSteps(
+        KbModule $module,
+        string $key,
+        string $label,
+        string $description,
+        ?string $route,
+        ?string $manage,
+        string $lang,
+    ): array {
+        $menuPath = $this->menuPathForModule($module, $lang);
+        $screenPath = $menuPath . ' → <strong>' . e($label) . '</strong>';
+        $officer = $lang === 'bn' ? 'Module Officer' : 'Module Officer';
+        $manager = $lang === 'bn' ? 'Manager' : 'Manager';
+        $haystack = strtolower($key . ' ' . $label);
+
+        if (str_contains($haystack, 'dashboard')) {
+            return $lang === 'bn' ? [
+                ['step' => '১', 'who' => 'HR Officer / Manager', 'action' => $screenPath . ' open করুন', 'result' => 'আজকের KPI, pending item, open period summary'],
+                ['step' => '২', 'who' => 'HR Officer', 'action' => 'Red flag (high late, open approval) item identify', 'result' => 'Same day action list তৈরি'],
+                ['step' => '৩', 'who' => 'HR Officer', 'action' => 'Drill-down link দিয়ে সংশ্লিষ্ট screen-এ যান', 'result' => 'Exception fix — data entry dashboard-এ নয়'],
+            ] : [
+                ['step' => '1', 'who' => 'HR Officer / Manager', 'action' => 'Open ' . $screenPath, 'result' => 'Today\'s KPIs, pending items, open periods summary'],
+                ['step' => '2', 'who' => 'HR Officer', 'action' => 'Identify red flags (high late count, open approvals)', 'result' => 'Same-day action list created'],
+                ['step' => '3', 'who' => 'HR Officer', 'action' => 'Use drill-down links to open the relevant screen', 'result' => 'Fix exceptions — no data entry on dashboard'],
+            ];
+        }
+
+        if (str_contains($haystack, 'sync')) {
+            return $lang === 'bn' ? [
+                ['step' => '১', 'who' => 'IT / HR Officer', 'action' => $screenPath . ' → device online verify', 'result' => 'Offline device skip'],
+                ['step' => '২', 'who' => 'IT / HR Officer', 'action' => 'Sync Now / Sync All run', 'result' => 'Raw punch import queue'],
+                ['step' => '৩', 'who' => 'HR Officer', 'action' => 'Punch Logs / Daily Summary check', 'result' => 'Processed attendance update'],
+            ] : [
+                ['step' => '1', 'who' => 'IT / HR Officer', 'action' => $screenPath . ' → verify devices online', 'result' => 'Offline devices skipped'],
+                ['step' => '2', 'who' => 'IT / HR Officer', 'action' => 'Run Sync Now / Sync All', 'result' => 'Raw punches queued for import'],
+                ['step' => '3', 'who' => 'HR Officer', 'action' => 'Check Punch Logs / Daily Summary', 'result' => 'Processed attendance updated'],
+            ];
+        }
+
+        if ($key === 'punches' || str_contains($haystack, 'punch log')) {
+            return $lang === 'bn' ? [
+                ['step' => '১', 'who' => 'HR Officer', 'action' => $screenPath . ' → আজকের date filter', 'result' => 'Raw IN/OUT punch list'],
+                ['step' => '২', 'who' => 'HR Officer', 'action' => 'Unmapped / duplicate punch identify', 'result' => 'Employee mapping বা device issue flag'],
+                ['step' => '৩', 'who' => 'HR Officer', 'action' => 'Fix mapping অথবা Manual Punch screen-এ escalate', 'result' => 'Daily Summary process unblock'],
+            ] : [
+                ['step' => '1', 'who' => 'HR Officer', 'action' => $screenPath . ' → filter by today\'s date', 'result' => 'Raw IN/OUT punch list'],
+                ['step' => '2', 'who' => 'HR Officer', 'action' => 'Identify unmapped or duplicate punches', 'result' => 'Employee mapping or device issue flagged'],
+                ['step' => '3', 'who' => 'HR Officer', 'action' => 'Fix mapping or escalate via Manual Punch screen', 'result' => 'Daily Summary processing unblocked'],
+            ];
+        }
+
+        if (str_contains($key, 'manual') || str_contains($haystack, 'manual punch')) {
+            return $lang === 'bn' ? [
+                ['step' => '১', 'who' => 'HR Officer', 'action' => $screenPath . ' → New entry', 'result' => 'Form open'],
+                ['step' => '২', 'who' => 'HR Officer', 'action' => 'Employee, date, IN/OUT, reason fill → Submit', 'result' => 'Pending approval; Manager notified'],
+                ['step' => '৩', 'who' => 'HR Manager', 'action' => 'Approve বা Reject (comment সহ)', 'result' => 'Approve → daily log update; Reject → officer re-submit'],
+            ] : [
+                ['step' => '1', 'who' => 'HR Officer', 'action' => $screenPath . ' → New entry', 'result' => 'Form opens'],
+                ['step' => '2', 'who' => 'HR Officer', 'action' => 'Fill employee, date, IN/OUT, reason → Submit', 'result' => 'Pending approval; Manager notified'],
+                ['step' => '3', 'who' => 'HR Manager', 'action' => 'Approve or Reject with comment', 'result' => 'Approved → daily log updated; Rejected → officer re-submits'],
+            ];
+        }
+
+        if (str_contains($haystack, 'approve') || str_contains($haystack, 'acceptance')) {
+            return $lang === 'bn' ? [
+                ['step' => '১', 'who' => 'Employee', 'action' => 'Portal থেকে application submit', 'result' => 'Status Pending'],
+                ['step' => '২', 'who' => 'HR Officer', 'action' => $screenPath . ' → queue review, policy limit check', 'result' => 'Valid/invalid flag'],
+                ['step' => '৩', 'who' => 'HR Manager', 'action' => 'Approve/Reject written reason সহ', 'result' => 'Attendance recalc; employee notified'],
+            ] : [
+                ['step' => '1', 'who' => 'Employee', 'action' => 'Submit application via portal', 'result' => 'Status Pending'],
+                ['step' => '2', 'who' => 'HR Officer', 'action' => $screenPath . ' → review queue, check policy limits', 'result' => 'Valid/invalid flagged'],
+                ['step' => '3', 'who' => 'HR Manager', 'action' => 'Approve/Reject with written reason', 'result' => 'Attendance recalculated; employee notified'],
+            ];
+        }
+
+        if (str_contains($haystack, 'period') || str_contains($haystack, 'close') || str_contains($haystack, 'process')) {
+            return $lang === 'bn' ? [
+                ['step' => '১', 'who' => 'HR Officer', 'action' => 'Daily exception সব close confirm', 'result' => 'Process unblock'],
+                ['step' => '২', 'who' => 'HR Officer', 'action' => $screenPath . ' → period select → Process run', 'result' => 'Monthly totals calculate'],
+                ['step' => '৩', 'who' => 'HR Manager', 'action' => 'Summary review → Freeze/Close', 'result' => 'Period lock; downstream module use'],
+            ] : [
+                ['step' => '1', 'who' => 'HR Officer', 'action' => 'Confirm all daily exceptions closed', 'result' => 'Process unblocked'],
+                ['step' => '2', 'who' => 'HR Officer', 'action' => $screenPath . ' → select period → Run process', 'result' => 'Monthly totals calculated'],
+                ['step' => '3', 'who' => 'HR Manager', 'action' => 'Review summary → Freeze/Close', 'result' => 'Period locked; downstream modules can use data'],
+            ];
+        }
+
+        if (str_contains($haystack, 'report') || str_contains($haystack, 'register')) {
+            return $lang === 'bn' ? [
+                ['step' => '১', 'who' => 'HR Officer', 'action' => $screenPath . ' → factory, period filter set', 'result' => 'Filtered dataset'],
+                ['step' => '২', 'who' => 'HR Officer', 'action' => 'Report generate / preview', 'result' => 'On-screen summary'],
+                ['step' => '৩', 'who' => 'HR Manager', 'action' => 'Review → Export PDF/Excel archive', 'result' => 'Audit record saved'],
+            ] : [
+                ['step' => '1', 'who' => 'HR Officer', 'action' => $screenPath . ' → set factory and period filters', 'result' => 'Filtered dataset'],
+                ['step' => '2', 'who' => 'HR Officer', 'action' => 'Generate / preview report', 'result' => 'On-screen summary'],
+                ['step' => '3', 'who' => 'HR Manager', 'action' => 'Review → Export PDF/Excel for archive', 'result' => 'Audit record saved'],
+            ];
+        }
+
+        if (str_contains($haystack, 'policy') || str_contains($haystack, 'rule')) {
+            return $lang === 'bn' ? [
+                ['step' => '১', 'who' => 'HR Manager', 'action' => $screenPath . ' → current policy review', 'result' => 'Baseline documented'],
+                ['step' => '২', 'who' => 'HR Manager', 'action' => 'Grace minutes, deduction rule, limit update → Save', 'result' => 'New policy saved (usually next period effective)'],
+                ['step' => '৩', 'who' => 'HR Officer', 'action' => 'Staff-কে change communicate; Daily Summary monitor', 'result' => 'Consistent application from effective date'],
+            ] : [
+                ['step' => '1', 'who' => 'HR Manager', 'action' => $screenPath . ' → review current policy', 'result' => 'Baseline documented'],
+                ['step' => '2', 'who' => 'HR Manager', 'action' => 'Update grace minutes, deduction rules, limits → Save', 'result' => 'New policy saved (usually effective next period)'],
+                ['step' => '3', 'who' => 'HR Officer', 'action' => 'Communicate change to staff; monitor Daily Summary', 'result' => 'Consistent application from effective date'],
+            ];
+        }
+
+        if (str_contains($haystack, 'bulk') || str_contains($haystack, 'upload')) {
+            return $lang === 'bn' ? [
+                ['step' => '১', 'who' => 'HR Officer', 'action' => 'Template download → ৫ row test upload', 'result' => 'Validation error preview'],
+                ['step' => '২', 'who' => 'HR Officer', 'action' => 'Full file upload → preview grid check', 'result' => 'Draft import ready'],
+                ['step' => '৩', 'who' => 'HR Manager', 'action' => 'Dual verify → Confirm save', 'result' => 'Records created/updated in bulk'],
+            ] : [
+                ['step' => '1', 'who' => 'HR Officer', 'action' => 'Download template → test upload with 5 rows', 'result' => 'Validation errors previewed'],
+                ['step' => '2', 'who' => 'HR Officer', 'action' => 'Upload full file → review preview grid', 'result' => 'Draft import ready'],
+                ['step' => '3', 'who' => 'HR Manager', 'action' => 'Dual verify → Confirm save', 'result' => 'Records created/updated in bulk'],
+            ];
+        }
+
+        if ($manage) {
+            return $lang === 'bn' ? [
+                ['step' => '১', 'who' => $officer, 'action' => $screenPath . ' open → New/Edit', 'result' => 'Form with factory-scoped data'],
+                ['step' => '২', 'who' => $officer, 'action' => e($description) . ' — required field fill → Save', 'result' => 'Record saved; audit log entry'],
+                ['step' => '৩', 'who' => $manager, 'action' => 'Approval queue review (যদি apply)', 'result' => 'Approved → active; Rejected → correction'],
+            ] : [
+                ['step' => '1', 'who' => $officer, 'action' => 'Open ' . $screenPath . ' → New/Edit', 'result' => 'Form with factory-scoped data'],
+                ['step' => '2', 'who' => $officer, 'action' => e($description) . ' — fill required fields → Save', 'result' => 'Record saved; audit log entry'],
+                ['step' => '3', 'who' => $manager, 'action' => 'Review approval queue (if applicable)', 'result' => 'Approved → active; Rejected → correction required'],
+            ];
+        }
+
+        return $lang === 'bn' ? [
+            ['step' => '১', 'who' => 'Authorized user', 'action' => $screenPath . ' open', 'result' => 'Screen data load (view-only বা filter)'],
+            ['step' => '২', 'who' => 'Authorized user', 'action' => 'Filter/search দিয়ে প্রয়োজনীয় record find', 'result' => 'Target record displayed'],
+            ['step' => '৩', 'who' => 'Authorized user', 'action' => 'Export/print (যদি permission থাকে)', 'result' => 'Offline copy for review'],
+        ] : [
+            ['step' => '1', 'who' => 'Authorized user', 'action' => 'Open ' . $screenPath, 'result' => 'Screen data loaded (view or filter)'],
+            ['step' => '2', 'who' => 'Authorized user', 'action' => 'Use filter/search to find required records', 'result' => 'Target records displayed'],
+            ['step' => '3', 'who' => 'Authorized user', 'action' => 'Export/print if permitted', 'result' => 'Offline copy for review'],
+        ];
+    }
+
+    /**
+     * @param list<array{step: string, who: string, action: string, result: string}> $steps
+     */
+    private function workflowTable(array $steps, string $lang): string
+    {
+        $headers = $lang === 'bn'
+            ? ['Step', 'কে', 'কী করবেন', 'ফলাফল']
+            : ['Step', 'Who', 'Action', 'Result'];
+
+        $html = '<h3>Step-by-step workflow</h3><table><thead><tr>';
+        foreach ($headers as $header) {
+            $html .= '<th>' . e($header) . '</th>';
+        }
+        $html .= '</tr></thead><tbody>';
+
+        foreach ($steps as $row) {
+            $html .= '<tr><td>' . e($row['step']) . '</td><td>' . e($row['who']) . '</td><td>' . $row['action'] . '</td><td>' . e($row['result']) . '</td></tr>';
+        }
+
+        $html .= '</tbody></table>';
+
+        return $html;
     }
 
     /** @param array<string, mixed> $profile */
-    private function submoduleRules(
+    private function workflowRulesBlock(
         string $key,
         string $label,
         ?string $permission,
@@ -391,14 +692,15 @@ class KbArticleSeedBuilder
     ): string {
         $rules = [];
         $suffix = $lang === 'bn' ? '_bn' : '_en';
+        $heading = $lang === 'bn' ? 'গুরুত্বপূর্ণ নিয়ম ও exception' : 'Important rules & exceptions';
 
         if ($manage) {
             $rules[] = $lang === 'bn'
-                ? 'এই স্ক্রিনে entry/edit-এর জন্য <code>' . e($manage) . '</code> permission mandatory।'
-                : 'Permission <code>' . e($manage) . '</code> required for entry/edit on this screen.';
+                ? 'Entry/edit-এর জন্য <code>' . e($manage) . '</code> permission mandatory।'
+                : 'Permission <code>' . e($manage) . '</code> required for entry/edit.';
         } elseif ($permission) {
             $rules[] = $lang === 'bn'
-                ? 'শুধু view/access-এর জন্য <code>' . e($permission) . '</code> permission যথেষ্ট।'
+                ? 'View/access-এর জন্য <code>' . e($permission) . '</code> permission যথেষ্ট।'
                 : 'Permission <code>' . e($permission) . '</code> sufficient for view/access.';
         }
 
@@ -409,24 +711,41 @@ class KbArticleSeedBuilder
             }
         }
 
+        $rules[] = $lang === 'bn'
+            ? 'সব transaction user-এর assigned factory/unit scope-এ restricted।'
+            : 'All transactions restricted to the user\'s assigned factory/unit scope.';
+
+        $rules[] = $lang === 'bn'
+            ? 'Error বা duplicate same day HR/Admin-কে report করুন — period close-এর আগে resolve।'
+            : 'Report errors or duplicates to HR/Admin same day — resolve before period close.';
+
         if (! empty($profile['usage_rules' . $suffix])) {
             $rules[] = $lang === 'bn'
-                ? 'মডিউল-প্রয় general rule: module overview-এর section ৩ দেখুন।'
-                : 'Module-level rules apply — see section 3 in module overview.';
+                ? 'Module-level policy: module overview section ৩ দেখুন।'
+                : 'Module-level policy: see module overview section 3.';
         }
 
-        $rules[] = $lang === 'bn'
-            ? 'সব transaction factory/unit scope অনুযায়ী restricted (user factory_id)।'
-            : 'All transactions are restricted to the user\'s assigned factory/unit scope.';
-
-        $rules[] = $lang === 'bn'
-            ? 'সন্দেহজনক বা duplicate entry HR/Admin-কে same day report করতে হবে।'
-            : 'Report suspicious or duplicate entries to HR/Admin on the same day.';
-
-        return '<ul>' . implode('', array_map(fn (string $r) => '<li>' . $r . '</li>', $rules)) . '</ul>';
+        return '<h3>' . e($heading) . '</h3><ul>'
+            . implode('', array_map(fn (string $r) => '<li>' . $r . '</li>', $rules))
+            . '</ul>';
     }
 
-    /** @return list<string> */
+    private function menuPathForModule(KbModule $module, string $lang): string
+    {
+        $code = $module->code;
+
+        return match (true) {
+            str_starts_with($code, 'hrm-') => $lang === 'bn'
+                ? 'Menu: HRM → ' . e(str_replace('HRM — ', '', $module->label_en))
+                : 'Menu: HRM → ' . e(str_replace('HRM — ', '', $module->label_en)),
+            $code === 'tms' => 'Menu: Transport (TMS)',
+            $code === 'commercial' => 'Menu: Commercial',
+            $code === 'masters' => 'Menu: Masters',
+            $code === 'admin-system' => 'Menu: Administration',
+            default => 'Menu: ' . e($module->label_en),
+        };
+    }
+
     private function hintKeysForSubmodule(string $key, string $label): array
     {
         $keys = [];

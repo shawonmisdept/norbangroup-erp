@@ -8,7 +8,7 @@
     $sectionFields = [
         ['name' => 'purpose', 'label_en' => '1. Purpose — what this module/screen does', 'label_bn' => '১. এই মডিউল/স্ক্রিনের কাজ কী'],
         ['name' => 'audience', 'label_en' => '2. Who uses it · which department', 'label_bn' => '২. কে ব্যবহার করবে · কোন department'],
-        ['name' => 'usage_rules', 'label_en' => '3. Usage rules & guidelines', 'label_bn' => '৩. ব্যবহার বিধি'],
+        ['name' => 'usage_rules', 'label_en' => '3. Usage rules & step-by-step workflow', 'label_bn' => '৩. ব্যবহার বিধি ও step-by-step workflow'],
     ];
 @endphp
 
@@ -23,7 +23,7 @@
 @section('admin-content')
 @include('partials.erp.page-header', [
     'title' => $isEdit ? 'Edit article' : 'New article',
-    'subtitle' => '৩টি section — কাজ · ব্যবহারকারী/department · ব্যবহার বিধি (BN + EN)',
+    'subtitle' => '৩টি section — কাজ · ব্যবহারকারী/department · step-by-step workflow (BN + EN)',
 ])
 
 <form method="POST"

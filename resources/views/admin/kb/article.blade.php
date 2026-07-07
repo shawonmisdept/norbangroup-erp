@@ -9,10 +9,17 @@
 @endsection
 
 @section('admin-content')
+@php
+    $headerActions = '<a href="' . route('admin.kb.module', $module->code) . '" class="erp-btn-secondary">← Back</a>';
+    if ($canManage) {
+        $headerActions .= ' <a href="' . route('admin.kb.manage.edit', $article) . '" class="erp-btn-secondary ml-2">Edit article</a>';
+    }
+@endphp
 <div x-data="{ lang: 'bn' }">
     @include('partials.erp.page-header', [
         'title' => $submoduleLabel,
         'subtitle' => $module->label_en . ' · ' . $module->label_bn,
+        'actions' => $headerActions,
     ])
 
     <div class="flex flex-wrap items-center gap-2 mb-4">
@@ -26,10 +33,6 @@
                 :class="lang === 'en' ? 'erp-btn-primary' : 'erp-btn-secondary'">
             English
         </button>
-
-        @if($canManage)
-            <a href="{{ route('admin.kb.manage.edit', $article) }}" class="erp-btn-secondary ml-auto">Edit article</a>
-        @endif
 
         @if(!$article->is_published && $canManage)
             <span class="erp-badge bg-amber-100 text-amber-700 text-[10px]">Draft</span>

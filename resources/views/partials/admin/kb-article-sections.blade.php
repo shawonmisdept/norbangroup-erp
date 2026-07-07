@@ -16,7 +16,7 @@
         ],
         [
             'key'     => 'usage_rules',
-            'title'   => $isBn ? '৩. ব্যবহার বিধি ঃ' : '3. Usage rules & guidelines',
+            'title'   => $isBn ? '৩. ব্যবহার বিধি ও step-by-step workflow ঃ' : '3. Usage rules & step-by-step workflow',
             'content' => $article->{'usage_rules' . $suffix},
         ],
     ];
