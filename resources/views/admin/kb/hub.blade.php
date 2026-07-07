@@ -10,7 +10,7 @@
 @include('partials.erp.page-header', [
     'title' => 'Knowledge Base',
     'subtitle' => 'Module workflows and guides — English & Bengali',
-    'actions' => $canManage ? '<a href="' . route('admin.kb.manage.index') . '" class="erp-btn erp-btn-secondary text-xs">Manage articles</a>' : null,
+    'actions' => $canManage ? view('partials.admin.kb-manage-link', ['label' => 'Manage articles', 'route' => route('admin.kb.manage.index')])->render() : null,
 ])
 
 <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3">

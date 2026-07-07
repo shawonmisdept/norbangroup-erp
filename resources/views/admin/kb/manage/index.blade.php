@@ -11,7 +11,11 @@
 @include('partials.erp.page-header', [
     'title' => 'Manage articles',
     'subtitle' => 'Create and edit workflow guides',
-    'actions' => '<a href="' . route('admin.kb.manage.create') . '" class="erp-btn erp-btn-primary text-xs">New article</a>',
+    'actions' => view('partials.admin.kb-manage-link', [
+        'label' => 'New article',
+        'route' => route('admin.kb.manage.create'),
+        'primary' => true,
+    ])->render(),
 ])
 
 <div class="erp-panel">
@@ -38,7 +42,7 @@
                             </span>
                         </td>
                         <td class="text-right">
-                            <a href="{{ route('admin.kb.manage.edit', $article) }}" class="text-brand text-xs hover:underline">Edit</a>
+                            <a href="{{ route('admin.kb.manage.edit', $article) }}" class="erp-btn-sm-secondary">Edit</a>
                         </td>
                     </tr>
                 @empty

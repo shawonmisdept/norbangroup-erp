@@ -11,7 +11,10 @@
 @include('partials.erp.page-header', [
     'title' => $module->label_en,
     'subtitle' => $module->label_bn,
-    'actions' => $canManage ? '<a href="' . route('admin.kb.manage.create') . '?module=' . urlencode($module->code) . '" class="erp-btn erp-btn-secondary text-xs">Add article</a>' : null,
+    'actions' => $canManage ? view('partials.admin.kb-manage-link', [
+        'label' => 'Add article',
+        'route' => route('admin.kb.manage.create') . '?module=' . urlencode($module->code),
+    ])->render() : null,
 ])
 
 <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3">

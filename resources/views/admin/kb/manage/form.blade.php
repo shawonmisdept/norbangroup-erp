@@ -5,6 +5,11 @@
     $prefillModule = request('module') ? \App\Models\KbModule::where('code', request('module'))->first() : null;
     $activeModule = $selectedModule ?? $prefillModule;
     $prefillSubmodule = request('submodule', $article->submodule_key ?? 'overview');
+    $sectionFields = [
+        ['name' => 'purpose', 'label_en' => '1. Purpose — what this module/screen does', 'label_bn' => '১. এই মডিউল/স্ক্রিনের কাজ কী'],
+        ['name' => 'audience', 'label_en' => '2. Who uses it · which department', 'label_bn' => '২. কে ব্যবহার করবে · কোন department'],
+        ['name' => 'usage_rules', 'label_en' => '3. Usage rules & guidelines', 'label_bn' => '৩. ব্যবহার বিধি'],
+    ];
 @endphp
 
 @section('title', ($isEdit ? 'Edit' : 'New') . ' KB Article')
@@ -18,7 +23,7 @@
 @section('admin-content')
 @include('partials.erp.page-header', [
     'title' => $isEdit ? 'Edit article' : 'New article',
-    'subtitle' => 'Rich text editor — save English and Bengali separately',
+    'subtitle' => '৩টি section — কাজ · ব্যবহারকারী/department · ব্যবহার বিধি (BN + EN)',
 ])
 
 <form method="POST"
@@ -34,12 +39,10 @@
             <div>
                 <label class="erp-form-label" for="kb_module_id">Module</label>
                 <select name="kb_module_id" id="kb_module_id" class="erp-input w-full text-xs" required
-                        x-data
                         @change="window.dispatchEvent(new CustomEvent('kb-module-changed'))">
                     <option value="">Select module…</option>
                     @foreach($modules as $mod)
                         <option value="{{ $mod->id }}"
-                                data-code="{{ $mod->code }}"
                                 @selected(old('kb_module_id', $article->kb_module_id ?? $activeModule?->id) == $mod->id)>
                             {{ $mod->label_en }}
                         </option>
@@ -57,43 +60,40 @@
             </div>
         </div>
 
-        <div class="border-t border-gray-100 pt-4">
-            <p class="text-xs font-semibold text-gray-700 mb-3">English</p>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                    <label class="erp-form-label" for="title_en">Title</label>
-                    <input type="text" name="title_en" id="title_en" class="erp-input w-full text-xs"
-                           value="{{ old('title_en', $article->title_en) }}" required>
-                    @error('title_en')<p class="text-red-500 text-[10px] mt-1">{{ $message }}</p>@enderror
-                </div>
-                <div>
-                    <label class="erp-form-label" for="summary_en">Summary</label>
-                    <input type="text" name="summary_en" id="summary_en" class="erp-input w-full text-xs"
-                           value="{{ old('summary_en', $article->summary_en) }}" maxlength="500">
-                </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 border-t border-gray-100 pt-4">
+            <div>
+                <label class="erp-form-label" for="title_en">Title (English)</label>
+                <input type="text" name="title_en" id="title_en" class="erp-input w-full text-xs"
+                       value="{{ old('title_en', $article->title_en) }}" required>
+                @error('title_en')<p class="text-red-500 text-[10px] mt-1">{{ $message }}</p>@enderror
             </div>
-            @include('partials.admin.rich-text-field', ['name' => 'body_en', 'label' => 'Body (English)', 'value' => $article->body_en])
+            <div>
+                <label class="erp-form-label" for="title_bn">শিরোনাম (বাংলা)</label>
+                <input type="text" name="title_bn" id="title_bn" class="erp-input w-full text-xs"
+                       value="{{ old('title_bn', $article->title_bn) }}" required>
+                @error('title_bn')<p class="text-red-500 text-[10px] mt-1">{{ $message }}</p>@enderror
+            </div>
         </div>
 
-        <div class="border-t border-gray-100 pt-4">
-            <p class="text-xs font-semibold text-gray-700 mb-3">বাংলা</p>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                    <label class="erp-form-label" for="title_bn">শিরোনাম</label>
-                    <input type="text" name="title_bn" id="title_bn" class="erp-input w-full text-xs"
-                           value="{{ old('title_bn', $article->title_bn) }}" required>
-                    @error('title_bn')<p class="text-red-500 text-[10px] mt-1">{{ $message }}</p>@enderror
-                </div>
-                <div>
-                    <label class="erp-form-label" for="summary_bn">সারাংশ</label>
-                    <input type="text" name="summary_bn" id="summary_bn" class="erp-input w-full text-xs"
-                           value="{{ old('summary_bn', $article->summary_bn) }}" maxlength="500">
+        @foreach($sectionFields as $section)
+            <div class="border-t border-gray-100 pt-4">
+                <p class="text-xs font-semibold text-gray-800 mb-3">{{ $section['label_bn'] }} / {{ $section['label_en'] }}</p>
+                <div class="grid grid-cols-1 xl:grid-cols-2 gap-4">
+                    @include('partials.admin.rich-text-field', [
+                        'name'  => $section['name'] . '_bn',
+                        'label' => 'বাংলা',
+                        'value' => old($section['name'] . '_bn', $article->{$section['name'] . '_bn'}),
+                    ])
+                    @include('partials.admin.rich-text-field', [
+                        'name'  => $section['name'] . '_en',
+                        'label' => 'English',
+                        'value' => old($section['name'] . '_en', $article->{$section['name'] . '_en'}),
+                    ])
                 </div>
             </div>
-            @include('partials.admin.rich-text-field', ['name' => 'body_bn', 'label' => 'বিষয়বস্তু (বাংলা)', 'value' => $article->body_bn])
-        </div>
+        @endforeach
 
-        <div class="flex items-center gap-2 pt-2">
+        <div class="flex items-center gap-2 pt-2 border-t border-gray-100">
             <input type="checkbox" name="is_published" id="is_published" value="1" class="rounded border-gray-300"
                    @checked(old('is_published', $article->is_published))>
             <label for="is_published" class="text-xs text-gray-700">Publish (visible to users with module access)</label>
@@ -101,8 +101,8 @@
     </div>
 
     <div class="erp-panel-footer flex justify-end gap-2">
-        <a href="{{ route('admin.kb.manage.index') }}" class="erp-btn erp-btn-secondary text-xs">Cancel</a>
-        <button type="submit" class="erp-btn erp-btn-primary text-xs">{{ $isEdit ? 'Update' : 'Create' }}</button>
+        <a href="{{ route('admin.kb.manage.index') }}" class="erp-btn-secondary">Cancel</a>
+        <button type="submit" class="erp-btn-primary">{{ $isEdit ? 'Update' : 'Create' }}</button>
     </div>
 </form>
 @endsection
