@@ -10,7 +10,7 @@
 @theme {
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
         'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-    --font-bengali: 'Anek Bangla', 'Noto Sans Bengali', ui-sans-serif, system-ui, sans-serif;
+    --font-bengali: var(--font-anek-bangla), 'Noto Sans Bengali', ui-sans-serif, system-ui, sans-serif;
 
     --color-brand: #1e3a5f;
     --color-brand-dark: #152d4a;
@@ -33,13 +33,10 @@
     display: none !important;
 }
 
-.font-anek-bangla {
-    font-family: var(--font-bengali);
-}
-
+.font-anek-bangla,
 .kb-bn-content,
 .kb-bn-content .prose {
-    font-family: var(--font-bengali);
+    font-family: var(--font-anek-bangla, var(--font-bengali));
 }
 
 /* ERP sidebar shell */

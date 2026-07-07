@@ -1,7 +1,103 @@
 {
-  "_fonts-DkuEHybc.css": {
-    "file": "assets/fonts-DkuEHybc.css",
-    "src": "_fonts-DkuEHybc.css"
+  "_anek-bangla-400-normal-B6AQM8pp.woff2": {
+    "file": "assets/anek-bangla-400-normal-B6AQM8pp.woff2",
+    "src": "_anek-bangla-400-normal-B6AQM8pp.woff2"
+  },
+  "_anek-bangla-400-normal-CB6VDcDl.woff": {
+    "file": "assets/anek-bangla-400-normal-CB6VDcDl.woff",
+    "src": "_anek-bangla-400-normal-CB6VDcDl.woff"
+  },
+  "_anek-bangla-400-normal-CDh5REQO.woff": {
+    "file": "assets/anek-bangla-400-normal-CDh5REQO.woff",
+    "src": "_anek-bangla-400-normal-CDh5REQO.woff"
+  },
+  "_anek-bangla-400-normal-D88e8tc0.woff": {
+    "file": "assets/anek-bangla-400-normal-D88e8tc0.woff",
+    "src": "_anek-bangla-400-normal-D88e8tc0.woff"
+  },
+  "_anek-bangla-400-normal-Du8NGUEn.woff2": {
+    "file": "assets/anek-bangla-400-normal-Du8NGUEn.woff2",
+    "src": "_anek-bangla-400-normal-Du8NGUEn.woff2"
+  },
+  "_anek-bangla-400-normal-tbrAKN14.woff2": {
+    "file": "assets/anek-bangla-400-normal-tbrAKN14.woff2",
+    "src": "_anek-bangla-400-normal-tbrAKN14.woff2"
+  },
+  "_anek-bangla-500-normal-BJdDisuv.woff2": {
+    "file": "assets/anek-bangla-500-normal-BJdDisuv.woff2",
+    "src": "_anek-bangla-500-normal-BJdDisuv.woff2"
+  },
+  "_anek-bangla-500-normal-BK_--WfN.woff": {
+    "file": "assets/anek-bangla-500-normal-BK_--WfN.woff",
+    "src": "_anek-bangla-500-normal-BK_--WfN.woff"
+  },
+  "_anek-bangla-500-normal-Bk-6B7eM.woff": {
+    "file": "assets/anek-bangla-500-normal-Bk-6B7eM.woff",
+    "src": "_anek-bangla-500-normal-Bk-6B7eM.woff"
+  },
+  "_anek-bangla-500-normal-CnLWi5wq.woff": {
+    "file": "assets/anek-bangla-500-normal-CnLWi5wq.woff",
+    "src": "_anek-bangla-500-normal-CnLWi5wq.woff"
+  },
+  "_anek-bangla-500-normal-DoxEl-K8.woff2": {
+    "file": "assets/anek-bangla-500-normal-DoxEl-K8.woff2",
+    "src": "_anek-bangla-500-normal-DoxEl-K8.woff2"
+  },
+  "_anek-bangla-500-normal-ZzdS9mTY.woff2": {
+    "file": "assets/anek-bangla-500-normal-ZzdS9mTY.woff2",
+    "src": "_anek-bangla-500-normal-ZzdS9mTY.woff2"
+  },
+  "_anek-bangla-600-normal-B4fjqXC7.woff": {
+    "file": "assets/anek-bangla-600-normal-B4fjqXC7.woff",
+    "src": "_anek-bangla-600-normal-B4fjqXC7.woff"
+  },
+  "_anek-bangla-600-normal-BFQ8Uf_4.woff2": {
+    "file": "assets/anek-bangla-600-normal-BFQ8Uf_4.woff2",
+    "src": "_anek-bangla-600-normal-BFQ8Uf_4.woff2"
+  },
+  "_anek-bangla-600-normal-BUIgI3S1.woff": {
+    "file": "assets/anek-bangla-600-normal-BUIgI3S1.woff",
+    "src": "_anek-bangla-600-normal-BUIgI3S1.woff"
+  },
+  "_anek-bangla-600-normal-DddcLZa0.woff2": {
+    "file": "assets/anek-bangla-600-normal-DddcLZa0.woff2",
+    "src": "_anek-bangla-600-normal-DddcLZa0.woff2"
+  },
+  "_anek-bangla-600-normal-i634Kl-w.woff": {
+    "file": "assets/anek-bangla-600-normal-i634Kl-w.woff",
+    "src": "_anek-bangla-600-normal-i634Kl-w.woff"
+  },
+  "_anek-bangla-600-normal-nQ0xXJPL.woff2": {
+    "file": "assets/anek-bangla-600-normal-nQ0xXJPL.woff2",
+    "src": "_anek-bangla-600-normal-nQ0xXJPL.woff2"
+  },
+  "_anek-bangla-700-normal-B7e8T__g.woff2": {
+    "file": "assets/anek-bangla-700-normal-B7e8T__g.woff2",
+    "src": "_anek-bangla-700-normal-B7e8T__g.woff2"
+  },
+  "_anek-bangla-700-normal-BtFT1iS1.woff": {
+    "file": "assets/anek-bangla-700-normal-BtFT1iS1.woff",
+    "src": "_anek-bangla-700-normal-BtFT1iS1.woff"
+  },
+  "_anek-bangla-700-normal-C-LpM2go.woff": {
+    "file": "assets/anek-bangla-700-normal-C-LpM2go.woff",
+    "src": "_anek-bangla-700-normal-C-LpM2go.woff"
+  },
+  "_anek-bangla-700-normal-C5oiW16u.woff2": {
+    "file": "assets/anek-bangla-700-normal-C5oiW16u.woff2",
+    "src": "_anek-bangla-700-normal-C5oiW16u.woff2"
+  },
+  "_anek-bangla-700-normal-CggJZ4F0.woff2": {
+    "file": "assets/anek-bangla-700-normal-CggJZ4F0.woff2",
+    "src": "_anek-bangla-700-normal-CggJZ4F0.woff2"
+  },
+  "_anek-bangla-700-normal-pKs2njVA.woff": {
+    "file": "assets/anek-bangla-700-normal-pKs2njVA.woff",
+    "src": "_anek-bangla-700-normal-pKs2njVA.woff"
+  },
+  "_fonts-ny3_jKKt.css": {
+    "file": "assets/fonts-ny3_jKKt.css",
+    "src": "_fonts-ny3_jKKt.css"
   },
   "_instrument-sans-400-normal-D1W7dsQl.woff": {
     "file": "assets/instrument-sans-400-normal-D1W7dsQl.woff",
@@ -52,7 +148,7 @@
     "src": "_instrument-sans-600-normal-DMks36a2.woff"
   },
   "resources/css/app.css": {
-    "file": "assets/app-znWtgSgX.css",
+    "file": "assets/app-hfRv6otJ.css",
     "name": "app",
     "names": [
       "app.css"
