@@ -91,7 +91,7 @@ class UploadController extends Controller
                 'medical'            => ['nullable', 'numeric', 'min:0'],
                 'conveyance'         => ['nullable', 'numeric', 'min:0'],
                 'other_allowance'    => ['nullable', 'numeric', 'min:0'],
-                'payment_method'     => ['nullable', 'in:bank,cash'],
+                'payment_method'     => ['nullable', 'in:bank,cash,split'],
                 'bank_account'       => ['nullable', 'string', 'max:40'],
             ]);
 

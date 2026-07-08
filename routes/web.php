@@ -41,9 +41,12 @@ use App\Http\Controllers\Admin\Hrm\Salary\IncrementBulkController;
 use App\Http\Controllers\Admin\Hrm\Salary\IncrementRuleController;
 use App\Http\Controllers\Admin\Hrm\Salary\IncrementUploadController;
 use App\Http\Controllers\Admin\Hrm\Salary\CloseController as SalaryCloseController;
+use App\Http\Controllers\Admin\Hrm\Salary\DisbursementController as SalaryDisbursementController;
 use App\Http\Controllers\Admin\Hrm\Salary\EmployeeSalaryController;
 use App\Http\Controllers\Admin\Hrm\Salary\GradeController as SalaryGradeController;
 use App\Http\Controllers\Admin\Hrm\Salary\GradeDetailController;
+use App\Http\Controllers\Admin\Hrm\Salary\BankLedgerController as SalaryBankLedgerController;
+use App\Http\Controllers\Admin\Hrm\Salary\BankController as SalaryBankController;
 use App\Http\Controllers\Admin\Hrm\Salary\HeadController as SalaryHeadController;
 use App\Http\Controllers\Admin\Hrm\Salary\HubController as SalaryHubController;
 use App\Http\Controllers\Admin\Hrm\Salary\PlannedController as SalaryPlannedController;
@@ -670,6 +673,10 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
             Route::get('/salary/heads/{head}', [SalaryHeadController::class, 'show'])->name('salary.heads.show')->whereNumber('head');
         });
 
+        Route::middleware('hrm.submodule:salary,banks,view')->group(function () {
+            Route::get('/salary/banks', [SalaryBankController::class, 'index'])->name('salary.banks.index');
+        });
+
         Route::middleware('hrm.submodule:salary,grades,view')->group(function () {
             Route::get('/salary/grades', [SalaryGradeController::class, 'index'])->name('salary.grades.index');
             Route::get('/salary/grades/{grade}', [SalaryGradeController::class, 'show'])->name('salary.grades.show')->whereNumber('grade');
@@ -697,6 +704,10 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
 
         Route::middleware('hrm.submodule:salary,close,view')->group(function () {
             Route::get('/salary/close', [SalaryCloseController::class, 'index'])->name('salary.close.index');
+            Route::get('/salary/disbursement/{period}', [SalaryDisbursementController::class, 'show'])->name('salary.disbursement.show');
+            Route::get('/salary/bank-ledger', [SalaryBankLedgerController::class, 'index'])->name('salary.bank-ledger.index');
+            Route::get('/salary/bank-ledger/export-summary', [SalaryBankLedgerController::class, 'exportSummary'])->name('salary.bank-ledger.export-summary');
+            Route::get('/salary/bank-ledger/export-detail', [SalaryBankLedgerController::class, 'exportDetail'])->name('salary.bank-ledger.export-detail');
         });
 
         Route::middleware('hrm.submodule:salary,increment-rules,view')->group(function () {
@@ -717,6 +728,14 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
             Route::get('/salary/heads/{head}/edit', [SalaryHeadController::class, 'edit'])->name('salary.heads.edit');
             Route::put('/salary/heads/{head}', [SalaryHeadController::class, 'update'])->name('salary.heads.update');
             Route::delete('/salary/heads/{head}', [SalaryHeadController::class, 'destroy'])->name('salary.heads.destroy');
+        });
+
+        Route::middleware('hrm.submodule:salary,banks,manage')->group(function () {
+            Route::get('/salary/banks/create', [SalaryBankController::class, 'create'])->name('salary.banks.create');
+            Route::post('/salary/banks', [SalaryBankController::class, 'store'])->name('salary.banks.store');
+            Route::get('/salary/banks/{bank}/edit', [SalaryBankController::class, 'edit'])->name('salary.banks.edit')->whereNumber('bank');
+            Route::put('/salary/banks/{bank}', [SalaryBankController::class, 'update'])->name('salary.banks.update')->whereNumber('bank');
+            Route::delete('/salary/banks/{bank}', [SalaryBankController::class, 'destroy'])->name('salary.banks.destroy')->whereNumber('bank');
         });
 
         Route::middleware('hrm.submodule:salary,grades,manage')->group(function () {
@@ -773,6 +792,13 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
             Route::post('/salary/close/{period}/freeze', [SalaryCloseController::class, 'freeze'])->name('salary.close.freeze');
             Route::post('/salary/close/{period}/send-payslips', [SalaryCloseController::class, 'sendPayslips'])->name('salary.close.send-payslips');
             Route::get('/salary/close/{period}/bank-advise', [SalaryCloseController::class, 'bankAdvise'])->name('salary.close.bank-advise');
+            Route::get('/salary/close/{period}/cash-list', [SalaryDisbursementController::class, 'cashList'])->name('salary.close.cash-list');
+        });
+
+        Route::middleware('permission:hrm.salary.close.manage')->group(function () {
+            Route::put('/salary/disbursement/{period}/items/{item}', [SalaryDisbursementController::class, 'updateSplit'])->name('salary.disbursement.update-split')->whereNumber('item');
+            Route::post('/salary/disbursement/{period}/items/{item}/cash-disbursed', [SalaryDisbursementController::class, 'markCashDisbursed'])->name('salary.disbursement.mark-cash')->whereNumber('item');
+            Route::post('/salary/disbursement/{period}/mark-all-cash', [SalaryDisbursementController::class, 'markAllCashDisbursed'])->name('salary.disbursement.mark-all-cash');
         });
 
         // ── Compliance sub-modules ──
@@ -934,6 +960,12 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
         Route::middleware('hrm.submodule:rmg,worker-transfer,manage')->group(function () {
             Route::get('/rmg/worker-transfer/create', [RmgWorkerTransferController::class, 'create'])->name('rmg.worker-transfer.create');
             Route::post('/rmg/worker-transfer', [RmgWorkerTransferController::class, 'store'])->name('rmg.worker-transfer.store');
+            Route::get('/rmg/worker-transfer/{workerTransfer}/edit', [RmgWorkerTransferController::class, 'edit'])
+                ->name('rmg.worker-transfer.edit')->whereNumber('workerTransfer');
+            Route::put('/rmg/worker-transfer/{workerTransfer}', [RmgWorkerTransferController::class, 'update'])
+                ->name('rmg.worker-transfer.update')->whereNumber('workerTransfer');
+            Route::delete('/rmg/worker-transfer/{workerTransfer}', [RmgWorkerTransferController::class, 'destroy'])
+                ->name('rmg.worker-transfer.destroy')->whereNumber('workerTransfer');
             Route::post('/rmg/worker-transfer/{workerTransfer}/approve', [RmgWorkerTransferController::class, 'approve'])
                 ->name('rmg.worker-transfer.approve')->whereNumber('workerTransfer');
             Route::post('/rmg/worker-transfer/{workerTransfer}/reject', [RmgWorkerTransferController::class, 'reject'])
@@ -943,6 +975,12 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
         Route::middleware('hrm.submodule:rmg,gate-pass,manage')->group(function () {
             Route::get('/rmg/gate-pass/create', [RmgGatePassController::class, 'create'])->name('rmg.gate-pass.create');
             Route::post('/rmg/gate-pass', [RmgGatePassController::class, 'store'])->name('rmg.gate-pass.store');
+            Route::get('/rmg/gate-pass/{gatePass}/edit', [RmgGatePassController::class, 'edit'])
+                ->name('rmg.gate-pass.edit')->whereNumber('gatePass');
+            Route::put('/rmg/gate-pass/{gatePass}', [RmgGatePassController::class, 'update'])
+                ->name('rmg.gate-pass.update')->whereNumber('gatePass');
+            Route::delete('/rmg/gate-pass/{gatePass}', [RmgGatePassController::class, 'destroy'])
+                ->name('rmg.gate-pass.destroy')->whereNumber('gatePass');
             Route::post('/rmg/gate-pass/{gatePass}/approve', [RmgGatePassController::class, 'approve'])
                 ->name('rmg.gate-pass.approve')->whereNumber('gatePass');
             Route::post('/rmg/gate-pass/{gatePass}/reject', [RmgGatePassController::class, 'reject'])
@@ -952,6 +990,12 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
         Route::middleware('hrm.submodule:rmg,manpower-planning,manage')->group(function () {
             Route::get('/rmg/manpower-planning/create', [RmgManpowerPlanningController::class, 'create'])->name('rmg.manpower-planning.create');
             Route::post('/rmg/manpower-planning', [RmgManpowerPlanningController::class, 'store'])->name('rmg.manpower-planning.store');
+            Route::get('/rmg/manpower-planning/{manpowerPlan}/edit', [RmgManpowerPlanningController::class, 'edit'])
+                ->name('rmg.manpower-planning.edit')->whereNumber('manpowerPlan');
+            Route::put('/rmg/manpower-planning/{manpowerPlan}', [RmgManpowerPlanningController::class, 'update'])
+                ->name('rmg.manpower-planning.update')->whereNumber('manpowerPlan');
+            Route::delete('/rmg/manpower-planning/{manpowerPlan}', [RmgManpowerPlanningController::class, 'destroy'])
+                ->name('rmg.manpower-planning.destroy')->whereNumber('manpowerPlan');
         });
 
         Route::middleware('hrm.submodule:rmg,proxy-punch,manage')->group(function () {
@@ -1029,6 +1073,9 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
         });
 
         Route::middleware('permission:tms.vehicles.view')->group(function () {
+            Route::get('/vehicles/papers-status', [\App\Http\Controllers\Admin\Tms\VehiclePaperController::class, 'index'])->name('vehicles.papers');
+            Route::get('/vehicles/papers-status/print', [\App\Http\Controllers\Admin\Tms\VehiclePaperController::class, 'print'])->name('vehicles.papers.print');
+            Route::get('/vehicles/paper-renewals/{renewal}/document', [\App\Http\Controllers\Admin\Tms\VehiclePaperController::class, 'downloadDocument'])->name('vehicles.paper-renewals.document')->whereNumber('renewal');
             Route::get('/vehicles', [\App\Http\Controllers\Admin\Tms\VehicleController::class, 'index'])->name('vehicles.index');
             Route::get('/vehicles/{vehicle}', [\App\Http\Controllers\Admin\Tms\VehicleController::class, 'show'])->name('vehicles.show')->whereNumber('vehicle');
         });
@@ -1036,6 +1083,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
         Route::middleware('permission:tms.vehicles.manage')->group(function () {
             Route::get('/vehicles/create', [\App\Http\Controllers\Admin\Tms\VehicleController::class, 'create'])->name('vehicles.create');
             Route::post('/vehicles', [\App\Http\Controllers\Admin\Tms\VehicleController::class, 'store'])->name('vehicles.store');
+            Route::post('/vehicles/{vehicle}/paper-renewals', [\App\Http\Controllers\Admin\Tms\VehiclePaperController::class, 'storeRenewal'])->name('vehicles.paper-renewals.store')->whereNumber('vehicle');
             Route::get('/vehicles/{vehicle}/edit', [\App\Http\Controllers\Admin\Tms\VehicleController::class, 'edit'])->name('vehicles.edit')->whereNumber('vehicle');
             Route::put('/vehicles/{vehicle}', [\App\Http\Controllers\Admin\Tms\VehicleController::class, 'update'])->name('vehicles.update')->whereNumber('vehicle');
             Route::delete('/vehicles/{vehicle}', [\App\Http\Controllers\Admin\Tms\VehicleController::class, 'destroy'])->name('vehicles.destroy')->whereNumber('vehicle');

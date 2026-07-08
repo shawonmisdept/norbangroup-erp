@@ -52,7 +52,10 @@
                         <p class="text-gray-400 mt-0.5 tabular-nums">Last attempt @portalDateTime($device->last_synced_at)</p>
                     @endif
                     @if($device->hasAdmsEndpoint())
-                        <form method="POST" action="{{ route('admin.hrm.attendance.devices.sync', $device) }}" class="mt-2">
+                        <form method="POST" action="{{ route('admin.hrm.attendance.devices.sync', $device) }}" class="mt-2"
+                              data-confirm="Retry pull sync from {{ $device->name }}?"
+                              data-confirm-variant="primary"
+                              data-confirm-ok="Yes, retry sync">
                             @csrf
                             <button type="submit" class="erp-btn-secondary !py-1 !px-2 text-xs">Retry Pull Sync</button>
                         </form>

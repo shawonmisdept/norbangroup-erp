@@ -22,7 +22,7 @@ class ProxyPunchFlaggedNotification extends Notification
             'type'    => 'proxy_punch_flagged',
             'title'   => 'Proxy Punch Flagged',
             'message' => 'Suspicious punch flagged for ' . ($this->flag->employee?->name ?? 'unknown employee'),
-            'url'     => route('admin.hrm.rmg.proxy-punch.index'),
+            'url'     => route('admin.hrm.rmg.proxy-punch.index', ['status' => 'open']),
         ];
     }
 }

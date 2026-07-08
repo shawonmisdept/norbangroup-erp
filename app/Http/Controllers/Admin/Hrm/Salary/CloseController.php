@@ -91,21 +91,21 @@ class CloseController extends Controller
 
         return response()->streamDownload(function () use ($period) {
             $handle = fopen('php://output', 'w');
-            fputcsv($handle, ['Employee Code', 'Employee Name', 'Bank Account', 'Net Pay', 'Payment Method']);
+            fputcsv($handle, ['Employee Code', 'Employee Name', 'Bank', 'Account Number', 'Bank Pay', 'Payment Method']);
 
             PayrollItem::query()
-                ->with('employee')
+                ->with(['employee', 'salaryBank'])
                 ->where('payroll_period_id', $period->id)
-                ->where('payment_method', 'bank')
-                ->where('net_pay', '>', 0)
+                ->where('bank_pay_amount', '>', 0)
                 ->orderBy('employee_id')
                 ->chunk(100, function ($items) use ($handle) {
                     foreach ($items as $item) {
                         fputcsv($handle, [
                             $item->employee->employee_code,
                             $item->employee->name,
+                            $item->salaryBank?->displayName() ?? '',
                             $item->bank_account ?? '',
-                            number_format((float) $item->net_pay, 2, '.', ''),
+                            number_format((float) $item->bank_pay_amount, 2, '.', ''),
                             $item->payment_method,
                         ]);
                     }

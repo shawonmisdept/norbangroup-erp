@@ -72,6 +72,21 @@ class PayrollPeriod extends Model
         return $this->status === 'frozen';
     }
 
+    public function pendingCashDisbursementCount(): int
+    {
+        return $this->items()
+            ->where('cash_pay_amount', '>', 0)
+            ->whereNull('cash_disbursed_at')
+            ->count();
+    }
+
+    public function canFreeze(): bool
+    {
+        return $this->status === 'calculated'
+            && $this->items()->count() > 0
+            && $this->pendingCashDisbursementCount() === 0;
+    }
+
     public function periodLabel(): string
     {
         return Carbon::create($this->year, $this->month, 1)->format('F Y');

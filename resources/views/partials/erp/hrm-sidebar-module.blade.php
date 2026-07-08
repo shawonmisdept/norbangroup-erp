@@ -32,12 +32,20 @@
         ),
         default => request()->routeIs("admin.hrm.{$section}.*"),
     };
-    $routeMatch = function (string $key) use ($section, $submodules) {
+    $routeMatch = function (string $key) use ($submodules) {
         if (! isset($submodules[$key]['route'])) {
             return false;
         }
 
-        $base = preg_replace('/\.(index|hub|dashboard)$/', '', $submodules[$key]['route']);
+        $sub = $submodules[$key];
+
+        foreach ($sub['related_route_patterns'] ?? [] as $pattern) {
+            if (request()->routeIs($pattern)) {
+                return true;
+            }
+        }
+
+        $base = preg_replace('/\.(index|hub|dashboard)$/', '', $sub['route']);
 
         return request()->routeIs($base) || request()->routeIs($base . '.*');
     };

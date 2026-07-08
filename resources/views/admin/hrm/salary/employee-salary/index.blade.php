@@ -122,15 +122,43 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
                         <div>
                             <label class="erp-form-label">Payment</label>
-                            <select name="payment_method" class="erp-input !text-xs">
+                            <select name="payment_method" id="payment_method" class="erp-input !text-xs">
                                 @foreach(\App\Models\Hrm\SalaryStructure::PAYMENT_METHODS as $k => $l)
                                     <option value="{{ $k }}" {{ old('payment_method', $structure?->payment_method ?? 'bank') === $k ? 'selected' : '' }}>{{ $l }}</option>
                                 @endforeach
                             </select>
                         </div>
-                        <div>
-                            <label class="erp-form-label">Bank Account</label>
-                            <input type="text" name="bank_account" value="{{ old('bank_account', $structure?->bank_account) }}" class="erp-input !text-xs">
+                        <div id="bank-select-wrap">
+                            <label class="erp-form-label">Salary Bank</label>
+                            <select name="salary_bank_id" id="salary_bank_id" class="erp-input !text-xs">
+                                <option value="">Select bank…</option>
+                                @foreach($salaryBanks as $bank)
+                                    <option value="{{ $bank->id }}" {{ (string) old('salary_bank_id', $structure?->salary_bank_id) === (string) $bank->id ? 'selected' : '' }}>
+                                        {{ $bank->displayName() }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @if($salaryBanks->isEmpty())
+                                <p class="text-[11px] text-amber-600 mt-1"><a href="{{ route('admin.hrm.salary.banks.index') }}" class="underline">Add salary banks</a> first.</p>
+                            @endif
+                        </div>
+                        <div id="bank-account-wrap">
+                            <label class="erp-form-label">Employee Account No.</label>
+                            <input type="text" name="bank_account" id="bank_account" value="{{ old('bank_account', $structure?->bank_account) }}" class="erp-input !text-xs">
+                        </div>
+                        <div id="bank-disbursement-wrap" class="sm:col-span-2 hidden">
+                            <div class="rounded-sm border border-erp-border bg-gray-50/60 p-3 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                <div>
+                                    <label class="erp-form-label">Bank Amount (monthly)</label>
+                                    <input type="number" step="0.01" min="0" name="bank_disbursement_amount" id="bank_disbursement_amount"
+                                           value="{{ old('bank_disbursement_amount', $structure?->bank_disbursement_amount) }}" class="erp-input !text-xs">
+                                </div>
+                                <div>
+                                    <label class="erp-form-label">Cash Amount (estimated)</label>
+                                    <input type="text" readonly id="cash_disbursement_preview" class="erp-input !text-xs bg-white tabular-nums" value="—">
+                                    <p class="text-[11px] text-gray-400 mt-1">Based on gross salary. Actual cash adjusts after payroll deductions.</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -231,6 +259,40 @@
 
     document.querySelectorAll('.calc-trigger').forEach(el => el.addEventListener('input', schedule));
     schedule();
+
+    const paymentSelect = document.getElementById('payment_method');
+    const splitWrap = document.getElementById('bank-disbursement-wrap');
+    const bankSelectWrap = document.getElementById('bank-select-wrap');
+    const bankAccountWrap = document.getElementById('bank-account-wrap');
+    const bankAmountInput = document.getElementById('bank_disbursement_amount');
+    const cashPreview = document.getElementById('cash_disbursement_preview');
+    const grossInput = document.getElementById('gross_salary');
+
+    function updateCashPreview() {
+        if (!cashPreview) return;
+        const gross = parseFloat(grossInput?.value) || 0;
+        const bankAmt = parseFloat(bankAmountInput?.value) || 0;
+        if (paymentSelect?.value !== 'split' || gross <= 0) {
+            cashPreview.value = '—';
+            return;
+        }
+        const cash = Math.max(0, gross - bankAmt);
+        cashPreview.value = cash.toLocaleString('en-BD', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+
+    function syncPaymentFields() {
+        if (!paymentSelect) return;
+        const method = paymentSelect.value;
+        const needsBank = method === 'bank' || method === 'split';
+        bankSelectWrap?.classList.toggle('hidden', !needsBank);
+        bankAccountWrap?.classList.toggle('hidden', !needsBank);
+        splitWrap?.classList.toggle('hidden', method !== 'split');
+        updateCashPreview();
+    }
+    paymentSelect?.addEventListener('change', syncPaymentFields);
+    bankAmountInput?.addEventListener('input', updateCashPreview);
+    grossInput?.addEventListener('input', updateCashPreview);
+    syncPaymentFields();
 })();
 </script>
 @endif

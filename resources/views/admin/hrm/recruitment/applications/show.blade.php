@@ -319,7 +319,10 @@
                             <span class="erp-badge {{ $resultBadge }} text-[10px]">{{ $interview->resultLabel() }}</span>
                         </div>
                         @if($interview->result === 'pending' && $canManage)
-                            <form method="POST" action="{{ route('admin.hrm.recruitment.applications.interviews.complete', [$application, $interview]) }}" class="mt-3 flex flex-wrap gap-2">
+                            <form method="POST" action="{{ route('admin.hrm.recruitment.applications.interviews.complete', [$application, $interview]) }}" class="mt-3 flex flex-wrap gap-2"
+                                  data-confirm="Save interview result?"
+                                  data-confirm-variant="primary"
+                                  data-confirm-ok="Yes, save result">
                                 @csrf
                                 <select name="result" required class="erp-input !text-xs flex-1 min-w-[120px]">
                                     @foreach($interviewResults as $val => $label)
@@ -464,7 +467,10 @@
                 @if($canManage && ! $application->isTerminal())
                     <div class="pt-2 border-t border-erp-border">
                         <p class="text-[10px] uppercase tracking-wide text-gray-400 font-semibold mb-3">Update Status</p>
-                        <form method="POST" action="{{ route('admin.hrm.recruitment.applications.status', $application) }}" class="space-y-3">
+                        <form method="POST" action="{{ route('admin.hrm.recruitment.applications.status', $application) }}" class="space-y-3"
+                              data-confirm="Update application status? Hired status will automatically enroll an employee."
+                              data-confirm-variant="warning"
+                              data-confirm-ok="Yes, update status">
                             @csrf
                             <select name="status" required class="erp-input !text-xs">
                                 @foreach($statuses as $val => $label)
@@ -482,7 +488,10 @@
                 @endif
 
                 @if($canConvert && $application->canConvert())
-                    <form method="POST" action="{{ route('admin.hrm.recruitment.applications.convert', $application) }}" class="pt-2 border-t border-erp-border">
+                    <form method="POST" action="{{ route('admin.hrm.recruitment.applications.convert', $application) }}" class="pt-2 border-t border-erp-border"
+                          data-confirm="Start employee enrollment from this application? You will review details before saving."
+                          data-confirm-variant="primary"
+                          data-confirm-ok="Yes, continue">
                         @csrf
                         <button type="submit" class="erp-btn-secondary w-full justify-center">Convert to Employee (Manual)</button>
                         <p class="text-[10px] text-gray-400 text-center mt-2">Review & edit details before enrollment</p>

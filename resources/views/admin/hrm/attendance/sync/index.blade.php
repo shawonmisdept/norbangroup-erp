@@ -14,13 +14,19 @@
 @php
     $syncActions = '';
     if (auth()->user()->hasPermission('hrm.attendance.sync')) {
-        $syncActions .= '<form method="POST" action="' . route('admin.hrm.attendance.sync-all') . '" class="inline">'
+        $syncActions .= '<form method="POST" action="' . route('admin.hrm.attendance.sync-all') . '" class="inline"'
+            . ' data-confirm="Pull sync from all biometric devices?"'
+            . ' data-confirm-variant="primary"'
+            . ' data-confirm-ok="Yes, sync all">'
             . csrf_field()
             . '<button type="submit" class="erp-btn-primary">Sync All Devices</button>'
             . '</form>';
     }
     if (auth()->user()->canManageAttendanceSubmodule('periods')) {
-        $syncActions .= '<form method="POST" action="' . route('admin.hrm.attendance.process-today') . '" class="inline">'
+        $syncActions .= '<form method="POST" action="' . route('admin.hrm.attendance.process-today') . '" class="inline"'
+            . ' data-confirm="Process today\'s unprocessed attendance punches?"'
+            . ' data-confirm-variant="warning"'
+            . ' data-confirm-ok="Yes, process today">'
             . csrf_field()
             . '<button type="submit" class="erp-btn-secondary">Process Today</button>'
             . '</form>';

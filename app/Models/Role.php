@@ -112,7 +112,15 @@ class Role extends Model
         }
 
         if (preg_match('/^hrm\.rmg\.([a-z-]+)\.(view|manage)$/', $permission, $matches)) {
-            return in_array('hrm.rmg.' . $matches[2], $permissions, true);
+            if (in_array('hrm.rmg.' . $matches[2], $permissions, true)) {
+                return true;
+            }
+
+            if ($matches[2] === 'view') {
+                return in_array('hrm.rmg.' . $matches[1] . '.manage', $permissions, true);
+            }
+
+            return false;
         }
 
         $legacyPayroll = [

@@ -16,9 +16,9 @@
         <a href="{{ $editUrl }}" class="erp-btn-sm-primary">Edit</a>
     @endif
     @if($destroyUrl)
-        <form method="POST" action="{{ $destroyUrl }}" class="inline">
+        <form method="POST" action="{{ $destroyUrl }}" class="inline" data-confirm="{{ $confirm }}">
             @csrf @method('DELETE')
-            <button type="submit" class="erp-btn-sm-secondary text-red-600" data-confirm="{{ $confirm }}">Delete</button>
+            <button type="submit" class="erp-btn-sm-secondary text-red-600">Delete</button>
         </form>
     @endif
 </div>

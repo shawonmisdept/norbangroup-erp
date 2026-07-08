@@ -57,3 +57,8 @@ Schedule::command('tms:sync-rental-billing')
     ->dailyAt('18:30')
     ->withoutOverlapping()
     ->runInBackground();
+
+Schedule::command('tms:notify-vehicle-paper-expiry')
+    ->dailyAt('08:30')
+    ->withoutOverlapping()
+    ->runInBackground();

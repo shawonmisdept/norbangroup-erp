@@ -36,11 +36,12 @@
         <select name="vehicle_id" class="erp-input assign-vehicle-select">
             <option value="">Use driver's default vehicle</option>
             @foreach($vehicles as $v)
-                <option value="{{ $v->id }}" data-capacity="{{ $v->passenger_capacity }}" @selected(old('vehicle_id') == $v->id)>
+                <option value="{{ $v->id }}" data-capacity="{{ $v->passenger_capacity }}" data-warnings="{{ json_encode(($vehiclePaperWarnings ?? [])[$v->id] ?? []) }}" @selected(old('vehicle_id') == $v->id)>
                     {{ $v->displayLabel() }} ({{ $v->passenger_capacity }} seats)
                 </option>
             @endforeach
         </select>
+        <div id="vehicle-paper-warning" class="hidden mt-2 rounded border border-amber-200 bg-amber-50 p-3 text-xs text-amber-900"></div>
         @if(isset($passengerCount))
             <p class="text-xs text-gray-500 mt-1">Passengers: {{ $passengerCount }}</p>
         @endif

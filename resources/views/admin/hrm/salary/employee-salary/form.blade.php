@@ -56,7 +56,7 @@
                 </div>
                 <div>
                     <label class="erp-form-label">Payment Method <span class="text-red-500">*</span></label>
-                    <select name="payment_method" required class="erp-input !text-xs">
+                    <select name="payment_method" id="payment_method" required class="erp-input !text-xs">
                         @foreach($methods as $value => $label)
                             <option value="{{ $value }}" {{ old('payment_method', $structure->payment_method) === $value ? 'selected' : '' }}>{{ $label }}</option>
                         @endforeach
@@ -99,7 +99,12 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                     <label class="erp-form-label">Bank Account</label>
-                    <input type="text" name="bank_account" maxlength="40" value="{{ old('bank_account', $structure->bank_account) }}" class="erp-input !text-xs">
+                    <input type="text" name="bank_account" id="bank_account" maxlength="40" value="{{ old('bank_account', $structure->bank_account) }}" class="erp-input !text-xs">
+                </div>
+                <div id="bank-disbursement-wrap" class="hidden">
+                    <label class="erp-form-label">Fixed Bank Amount (monthly)</label>
+                    <input type="number" step="0.01" min="0" name="bank_disbursement_amount" id="bank_disbursement_amount"
+                           value="{{ old('bank_disbursement_amount', $structure->bank_disbursement_amount) }}" class="erp-input !text-xs">
                 </div>
                 <div>
                     <label class="erp-form-label">Effective From</label>
@@ -119,4 +124,18 @@
         </form>
     </div>
 </div>
+@push('scripts')
+<script>
+(function () {
+    const paymentSelect = document.getElementById('payment_method');
+    const splitWrap = document.getElementById('bank-disbursement-wrap');
+    function syncPaymentFields() {
+        if (!paymentSelect || !splitWrap) return;
+        splitWrap.classList.toggle('hidden', paymentSelect.value !== 'split');
+    }
+    paymentSelect?.addEventListener('change', syncPaymentFields);
+    syncPaymentFields();
+})();
+</script>
+@endpush
 @endsection

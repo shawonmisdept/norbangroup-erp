@@ -55,13 +55,17 @@
                         @if($canManage)
                             <td class="text-right whitespace-nowrap">
                                 @if($renewal->isPending())
-                                    <form method="POST" action="{{ route('admin.hrm.contract-renewals.approve', $renewal) }}" class="inline">
+                                    <form method="POST" action="{{ route('admin.hrm.contract-renewals.approve', $renewal) }}" class="inline"
+                                          data-confirm="Approve contract extension to {{ $renewal->new_end_date->format('d M Y') }}?"
+                                          data-confirm-variant="primary"
+                                          data-confirm-ok="Yes, approve">
                                         @csrf
                                         <button type="submit" class="erp-btn-sm">Approve</button>
                                     </form>
                                     <details class="inline-block ml-1">
                                         <summary class="erp-btn-sm-secondary cursor-pointer">Reject</summary>
-                                        <form method="POST" action="{{ route('admin.hrm.contract-renewals.reject', $renewal) }}" class="mt-2 p-2 border rounded bg-white">
+                                        <form method="POST" action="{{ route('admin.hrm.contract-renewals.reject', $renewal) }}" class="mt-2 p-2 border rounded bg-white"
+                                              data-confirm="Reject this contract renewal request?">
                                             @csrf
                                             <textarea name="rejection_reason" required class="erp-input text-xs" rows="2" placeholder="Reason"></textarea>
                                             <button type="submit" class="erp-btn-sm-secondary mt-1 w-full">Confirm reject</button>

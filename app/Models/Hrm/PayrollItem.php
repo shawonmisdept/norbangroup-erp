@@ -19,8 +19,10 @@ class PayrollItem extends Model
         'absent_deduction', 'late_deduction', 'other_deduction',
         'tds_amount', 'pf_employee_amount', 'pf_employer_amount', 'loan_deduction',
         'net_pay',
+        'bank_pay_amount', 'cash_pay_amount', 'disbursement_override',
+        'cash_disbursed_at', 'cash_disbursed_by',
         'head_breakdown', 'payslip_sent_at',
-        'payment_method', 'bank_account', 'notes',
+        'payment_method', 'salary_bank_id', 'bank_account', 'notes',
     ];
 
     protected $casts = [
@@ -36,10 +38,14 @@ class PayrollItem extends Model
         'pf_employee_amount'=> 'decimal:2',
         'pf_employer_amount'=> 'decimal:2',
         'loan_deduction'    => 'decimal:2',
-        'net_pay'           => 'decimal:2',
-        'half_day_paid_units' => 'decimal:2',
-        'head_breakdown'    => 'array',
-        'payslip_sent_at'   => 'datetime',
+        'net_pay'               => 'decimal:2',
+        'bank_pay_amount'       => 'decimal:2',
+        'cash_pay_amount'       => 'decimal:2',
+        'disbursement_override' => 'boolean',
+        'cash_disbursed_at'     => 'datetime',
+        'half_day_paid_units'   => 'decimal:2',
+        'head_breakdown'        => 'array',
+        'payslip_sent_at'       => 'datetime',
     ];
 
     public function factory(): BelongsTo
@@ -57,9 +63,38 @@ class PayrollItem extends Model
         return $this->belongsTo(PayrollPeriod::class, 'payroll_period_id');
     }
 
+    public function salaryBank(): BelongsTo
+    {
+        return $this->belongsTo(SalaryBank::class, 'salary_bank_id');
+    }
+
     public function run(): BelongsTo
     {
         return $this->belongsTo(PayrollRun::class, 'payroll_run_id');
+    }
+
+    public function cashDisbursedByUser(): BelongsTo
+    {
+        return $this->belongsTo(\App\Models\User::class, 'cash_disbursed_by');
+    }
+
+    public function requiresCashDisbursement(): bool
+    {
+        return (float) $this->cash_pay_amount > 0;
+    }
+
+    public function isCashDisbursed(): bool
+    {
+        return ! $this->requiresCashDisbursement() || $this->cash_disbursed_at !== null;
+    }
+
+    public function paymentMethodLabel(): string
+    {
+        return match ($this->payment_method) {
+            'split' => 'Bank transfer',
+            'cash'  => 'Cash',
+            default => 'Bank transfer',
+        };
     }
 
     public function totalDeductions(): float

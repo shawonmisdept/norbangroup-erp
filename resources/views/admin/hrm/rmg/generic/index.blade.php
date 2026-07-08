@@ -38,11 +38,19 @@
 @endswitch
 <td class="text-right">
 @if($canManage && $submodule === 'salary-hold' && $record->status === 'active')
-<form method="POST" action="{{ route('admin.hrm.rmg.salary-hold.release', $record) }}" class="inline">@csrf<button type="submit" class="erp-btn-primary !py-1 !px-2 text-[10px]">Release</button></form>
+<form method="POST" action="{{ route('admin.hrm.rmg.salary-hold.release', $record) }}" class="inline"
+      data-confirm="Release salary hold for {{ $record->employee?->name ?? 'this employee' }}?"
+      data-confirm-variant="warning">@csrf<button type="submit" class="erp-btn-primary !py-1 !px-2 text-[10px]">Release</button></form>
 @elseif($canManage && $submodule === 'production-incentive' && $record->status === 'draft')
-<form method="POST" action="{{ route('admin.hrm.rmg.production-incentive.approve', $record) }}" class="inline">@csrf<button type="submit" class="erp-btn-primary !py-1 !px-2 text-[10px]">Approve</button></form>
+<form method="POST" action="{{ route('admin.hrm.rmg.production-incentive.approve', $record) }}" class="inline"
+      data-confirm="Approve this production incentive?"
+      data-confirm-variant="primary"
+      data-confirm-ok="Yes, approve">@csrf<button type="submit" class="erp-btn-primary !py-1 !px-2 text-[10px]">Approve</button></form>
 @elseif($canManage && $submodule === 'osd-movement' && $record->status === 'pending')
-<form method="POST" action="{{ route('admin.hrm.rmg.osd-movement.approve', $record) }}" class="inline">@csrf<button type="submit" class="erp-btn-primary !py-1 !px-2 text-[10px]">Approve</button></form>
+<form method="POST" action="{{ route('admin.hrm.rmg.osd-movement.approve', $record) }}" class="inline"
+      data-confirm="Approve this OSD movement?"
+      data-confirm-variant="primary"
+      data-confirm-ok="Yes, approve">@csrf<button type="submit" class="erp-btn-primary !py-1 !px-2 text-[10px]">Approve</button></form>
 <form method="POST" action="{{ route('admin.hrm.rmg.osd-movement.reject', $record) }}" class="inline ml-1" data-confirm="Reject this OSD movement?">@csrf<button type="submit" class="erp-btn-secondary !py-1 !px-2 text-[10px] !text-red-600">Reject</button></form>
 @endif
 @php

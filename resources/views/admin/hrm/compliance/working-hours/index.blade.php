@@ -10,7 +10,9 @@
     <button type="submit" class="erp-btn-primary">Filter</button>
 </form>
 @if($canManage && $factoryId)
-<form method="POST" action="{{ route('admin.hrm.compliance.working-hours.notify') }}" class="flex gap-2 items-end">
+<form method="POST" action="{{ route('admin.hrm.compliance.working-hours.notify') }}" class="flex gap-2 items-end"
+      data-confirm="Send working-hours violation notifications to HR?"
+      data-confirm-variant="warning">
     @csrf
     <input type="hidden" name="factory_id" value="{{ $factoryId }}">
     <input type="hidden" name="year" value="{{ $year }}">

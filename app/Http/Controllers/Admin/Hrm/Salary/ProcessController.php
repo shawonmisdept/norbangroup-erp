@@ -77,6 +77,8 @@ class ProcessController extends Controller
             'employee.department',
             'employee.designation',
             'employee.salaryStructure.salaryGrade',
+            'employee.salaryStructure.salaryBank',
+            'salaryBank',
             'period.factory',
         ]);
 
@@ -99,6 +101,8 @@ class ProcessController extends Controller
             'employee.department',
             'employee.designation',
             'employee.salaryStructure.salaryGrade',
+            'employee.salaryStructure.salaryBank',
+            'salaryBank',
             'period.factory',
         ]);
 

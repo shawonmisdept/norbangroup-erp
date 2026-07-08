@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Admin\Tms;
 use App\Http\Controllers\Admin\Hrm\Concerns\ScopesHrmFactory;
 use App\Http\Controllers\Controller;
 use App\Models\Hrm\Employee;
+use App\Models\Tms\TmsDriver;
 use App\Models\Tms\TmsRentalVendor;
 use App\Models\Tms\TmsVehicle;
+use App\Services\Tms\VehiclePaperService;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
@@ -14,9 +16,15 @@ class VehicleController extends Controller
 {
     use ScopesHrmFactory;
 
+    public function __construct(
+        private VehiclePaperService $paperService,
+    ) {}
+
     public function index(Request $request)
     {
-        $query = TmsVehicle::query()->with(['factory', 'rentalVendor'])->latest('id');
+        $query = TmsVehicle::query()
+            ->with(['factory', 'rentalVendor', 'primaryDriver.employee', 'allocatedEmployee.designation'])
+            ->latest('id');
         $this->scopeToUserFactory($query, $request);
 
         if ($request->filled('factory_id')) {
@@ -25,27 +33,62 @@ class VehicleController extends Controller
         if ($request->filled('status')) {
             $query->where('status', $request->status);
         }
+        if ($request->filled('type')) {
+            $query->where('type', $request->type);
+        }
+        if ($request->filled('search')) {
+            $term = $request->search;
+            $query->where(function ($q) use ($term) {
+                $q->where('name', 'like', "%{$term}%")
+                    ->orWhere('reg_number', 'like', "%{$term}%");
+            });
+        }
+
+        $statsBase = clone $query;
+        $allForStats = (clone $statsBase)->get();
+        $paperCounts = $this->paperService->dashboardCounts($allForStats);
+
+        if ($request->filled('paper_status')) {
+            $status = $request->paper_status;
+            $filtered = $query->get()->filter(
+                fn (TmsVehicle $vehicle) => $this->paperService->worstStatusForVehicle($vehicle) === $status
+            );
+            $vehicles = $filtered->values();
+            $paginator = null;
+        } else {
+            $vehicles = $query->paginate(25)->withQueryString();
+            $paginator = $vehicles;
+        }
 
         return view('admin.tms.vehicles.index', [
-            'vehicles'  => $query->paginate(25)->withQueryString(),
-            'factories' => $this->factoryOptions($request),
-            'statuses'  => config('tms.vehicle_statuses'),
-            'filters'   => $request->only(['factory_id', 'status']),
+            'vehicles'     => $vehicles,
+            'paginator'    => $paginator,
+            'factories'    => $this->factoryOptions($request),
+            'statuses'     => config('tms.vehicle_statuses'),
+            'types'        => config('tms.vehicle_types'),
+            'paperStatuses'=> [
+                VehiclePaperService::STATUS_EXPIRED => 'Expired',
+                VehiclePaperService::STATUS_URGENT  => 'Urgent',
+                VehiclePaperService::STATUS_WARNING => 'Warning',
+                VehiclePaperService::STATUS_OK      => 'All OK',
+            ],
+            'stats'        => [
+                'total'    => $allForStats->count(),
+                'available'=> $allForStats->where('status', 'available')->count(),
+                'maintenance'=> $allForStats->where('status', 'maintenance')->count(),
+                'papers'   => $paperCounts['expired'] + $paperCounts['urgent'],
+            ],
+            'paperService' => $this->paperService,
+            'filters'      => $request->only(['factory_id', 'status', 'type', 'search', 'paper_status']),
         ]);
     }
 
     public function create(Request $request)
     {
-        return view('admin.tms.vehicles.form', [
-            'vehicle'   => new TmsVehicle(['type' => 'own', 'fuel_type' => 'petrol', 'status' => 'available', 'passenger_capacity' => 4]),
-            'factories' => $this->factoryOptions($request),
-            'types'     => config('tms.vehicle_types'),
-            'fuelTypes' => config('tms.fuel_types'),
-            'statuses'  => config('tms.vehicle_statuses'),
-            'paidBy'    => config('tms.fuel_paid_by'),
-            'vendors'   => $this->vendorOptions($request),
-            'employees' => $this->employeeOptions($request),
-        ]);
+        return view('admin.tms.vehicles.form', $this->formData($request, new TmsVehicle([
+            'type' => 'own', 'fuel_type' => 'petrol', 'status' => 'available',
+            'passenger_capacity' => 4, 'registration_paper_status' => 'ok',
+        ])));
     }
 
     public function store(Request $request)
@@ -65,7 +108,11 @@ class VehicleController extends Controller
     {
         $this->authorizeFactoryAccess($request, $vehicle->factory_id);
 
-        $vehicle->load(['factory', 'rentalVendor', 'allocatedEmployee.designation', 'defaultDrivers.employee']);
+        $vehicle->load([
+            'factory', 'rentalVendor', 'allocatedEmployee.designation',
+            'primaryDriver.employee', 'defaultDrivers.employee',
+            'paperRenewals.renewedByUser',
+        ]);
 
         $recentTrips = $vehicle->tripLogs()
             ->with(['driver.employee', 'rentalDriver', 'transportRequests.employee'])
@@ -74,9 +121,13 @@ class VehicleController extends Controller
             ->get();
 
         return view('admin.tms.vehicles.show', [
-            'vehicle'     => $vehicle,
-            'recentTrips' => $recentTrips,
-            'canManage'   => $request->user()?->canManageTmsSubmodule('vehicles') ?? false,
+            'vehicle'      => $vehicle,
+            'recentTrips'    => $recentTrips,
+            'canManage'      => $request->user()?->canManageTmsSubmodule('vehicles') ?? false,
+            'paperTypes'     => config('tms.paper_types'),
+            'paperService'   => $this->paperService,
+            'papers'         => $this->paperService->papersForVehicle($vehicle),
+            'worstPaperStatus'=> $this->paperService->worstStatusForVehicle($vehicle),
         ]);
     }
 
@@ -84,16 +135,9 @@ class VehicleController extends Controller
     {
         $this->authorizeFactoryAccess($request, $vehicle->factory_id);
 
-        return view('admin.tms.vehicles.form', [
-            'vehicle'   => $vehicle->load(['rentalVendor', 'allocatedEmployee']),
-            'factories' => $this->factoryOptions($request),
-            'types'     => config('tms.vehicle_types'),
-            'fuelTypes' => config('tms.fuel_types'),
-            'statuses'  => config('tms.vehicle_statuses'),
-            'paidBy'    => config('tms.fuel_paid_by'),
-            'vendors'   => $this->vendorOptions($request, $vehicle->factory_id),
-            'employees' => $this->employeeOptions($request, $vehicle->factory_id),
-        ]);
+        return view('admin.tms.vehicles.form', $this->formData($request, $vehicle->load([
+            'rentalVendor', 'allocatedEmployee', 'primaryDriver',
+        ])));
     }
 
     public function update(Request $request, TmsVehicle $vehicle)
@@ -103,7 +147,7 @@ class VehicleController extends Controller
             'updated_by' => $request->user()->id,
         ]);
 
-        return redirect()->route('admin.tms.vehicles.index')->with('success', 'Vehicle updated.');
+        return redirect()->route('admin.tms.vehicles.show', $vehicle)->with('success', 'Vehicle updated.');
     }
 
     public function destroy(Request $request, TmsVehicle $vehicle)
@@ -114,30 +158,72 @@ class VehicleController extends Controller
         return redirect()->route('admin.tms.vehicles.index')->with('success', 'Vehicle deleted.');
     }
 
+    /** @return array<string, mixed> */
+    private function formData(Request $request, TmsVehicle $vehicle): array
+    {
+        $factoryId = $vehicle->factory_id ?? $request->user()?->factory_id;
+
+        return [
+            'vehicle'    => $vehicle,
+            'factories'  => $this->factoryOptions($request),
+            'types'      => config('tms.vehicle_types'),
+            'fuelTypes'  => config('tms.fuel_types'),
+            'statuses'   => config('tms.vehicle_statuses'),
+            'paidBy'     => config('tms.fuel_paid_by'),
+            'vendors'    => $this->vendorOptions($request, $factoryId),
+            'employees'  => $this->employeeOptions($request, $factoryId),
+            'drivers'    => $this->driverOptions($request, $factoryId),
+            'categories' => config('tms.vehicle_categories'),
+            'regStatuses'=> config('tms.registration_paper_statuses'),
+        ];
+    }
+
     private function validateVehicle(Request $request, ?TmsVehicle $vehicle = null): array
     {
+        $fuelTypes = implode(',', array_keys(config('tms.fuel_types', [])));
+        $categories = implode(',', array_keys(config('tms.vehicle_categories', [])));
+        $regStatuses = implode(',', array_keys(config('tms.registration_paper_statuses', [])));
+
         $data = $request->validate([
-            'factory_id'             => ['required', 'exists:factories,id'],
-            'name'                   => ['required', 'string', 'max:255'],
-            'reg_number'             => [
+            'factory_id'                 => ['required', 'exists:factories,id'],
+            'name'                       => ['required', 'string', 'max:255'],
+            'vehicle_category'           => ['nullable', 'in:' . $categories],
+            'model_year'                 => ['nullable', 'integer', 'min:1980', 'max:2100'],
+            'engine_cc'                  => ['nullable', 'integer', 'min:50', 'max:10000'],
+            'reg_number'                 => [
                 'required', 'string', 'max:32',
                 Rule::unique('tms_vehicles', 'reg_number')
                     ->where('factory_id', $request->input('factory_id'))
                     ->ignore($vehicle?->id),
             ],
-            'type'                   => ['required', 'in:own,rental'],
-            'fuel_type'              => ['required', 'in:gas,petrol,diesel'],
-            'passenger_capacity'     => ['required', 'integer', 'min:1', 'max:100'],
-            'status'                 => ['required', 'in:available,on_trip,maintenance'],
-            'rental_vendor_id'       => ['nullable', 'exists:tms_rental_vendors,id'],
-            'rental_km_rate'         => ['nullable', 'numeric', 'min:0'],
-            'fuel_covered_by'        => ['nullable', 'in:company,rental_party'],
-            'maintenance_covered_by' => ['nullable', 'in:company,rental_party'],
-            'allocated_employee_id'  => [
+            'type'                       => ['required', 'in:own,rental'],
+            'fuel_type'                  => ['required', 'in:' . $fuelTypes],
+            'passenger_capacity'         => ['required', 'integer', 'min:1', 'max:100'],
+            'status'                     => ['required', 'in:available,on_trip,maintenance'],
+            'purchase_date'              => ['nullable', 'date'],
+            'registration_date'        => ['nullable', 'date'],
+            'purchase_value'             => ['nullable', 'numeric', 'min:0'],
+            'is_dedicated'               => ['sometimes', 'boolean'],
+            'fitness_expires_at'         => ['nullable', 'date'],
+            'tax_token_expires_at'       => ['nullable', 'date'],
+            'insurance_expires_at'       => ['nullable', 'date'],
+            'route_permit_expires_at'    => ['nullable', 'date'],
+            'registration_paper_status'  => ['required', 'in:' . $regStatuses],
+            'rental_vendor_id'           => ['nullable', 'exists:tms_rental_vendors,id'],
+            'rental_km_rate'             => ['nullable', 'numeric', 'min:0'],
+            'fuel_covered_by'            => ['nullable', 'in:company,rental_party'],
+            'maintenance_covered_by'     => ['nullable', 'in:company,rental_party'],
+            'allocated_employee_id'      => [
                 'nullable',
                 Rule::exists('hrm_employees', 'id')->where(fn ($q) => $q->where('factory_id', $request->input('factory_id'))),
             ],
+            'primary_driver_id'          => [
+                'nullable',
+                Rule::exists('tms_drivers', 'id')->where(fn ($q) => $q->where('factory_id', $request->input('factory_id'))),
+            ],
         ]);
+
+        $data['is_dedicated'] = $request->boolean('is_dedicated');
 
         if ($data['type'] === 'rental') {
             $request->validate([
@@ -179,5 +265,22 @@ class VehicleController extends Controller
         }
 
         return $query->pluck('name', 'id')->all();
+    }
+
+    private function driverOptions(Request $request, ?int $factoryId = null): array
+    {
+        $query = TmsDriver::query()
+            ->with('employee')
+            ->where('status', 'active')
+            ->orderBy('id');
+
+        $fid = $factoryId ?? $request->user()?->factory_id;
+        if ($fid) {
+            $query->where('factory_id', $fid);
+        } elseif ($request->filled('factory_id')) {
+            $query->where('factory_id', $request->factory_id);
+        }
+
+        return $query->get()->mapWithKeys(fn (TmsDriver $d) => [$d->id => $d->displayLabel()])->all();
     }
 }

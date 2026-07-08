@@ -130,14 +130,20 @@
         <p>
             <span class="text-gray-500">Driver Payment:</span> {{ ucfirst($trip->overtimePayment->payment_status) }}
             @if($trip->overtimePayment->payment_status === 'pending' && auth()->user()->hasPermission('tms.overtime.manage'))
-                <form method="POST" action="{{ route('admin.tms.trips.mark-ot-paid', $trip) }}" class="inline ml-2">
+                <form method="POST" action="{{ route('admin.tms.trips.mark-ot-paid', $trip) }}" class="inline ml-2"
+                      data-confirm="Mark driver payment as paid?"
+                      data-confirm-variant="primary"
+                      data-confirm-ok="Yes, mark paid">
                     @csrf
-                    <button type="submit" class="erp-btn-sm-primary" data-confirm="Mark driver payment as paid?">Mark Paid</button>
+                    <button type="submit" class="erp-btn-sm-primary">Mark Paid</button>
                 </form>
             @elseif($trip->overtimePayment->payment_status === 'paid' && auth()->user()->hasPermission('tms.overtime.manage'))
-                <form method="POST" action="{{ route('admin.tms.trips.unmark-ot-paid', $trip) }}" class="inline ml-2">
+                <form method="POST" action="{{ route('admin.tms.trips.unmark-ot-paid', $trip) }}" class="inline ml-2"
+                      data-confirm="Unmark driver payment as paid?"
+                      data-confirm-variant="warning"
+                      data-confirm-ok="Yes, unmark">
                     @csrf
-                    <button type="submit" class="erp-btn-sm-secondary" data-confirm="Unmark driver payment as paid?">Unmark Paid</button>
+                    <button type="submit" class="erp-btn-sm-secondary">Unmark Paid</button>
                 </form>
             @endif
         </p>
@@ -152,16 +158,22 @@
                     <li>Status: {{ ucfirst($trip->rentalVehicleCharge->payment_status) }}</li>
                     @if($trip->rentalVehicleCharge->payment_status === 'pending' && auth()->user()->hasPermission('tms.rental_charges.manage'))
                         <li>
-                            <form method="POST" action="{{ route('admin.tms.trips.mark-rental-paid', $trip) }}" class="inline">
+                            <form method="POST" action="{{ route('admin.tms.trips.mark-rental-paid', $trip) }}" class="inline"
+                                  data-confirm="Mark rental charge as paid?"
+                                  data-confirm-variant="primary"
+                                  data-confirm-ok="Yes, mark paid">
                                 @csrf
-                                <button type="submit" class="erp-btn-sm-primary" data-confirm="Mark rental charge as paid?">Mark Rental Paid</button>
+                                <button type="submit" class="erp-btn-sm-primary">Mark Rental Paid</button>
                             </form>
                         </li>
                     @elseif($trip->rentalVehicleCharge->payment_status === 'paid' && auth()->user()->hasPermission('tms.rental_charges.manage'))
                         <li>
-                            <form method="POST" action="{{ route('admin.tms.trips.unmark-rental-paid', $trip) }}" class="inline">
+                            <form method="POST" action="{{ route('admin.tms.trips.unmark-rental-paid', $trip) }}" class="inline"
+                                  data-confirm="Unmark rental charge as paid?"
+                                  data-confirm-variant="warning"
+                                  data-confirm-ok="Yes, unmark">
                                 @csrf
-                                <button type="submit" class="erp-btn-sm-secondary" data-confirm="Unmark rental charge as paid?">Unmark Rental Paid</button>
+                                <button type="submit" class="erp-btn-sm-secondary">Unmark Rental Paid</button>
                             </form>
                         </li>
                     @endif
@@ -176,7 +188,10 @@
 @if($trip->trip_status === 'not_started' && auth()->user()->canManageTmsSubmodule('trips') && ! $trip->rental_driver_id)
     <div class="erp-panel p-6 max-w-3xl mt-4">
         <h3 class="font-semibold mb-3">Start Trip (Admin)</h3>
-        <form method="POST" action="{{ route('admin.tms.trips.start', $trip) }}" class="space-y-3">
+        <form method="POST" action="{{ route('admin.tms.trips.start', $trip) }}" class="space-y-3"
+              data-confirm="Start this trip?"
+              data-confirm-variant="primary"
+              data-confirm-ok="Yes, start trip">
             @csrf
             @if(! $trip->vehicle?->isRental())
                 <div>
@@ -190,7 +205,10 @@
 @elseif($trip->trip_status === 'in_progress' && auth()->user()->canManageTmsSubmodule('trips') && ! $trip->rental_driver_id)
     <div class="erp-panel p-6 max-w-3xl mt-4">
         <h3 class="font-semibold mb-3">End Trip (Admin)</h3>
-        <form method="POST" action="{{ route('admin.tms.trips.end', $trip) }}" class="space-y-3">
+        <form method="POST" action="{{ route('admin.tms.trips.end', $trip) }}" class="space-y-3"
+              data-confirm="End this trip?"
+              data-confirm-variant="primary"
+              data-confirm-ok="Yes, end trip">
             @csrf
             @if($trip->start_km !== null)
                 <p class="text-xs text-gray-500">Start KM: {{ number_format($trip->start_km, 2) }}</p>
@@ -214,13 +232,16 @@
     <div class="erp-panel p-6 max-w-3xl mt-4">
         <h3 class="font-semibold mb-3 text-red-800">Abort Trip</h3>
         <p class="text-sm text-gray-600 mb-3">Force-close an in-progress trip and cancel all linked passenger requests.</p>
-        <form method="POST" action="{{ route('admin.tms.trips.abort', $trip) }}" class="space-y-3">
+        <form method="POST" action="{{ route('admin.tms.trips.abort', $trip) }}" class="space-y-3"
+              data-confirm="Abort this trip and cancel all passengers?"
+              data-confirm-variant="danger"
+              data-confirm-ok="Yes, abort trip">
             @csrf
             <div>
                 <label class="erp-label">Reason</label>
                 <textarea name="reason" class="erp-input" rows="2" required placeholder="Why is this trip being aborted?"></textarea>
             </div>
-            <button type="submit" class="erp-btn-secondary" data-confirm="Abort this trip and cancel all passengers?">Abort Trip</button>
+            <button type="submit" class="erp-btn-secondary">Abort Trip</button>
         </form>
     </div>
 @endif

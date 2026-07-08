@@ -65,9 +65,16 @@
             </div>
             <div>
                 <p class="text-[11px] text-gray-400 uppercase tracking-wide">Payment</p>
-                <p class="capitalize">{{ $payslip->payment_method ?? '—' }}</p>
-                @if($payslip->bank_account)
-                    <p class="text-xs text-gray-500 mt-0.5">{{ $payslip->bank_account }}</p>
+                <p>{{ $payslip->paymentMethodLabel() }}</p>
+                @if($payslip->salaryBank && in_array($payslip->payment_method, ['bank', 'split'], true))
+                    <p class="text-xs text-gray-600 mt-0.5">{{ $payslip->salaryBank->displayName() }}</p>
+                @endif
+                @if($payslip->bank_account && in_array($payslip->payment_method, ['bank', 'split'], true))
+                    @php
+                        $account = (string) $payslip->bank_account;
+                        $masked = strlen($account) > 4 ? str_repeat('•', max(0, strlen($account) - 4)) . substr($account, -4) : $account;
+                    @endphp
+                    <p class="text-xs text-gray-500 mt-0.5">{{ $masked }}</p>
                 @endif
             </div>
         </div>

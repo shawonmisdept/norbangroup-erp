@@ -22,7 +22,7 @@ class WorkerTransferPendingNotification extends Notification
             'type'    => 'worker_transfer_pending',
             'title'   => 'Worker Transfer Pending',
             'message' => ($this->transfer->employee?->name ?? 'Employee') . ' transfer pending approval — effective ' . $this->transfer->effective_date?->format('d M Y'),
-            'url'     => route('admin.hrm.rmg.worker-transfer.index'),
+            'url'     => route('admin.hrm.rmg.worker-transfer.index', ['status' => 'pending']),
         ];
     }
 }

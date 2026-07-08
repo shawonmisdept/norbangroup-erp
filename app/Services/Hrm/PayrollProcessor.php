@@ -31,6 +31,7 @@ class PayrollProcessor
         private StatutoryPayrollService $statutoryPayroll,
         private SalaryHoldService $salaryHold,
         private PayrollAdjustmentResolver $adjustments,
+        private DisbursementSplitService $disbursement,
     ) {}
 
     public function calculatePeriod(PayrollPeriod $period, User $user): PayrollRun
@@ -94,6 +95,13 @@ class PayrollProcessor
                 $performanceBonusItemIds = $built['performance_bonus_item_ids'] ?? [];
                 unset($built['statutory'], $built['bonus_item_ids'], $built['performance_bonus_item_ids']);
 
+                $split = $this->disbursement->splitFromStructure($structure, (float) $built['net_pay']);
+                $built['bank_pay_amount'] = $split['bank_pay_amount'];
+                $built['cash_pay_amount'] = $split['cash_pay_amount'];
+                $built['disbursement_override'] = false;
+                $built['cash_disbursed_at'] = null;
+                $built['cash_disbursed_by'] = null;
+
                 PayrollItem::updateOrCreate(
                     ['employee_id' => $employee->id, 'payroll_period_id' => $period->id],
                     $built
@@ -143,6 +151,8 @@ class PayrollProcessor
                 'period' => 'No payroll items found for this period.',
             ]);
         }
+
+        $this->disbursement->assertReadyToFreeze($period);
 
         $period->update([
             'status'    => 'frozen',
@@ -350,6 +360,7 @@ class PayrollProcessor
             'head_breakdown'    => $headBreakdown,
             'statutory'         => $statutory,
             'payment_method'    => $structure->payment_method,
+            'salary_bank_id'    => $structure->salary_bank_id,
             'bank_account'      => $structure->bank_account,
             'bonus_item_ids'    => $payrollAdjustments['bonus_item_ids'],
             'performance_bonus_item_ids' => $payrollAdjustments['performance_bonus_item_ids'],

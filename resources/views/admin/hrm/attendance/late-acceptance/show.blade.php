@@ -75,7 +75,8 @@
                     @csrf
                     <button type="submit" class="erp-btn-primary w-full justify-center">Approve</button>
                 </form>
-                <form method="POST" action="{{ route('admin.hrm.attendance.late-acceptance.reject', $application) }}" class="space-y-2">
+                <form method="POST" action="{{ route('admin.hrm.attendance.late-acceptance.reject', $application) }}" class="space-y-2"
+                      data-confirm="Reject this late acceptance application?">
                     @csrf
                     <label class="erp-form-label">Rejection reason</label>
                     <textarea name="rejection_reason" rows="3" required class="erp-input !text-xs" placeholder="Reason for rejection…"></textarea>

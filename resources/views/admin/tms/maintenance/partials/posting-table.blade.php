@@ -6,7 +6,10 @@
     @endphp
 
     @if($showBulk && $unpostedIds->isNotEmpty())
-        <form method="POST" action="{{ route('admin.tms.maintenance.posting.bulk-post') }}" class="erp-panel p-4 mb-4 space-y-3" id="bulk-post-form">
+        <form method="POST" action="{{ route('admin.tms.maintenance.posting.bulk-post') }}" class="erp-panel p-4 mb-4 space-y-3" id="bulk-post-form"
+              data-confirm="Mark selected bills as posted to finance?"
+              data-confirm-variant="primary"
+              data-confirm-ok="Yes, post to finance">
             @csrf
             @foreach(request()->only(['factory_id', 'workshop', 'from', 'to', 'unposted_only']) as $key => $value)
                 @if($value !== null && $value !== '')
@@ -15,7 +18,7 @@
             @endforeach
             <p class="text-sm text-gray-600">Select unposted bills below, or select all {{ $unpostedIds->count() }} unposted bill(s) in this report.</p>
             <div class="flex flex-wrap gap-2">
-                <button type="submit" class="erp-btn-primary" data-confirm="Mark selected bills as posted to finance?">Post Selected to Finance</button>
+                <button type="submit" class="erp-btn-primary">Post Selected to Finance</button>
                 <button type="button" class="erp-btn-secondary" onclick="document.querySelectorAll('.bulk-post-checkbox').forEach(c => c.checked = true)">Select All Unposted</button>
             </div>
         </form>

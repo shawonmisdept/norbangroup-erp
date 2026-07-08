@@ -7,7 +7,10 @@
     'actions' => '<a href="' . route('admin.hrm.attendance.roster.index') . '" class="erp-btn-secondary">← Back</a>',
 ])
 @if($canManage && $roster->status === 'draft')
-<form method="POST" action="{{ route('admin.hrm.attendance.roster.publish', $roster) }}" class="mb-4 text-right">@csrf
+<form method="POST" action="{{ route('admin.hrm.attendance.roster.publish', $roster) }}" class="mb-4 text-right"
+      data-confirm="Publish roster? Employees will see their shift assignments."
+      data-confirm-variant="warning"
+      data-confirm-ok="Yes, publish">@csrf
     <button type="submit" class="erp-btn-primary !text-xs">Publish Roster</button>
 </form>
 @endif

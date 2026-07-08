@@ -268,9 +268,81 @@ return [
     ],
 
     'fuel_types' => [
-        'gas'    => 'Gas',
-        'petrol' => 'Petrol',
-        'diesel' => 'Diesel',
+        'gas'        => 'Gas / CNG',
+        'petrol'     => 'Petrol',
+        'diesel'     => 'Diesel',
+        'octane'     => 'Octane',
+        'cng'        => 'CNG',
+        'hybrid'     => 'Electric / Octane',
+        'lpg_octane' => 'LPG / Octane',
+    ],
+
+    'vehicle_categories' => [
+        'sedan'     => 'Sedan',
+        'jeep'      => 'Jeep / SUV',
+        'microbus'  => 'Microbus',
+        'pickup'    => 'Pickup',
+        'minibus'   => 'Minibus',
+        'motorcycle'=> 'Motorcycle',
+        'other'     => 'Other',
+    ],
+
+    'registration_paper_statuses' => [
+        'ok'      => 'Ok',
+        'pending' => 'Pending',
+        'expired' => 'Expired',
+    ],
+
+    'paper_types' => [
+        'fitness'      => 'Fitness',
+        'tax_token'    => 'Tax Token',
+        'insurance'    => 'Insurance',
+        'route_permit' => 'Route Permit',
+    ],
+
+    'paper_alert_days' => [
+        'warning' => 60,
+        'urgent'  => 30,
+    ],
+
+    'paper_status_colors' => [
+        'ok'      => 'bg-green-100 text-green-800',
+        'warning' => 'bg-amber-100 text-amber-800',
+        'urgent'  => 'bg-orange-100 text-orange-800',
+        'expired' => 'bg-red-100 text-red-800',
+        'missing' => 'bg-gray-100 text-gray-600',
+        'na'      => 'bg-slate-100 text-slate-500',
+    ],
+
+    'paper_status_cell_colors' => [
+        'warning' => 'bg-amber-200 text-amber-950',
+        'urgent'  => 'bg-orange-300 text-orange-950',
+        'expired' => 'bg-red-300 text-red-950 font-semibold',
+        'missing' => 'bg-gray-100 text-gray-600',
+    ],
+
+    'vehicle_papers_print_colors' => [
+        'warning' => ['bg' => '#FFFF00', 'color' => '#000000'],
+        'urgent'  => ['bg' => '#FFC000', 'color' => '#000000'],
+        'expired' => ['bg' => '#FF0000', 'color' => '#FFFFFF'],
+    ],
+
+    'vehicle_papers_unit_colors' => [
+        'BD Com' => '#C6EFCE',
+        'NCL'    => '#FCE4D6',
+        'NFL'    => '#FFC000',
+        'HAL'    => '#4BACC6',
+        'DHL'    => '#BDD7EE',
+    ],
+
+    'vehicle_papers_print_fuel_labels' => [
+        'octane'     => 'Octen',
+        'hybrid'     => 'Elec / Octen',
+        'lpg_octane' => 'LPG / Octen',
+        'gas'        => 'CNG',
+        'cng'        => 'CNG',
+        'diesel'     => 'Diesel',
+        'petrol'     => 'Petrol',
     ],
 
     'fuel_paid_by' => [

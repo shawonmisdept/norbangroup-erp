@@ -42,7 +42,8 @@
         @if($canManage)
             <div class="ml-auto flex flex-wrap gap-2">
                 @if($run->status === 'draft')
-                    <form method="POST" action="{{ route('admin.hrm.performance.increment-runs.calculate', $run) }}">@csrf
+                    <form method="POST" action="{{ route('admin.hrm.performance.increment-runs.calculate', $run) }}"
+                          data-confirm="Calculate increment suggestions for all eligible employees?">@csrf
                         <button type="submit" class="erp-btn-primary !text-xs">Calculate Increments</button>
                     </form>
                 @elseif($run->status === 'calculated')

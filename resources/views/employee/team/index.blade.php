@@ -21,13 +21,19 @@
                             @endif
                         </div>
                         <div class="flex gap-2">
-                            <form method="POST" action="{{ route('employee.team.leave.approve', $approval) }}" class="flex-1">
+                            <form method="POST" action="{{ route('employee.team.leave.approve', $approval) }}" class="flex-1"
+                                  data-confirm="Approve leave for {{ $approval->employee->name }}?"
+                                  data-confirm-variant="primary"
+                                  data-confirm-ok="Yes, approve">
                                 @csrf
                                 <button type="submit" class="emp-btn w-full !py-2.5 !text-xs">Approve</button>
                             </form>
                             <details class="flex-1">
                                 <summary class="emp-btn-secondary w-full cursor-pointer list-none !py-2.5 !text-xs !text-red-600">Reject</summary>
-                                <form method="POST" action="{{ route('employee.team.leave.reject', $approval) }}" class="mt-2 space-y-2">
+                                <form method="POST" action="{{ route('employee.team.leave.reject', $approval) }}" class="mt-2 space-y-2"
+                                      data-confirm="Reject leave for {{ $approval->employee->name }}?"
+                                      data-confirm-variant="danger"
+                                      data-confirm-ok="Yes, reject">
                                     @csrf
                                     <textarea name="rejection_reason" rows="2" required class="emp-input !text-xs" placeholder="Reason…"></textarea>
                                     <button type="submit" class="emp-btn-secondary w-full !py-2 !text-xs !text-red-700">Confirm</button>
@@ -54,13 +60,19 @@
                             @endif
                         </div>
                         <div class="flex gap-2">
-                            <form method="POST" action="{{ route('employee.team.separation.approve', $separation) }}" class="flex-1">
+                            <form method="POST" action="{{ route('employee.team.separation.approve', $separation) }}" class="flex-1"
+                                  data-confirm="Approve separation for {{ $separation->employee->name }}?"
+                                  data-confirm-variant="primary"
+                                  data-confirm-ok="Yes, approve">
                                 @csrf
                                 <button type="submit" class="emp-btn w-full !py-2.5 !text-xs">Approve</button>
                             </form>
                             <details class="flex-1">
                                 <summary class="emp-btn-secondary w-full cursor-pointer list-none !py-2.5 !text-xs !text-red-600">Reject</summary>
-                                <form method="POST" action="{{ route('employee.team.separation.reject', $separation) }}" class="mt-2 space-y-2">
+                                <form method="POST" action="{{ route('employee.team.separation.reject', $separation) }}" class="mt-2 space-y-2"
+                                      data-confirm="Reject separation for {{ $separation->employee->name }}?"
+                                      data-confirm-variant="danger"
+                                      data-confirm-ok="Yes, reject">
                                     @csrf
                                     <textarea name="rejection_reason" rows="2" required class="emp-input !text-xs" placeholder="Reason…"></textarea>
                                     <button type="submit" class="emp-btn-secondary w-full !py-2 !text-xs !text-red-700">Confirm</button>

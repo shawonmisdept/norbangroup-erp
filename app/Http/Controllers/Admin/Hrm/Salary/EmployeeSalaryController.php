@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Hrm\Salary;
 use App\Http\Controllers\Admin\Hrm\Concerns\ScopesHrmFactory;
 use App\Http\Controllers\Controller;
 use App\Models\Hrm\Employee;
+use App\Models\Hrm\SalaryBank;
 use App\Models\Hrm\SalaryGrade;
 use App\Models\Hrm\SalaryGradeDetail;
 use App\Models\Hrm\SalaryHead;
@@ -42,6 +43,7 @@ class EmployeeSalaryController extends Controller
         $employees = collect();
         $gradeDetails = collect();
         $heads = collect();
+        $salaryBanks = collect();
 
         if ($selectedGrade) {
             $gradeDetails = SalaryGradeDetail::query()
@@ -72,6 +74,12 @@ class EmployeeSalaryController extends Controller
 
             $employees = $employeeQuery->get(['id', 'employee_code', 'name', 'factory_id']);
 
+            $salaryBanks = SalaryBank::query()
+                ->where('factory_id', $selectedGrade->factory_id)
+                ->where('is_active', true)
+                ->orderBy('name')
+                ->get(['id', 'code', 'name', 'short_name']);
+
             if ($request->filled('employee_id')) {
                 $selectedEmployee = $employees->firstWhere('id', (int) $request->employee_id)
                     ?? Employee::with('salaryStructure')->find($request->employee_id);
@@ -88,6 +96,7 @@ class EmployeeSalaryController extends Controller
             'structure'         => $structure,
             'gradeDetails'      => $gradeDetails,
             'heads'             => $heads,
+            'salaryBanks'       => $salaryBanks,
             'filterSearch'      => (string) $request->input('search', ''),
             'canManage'         => $request->user()?->hasPermission('hrm.salary.manage') ?? false,
         ]);
@@ -146,13 +155,15 @@ class EmployeeSalaryController extends Controller
         $structure = SalaryStructure::updateOrCreate(
             ['employee_id' => $employee->id],
             [
-                'factory_id'      => $employee->factory_id,
-                'salary_grade_id' => $grade->id,
-                'gross_salary'    => (float) $validated['gross_salary'],
-                'payment_method'  => $validated['payment_method'],
-                'bank_account'    => $validated['bank_account'] ?? null,
-                'effective_from'  => $validated['effective_from'] ?? null,
-                'is_active'       => true,
+                'factory_id'                 => $employee->factory_id,
+                'salary_grade_id'            => $grade->id,
+                'gross_salary'               => (float) $validated['gross_salary'],
+                'payment_method'           => $validated['payment_method'],
+                'salary_bank_id'           => $validated['salary_bank_id'] ?? null,
+                'bank_account'             => $validated['bank_account'] ?? null,
+                'bank_disbursement_amount'   => $validated['bank_disbursement_amount'] ?? null,
+                'effective_from'             => $validated['effective_from'] ?? null,
+                'is_active'                  => true,
             ]
         );
 
@@ -189,15 +200,54 @@ class EmployeeSalaryController extends Controller
 
     private function validateAssignment(Request $request): array
     {
-        return $request->validate([
-            'employee_id'     => ['required', 'exists:hrm_employees,id'],
-            'salary_grade_id' => ['required', 'exists:hrm_salary_grades,id'],
-            'gross_salary'    => ['required', 'numeric', 'min:0'],
-            'overrides'       => ['nullable', 'array'],
-            'overrides.*'     => ['nullable', 'numeric', 'min:0'],
-            'payment_method'  => ['required', Rule::in(array_keys(SalaryStructure::PAYMENT_METHODS))],
-            'bank_account'    => ['nullable', 'string', 'max:40'],
-            'effective_from'  => ['nullable', 'date'],
+        $validated = $request->validate([
+            'employee_id'              => ['required', 'exists:hrm_employees,id'],
+            'salary_grade_id'          => ['required', 'exists:hrm_salary_grades,id'],
+            'gross_salary'             => ['required', 'numeric', 'min:0'],
+            'overrides'                => ['nullable', 'array'],
+            'overrides.*'              => ['nullable', 'numeric', 'min:0'],
+            'payment_method'           => ['required', Rule::in(array_keys(SalaryStructure::PAYMENT_METHODS))],
+            'salary_bank_id'           => ['nullable', 'exists:hrm_salary_banks,id'],
+            'bank_account'             => ['nullable', 'string', 'max:40'],
+            'bank_disbursement_amount' => ['nullable', 'numeric', 'min:0'],
+            'effective_from'           => ['nullable', 'date'],
         ]);
+
+        if (in_array($validated['payment_method'], ['bank', 'split'], true)) {
+            if (blank($validated['salary_bank_id'] ?? null)) {
+                throw \Illuminate\Validation\ValidationException::withMessages([
+                    'salary_bank_id' => 'Select a salary bank for bank or split payment.',
+                ]);
+            }
+
+            $bank = SalaryBank::find($validated['salary_bank_id']);
+            $employee = Employee::find($validated['employee_id']);
+            if (! $bank || ! $employee || (int) $bank->factory_id !== (int) $employee->factory_id) {
+                throw \Illuminate\Validation\ValidationException::withMessages([
+                    'salary_bank_id' => 'Invalid salary bank for this employee factory.',
+                ]);
+            }
+
+            if (blank($validated['bank_account'] ?? null)) {
+                throw \Illuminate\Validation\ValidationException::withMessages([
+                    'bank_account' => 'Employee bank account number is required.',
+                ]);
+            }
+        } else {
+            $validated['salary_bank_id'] = null;
+            $validated['bank_account'] = null;
+        }
+
+        if ($validated['payment_method'] === 'split') {
+            if (blank($validated['bank_disbursement_amount'] ?? null) || (float) $validated['bank_disbursement_amount'] <= 0) {
+                throw \Illuminate\Validation\ValidationException::withMessages([
+                    'bank_disbursement_amount' => 'Fixed bank amount is required for split payment.',
+                ]);
+            }
+        } else {
+            $validated['bank_disbursement_amount'] = null;
+        }
+
+        return $validated;
     }
 }

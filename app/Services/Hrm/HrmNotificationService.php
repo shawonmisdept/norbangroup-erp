@@ -471,7 +471,7 @@ class HrmNotificationService
         Cache::put($cacheKey, true, now()->addHours(12));
 
         $this->notifyPermission(
-            'hrm.rmg.manpower-planning.view',
+            'hrm.rmg.manpower-planning.manage',
             new ManpowerVarianceNotification(
                 $factoryId,
                 $planDate,

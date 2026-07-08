@@ -179,7 +179,10 @@
                 <h2 class="text-xs font-semibold text-gray-700 uppercase tracking-wide">Status & Assignment</h2>
             </div>
             <div class="erp-panel-body space-y-5" x-data="{ selectedStatus: @js($order->status) }">
-                <form method="POST" action="{{ route('admin.requirements.update', $order) }}">
+                <form method="POST" action="{{ route('admin.requirements.update', $order) }}"
+                      data-confirm="Save status change and notify client at {{ $order->email }}?"
+                      data-confirm-variant="warning"
+                      data-confirm-ok="Yes, save & notify">
                     @csrf @method('PATCH')
                     <label class="erp-form-label">Requirement Status</label>
                     <select name="status" class="erp-input !text-xs mb-2" x-model="selectedStatus">

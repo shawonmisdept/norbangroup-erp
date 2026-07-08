@@ -16,10 +16,22 @@
 <td>{{ $flag->statusLabel() }}</td>
 <td class="text-right">
 @if($canManage && $flag->status === 'open')
-<form method="POST" action="{{ route('admin.hrm.rmg.proxy-punch.review', $flag) }}" class="inline space-x-1">@csrf
-<button type="submit" name="status" value="reviewed" class="erp-btn-secondary !py-1 !px-2 text-[10px]">Review</button>
-<button type="submit" name="status" value="dismissed" class="erp-btn-secondary !py-1 !px-2 text-[10px]">Dismiss</button>
-</form>
+    <div class="erp-table-actions justify-end">
+        <form method="POST" action="{{ route('admin.hrm.rmg.proxy-punch.review', $flag) }}" class="inline"
+              data-confirm="Mark this proxy punch flag as reviewed?"
+              data-confirm-variant="primary"
+              data-confirm-ok="Yes, mark reviewed">@csrf
+            <input type="hidden" name="status" value="reviewed">
+            <button type="submit" class="erp-btn-secondary !py-1 !px-2 text-[10px]">Review</button>
+        </form>
+        <form method="POST" action="{{ route('admin.hrm.rmg.proxy-punch.review', $flag) }}" class="inline"
+              data-confirm="Dismiss this proxy punch flag?"
+              data-confirm-variant="warning"
+              data-confirm-ok="Yes, dismiss">@csrf
+            <input type="hidden" name="status" value="dismissed">
+            <button type="submit" class="erp-btn-secondary !py-1 !px-2 text-[10px] !text-red-600">Dismiss</button>
+        </form>
+    </div>
 @endIf
 </td></tr>
 @empty<tr><td colspan="5" class="text-center py-8 text-gray-400">No proxy punch flags yet.</td></tr>@endforelse</tbody></table></div>

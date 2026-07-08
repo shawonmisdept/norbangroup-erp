@@ -24,6 +24,41 @@ class HrmRolePermissionsTest extends TestCase
 {
     use RefreshDatabase;
 
+    public function test_rmg_submodule_manage_implies_view_permission(): void
+    {
+        $role = Role::create([
+            'name'        => 'Gate Pass Manager',
+            'permissions' => ['hrm.rmg.gate-pass.manage'],
+        ]);
+
+        $this->assertTrue($role->hasPermission('hrm.rmg.gate-pass.manage'));
+        $this->assertTrue($role->hasPermission('hrm.rmg.gate-pass.view'));
+        $this->assertFalse($role->hasPermission('hrm.rmg.worker-transfer.view'));
+    }
+
+    public function test_granular_rmg_gate_pass_manage_allows_create_route(): void
+    {
+        $role = Role::create([
+            'name'        => 'Gate Pass Only',
+            'permissions' => ['hrm.rmg.gate-pass.view', 'hrm.rmg.gate-pass.manage'],
+        ]);
+
+        $user = User::create([
+            'name'     => 'Gate Pass User',
+            'email'    => 'gate-pass@test.com',
+            'password' => 'password',
+            'role_id'  => $role->id,
+        ]);
+
+        $this->actingAs($user)
+            ->get(route('admin.hrm.rmg.gate-pass.create'))
+            ->assertOk();
+
+        $this->actingAs($user)
+            ->get(route('admin.hrm.rmg.worker-transfer.index'))
+            ->assertForbidden();
+    }
+
     public function test_rmg_view_does_not_fallback_to_hrm_masters(): void
     {
         $role = Role::create([

@@ -37,13 +37,14 @@ class KbArticleSeedBuilder
         $permission = $subConfig['permission'] ?? null;
         $manage = $subConfig['manage'] ?? null;
         $profile = config('kb-seed-profiles.modules.' . $module->code, []);
+        $customSummary = config('kb-submodule-summaries.' . $module->code . '.' . $key, []);
 
         return $this->articlePayload(
             submoduleKey: $key,
             titleEn: $label . ' — ' . $module->label_en,
             titleBn: $label . ' — ' . $module->label_bn,
-            summaryEn: $description,
-            summaryBn: $description,
+            summaryEn: $customSummary['summary_en'] ?? $description,
+            summaryBn: $customSummary['summary_bn'] ?? $description,
             purposeEn: $this->submodulePurposeEn($module, $key, $label, $description, $subConfig),
             purposeBn: $this->submodulePurposeBn($module, $key, $label, $description, $subConfig),
             audienceEn: $this->submoduleAudienceEn($module, $key, $label, $permission, $manage, $profile),

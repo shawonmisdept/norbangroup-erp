@@ -69,7 +69,8 @@
                     <div><p class="text-[10px] text-gray-400">Leave (paid)</p><p class="font-medium">{{ $metrics['leave_days'] ?? '—' }}</p></div>
                     @if($canManage && !$review->isApproved())
                         <div class="col-span-full">
-                            <form method="POST" action="{{ route('admin.hrm.performance.reviews.recalculate', $review) }}">@csrf
+                            <form method="POST" action="{{ route('admin.hrm.performance.reviews.recalculate', $review) }}"
+                                  data-confirm="Recalculate scores for this review?">@csrf
                                 <button type="submit" class="erp-btn-secondary !py-1 !px-3 text-xs">Recalculate Auto Metrics</button>
                             </form>
                         </div>
@@ -178,10 +179,14 @@
                     @elseif($review->cycle_type === 'probation_6m' && !$review->passedMinimumScore())
                         <p class="text-xs text-amber-700 bg-amber-50 p-2 rounded">Score below {{ $minimumPass }}% — recommendation only, no auto confirmation.</p>
                     @endif
-                    <form method="POST" action="{{ route('admin.hrm.performance.reviews.approve', $review) }}">@csrf
+                    <form method="POST" action="{{ route('admin.hrm.performance.reviews.approve', $review) }}"
+                          data-confirm="Approve this performance review?{{ $review->apply_confirmation && $review->passedMinimumScore() ? ' Confirmation will be applied.' : '' }}"
+                          data-confirm-variant="primary"
+                          data-confirm-ok="Yes, approve">@csrf
                         <button type="submit" class="erp-btn-primary w-full !py-2 text-xs">Approve Review</button>
                     </form>
-                    <form method="POST" action="{{ route('admin.hrm.performance.reviews.reject', $review) }}" class="space-y-2">
+                    <form method="POST" action="{{ route('admin.hrm.performance.reviews.reject', $review) }}" class="space-y-2"
+                          data-confirm="Reject this performance review?">
                         @csrf
                         <textarea name="hr_rejection_reason" rows="2" class="erp-input !text-xs" placeholder="Rejection reason…" required></textarea>
                         <button type="submit" class="erp-btn-secondary w-full !py-2 text-xs text-red-600">Reject</button>

@@ -11,7 +11,10 @@
     <p><span class="text-gray-500">Status:</span> {{ ucfirst($settlement->status) }}</p>
     @if($settlement->notes)<p class="text-xs text-gray-500">{{ $settlement->notes }}</p>@endif
     @if($canManage && $settlement->status === 'calculated' && $settlement->gratuity_amount > 0)
-    <form method="POST" action="{{ route('admin.hrm.compliance.gratuity.paid', $settlement) }}" class="pt-2">@csrf
+    <form method="POST" action="{{ route('admin.hrm.compliance.gratuity.paid', $settlement) }}" class="pt-2"
+          data-confirm="Mark gratuity as paid? This cannot be undone."
+          data-confirm-variant="warning"
+          data-confirm-ok="Yes, mark paid">@csrf
         <button type="submit" class="erp-btn-primary !text-xs">Mark as Paid</button>
     </form>
     @endif

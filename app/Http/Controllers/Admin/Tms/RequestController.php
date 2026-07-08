@@ -9,12 +9,17 @@ use App\Models\Tms\TmsRentalDriver;
 use App\Models\Tms\TmsTransportRequest;
 use App\Models\Tms\TmsVehicle;
 use App\Services\Tms\TransportRequestService;
+use App\Services\Tms\VehiclePaperService;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
 class RequestController extends Controller
 {
     use ScopesHrmFactory;
+
+    public function __construct(
+        private VehiclePaperService $paperService,
+    ) {}
 
     public function index(Request $request)
     {
@@ -60,13 +65,14 @@ class RequestController extends Controller
             ->get();
 
         return view('admin.tms.requests.index', [
-            'requests'      => $query->paginate(25)->withQueryString(),
-            'factories'     => $this->factoryOptions($request),
-            'drivers'       => $drivers,
-            'rentalDrivers' => $rentalDrivers,
-            'vehicles'      => $vehicles,
-            'statuses'      => config('tms.request_statuses'),
-            'filters'       => $request->only(['status', 'factory_id', 'destination', 'pickup_date']),
+            'requests'            => $query->paginate(25)->withQueryString(),
+            'factories'           => $this->factoryOptions($request),
+            'drivers'             => $drivers,
+            'rentalDrivers'       => $rentalDrivers,
+            'vehicles'            => $vehicles,
+            'vehiclePaperWarnings'=> $this->vehiclePaperWarningsMap($vehicles),
+            'statuses'            => config('tms.request_statuses'),
+            'filters'             => $request->only(['status', 'factory_id', 'destination', 'pickup_date']),
         ]);
     }
 
@@ -97,11 +103,12 @@ class RequestController extends Controller
             ->get();
 
         return view('admin.tms.requests.show', [
-            'transportRequest' => $transportRequest,
-            'drivers'          => $drivers,
-            'rentalDrivers'    => $rentalDrivers,
-            'vehicles'         => $vehicles,
-            'statuses'         => config('tms.request_statuses'),
+            'transportRequest'     => $transportRequest,
+            'drivers'              => $drivers,
+            'rentalDrivers'        => $rentalDrivers,
+            'vehicles'             => $vehicles,
+            'vehiclePaperWarnings' => $this->vehiclePaperWarningsMap($vehicles),
+            'statuses'             => config('tms.request_statuses'),
         ]);
     }
 
@@ -209,5 +216,20 @@ class RequestController extends Controller
             'rental_driver_id'  => ['nullable', 'required_if:driver_type,rental', 'exists:tms_rental_drivers,id'],
             'vehicle_id'        => ['nullable', 'exists:tms_vehicles,id'],
         ]);
+    }
+
+    /** @return array<int, array<int, string>> */
+    private function vehiclePaperWarningsMap($vehicles): array
+    {
+        $map = [];
+
+        foreach ($vehicles as $vehicle) {
+            $warnings = $this->paperService->warningMessagesForVehicle($vehicle);
+            if ($warnings !== []) {
+                $map[$vehicle->id] = $warnings;
+            }
+        }
+
+        return $map;
     }
 }

@@ -159,6 +159,34 @@ class TmsNotificationService
         $this->notifyPermission('tms.trips.manage', $notification, $vehicle->factory_id);
     }
 
+    /** @param  array<int, string>  $warnings */
+    public function vehiclePaperAlert(TmsVehicle $vehicle, string $status, array $warnings): void
+    {
+        $title = $status === 'expired' ? 'Vehicle Paper Expired' : 'Vehicle Paper Expiring Soon';
+        $message = $vehicle->displayLabel() . ' — ' . implode('; ', array_slice($warnings, 0, 3));
+
+        $notification = new class($title, $message) extends Notification {
+            public function __construct(private string $title, private string $message) {}
+
+            public function via(object $notifiable): array
+            {
+                return ['database'];
+            }
+
+            public function toDatabase(object $notifiable): array
+            {
+                return [
+                    'type'    => 'tms_vehicle_paper_alert',
+                    'title'   => $this->title,
+                    'message' => $this->message,
+                    'url'     => route('admin.tms.vehicles.papers'),
+                ];
+            }
+        };
+
+        $this->notifyPermission('tms.vehicles.manage', $notification, $vehicle->factory_id);
+    }
+
     private function tripStatusNotification(TmsTransportRequest $request, string $event, bool $portal = false): Notification
     {
         $label = $event === 'started' ? 'Trip Started' : 'Trip Completed';

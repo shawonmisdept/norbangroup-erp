@@ -44,8 +44,11 @@
 @endif
 
 @if($transportRequest->canBeCancelledByEmployee())
-<form method="POST" action="{{ route('employee.transport.requests.cancel', $transportRequest) }}">@csrf
-<button type="submit" class="emp-btn-secondary w-full" data-confirm="{{ $transportRequest->status === 'approved' ? 'Cancel this approved trip? The driver will be notified.' : 'Cancel this request?' }}">Cancel Request</button>
+<form method="POST" action="{{ route('employee.transport.requests.cancel', $transportRequest) }}"
+      data-confirm="{{ $transportRequest->status === 'approved' ? 'Cancel this approved trip? The driver will be notified.' : 'Cancel this request?' }}"
+      data-confirm-variant="danger"
+      data-confirm-ok="Yes, cancel">@csrf
+<button type="submit" class="emp-btn-secondary w-full">Cancel Request</button>
 </form>
 @elseif($transportRequest->status === 'approved')
 <p class="text-xs text-amber-700 bg-amber-50 border border-amber-100 rounded-lg p-3">Trip has started — contact transport admin to cancel.</p>

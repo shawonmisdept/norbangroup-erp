@@ -317,6 +317,10 @@ class User extends Authenticatable
 
     public function canViewSalarySubmodule(string $key): bool
     {
+        if ($this->hasPermission('hrm.salary.view') || $this->hasPermission('hrm.payroll.view')) {
+            return true;
+        }
+
         $sub = config("hrm.salary_submodules.{$key}");
 
         if (! $sub) {
@@ -328,6 +332,10 @@ class User extends Authenticatable
 
     public function canManageSalarySubmodule(string $key): bool
     {
+        if ($this->hasPermission('hrm.salary.manage') || $this->hasPermission('hrm.payroll.manage')) {
+            return true;
+        }
+
         $sub = config("hrm.salary_submodules.{$key}");
 
         if (! $sub) {

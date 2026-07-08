@@ -14,8 +14,9 @@ class SalaryStructure extends Model
     ];
 
     public const PAYMENT_METHODS = [
-        'bank' => 'Bank',
-        'cash' => 'Cash',
+        'bank'  => 'Bank',
+        'cash'  => 'Cash',
+        'split' => 'Bank + Cash (Split)',
     ];
 
     protected $table = 'hrm_salary_structures';
@@ -23,7 +24,7 @@ class SalaryStructure extends Model
     protected $fillable = [
         'factory_id', 'employee_id', 'salary_grade_id', 'gross_salary', 'head_amounts',
         'pay_type', 'basic_salary', 'daily_wage', 'hra', 'medical', 'conveyance', 'other_allowance',
-        'payment_method', 'bank_account', 'effective_from', 'is_active',
+        'payment_method', 'salary_bank_id', 'bank_account', 'bank_disbursement_amount', 'effective_from', 'is_active',
     ];
 
     protected $casts = [
@@ -34,8 +35,9 @@ class SalaryStructure extends Model
         'hra'              => 'decimal:2',
         'medical'          => 'decimal:2',
         'conveyance'       => 'decimal:2',
-        'other_allowance'  => 'decimal:2',
-        'effective_from'   => 'date',
+        'other_allowance'          => 'decimal:2',
+        'bank_disbursement_amount' => 'decimal:2',
+        'effective_from'           => 'date',
         'is_active'        => 'boolean',
     ];
 
@@ -52,6 +54,11 @@ class SalaryStructure extends Model
     public function salaryGrade(): BelongsTo
     {
         return $this->belongsTo(SalaryGrade::class);
+    }
+
+    public function salaryBank(): BelongsTo
+    {
+        return $this->belongsTo(SalaryBank::class, 'salary_bank_id');
     }
 
     public function resolveFactoryId(): int

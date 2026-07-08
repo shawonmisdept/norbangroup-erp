@@ -224,7 +224,8 @@
             </div>
             <div class="erp-panel">
                 <div class="erp-panel-head"><h2 class="text-xs font-semibold text-red-700 uppercase">Reject</h2></div>
-                <form method="POST" action="{{ route('admin.hrm.separations.reject', $separation) }}" class="erp-panel-body space-y-3">
+                <form method="POST" action="{{ route('admin.hrm.separations.reject', $separation) }}" class="erp-panel-body space-y-3"
+                      data-confirm="Reject this separation request?">
                     @csrf
                     <textarea name="rejection_reason" rows="2" required class="erp-input !text-xs" placeholder="Rejection reason…"></textarea>
                     <button type="submit" class="erp-btn-danger w-full justify-center">Reject Request</button>

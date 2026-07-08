@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Hrm\Employee;
 use App\Models\Hrm\GatePass;
 use App\Services\Hrm\HrmNotificationService;
+use App\Support\TimeInput;
 use Illuminate\Http\Request;
 
 class GatePassController extends Controller
@@ -30,6 +31,7 @@ class GatePassController extends Controller
             'passes'    => $query->paginate(25)->withQueryString(),
             'factories' => $this->factoryOptions($request),
             'filters'   => $request->only(['factory_id', 'status']),
+            'statuses'  => GatePass::STATUSES,
             'canManage' => $request->user()?->canManageRmgSubmodule('gate-pass') ?? false,
         ]);
     }
@@ -45,15 +47,7 @@ class GatePassController extends Controller
 
     public function store(Request $request, HrmNotificationService $notifier)
     {
-        $validated = $request->validate([
-            'factory_id'         => ['required', 'exists:factories,id'],
-            'employee_id'        => ['required', 'exists:hrm_employees,id'],
-            'pass_date'          => ['required', 'date'],
-            'out_time'           => ['nullable', 'date_format:H:i'],
-            'expected_in_time'   => ['nullable', 'date_format:H:i'],
-            'destination'        => ['nullable', 'string', 'max:255'],
-            'reason'             => ['nullable', 'string', 'max:1000'],
-        ]);
+        $validated = $this->validatePass($request);
 
         $employee = Employee::findOrFail($validated['employee_id']);
         $this->authorizeFactoryAccess($request, (int) $validated['factory_id']);
@@ -68,6 +62,56 @@ class GatePassController extends Controller
 
         return redirect()->route('admin.hrm.rmg.gate-pass.index')
             ->with('success', 'Gate pass submitted for approval.');
+    }
+
+    public function edit(Request $request, GatePass $gatePass)
+    {
+        $this->authorizeFactoryAccess($request, $gatePass->factory_id);
+
+        if (! $this->canModify($gatePass)) {
+            return redirect()->route('admin.hrm.rmg.gate-pass.index')
+                ->with('error', 'Only pending gate passes can be edited.');
+        }
+
+        return view('admin.hrm.rmg.gate-pass.form', [
+            'pass'      => $gatePass,
+            'factories' => $this->factoryOptions($request),
+            'employees' => $this->employeeOptions($request, $gatePass->employee_id),
+        ]);
+    }
+
+    public function update(Request $request, GatePass $gatePass)
+    {
+        $this->authorizeFactoryAccess($request, $gatePass->factory_id);
+
+        if (! $this->canModify($gatePass)) {
+            return back()->with('error', 'Only pending gate passes can be edited.');
+        }
+
+        $validated = $this->validatePass($request);
+        $this->authorizeFactoryAccess($request, (int) $validated['factory_id']);
+
+        $employee = Employee::findOrFail($validated['employee_id']);
+        abort_if($employee->factory_id !== (int) $validated['factory_id'], 422);
+
+        $gatePass->update($validated);
+
+        return redirect()->route('admin.hrm.rmg.gate-pass.index')
+            ->with('success', 'Gate pass updated.');
+    }
+
+    public function destroy(Request $request, GatePass $gatePass)
+    {
+        $this->authorizeFactoryAccess($request, $gatePass->factory_id);
+
+        if (! $this->canDelete($gatePass)) {
+            return back()->with('error', 'This gate pass cannot be deleted.');
+        }
+
+        $gatePass->delete();
+
+        return redirect()->route('admin.hrm.rmg.gate-pass.index')
+            ->with('success', 'Gate pass deleted.');
     }
 
     public function approve(Request $request, GatePass $gatePass)
@@ -106,14 +150,51 @@ class GatePassController extends Controller
             ->with('success', 'Gate pass rejected.');
     }
 
-    private function employeeOptions(Request $request): array
+    private function employeeOptions(Request $request, ?int $includeId = null): array
     {
         $query = Employee::query()
-            ->whereIn('status', ['active', 'probation'])
             ->orderBy('name');
+
+        if ($includeId) {
+            $query->where(function ($q) use ($includeId) {
+                $q->whereIn('status', ['active', 'probation'])
+                    ->orWhere('id', $includeId);
+            });
+        } else {
+            $query->whereIn('status', ['active', 'probation']);
+        }
 
         $this->scopeToUserFactory($query, $request);
 
         return $query->pluck('name', 'id')->all();
+    }
+
+    /** @return array<string, mixed> */
+    private function validatePass(Request $request): array
+    {
+        $validated = $request->validate([
+            'factory_id'       => ['required', 'exists:factories,id'],
+            'employee_id'      => ['required', 'exists:hrm_employees,id'],
+            'pass_date'        => ['required', 'date'],
+            'out_time'         => ['nullable', 'date_format:H:i'],
+            'expected_in_time' => ['nullable', 'date_format:H:i'],
+            'destination'      => ['nullable', 'string', 'max:255'],
+            'reason'           => ['nullable', 'string', 'max:1000'],
+        ]);
+
+        $validated['out_time'] = TimeInput::normalize($validated['out_time'] ?? null);
+        $validated['expected_in_time'] = TimeInput::normalize($validated['expected_in_time'] ?? null);
+
+        return $validated;
+    }
+
+    private function canModify(GatePass $gatePass): bool
+    {
+        return $gatePass->status === 'pending';
+    }
+
+    private function canDelete(GatePass $gatePass): bool
+    {
+        return in_array($gatePass->status, ['pending', 'rejected'], true);
     }
 }

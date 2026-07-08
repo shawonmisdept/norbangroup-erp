@@ -15,7 +15,7 @@ class PayslipController extends Controller
         $payslips = PayrollItem::query()
             ->with('period')
             ->where('employee_id', $employee->id)
-            ->whereHas('period', fn ($q) => $q->whereIn('status', ['calculated', 'frozen']))
+            ->whereHas('period', fn ($q) => $q->where('status', 'frozen'))
             ->latest('id')
             ->paginate(12);
 
@@ -59,6 +59,8 @@ class PayslipController extends Controller
             'employee.department',
             'employee.designation',
             'employee.salaryStructure.salaryGrade',
+            'employee.salaryStructure.salaryBank',
+            'salaryBank',
         ]);
 
         return [$employee, $payslip];
@@ -66,6 +68,6 @@ class PayslipController extends Controller
 
     private function isPortalVisible(PayrollItem $payslip): bool
     {
-        return in_array($payslip->period?->status, ['calculated', 'frozen'], true);
+        return $payslip->period?->status === 'frozen';
     }
 }

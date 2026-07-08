@@ -16,20 +16,20 @@ class RmgExportService
         $items = PayrollItem::query()
             ->with(['employee.line', 'employee.designation'])
             ->where('payroll_period_id', $period->id)
-            ->where('net_pay', '>', 0)
+            ->where('cash_pay_amount', '>', 0)
             ->get()
             ->sortBy(fn ($item) => ($item->employee?->line?->name ?? '') . ($item->employee?->name ?? ''));
 
         return response()->streamDownload(function () use ($items) {
             $out = fopen('php://output', 'w');
-            fputcsv($out, ['Line', 'Employee Code', 'Name', 'Designation', 'Net Pay (Cash)']);
+            fputcsv($out, ['Line', 'Employee Code', 'Name', 'Designation', 'Cash Pay']);
             foreach ($items as $item) {
                 fputcsv($out, [
                     $item->employee?->line?->name ?? '—',
                     $item->employee?->employee_code,
                     $item->employee?->name,
                     $item->employee?->designation?->name ?? '—',
-                    number_format((float) $item->net_pay, 2, '.', ''),
+                    number_format((float) $item->cash_pay_amount, 2, '.', ''),
                 ]);
             }
             fclose($out);

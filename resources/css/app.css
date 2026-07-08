@@ -408,7 +408,15 @@ select.emp-input.tomselected {
 }
 
 .erp-table th {
-    @apply px-4 py-2.5 text-left text-[11px] font-semibold text-gray-500 uppercase tracking-wider whitespace-nowrap;
+    @apply px-4 py-2.5 text-center text-[11px] font-semibold text-gray-500 uppercase tracking-wider whitespace-nowrap;
+}
+
+.erp-table th.text-right {
+    text-align: right;
+}
+
+.erp-table th.text-center {
+    text-align: center;
 }
 
 .erp-table td {
@@ -636,6 +644,331 @@ select.emp-input.tomselected {
 
 .erp-employee-wizard-step-dot {
     @apply w-4 h-4 rounded-full border-2 shrink-0;
+}
+
+/* TMS vehicle create / edit form */
+.vehicle-form-layout {
+    @apply max-w-[1400px];
+}
+
+.vehicle-form-section {
+    @apply scroll-mt-20 border-b border-erp-border last:border-b-0;
+}
+
+.vehicle-form-section-head {
+    @apply px-5 py-3.5 bg-gray-50/80 border-b border-erp-border;
+}
+
+.vehicle-form-section-body {
+    @apply p-5;
+}
+
+.vehicle-form-grid {
+    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-4 items-start;
+}
+
+.vehicle-form-field {
+    @apply min-w-0 flex flex-col;
+}
+
+#vehicle-form .vehicle-form-field .erp-input,
+#vehicle-form .vehicle-form-field select.erp-input,
+#vehicle-form .vehicle-form-field input[type="date"].erp-input {
+    @apply w-full h-7 min-h-[28px];
+}
+
+#vehicle-form .vehicle-form-field .ts-wrapper {
+    @apply w-full block;
+}
+
+#vehicle-form .vehicle-form-field .ts-wrapper .ts-control {
+    @apply h-7 min-h-[28px];
+}
+
+.vehicle-form-check {
+    @apply flex items-center gap-2 w-full h-7 min-h-[28px] rounded-sm border border-erp-border bg-white px-2 text-xs text-gray-700 cursor-pointer select-none;
+}
+
+.vehicle-form-check input {
+    @apply rounded border-gray-300 text-brand focus:ring-brand/30 shrink-0;
+}
+
+.vehicle-form-hint {
+    @apply text-[11px] text-gray-400 mt-1 leading-snug min-h-[1rem];
+}
+
+.vehicle-form-error {
+    @apply text-[11px] text-red-600 mt-1;
+}
+
+.vehicle-form-footer {
+    @apply px-5 py-4 bg-gray-50/90 border-t border-erp-border flex flex-wrap items-center gap-3;
+}
+
+/* TMS vehicle papers status report */
+.vehicle-papers-filters {
+    @apply p-4 mb-4;
+}
+
+.vehicle-papers-filters-grid {
+    @apply grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-6 gap-3 items-end;
+}
+
+.vehicle-papers-filter-search {
+    @apply sm:col-span-2 xl:col-span-2;
+}
+
+.vehicle-papers-filter-field {
+    @apply min-w-0 flex flex-col gap-1;
+}
+
+.vehicle-papers-filter-field .erp-form-label {
+    @apply text-[11px] font-semibold text-gray-600 leading-none mb-0;
+}
+
+.vehicle-papers-filter-field .erp-input {
+    @apply w-full;
+}
+
+.vehicle-papers-filter-actions {
+    @apply flex items-center gap-2 sm:col-span-2 xl:col-span-1 xl:justify-end;
+}
+
+.vehicle-papers-filter-btn {
+    @apply h-7 min-h-[28px] px-4 whitespace-nowrap;
+}
+
+.vehicle-papers-table-wrap {
+    @apply overflow-x-auto overscroll-x-contain p-3 relative;
+    -webkit-overflow-scrolling: touch;
+}
+
+.vehicle-papers-table-wrap.vehicle-papers-loading {
+    @apply opacity-60 pointer-events-none;
+}
+
+.vehicle-papers-count {
+    @apply ml-auto text-[11px] font-medium text-gray-500 whitespace-nowrap;
+}
+
+.vehicle-papers-table {
+    @apply w-full text-sm;
+    table-layout: fixed;
+    min-width: 76rem;
+    border-collapse: collapse;
+    border: 1px solid #b4b4b4;
+}
+
+.vehicle-papers-table col.col-num { width: 2.25rem; }
+.vehicle-papers-table col.col-unit { width: 4rem; }
+.vehicle-papers-table col.col-vehicle { width: 6.5rem; }
+.vehicle-papers-table col.col-reg { width: 7rem; }
+.vehicle-papers-table col.col-year { width: 3rem; }
+.vehicle-papers-table col.col-cc { width: 3rem; }
+.vehicle-papers-table col.col-fuel { width: 3.5rem; }
+.vehicle-papers-table col.col-paper { width: 4.5rem; }
+.vehicle-papers-table col.col-reg-status { width: 4rem; }
+.vehicle-papers-table col.col-assign { width: 4.5rem; }
+.vehicle-papers-table col.col-actions { width: 4.75rem; }
+
+/* Print sheet — same column scale as screen table */
+.vehicle-papers-print-table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    border: 1px solid #b4b4b4;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+}
+
+.vehicle-papers-print-table col.col-num { width: 2.25rem; }
+.vehicle-papers-print-table col.col-vehicle { width: 6.5rem; }
+.vehicle-papers-print-table col.col-reg { width: 7rem; }
+.vehicle-papers-print-table col.col-year { width: 3rem; }
+.vehicle-papers-print-table col.col-purchase { width: 4.5rem; }
+.vehicle-papers-print-table col.col-reg-date { width: 4.5rem; }
+.vehicle-papers-print-table col.col-cc { width: 3rem; }
+.vehicle-papers-print-table col.col-fuel { width: 3.5rem; }
+.vehicle-papers-print-table col.col-purchase-value { width: 5.5rem; }
+.vehicle-papers-print-table col.col-paper { width: 4.5rem; }
+.vehicle-papers-print-table col.col-reg-status { width: 4rem; }
+.vehicle-papers-print-table col.col-unit { width: 4rem; }
+.vehicle-papers-print-table col.col-type { width: 3rem; }
+.vehicle-papers-print-table col.col-assign { width: 4.5rem; }
+
+.vehicle-papers-print-table th,
+.vehicle-papers-print-table td {
+    border: 1px solid #c7c7c7;
+    height: 1.75rem;
+    max-height: 1.75rem;
+    line-height: 1.25;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0 0.375rem;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 11pt;
+    color: #374151;
+}
+
+.vehicle-papers-print-table thead th {
+    font-weight: 700;
+    white-space: normal;
+    word-break: break-word;
+    font-size: 11pt;
+    color: #374151;
+    border-color: #a8a8a8;
+    background-color: #f3f3f3;
+}
+
+.vehicle-papers-print-table .vp-left {
+    text-align: left;
+}
+
+.vehicle-papers-print-sheet {
+    padding: 12px;
+    font-family: Calibri, Arial, sans-serif;
+    color: #000;
+    background: #fff;
+}
+
+.vehicle-papers-print-title {
+    text-align: center;
+    margin: 0 0 2px;
+    font-size: 14pt;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.vehicle-papers-print-subtitle {
+    text-align: center;
+    margin: 0 0 10px;
+    font-size: 11pt;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.vehicle-papers-print-meta {
+    text-align: right;
+    font-size: 7pt;
+    color: #444;
+    margin-bottom: 6px;
+}
+
+.vehicle-papers-print-toolbar {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+@media print {
+    .vehicle-papers-print-sheet {
+        padding: 0;
+    }
+
+    .vehicle-papers-print-toolbar {
+        display: none !important;
+    }
+
+    .vehicle-papers-print-table tr {
+        page-break-inside: avoid;
+    }
+}
+
+.vehicle-papers-table th,
+.vehicle-papers-table td {
+    border: 1px solid #c7c7c7;
+    height: 2.125rem;
+    max-height: 2.125rem;
+    line-height: 1.25;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    @apply px-1.5 py-0 text-gray-700 align-middle;
+}
+
+.vehicle-papers-table tbody tr {
+    height: 2.125rem;
+}
+
+.vehicle-papers-table thead tr {
+    @apply bg-gray-50;
+}
+
+.vehicle-papers-table th {
+    @apply text-center text-xs font-semibold text-gray-700 normal-case tracking-normal whitespace-nowrap;
+    border-color: #a8a8a8;
+    background-color: #f3f3f3;
+}
+
+.vehicle-papers-table th.vehicle-papers-th-paper {
+    @apply text-center;
+}
+
+.vehicle-papers-table tbody tr:hover td:not([class*="bg-"]) {
+    @apply bg-blue-50/30;
+}
+
+.vehicle-papers-table td.vehicle-papers-num,
+.vehicle-papers-table td.vehicle-papers-year,
+.vehicle-papers-table td.vehicle-papers-cc {
+    @apply tabular-nums text-center text-xs;
+}
+
+.vehicle-papers-table td.vehicle-papers-date {
+    @apply text-center text-xs tabular-nums whitespace-nowrap;
+}
+
+.vehicle-papers-table td.vehicle-papers-empty {
+    @apply text-center text-gray-400 text-xs;
+}
+
+.vehicle-papers-table td.vehicle-papers-actions {
+    @apply text-right whitespace-nowrap;
+    overflow: visible;
+}
+
+.vehicle-papers-table td.vehicle-papers-reg-status {
+    @apply text-center;
+    overflow: visible;
+}
+
+.vehicle-papers-table td.vehicle-papers-reg-status .erp-badge {
+    @apply max-w-full truncate inline-block align-middle;
+}
+
+.vehicle-papers-table .vehicle-papers-actions .erp-table-actions {
+    @apply inline-flex flex-nowrap items-center justify-end gap-1.5;
+}
+
+.vehicle-papers-table .vehicle-papers-actions .erp-btn-sm-primary,
+.vehicle-papers-table .vehicle-papers-actions .erp-btn-sm-secondary {
+    @apply px-2.5 py-1 text-[11px] leading-none;
+}
+
+.vehicle-papers-table .vehicle-papers-name {
+    @apply font-medium text-gray-900 inline-block max-w-full truncate align-middle;
+}
+
+.vehicle-papers-table .vehicle-papers-reg {
+    @apply tabular-nums text-xs whitespace-nowrap;
+}
+
+.vehicle-papers-table .vehicle-papers-unit {
+    @apply text-xs max-w-full;
+}
+
+.vehicle-papers-legend {
+    @apply flex flex-wrap items-center gap-x-4 gap-y-1 px-1 pb-3 mb-3 border-b border-gray-200 text-[11px] text-gray-600;
+}
+
+.vehicle-papers-legend span {
+    @apply inline-flex items-center gap-1.5 font-medium;
+}
+
+.vehicle-papers-legend i {
+    @apply inline-block w-4 h-4 border border-gray-400;
 }
 
 .erp-employee-index-row {

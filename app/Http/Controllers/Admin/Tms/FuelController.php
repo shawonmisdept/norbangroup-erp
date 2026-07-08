@@ -9,6 +9,7 @@ use App\Models\Tms\TmsTripLog;
 use App\Models\Tms\TmsVehicle;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 
 class FuelController extends Controller
 {
@@ -139,7 +140,7 @@ class FuelController extends Controller
             'factory_id'     => ['required', 'exists:factories,id'],
             'vehicle_id'     => ['required', 'exists:tms_vehicles,id'],
             'trip_log_id'    => ['nullable', 'exists:tms_trip_logs,id'],
-            'fuel_type'      => ['required', 'in:gas,petrol,diesel'],
+            'fuel_type'      => ['required', Rule::in(array_keys(config('tms.fuel_types', [])))],
             'quantity'       => ['required', 'numeric', 'min:0.001'],
             'unit'           => ['required', 'string', 'max:16'],
             'unit_price'     => ['required', 'numeric', 'min:0'],

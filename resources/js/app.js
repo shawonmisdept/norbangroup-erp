@@ -861,6 +861,105 @@ Alpine.data('erpShell', (openGroups = {}, adminOpenInitial = false) => ({
     },
 }));
 
+Alpine.data('vehiclePapersIndex', () => ({
+    loading: false,
+    searchTimer: null,
+    requestId: 0,
+
+    init() {
+        this.$refs.results?.addEventListener('click', (event) => {
+            const link = event.target.closest('.vehicle-papers-pagination a[href]');
+
+            if (! link) {
+                return;
+            }
+
+            event.preventDefault();
+            this.load(link.href);
+        });
+    },
+
+    buildUrl(page = null) {
+        const form = this.$refs.filterForm;
+        const params = new URLSearchParams(new FormData(form));
+
+        if (page) {
+            params.set('page', String(page));
+        } else {
+            params.delete('page');
+        }
+
+        return `${form.action}?${params.toString()}`;
+    },
+
+    async load(url = null) {
+        const requestUrl = url ?? this.buildUrl();
+        const currentRequest = ++this.requestId;
+
+        this.loading = true;
+
+        try {
+            const response = await fetch(requestUrl, {
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    Accept: 'text/html',
+                },
+            });
+
+            if (! response.ok) {
+                throw new Error(`Request failed: ${response.status}`);
+            }
+
+            const html = await response.text();
+
+            if (currentRequest !== this.requestId) {
+                return;
+            }
+
+            this.$refs.results.innerHTML = html;
+            window.history.replaceState(null, '', requestUrl);
+        } catch (error) {
+            if (currentRequest === this.requestId) {
+                window.location.href = requestUrl;
+            }
+        } finally {
+            if (currentRequest === this.requestId) {
+                this.loading = false;
+            }
+        }
+    },
+
+    debouncedSearch() {
+        clearTimeout(this.searchTimer);
+        this.searchTimer = setTimeout(() => this.load(), 350);
+    },
+
+    onFilterChange() {
+        this.load();
+    },
+
+    resetFilters() {
+        window.location.href = this.$refs.filterForm.action;
+    },
+}));
+
+Alpine.data('erpListFilters', () => ({
+    searchTimer: null,
+
+    submit() {
+        this.$refs.filterForm?.requestSubmit();
+    },
+
+    debouncedSearch() {
+        clearTimeout(this.searchTimer);
+        this.searchTimer = setTimeout(() => this.submit(), 350);
+    },
+
+    onSelectChange() {
+        this.submit();
+    },
+}));
+
 Alpine.data('employeeIndexFilters', () => ({
     searchTimer: null,
 

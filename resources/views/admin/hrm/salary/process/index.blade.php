@@ -27,7 +27,10 @@
     </div>
     <div class="erp-panel-body">
         <p class="text-xs text-gray-500 mb-3">Requires a <strong>frozen attendance period</strong> for the same factory and month.</p>
-        <form method="POST" action="{{ route('admin.hrm.salary.process.run') }}" class="grid grid-cols-1 md:grid-cols-4 gap-3 items-end">
+        <form method="POST" action="{{ route('admin.hrm.salary.process.run') }}" class="grid grid-cols-1 md:grid-cols-4 gap-3 items-end"
+              data-confirm="Calculate payroll for the selected factory and month? Existing calculated items for that period will be replaced."
+              data-confirm-variant="warning"
+              data-confirm-ok="Yes, calculate">
             @csrf
             <div>
                 <label class="erp-form-label">Factory</label>
@@ -123,7 +126,7 @@
                             @include('partials.erp.table-actions', [
                                 'viewUrl' => route('admin.hrm.salary.process.show', $period),
                             ])
-                            @if($period->status === 'calculated' && auth()->user()->hasPermission('hrm.salary.approve'))
+                            @if($period->status === 'calculated' && auth()->user()->hasPermission('hrm.salary.approve') && $period->pendingCashDisbursementCount() === 0)
                                 <form method="POST" action="{{ route('admin.hrm.salary.close.freeze', $period) }}" class="inline"
                                       data-confirm="Close {{ $period->periodLabel() }} and email payslips?"
                                       data-confirm-variant="warning"
@@ -132,6 +135,8 @@
                                     <input type="hidden" name="send_payslips" value="1">
                                     <button type="submit" class="erp-btn-primary !py-1 !px-2 text-xs">Close</button>
                                 </form>
+                            @elseif($period->status === 'calculated' && $period->pendingCashDisbursementCount() > 0)
+                                <a href="{{ route('admin.hrm.salary.disbursement.show', $period) }}" class="erp-btn-sm-secondary">Cash pending</a>
                             @elseif($period->isFrozen())
                                 <span class="text-[11px] text-green-700">Closed</span>
                             @endif

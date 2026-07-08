@@ -28,7 +28,7 @@ class RmgDashboardService
             ->get();
 
         $pendingTransfers = (clone $transferBase)
-            ->with(['employee'])
+            ->with(['employee', 'toLine'])
             ->where('status', 'pending')
             ->latest('id')
             ->limit(8)

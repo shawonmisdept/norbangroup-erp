@@ -91,7 +91,9 @@
     <div class="erp-panel">
         <div class="erp-panel-head"><h2 class="text-xs font-semibold uppercase text-gray-600">Actions</h2></div>
         <div class="erp-panel-body space-y-3">
-            <form method="POST" action="{{ route('admin.hrm.finance.final-settlement.calculate', $settlement) }}">
+            <form method="POST" action="{{ route('admin.hrm.finance.final-settlement.calculate', $settlement) }}"
+                  data-confirm="{{ $settlement->status === 'draft' ? 'Calculate final settlement amounts?' : 'Recalculate final settlement amounts?' }}"
+                  data-confirm-variant="warning">
                 @csrf
                 <button type="submit" class="erp-btn-primary w-full !py-2 text-xs">
                     {{ $settlement->status === 'draft' ? 'Calculate F&F' : 'Recalculate' }}
@@ -135,7 +137,8 @@
 <div class="erp-panel mb-4">
     <div class="erp-panel-head"><h2 class="text-xs font-semibold uppercase text-gray-600">Exit Clearance</h2></div>
     <div class="erp-panel-body">
-        <form method="POST" action="{{ route('admin.hrm.finance.final-settlement.clearance', $settlement) }}">
+        <form method="POST" action="{{ route('admin.hrm.finance.final-settlement.clearance', $settlement) }}"
+              data-confirm="Update exit clearance checklist for this settlement?">
             @csrf @method('PUT')
             <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 mb-3">
                 @foreach(\App\Models\Hrm\FinalSettlement::CLEARANCE_KEYS as $key => $label)

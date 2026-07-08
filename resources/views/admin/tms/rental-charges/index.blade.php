@@ -83,14 +83,20 @@
                         @endif
                         @if($canManage)
                             @if($c->payment_status === 'pending')
-                                <form method="POST" action="{{ route('admin.tms.rental-charges.mark-paid', $c) }}" class="inline">
+                                <form method="POST" action="{{ route('admin.tms.rental-charges.mark-paid', $c) }}" class="inline"
+                                      data-confirm="Mark as paid?"
+                                      data-confirm-variant="primary"
+                                      data-confirm-ok="Yes, mark paid">
                                     @csrf
-                                    <button type="submit" class="erp-btn-sm-primary" data-confirm="Mark as paid?">Mark Paid</button>
+                                    <button type="submit" class="erp-btn-sm-primary">Mark Paid</button>
                                 </form>
                             @else
-                                <form method="POST" action="{{ route('admin.tms.rental-charges.unmark-paid', $c) }}" class="inline">
+                                <form method="POST" action="{{ route('admin.tms.rental-charges.unmark-paid', $c) }}" class="inline"
+                                      data-confirm="Unmark as paid?"
+                                      data-confirm-variant="warning"
+                                      data-confirm-ok="Yes, unmark">
                                     @csrf
-                                    <button type="submit" class="erp-btn-sm-secondary" data-confirm="Unmark as paid?">Unmark Paid</button>
+                                    <button type="submit" class="erp-btn-sm-secondary">Unmark Paid</button>
                                 </form>
                             @endif
                         @endif

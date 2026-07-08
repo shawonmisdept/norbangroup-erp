@@ -9,15 +9,19 @@
 @include('admin.tms.partials.request-filters', ['filters' => $filters, 'factories' => $factories, 'statuses' => $statuses])
 
 @if(auth()->user()->hasPermission('tms.requests.approve'))
-    <form method="POST" action="{{ route('admin.tms.requests.merge') }}" id="merge-form" class="erp-panel p-4 mb-4 space-y-3">
+    <form method="POST" action="{{ route('admin.tms.requests.merge') }}" id="merge-form" class="erp-panel p-4 mb-4 space-y-3"
+          data-confirm="Merge selected requests and assign to this driver?"
+          data-confirm-variant="primary"
+          data-confirm-ok="Yes, merge & assign">
         @csrf
         @include('admin.tms.requests.partials.driver-assignment-fields', [
             'drivers' => $drivers,
             'rentalDrivers' => $rentalDrivers,
             'vehicles' => $vehicles,
+            'vehiclePaperWarnings' => $vehiclePaperWarnings ?? [],
         ])
         <div class="flex gap-2">
-            <button type="submit" class="erp-btn-primary flex-1" data-confirm="Merge selected requests and assign to this driver?">Merge & Assign</button>
+            <button type="submit" class="erp-btn-primary flex-1">Merge & Assign</button>
         </div>
         <p class="text-xs text-gray-500">Selected passengers: <strong id="selected-passengers">0</strong> · Vehicle capacity: <strong id="vehicle-capacity">—</strong></p>
     </form>

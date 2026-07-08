@@ -34,7 +34,10 @@
 </div>
 
 @if($trip->trip_status === 'not_started')
-<form method="POST" action="{{ route('employee.transport.trips.start', $trip) }}" class="space-y-2" data-tms-trip-gps>@csrf
+<form method="POST" action="{{ route('employee.transport.trips.start', $trip) }}" class="space-y-2" data-tms-trip-gps
+      data-confirm="Start this trip?"
+      data-confirm-variant="primary"
+      data-confirm-ok="Yes, start trip">@csrf
 @if(! $isRental)
 <div>
 <label class="text-xs text-gray-600">Start KM</label>
@@ -46,7 +49,10 @@
 </form>
 @elseif($trip->trip_status === 'in_progress')
 <p class="text-xs flex flex-wrap items-center gap-2">Started at @include('partials.erp.datetime-highlight', ['at' => $trip->duty_start_at, 'variant' => 'employee'])@if($trip->start_km !== null) · Start KM: {{ number_format($trip->start_km, 2) }}@endif</p>
-<form method="POST" action="{{ route('employee.transport.trips.end', $trip) }}" class="space-y-2" data-tms-trip-gps>@csrf
+<form method="POST" action="{{ route('employee.transport.trips.end', $trip) }}" class="space-y-2" data-tms-trip-gps
+      data-confirm="End this trip?"
+      data-confirm-variant="primary"
+      data-confirm-ok="Yes, end trip">@csrf
 @if(! $isRental)
 <div>
 <label class="text-xs text-gray-600">End KM</label>

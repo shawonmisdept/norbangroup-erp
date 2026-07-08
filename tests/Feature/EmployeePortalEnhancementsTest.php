@@ -96,7 +96,7 @@ class EmployeePortalEnhancementsTest extends TestCase
             ->assertSee('Experience Certificate');
     }
 
-    public function test_calculated_payslip_is_visible_on_portal(): void
+    public function test_calculated_payslip_is_hidden_until_period_close(): void
     {
         $period = PayrollPeriod::create([
             'factory_id' => $this->factory->id,
@@ -114,13 +114,21 @@ class EmployeePortalEnhancementsTest extends TestCase
             'pay_type'          => 'salary',
             'gross_pay'         => 30000,
             'net_pay'           => 29000,
+            'bank_pay_amount'   => 29000,
+            'cash_pay_amount'   => 0,
             'present_days'      => 26,
         ]);
 
         $this->actingAs($this->portalUser, 'employee')
             ->get(route('employee.payslips.show', $item))
+            ->assertNotFound();
+
+        $period->update(['status' => 'frozen', 'frozen_at' => now()]);
+
+        $this->actingAs($this->portalUser, 'employee')
+            ->get(route('employee.payslips.show', $item))
             ->assertOk()
-            ->assertSee('Provisional');
+            ->assertSee(number_format(29000, 2));
 
         $this->actingAs($this->portalUser, 'employee')
             ->get(route('employee.payslips.print', ['payslip' => $item, 'download' => 1]))

@@ -34,6 +34,7 @@ class WorkerTransferController extends Controller
             'transfers' => $query->paginate(25)->withQueryString(),
             'factories' => $this->factoryOptions($request),
             'filters'   => $request->only(['factory_id', 'status']),
+            'statuses'  => WorkerTransfer::STATUSES,
             'canManage' => $request->user()?->canManageRmgSubmodule('worker-transfer') ?? false,
         ]);
     }
@@ -52,16 +53,7 @@ class WorkerTransferController extends Controller
 
     public function store(Request $request, HrmNotificationService $notifier)
     {
-        $validated = $request->validate([
-            'factory_id'      => ['required', 'exists:factories,id'],
-            'employee_id'     => ['required', 'exists:hrm_employees,id'],
-            'to_factory_id'   => ['nullable', 'exists:factories,id'],
-            'to_line_id'      => ['nullable', 'exists:hrm_lines,id'],
-            'to_floor_id'     => ['nullable', 'exists:hrm_floors,id'],
-            'to_building_id'  => ['nullable', 'exists:hrm_buildings,id'],
-            'effective_date'  => ['required', 'date'],
-            'reason'          => ['nullable', 'string', 'max:1000'],
-        ]);
+        $validated = $this->validateTransfer($request);
 
         $employee = Employee::findOrFail($validated['employee_id']);
         $this->authorizeFactoryAccess($request, (int) $validated['factory_id']);
@@ -76,6 +68,59 @@ class WorkerTransferController extends Controller
 
         return redirect()->route('admin.hrm.rmg.worker-transfer.index')
             ->with('success', 'Worker transfer submitted for approval.');
+    }
+
+    public function edit(Request $request, WorkerTransfer $workerTransfer)
+    {
+        $this->authorizeFactoryAccess($request, $workerTransfer->factory_id);
+
+        if (! $this->canModify($workerTransfer)) {
+            return redirect()->route('admin.hrm.rmg.worker-transfer.index')
+                ->with('error', 'Only pending transfers can be edited.');
+        }
+
+        return view('admin.hrm.rmg.worker-transfer.form', [
+            'transfer'  => $workerTransfer,
+            'factories' => $this->factoryOptions($request),
+            'employees' => $this->employeeOptions($request, $workerTransfer->employee_id),
+            'lines'     => $this->lineOptions($request),
+            'floors'    => $this->floorOptions($request),
+            'buildings' => $this->buildingOptions($request),
+        ]);
+    }
+
+    public function update(Request $request, WorkerTransfer $workerTransfer)
+    {
+        $this->authorizeFactoryAccess($request, $workerTransfer->factory_id);
+
+        if (! $this->canModify($workerTransfer)) {
+            return back()->with('error', 'Only pending transfers can be edited.');
+        }
+
+        $validated = $this->validateTransfer($request);
+        $this->authorizeFactoryAccess($request, (int) $validated['factory_id']);
+
+        $employee = Employee::findOrFail($validated['employee_id']);
+        abort_if($employee->factory_id !== (int) $validated['factory_id'], 422);
+
+        $workerTransfer->update($validated);
+
+        return redirect()->route('admin.hrm.rmg.worker-transfer.index')
+            ->with('success', 'Transfer request updated.');
+    }
+
+    public function destroy(Request $request, WorkerTransfer $workerTransfer)
+    {
+        $this->authorizeFactoryAccess($request, $workerTransfer->factory_id);
+
+        if (! $this->canDelete($workerTransfer)) {
+            return back()->with('error', 'This transfer cannot be deleted.');
+        }
+
+        $workerTransfer->delete();
+
+        return redirect()->route('admin.hrm.rmg.worker-transfer.index')
+            ->with('success', 'Transfer request deleted.');
     }
 
     public function approve(
@@ -113,11 +158,18 @@ class WorkerTransferController extends Controller
             ->with('success', 'Transfer request rejected.');
     }
 
-    private function employeeOptions(Request $request): array
+    private function employeeOptions(Request $request, ?int $includeId = null): array
     {
-        $query = Employee::query()
-            ->whereIn('status', ['active', 'probation'])
-            ->orderBy('name');
+        $query = Employee::query()->orderBy('name');
+
+        if ($includeId) {
+            $query->where(function ($q) use ($includeId) {
+                $q->whereIn('status', ['active', 'probation'])
+                    ->orWhere('id', $includeId);
+            });
+        } else {
+            $query->whereIn('status', ['active', 'probation']);
+        }
 
         $this->scopeToUserFactory($query, $request);
 
@@ -146,5 +198,30 @@ class WorkerTransferController extends Controller
         $this->scopeToUserFactory($query, $request);
 
         return $query->pluck('name', 'id')->all();
+    }
+
+    /** @return array<string, mixed> */
+    private function validateTransfer(Request $request): array
+    {
+        return $request->validate([
+            'factory_id'     => ['required', 'exists:factories,id'],
+            'employee_id'    => ['required', 'exists:hrm_employees,id'],
+            'to_factory_id'  => ['nullable', 'exists:factories,id'],
+            'to_line_id'     => ['nullable', 'exists:hrm_lines,id'],
+            'to_floor_id'    => ['nullable', 'exists:hrm_floors,id'],
+            'to_building_id' => ['nullable', 'exists:hrm_buildings,id'],
+            'effective_date' => ['required', 'date'],
+            'reason'         => ['nullable', 'string', 'max:1000'],
+        ]);
+    }
+
+    private function canModify(WorkerTransfer $transfer): bool
+    {
+        return $transfer->status === 'pending';
+    }
+
+    private function canDelete(WorkerTransfer $transfer): bool
+    {
+        return in_array($transfer->status, ['pending', 'rejected'], true);
     }
 }

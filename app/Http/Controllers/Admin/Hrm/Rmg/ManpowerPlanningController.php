@@ -60,13 +60,7 @@ class ManpowerPlanningController extends Controller
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'factory_id'      => ['required', 'exists:factories,id'],
-            'line_id'         => ['required', 'exists:hrm_lines,id'],
-            'plan_date'       => ['required', 'date'],
-            'required_count'  => ['required', 'integer', 'min:0', 'max:5000'],
-            'notes'           => ['nullable', 'string', 'max:1000'],
-        ]);
+        $validated = $this->validatePlan($request);
 
         $this->authorizeFactoryAccess($request, (int) $validated['factory_id']);
 
@@ -83,6 +77,70 @@ class ManpowerPlanningController extends Controller
             'factory_id' => $validated['factory_id'],
             'plan_date'  => $validated['plan_date'],
         ])->with('success', 'Manpower plan saved.');
+    }
+
+    public function edit(Request $request, ManpowerPlan $manpowerPlan)
+    {
+        $this->authorizeFactoryAccess($request, $manpowerPlan->factory_id);
+
+        return view('admin.hrm.rmg.manpower-planning.form', [
+            'plan'      => $manpowerPlan,
+            'factories' => $this->factoryOptions($request),
+            'lines'     => $this->lineOptions($request),
+        ]);
+    }
+
+    public function update(Request $request, ManpowerPlan $manpowerPlan)
+    {
+        $this->authorizeFactoryAccess($request, $manpowerPlan->factory_id);
+
+        $validated = $this->validatePlan($request);
+        $this->authorizeFactoryAccess($request, (int) $validated['factory_id']);
+
+        $conflict = ManpowerPlan::query()
+            ->where('factory_id', $validated['factory_id'])
+            ->where('line_id', $validated['line_id'])
+            ->whereDate('plan_date', $validated['plan_date'])
+            ->where('id', '!=', $manpowerPlan->id)
+            ->exists();
+
+        if ($conflict) {
+            return back()->withInput()->with('error', 'A plan already exists for this line and date.');
+        }
+
+        $manpowerPlan->update($validated);
+
+        return redirect()->route('admin.hrm.rmg.manpower-planning.index', [
+            'factory_id' => $validated['factory_id'],
+            'plan_date'  => $validated['plan_date'],
+        ])->with('success', 'Manpower plan updated.');
+    }
+
+    public function destroy(Request $request, ManpowerPlan $manpowerPlan)
+    {
+        $this->authorizeFactoryAccess($request, $manpowerPlan->factory_id);
+
+        $factoryId = $manpowerPlan->factory_id;
+        $planDate = $manpowerPlan->plan_date?->toDateString();
+
+        $manpowerPlan->delete();
+
+        return redirect()->route('admin.hrm.rmg.manpower-planning.index', array_filter([
+            'factory_id' => $factoryId,
+            'plan_date'  => $planDate,
+        ]))->with('success', 'Manpower plan deleted.');
+    }
+
+    /** @return array<string, mixed> */
+    private function validatePlan(Request $request): array
+    {
+        return $request->validate([
+            'factory_id'     => ['required', 'exists:factories,id'],
+            'line_id'        => ['required', 'exists:hrm_lines,id'],
+            'plan_date'      => ['required', 'date'],
+            'required_count' => ['required', 'integer', 'min:0', 'max:5000'],
+            'notes'          => ['nullable', 'string', 'max:1000'],
+        ]);
     }
 
     private function lineOptions(Request $request): array

@@ -23,7 +23,10 @@
                 <h2 class="text-xs font-semibold text-gray-700 uppercase tracking-wide">Process Period</h2>
             </div>
             <div class="erp-panel-body">
-                <form method="POST" action="{{ route('admin.hrm.attendance.process') }}" class="grid grid-cols-1 md:grid-cols-4 gap-3 items-end">
+                <form method="POST" action="{{ route('admin.hrm.attendance.process') }}" class="grid grid-cols-1 md:grid-cols-4 gap-3 items-end"
+                      data-confirm="Process attendance for the selected period? This may mark absences."
+                      data-confirm-variant="warning"
+                      data-confirm-ok="Yes, process">
                     @csrf
                     <div>
                         <label class="erp-form-label">Factory</label>
@@ -63,7 +66,10 @@
             </div>
             <div class="erp-panel-body space-y-3">
                 <p class="text-xs text-gray-500">Quick process for today's unprocessed punches only.</p>
-                <form method="POST" action="{{ route('admin.hrm.attendance.process-today') }}">
+                <form method="POST" action="{{ route('admin.hrm.attendance.process-today') }}"
+                      data-confirm="Process today's unprocessed attendance punches?"
+                      data-confirm-variant="warning"
+                      data-confirm-ok="Yes, process today">
                     @csrf
                     @if(count($factories) > 1)
                         <select name="factory_id" class="erp-input !text-xs mb-2">

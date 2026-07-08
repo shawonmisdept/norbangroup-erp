@@ -22,7 +22,7 @@ class GatePassPendingNotification extends Notification
             'type'    => 'gate_pass_pending',
             'title'   => 'Gate Pass Pending',
             'message' => ($this->gatePass->employee?->name ?? 'Employee') . ' gate pass for ' . $this->gatePass->pass_date?->format('d M Y'),
-            'url'     => route('admin.hrm.rmg.gate-pass.index'),
+            'url'     => route('admin.hrm.rmg.gate-pass.index', ['status' => 'pending']),
         ];
     }
 }

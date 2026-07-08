@@ -78,13 +78,16 @@
 
             <div class="erp-panel p-6">
                 <h3 class="font-semibold mb-3">Reject</h3>
-                <form method="POST" action="{{ route('admin.tms.requests.reject', $transportRequest) }}" class="space-y-3">
+                <form method="POST" action="{{ route('admin.tms.requests.reject', $transportRequest) }}" class="space-y-3"
+                      data-confirm="Reject this transport request?"
+                      data-confirm-variant="danger"
+                      data-confirm-ok="Yes, reject">
                     @csrf
                     <div>
                         <label class="erp-label">Reason</label>
                         <textarea name="rejection_reason" class="erp-input" rows="3" required></textarea>
                     </div>
-                    <button type="submit" class="erp-btn-secondary w-full" data-confirm="Reject this transport request?">Reject</button>
+                    <button type="submit" class="erp-btn-secondary w-full">Reject</button>
                 </form>
             </div>
         @endif
@@ -97,12 +100,16 @@
             @if($tripNotStarted)
                 <div class="erp-panel p-6">
                     <h3 class="font-semibold mb-3">Reassign Driver / Vehicle</h3>
-                    <form method="POST" action="{{ route('admin.tms.requests.reassign', $transportRequest) }}" class="space-y-3">
+                    <form method="POST" action="{{ route('admin.tms.requests.reassign', $transportRequest) }}" class="space-y-3"
+                          data-confirm="Reassign driver and vehicle for this trip?"
+                          data-confirm-variant="warning"
+                          data-confirm-ok="Yes, reassign">
                         @csrf
                         @include('admin.tms.requests.partials.driver-assignment-fields', [
                             'drivers' => $drivers,
                             'rentalDrivers' => $rentalDrivers,
                             'vehicles' => $vehicles,
+                            'vehiclePaperWarnings' => $vehiclePaperWarnings ?? [],
                             'passengerCount' => $transportRequest->tripLog?->total_passengers ?? $transportRequest->passenger_count,
                         ])
                         <button type="submit" class="erp-btn-primary w-full">Reassign</button>
@@ -112,13 +119,16 @@
 
                 <div class="erp-panel p-6">
                     <h3 class="font-semibold mb-3">Cancel Approved Request</h3>
-                    <form method="POST" action="{{ route('admin.tms.requests.cancel', $transportRequest) }}" class="space-y-3">
+                    <form method="POST" action="{{ route('admin.tms.requests.cancel', $transportRequest) }}" class="space-y-3"
+                          data-confirm="Cancel this approved request before the trip starts?"
+                          data-confirm-variant="danger"
+                          data-confirm-ok="Yes, cancel">
                         @csrf
                         <div>
                             <label class="erp-label">Reason (optional)</label>
                             <textarea name="reason" class="erp-input" rows="2" placeholder="Reason for cancellation…"></textarea>
                         </div>
-                        <button type="submit" class="erp-btn-secondary w-full" data-confirm="Cancel this approved request before the trip starts?">Cancel Request</button>
+                        <button type="submit" class="erp-btn-secondary w-full">Cancel Request</button>
                     </form>
                 </div>
             @endif

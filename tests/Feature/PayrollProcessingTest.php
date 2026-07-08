@@ -9,6 +9,7 @@ use App\Models\Hrm\Employee;
 use App\Models\Hrm\EmployeePortalUser;
 use App\Models\Hrm\PayrollItem;
 use App\Models\Hrm\PayrollPeriod;
+use App\Models\Hrm\SalaryBank;
 use App\Models\Hrm\SalaryGrade;
 use App\Models\Hrm\SalaryGradeDetail;
 use App\Models\Hrm\SalaryStructure;
@@ -366,12 +367,21 @@ class PayrollProcessingTest extends TestCase
             'status'        => 'active',
         ]);
 
+        $bank = SalaryBank::create([
+            'factory_id' => $this->factory->id,
+            'code'       => 'BRAC',
+            'name'       => 'BRAC Bank PLC',
+            'short_name' => 'BRAC Bank',
+            'is_active'  => true,
+        ]);
+
         $this->actingAs($this->hrUser)
             ->post(route('admin.hrm.salary.employee-salary.store'), [
                 'employee_id'     => $other->id,
                 'salary_grade_id' => $grade->id,
                 'gross_salary'    => 25000,
                 'payment_method'  => 'bank',
+                'salary_bank_id'  => $bank->id,
                 'bank_account'    => '9876543210',
             ])
             ->assertRedirect()

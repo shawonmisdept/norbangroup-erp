@@ -13,7 +13,10 @@
     <span>Status: <strong>{{ ucfirst($loan->status) }}</strong></span>
     @if($canManage && $loan->status === 'pending')
     <div class="ml-auto flex flex-wrap gap-2">
-        <form method="POST" action="{{ route('admin.hrm.finance.loans.approve', $loan) }}">@csrf
+        <form method="POST" action="{{ route('admin.hrm.finance.loans.approve', $loan) }}"
+              data-confirm="Approve this loan and create repayment schedule?"
+              data-confirm-variant="primary"
+              data-confirm-ok="Yes, approve">@csrf
             <button type="submit" class="erp-btn-primary !text-xs">Approve & Create Schedule</button>
         </form>
         <form method="POST" action="{{ route('admin.hrm.finance.loans.reject', $loan) }}" data-confirm="Reject this loan application?">@csrf

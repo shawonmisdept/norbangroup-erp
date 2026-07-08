@@ -141,8 +141,8 @@ return [
         ],
 
         'tms' => [
-            'summary_en' => 'Transport requests, trips, fuel, maintenance, and fleet reports.',
-            'summary_bn' => 'Transport request, trip, fuel, maintenance ও fleet report।',
+            'summary_en' => 'Employee transport requests → admin approve/merge/reject → driver trip start/end → post-trip OT (auto) and fuel/payments (admin).',
+            'summary_bn' => 'কর্মী transport request → admin approve/merge/reject → driver trip start/end → post-trip OT (auto) ও fuel/payment (admin)।',
             'purpose_en'   => '<p>Manage company transport: vehicle and driver roster, employee trip requests, trip logging, fuel/maintenance costs, rental charges, and fleet analytics.</p>',
             'purpose_bn'   => '<p>Company transport manage: vehicle ও driver roster, employee trip request, trip log, fuel/maintenance cost, rental charge, fleet analytics।</p>',
             'audience_en'  => '<table><thead><tr><th>Role</th><th>Department</th><th>Responsibility</th></tr></thead><tbody><tr><td>Transport Authority</td><td>Admin / Transport</td><td>Approve requests, assign vehicles, manage fleet</td></tr><tr><td>Driver</td><td>Transport</td><td>Log trips, odometer, fuel</td></tr><tr><td>Employee</td><td>All</td><td>Submit transport request via portal</td></tr><tr><td>Accounts</td><td>Finance</td><td>Rental charge payment, maintenance posting</td></tr></tbody></table>',

@@ -134,7 +134,10 @@
                 <div class="erp-panel-head">
                     <h2 class="text-xs font-semibold text-gray-700 uppercase tracking-wide">Approve</h2>
                 </div>
-                <form method="POST" action="{{ route('admin.hrm.leave.transactions.approve', $application) }}" class="erp-panel-body space-y-3">
+                <form method="POST" action="{{ route('admin.hrm.leave.transactions.approve', $application) }}" class="erp-panel-body space-y-3"
+                      data-confirm="Approve this leave application?"
+                      data-confirm-variant="primary"
+                      data-confirm-ok="Yes, approve">
                     @csrf
                     <div>
                         <label class="erp-form-label">Notes (optional)</label>
@@ -148,7 +151,8 @@
                 <div class="erp-panel-head">
                     <h2 class="text-xs font-semibold text-gray-700 uppercase tracking-wide">Reject</h2>
                 </div>
-                <form method="POST" action="{{ route('admin.hrm.leave.transactions.reject', $application) }}" class="erp-panel-body space-y-3">
+                <form method="POST" action="{{ route('admin.hrm.leave.transactions.reject', $application) }}" class="erp-panel-body space-y-3"
+                      data-confirm="Reject this leave application?">
                     @csrf
                     <div>
                         <label class="erp-form-label">Rejection Reason</label>

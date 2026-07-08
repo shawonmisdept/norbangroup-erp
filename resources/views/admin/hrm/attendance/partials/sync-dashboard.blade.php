@@ -145,7 +145,10 @@
                             @if(auth()->user()->hasPermission('hrm.attendance.sync'))
                                 <td class="text-right">
                                     @if($device->hasAdmsEndpoint())
-                                        <form method="POST" action="{{ route('admin.hrm.attendance.devices.sync', $device) }}" class="inline">
+                                        <form method="POST" action="{{ route('admin.hrm.attendance.devices.sync', $device) }}" class="inline"
+                                              data-confirm="Pull sync from {{ $device->name }}?"
+                                              data-confirm-variant="primary"
+                                              data-confirm-ok="Yes, sync">
                                             @csrf
                                             <button type="submit" class="erp-btn-secondary !py-1 !px-2 text-xs">Pull Sync</button>
                                         </form>

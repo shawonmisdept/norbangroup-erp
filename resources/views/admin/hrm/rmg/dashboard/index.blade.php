@@ -20,12 +20,30 @@
 
 <div class="grid grid-cols-1 xl:grid-cols-3 gap-4">
     <div class="erp-panel">
-        <div class="erp-panel-head"><h2 class="text-xs font-semibold uppercase">Pending Gate Pass</h2></div>
+        <div class="erp-panel-head flex items-center justify-between">
+            <h2 class="text-xs font-semibold uppercase">Pending Gate Pass</h2>
+            <a href="{{ route('admin.hrm.rmg.gate-pass.index', ['status' => 'pending']) }}" class="text-[10px] text-brand hover:underline">View all</a>
+        </div>
         <div class="erp-panel-body space-y-2">
             @forelse($pending_gate_passes as $row)
                 <div class="block border border-erp-border rounded-sm p-2 text-sm">
-                    <p class="font-medium">{{ $row->employee?->name }}</p>
-                    <p class="text-xs text-gray-500">{{ $row->destination ?? '—' }} · {{ $row->statusLabel() }}</p>
+                    <div class="flex items-start justify-between gap-2">
+                        <div>
+                            <p class="font-medium">{{ $row->employee?->name }}</p>
+                            <p class="text-xs text-gray-500">{{ $row->destination ?? '—' }} · {{ $row->statusLabel() }}</p>
+                        </div>
+                        @if(auth()->user()->canManageRmgSubmodule('gate-pass'))
+                            <div class="flex flex-wrap gap-1 shrink-0">
+                                <form method="POST" action="{{ route('admin.hrm.rmg.gate-pass.approve', $row) }}" class="inline"
+                                      data-confirm="Approve gate pass for {{ $row->employee?->name }}?"
+                                      data-confirm-variant="primary"
+                                      data-confirm-ok="Yes, approve">@csrf
+                                    <button type="submit" class="erp-btn-primary !py-0.5 !px-2 text-[10px]">Approve</button>
+                                </form>
+                                <a href="{{ route('admin.hrm.rmg.gate-pass.edit', $row) }}" class="erp-btn-secondary !py-0.5 !px-2 text-[10px]">Edit</a>
+                            </div>
+                        @endif
+                    </div>
                 </div>
             @empty
                 <p class="text-sm text-gray-400">No pending gate passes.</p>
@@ -33,12 +51,30 @@
         </div>
     </div>
     <div class="erp-panel">
-        <div class="erp-panel-head"><h2 class="text-xs font-semibold uppercase">Pending Transfers</h2></div>
+        <div class="erp-panel-head flex items-center justify-between">
+            <h2 class="text-xs font-semibold uppercase">Pending Transfers</h2>
+            <a href="{{ route('admin.hrm.rmg.worker-transfer.index', ['status' => 'pending']) }}" class="text-[10px] text-brand hover:underline">View all</a>
+        </div>
         <div class="erp-panel-body space-y-2">
             @forelse($pending_transfers as $row)
                 <div class="block border border-erp-border rounded-sm p-2 text-sm">
-                    <p class="font-medium">{{ $row->employee?->name }}</p>
-                    <p class="text-xs text-gray-500">{{ $row->statusLabel() }}</p>
+                    <div class="flex items-start justify-between gap-2">
+                        <div>
+                            <p class="font-medium">{{ $row->employee?->name }}</p>
+                            <p class="text-xs text-gray-500">{{ $row->toLine?->name ?? '—' }} · {{ $row->statusLabel() }}</p>
+                        </div>
+                        @if(auth()->user()->canManageRmgSubmodule('worker-transfer'))
+                            <div class="flex flex-wrap gap-1 shrink-0">
+                                <form method="POST" action="{{ route('admin.hrm.rmg.worker-transfer.approve', $row) }}" class="inline"
+                                      data-confirm="Approve transfer for {{ $row->employee?->name }}?"
+                                      data-confirm-variant="primary"
+                                      data-confirm-ok="Yes, approve">@csrf
+                                    <button type="submit" class="erp-btn-primary !py-0.5 !px-2 text-[10px]">Approve</button>
+                                </form>
+                                <a href="{{ route('admin.hrm.rmg.worker-transfer.edit', $row) }}" class="erp-btn-secondary !py-0.5 !px-2 text-[10px]">Edit</a>
+                            </div>
+                        @endif
+                    </div>
                 </div>
             @empty
                 <p class="text-sm text-gray-400">No pending worker transfers.</p>
@@ -46,13 +82,16 @@
         </div>
     </div>
     <div class="erp-panel">
-        <div class="erp-panel-head"><h2 class="text-xs font-semibold uppercase">Open Proxy Flags</h2></div>
+        <div class="erp-panel-head flex items-center justify-between">
+            <h2 class="text-xs font-semibold uppercase">Open Proxy Flags</h2>
+            <a href="{{ route('admin.hrm.rmg.proxy-punch.index', ['status' => 'open']) }}" class="text-[10px] text-brand hover:underline">View all</a>
+        </div>
         <div class="erp-panel-body space-y-2">
             @forelse($open_proxy_flags as $row)
-                <div class="block border border-erp-border rounded-sm p-2 text-sm">
+                <a href="{{ route('admin.hrm.rmg.proxy-punch.index', ['status' => 'open']) }}" class="block border border-erp-border rounded-sm p-2 text-sm hover:border-brand/30 transition-colors">
                     <p class="font-medium">{{ $row->employee?->name }}</p>
                     <p class="text-xs text-gray-500">{{ \Illuminate\Support\Str::limit($row->reason ?? '—', 40) }}</p>
-                </div>
+                </a>
             @empty
                 <p class="text-sm text-gray-400">No open proxy punch flags.</p>
             @endforelse

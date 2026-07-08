@@ -3,7 +3,7 @@
 @section('admin-content')
 @include('partials.erp.page-header', ['title' => 'Transport Dashboard', 'subtitle' => 'Pending requests, active trips, and payment summary'])
 
-<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-6">
+<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-6">
     <div class="erp-panel p-4">
         <p class="text-xs text-gray-500">Pending Requests</p>
         <p class="text-2xl font-bold tabular-nums">{{ $pendingRequests }}</p>
@@ -28,6 +28,18 @@
         <p class="text-xs text-gray-500">Maintenance Spend (This Month)</p>
         <p class="text-2xl font-bold tabular-nums">৳{{ number_format($maintenanceSpendThisMonth, 0) }}</p>
     </div>
+    <a href="{{ route('admin.tms.vehicles.papers', ['paper_status' => 'expired']) }}" class="erp-panel p-4 hover:bg-red-50 transition {{ $papersExpired ? 'ring-1 ring-red-200' : '' }}">
+        <p class="text-xs text-gray-500">Papers Expired</p>
+        <p class="text-2xl font-bold tabular-nums text-red-700">{{ $papersExpired }}</p>
+    </a>
+    <a href="{{ route('admin.tms.vehicles.papers', ['paper_status' => 'urgent']) }}" class="erp-panel p-4 hover:bg-orange-50 transition {{ $papersUrgent ? 'ring-1 ring-orange-200' : '' }}">
+        <p class="text-xs text-gray-500">Papers Urgent (≤30d)</p>
+        <p class="text-2xl font-bold tabular-nums text-orange-700">{{ $papersUrgent }}</p>
+    </a>
+    <a href="{{ route('admin.tms.vehicles.papers', ['paper_status' => 'warning']) }}" class="erp-panel p-4 hover:bg-amber-50 transition">
+        <p class="text-xs text-gray-500">Papers Warning (≤60d)</p>
+        <p class="text-2xl font-bold tabular-nums text-amber-700">{{ $papersWarning }}</p>
+    </a>
 </div>
 
 <div class="erp-panel overflow-hidden">
