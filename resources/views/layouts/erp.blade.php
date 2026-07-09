@@ -107,7 +107,7 @@
 
     @endphp
 </head>
-<body class="bg-erp-bg text-gray-900 antialiased min-h-screen"
+<body class="bg-erp-bg text-gray-900 font-sans antialiased min-h-screen"
       :class="{ 'sidebar-open': sidebarOpen }"
       x-data='erpShell(@json($initialOpenGroups), {{ request()->routeIs('admin.users.*', 'admin.roles.*', 'admin.profile.*', 'admin.settings.*') ? 'true' : 'false' }})'>
 

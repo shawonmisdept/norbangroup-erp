@@ -110,7 +110,7 @@ class VehicleController extends Controller
 
         $vehicle->load([
             'factory', 'rentalVendor', 'allocatedEmployee.designation',
-            'primaryDriver.employee', 'defaultDrivers.employee',
+            'primaryDriver.employee', 'assignedCompanyDrivers.employee', 'defaultDrivers.employee',
             'paperRenewals.renewedByUser',
         ]);
 
@@ -254,6 +254,7 @@ class VehicleController extends Controller
     private function employeeOptions(Request $request, ?int $factoryId = null): array
     {
         $query = Employee::query()
+            ->with('designation')
             ->whereIn('status', ['active', 'probation'])
             ->orderBy('name');
 
@@ -264,7 +265,15 @@ class VehicleController extends Controller
             $query->where('factory_id', $request->factory_id);
         }
 
-        return $query->pluck('name', 'id')->all();
+        return $query->get()->mapWithKeys(function (Employee $employee) {
+            $label = $employee->name;
+
+            if ($employee->designation?->name) {
+                $label .= ' (' . $employee->designation->name . ')';
+            }
+
+            return [$employee->id => $label];
+        })->all();
     }
 
     private function driverOptions(Request $request, ?int $factoryId = null): array

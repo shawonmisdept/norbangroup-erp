@@ -3,6 +3,7 @@
 namespace App\Notifications;
 
 use App\Models\Hrm\Employee;
+use App\Support\NotificationUrl;
 use Illuminate\Notifications\Notification;
 
 class WorkingHoursExceededNotification extends Notification
@@ -13,6 +14,9 @@ class WorkingHoursExceededNotification extends Notification
         public float $limitHours,
         public string $periodLabel,
         public string $periodType,
+        public ?int $factoryId = null,
+        public ?int $year = null,
+        public ?int $month = null,
     ) {}
 
     public function via(object $notifiable): array
@@ -30,7 +34,11 @@ class WorkingHoursExceededNotification extends Notification
             'message' => $this->employee->name . ' (' . $this->employee->employee_code . ') — '
                 . number_format($this->hours, 1) . ' hrs on ' . $this->periodLabel
                 . ' (limit ' . number_format($this->limitHours, 1) . ' hrs)',
-            'url'     => route('admin.hrm.compliance.working-hours.index'),
+            'url'     => NotificationUrl::route('admin.hrm.compliance.working-hours.index', [], array_filter([
+                'factory_id' => $this->factoryId,
+                'year'       => $this->year,
+                'month'      => $this->month,
+            ])),
         ];
     }
 }

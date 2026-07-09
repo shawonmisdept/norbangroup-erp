@@ -366,6 +366,7 @@
                         ['notify_popup_hrm_sync_failed', 'Popup — biometric sync failed', 'Alert IT/HR when ZKTeco ADMS sync fails for a device'],
                         ['notify_popup_hrm_daily_attendance', 'Popup — daily late/absent alert', 'Summary to HR; line chiefs get team alerts via employee portal'],
                         ['notify_popup_hrm_ot_limit', 'Popup — OT limit exceeded', 'Alert when payroll calculation exceeds monthly OT limit'],
+                        ['notify_popup_hrm_working_hours', 'Popup — working hour limit exceeded', 'Alert HR when daily or weekly working-hour limits are breached'],
                     ] as [$field, $title, $desc])
                         <label class="flex items-start gap-3 px-4 py-3 cursor-pointer hover:bg-gray-50/80">
                             <input type="hidden" name="{{ $field }}" value="0">
@@ -456,10 +457,11 @@
                         ['notify_popup_tms_request_approved', 'Popup — request approved', 'Notify employee and driver when a request is approved'],
                         ['notify_popup_tms_request_rejected', 'Popup — request rejected', 'Notify employee when a request is rejected'],
                         ['notify_popup_tms_request_cancelled', 'Popup — request cancelled', 'Notify approvers when a request is cancelled'],
-                        ['notify_popup_tms_trip_started', 'Popup — trip started', 'Notify authority when driver starts a trip'],
-                        ['notify_popup_tms_trip_completed', 'Popup — trip completed', 'Notify employee and authority when a trip ends'],
+                        ['notify_popup_tms_trip_started', 'Popup — trip started', 'Notify employee, driver and transport authority when a trip starts'],
+                        ['notify_popup_tms_trip_completed', 'Popup — trip completed', 'Notify employee, driver and transport authority when a trip ends'],
                         ['notify_popup_tms_ot_pending', 'Popup — driver OT pending', 'Notify OT manager when payment is due'],
-                        ['notify_popup_tms_odometer_reminder', 'Popup — daily KM reminder', 'Morning/evening KM missing alerts'],
+                        ['notify_popup_tms_odometer_reminder', 'Popup — daily KM reminder', 'Morning/evening KM missing alerts for transport staff'],
+                        ['notify_popup_tms_vehicle_paper', 'Popup — vehicle paper expiry', 'Alert fleet managers when registration, fitness or insurance papers expire'],
                         ['notify_sms_tms', 'SMS — transport updates', 'Send SMS to employee/driver phones on approve/reject/trip events'],
                         ['notify_whatsapp_tms', 'WhatsApp — transport updates', 'Send WhatsApp using the WhatsApp Gateway tab (Log or Meta stub)'],
                     ] as [$field, $title, $desc])

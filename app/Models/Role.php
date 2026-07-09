@@ -143,6 +143,24 @@ class Role extends Model
             return true;
         }
 
+        if (preg_match('/^tms\.([a-z_]+)\.view$/', $permission, $matches)) {
+            if (in_array('tms.' . $matches[1] . '.manage', $permissions, true)) {
+                return true;
+            }
+        }
+
+        if ($permission === 'tms.requests.view' && in_array('tms.requests.approve', $permissions, true)) {
+            return true;
+        }
+
+        if ($permission === 'tms.dashboard.view') {
+            foreach ($permissions as $assigned) {
+                if (str_starts_with($assigned, 'tms.')) {
+                    return true;
+                }
+            }
+        }
+
         return false;
     }
 
@@ -293,19 +311,6 @@ class Role extends Model
             config('tms.permissions.rental_drivers', []),
             config('tms.permissions.maintenance', [])
         );
-
-        foreach (config('tms.submodules', []) as $key => $sub) {
-            $items = [];
-            if (! empty($sub['permission'])) {
-                $items[$sub['permission']] = 'View ' . $sub['label'];
-            }
-            if (! empty($sub['manage'])) {
-                $items[$sub['manage']] = 'Manage ' . $sub['label'];
-            }
-            if ($items !== []) {
-                $groups['TMS — ' . $sub['label']] = $items;
-            }
-        }
 
         foreach (config('hrm.groups') as $groupName => $modules) {
             $items = [];

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Rental;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Rental\Concerns\ResolvesPortalRentalDriver;
+use App\Support\NotificationUrl;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
@@ -35,7 +36,8 @@ class NotificationController extends Controller
         $notification = $portalUser->notifications()->where('id', $id)->firstOrFail();
         $notification->markAsRead();
 
-        $url = $notification->data['url'] ?? route('rental.dashboard');
+        $url = NotificationUrl::resolve($notification->data['url'] ?? null)
+            ?? $this->fallbackUrl($notification->data['type'] ?? null);
 
         return redirect($url);
     }
@@ -45,5 +47,13 @@ class NotificationController extends Controller
         Auth::guard('rental_driver')->user()?->unreadNotifications->markAsRead();
 
         return back()->with('success', 'All notifications marked as read.');
+    }
+
+    private function fallbackUrl(?string $type): string
+    {
+        return match ($type) {
+            'tms_trip_assigned', 'tms_trip_started', 'tms_trip_completed' => route('rental.trips'),
+            default => route('rental.dashboard'),
+        };
     }
 }

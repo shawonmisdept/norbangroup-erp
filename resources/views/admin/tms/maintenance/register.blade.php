@@ -81,7 +81,7 @@
                             <th>Unit</th>
                             <th class="text-center">Amount</th>
                             @if($canManageBills)
-                                <th class="text-center"></th>
+                                <th class="text-center">Actions</th>
                             @endif
                         </tr>
                     </thead>
@@ -102,25 +102,27 @@
                                     <td class="text-right tabular-nums">৳{{ number_format($item->amount, 2) }}</td>
 
                                     @if($index === 0 && $canManageBills)
-                                        <td rowspan="{{ $bill->items->count() }}" class="align-top text-right whitespace-nowrap">
-                                            @if($bill->isPostedToFinance())
-                                                <span class="erp-badge bg-green-100 text-green-700 text-[10px]">Posted</span>
-                                                <p class="text-[10px] text-gray-500 mt-1">{{ $bill->posted_to_finance_at?->format('d M Y') }}</p>
-                                                <form method="POST" action="{{ route('admin.tms.maintenance.bills.unpost', $bill) }}" class="inline mt-1" data-confirm="Unmark this bill from finance posting?">
-                                                    @csrf
-                                                    <button type="submit" class="erp-btn-secondary !py-1 !px-2 text-[10px]">Unpost</button>
-                                                </form>
-                                            @else
-                                                <form method="POST" action="{{ route('admin.tms.maintenance.bills.post', $bill) }}" class="inline mb-1" data-confirm="Mark this bill as posted to finance?">
-                                                    @csrf
-                                                    <button type="submit" class="erp-btn-primary !py-1 !px-2 text-[10px]">Post to Finance</button>
-                                                </form>
-                                                @include('admin.tms.partials.row-actions', [
-                                                    'editUrl' => route('admin.tms.maintenance.bills.edit', $bill),
-                                                    'destroyUrl' => route('admin.tms.maintenance.bills.destroy', $bill),
-                                                    'confirm' => 'Delete this bill?',
-                                                ])
-                                            @endif
+                                        <td rowspan="{{ $bill->items->count() }}" class="maintenance-bill-actions">
+                                            <div class="maintenance-bill-action-stack">
+                                                @if($bill->isPostedToFinance())
+                                                    <span class="erp-badge bg-green-100 text-green-700 text-[10px]">Posted</span>
+                                                    <p class="text-[10px] text-gray-500">{{ $bill->posted_to_finance_at?->format('d M Y') }}</p>
+                                                    <form method="POST" action="{{ route('admin.tms.maintenance.bills.unpost', $bill) }}" data-confirm="Unmark this bill from finance posting?">
+                                                        @csrf
+                                                        <button type="submit" class="erp-btn-secondary !py-1 !px-2 text-[10px] w-full">Unpost</button>
+                                                    </form>
+                                                @else
+                                                    <form method="POST" action="{{ route('admin.tms.maintenance.bills.post', $bill) }}" data-confirm="Mark this bill as posted to finance?">
+                                                        @csrf
+                                                        <button type="submit" class="erp-btn-primary !py-1 !px-2 text-[10px] w-full">Post to Finance</button>
+                                                    </form>
+                                                    @include('admin.tms.partials.row-actions', [
+                                                        'editUrl' => route('admin.tms.maintenance.bills.edit', $bill),
+                                                        'destroyUrl' => route('admin.tms.maintenance.bills.destroy', $bill),
+                                                        'confirm' => 'Delete this bill?',
+                                                    ])
+                                                @endif
+                                            </div>
                                         </td>
                                     @endif
                                 </tr>

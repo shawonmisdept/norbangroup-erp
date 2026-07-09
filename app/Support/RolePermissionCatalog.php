@@ -63,30 +63,56 @@ class RolePermissionCatalog
     /** @return list<string> */
     public static function transportAuthorityPermissions(): array
     {
-        return array_values(array_unique([
+        return self::tmsOperationalPermissions();
+    }
+
+    /** @return list<string> */
+    public static function tmsViewPermissions(): array
+    {
+        $permissions = [];
+
+        foreach (config('tms.permissions', []) as $group) {
+            foreach (array_keys($group) as $key) {
+                if (str_ends_with($key, '.view')) {
+                    $permissions[] = $key;
+                }
+            }
+        }
+
+        return array_values(array_unique($permissions));
+    }
+
+    /** @return list<string> */
+    public static function tmsOperationalPermissions(): array
+    {
+        $permissions = [];
+
+        foreach (config('tms.permissions', []) as $group) {
+            $permissions = array_merge($permissions, array_keys($group));
+        }
+
+        foreach (config('tms.submodules', []) as $sub) {
+            if (($sub['status'] ?? 'active') !== 'active') {
+                continue;
+            }
+
+            if (! empty($sub['also'])) {
+                $permissions[] = $sub['also'];
+            }
+        }
+
+        return array_values(array_unique($permissions));
+    }
+
+    /** @return list<string> */
+    public static function tmsAccountsPermissions(): array
+    {
+        return [
             'tms.dashboard.view',
-            'tms.settings.view',
-            'tms.settings.manage',
-            'tms.requests.view',
-            'tms.requests.approve',
-            'tms.vehicles.view',
-            'tms.vehicles.manage',
-            'tms.drivers.view',
-            'tms.drivers.manage',
-            'tms.trips.view',
-            'tms.trips.manage',
-            'tms.fuel.view',
-            'tms.fuel.manage',
-            'tms.reports.view',
-            'tms.overtime.manage',
-            'tms.rental_vendors.view',
-            'tms.rental_vendors.manage',
-            'tms.rental_charges.manage',
-            'tms.rental_drivers.view',
-            'tms.rental_drivers.manage',
             'tms.maintenance.view',
             'tms.maintenance.manage',
-        ]));
+            'tms.reports.view',
+        ];
     }
 
     /** @return list<string> */

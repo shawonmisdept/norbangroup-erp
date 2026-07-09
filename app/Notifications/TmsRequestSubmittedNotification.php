@@ -3,6 +3,7 @@
 namespace App\Notifications;
 
 use App\Models\Tms\TmsTransportRequest;
+use App\Support\NotificationUrl;
 use App\Support\PortalDateTime;
 use Illuminate\Notifications\Notification;
 
@@ -24,7 +25,7 @@ class TmsRequestSubmittedNotification extends Notification
             'title'   => 'Transport Request Submitted',
             'message' => ($employee?->name ?? 'Employee') . ' submitted a transport request for '
                 . PortalDateTime::dateTime($this->request->pickup_at),
-            'url'     => route('admin.tms.requests.show', $this->request),
+            'url'     => NotificationUrl::route('admin.tms.requests.show', $this->request),
         ];
     }
 }

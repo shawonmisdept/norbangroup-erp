@@ -27,13 +27,21 @@ class OdometerController extends Controller
             abort(403, 'You are not registered as a driver.');
         }
 
-        $vehicle = $this->odometerService->driverVehicleOrFail($driver);
+        $driver->load('vehicles');
+
+        $assignedVehicles = $driver->relationLoaded('vehicles') && $driver->vehicles->isNotEmpty()
+            ? $driver->vehicles
+            : collect([$this->odometerService->driverVehicleOrFail($driver)]);
+
+        $selectedVehicleId = (int) $request->query('vehicle_id', $driver->primaryVehicleId() ?? $assignedVehicles->first()?->id);
+        $vehicle = $this->odometerService->driverVehicleOrFail($driver, $selectedVehicleId);
 
         $logs = TmsDailyOdometerLog::query()
             ->where('vehicle_id', $vehicle->id)
             ->latest('log_date')
             ->latest('id')
-            ->paginate(15);
+            ->paginate(15)
+            ->withQueryString();
 
         $todayLog = TmsDailyOdometerLog::query()
             ->where('vehicle_id', $vehicle->id)
@@ -41,10 +49,12 @@ class OdometerController extends Controller
             ->first();
 
         return view('employee.transport.odometer', [
-            'logs'     => $logs,
-            'vehicle'  => $vehicle,
-            'driver'   => $driver,
-            'todayLog' => $todayLog,
+            'logs'              => $logs,
+            'vehicle'           => $vehicle,
+            'driver'            => $driver,
+            'assignedVehicles'  => $assignedVehicles,
+            'selectedVehicleId' => $selectedVehicleId,
+            'todayLog'          => $todayLog,
         ]);
     }
 
@@ -52,12 +62,14 @@ class OdometerController extends Controller
     {
         $employee = $this->portalEmployee($request);
         $driver = $this->tripService->driverForEmployee($employee);
-        $vehicle = $this->odometerService->driverVehicleOrFail($driver);
 
         $validated = $request->validate([
+            'vehicle_id' => ['required', 'integer', 'exists:tms_vehicles,id'],
             'morning_km' => ['required', 'numeric', 'min:0'],
             'notes'      => ['nullable', 'string', 'max:1000'],
         ]);
+
+        $vehicle = $this->odometerService->driverVehicleOrFail($driver, (int) $validated['vehicle_id']);
 
         $this->odometerService->storeMorning([
             'factory_id' => $vehicle->factory_id,
@@ -68,7 +80,7 @@ class OdometerController extends Controller
         ], employee: $employee);
 
         return redirect()
-            ->route('employee.transport.odometer')
+            ->route('employee.transport.odometer', ['vehicle_id' => $vehicle->id])
             ->with('success', 'Morning KM saved.');
     }
 
@@ -93,7 +105,7 @@ class OdometerController extends Controller
         );
 
         return redirect()
-            ->route('employee.transport.odometer')
+            ->route('employee.transport.odometer', ['vehicle_id' => $odometer->vehicle_id])
             ->with('success', 'Evening KM saved.');
     }
 }

@@ -98,7 +98,7 @@ class DailyOdometerService
 
     public function assertDriverVehicle(TmsDriver $driver, TmsDailyOdometerLog $log): void
     {
-        if ((int) $driver->default_vehicle_id !== (int) $log->vehicle_id) {
+        if (! $driver->hasAssignedVehicle((int) $log->vehicle_id)) {
             abort(403, 'This log does not belong to your assigned vehicle.');
         }
     }
@@ -110,12 +110,36 @@ class DailyOdometerService
         }
     }
 
-    public function driverVehicleOrFail(TmsDriver $driver): TmsVehicle
+    public function driverVehicleOrFail(TmsDriver $driver, ?int $vehicleId = null): TmsVehicle
     {
+        if ($vehicleId !== null) {
+            if (! $driver->hasAssignedVehicle($vehicleId)) {
+                abort(403, 'Selected vehicle is not assigned to your driver profile.');
+            }
+
+            $vehicle = TmsVehicle::find($vehicleId);
+
+            if (! $vehicle) {
+                abort(403, 'Selected vehicle was not found.');
+            }
+
+            return $vehicle;
+        }
+
+        $primaryVehicleId = $driver->primaryVehicleId();
+
+        if ($primaryVehicleId) {
+            $vehicle = TmsVehicle::find($primaryVehicleId);
+
+            if ($vehicle) {
+                return $vehicle;
+            }
+        }
+
         $vehicle = $driver->defaultVehicle;
 
         if (! $vehicle) {
-            abort(403, 'No default vehicle assigned to your driver profile.');
+            abort(403, 'No vehicle assigned to your driver profile.');
         }
 
         return $vehicle;

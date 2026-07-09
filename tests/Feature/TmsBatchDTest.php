@@ -169,7 +169,8 @@ class TmsBatchDTest extends TestCase
             ->post(route('admin.tms.drivers.store'), [
                 'factory_id'             => $this->factory->id,
                 'employee_id'            => $driverEmployee->id,
-                'default_vehicle_id'     => $this->vehicle->id,
+                'vehicle_ids'            => [$this->vehicle->id],
+                'primary_vehicle_id'     => $this->vehicle->id,
                 'ot_rate'                => 120,
                 'ot_rate_effective_from' => '2026-06-01',
                 'is_overtime_active'     => 1,
@@ -219,7 +220,8 @@ class TmsBatchDTest extends TestCase
             ->put(route('admin.tms.drivers.update', $driver), [
                 'factory_id'             => $this->factory->id,
                 'employee_id'            => $driverEmployee->id,
-                'default_vehicle_id'     => $this->vehicle->id,
+                'vehicle_ids'            => [$this->vehicle->id],
+                'primary_vehicle_id'     => $this->vehicle->id,
                 'license_number'         => 'LIC-123',
                 'ot_rate'                => 100,
                 'ot_rate_effective_from' => '2026-06-01',
@@ -234,7 +236,8 @@ class TmsBatchDTest extends TestCase
             ->put(route('admin.tms.drivers.update', $driver), [
                 'factory_id'             => $this->factory->id,
                 'employee_id'            => $driverEmployee->id,
-                'default_vehicle_id'     => $this->vehicle->id,
+                'vehicle_ids'            => [$this->vehicle->id],
+                'primary_vehicle_id'     => $this->vehicle->id,
                 'license_number'         => 'LIC-123',
                 'ot_rate'                => 150,
                 'ot_rate_effective_from' => '2026-07-01',

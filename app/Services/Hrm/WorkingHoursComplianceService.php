@@ -88,11 +88,13 @@ class WorkingHoursComplianceService
         return $violations;
     }
 
-    public function notifyViolations(int $factoryId, Carbon $from, Carbon $to): int
+    public function notifyViolations(int $factoryId, Carbon $from, Carbon $to, bool $force = false): int
     {
         $daily = $this->dailyViolations($factoryId, $from, $to);
         $weekly = $this->weeklyViolations($factoryId, $from, $to);
         $count = 0;
+        $filterYear = (int) $from->year;
+        $filterMonth = (int) $from->month;
 
         foreach ($daily as $violation) {
             if ($violation['employee']) {
@@ -101,7 +103,10 @@ class WorkingHoursComplianceService
                     $violation['hours'],
                     $violation['limit'],
                     $violation['date'],
-                    'daily'
+                    'daily',
+                    $force,
+                    $filterYear,
+                    $filterMonth,
                 );
                 $count++;
             }
@@ -114,7 +119,10 @@ class WorkingHoursComplianceService
                     $violation['hours'],
                     $violation['limit'],
                     $violation['week_start'],
-                    'weekly'
+                    'weekly',
+                    $force,
+                    $filterYear,
+                    $filterMonth,
                 );
                 $count++;
             }

@@ -6,6 +6,7 @@
           data-confirm-ok="Yes, approve">
         @csrf
         @include('admin.tms.requests.partials.driver-assignment-fields', [
+            'layout' => 'stack',
             'drivers' => $drivers,
             'rentalDrivers' => $rentalDrivers,
             'vehicles' => $vehicles,

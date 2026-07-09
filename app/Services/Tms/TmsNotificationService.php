@@ -9,13 +9,21 @@ use App\Models\Tms\TmsTransportRequest;
 use App\Models\Tms\TmsTripLog;
 use App\Models\Tms\TmsVehicle;
 use App\Models\User;
-use App\Support\PortalDateTime;
+use App\Notifications\PortalEmployeeTmsTripCompletedNotification;
+use App\Notifications\PortalEmployeeTmsTripStartedNotification;
+use App\Notifications\PortalRentalTmsTripCompletedNotification;
+use App\Notifications\PortalRentalTmsTripStartedNotification;
 use App\Notifications\PortalTmsDriverTripAssignedNotification;
 use App\Notifications\PortalTmsRentalDriverTripAssignedNotification;
 use App\Notifications\PortalTmsRequestApprovedNotification;
 use App\Notifications\PortalTmsRequestRejectedNotification;
+use App\Notifications\TmsOdometerReminderNotification;
+use App\Notifications\TmsOtPendingNotification;
 use App\Notifications\TmsRequestCancelledNotification;
 use App\Notifications\TmsRequestSubmittedNotification;
+use App\Notifications\TmsTripCompletedNotification;
+use App\Notifications\TmsTripStartedNotification;
+use App\Notifications\TmsVehiclePaperAlertNotification;
 use Carbon\Carbon;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\Auth;
@@ -34,12 +42,16 @@ class TmsNotificationService
 
         $request->loadMissing('employee');
 
-        $this->notifyPermission('tms.requests.approve', new TmsRequestSubmittedNotification($request), $request->factory_id);
+        $notification = new TmsRequestSubmittedNotification($request);
+
+        $this->notifyTransportApprovers($notification, $request->factory_id);
     }
 
     public function requestApproved(TmsTransportRequest $request): void
     {
         if ($this->popupEnabled('request_approved')) {
+            $request->loadMissing(['employee', 'driver.employee', 'rentalDriver']);
+
             $this->notifyEmployeePortal($request->employee_id, new PortalTmsRequestApprovedNotification($request));
 
             if ($request->driver?->employee_id) {
@@ -70,7 +82,7 @@ class TmsNotificationService
         }
 
         $request->loadMissing('employee');
-        $this->notifyPermission('tms.requests.approve', new TmsRequestCancelledNotification($request), $request->factory_id);
+        $this->notifyTmsSubmodule('requests', new TmsRequestCancelledNotification($request), $request->factory_id, excludeActingAdmin: false);
     }
 
     public function tripStarted(TmsTransportRequest $request): void
@@ -79,14 +91,39 @@ class TmsNotificationService
             return;
         }
 
-        $this->notifyPermission('tms.requests.approve', $this->tripStatusNotification($request, 'started'), $request->factory_id);
+        $request->loadMissing(['employee', 'driver.employee', 'rentalDriver']);
+
+        $this->notifyTmsSubmodule('requests', new TmsTripStartedNotification($request), $request->factory_id);
+        $this->notifyEmployeePortal($request->employee_id, new PortalEmployeeTmsTripStartedNotification($request));
+
+        $driverEmployeeId = $request->driver?->employee_id;
+
+        if ($driverEmployeeId && $driverEmployeeId !== $request->employee_id) {
+            $this->notifyEmployeePortal($driverEmployeeId, new PortalEmployeeTmsTripStartedNotification($request, forDriver: true));
+        }
+
+        if ($request->rental_driver_id) {
+            $this->notifyRentalDriverPortal($request->rental_driver_id, new PortalRentalTmsTripStartedNotification($request));
+        }
     }
 
     public function tripCompleted(TmsTransportRequest $request): void
     {
         if ($this->popupEnabled('trip_completed')) {
-            $this->notifyEmployeePortal($request->employee_id, $this->tripStatusNotification($request, 'completed', true));
-            $this->notifyPermission('tms.requests.approve', $this->tripStatusNotification($request, 'completed'), $request->factory_id);
+            $request->loadMissing(['employee', 'driver.employee', 'rentalDriver']);
+
+            $this->notifyEmployeePortal($request->employee_id, new PortalEmployeeTmsTripCompletedNotification($request));
+            $this->notifyTmsSubmodule('requests', new TmsTripCompletedNotification($request), $request->factory_id);
+
+            $driverEmployeeId = $request->driver?->employee_id;
+
+            if ($driverEmployeeId && $driverEmployeeId !== $request->employee_id) {
+                $this->notifyEmployeePortal($driverEmployeeId, new PortalEmployeeTmsTripCompletedNotification($request, forDriver: true));
+            }
+
+            if ($request->rental_driver_id) {
+                $this->notifyRentalDriverPortal($request->rental_driver_id, new PortalRentalTmsTripCompletedNotification($request));
+            }
         }
 
         $this->messaging->tripCompleted($request);
@@ -101,26 +138,11 @@ class TmsNotificationService
                 ?? $tripLog->driver?->employee?->name
                 ?? 'Driver';
 
-            $notification = new class($driver, $tripLog) extends Notification {
-                public function __construct(private string $driverName, private TmsTripLog $tripLog) {}
-
-                public function via(object $notifiable): array
-                {
-                    return ['database'];
-                }
-
-                public function toDatabase(object $notifiable): array
-                {
-                    return [
-                        'type'    => 'tms_ot_pending',
-                        'title'   => 'Driver OT Pending Payment',
-                        'message' => $this->driverName . ' has ৳' . number_format((float) $this->tripLog->ot_amount, 2) . ' OT pending.',
-                        'url'     => route('admin.tms.trips.show', $this->tripLog),
-                    ];
-                }
-            };
-
-            $this->notifyPermission('tms.overtime.manage', $notification, $tripLog->factory_id);
+            $this->notifyTmsPermission(
+                ['tms.overtime.manage'],
+                new TmsOtPendingNotification($driver, $tripLog),
+                $tripLog->factory_id
+            );
         }
 
         $this->messaging->otPendingPayment($tripLog);
@@ -137,85 +159,28 @@ class TmsNotificationService
             ? $vehicle->displayLabel() . ' — morning KM not recorded for ' . Carbon::parse($date)->format('d M Y') . '.'
             : $vehicle->displayLabel() . ' — evening KM pending for ' . Carbon::parse($date)->format('d M Y') . '.';
 
-        $notification = new class($label, $message, $vehicle) extends Notification {
-            public function __construct(private string $title, private string $message, private TmsVehicle $vehicle) {}
-
-            public function via(object $notifiable): array
-            {
-                return ['database'];
-            }
-
-            public function toDatabase(object $notifiable): array
-            {
-                return [
-                    'type'    => 'tms_odometer_reminder',
-                    'title'   => $this->title,
-                    'message' => $this->message,
-                    'url'     => route('admin.tms.odometer.index'),
-                ];
-            }
-        };
-
-        $this->notifyPermission('tms.trips.manage', $notification, $vehicle->factory_id);
+        $this->notifyTmsSubmodule(
+            'odometer',
+            new TmsOdometerReminderNotification($label, $message, $vehicle, $date),
+            $vehicle->factory_id
+        );
     }
 
     /** @param  array<int, string>  $warnings */
     public function vehiclePaperAlert(TmsVehicle $vehicle, string $status, array $warnings): void
     {
+        if (! $this->popupEnabled('vehicle_paper')) {
+            return;
+        }
+
         $title = $status === 'expired' ? 'Vehicle Paper Expired' : 'Vehicle Paper Expiring Soon';
         $message = $vehicle->displayLabel() . ' — ' . implode('; ', array_slice($warnings, 0, 3));
 
-        $notification = new class($title, $message) extends Notification {
-            public function __construct(private string $title, private string $message) {}
-
-            public function via(object $notifiable): array
-            {
-                return ['database'];
-            }
-
-            public function toDatabase(object $notifiable): array
-            {
-                return [
-                    'type'    => 'tms_vehicle_paper_alert',
-                    'title'   => $this->title,
-                    'message' => $this->message,
-                    'url'     => route('admin.tms.vehicles.papers'),
-                ];
-            }
-        };
-
-        $this->notifyPermission('tms.vehicles.manage', $notification, $vehicle->factory_id);
-    }
-
-    private function tripStatusNotification(TmsTransportRequest $request, string $event, bool $portal = false): Notification
-    {
-        $label = $event === 'started' ? 'Trip Started' : 'Trip Completed';
-        $message = $event === 'started'
-            ? 'Driver started the trip for ' . PortalDateTime::dateTime($request->pickup_at)
-            : 'Your transport trip has been completed.';
-
-        $url = $portal
-            ? route('employee.transport.requests.show', $request)
-            : route('admin.tms.requests.show', $request);
-
-        return new class($label, $message, $url, $event) extends Notification {
-            public function __construct(private string $title, private string $message, private string $url, private string $event) {}
-
-            public function via(object $notifiable): array
-            {
-                return ['database'];
-            }
-
-            public function toDatabase(object $notifiable): array
-            {
-                return [
-                    'type'    => 'tms_trip_' . $this->event,
-                    'title'   => $this->title,
-                    'message' => $this->message,
-                    'url'     => $this->url,
-                ];
-            }
-        };
+        $this->notifyTmsSubmodule(
+            'vehicles',
+            new TmsVehiclePaperAlertNotification($title, $message, $vehicle),
+            $vehicle->factory_id
+        );
     }
 
     private function popupEnabled(string $event): bool
@@ -235,22 +200,58 @@ class TmsNotificationService
             'trip_completed'     => (bool) $settings->notify_popup_tms_trip_completed,
             'ot_pending'         => (bool) $settings->notify_popup_tms_ot_pending,
             'odometer_reminder'  => (bool) $settings->notify_popup_tms_odometer_reminder,
+            'vehicle_paper'      => (bool) $settings->notify_popup_tms_vehicle_paper,
             default              => true,
         };
     }
 
-    private function notifyPermission(string $permission, Notification $notification, ?int $factoryId = null): void
+    private function notifyTmsSubmodule(string $submoduleKey, Notification $notification, ?int $factoryId = null, bool $excludeActingAdmin = false): void
     {
-        $currentUserId = Auth::id();
+        $this->notifyAdminUsers(
+            fn (User $user) => $user->canViewTmsSubmodule($submoduleKey),
+            $notification,
+            $factoryId,
+            $excludeActingAdmin,
+        );
+    }
+
+    /** @param  list<string>  $permissions */
+    private function notifyTmsPermission(array $permissions, Notification $notification, ?int $factoryId = null): void
+    {
+        $this->notifyAdminUsers(
+            fn (User $user) => collect($permissions)->contains(fn (string $permission) => $user->hasPermission($permission)),
+            $notification,
+            $factoryId,
+        );
+    }
+
+    private function notifyTransportApprovers(Notification $notification, ?int $factoryId = null): void
+    {
+        $this->notifyAdminUsers(
+            fn (User $user) => $user->hasPermission('tms.requests.approve')
+                || $user->hasPermission('tms.requests.view')
+                || $user->canViewTmsSubmodule('requests'),
+            $notification,
+            $factoryId,
+            excludeActingAdmin: false,
+        );
+    }
+
+    /** @param  callable(User): bool  $predicate */
+    private function notifyAdminUsers(
+        callable $predicate,
+        Notification $notification,
+        ?int $factoryId = null,
+        bool $excludeActingAdmin = true,
+    ): void {
+        $currentAdminId = $excludeActingAdmin ? Auth::guard('web')->id() : null;
 
         User::query()
             ->with('role')
-            ->when($factoryId, fn ($q) => $q->where(function ($query) use ($factoryId) {
-                $query->whereNull('factory_id')->orWhere('factory_id', $factoryId);
-            }))
             ->get()
-            ->filter(fn (User $user) => $user->hasPermission($permission))
-            ->filter(fn (User $user) => $currentUserId === null || $user->id !== $currentUserId)
+            ->filter(fn (User $user) => $factoryId === null || $user->canAccessFactory($factoryId))
+            ->filter($predicate)
+            ->filter(fn (User $user) => $currentAdminId === null || (int) $user->id !== (int) $currentAdminId)
             ->each(fn (User $user) => $user->notify($notification));
     }
 

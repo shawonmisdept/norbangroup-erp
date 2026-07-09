@@ -83,6 +83,8 @@ class HeadOfficeRolePermissionCatalog
             'hrm.finance' => self::hrmModulePermissions('hrm.finance', $actions, approve: false),
             'hrm.salary' => self::hrmModulePermissions('hrm.salary', $actions, approve: self::accessAtLeast($accessLevel, 'full')),
             'hrm.rmg' => self::hrmModulePermissions('hrm.rmg', $actions, approve: false),
+            'tms' => self::tmsPermissions($actions),
+            'tms.accounts' => self::tmsAccountsPermissions($actions),
             default => str_starts_with($module, 'hrm.')
                 ? self::hrmModulePermissions($module, $actions, approve: false)
                 : [],
@@ -143,6 +145,48 @@ class HeadOfficeRolePermissionCatalog
         }
 
         return $permissions;
+    }
+
+    /** @param  list<string>  $actions
+     * @return list<string>
+     */
+    private static function tmsPermissions(array $actions): array
+    {
+        if (in_array('manage', $actions, true)
+            || in_array('operate', $actions, true)
+            || in_array('approve', $actions, true)) {
+            return RolePermissionCatalog::tmsOperationalPermissions();
+        }
+
+        if (self::hasViewAccess($actions)) {
+            return RolePermissionCatalog::tmsViewPermissions();
+        }
+
+        return [];
+    }
+
+    /** @param  list<string>  $actions
+     * @return list<string>
+     */
+    private static function tmsAccountsPermissions(array $actions): array
+    {
+        $permissions = [];
+
+        if (self::hasViewAccess($actions)) {
+            $permissions = [
+                'tms.dashboard.view',
+                'tms.maintenance.view',
+                'tms.reports.view',
+            ];
+        }
+
+        if (in_array('manage', $actions, true)
+            || in_array('operate', $actions, true)
+            || in_array('approve', $actions, true)) {
+            $permissions[] = 'tms.maintenance.manage';
+        }
+
+        return array_values(array_unique($permissions));
     }
 
     /** @param  list<string>  $actions

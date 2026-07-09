@@ -7,11 +7,12 @@ use App\Http\Controllers\Controller;
 use App\Models\Tms\TmsDriver;
 use App\Models\Tms\TmsRentalDriver;
 use App\Models\Tms\TmsTransportRequest;
+use App\Models\Tms\TmsTripLog;
 use App\Models\Tms\TmsVehicle;
 use App\Services\Tms\TransportRequestService;
 use App\Services\Tms\VehiclePaperService;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 
 class RequestController extends Controller
 {
@@ -47,7 +48,7 @@ class RequestController extends Controller
 
         $factoryId = $request->user()->factory_id;
 
-        $drivers = TmsDriver::with(['employee', 'defaultVehicle'])
+        $drivers = TmsDriver::with(['employee', 'vehicles', 'defaultVehicle'])
             ->where('status', 'active')
             ->when($factoryId, fn ($q, $fid) => $q->where('factory_id', $fid))
             ->orderBy('id')
@@ -86,7 +87,7 @@ class RequestController extends Controller
             'approvedByUser',
         ]);
 
-        $drivers = TmsDriver::with(['employee', 'defaultVehicle'])
+        $drivers = TmsDriver::with(['employee', 'vehicles', 'defaultVehicle'])
             ->where('factory_id', $transportRequest->factory_id)
             ->where('status', 'active')
             ->orderBy('id')
@@ -130,9 +131,12 @@ class RequestController extends Controller
 
         $count = count($validated['request_ids']);
 
-        return redirect()
-            ->route('admin.tms.trips.show', $trip)
-            ->with('success', "{$count} request(s) merged and assigned to trip #{$trip->id}.");
+        return $this->redirectAfterTripAssignment(
+            $request,
+            $trip,
+            $first,
+            "{$count} request(s) merged and assigned to trip #{$trip->id}.",
+        );
     }
 
     public function approve(Request $request, TmsTransportRequest $transportRequest, TransportRequestService $service)
@@ -150,9 +154,7 @@ class RequestController extends Controller
             $validated['rental_driver_id'] ?? null,
         );
 
-        return redirect()
-            ->route('admin.tms.trips.show', $trip)
-            ->with('success', 'Request approved and assigned to trip #' . $trip->id . '.');
+        return $this->redirectAfterTripAssignment($request, $trip, $transportRequest, 'Request approved and assigned to trip #' . $trip->id . '.');
     }
 
     public function reject(Request $request, TmsTransportRequest $transportRequest, TransportRequestService $service)
@@ -200,9 +202,25 @@ class RequestController extends Controller
             isset($validated['vehicle_id']) ? (int) $validated['vehicle_id'] : null,
         );
 
+        return $this->redirectAfterTripAssignment(
+            $request,
+            $trip,
+            $transportRequest,
+            'Driver and vehicle reassigned for trip #' . $trip->id . '.',
+        );
+    }
+
+    private function redirectAfterTripAssignment(Request $request, TmsTripLog $trip, TmsTransportRequest $transportRequest, string $message): RedirectResponse
+    {
+        if ($request->user()->hasPermission('tms.trips.view')) {
+            return redirect()
+                ->route('admin.tms.trips.show', $trip)
+                ->with('success', $message);
+        }
+
         return redirect()
-            ->route('admin.tms.trips.show', $trip)
-            ->with('success', 'Driver and vehicle reassigned for trip #' . $trip->id . '.');
+            ->route('admin.tms.requests.show', $transportRequest)
+            ->with('success', $message);
     }
 
     /** @return array<string, mixed> */

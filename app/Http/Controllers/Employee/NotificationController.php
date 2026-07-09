@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Employee;
 
 use App\Http\Controllers\Controller;
+use App\Support\NotificationUrl;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -28,7 +29,8 @@ class NotificationController extends Controller
         $notification = $request->user('employee')->notifications()->where('id', $id)->firstOrFail();
         $notification->markAsRead();
 
-        $url = $notification->data['url'] ?? route('employee.dashboard');
+        $url = NotificationUrl::resolve($notification->data['url'] ?? null)
+            ?? $this->fallbackUrl($notification->data['type'] ?? null);
 
         return redirect($url);
     }
@@ -38,5 +40,14 @@ class NotificationController extends Controller
         $request->user('employee')->unreadNotifications->markAsRead();
 
         return back()->with('success', 'All notifications marked as read.');
+    }
+
+    private function fallbackUrl(?string $type): string
+    {
+        return match ($type) {
+            'tms_request_approved', 'tms_request_rejected' => route('employee.transport.requests'),
+            'tms_trip_assigned', 'tms_trip_started', 'tms_trip_completed' => route('employee.transport.trips'),
+            default => route('employee.dashboard'),
+        };
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Notifications;
 
 use App\Models\Tms\TmsTransportRequest;
+use App\Support\NotificationUrl;
 use Illuminate\Notifications\Notification;
 
 class TmsRequestCancelledNotification extends Notification
@@ -22,7 +23,7 @@ class TmsRequestCancelledNotification extends Notification
             'type'    => 'tms_request_cancelled',
             'title'   => 'Transport Request Cancelled',
             'message' => ($employee?->name ?? 'Employee') . ' cancelled their transport request.',
-            'url'     => route('admin.tms.requests.index'),
+            'url'     => NotificationUrl::route('admin.tms.requests.index'),
         ];
     }
 }

@@ -33,6 +33,12 @@
     display: none !important;
 }
 
+@layer base {
+    body {
+        font-family: var(--font-sans);
+    }
+}
+
 .font-anek-bangla,
 .kb-bn-content,
 .kb-bn-content .prose {
@@ -408,7 +414,7 @@ select.emp-input.tomselected {
 }
 
 .erp-table th {
-    @apply px-4 py-2.5 text-center text-[11px] font-semibold text-gray-500 uppercase tracking-wider whitespace-nowrap;
+    @apply px-4 py-2.5 text-left text-[11px] font-semibold text-gray-500 uppercase tracking-wide whitespace-nowrap;
 }
 
 .erp-table th.text-right {
@@ -420,11 +426,67 @@ select.emp-input.tomselected {
 }
 
 .erp-table td {
-    @apply px-4 py-1 text-gray-700 align-middle;
+    @apply px-4 py-1 text-left text-gray-700 align-middle;
+}
+
+.erp-table td.text-right {
+    text-align: right;
+}
+
+.erp-table td.text-center {
+    text-align: center;
 }
 
 .erp-table tbody tr {
     @apply border-b border-gray-100 hover:bg-blue-50/40 transition-colors;
+}
+
+/* TMS fleet / driver registry tables */
+.tms-registry-table td.align-top {
+    vertical-align: top;
+}
+
+.tms-registry-table .tms-vehicle-list {
+    @apply space-y-1 leading-snug;
+}
+
+/* TMS driver assignment — stack layout for narrow sidebars */
+.tms-assign-fields--stack select.erp-input {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+}
+
+.tms-assign-fields--stack .erp-label {
+    display: block;
+}
+
+.tms-registry-table .tms-vehicle-list li {
+    @apply flex flex-wrap items-baseline gap-x-1.5;
+}
+
+.tms-driver-detail-grid {
+    @apply grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4;
+}
+
+.tms-driver-detail-item {
+    @apply space-y-1;
+}
+
+.tms-driver-detail-label {
+    @apply text-[11px] font-semibold uppercase tracking-wide text-gray-400 block;
+}
+
+.tms-driver-vehicles-section {
+    @apply border-t border-erp-border pt-4 mt-4 space-y-2;
+}
+
+.tms-driver-vehicles-list {
+    @apply grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2;
+}
+
+.tms-driver-vehicles-list li {
+    @apply flex flex-wrap items-baseline gap-x-1.5 text-sm;
 }
 
 /* Maintenance module tables */
@@ -433,16 +495,34 @@ select.emp-input.tomselected {
     table-layout: fixed;
 }
 
-.maintenance-bills-table col.col-bill-no { width: 8%; }
-.maintenance-bills-table col.col-date { width: 10%; }
-.maintenance-bills-table col.col-workshop { width: 12%; }
-.maintenance-bills-table col.col-item { width: 28%; }
-.maintenance-bills-table col.col-qty { width: 8%; }
-.maintenance-bills-table col.col-unit { width: 8%; }
-.maintenance-bills-table col.col-amount { width: 12%; }
-.maintenance-bills-table col.col-actions { width: 12%; }
+.maintenance-bills-table col.col-bill-no { width: 5.5rem; }
+.maintenance-bills-table col.col-date { width: 6rem; }
+.maintenance-bills-table col.col-workshop { width: 7rem; }
+.maintenance-bills-table col.col-qty { width: 3.5rem; }
+.maintenance-bills-table col.col-unit { width: 3.5rem; }
+.maintenance-bills-table col.col-amount { width: 6.5rem; }
+.maintenance-bills-table col.col-actions { width: 7.5rem; }
 
-.maintenance-bills-table:not(.has-actions) col.col-item { width: 36%; }
+.maintenance-bills-table td.maintenance-bill-actions {
+    @apply align-top p-1.5;
+    width: 7.5rem;
+    max-width: 7.5rem;
+    overflow: visible;
+}
+
+.maintenance-bills-table .maintenance-bill-action-stack {
+    @apply flex flex-col items-stretch gap-1;
+}
+
+.maintenance-bills-table .maintenance-bill-action-stack .erp-table-actions {
+    @apply flex flex-col items-stretch gap-1;
+}
+
+.maintenance-bills-table .maintenance-bill-action-stack .erp-btn-sm-primary,
+.maintenance-bills-table .maintenance-bill-action-stack .erp-btn-sm-secondary,
+.maintenance-bills-table .maintenance-bill-action-stack form button {
+    @apply w-full justify-center;
+}
 
 .maintenance-bills-table th,
 .maintenance-bills-table td {
@@ -593,7 +673,8 @@ select.emp-input.tomselected {
     @apply inline-flex items-center text-[11px] font-semibold px-2 py-0.5 rounded-sm;
 }
 
-.erp-form-label {
+.erp-form-label,
+.erp-label {
     @apply block text-[11px] font-semibold text-gray-500 uppercase tracking-wide mb-1;
 }
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Support\NotificationUrl;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -29,7 +30,8 @@ class NotificationController extends Controller
         $notification = $request->user()->notifications()->where('id', $id)->firstOrFail();
         $notification->markAsRead();
 
-        $url = $notification->data['url'] ?? $this->fallbackUrl($notification->data['type'] ?? null, $request->user());
+        $url = NotificationUrl::resolve($notification->data['url'] ?? null)
+            ?? $this->fallbackUrl($notification->data['type'] ?? null, $request->user());
 
         return redirect($url);
     }
@@ -65,6 +67,8 @@ class NotificationController extends Controller
             'new_requirement', 'status_updated', 'requirement_assigned' => route('admin.requirements.index'),
             'tms_request_submitted', 'tms_request_cancelled', 'tms_trip_started', 'tms_trip_completed' => route('admin.tms.requests.index'),
             'tms_ot_pending' => route('admin.tms.trips.index'),
+            'tms_odometer_reminder' => route('admin.tms.odometer.index'),
+            'tms_vehicle_paper_alert' => route('admin.tms.vehicles.papers'),
             default => $user?->hasAnyTmsViewPermission()
                 ? route('admin.tms.dashboard')
                 : ($user?->hasAnyHrmViewPermission()

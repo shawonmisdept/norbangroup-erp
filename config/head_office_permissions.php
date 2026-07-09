@@ -61,6 +61,7 @@ return [
             'hrm.recruitment',
             'hrm.compliance',
             'hrm.performance',
+            'tms',
         ],
         'IT' => [
             'admin.settings',
@@ -74,6 +75,7 @@ return [
             'hrm.salary',
             'hrm.compliance',
             'masters',
+            'tms.accounts',
         ],
         'Audit' => [
             'hrm.finance',

@@ -4,6 +4,7 @@ namespace App\Notifications;
 
 use App\Models\Tms\TmsTransportRequest;
 use App\Notifications\Concerns\DeliversEmployeeWebPush;
+use App\Support\NotificationUrl;
 use Illuminate\Notifications\Notification;
 
 class PortalTmsRequestRejectedNotification extends Notification
@@ -17,7 +18,7 @@ class PortalTmsRequestRejectedNotification extends Notification
             'type'    => 'tms_request_rejected',
             'title'   => 'Transport Request Rejected',
             'message' => 'Your transport request was rejected: ' . ($this->request->rejection_reason ?? 'No reason given'),
-            'url'     => route('employee.transport.requests.show', $this->request),
+            'url'     => NotificationUrl::route('employee.transport.requests.show', $this->request),
         ];
     }
 }

@@ -20,16 +20,16 @@
             'vehicles' => $vehicles,
             'vehiclePaperWarnings' => $vehiclePaperWarnings ?? [],
         ])
-        <div class="flex gap-2">
-            <button type="submit" class="erp-btn-primary flex-1">Merge & Assign</button>
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pt-1 border-t border-erp-border">
+            <p class="text-xs text-gray-500 order-2 sm:order-1">Selected passengers: <strong id="selected-passengers">0</strong> · Vehicle capacity: <strong id="vehicle-capacity">—</strong></p>
+            <button type="submit" class="erp-btn-primary order-1 sm:order-2 sm:min-w-[12rem]">Merge & Assign</button>
         </div>
-        <p class="text-xs text-gray-500">Selected passengers: <strong id="selected-passengers">0</strong> · Vehicle capacity: <strong id="vehicle-capacity">—</strong></p>
     </form>
     @include('admin.tms.requests.partials.driver-assignment-script')
 @endif
 
 <div class="erp-panel overflow-hidden">
-    <table class="erp-table">
+    <table class="erp-table tms-registry-table">
         <thead>
             <tr>
                 @if(auth()->user()->hasPermission('tms.requests.approve'))

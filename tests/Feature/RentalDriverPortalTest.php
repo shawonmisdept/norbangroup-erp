@@ -201,6 +201,37 @@ class RentalDriverPortalTest extends TestCase
             ->assertSee('Start Trip');
     }
 
+    public function test_trip_start_notifies_rental_driver_portal(): void
+    {
+        $trip = $this->createAssignedTrip();
+
+        $this->actingAs($this->portalUser, 'rental_driver')
+            ->post(route('rental.trips.start', $trip))
+            ->assertRedirect(route('rental.trips'));
+
+        $this->assertTrue(
+            $this->portalUser->fresh()->notifications()->where('data->type', 'tms_trip_started')->exists()
+        );
+    }
+
+    public function test_trip_end_notifies_rental_driver_portal(): void
+    {
+        $trip = $this->createAssignedTrip();
+
+        $this->actingAs($this->portalUser, 'rental_driver')
+            ->post(route('rental.trips.start', $trip));
+
+        Carbon::setTestNow('2026-06-24 18:00:00');
+
+        $this->actingAs($this->portalUser, 'rental_driver')
+            ->post(route('rental.trips.end', $trip))
+            ->assertRedirect(route('rental.trips'));
+
+        $this->assertTrue(
+            $this->portalUser->fresh()->notifications()->where('data->type', 'tms_trip_completed')->exists()
+        );
+    }
+
     private function createAssignedTrip(): TmsTripLog
     {
         $requester = Employee::create([

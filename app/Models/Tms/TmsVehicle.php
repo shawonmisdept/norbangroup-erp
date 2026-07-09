@@ -7,6 +7,7 @@ use App\Models\Hrm\Employee;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -80,6 +81,13 @@ class TmsVehicle extends Model
         return $this->hasMany(TmsDriver::class, 'default_vehicle_id');
     }
 
+    public function assignedCompanyDrivers(): BelongsToMany
+    {
+        return $this->belongsToMany(TmsDriver::class, 'tms_driver_vehicles', 'vehicle_id', 'driver_id')
+            ->withPivot('is_primary')
+            ->withTimestamps();
+    }
+
     public function assignedDriverNames(): string
     {
         if ($this->relationLoaded('primaryDriver') && $this->primaryDriver?->isActive()) {
@@ -93,12 +101,21 @@ class TmsVehicle extends Model
             }
         }
 
-        $drivers = $this->relationLoaded('defaultDrivers')
+        $drivers = collect();
+
+        $pivotDrivers = $this->relationLoaded('assignedCompanyDrivers')
+            ? $this->assignedCompanyDrivers
+            : $this->assignedCompanyDrivers()->with('employee')->where('status', 'active')->get();
+
+        $drivers = $drivers->merge($pivotDrivers->where('status', 'active'));
+
+        $legacyDrivers = $this->relationLoaded('defaultDrivers')
             ? $this->defaultDrivers
             : $this->defaultDrivers()->with('employee')->where('status', 'active')->get();
 
+        $drivers = $drivers->merge($legacyDrivers->where('status', 'active'));
+
         $names = $drivers
-            ->where('status', 'active')
             ->map(fn (TmsDriver $driver) => $driver->displayLabel())
             ->filter()
             ->unique()

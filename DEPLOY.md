@@ -31,6 +31,7 @@ git pull origin main
 
 ```bash
 # always
+php artisan route:clear
 php artisan config:cache
 php artisan route:cache
 php artisan view:cache
@@ -49,6 +50,7 @@ cd ~/portal.norbangroup.com
 git pull origin main
 php composer.phar install --no-dev --optimize-autoloader
 php artisan migrate --force
+php artisan route:clear
 php artisan config:cache
 php artisan route:cache
 php artisan view:cache

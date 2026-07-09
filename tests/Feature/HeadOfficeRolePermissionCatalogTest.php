@@ -39,6 +39,18 @@ class HeadOfficeRolePermissionCatalogTest extends TestCase
 
         $this->assertContains('hrm.finance.manage', $permissions);
         $this->assertContains('hrm.salary.approve', $permissions);
+        $this->assertContains('tms.maintenance.view', $permissions);
+        $this->assertContains('tms.maintenance.manage', $permissions);
+        $this->assertContains('tms.reports.view', $permissions);
+    }
+
+    public function test_admin_gm_gets_full_tms_operational_permissions(): void
+    {
+        $permissions = HeadOfficeRolePermissionCatalog::permissionsFor('Admin-GM');
+
+        $this->assertContains('tms.vehicles.manage', $permissions);
+        $this->assertContains('tms.maintenance.manage', $permissions);
+        $this->assertContains('tms.requests.approve', $permissions);
     }
 
     public function test_compliance_manager_override(): void

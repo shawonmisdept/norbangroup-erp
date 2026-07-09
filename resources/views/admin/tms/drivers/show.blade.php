@@ -8,64 +8,78 @@
 ])
 
 <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
-    <div class="lg:col-span-2 erp-panel p-6 space-y-4 text-sm">
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3">
-            <div>
-                <span class="text-[11px] font-semibold uppercase tracking-wide text-gray-400 block">Unit</span>
+    <div class="lg:col-span-2 erp-panel p-6 text-sm">
+        <div class="tms-driver-detail-grid">
+            <div class="tms-driver-detail-item">
+                <span class="tms-driver-detail-label">Unit</span>
                 <span class="font-medium">{{ $driver->factory?->name ?? '—' }}</span>
             </div>
-            <div>
-                <span class="text-[11px] font-semibold uppercase tracking-wide text-gray-400 block">Status</span>
+            <div class="tms-driver-detail-item">
+                <span class="tms-driver-detail-label">Status</span>
                 <span class="erp-badge {{ $driver->status === 'active' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-600' }}">
                     {{ ucfirst($driver->status) }}
                 </span>
             </div>
-            <div>
-                <span class="text-[11px] font-semibold uppercase tracking-wide text-gray-400 block">Employee Code</span>
+            <div class="tms-driver-detail-item">
+                <span class="tms-driver-detail-label">Employee Code</span>
                 <span class="font-medium tabular-nums">{{ $driver->employee?->employee_code ?? '—' }}</span>
             </div>
-            <div>
-                <span class="text-[11px] font-semibold uppercase tracking-wide text-gray-400 block">Phone</span>
+            <div class="tms-driver-detail-item">
+                <span class="tms-driver-detail-label">Phone</span>
                 <span class="font-medium tabular-nums">{{ $driver->contactPhone() ?? '—' }}</span>
             </div>
-            <div>
-                <span class="text-[11px] font-semibold uppercase tracking-wide text-gray-400 block">Designation</span>
+            <div class="tms-driver-detail-item">
+                <span class="tms-driver-detail-label">Designation</span>
                 <span class="font-medium">{{ $driver->employee?->designation?->name ?? '—' }}</span>
             </div>
-            <div>
-                <span class="text-[11px] font-semibold uppercase tracking-wide text-gray-400 block">Department</span>
+            <div class="tms-driver-detail-item">
+                <span class="tms-driver-detail-label">Department</span>
                 <span class="font-medium">{{ $driver->employee?->department?->name ?? '—' }}</span>
             </div>
-            <div>
-                <span class="text-[11px] font-semibold uppercase tracking-wide text-gray-400 block">License</span>
+            <div class="tms-driver-detail-item">
+                <span class="tms-driver-detail-label">License</span>
                 <span class="font-medium tabular-nums">{{ $driver->license_number ?? '—' }}</span>
             </div>
-            <div>
-                <span class="text-[11px] font-semibold uppercase tracking-wide text-gray-400 block">Default Vehicle</span>
-                @if($driver->defaultVehicle)
-                    <a href="{{ route('admin.tms.vehicles.show', $driver->defaultVehicle) }}" class="font-medium text-indigo-600">{{ $driver->defaultVehicle->displayLabel() }}</a>
-                @else
-                    <span class="font-medium">—</span>
-                @endif
-            </div>
-            <div>
-                <span class="text-[11px] font-semibold uppercase tracking-wide text-gray-400 block">OT Rate</span>
-                <span class="font-medium tabular-nums">৳{{ number_format((float) $driver->ot_rate, 2) }}/hr</span>
-            </div>
-            <div>
-                <span class="text-[11px] font-semibold uppercase tracking-wide text-gray-400 block">OT Active</span>
+            <div class="tms-driver-detail-item">
+                <span class="tms-driver-detail-label">OT Active</span>
                 <span class="font-medium">{{ $driver->is_overtime_active ? 'Yes' : 'No' }}</span>
             </div>
+            <div class="tms-driver-detail-item">
+                <span class="tms-driver-detail-label">OT Rate</span>
+                <span class="font-medium tabular-nums">৳{{ number_format((float) $driver->ot_rate, 2) }}/hr</span>
+            </div>
             @if($driver->ot_rate_effective_from)
-                <div>
-                    <span class="text-[11px] font-semibold uppercase tracking-wide text-gray-400 block">OT Rate Effective</span>
+                <div class="tms-driver-detail-item">
+                    <span class="tms-driver-detail-label">OT Rate Effective</span>
                     <span class="font-medium tabular-nums">{{ $driver->ot_rate_effective_from->format('d M Y') }}</span>
                 </div>
             @endif
         </div>
 
+        <div class="tms-driver-vehicles-section">
+            <span class="tms-driver-detail-label">Assigned Vehicles</span>
+            @if($driver->vehicles->isNotEmpty())
+                <ul class="tms-driver-vehicles-list">
+                    @foreach($driver->vehicles as $vehicle)
+                        <li>
+                            <a href="{{ route('admin.tms.vehicles.show', $vehicle) }}" class="font-medium text-indigo-600 hover:underline">
+                                {{ $vehicle->displayLabel() }}
+                            </a>
+                            @if($vehicle->pivot?->is_primary)
+                                <span class="text-xs text-gray-500">(primary)</span>
+                            @endif
+                        </li>
+                    @endforeach
+                </ul>
+            @elseif($driver->defaultVehicle)
+                <a href="{{ route('admin.tms.vehicles.show', $driver->defaultVehicle) }}" class="font-medium text-indigo-600 hover:underline">{{ $driver->defaultVehicle->displayLabel() }}</a>
+            @else
+                <span class="font-medium">—</span>
+            @endif
+        </div>
+
         @if($canManage)
-            <div class="pt-2 border-t border-erp-border">
+            <div class="pt-4 mt-4 border-t border-erp-border">
                 <a href="{{ route('admin.tms.drivers.edit', $driver) }}" class="erp-btn-sm-primary">Edit Driver</a>
             </div>
         @endif
@@ -91,23 +105,23 @@
     <div class="erp-panel p-6 mt-4">
         <h3 class="font-semibold mb-3">OT Rate History</h3>
         <div class="overflow-x-auto">
-            <table class="erp-table text-sm">
+            <table class="erp-table tms-registry-table text-sm">
                 <thead>
                     <tr>
                         <th>Recorded</th>
-                        <th>Rate (BDT/hr)</th>
+                        <th class="text-right">Rate (BDT/hr)</th>
                         <th>Effective From</th>
-                        <th>OT Active</th>
+                        <th class="text-center">OT Active</th>
                         <th>By</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($driver->otRateLogs as $log)
                         <tr>
-                            <td class="tabular-nums">@portalDateTime($log->created_at)</td>
-                            <td class="tabular-nums">৳{{ number_format((float) $log->ot_rate, 2) }}</td>
-                            <td class="tabular-nums">{{ $log->effective_from?->format('d M Y') ?? '—' }}</td>
-                            <td>{{ $log->is_overtime_active ? 'Yes' : 'No' }}</td>
+                            <td class="tabular-nums whitespace-nowrap">@portalDateTime($log->created_at)</td>
+                            <td class="tabular-nums text-right whitespace-nowrap">৳{{ number_format((float) $log->ot_rate, 2) }}</td>
+                            <td class="tabular-nums whitespace-nowrap">{{ $log->effective_from?->format('d M Y') ?? '—' }}</td>
+                            <td class="text-center">{{ $log->is_overtime_active ? 'Yes' : 'No' }}</td>
                             <td>{{ $log->recordedByUser?->name ?? '—' }}</td>
                         </tr>
                     @endforeach

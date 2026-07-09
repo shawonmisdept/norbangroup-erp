@@ -40,6 +40,9 @@ class RolePermissionSeederTest extends TestCase
             'tms.drivers.manage',
             'tms.overtime.manage',
             'tms.requests.approve',
+            'tms.maintenance.view',
+            'tms.maintenance.manage',
+            'tms.reports.view',
         ] as $permission) {
             $this->assertContains($permission, $role->permissions);
             $this->assertTrue($role->hasPermission($permission), "Transport Authority missing: {$permission}");

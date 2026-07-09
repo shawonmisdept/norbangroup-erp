@@ -332,14 +332,20 @@ class TransportRequestService
         $totalPassengers = (int) $requests->sum('passenger_count');
 
         if ($driverType === 'company') {
-            $driver = TmsDriver::with(['employee', 'defaultVehicle'])->findOrFail($companyDriverId);
+            $driver = TmsDriver::with(['employee', 'defaultVehicle'])->find($companyDriverId);
+            if (! $driver) {
+                throw ValidationException::withMessages(['driver_id' => 'Selected driver was not found.']);
+            }
             $vehicle = $this->resolveVehicleForCompanyDriver($driver, $vehicleIdOverride, $factoryId);
             $this->validateCompanyAssignment($requests->first(), $vehicle, $driver, $totalPassengers);
 
             return $this->createTrip($requests, $user, $vehicle, $driver, null, 'company', $totalPassengers);
         }
 
-        $rentalDriver = TmsRentalDriver::with('defaultVehicle')->findOrFail($rentalDriverId);
+        $rentalDriver = TmsRentalDriver::with('defaultVehicle')->find($rentalDriverId);
+        if (! $rentalDriver) {
+            throw ValidationException::withMessages(['rental_driver_id' => 'Selected rental driver was not found.']);
+        }
         $vehicle = $this->resolveVehicleForRentalDriver($rentalDriver, $vehicleIdOverride, $factoryId);
         $this->validateRentalAssignment($requests->first(), $vehicle, $rentalDriver, $totalPassengers);
 
@@ -438,12 +444,26 @@ class TransportRequestService
     private function resolveVehicleForCompanyDriver(TmsDriver $driver, ?int $overrideId, int $factoryId): TmsVehicle
     {
         if ($overrideId) {
-            $vehicle = TmsVehicle::findOrFail($overrideId);
-        } elseif ($driver->default_vehicle_id) {
-            $vehicle = TmsVehicle::findOrFail($driver->default_vehicle_id);
+            $vehicle = TmsVehicle::find($overrideId);
+            if (! $vehicle) {
+                throw ValidationException::withMessages(['vehicle_id' => 'Selected vehicle was not found.']);
+            }
+
+            if (! $driver->hasAssignedVehicle($overrideId)) {
+                throw ValidationException::withMessages([
+                    'vehicle_id' => 'Selected vehicle is not assigned to this driver.',
+                ]);
+            }
+        } elseif ($primaryVehicleId = $driver->primaryVehicleId()) {
+            $vehicle = TmsVehicle::find($primaryVehicleId);
+            if (! $vehicle) {
+                throw ValidationException::withMessages([
+                    'driver_id' => 'Driver primary vehicle is missing. Re-assign vehicles to this driver or pick a vehicle manually.',
+                ]);
+            }
         } else {
             throw ValidationException::withMessages([
-                'driver_id' => 'Driver has no default vehicle. Assign a vehicle to the driver or provide an override.',
+                'driver_id' => 'Driver has no assigned vehicle. Assign vehicles to the driver or provide an override.',
             ]);
         }
 
@@ -457,9 +477,17 @@ class TransportRequestService
     private function resolveVehicleForRentalDriver(TmsRentalDriver $driver, ?int $overrideId, int $factoryId): TmsVehicle
     {
         if ($overrideId) {
-            $vehicle = TmsVehicle::findOrFail($overrideId);
+            $vehicle = TmsVehicle::find($overrideId);
+            if (! $vehicle) {
+                throw ValidationException::withMessages(['vehicle_id' => 'Selected vehicle was not found.']);
+            }
         } elseif ($driver->default_vehicle_id) {
-            $vehicle = TmsVehicle::findOrFail($driver->default_vehicle_id);
+            $vehicle = TmsVehicle::find($driver->default_vehicle_id);
+            if (! $vehicle) {
+                throw ValidationException::withMessages([
+                    'rental_driver_id' => 'Rental driver default vehicle is missing. Select a vehicle manually.',
+                ]);
+            }
         } else {
             throw ValidationException::withMessages([
                 'rental_driver_id' => 'Rental driver has no default vehicle. Select a vehicle.',

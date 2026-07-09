@@ -255,6 +255,17 @@ class TmsMaintenanceTest extends TestCase
             ->assertSessionHasErrors('bill_no');
     }
 
+    public function test_bill_for_posting_lists_workshop_options(): void
+    {
+        $this->seedBill($this->ownVehicle, '20001', '2026-06-05', 10350, [['Engine Oil', 10350]]);
+
+        $this->actingAs($this->user)
+            ->get(route('admin.tms.maintenance.posting'))
+            ->assertOk()
+            ->assertSee('Select workshop')
+            ->assertSee('JK Motors', false);
+    }
+
     public function test_bill_for_posting_report_groups_by_vehicle(): void
     {
         $this->seedBill($this->rentalVehicle, '14811', '2026-06-10', 70900, [

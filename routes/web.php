@@ -1134,10 +1134,13 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
 
         Route::middleware('permission:tms.requests.approve')->group(function () {
             Route::post('/requests/merge', [\App\Http\Controllers\Admin\Tms\RequestController::class, 'merge'])->name('requests.merge');
-            Route::post('/requests/{transportRequest}/approve', [\App\Http\Controllers\Admin\Tms\RequestController::class, 'approve'])->name('requests.approve')->whereNumber('transportRequest');
-            Route::post('/requests/{transportRequest}/reject', [\App\Http\Controllers\Admin\Tms\RequestController::class, 'reject'])->name('requests.reject')->whereNumber('transportRequest');
-            Route::post('/requests/{transportRequest}/cancel', [\App\Http\Controllers\Admin\Tms\RequestController::class, 'cancel'])->name('requests.cancel')->whereNumber('transportRequest');
-            Route::post('/requests/{transportRequest}/reassign', [\App\Http\Controllers\Admin\Tms\RequestController::class, 'reassign'])->name('requests.reassign')->whereNumber('transportRequest');
+            Route::post('/requests/approve/{transportRequest}', [\App\Http\Controllers\Admin\Tms\RequestController::class, 'approve'])->name('requests.approve')->whereNumber('transportRequest');
+            Route::post('/requests/reject/{transportRequest}', [\App\Http\Controllers\Admin\Tms\RequestController::class, 'reject'])->name('requests.reject')->whereNumber('transportRequest');
+            Route::post('/requests/cancel/{transportRequest}', [\App\Http\Controllers\Admin\Tms\RequestController::class, 'cancel'])->name('requests.cancel')->whereNumber('transportRequest');
+            Route::post('/requests/reassign/{transportRequest}', [\App\Http\Controllers\Admin\Tms\RequestController::class, 'reassign'])->name('requests.reassign')->whereNumber('transportRequest');
+            // Legacy GET bookmarks (e.g. after a failed POST) → request detail
+            Route::get('/requests/{transportRequest}/approve', fn (int $transportRequest) => redirect()->route('admin.tms.requests.show', $transportRequest))->whereNumber('transportRequest');
+            Route::get('/requests/approve/{transportRequest}', fn (int $transportRequest) => redirect()->route('admin.tms.requests.show', $transportRequest))->whereNumber('transportRequest');
         });
 
         Route::middleware('permission:tms.trips.view')->group(function () {

@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const companySelect = form.querySelector('.company-driver-select');
         const rentalSelect = form.querySelector('.rental-driver-select');
         const vehicleSelect = form.querySelector('.assign-vehicle-select');
-        const warningBox = form.querySelector('#vehicle-paper-warning');
+        const warningBox = form.querySelector('.vehicle-paper-warning');
 
         const toggleType = () => {
             const isCompany = typeSelect.value === 'company';
@@ -68,20 +68,67 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         };
 
+        const filterVehicleOptions = (select) => {
+            if (!vehicleSelect) return;
+
+            const assignedRaw = select?.selectedOptions[0]?.dataset.assignedVehicles;
+            let assignedIds = null;
+
+            if (assignedRaw) {
+                try {
+                    assignedIds = JSON.parse(assignedRaw) || [];
+                } catch (e) {
+                    assignedIds = null;
+                }
+            }
+
+            vehicleSelect.querySelectorAll('option').forEach((option) => {
+                if (!option.value) {
+                    option.hidden = false;
+                    option.disabled = false;
+                    return;
+                }
+
+                const allowed = !assignedIds || assignedIds.includes(parseInt(option.value, 10));
+                option.hidden = !allowed;
+                option.disabled = !allowed;
+            });
+
+            const current = vehicleSelect.selectedOptions[0];
+            if (current && (current.disabled || current.hidden)) {
+                vehicleSelect.value = '';
+            }
+        };
+
         const applyDefaultVehicle = (select) => {
+            filterVehicleOptions(select);
+
             const defaultVehicleId = select?.selectedOptions[0]?.dataset.vehicle;
             if (defaultVehicleId && vehicleSelect) {
-                vehicleSelect.value = defaultVehicleId;
+                const target = vehicleSelect.querySelector(`option[value="${defaultVehicleId}"]`);
+                if (target && !target.disabled) {
+                    vehicleSelect.value = defaultVehicleId;
+                }
             }
             showPaperWarnings();
         };
 
-        typeSelect.addEventListener('change', toggleType);
+        typeSelect.addEventListener('change', () => {
+            toggleType();
+            if (typeSelect.value === 'company') {
+                applyDefaultVehicle(companySelect);
+            } else {
+                filterVehicleOptions(null);
+                vehicleSelect.value = '';
+                applyDefaultVehicle(rentalSelect);
+            }
+        });
         companySelect?.addEventListener('change', () => applyDefaultVehicle(companySelect));
         rentalSelect?.addEventListener('change', () => applyDefaultVehicle(rentalSelect));
         vehicleSelect?.addEventListener('change', showPaperWarnings);
 
         toggleType();
+        applyDefaultVehicle(companySelect);
         showPaperWarnings();
     });
 });

@@ -74,15 +74,18 @@ class EmployeeTransportOdometerTest extends TestCase
             'default_vehicle_id' => $this->vehicle->id,
             'status'             => 'active',
         ]);
+
+        $this->driver->syncAssignedVehicles([$this->vehicle->id], $this->vehicle->id);
     }
 
     public function test_driver_records_morning_km_and_sees_time_on_index(): void
     {
         $this->actingAs($this->driverPortal, 'employee')
             ->post(route('employee.transport.odometer.morning'), [
+                'vehicle_id' => $this->vehicle->id,
                 'morning_km' => 1050,
             ])
-            ->assertRedirect(route('employee.transport.odometer'));
+            ->assertRedirect(route('employee.transport.odometer', ['vehicle_id' => $this->vehicle->id]));
 
         $log = TmsDailyOdometerLog::first();
 
@@ -116,7 +119,7 @@ class EmployeeTransportOdometerTest extends TestCase
             ->post(route('employee.transport.odometer.evening', $log), [
                 'evening_km' => 1120,
             ])
-            ->assertRedirect(route('employee.transport.odometer'));
+            ->assertRedirect(route('employee.transport.odometer', ['vehicle_id' => $this->vehicle->id]));
 
         $log->refresh();
 

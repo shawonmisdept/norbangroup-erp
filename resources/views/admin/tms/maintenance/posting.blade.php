@@ -11,7 +11,7 @@
     @if($factories !== [])
         <div>
             <label class="erp-label">Unit</label>
-            <select name="factory_id" class="erp-input">
+            <select name="factory_id" class="erp-input" onchange="this.form.submit()">
                 <option value="">All</option>
                 @foreach($factories as $id => $name)
                     <option value="{{ $id }}" @selected(($filters['factory_id'] ?? '') == $id)>{{ $name }}</option>
@@ -22,12 +22,15 @@
 
     <div>
         <label class="erp-label">Workshop / Vendor</label>
-        <input type="text" name="workshop" list="workshop-list" class="erp-input" value="{{ $filters['workshop'] ?? '' }}" required placeholder="JK Motors">
-        <datalist id="workshop-list">
+        <select name="workshop" class="erp-input" required>
+            <option value="">Select workshop…</option>
             @foreach($workshops as $w)
-                <option value="{{ $w }}">
+                <option value="{{ $w }}" @selected(($filters['workshop'] ?? '') === $w)>{{ $w }}</option>
             @endforeach
-        </datalist>
+        </select>
+        @if($workshops === [])
+            <p class="text-[10px] text-gray-500 mt-1">No maintenance bills yet — add bills from a vehicle register first.</p>
+        @endif
     </div>
 
     <div>

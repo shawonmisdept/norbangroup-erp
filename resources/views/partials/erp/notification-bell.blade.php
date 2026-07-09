@@ -30,7 +30,7 @@
         'promotion_rejected' => ['label' => 'Promo', 'class' => 'erp-notif-badge-hrm'],
         'recruitment_application' => ['label' => 'Recruit', 'class' => 'erp-notif-badge-hrm'],
         'roster_published' => ['label' => 'Roster', 'class' => 'erp-notif-badge-hrm'],
-        'hrm_working_hours' => ['label' => 'HRM', 'class' => 'erp-notif-badge-hrm'],
+        'hrm_working_hours' => ['label' => 'Compliance', 'class' => 'erp-notif-badge-hrm'],
         'hrm_performance_pending_hr' => ['label' => 'Perf', 'class' => 'erp-notif-badge-hrm'],
         'hrm_performance_pending_rating' => ['label' => 'Perf', 'class' => 'erp-notif-badge-hrm'],
         'gate_pass_pending' => ['label' => 'RMG', 'class' => 'erp-notif-badge-hrm'],
@@ -42,6 +42,8 @@
         'tms_trip_started' => ['label' => 'TMS', 'class' => 'erp-notif-badge-hrm'],
         'tms_trip_completed' => ['label' => 'TMS', 'class' => 'erp-notif-badge-hrm'],
         'tms_ot_pending' => ['label' => 'TMS', 'class' => 'erp-notif-badge-hrm'],
+        'tms_odometer_reminder' => ['label' => 'TMS', 'class' => 'erp-notif-badge-hrm'],
+        'tms_vehicle_paper_alert' => ['label' => 'TMS', 'class' => 'erp-notif-badge-hrm'],
     ];
 @endphp
 <div class="relative z-50 shrink-0" x-data="notificationBell({{ $unreadCount }}, '{{ route('admin.notifications.unread-count') }}', true)">

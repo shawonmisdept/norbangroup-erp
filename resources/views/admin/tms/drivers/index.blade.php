@@ -9,64 +9,84 @@
         : '',
 ])
 
-<form method="GET" class="erp-panel p-4 mb-4 grid grid-cols-2 md:grid-cols-4 gap-3 items-end">
-    @if($factories !== [])
-        <div>
-            <label class="erp-label">Unit</label>
-            <select name="factory_id" class="erp-input">
-                <option value="">All</option>
-                @foreach($factories as $id => $name)
-                    <option value="{{ $id }}" @selected(($filters['factory_id'] ?? '') == $id)>{{ $name }}</option>
-                @endforeach
-            </select>
-        </div>
-    @endif
-    <div class="flex gap-2">
-        <button type="submit" class="erp-btn-primary">Apply</button>
-        <a href="{{ route('admin.tms.drivers.index') }}" class="erp-btn-secondary">Reset</a>
+<div class="erp-panel mb-4">
+    <div class="erp-panel-body">
+        <form method="GET" class="erp-filter-bar">
+            @if($factories !== [])
+                <div class="erp-filter-field">
+                    <label class="erp-label">Unit</label>
+                    <select name="factory_id" class="erp-input">
+                        <option value="">All</option>
+                        @foreach($factories as $id => $name)
+                            <option value="{{ $id }}" @selected(($filters['factory_id'] ?? '') == $id)>{{ $name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            @endif
+            <div class="erp-filter-actions">
+                <button type="submit" class="erp-btn-primary">Apply</button>
+                <a href="{{ route('admin.tms.drivers.index') }}" class="erp-btn-secondary">Reset</a>
+            </div>
+        </form>
     </div>
-</form>
+</div>
 
 <div class="erp-panel overflow-hidden">
-    <table class="erp-table">
+    <table class="erp-table tms-registry-table">
         <thead>
             <tr>
                 <th>Unit</th>
                 <th>Employee</th>
-                <th>Default Vehicle</th>
+                <th>Assigned Vehicles</th>
                 <th>License</th>
-                <th>OT Rate</th>
-                <th>OT Active</th>
-                <th>Status</th>
-                <th></th>
+                <th class="text-right">OT Rate</th>
+                <th class="text-center">OT Active</th>
+                <th class="text-center">Status</th>
+                <th class="text-right">Actions</th>
             </tr>
         </thead>
         <tbody>
             @forelse($drivers as $d)
                 <tr>
-                    <td class="text-xs">{{ $d->factory?->name }}</td>
-                    <td>{{ $d->employee?->name }}</td>
-                    <td class="text-xs">{{ $d->defaultVehicle?->displayLabel() ?? '—' }}</td>
-                    <td class="text-xs">{{ $d->license_number ?? '—' }}</td>
-                    <td class="tabular-nums">৳{{ number_format($d->ot_rate, 2) }}</td>
-                    <td>{{ $d->is_overtime_active ? 'Yes' : 'No' }}</td>
-                    <td>
+                    <td class="text-xs align-top whitespace-nowrap">{{ $d->factory?->name }}</td>
+                    <td class="align-top">
+                        <span class="font-medium">{{ $d->employee?->name }}</span>
+
+                    </td>
+                    <td class="text-xs align-top min-w-[12rem]">
+                        @if($d->vehicles->isNotEmpty())
+                            <ul class="tms-vehicle-list">
+                                @foreach($d->vehicles as $vehicle)
+                                    <li>
+                                        <span>{{ $vehicle->displayLabel() }}</span>
+                                        @if($vehicle->pivot?->is_primary)
+                                            <span class="text-gray-500">(primary)</span>
+                                        @endif
+                                    </li>
+                                @endforeach
+                            </ul>
+                        @else
+                            {{ $d->defaultVehicle?->displayLabel() ?? '—' }}
+                        @endif
+                    </td>
+                    <td class="text-xs align-top whitespace-nowrap">{{ $d->license_number ?? '—' }}</td>
+                    <td class="tabular-nums text-right align-top whitespace-nowrap">৳{{ number_format($d->ot_rate, 2) }}</td>
+                    <td class="text-center align-top">{{ $d->is_overtime_active ? 'Yes' : 'No' }}</td>
+                    <td class="text-center align-top">
                         <span class="erp-badge {{ $d->status === 'active' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-600' }}">
                             {{ ucfirst($d->status) }}
                         </span>
                     </td>
-                    <td class="text-right space-x-1">
-                        <a href="{{ route('admin.tms.drivers.show', $d) }}" class="erp-btn-sm-secondary">View</a>
-                        @if(auth()->user()->canManageTmsSubmodule('drivers'))
-                            @include('admin.tms.partials.row-actions', [
-                                'editUrl' => route('admin.tms.drivers.edit', $d),
-                                'destroyUrl' => route('admin.tms.drivers.destroy', $d),
-                            ])
-                        @endif
+                    <td class="text-right align-top whitespace-nowrap">
+                        @include('admin.tms.partials.row-actions', [
+                            'viewUrl' => route('admin.tms.drivers.show', $d),
+                            'editUrl' => auth()->user()->canManageTmsSubmodule('drivers') ? route('admin.tms.drivers.edit', $d) : null,
+                            'destroyUrl' => auth()->user()->canManageTmsSubmodule('drivers') ? route('admin.tms.drivers.destroy', $d) : null,
+                        ])
                     </td>
                 </tr>
             @empty
-                <tr><td colspan="7" class="text-center py-8 text-gray-400">No drivers yet.</td></tr>
+                <tr><td colspan="8" class="text-center py-8 text-gray-400">No drivers yet.</td></tr>
             @endforelse
         </tbody>
     </table>

@@ -8,10 +8,29 @@
 </div>
 <p class="text-xs text-gray-500">{{ $vehicle->displayLabel() }} · Record morning and evening KM separately</p>
 
+@if($assignedVehicles->count() > 1)
+<div class="emp-card p-4">
+    <label class="text-xs font-semibold text-gray-600 block mb-2">Vehicle</label>
+    <form method="GET" action="{{ route('employee.transport.odometer') }}">
+        <select name="vehicle_id" class="emp-input w-full" onchange="this.form.submit()">
+            @foreach($assignedVehicles as $assignedVehicle)
+                <option value="{{ $assignedVehicle->id }}" @selected($selectedVehicleId === $assignedVehicle->id)>
+                    {{ $assignedVehicle->displayLabel() }}
+                    @if((bool) $assignedVehicle->pivot?->is_primary)
+                        (primary)
+                    @endif
+                </option>
+            @endforeach
+        </select>
+    </form>
+</div>
+@endif
+
 @if(!$todayLog || !$todayLog->hasMorning())
 <div class="emp-card p-4 space-y-3">
 <p class="text-sm font-semibold">Record Morning KM</p>
 <form method="POST" action="{{ route('employee.transport.odometer.morning') }}" class="space-y-2">@csrf
+<input type="hidden" name="vehicle_id" value="{{ $vehicle->id }}">
 <input type="number" step="0.01" min="0" name="morning_km" class="emp-input w-full" required placeholder="Morning KM" autofocus>
 <button type="submit" class="emp-btn w-full">Save Morning KM</button>
 </form>

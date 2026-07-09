@@ -34,8 +34,8 @@ class MaintenancePostingController extends Controller
             $this->authorizeFactoryAccess($request, (int) $filters['factory_id']);
         }
 
-        $factoryId = $filters['factory_id'] ?? $request->user()?->factory_id;
         $report = null;
+        $workshopFactoryId = ! empty($filters['factory_id']) ? (int) $filters['factory_id'] : null;
 
         if (! empty($filters['workshop']) && ! empty($filters['from']) && ! empty($filters['to'])) {
             $report = $this->postingReport->build($request, $filters);
@@ -43,7 +43,7 @@ class MaintenancePostingController extends Controller
 
         return view('admin.tms.maintenance.posting', [
             'factories'  => $this->factoryOptions($request),
-            'workshops'  => $this->maintenanceService->workshopOptions($factoryId ? (int) $factoryId : null),
+            'workshops'  => $this->maintenanceService->workshopOptions($workshopFactoryId),
             'filters'    => $filters,
             'report'     => $report,
         ]);

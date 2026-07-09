@@ -833,6 +833,9 @@ class HrmNotificationService
         float $limitHours,
         string $periodLabel,
         string $periodType = 'daily',
+        bool $force = false,
+        ?int $filterYear = null,
+        ?int $filterMonth = null,
     ): void {
         $settings = AppSetting::current();
 
@@ -840,24 +843,53 @@ class HrmNotificationService
             return;
         }
 
-        $cacheKey = 'hrm_work_hours_' . $employee->id . '_' . $periodType . '_' . md5($periodLabel);
-
-        if (Cache::has($cacheKey)) {
+        if (! $force && ! $settings->notify_popup_hrm_working_hours) {
             return;
         }
 
-        Cache::put($cacheKey, true, now()->addDays(3));
+        $cacheKey = 'hrm_work_hours_' . $employee->id . '_' . $periodType . '_' . md5($periodLabel);
 
-        $this->notifyPermission(
-            'hrm.compliance.view',
-            new WorkingHoursExceededNotification($employee, $hours, $limitHours, $periodLabel, $periodType),
+        if (! $force && Cache::has($cacheKey)) {
+            return;
+        }
+
+        if (! $force) {
+            Cache::put($cacheKey, true, now()->addDays(3));
+        }
+
+        $this->notifyCompliance(
+            new WorkingHoursExceededNotification(
+                $employee,
+                $hours,
+                $limitHours,
+                $periodLabel,
+                $periodType,
+                $employee->factory_id,
+                $filterYear,
+                $filterMonth,
+            ),
             $employee->factory_id
         );
     }
 
+    private function notifyCompliance(Notification $notification, ?int $factoryId = null, ?int $exceptUserId = null): void
+    {
+        $permissions = ['hrm.compliance.manage', 'hrm.compliance.view'];
+        $currentAdminId = Auth::guard('web')->id();
+
+        User::query()
+            ->with('role')
+            ->get()
+            ->filter(fn (User $user) => $factoryId === null || $user->canAccessFactory($factoryId))
+            ->filter(fn (User $user) => collect($permissions)->contains(fn (string $permission) => $user->hasPermission($permission)))
+            ->filter(fn (User $user) => $exceptUserId === null || $user->id !== $exceptUserId)
+            ->filter(fn (User $user) => $currentAdminId === null || (int) $user->id !== (int) $currentAdminId)
+            ->each(fn (User $user) => $user->notify($notification));
+    }
+
     private function notifyFinanceSettlementManagers(Notification $notification, ?int $factoryId = null): void
     {
-        $currentUserId = Auth::id();
+        $currentAdminId = Auth::guard('web')->id();
 
         User::query()
             ->with('role')
@@ -868,13 +900,13 @@ class HrmNotificationService
             ->filter(fn (User $user) => $user->hasPermission('hrm.finance.manage')
                 || $user->hasPermission('hrm.finance.settlement.manage')
                 || $user->canManageFinanceSubmodule('final-settlement'))
-            ->filter(fn (User $user) => $currentUserId === null || $user->id !== $currentUserId)
+            ->filter(fn (User $user) => $currentAdminId === null || (int) $user->id !== (int) $currentAdminId)
             ->each(fn (User $user) => $user->notify($notification));
     }
 
     private function notifyPermission(string $permission, Notification $notification, ?int $factoryId = null, ?int $exceptUserId = null): void
     {
-        $currentUserId = Auth::id();
+        $currentAdminId = Auth::guard('web')->id();
 
         User::query()
             ->with('role')
@@ -884,7 +916,7 @@ class HrmNotificationService
             ->get()
             ->filter(fn (User $user) => $user->hasPermission($permission))
             ->filter(fn (User $user) => $exceptUserId === null || $user->id !== $exceptUserId)
-            ->filter(fn (User $user) => $currentUserId === null || $user->id !== $currentUserId)
+            ->filter(fn (User $user) => $currentAdminId === null || (int) $user->id !== (int) $currentAdminId)
             ->each(fn (User $user) => $user->notify($notification));
     }
 

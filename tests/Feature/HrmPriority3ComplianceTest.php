@@ -307,4 +307,67 @@ class HrmPriority3ComplianceTest extends TestCase
             'end_date'    => now()->addWeeks(16)->toDateString(),
         ])->assertSessionHasErrors();
     }
+
+    public function test_working_hours_notify_sends_compliance_alerts(): void
+    {
+        \Illuminate\Support\Facades\Notification::fake();
+
+        $factory = Factory::create(['name' => 'Hours Factory', 'is_active' => true]);
+        AttendancePolicy::forFactory($factory->id)->update([
+            'max_daily_hours'  => 8,
+            'max_weekly_hours' => 40,
+        ]);
+
+        $employee = Employee::create([
+            'factory_id'    => $factory->id,
+            'employee_code' => 'WH-001',
+            'name'          => 'Long Day Worker',
+            'status'        => 'active',
+        ]);
+
+        AttendanceDailyLog::create([
+            'factory_id'      => $factory->id,
+            'employee_id'     => $employee->id,
+            'attendance_date' => Carbon::parse('2026-07-09'),
+            'status'          => 'present',
+            'work_minutes'    => 600,
+        ]);
+
+        $hrRole = Role::create([
+            'name'        => 'Compliance HR',
+            'permissions' => ['hrm.compliance.manage'],
+        ]);
+
+        $hrUser = User::create([
+            'name'       => 'Compliance HR User',
+            'email'      => 'compliance-hr@test.com',
+            'password'   => 'password',
+            'role_id'    => $hrRole->id,
+            'factory_id' => $factory->id,
+        ]);
+
+        $admin = $this->adminUser();
+
+        $this->actingAs($admin)
+            ->post(route('admin.hrm.compliance.working-hours.notify'), [
+                'factory_id' => $factory->id,
+                'year'       => 2026,
+                'month'      => 7,
+            ])
+            ->assertRedirect(route('admin.hrm.compliance.working-hours.index', [
+                'factory_id' => $factory->id,
+                'year'       => 2026,
+                'month'      => 7,
+            ]))
+            ->assertSessionHas('success');
+
+        \Illuminate\Support\Facades\Notification::assertSentTo(
+            $hrUser,
+            \App\Notifications\WorkingHoursExceededNotification::class,
+            fn ($notification) => $notification->employee->id === $employee->id
+                && $notification->factoryId === $factory->id
+                && $notification->year === 2026
+                && $notification->month === 7
+        );
+    }
 }

@@ -615,6 +615,10 @@ class User extends Authenticatable
             return false;
         }
 
+        if (! empty($sub['manage']) && $this->hasPermission($sub['manage'])) {
+            return true;
+        }
+
         if ($this->hasPermission($sub['permission'] ?? 'tms.dashboard.view')) {
             return true;
         }

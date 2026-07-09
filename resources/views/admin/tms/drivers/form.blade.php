@@ -6,6 +6,11 @@
     'actions' => '<a href="' . route('admin.tms.drivers.index') . '" class="erp-btn-secondary">← Back</a>',
 ])
 
+@php
+    $selectedVehicleIds = array_map('intval', (array) old('vehicle_ids', $assignedVehicleIds));
+    $selectedPrimaryId = (int) old('primary_vehicle_id', $primaryVehicleId ?? 0);
+@endphp
+
 <div class="erp-panel p-6 max-w-xl">
     <form method="POST" action="{{ $driver->exists ? route('admin.tms.drivers.update', $driver) : route('admin.tms.drivers.store') }}" class="space-y-4">
         @csrf
@@ -32,12 +37,42 @@
         </div>
 
         <div>
-            <label class="erp-label">Default Vehicle</label>
-            <select name="default_vehicle_id" class="erp-input" required>
+            <label class="erp-label">Assigned Vehicles</label>
+            <p class="text-xs text-gray-500 mb-2">Select every vehicle this driver may operate. Mark one as primary.</p>
+            <div class="space-y-2 rounded border border-erp-border p-3 max-h-64 overflow-y-auto">
                 @foreach($vehicles as $id => $label)
-                    <option value="{{ $id }}" @selected(old('default_vehicle_id', $driver->default_vehicle_id) == $id)>{{ $label }}</option>
+                    @php
+                        $vehicleId = (int) $id;
+                        $isChecked = in_array($vehicleId, $selectedVehicleIds, true);
+                    @endphp
+                    <label class="flex items-start gap-3 text-sm">
+                        <input
+                            type="checkbox"
+                            name="vehicle_ids[]"
+                            value="{{ $vehicleId }}"
+                            class="driver-vehicle-check mt-0.5 rounded border-gray-300"
+                            @checked($isChecked)
+                        >
+                        <span class="flex-1 min-w-0">
+                            <span class="block">{{ $label }}</span>
+                            <label class="inline-flex items-center gap-1.5 mt-1 text-xs text-gray-500">
+                                <input
+                                    type="radio"
+                                    name="primary_vehicle_id"
+                                    value="{{ $vehicleId }}"
+                                    class="driver-vehicle-primary rounded-full border-gray-300"
+                                    @checked($selectedPrimaryId === $vehicleId)
+                                    @disabled(! $isChecked)
+                                >
+                                Primary vehicle
+                            </label>
+                        </span>
+                    </label>
                 @endforeach
-            </select>
+            </div>
+            @error('vehicle_ids')<p class="text-xs text-red-600 mt-1">{{ $message }}</p>@enderror
+            @error('vehicle_ids.*')<p class="text-xs text-red-600 mt-1">{{ $message }}</p>@enderror
+            @error('primary_vehicle_id')<p class="text-xs text-red-600 mt-1">{{ $message }}</p>@enderror
         </div>
 
         <div>
@@ -78,7 +113,7 @@
         <div class="mt-8 pt-6 border-t border-erp-border">
             <h3 class="font-semibold mb-3">OT Rate History</h3>
             <div class="overflow-x-auto">
-                <table class="erp-table text-sm">
+                <table class="erp-table tms-registry-table text-sm">
                     <thead>
                         <tr>
                             <th>Recorded</th>
@@ -104,4 +139,44 @@
         </div>
     @endif
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const syncPrimaryRadios = () => {
+        const checkedIds = new Set(
+            [...document.querySelectorAll('.driver-vehicle-check:checked')].map((el) => el.value)
+        );
+
+        let hasEnabledPrimary = false;
+
+        document.querySelectorAll('.driver-vehicle-primary').forEach((radio) => {
+            const enabled = checkedIds.has(radio.value);
+            radio.disabled = !enabled;
+
+            if (!enabled && radio.checked) {
+                radio.checked = false;
+            }
+
+            if (enabled && radio.checked) {
+                hasEnabledPrimary = true;
+            }
+        });
+
+        if (!hasEnabledPrimary && checkedIds.size > 0) {
+            const firstChecked = document.querySelector('.driver-vehicle-check:checked');
+            const primary = document.querySelector(`.driver-vehicle-primary[value="${firstChecked.value}"]`);
+            if (primary) {
+                primary.disabled = false;
+                primary.checked = true;
+            }
+        }
+    };
+
+    document.querySelectorAll('.driver-vehicle-check, .driver-vehicle-primary').forEach((el) => {
+        el.addEventListener('change', syncPrimaryRadios);
+    });
+
+    syncPrimaryRadios();
+});
+</script>
 @endsection

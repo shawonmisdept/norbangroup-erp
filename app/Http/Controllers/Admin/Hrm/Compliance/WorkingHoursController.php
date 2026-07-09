@@ -28,6 +28,7 @@ class WorkingHoursController extends Controller
 
         $dailyViolations = $factoryId ? $compliance->dailyViolations($factoryId, $from, $to) : [];
         $weeklyViolations = $factoryId ? $compliance->weeklyViolations($factoryId, $from, $to) : [];
+        $violationTotal = count($dailyViolations) + count($weeklyViolations);
 
         return view('admin.hrm.compliance.working-hours.index', [
             'factories'        => $factories,
@@ -36,6 +37,7 @@ class WorkingHoursController extends Controller
             'month'            => $month,
             'dailyViolations'  => $dailyViolations,
             'weeklyViolations' => $weeklyViolations,
+            'violationTotal'   => $violationTotal,
             'filters'          => $request->only(['factory_id', 'year', 'month']),
             'canManage'        => $request->user()?->canManageComplianceSubmodule('working-hours') ?? false,
         ]);
@@ -53,9 +55,13 @@ class WorkingHoursController extends Controller
 
         $from = Carbon::create($validated['year'], $validated['month'], 1)->startOfMonth();
         $to = $from->copy()->endOfMonth();
-        $count = $compliance->notifyViolations((int) $validated['factory_id'], $from, $to);
+        $count = $compliance->notifyViolations((int) $validated['factory_id'], $from, $to, force: true);
+
+        $message = $count > 0
+            ? "Sent {$count} working hour limit alert(s) to HR."
+            : 'No working hour violations found for the selected period.';
 
         return redirect()->route('admin.hrm.compliance.working-hours.index', $validated)
-            ->with('success', "Sent {$count} working hour limit alert(s) to HR.");
+            ->with($count > 0 ? 'success' : 'info', $message);
     }
 }
