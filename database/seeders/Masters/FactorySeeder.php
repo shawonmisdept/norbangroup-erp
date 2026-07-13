@@ -40,6 +40,11 @@ class FactorySeeder extends Seeder
                 'address' => null,
                 'phone'   => null,
             ],
+            [
+                'name'    => 'NFL',
+                'address' => null,
+                'phone'   => null,
+            ],
         ];
 
         $activeNames = collect($records)->pluck('name');

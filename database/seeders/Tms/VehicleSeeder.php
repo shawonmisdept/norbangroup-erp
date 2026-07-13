@@ -9,17 +9,31 @@ use Illuminate\Database\Seeder;
 
 class VehicleSeeder extends Seeder
 {
+    /** Spreadsheet Owner codes → factory names. */
+    private const UNIT_FACTORY_NAMES = [
+        'NCL'    => 'Norban Comtex Limited',
+        'HAL'    => 'Hornbill Apparel Ltd',
+        'BD COM' => 'BD Com',
+        'BDCOM'  => 'BD Com',
+        'NFL'    => 'NFL',
+        'DHL'    => 'DHL',
+        'HO'     => 'Head Office',
+        'HEAD OFFICE' => 'Head Office',
+    ];
+
     public function run(): void
     {
         $rows = require database_path('seeders/data/tms_vehicles.php');
 
-        $factoryId = Factory::query()
+        $factoriesByName = Factory::query()
             ->where('is_active', true)
-            ->where('name', 'Head Office')
-            ->value('id')
+            ->get()
+            ->keyBy(fn (Factory $factory) => mb_strtolower(trim($factory->name)));
+
+        $fallbackFactoryId = $factoriesByName->get('head office')?->id
             ?? Factory::query()->where('is_active', true)->orderBy('id')->value('id');
 
-        if (! $factoryId) {
+        if (! $fallbackFactoryId) {
             $this->command?->error('No active factory found — run FactorySeeder first.');
 
             return;
@@ -28,12 +42,22 @@ class VehicleSeeder extends Seeder
         $created = 0;
         $updated = 0;
         $seededRegNumbers = [];
+        $unknownUnits = [];
 
         foreach ($rows as $row) {
             $regNumber = $this->normalizeRegNumber($row['reg_number']);
             $seededRegNumbers[] = $regNumber;
+
+            $factoryId = $this->resolveFactoryId(
+                $row['unit'] ?? null,
+                $factoriesByName,
+                (int) $fallbackFactoryId,
+                $unknownUnits,
+            );
+
             $payload = [
                 'factory_id'                => $factoryId,
+                'reg_number'                => $regNumber,
                 'name'                      => $row['name'] ?? 'Vehicle',
                 'vehicle_category'          => $row['vehicle_category'] ?? null,
                 'model_year'                => $row['model_year'] ?? null,
@@ -56,24 +80,58 @@ class VehicleSeeder extends Seeder
                 'deleted_at'                => null,
             ];
 
-            $vehicle = TmsVehicle::withTrashed()->updateOrCreate(
-                [
-                    'factory_id' => $factoryId,
-                    'reg_number' => $regNumber,
-                ],
-                $payload
-            );
+            $vehicle = TmsVehicle::withTrashed()->where('reg_number', $regNumber)->first();
 
-            $vehicle->wasRecentlyCreated ? $created++ : $updated++;
+            if ($vehicle) {
+                $vehicle->restore();
+                $vehicle->update($payload);
+                $updated++;
+            } else {
+                TmsVehicle::create($payload);
+                $created++;
+            }
         }
 
         $removed = TmsVehicle::query()
-            ->where('factory_id', $factoryId)
             ->whereNotIn('reg_number', $seededRegNumbers)
             ->delete();
 
-        $this->command?->info("TMS vehicles seeded: {$created} created, {$updated} updated, {$removed} removed (factory_id={$factoryId}).");
-        $this->command?->comment('Unit, allocated user, and driver can be assigned later from the vehicle form.');
+        $this->command?->info("TMS vehicles seeded: {$created} created, {$updated} updated, {$removed} removed.");
+
+        if ($unknownUnits !== []) {
+            $this->command?->warn('Unknown Owner units fell back to Head Office: '.implode(', ', array_unique($unknownUnits)));
+        }
+    }
+
+    /**
+     * @param  \Illuminate\Support\Collection<string, Factory>  $factoriesByName
+     * @param  list<string>  $unknownUnits
+     */
+    private function resolveFactoryId(?string $unit, $factoriesByName, int $fallbackFactoryId, array &$unknownUnits): int
+    {
+        $unit = trim((string) $unit);
+
+        if ($unit === '') {
+            return $fallbackFactoryId;
+        }
+
+        $key = strtoupper(preg_replace('/\s+/', ' ', $unit) ?? $unit);
+        $factoryName = self::UNIT_FACTORY_NAMES[$key] ?? null;
+
+        if ($factoryName === null) {
+            // Allow full factory names from seed data.
+            $factoryName = $unit;
+        }
+
+        $factory = $factoriesByName->get(mb_strtolower(trim($factoryName)));
+
+        if ($factory) {
+            return (int) $factory->id;
+        }
+
+        $unknownUnits[] = $unit;
+
+        return $fallbackFactoryId;
     }
 
     private function normalizeRegNumber(string $regNumber): string
@@ -150,7 +208,7 @@ class VehicleSeeder extends Seeder
 
     private function mapRegistrationStatus(?string $status): string
     {
-        $status = strtolower(trim((string) ($status ?? '')));
+        $status = strtolower(trim((string) $status));
 
         return match ($status) {
             'ok'      => 'ok',

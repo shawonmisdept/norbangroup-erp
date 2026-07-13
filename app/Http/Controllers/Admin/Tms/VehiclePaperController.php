@@ -93,8 +93,7 @@ class VehiclePaperController extends Controller
     {
         $query = TmsVehicle::query()
             ->with(['factory', 'allocatedEmployee.designation', 'primaryDriver.employee'])
-            ->orderBy('factory_id')
-            ->orderBy('name');
+            ->orderBy('id');
 
         $this->scopeToUserFactory($query, $request);
 

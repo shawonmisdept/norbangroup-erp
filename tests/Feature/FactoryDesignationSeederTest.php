@@ -48,7 +48,7 @@ class FactoryDesignationSeederTest extends TestCase
         $headOffice = Factory::where('name', 'Head Office')->firstOrFail();
 
         $this->assertSame(0, Department::where('factory_id', $headOffice->id)->count());
-        $this->assertSame(6, Factory::where('is_active', true)->count());
+        $this->assertSame(7, Factory::where('is_active', true)->count());
         $this->assertTrue((bool) $headOffice->is_active);
     }
 

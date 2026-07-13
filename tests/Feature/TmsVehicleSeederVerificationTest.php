@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\Factory;
 use App\Models\Tms\TmsVehicle;
+use Database\Seeders\Masters\FactorySeeder;
 use Database\Seeders\Tms\VehicleSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -122,8 +123,7 @@ class TmsVehicleSeederVerificationTest extends TestCase
 
     public function test_vehicle_seeder_inserts_all_fifty_vehicles(): void
     {
-        Factory::create(['name' => 'Head Office', 'is_active' => true]);
-
+        $this->seed(FactorySeeder::class);
         $this->seed(VehicleSeeder::class);
 
         $this->assertSame(50, TmsVehicle::count());
@@ -137,8 +137,7 @@ class TmsVehicleSeederVerificationTest extends TestCase
 
     public function test_vehicle_seeder_vehicle_names_match_spreadsheet(): void
     {
-        Factory::create(['name' => 'Head Office', 'is_active' => true]);
-
+        $this->seed(FactorySeeder::class);
         $this->seed(VehicleSeeder::class);
 
         foreach ($this->expectedNamesByReg() as $reg => $name) {
@@ -151,8 +150,7 @@ class TmsVehicleSeederVerificationTest extends TestCase
 
     public function test_vehicle_seeder_sets_category_and_seats_by_model(): void
     {
-        Factory::create(['name' => 'Head Office', 'is_active' => true]);
-
+        $this->seed(FactorySeeder::class);
         $this->seed(VehicleSeeder::class);
 
         foreach ($this->expectedCategoryAndSeatsByReg() as $reg => [$category, $seats]) {
@@ -172,8 +170,7 @@ class TmsVehicleSeederVerificationTest extends TestCase
 
     public function test_vehicle_seeder_blank_sheet_cells_stay_null(): void
     {
-        Factory::create(['name' => 'Head Office', 'is_active' => true]);
-
+        $this->seed(FactorySeeder::class);
         $this->seed(VehicleSeeder::class);
 
         $honda = TmsVehicle::where('reg_number', 'DM-GA-15-7196')->first();
@@ -191,8 +188,7 @@ class TmsVehicleSeederVerificationTest extends TestCase
 
     public function test_vehicle_seeder_paper_dates_match_sheet1(): void
     {
-        Factory::create(['name' => 'Head Office', 'is_active' => true]);
-
+        $this->seed(FactorySeeder::class);
         $this->seed(VehicleSeeder::class);
 
         // Sheet1 dates (not Sheet2) for regs that differ between sheets
@@ -234,9 +230,35 @@ class TmsVehicleSeederVerificationTest extends TestCase
         }
     }
 
+    public function test_vehicle_seeder_assigns_factory_from_sheet1_owner(): void
+    {
+        $this->seed(FactorySeeder::class);
+        $this->seed(VehicleSeeder::class);
+
+        $cases = [
+            'DM-GHA-22-1042' => 'Norban Comtex Limited', // NCL
+            'DM-GA-42-0117'  => 'BD Com',
+            'DM-GHA-02-0005' => 'Hornbill Apparel Ltd', // HAL
+            'DM-BHA-11-0813' => 'NFL',
+            'DM-GHA-21-5864' => 'DHL',
+        ];
+
+        foreach ($cases as $reg => $factoryName) {
+            $vehicle = TmsVehicle::with('factory')->where('reg_number', $reg)->first();
+            $this->assertNotNull($vehicle, "Missing vehicle: {$reg}");
+            $this->assertSame($factoryName, $vehicle->factory?->name, "Wrong unit for {$reg}");
+        }
+
+        $rows = require database_path('seeders/data/tms_vehicles.php');
+        foreach ($rows as $row) {
+            $this->assertNotEmpty($row['unit'] ?? null, 'Missing unit for '.$row['reg_number']);
+        }
+    }
+
     public function test_vehicle_seeder_removes_orphan_records_not_in_spreadsheet(): void
     {
-        $factory = Factory::create(['name' => 'Head Office', 'is_active' => true]);
+        $this->seed(FactorySeeder::class);
+        $factory = Factory::where('name', 'Head Office')->firstOrFail();
 
         $this->seed(VehicleSeeder::class);
         $this->assertSame(50, TmsVehicle::count());

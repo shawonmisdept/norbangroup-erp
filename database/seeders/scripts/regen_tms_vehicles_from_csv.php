@@ -211,6 +211,7 @@ foreach ($ordered as $row) {
         'reg_number' => $row['reg_number'],
         'name' => $name,
         'vehicle_category' => $category,
+        'unit' => $row['_unit'] ?? null,
         'model_year' => $row['model_year'],
         'purchase_date' => $row['purchase_date'],
         'registration_date' => $row['registration_date'],
@@ -243,7 +244,8 @@ $header = <<<'PHP'
  * Vehicle register from "Vehicle Papers Update Information" spreadsheet
  * (Sheet1 + Sheet2 merged). Blank / missing cells are omitted.
  * vehicle_category and passenger_capacity are set from model name.
- * Unit, allocated user, and driver are assigned later in admin.
+ * unit is Sheet1 Owner (NCL / HAL / BD Com / NFL / DHL) for factory mapping.
+ * Allocated user and driver are assigned later in admin.
  *
  * Regenerate:
  *   php database/seeders/scripts/regen_tms_vehicles_from_csv.php
