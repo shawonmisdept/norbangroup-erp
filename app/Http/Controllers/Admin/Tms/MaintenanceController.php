@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin\Tms;
 use App\Http\Controllers\Admin\Hrm\Concerns\ScopesHrmFactory;
 use App\Http\Controllers\Controller;
 use App\Models\Tms\TmsMaintenanceBill;
-use App\Models\Tms\TmsMaintenancePartCatalog;
 use App\Models\Tms\TmsVehicle;
 use App\Services\Tms\MaintenanceService;
 use Illuminate\Database\QueryException;
@@ -193,9 +192,8 @@ class MaintenanceController extends Controller
                 'bill_date'  => now()->toDateString(),
                 'paid_by'    => $this->maintenanceService->defaultPaidBy($vehicle),
             ]),
-            'units'         => config('tms.maintenance_item_units', []),
-            'paidBy'        => config('tms.fuel_paid_by'),
-            'catalogParts'  => $this->catalogParts($vehicle->factory_id),
+            'units'  => config('tms.maintenance_item_units', []),
+            'paidBy' => config('tms.fuel_paid_by'),
         ]);
     }
 
@@ -237,9 +235,8 @@ class MaintenanceController extends Controller
         return view('admin.tms.maintenance.bill-form', [
             'vehicle' => $bill->vehicle()->with('rentalVendor')->firstOrFail(),
             'bill'    => $bill->load('items'),
-            'units'         => config('tms.maintenance_item_units', []),
-            'paidBy'        => config('tms.fuel_paid_by'),
-            'catalogParts'  => $this->catalogParts($vehicle->factory_id),
+            'units'  => config('tms.maintenance_item_units', []),
+            'paidBy' => config('tms.fuel_paid_by'),
         ]);
     }
 
@@ -334,7 +331,6 @@ class MaintenanceController extends Controller
             'notes'         => ['nullable', 'string', 'max:2000'],
             'items'         => ['required', 'array', 'min:1'],
             'items.*.item_name' => ['required', 'string', 'max:255'],
-            'items.*.part_catalog_id' => ['nullable', 'integer', 'exists:tms_maintenance_part_catalog,id'],
             'items.*.quantity'  => ['nullable', 'numeric', 'min:0'],
             'items.*.unit'      => ['nullable', 'string', 'max:16'],
             'items.*.amount'    => ['required', 'numeric', 'min:0'],
@@ -346,23 +342,6 @@ class MaintenanceController extends Controller
             'factory_id' => $vehicle->factory_id,
             'vehicle_id' => $vehicle->id,
         ];
-    }
-
-    /** @return array<int, array{id: int, label: string, unit: ?string, price: ?float}> */
-    private function catalogParts(int $factoryId): array
-    {
-        return TmsMaintenancePartCatalog::query()
-            ->where('factory_id', $factoryId)
-            ->where('is_active', true)
-            ->orderBy('name')
-            ->get()
-            ->map(fn (TmsMaintenancePartCatalog $part) => [
-                'id'    => $part->id,
-                'label' => $part->displayLabel(),
-                'unit'  => $part->unit,
-                'price' => $part->default_unit_price !== null ? (float) $part->default_unit_price : null,
-            ])
-            ->all();
     }
 
     private function throwIfDuplicateBillNo(QueryException $e): never

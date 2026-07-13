@@ -5,6 +5,7 @@ namespace App\Models\Tms;
 use App\Models\Factory;
 use App\Models\Hrm\Employee;
 use App\Models\User;
+use App\Support\TmsDriverVehiclePivot;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -37,6 +38,18 @@ class TmsDriver extends Model
         return $this->belongsTo(Factory::class);
     }
 
+    /** @param  list<string>  $relations */
+    public static function withAssignedVehicles(array $relations): array
+    {
+        if (TmsDriverVehiclePivot::available()) {
+            $relations[] = 'vehicles';
+        } else {
+            $relations[] = 'defaultVehicle';
+        }
+
+        return array_values(array_unique($relations));
+    }
+
     public function employee(): BelongsTo
     {
         return $this->belongsTo(Employee::class);
@@ -57,6 +70,10 @@ class TmsDriver extends Model
 
     public function primaryVehicleId(): ?int
     {
+        if (! TmsDriverVehiclePivot::available()) {
+            return $this->default_vehicle_id ? (int) $this->default_vehicle_id : null;
+        }
+
         if ($this->relationLoaded('vehicles')) {
             $primary = $this->vehicles->first(fn (TmsVehicle $vehicle) => (bool) $vehicle->pivot?->is_primary);
 
@@ -71,6 +88,10 @@ class TmsDriver extends Model
     /** @return list<int> */
     public function assignedVehicleIds(): array
     {
+        if (! TmsDriverVehiclePivot::available()) {
+            return $this->default_vehicle_id ? [(int) $this->default_vehicle_id] : [];
+        }
+
         if ($this->relationLoaded('vehicles')) {
             $ids = $this->vehicles->pluck('id')->map(fn ($id) => (int) $id)->all();
         } else {
@@ -91,6 +112,10 @@ class TmsDriver extends Model
 
     public function assignedVehiclesLabel(): string
     {
+        if (! TmsDriverVehiclePivot::available()) {
+            return $this->defaultVehicle?->displayLabel() ?? '—';
+        }
+
         $vehicles = $this->relationLoaded('vehicles')
             ? $this->vehicles
             : $this->vehicles()->orderBy('name')->get();
@@ -114,6 +139,13 @@ class TmsDriver extends Model
 
     public function assignmentSelectLabel(): string
     {
+        if (! TmsDriverVehiclePivot::available()) {
+            $label = $this->displayLabel();
+            $primary = $this->defaultVehicle;
+
+            return $primary ? $label . ' — ' . $primary->displayLabel() : $label . ' — No vehicle';
+        }
+
         $primaryId = $this->primaryVehicleId();
         $vehicles = $this->relationLoaded('vehicles')
             ? $this->vehicles
@@ -142,12 +174,15 @@ class TmsDriver extends Model
     {
         $vehicleIds = array_values(array_unique(array_map('intval', $vehicleIds)));
 
-        $sync = [];
-        foreach ($vehicleIds as $vehicleId) {
-            $sync[$vehicleId] = ['is_primary' => $vehicleId === $primaryVehicleId];
+        if (TmsDriverVehiclePivot::available()) {
+            $sync = [];
+            foreach ($vehicleIds as $vehicleId) {
+                $sync[$vehicleId] = ['is_primary' => $vehicleId === $primaryVehicleId];
+            }
+
+            $this->vehicles()->sync($sync);
         }
 
-        $this->vehicles()->sync($sync);
         $this->update(['default_vehicle_id' => $primaryVehicleId]);
     }
 

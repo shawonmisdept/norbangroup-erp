@@ -10,6 +10,7 @@ use App\Models\Tms\TmsRentalVehicleCharge;
 use App\Models\Tms\TmsTransportRequest;
 use App\Models\Tms\TmsTripLog;
 use App\Models\Tms\TmsVehicle;
+use App\Services\Tms\TmsDashboardService;
 use App\Services\Tms\VehiclePaperService;
 use Illuminate\Http\Request;
 
@@ -19,6 +20,7 @@ class DashboardController extends Controller
 
     public function __construct(
         private VehiclePaperService $paperService,
+        private TmsDashboardService $dashboardService,
     ) {}
 
     public function index(Request $request)
@@ -63,6 +65,7 @@ class DashboardController extends Controller
             'papersWarning'               => $paperCounts['warning'],
             'recentRequests'              => (clone $requestQuery)->with(['employee', 'vehicle', 'driver.employee'])
                 ->latest('id')->limit(10)->get(),
+            'quickActions'                => $this->dashboardService->quickActions($request),
         ]);
     }
 }

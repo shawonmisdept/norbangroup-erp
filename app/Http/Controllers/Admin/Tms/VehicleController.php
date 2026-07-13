@@ -9,6 +9,7 @@ use App\Models\Tms\TmsDriver;
 use App\Models\Tms\TmsRentalVendor;
 use App\Models\Tms\TmsVehicle;
 use App\Services\Tms\VehiclePaperService;
+use App\Support\TmsDriverVehiclePivot;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
@@ -24,7 +25,7 @@ class VehicleController extends Controller
     {
         $query = TmsVehicle::query()
             ->with(['factory', 'rentalVendor', 'primaryDriver.employee', 'allocatedEmployee.designation'])
-            ->latest('id');
+            ->orderBy('id');
         $this->scopeToUserFactory($query, $request);
 
         if ($request->filled('factory_id')) {
@@ -108,11 +109,17 @@ class VehicleController extends Controller
     {
         $this->authorizeFactoryAccess($request, $vehicle->factory_id);
 
-        $vehicle->load([
+        $relations = [
             'factory', 'rentalVendor', 'allocatedEmployee.designation',
-            'primaryDriver.employee', 'assignedCompanyDrivers.employee', 'defaultDrivers.employee',
+            'primaryDriver.employee', 'defaultDrivers.employee',
             'paperRenewals.renewedByUser',
-        ]);
+        ];
+
+        if (TmsDriverVehiclePivot::available()) {
+            $relations[] = 'assignedCompanyDrivers.employee';
+        }
+
+        $vehicle->load($relations);
 
         $recentTrips = $vehicle->tripLogs()
             ->with(['driver.employee', 'rentalDriver', 'transportRequests.employee'])
@@ -171,8 +178,8 @@ class VehicleController extends Controller
             'statuses'   => config('tms.vehicle_statuses'),
             'paidBy'     => config('tms.fuel_paid_by'),
             'vendors'    => $this->vendorOptions($request, $factoryId),
-            'employees'  => $this->employeeOptions($request, $factoryId),
-            'drivers'    => $this->driverOptions($request, $factoryId),
+            'employees'  => $this->employeeOptions($request),
+            'drivers'    => $this->driverOptions($request),
             'categories' => config('tms.vehicle_categories'),
             'regStatuses'=> config('tms.registration_paper_statuses'),
         ];
@@ -215,11 +222,24 @@ class VehicleController extends Controller
             'maintenance_covered_by'     => ['nullable', 'in:company,rental_party'],
             'allocated_employee_id'      => [
                 'nullable',
-                Rule::exists('hrm_employees', 'id')->where(fn ($q) => $q->where('factory_id', $request->input('factory_id'))),
+                Rule::exists('hrm_employees', 'id')->where(function ($q) use ($request) {
+                    $q->whereIn('status', ['active', 'probation']);
+
+                    if ($scoped = $request->user()?->scopedFactoryId()) {
+                        $q->where('factory_id', $scoped);
+                    }
+                }),
             ],
+            // Drivers may operate vehicles from any unit.
             'primary_driver_id'          => [
                 'nullable',
-                Rule::exists('tms_drivers', 'id')->where(fn ($q) => $q->where('factory_id', $request->input('factory_id'))),
+                Rule::exists('tms_drivers', 'id')->where(function ($q) use ($request) {
+                    $q->where('status', 'active');
+
+                    if ($scoped = $request->user()?->scopedFactoryId()) {
+                        $q->where('factory_id', $scoped);
+                    }
+                }),
             ],
         ]);
 
@@ -251,18 +271,17 @@ class VehicleController extends Controller
         return $query->pluck('name', 'id')->all();
     }
 
-    private function employeeOptions(Request $request, ?int $factoryId = null): array
+    private function employeeOptions(Request $request): array
     {
         $query = Employee::query()
-            ->with('designation')
+            ->with(['designation', 'factory'])
             ->whereIn('status', ['active', 'probation'])
             ->orderBy('name');
 
-        $fid = $factoryId ?? $request->user()?->factory_id;
-        if ($fid) {
-            $query->where('factory_id', $fid);
-        } elseif ($request->filled('factory_id')) {
-            $query->where('factory_id', $request->factory_id);
+        // Cross-unit users see all units; unit-scoped users stay limited to their factory.
+        $scoped = $request->user()?->scopedFactoryId();
+        if ($scoped) {
+            $query->where('factory_id', $scoped);
         }
 
         return $query->get()->mapWithKeys(function (Employee $employee) {
@@ -272,24 +291,35 @@ class VehicleController extends Controller
                 $label .= ' (' . $employee->designation->name . ')';
             }
 
+            if ($employee->factory?->name) {
+                $label .= ' — ' . $employee->factory->name;
+            }
+
             return [$employee->id => $label];
         })->all();
     }
 
-    private function driverOptions(Request $request, ?int $factoryId = null): array
+    private function driverOptions(Request $request): array
     {
         $query = TmsDriver::query()
-            ->with('employee')
+            ->with(['employee', 'factory'])
             ->where('status', 'active')
             ->orderBy('id');
 
-        $fid = $factoryId ?? $request->user()?->factory_id;
-        if ($fid) {
-            $query->where('factory_id', $fid);
-        } elseif ($request->filled('factory_id')) {
-            $query->where('factory_id', $request->factory_id);
+        // Cross-unit users see every driver; unit-scoped users stay limited.
+        $scoped = $request->user()?->scopedFactoryId();
+        if ($scoped) {
+            $query->where('factory_id', $scoped);
         }
 
-        return $query->get()->mapWithKeys(fn (TmsDriver $d) => [$d->id => $d->displayLabel()])->all();
+        return $query->get()->mapWithKeys(function (TmsDriver $driver) {
+            $label = $driver->displayLabel();
+
+            if ($driver->factory?->name) {
+                $label .= ' — ' . $driver->factory->name;
+            }
+
+            return [$driver->id => $label];
+        })->all();
     }
 }

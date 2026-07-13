@@ -40,12 +40,19 @@ class HeadOfficeEmployeeSeederTest extends TestCase
 
         $this->seed(HeadOfficeEmployeeSeeder::class);
 
-        $this->assertSame(115, Employee::where('factory_id', $factory->id)->count());
+        $this->assertSame(121, Employee::where('factory_id', $factory->id)->count());
         $this->assertDatabaseMissing('hrm_employees', ['employee_code' => 'HO-OLD-1']);
         $this->assertDatabaseHas('hrm_employees', [
             'employee_code' => '3030',
             'name'          => 'L.C. Mohammad Abdul Bari (Rtd.)',
             'email'         => 'bari@norbangroup.com',
         ]);
+        $this->assertDatabaseHas('hrm_employees', [
+            'employee_code' => 'HO-M001',
+            'name'          => 'Md. Wahidul Haque Siddiqui',
+        ]);
+        $this->assertTrue(
+            Designation::query()->where('name', 'Managing Director (MD)')->exists()
+        );
     }
 }

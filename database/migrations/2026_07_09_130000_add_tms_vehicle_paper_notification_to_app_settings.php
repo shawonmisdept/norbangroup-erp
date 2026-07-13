@@ -9,7 +9,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('app_settings', function (Blueprint $table) {
-            $table->boolean('notify_popup_tms_vehicle_paper')->default(true)->after('notify_popup_tms_odometer_reminder');
+            $table->boolean('notify_popup_tms_vehicle_paper')->default(true);
         });
     }
 

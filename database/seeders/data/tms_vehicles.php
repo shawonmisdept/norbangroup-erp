@@ -1,20 +1,21 @@
 <?php
 
 /**
- * Vehicle register from "Vehicle Papers Status" spreadsheet (50 rows).
- * Blank / missing cells in the sheet are omitted — not filled with defaults.
- * Unit, allocated user, driver, and driver contact are set later in admin.
+ * Vehicle register from "Vehicle Papers Update Information" spreadsheet
+ * (Sheet1 + Sheet2 merged). Blank / missing cells are omitted.
+ * vehicle_category and passenger_capacity are set from model name.
+ * Unit, allocated user, and driver are assigned later in admin.
  *
- * Regenerate from xlsx: unzip to storage/app/temp-xlsx/ then run
- * php database/seeders/scripts/extract_tms_vehicles.php
+ * Regenerate:
+ *   php database/seeders/scripts/regen_tms_vehicles_from_csv.php
  */
 
-return 
-array (
+return array (
   0 => 
   array (
     'reg_number' => 'DM-GHA-22-1042',
     'name' => 'BMW Jeep',
+    'vehicle_category' => 'jeep',
     'model_year' => 2022,
     'purchase_date' => '10/Jan/23',
     'registration_date' => '10/Jan/23',
@@ -33,6 +34,7 @@ array (
   array (
     'reg_number' => 'DM-GA-42-0117',
     'name' => 'Mercedes Benz',
+    'vehicle_category' => 'sedan',
     'model_year' => 2018,
     'purchase_date' => '10/Oct/18',
     'registration_date' => '9/Oct/18',
@@ -50,6 +52,7 @@ array (
   array (
     'reg_number' => 'DM-GHA-13-8951',
     'name' => 'Parado Jeep',
+    'vehicle_category' => 'jeep',
     'model_year' => 2011,
     'purchase_date' => '7/Aug/14',
     'registration_date' => '21/Aug/14',
@@ -60,14 +63,15 @@ array (
     'tax_token_expires_at' => '21-Aug-26',
     'insurance_expires_at' => '25-Aug-26',
     'type' => 'own',
-    'passenger_capacity' => 5,
+    'passenger_capacity' => 7,
     'status' => 'available',
     'registration_paper_status' => 'ok',
   ),
   3 => 
   array (
     'reg_number' => 'DM-CHA-52-4571',
-    'name' => 'Microbus',
+    'name' => 'Microbus (Alphard)',
+    'vehicle_category' => 'microbus',
     'model_year' => 2022,
     'purchase_date' => '18/Jan/26',
     'registration_date' => '18/Jan/26',
@@ -78,7 +82,7 @@ array (
     'tax_token_expires_at' => '17-Jan-27',
     'insurance_expires_at' => '18-Jan-27',
     'type' => 'own',
-    'passenger_capacity' => 5,
+    'passenger_capacity' => 7,
     'status' => 'available',
     'registration_paper_status' => 'ok',
   ),
@@ -86,6 +90,7 @@ array (
   array (
     'reg_number' => 'DM-BHA-11-0813',
     'name' => 'Nissan, Sunny',
+    'vehicle_category' => 'sedan',
     'model_year' => 2003,
     'purchase_date' => '15/Apr/04',
     'registration_date' => '18/Apr/04',
@@ -104,6 +109,7 @@ array (
   array (
     'reg_number' => 'DM-GHA-21-9271',
     'name' => 'X-Trail Nissan',
+    'vehicle_category' => 'jeep',
     'model_year' => 2022,
     'purchase_date' => '15/Sep/22',
     'registration_date' => '13/Sep/22',
@@ -122,6 +128,7 @@ array (
   array (
     'reg_number' => 'DM-GA-33-1788',
     'name' => 'Toyota Premio',
+    'vehicle_category' => 'sedan',
     'model_year' => 2011,
     'purchase_date' => '7/Dec/10',
     'registration_date' => '3/Jan/12',
@@ -140,6 +147,7 @@ array (
   array (
     'reg_number' => 'DM-GHA-02-0005',
     'name' => 'Pajero Jeep',
+    'vehicle_category' => 'jeep',
     'model_year' => 1994,
     'purchase_date' => '30/Aug/99',
     'registration_date' => '10/Aug/95',
@@ -150,7 +158,7 @@ array (
     'tax_token_expires_at' => '10-Aug-26',
     'insurance_expires_at' => '24-Aug-26',
     'type' => 'own',
-    'passenger_capacity' => 5,
+    'passenger_capacity' => 7,
     'status' => 'available',
     'registration_paper_status' => 'ok',
   ),
@@ -158,6 +166,7 @@ array (
   array (
     'reg_number' => 'DM-GHA-21-9272',
     'name' => 'X-Trail Nissan',
+    'vehicle_category' => 'jeep',
     'model_year' => 2022,
     'purchase_date' => '15/Sep/22',
     'registration_date' => '13/Sep/22',
@@ -175,7 +184,8 @@ array (
   9 => 
   array (
     'reg_number' => 'DM-GHA-16-2903',
-    'name' => 'Hard Jeep,BYD',
+    'name' => 'Hard Jeep (BYD)',
+    'vehicle_category' => 'jeep',
     'model_year' => 2025,
     'purchase_date' => '27/Jul/25',
     'registration_date' => '27/Jul/25',
@@ -193,6 +203,7 @@ array (
   array (
     'reg_number' => 'DM-GHA-13-1531',
     'name' => 'Harrier, Jeep',
+    'vehicle_category' => 'jeep',
     'model_year' => 2007,
     'purchase_date' => '20/Dec/08',
     'registration_date' => '22/Dec/08',
@@ -211,6 +222,7 @@ array (
   array (
     'reg_number' => 'DM-GHA-21-7771',
     'name' => 'Haval H6 Jeep',
+    'vehicle_category' => 'jeep',
     'model_year' => 2022,
     'purchase_date' => '23/Jun/22',
     'registration_date' => '23/Jun/22',
@@ -229,6 +241,7 @@ array (
   array (
     'reg_number' => 'DM-THA-11-7867',
     'name' => 'Pic up Double cabin',
+    'vehicle_category' => 'pickup',
     'model_year' => 2008,
     'purchase_date' => '18/Aug/08',
     'registration_date' => '18/Aug/08',
@@ -248,6 +261,7 @@ array (
   array (
     'reg_number' => 'DM-GHA-21-7770',
     'name' => 'Haval H6 Jeep',
+    'vehicle_category' => 'jeep',
     'model_year' => 2022,
     'purchase_date' => '23/Jun/22',
     'registration_date' => '23/Jun/22',
@@ -266,6 +280,7 @@ array (
   array (
     'reg_number' => 'DM-GA-35-4897',
     'name' => 'Toyota Axio',
+    'vehicle_category' => 'sedan',
     'model_year' => 2008,
     'purchase_date' => '4/Aug/13',
     'registration_date' => '17/Sep/13',
@@ -284,6 +299,7 @@ array (
   array (
     'reg_number' => 'DM-GHA-11-8402',
     'name' => 'Hundai Zeep',
+    'vehicle_category' => 'jeep',
     'model_year' => 2006,
     'purchase_date' => '5/Dec/06',
     'registration_date' => '5/Dec/06',
@@ -302,6 +318,7 @@ array (
   array (
     'reg_number' => 'DM-GA-45-2366',
     'name' => 'Toyota Axio X',
+    'vehicle_category' => 'sedan',
     'model_year' => 2015,
     'purchase_date' => '26/Oct/20',
     'registration_date' => '8/Nov/20',
@@ -320,6 +337,7 @@ array (
   array (
     'reg_number' => 'DM-GA-35-7990',
     'name' => 'Toyota Axio',
+    'vehicle_category' => 'sedan',
     'model_year' => 2008,
     'purchase_date' => '30/Dec/13',
     'registration_date' => '21/Jan/14',
@@ -338,6 +356,7 @@ array (
   array (
     'reg_number' => 'DM-GA-15-7196',
     'name' => 'Honda, CIVIC',
+    'vehicle_category' => 'sedan',
     'model_year' => 2003,
     'registration_date' => '12/May/03',
     'engine_cc' => 1500,
@@ -354,6 +373,7 @@ array (
   array (
     'reg_number' => 'DM-KHA-12-6032',
     'name' => 'Provox',
+    'vehicle_category' => 'sedan',
     'model_year' => 2004,
     'purchase_date' => '19/Jun/08',
     'registration_date' => '24/Jun/08',
@@ -372,6 +392,7 @@ array (
   array (
     'reg_number' => 'DM-GA-31-4810',
     'name' => 'Toyota X Corolla',
+    'vehicle_category' => 'sedan',
     'model_year' => 2005,
     'purchase_date' => '14/Mar/11',
     'registration_date' => '7/Apr/11',
@@ -390,6 +411,7 @@ array (
   array (
     'reg_number' => 'DM-GA-23-5772',
     'name' => 'Toyota Axio',
+    'vehicle_category' => 'sedan',
     'model_year' => 2003,
     'purchase_date' => '3/Mar/21',
     'registration_date' => '22/Nov/08',
@@ -408,6 +430,7 @@ array (
   array (
     'reg_number' => 'DM-GA-43-9461',
     'name' => 'Toyota Axio X',
+    'vehicle_category' => 'sedan',
     'model_year' => 2015,
     'purchase_date' => '27/Jul/20',
     'registration_date' => '19/Aug/20',
@@ -426,6 +449,7 @@ array (
   array (
     'reg_number' => 'DM-GA-13-5028',
     'name' => 'Toyota Sidan',
+    'vehicle_category' => 'sedan',
     'model_year' => 1996,
     'purchase_date' => '4/Mar/21',
     'registration_date' => '23/Jul/00',
@@ -444,6 +468,7 @@ array (
   array (
     'reg_number' => 'DM-KHA-12-1223',
     'name' => 'Toyota Corolla X',
+    'vehicle_category' => 'sedan',
     'model_year' => 2002,
     'purchase_date' => '22/Sep/05',
     'registration_date' => '6/Oct/05',
@@ -462,6 +487,7 @@ array (
   array (
     'reg_number' => 'DM-KHA-13-1898',
     'name' => 'Avenza',
+    'vehicle_category' => 'sedan',
     'model_year' => 2012,
     'purchase_date' => '12/May/12',
     'registration_date' => '7/Jun/12',
@@ -480,6 +506,7 @@ array (
   array (
     'reg_number' => 'DM-GA-13-9120',
     'name' => 'Toyota Corrola',
+    'vehicle_category' => 'sedan',
     'model_year' => 1996,
     'registration_date' => '17/Oct/01',
     'engine_cc' => 1331,
@@ -496,6 +523,7 @@ array (
   array (
     'reg_number' => 'DM-GA-19-9823',
     'name' => 'Station Wagun',
+    'vehicle_category' => 'sedan',
     'model_year' => 2001,
     'purchase_date' => '6/Oct/16',
     'registration_date' => '14/Aug/07',
@@ -514,6 +542,7 @@ array (
   array (
     'reg_number' => 'DM-GA-23-3941',
     'name' => 'Toyota Allion',
+    'vehicle_category' => 'sedan',
     'model_year' => 2004,
     'purchase_date' => '15/Nov/21',
     'registration_date' => '24/Sep/08',
@@ -532,6 +561,7 @@ array (
   array (
     'reg_number' => 'DM-GA-37-9232',
     'name' => 'Toyota Axio',
+    'vehicle_category' => 'sedan',
     'model_year' => 2009,
     'purchase_date' => '9/Mar/25',
     'registration_date' => '10/Dec/14',
@@ -550,6 +580,7 @@ array (
   array (
     'reg_number' => 'DM-GA-37-9227',
     'name' => 'Toyota Axio',
+    'vehicle_category' => 'sedan',
     'model_year' => 2009,
     'purchase_date' => '9/Mar/25',
     'registration_date' => '10/Dec/14',
@@ -567,7 +598,8 @@ array (
   31 => 
   array (
     'reg_number' => 'DM-CHA-53-4286',
-    'name' => 'Micro Bus, Hayce',
+    'name' => 'HIACE (Microbus)',
+    'vehicle_category' => 'microbus',
     'model_year' => 2010,
     'purchase_date' => '7/Dec/10',
     'registration_date' => '28/Dec/10',
@@ -579,14 +611,15 @@ array (
     'insurance_expires_at' => '27-Jan-27',
     'route_permit_expires_at' => '21-Aug-26',
     'type' => 'own',
-    'passenger_capacity' => 5,
+    'passenger_capacity' => 12,
     'status' => 'available',
     'registration_paper_status' => 'ok',
   ),
   32 => 
   array (
     'reg_number' => 'DM-CHA-11-3870',
-    'name' => 'Micro Bus, Noah',
+    'name' => 'NOAH (Microbus)',
+    'vehicle_category' => 'microbus',
     'model_year' => 1998,
     'registration_date' => '23/Sep/01',
     'engine_cc' => 1900,
@@ -595,14 +628,15 @@ array (
     'tax_token_expires_at' => '23-Sep-26',
     'insurance_expires_at' => '7-Dec-26',
     'type' => 'own',
-    'passenger_capacity' => 5,
+    'passenger_capacity' => 8,
     'status' => 'available',
     'registration_paper_status' => 'ok',
   ),
   33 => 
   array (
     'reg_number' => 'DM-CHA-53-4349',
-    'name' => 'Micro Bus, Hayce',
+    'name' => 'HIACE (Microbus)',
+    'vehicle_category' => 'microbus',
     'model_year' => 2010,
     'purchase_date' => '5/Jan/11',
     'registration_date' => '12/Jan/11',
@@ -612,16 +646,17 @@ array (
     'fitness_expires_at' => '24-Jan-27',
     'tax_token_expires_at' => '12-Jan-27',
     'insurance_expires_at' => '27-Jan-27',
-    'route_permit_expires_at' => '21-Aug-26',
+    'route_permit_expires_at' => '22-Aug-26',
     'type' => 'own',
-    'passenger_capacity' => 5,
+    'passenger_capacity' => 12,
     'status' => 'available',
     'registration_paper_status' => 'ok',
   ),
   34 => 
   array (
     'reg_number' => 'DM-CHA-53-4348',
-    'name' => 'Micro Bus, Hayce',
+    'name' => 'HIACE (Microbus)',
+    'vehicle_category' => 'microbus',
     'model_year' => 2010,
     'purchase_date' => '5/Jan/11',
     'registration_date' => '12/Jan/11',
@@ -633,14 +668,15 @@ array (
     'insurance_expires_at' => '27-Jan-27',
     'route_permit_expires_at' => '22-Aug-26',
     'type' => 'own',
-    'passenger_capacity' => 5,
+    'passenger_capacity' => 12,
     'status' => 'available',
     'registration_paper_status' => 'ok',
   ),
   35 => 
   array (
     'reg_number' => 'DM-CHA-56-0973',
-    'name' => 'Micro Bus, Nissan',
+    'name' => 'URBAN (Microbus)',
+    'vehicle_category' => 'microbus',
     'model_year' => 2016,
     'purchase_date' => '26/Apr/16',
     'registration_date' => '10/May/16',
@@ -652,14 +688,15 @@ array (
     'insurance_expires_at' => '31-May-27',
     'route_permit_expires_at' => '9-Sep-26',
     'type' => 'own',
-    'passenger_capacity' => 5,
+    'passenger_capacity' => 10,
     'status' => 'available',
     'registration_paper_status' => 'ok',
   ),
   36 => 
   array (
     'reg_number' => 'DM-CHA-56-1146',
-    'name' => 'Micro Bus, Nissan',
+    'name' => 'URBAN (Microbus)',
+    'vehicle_category' => 'microbus',
     'model_year' => 2016,
     'purchase_date' => '10/May/16',
     'registration_date' => '19/Jun/16',
@@ -671,7 +708,7 @@ array (
     'insurance_expires_at' => '24-Aug-26',
     'route_permit_expires_at' => '22-Oct-26',
     'type' => 'own',
-    'passenger_capacity' => 5,
+    'passenger_capacity' => 10,
     'status' => 'available',
     'registration_paper_status' => 'ok',
   ),
@@ -679,6 +716,7 @@ array (
   array (
     'reg_number' => 'DM-MA-11-6078',
     'name' => 'Covered Van',
+    'vehicle_category' => 'other',
     'model_year' => 2020,
     'purchase_date' => '1/Mar/20',
     'registration_date' => '23/Mar/20',
@@ -690,7 +728,7 @@ array (
     'insurance_expires_at' => '31-May-27',
     'route_permit_expires_at' => '28-Jul-26',
     'type' => 'own',
-    'passenger_capacity' => 5,
+    'passenger_capacity' => 3,
     'status' => 'available',
     'registration_paper_status' => 'ok',
   ),
@@ -698,6 +736,7 @@ array (
   array (
     'reg_number' => 'DM-MA-11-6079',
     'name' => 'Covered Van',
+    'vehicle_category' => 'other',
     'model_year' => 2020,
     'purchase_date' => '1/Mar/20',
     'registration_date' => '23/Mar/20',
@@ -709,7 +748,7 @@ array (
     'insurance_expires_at' => '31-May-27',
     'route_permit_expires_at' => '28-Jul-26',
     'type' => 'own',
-    'passenger_capacity' => 5,
+    'passenger_capacity' => 3,
     'status' => 'available',
     'registration_paper_status' => 'ok',
   ),
@@ -717,6 +756,7 @@ array (
   array (
     'reg_number' => 'DM-AU-11-2904',
     'name' => 'Covered Van',
+    'vehicle_category' => 'other',
     'model_year' => 2010,
     'purchase_date' => '30/Nov/10',
     'registration_date' => '6/Jan/11',
@@ -728,7 +768,7 @@ array (
     'insurance_expires_at' => '3-Dec-26',
     'route_permit_expires_at' => '22-Aug-26',
     'type' => 'own',
-    'passenger_capacity' => 5,
+    'passenger_capacity' => 3,
     'status' => 'available',
     'registration_paper_status' => 'ok',
   ),
@@ -736,6 +776,7 @@ array (
   array (
     'reg_number' => 'NAR-MA-11-0043',
     'name' => 'Cover Van',
+    'vehicle_category' => 'other',
     'model_year' => 2012,
     'purchase_date' => '28/Aug/12',
     'registration_date' => '3/Oct/12',
@@ -747,7 +788,7 @@ array (
     'insurance_expires_at' => '9-Nov-26',
     'route_permit_expires_at' => '30-Sep-27',
     'type' => 'own',
-    'passenger_capacity' => 5,
+    'passenger_capacity' => 3,
     'status' => 'available',
     'registration_paper_status' => 'ok',
   ),
@@ -755,6 +796,7 @@ array (
   array (
     'reg_number' => 'DM-AU-11-4206',
     'name' => 'Covered Van',
+    'vehicle_category' => 'other',
     'model_year' => 2015,
     'purchase_date' => '16/May/15',
     'registration_date' => '15/Sep/15',
@@ -766,7 +808,7 @@ array (
     'insurance_expires_at' => '9-Nov-26',
     'route_permit_expires_at' => '15-Sep-27',
     'type' => 'own',
-    'passenger_capacity' => 5,
+    'passenger_capacity' => 3,
     'status' => 'available',
     'registration_paper_status' => 'ok',
   ),
@@ -774,6 +816,7 @@ array (
   array (
     'reg_number' => 'DM-AU-14-1095',
     'name' => 'Covered Van',
+    'vehicle_category' => 'other',
     'model_year' => 2008,
     'purchase_date' => '29/Sep/16',
     'registration_date' => '10/Nov/08',
@@ -785,7 +828,7 @@ array (
     'insurance_expires_at' => '3-Dec-26',
     'route_permit_expires_at' => '8-Nov-26',
     'type' => 'own',
-    'passenger_capacity' => 5,
+    'passenger_capacity' => 3,
     'status' => 'available',
     'registration_paper_status' => 'ok',
   ),
@@ -793,6 +836,7 @@ array (
   array (
     'reg_number' => 'DM-U-11-4801',
     'name' => 'Covered Van',
+    'vehicle_category' => 'other',
     'model_year' => 2017,
     'purchase_date' => '22/Jan/18',
     'registration_date' => '21/Mar/18',
@@ -804,7 +848,7 @@ array (
     'insurance_expires_at' => '31-May-27',
     'route_permit_expires_at' => '21-Mar-27',
     'type' => 'own',
-    'passenger_capacity' => 5,
+    'passenger_capacity' => 3,
     'status' => 'available',
     'registration_paper_status' => 'ok',
   ),
@@ -812,6 +856,7 @@ array (
   array (
     'reg_number' => 'DM-MA-51-8450',
     'name' => 'Covered Van',
+    'vehicle_category' => 'other',
     'model_year' => 2017,
     'purchase_date' => '22/Jan/18',
     'registration_date' => '21/Mar/18',
@@ -823,7 +868,7 @@ array (
     'insurance_expires_at' => '31-May-27',
     'route_permit_expires_at' => '21-Mar-27',
     'type' => 'own',
-    'passenger_capacity' => 5,
+    'passenger_capacity' => 3,
     'status' => 'available',
     'registration_paper_status' => 'ok',
   ),
@@ -831,6 +876,7 @@ array (
   array (
     'reg_number' => 'DM-MA-14-0155',
     'name' => 'Covered Van',
+    'vehicle_category' => 'other',
     'model_year' => 2008,
     'purchase_date' => '28/Jul/08',
     'registration_date' => '13/Nov/08',
@@ -842,7 +888,7 @@ array (
     'insurance_expires_at' => '25-Aug-26',
     'route_permit_expires_at' => '11-Nov-26',
     'type' => 'own',
-    'passenger_capacity' => 5,
+    'passenger_capacity' => 3,
     'status' => 'available',
     'registration_paper_status' => 'ok',
   ),
@@ -850,6 +896,7 @@ array (
   array (
     'reg_number' => 'DM-TA-15-7042',
     'name' => 'Covered Van',
+    'vehicle_category' => 'other',
     'model_year' => 2018,
     'purchase_date' => '11/Jan/24',
     'registration_date' => '1/Jan/20',
@@ -860,7 +907,7 @@ array (
     'tax_token_expires_at' => '1-Jan-27',
     'route_permit_expires_at' => '21-Oct-26',
     'type' => 'own',
-    'passenger_capacity' => 5,
+    'passenger_capacity' => 3,
     'status' => 'available',
     'registration_paper_status' => 'ok',
   ),
@@ -868,6 +915,7 @@ array (
   array (
     'reg_number' => 'DM-TA-13-6693',
     'name' => 'Covered Van',
+    'vehicle_category' => 'other',
     'model_year' => 2018,
     'purchase_date' => '20/Jul/23',
     'registration_date' => '15/Jan/19',
@@ -878,7 +926,7 @@ array (
     'tax_token_expires_at' => '15-Jan-27',
     'route_permit_expires_at' => '15-Jan-28',
     'type' => 'own',
-    'passenger_capacity' => 5,
+    'passenger_capacity' => 3,
     'status' => 'available',
     'registration_paper_status' => 'ok',
   ),
@@ -886,6 +934,7 @@ array (
   array (
     'reg_number' => 'DM-DA-11-9103',
     'name' => 'Covered Van',
+    'vehicle_category' => 'other',
     'model_year' => 2020,
     'purchase_date' => '5/May/26',
     'registration_date' => '18/Oct/20',
@@ -895,7 +944,7 @@ array (
     'tax_token_expires_at' => '18-Oct-26',
     'route_permit_expires_at' => '18-Oct-26',
     'type' => 'own',
-    'passenger_capacity' => 5,
+    'passenger_capacity' => 3,
     'status' => 'available',
     'registration_paper_status' => 'ok',
   ),
@@ -903,6 +952,7 @@ array (
   array (
     'reg_number' => 'DM-GHA-21-5864',
     'name' => 'Hard Jeep,Toyota',
+    'vehicle_category' => 'jeep',
     'model_year' => 2018,
     'registration_date' => '29/Mar/22',
     'engine_cc' => 2000,

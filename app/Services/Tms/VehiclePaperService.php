@@ -118,6 +118,24 @@ class VehiclePaperService
         return $worst;
     }
 
+    /** @return array<int, array{label: string, status: string}> */
+    public function alertPapersForVehicle(TmsVehicle $vehicle): array
+    {
+        return collect($this->papersForVehicle($vehicle))
+            ->filter(fn (array $paper) => in_array($paper['status'], [
+                self::STATUS_EXPIRED,
+                self::STATUS_URGENT,
+                self::STATUS_WARNING,
+                self::STATUS_MISSING,
+            ], true))
+            ->map(fn (array $paper) => [
+                'label'  => $paper['label'],
+                'status' => $paper['status'],
+            ])
+            ->values()
+            ->all();
+    }
+
     /** @return array<int, string> */
     public function warningMessagesForVehicle(TmsVehicle $vehicle): array
     {

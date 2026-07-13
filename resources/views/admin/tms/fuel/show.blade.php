@@ -33,7 +33,7 @@
             </div>
             <div>
                 <span class="text-[11px] font-semibold uppercase tracking-wide text-gray-400 block">Quantity</span>
-                <span class="font-medium tabular-nums">{{ number_format((float) $fuelLog->quantity, 3) }} {{ $fuelLog->unit }}</span>
+                <span class="font-medium tabular-nums">@portalQuantity($fuelLog->quantity) {{ $fuelLog->unit }}</span>
             </div>
             <div>
                 <span class="text-[11px] font-semibold uppercase tracking-wide text-gray-400 block">Unit Price</span>

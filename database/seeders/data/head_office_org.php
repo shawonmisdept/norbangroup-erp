@@ -245,6 +245,26 @@ return [
             ],
         ],
         [
+            'name' => 'Management',
+            'native_name' => null,
+            'default_building' => 'Main Building',
+            'default_floor' => '3rd Floor',
+            'designations' => [
+                [
+                    'name' => 'Managing Director (MD)',
+                    'role' => null,
+                ],
+                [
+                    'name' => 'Director',
+                    'role' => null,
+                ],
+                [
+                    'name' => 'Staff',
+                    'role' => null,
+                ],
+            ],
+        ],
+        [
             'name' => 'MIS',
             'native_name' => null,
             'default_building' => 'Main Building',
@@ -285,6 +305,10 @@ return [
                 [
                     'name' => 'Deputy Manager',
                     'role' => 'Merchandising-Deputy Manager',
+                ],
+                [
+                    'name' => 'Director',
+                    'role' => null,
                 ],
                 [
                     'name' => 'Executive (Data Entry)',

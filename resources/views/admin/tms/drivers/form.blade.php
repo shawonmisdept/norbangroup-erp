@@ -38,7 +38,7 @@
 
         <div>
             <label class="erp-label">Assigned Vehicles</label>
-            <p class="text-xs text-gray-500 mb-2">Select every vehicle this driver may operate. Mark one as primary.</p>
+            <p class="text-xs text-gray-500 mb-2">Select every vehicle this driver may operate (any unit). Mark one as primary.</p>
             <div class="space-y-2 rounded border border-erp-border p-3 max-h-64 overflow-y-auto">
                 @foreach($vehicles as $id => $label)
                     @php

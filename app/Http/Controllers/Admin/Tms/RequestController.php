@@ -46,22 +46,24 @@ class RequestController extends Controller
             $query->whereDate('pickup_at', $request->pickup_date);
         }
 
-        $factoryId = $request->user()->factory_id;
+        $factoryId = $request->filled('factory_id')
+            ? (int) $request->factory_id
+            : $request->user()?->scopedFactoryId();
 
-        $drivers = TmsDriver::with(['employee', 'vehicles', 'defaultVehicle'])
+        $drivers = TmsDriver::with(TmsDriver::withAssignedVehicles(['employee']))
             ->where('status', 'active')
-            ->when($factoryId, fn ($q, $fid) => $q->where('factory_id', $fid))
+            ->when($factoryId, fn ($q) => $q->where('factory_id', $factoryId))
             ->orderBy('id')
             ->get();
 
         $rentalDrivers = TmsRentalDriver::with('defaultVehicle')
             ->where('status', 'active')
-            ->when($factoryId, fn ($q, $fid) => $q->where('factory_id', $fid))
+            ->when($factoryId, fn ($q) => $q->where('factory_id', $factoryId))
             ->orderBy('name')
             ->get();
 
         $vehicles = TmsVehicle::query()
-            ->when($factoryId, fn ($q, $fid) => $q->where('factory_id', $fid))
+            ->when($factoryId, fn ($q) => $q->where('factory_id', $factoryId))
             ->orderBy('name')
             ->get();
 
@@ -87,7 +89,7 @@ class RequestController extends Controller
             'approvedByUser',
         ]);
 
-        $drivers = TmsDriver::with(['employee', 'vehicles', 'defaultVehicle'])
+        $drivers = TmsDriver::with(TmsDriver::withAssignedVehicles(['employee']))
             ->where('factory_id', $transportRequest->factory_id)
             ->where('status', 'active')
             ->orderBy('id')

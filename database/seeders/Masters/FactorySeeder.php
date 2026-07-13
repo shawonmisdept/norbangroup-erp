@@ -12,8 +12,33 @@ class FactorySeeder extends Seeder
         $records = [
             [
                 'name'    => 'Head Office',
-                'address' => 'Dhaka, Bangladesh',
-                'phone'   => '01711111100',
+                'address' => 'House # 8/B, Road # 1, Gulshan – 1, Dhaka – 1212, Bangladesh',
+                'phone'   => '+88-09666-707635',
+            ],
+            [
+                'name'    => 'Norban Comtex Limited',
+                'address' => null,
+                'phone'   => null,
+            ],
+            [
+                'name'    => 'Hornbill Apparel Ltd',
+                'address' => null,
+                'phone'   => null,
+            ],
+            [
+                'name'    => 'Fiber @ Home',
+                'address' => null,
+                'phone'   => null,
+            ],
+            [
+                'name'    => 'DHL',
+                'address' => null,
+                'phone'   => null,
+            ],
+            [
+                'name'    => 'BD Com',
+                'address' => null,
+                'phone'   => null,
             ],
         ];
 

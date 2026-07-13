@@ -44,7 +44,7 @@
                     <div>
                         <label class="emp-label">Employee ID</label>
                         <input type="text" name="employee_code" value="{{ old('employee_code') }}" required autofocus
-                               placeholder="e.g. NCL-D001" class="emp-input font-mono">
+                               placeholder="e.g. 3030" class="emp-input font-mono">
                     </div>
                     <div>
                         <label class="emp-label">Password</label>

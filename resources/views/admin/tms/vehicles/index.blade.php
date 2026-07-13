@@ -104,12 +104,19 @@
         </thead>
         <tbody>
             @forelse($vehicles as $v)
-                @php $paperStatus = $paperService->worstStatusForVehicle($v); @endphp
+                @php
+                    $paperStatus = $paperService->worstStatusForVehicle($v);
+                    $alertPapers = $paperService->alertPapersForVehicle($v);
+                @endphp
                 <tr>
-                    <td class="align-top min-w-[10rem]">
-                        <a href="{{ route('admin.tms.vehicles.show', $v) }}" class="font-medium text-indigo-600 hover:underline">{{ $v->name }}</a>
-                        <p class="text-xs text-gray-500 tabular-nums mt-0.5">{{ $v->reg_number }}</p>
+                <td class="align-top min-w-[10rem]">
+                        <a href="{{ route('admin.tms.vehicles.show', $v) }}" class="font-medium text-indigo-600 hover:underline">
+                            {{ $v->name }}
+                        </a>
 
+                        <p class="text-xs text-gray-800 tabular-nums mt-0.5">
+                            {{ $v->reg_number }} ({{ $v->passenger_capacity }} seats)
+                        </p>
                     </td>
                     <td class="text-xs align-top whitespace-nowrap">{{ $v->factory?->name }}</td>
                     <td class="text-xs align-top whitespace-nowrap">
@@ -121,8 +128,16 @@
                     <td class="text-xs align-top max-w-[10rem]">{{ $v->allocatedUserLabel() ?? '—' }}</td>
                     <td class="text-xs align-top max-w-[10rem]">{{ $v->assignedDriverNames() }}</td>
                     <td class="text-center align-top">
-                        <span class="erp-badge {{ $paperService->statusBadgeClass($paperStatus) }}">{{ ucfirst($paperStatus) }}</span>
-                    </td>
+    <span class="erp-badge {{ $paperService->statusBadgeClass($paperStatus) }}">
+        {{ ucfirst($paperStatus) }}
+    </span>
+
+    @if($alertPapers !== [])
+        <span class="text-xs text-gray-600">
+            ({{ collect($alertPapers)->pluck('label')->implode(', ') }})
+        </span>
+    @endif
+</td>
                     <td class="text-center align-top"><span class="erp-badge {{ $v->statusBadgeClass() }}">{{ $v->statusLabel() }}</span></td>
                     <td class="text-right align-top whitespace-nowrap">
                         @include('partials.erp.table-actions', [

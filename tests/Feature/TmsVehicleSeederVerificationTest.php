@@ -78,9 +78,31 @@ class TmsVehicleSeederVerificationTest extends TestCase
             'DM-GA-23-5772'  => 'Toyota Axio',
             'NAR-MA-11-0043' => 'Cover Van',
             'DM-U-11-4801'   => 'Covered Van',
+            'DM-GHA-16-2903' => 'Hard Jeep (BYD)',
             'DM-GHA-21-5864' => 'Hard Jeep,Toyota',
             'DM-THA-11-7867' => 'Pic up Double cabin',
             'DM-GA-13-9120'  => 'Toyota Corrola',
+            'DM-CHA-52-4571' => 'Microbus (Alphard)',
+            'DM-CHA-53-4286' => 'HIACE (Microbus)',
+            'DM-CHA-11-3870' => 'NOAH (Microbus)',
+            'DM-CHA-56-0973' => 'URBAN (Microbus)',
+        ];
+    }
+
+    /** @return array<string, array{0: string, 1: int}> */
+    private function expectedCategoryAndSeatsByReg(): array
+    {
+        return [
+            'DM-GHA-22-1042' => ['jeep', 5],
+            'DM-GA-42-0117'  => ['sedan', 5],
+            'DM-GHA-13-8951' => ['jeep', 7],
+            'DM-CHA-52-4571' => ['microbus', 7],
+            'DM-THA-11-7867' => ['pickup', 5],
+            'DM-CHA-53-4286' => ['microbus', 12],
+            'DM-CHA-11-3870' => ['microbus', 8],
+            'DM-CHA-56-0973' => ['microbus', 10],
+            'DM-MA-11-6078'  => ['other', 3],
+            'DM-GA-35-4897'  => ['sedan', 5],
         ];
     }
 
@@ -127,6 +149,27 @@ class TmsVehicleSeederVerificationTest extends TestCase
         }
     }
 
+    public function test_vehicle_seeder_sets_category_and_seats_by_model(): void
+    {
+        Factory::create(['name' => 'Head Office', 'is_active' => true]);
+
+        $this->seed(VehicleSeeder::class);
+
+        foreach ($this->expectedCategoryAndSeatsByReg() as $reg => [$category, $seats]) {
+            $vehicle = TmsVehicle::where('reg_number', $reg)->first();
+
+            $this->assertNotNull($vehicle, "Missing vehicle: {$reg}");
+            $this->assertSame($category, $vehicle->vehicle_category, "Wrong category for {$reg}");
+            $this->assertSame($seats, $vehicle->passenger_capacity, "Wrong seats for {$reg}");
+        }
+
+        $rows = require database_path('seeders/data/tms_vehicles.php');
+        foreach ($rows as $row) {
+            $this->assertNotEmpty($row['vehicle_category'] ?? null, 'Missing category for '.$row['reg_number']);
+            $this->assertGreaterThan(0, (int) ($row['passenger_capacity'] ?? 0), 'Missing seats for '.$row['reg_number']);
+        }
+    }
+
     public function test_vehicle_seeder_blank_sheet_cells_stay_null(): void
     {
         Factory::create(['name' => 'Head Office', 'is_active' => true]);
@@ -144,6 +187,51 @@ class TmsVehicleSeederVerificationTest extends TestCase
         $ta7042 = TmsVehicle::where('reg_number', 'DM-TA-15-7042')->first();
         $this->assertNotNull($ta7042);
         $this->assertNull($ta7042->insurance_expires_at);
+    }
+
+    public function test_vehicle_seeder_paper_dates_match_sheet1(): void
+    {
+        Factory::create(['name' => 'Head Office', 'is_active' => true]);
+
+        $this->seed(VehicleSeeder::class);
+
+        // Sheet1 dates (not Sheet2) for regs that differ between sheets
+        $cases = [
+            'DM-GA-42-0117' => [
+                'tax_token_expires_at' => '2026-10-09',
+                'insurance_expires_at' => '2026-10-10',
+            ],
+            'DM-BHA-11-0813' => [
+                'fitness_expires_at' => '2028-03-20',
+                'tax_token_expires_at' => '2027-04-18',
+                'insurance_expires_at' => '2027-05-31',
+            ],
+            'DM-GHA-21-7771' => [
+                'tax_token_expires_at' => '2027-06-22',
+            ],
+            'DM-THA-11-7867' => [
+                'fitness_expires_at' => '2027-06-01',
+                'route_permit_expires_at' => '2026-08-08',
+            ],
+            'DM-GA-15-7196' => [
+                'fitness_expires_at' => '2028-03-22',
+                'tax_token_expires_at' => '2027-05-12',
+            ],
+            'DM-CHA-56-0973' => [
+                'fitness_expires_at' => '2028-05-31',
+                'route_permit_expires_at' => '2026-09-09',
+            ],
+        ];
+
+        foreach ($cases as $reg => $fields) {
+            $vehicle = TmsVehicle::where('reg_number', $reg)->first();
+            $this->assertNotNull($vehicle, "Missing vehicle: {$reg}");
+
+            foreach ($fields as $column => $expected) {
+                $actual = $vehicle->{$column}?->format('Y-m-d');
+                $this->assertSame($expected, $actual, "Wrong {$column} for {$reg}");
+            }
+        }
     }
 
     public function test_vehicle_seeder_removes_orphan_records_not_in_spreadsheet(): void

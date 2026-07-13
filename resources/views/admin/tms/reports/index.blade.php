@@ -8,6 +8,22 @@
 
 @if($tab === 'fleet_cost' && $summary)
     @include('admin.tms.reports.partials.fleet-cost-summary')
+@elseif($tab === 'fuel' && $summary)
+    @include('admin.tms.reports.partials.fuel-summary')
+
+    <div class="erp-panel overflow-hidden">
+        <table class="erp-table">
+            @if(($filters['fuel_view'] ?? 'detail') === 'by_vehicle')
+                @include('admin.tms.reports.partials.fuel-by-vehicle-table')
+            @else
+                @include('admin.tms.reports.partials.fuel-table')
+            @endif
+        </table>
+
+        @if($rows instanceof \Illuminate\Contracts\Pagination\Paginator && $rows->hasPages())
+            <div class="px-4 py-3 border-t">{{ $rows->links() }}</div>
+        @endif
+    </div>
 @else
     <div class="erp-panel overflow-hidden">
         <table class="erp-table">
@@ -21,8 +37,6 @@
                 @include('admin.tms.reports.partials.payroll-ot-table')
             @elseif($tab === 'trips')
                 @include('admin.tms.reports.partials.trips-table')
-            @elseif($tab === 'fuel')
-                @include('admin.tms.reports.partials.fuel-table')
             @elseif($tab === 'odometer')
                 @include('admin.tms.reports.partials.odometer-table')
             @elseif($tab === 'maintenance')

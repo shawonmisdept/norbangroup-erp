@@ -22,7 +22,9 @@ class DriverController extends Controller
 
     public function index(Request $request)
     {
-        $query = TmsDriver::query()->with(['factory', 'employee.designation', 'vehicles'])->latest('id');
+        $query = TmsDriver::query()
+            ->with(TmsDriver::withAssignedVehicles(['factory', 'employee.designation']))
+            ->latest('id');
         $this->scopeToUserFactory($query, $request);
 
         if ($request->filled('factory_id')) {
@@ -52,7 +54,7 @@ class DriverController extends Controller
     {
         [$validated, $vehicleIds, $primaryVehicleId] = $this->validateDriver($request);
         $this->authorizeFactoryAccess($request, (int) $validated['factory_id']);
-        $this->assertVehiclesBelongToFactory($vehicleIds, (int) $validated['factory_id']);
+        $this->assertVehiclesAccessible($request, $vehicleIds);
 
         $driver = TmsDriver::create($validated + [
             'default_vehicle_id' => $primaryVehicleId,
@@ -70,7 +72,9 @@ class DriverController extends Controller
     {
         $this->authorizeFactoryAccess($request, $driver->factory_id);
 
-        $driver->load(['factory', 'employee.designation', 'employee.department', 'vehicles', 'otRateLogs.recordedByUser']);
+        $driver->load(TmsDriver::withAssignedVehicles([
+            'factory', 'employee.designation', 'employee.department', 'otRateLogs.recordedByUser',
+        ]));
 
         $recentTrips = $driver->tripLogs()
             ->with(['vehicle', 'transportRequests.employee'])
@@ -89,13 +93,15 @@ class DriverController extends Controller
     {
         $this->authorizeFactoryAccess($request, $driver->factory_id);
 
-        $driver->load(['employee', 'vehicles', 'otRateLogs.recordedByUser']);
+        $driver->load(TmsDriver::withAssignedVehicles([
+            'employee', 'otRateLogs.recordedByUser',
+        ]));
 
         return view('admin.tms.drivers.form', [
             'driver'             => $driver,
             'factories'          => $this->factoryOptions($request),
             'employees'          => $this->employeeOptions($request, $driver->factory_id),
-            'vehicles'           => $this->vehicleOptions($request, $driver->factory_id),
+            'vehicles'           => $this->vehicleOptions($request),
             'assignedVehicleIds' => $driver->assignedVehicleIds(),
             'primaryVehicleId'   => $driver->primaryVehicleId(),
         ]);
@@ -108,7 +114,7 @@ class DriverController extends Controller
         $before = $driver->fresh();
 
         [$validated, $vehicleIds, $primaryVehicleId] = $this->validateDriver($request, $driver);
-        $this->assertVehiclesBelongToFactory($vehicleIds, (int) $validated['factory_id']);
+        $this->assertVehiclesAccessible($request, $vehicleIds);
 
         $driver->update($validated + [
             'default_vehicle_id' => $primaryVehicleId,
@@ -164,18 +170,25 @@ class DriverController extends Controller
         return [$validated, $vehicleIds, $primaryVehicleId];
     }
 
-    /** @param  list<int>  $vehicleIds */
-    private function assertVehiclesBelongToFactory(array $vehicleIds, int $factoryId): void
+    /**
+     * Drivers may operate vehicles from any unit the user can access.
+     *
+     * @param  list<int>  $vehicleIds
+     */
+    private function assertVehiclesAccessible(Request $request, array $vehicleIds): void
     {
-        $count = TmsVehicle::query()
-            ->where('factory_id', $factoryId)
+        $vehicles = TmsVehicle::query()
             ->whereIn('id', $vehicleIds)
-            ->count();
+            ->get(['id', 'factory_id']);
 
-        if ($count !== count($vehicleIds)) {
+        if ($vehicles->count() !== count($vehicleIds)) {
             throw ValidationException::withMessages([
-                'vehicle_ids' => 'All assigned vehicles must belong to the selected unit.',
+                'vehicle_ids' => 'One or more selected vehicles are invalid.',
             ]);
+        }
+
+        foreach ($vehicles as $vehicle) {
+            $this->authorizeFactoryAccess($request, $vehicle->factory_id);
         }
     }
 
@@ -204,14 +217,26 @@ class DriverController extends Controller
         })->all();
     }
 
-    private function vehicleOptions(Request $request, ?int $factoryId = null): array
+    private function vehicleOptions(Request $request): array
     {
-        $query = TmsVehicle::orderBy('name');
-        $fid = $factoryId ?? $request->user()?->factory_id;
-        if ($fid) {
-            $query->where('factory_id', $fid);
+        $query = TmsVehicle::query()
+            ->with('factory')
+            ->orderBy('name');
+
+        // Unit-scoped users stay limited; cross-unit users see every vehicle.
+        $scoped = $request->user()?->scopedFactoryId();
+        if ($scoped) {
+            $query->where('factory_id', $scoped);
         }
 
-        return $query->get()->mapWithKeys(fn ($v) => [$v->id => $v->displayLabel() . ' (' . $v->passenger_capacity . ' seats)'])->all();
+        return $query->get()->mapWithKeys(function (TmsVehicle $vehicle) {
+            $label = $vehicle->displayLabel() . ' (' . $vehicle->passenger_capacity . ' seats)';
+
+            if ($vehicle->factory?->name) {
+                $label .= ' — ' . $vehicle->factory->name;
+            }
+
+            return [$vehicle->id => $label];
+        })->all();
     }
 }

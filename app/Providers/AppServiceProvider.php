@@ -50,5 +50,6 @@ class AppServiceProvider extends ServiceProvider
         Blade::directive('portalDateTimeShort', fn (string $expression) => "<?php echo e(\\App\\Support\\PortalDateTime::dateTimeShort($expression)); ?>");
         Blade::directive('portalDateCommaTime', fn (string $expression) => "<?php echo e(\\App\\Support\\PortalDateTime::dateCommaTime($expression)); ?>");
         Blade::directive('portalDateTimeSeconds', fn (string $expression) => "<?php echo e(\\App\\Support\\PortalDateTime::dateTimeWithSeconds($expression)); ?>");
+        Blade::directive('portalQuantity', fn (string $expression) => "<?php echo e(\\App\\Support\\PortalNumber::quantity($expression)); ?>");
     }
 }

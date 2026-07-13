@@ -11,10 +11,12 @@ use App\Models\Tms\TmsMaintenanceBill;
 use App\Models\Tms\TmsRentalVehicleCharge;
 use App\Models\Tms\TmsTransportRequest;
 use App\Models\Tms\TmsTripLog;
+use App\Models\Tms\TmsVehicle;
 use App\Services\Tms\DepartmentChargebackReportService;
 use App\Services\Tms\DepartmentRequestReportService;
 use App\Support\PortalDateTime;
 use App\Services\Tms\FleetCostReportService;
+use App\Services\Tms\FuelReportService;
 use App\Services\Tms\PayrollOtExportService;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -25,6 +27,7 @@ class ReportController extends Controller
 
     public function __construct(
         private FleetCostReportService $fleetCostReport,
+        private FuelReportService $fuelReport,
         private DepartmentRequestReportService $departmentRequestReport,
         private DepartmentChargebackReportService $departmentChargebackReport,
         private PayrollOtExportService $payrollOtExport,
@@ -33,16 +36,21 @@ class ReportController extends Controller
     public function index(Request $request)
     {
         $tab = $request->input('tab', 'requests');
-        $filters = $request->only(['factory_id', 'from', 'to', 'status', 'destination', 'driver_id', 'vehicle_id', 'payment_status', 'department_id']);
+        $filters = $request->only(['factory_id', 'from', 'to', 'status', 'destination', 'driver_id', 'vehicle_id', 'payment_status', 'department_id', 'fuel_view']);
+        $filters['fuel_view'] = ($filters['fuel_view'] ?? '') === 'by_vehicle' ? 'by_vehicle' : 'detail';
 
         $summary = null;
         if ($tab === 'fleet_cost') {
             $summary = $this->fleetCostReport->summarize($request, $filters);
+        } elseif ($tab === 'fuel') {
+            $summary = $this->fuelReport->summarize($request, $filters);
         }
 
         $data = match ($tab) {
             'trips'                 => $this->tripRows($request, $filters),
-            'fuel'                  => $this->fuelRows($request, $filters),
+            'fuel'                  => $filters['fuel_view'] === 'by_vehicle'
+                ? $this->fuelReport->byVehicle($request, $filters)
+                : $this->fuelRows($request, $filters),
             'odometer'              => $this->odometerRows($request, $filters),
             'ot'                    => $this->otRows($request, $filters),
             'maintenance'           => $this->maintenanceRows($request, $filters),
@@ -58,6 +66,7 @@ class ReportController extends Controller
             'tab'         => $tab,
             'factories'   => $this->factoryOptions($request),
             'departments' => $this->departmentOptions($request, $filters['factory_id'] ?? null),
+            'vehicles'    => $this->vehicleOptions($request, isset($filters['factory_id']) ? (int) $filters['factory_id'] : null),
             'filters'     => $filters,
             'rows'        => $data,
             'summary'     => $summary,
@@ -68,12 +77,13 @@ class ReportController extends Controller
     public function export(Request $request): StreamedResponse
     {
         $validated = $request->validate([
-            'report'         => ['required', 'in:requests,trips,fuel,odometer,ot,maintenance,rental_charges,fleet_cost,requests_by_department,department_chargeback,payroll_ot'],
+            'report'         => ['required', 'in:requests,trips,fuel,fuel_by_vehicle,odometer,ot,maintenance,rental_charges,fleet_cost,requests_by_department,department_chargeback,payroll_ot'],
             'factory_id'     => ['nullable', 'exists:factories,id'],
             'from'           => ['nullable', 'date'],
             'to'             => ['nullable', 'date', 'after_or_equal:from'],
             'payment_status' => ['nullable', 'in:pending,paid'],
             'department_id'  => ['nullable', 'integer'],
+            'vehicle_id'     => ['nullable', 'integer', 'exists:tms_vehicles,id'],
         ]);
 
         if (! empty($validated['factory_id'])) {
@@ -89,6 +99,7 @@ class ReportController extends Controller
                 'requests'       => $this->exportRequests($out, $request, $validated),
                 'trips'          => $this->exportTrips($out, $request, $validated),
                 'fuel'           => $this->exportFuel($out, $request, $validated),
+                'fuel_by_vehicle'=> $this->exportFuelByVehicle($out, $request, $validated),
                 'odometer'       => $this->exportOdometer($out, $request, $validated),
                 'ot'             => $this->exportOt($out, $request, $validated),
                 'maintenance'    => $this->exportMaintenance($out, $request, $validated),
@@ -148,6 +159,10 @@ class ReportController extends Controller
         $this->scopeToUserFactory($query, $request);
         $this->applyCommonFilters($query, $filters, 'created_at');
 
+        if (! empty($filters['vehicle_id'])) {
+            $query->where('vehicle_id', $filters['vehicle_id']);
+        }
+
         return $query->latest('id')->paginate(25)->withQueryString();
     }
 
@@ -163,17 +178,7 @@ class ReportController extends Controller
     private function otRows(Request $request, array $filters)
     {
         $query = TmsDriverOvertimePayment::with(['tripLog.driver.employee', 'tripLog.rentalDriver', 'tripLog.vehicle']);
-        $this->applyFactoryScope($query, $request, 'tripLog');
-
-        if (! empty($filters['from'])) {
-            $query->whereHas('tripLog', fn ($q) => $q->whereDate('duty_end_at', '>=', $filters['from']));
-        }
-        if (! empty($filters['to'])) {
-            $query->whereHas('tripLog', fn ($q) => $q->whereDate('duty_end_at', '<=', $filters['to']));
-        }
-        if (! empty($filters['payment_status'])) {
-            $query->where('payment_status', $filters['payment_status']);
-        }
+        $this->applyOtFilters($query, $request, $filters);
 
         return $query->latest('id')->paginate(25)->withQueryString();
     }
@@ -278,11 +283,30 @@ class ReportController extends Controller
         if (! empty($filters['factory_id'])) {
             $query->where('factory_id', $filters['factory_id']);
         }
+        if (! empty($filters['vehicle_id'])) {
+            $query->where('vehicle_id', $filters['vehicle_id']);
+        }
 
         foreach ($query->cursor() as $row) {
             fputcsv($out, [
                 $row->id, $row->vehicle?->displayLabel(), $row->trip_log_id, $row->fuel_type,
                 $row->quantity, $row->unit_price, $row->amount, $row->paid_by, $row->created_at?->format('Y-m-d'),
+            ]);
+        }
+    }
+
+    private function exportFuelByVehicle($out, Request $request, array $filters): void
+    {
+        fputcsv($out, ['Vehicle', 'Entries', 'Total Qty', 'Total Amount', 'Company', 'Rental Party']);
+
+        foreach ($this->fuelReport->byVehicle($request, $filters) as $row) {
+            fputcsv($out, [
+                $row->vehicle?->displayLabel() ?? '—',
+                $row->entry_count,
+                $row->total_quantity,
+                $row->total_amount,
+                $row->company_amount,
+                $row->rental_party_amount,
             ]);
         }
     }
@@ -294,6 +318,10 @@ class ReportController extends Controller
         $query = TmsDailyOdometerLog::with('vehicle');
         $this->scopeToUserFactory($query, $request);
         $this->applyDateFilters($query, 'log_date', $filters);
+
+        if (! empty($filters['factory_id'])) {
+            $query->where('factory_id', $filters['factory_id']);
+        }
 
         foreach ($query->cursor() as $row) {
             fputcsv($out, [
@@ -308,7 +336,7 @@ class ReportController extends Controller
         fputcsv($out, ['Trip', 'Driver', 'Type', 'Night Bill', 'Holiday Bill', 'OT Hours', 'OT Hourly', 'Total', 'Status', 'Paid At']);
 
         $query = TmsDriverOvertimePayment::with(['tripLog.driver.employee', 'tripLog.rentalDriver']);
-        $this->applyFactoryScope($query, $request, 'tripLog');
+        $this->applyOtFilters($query, $request, $filters);
 
         foreach ($query->cursor() as $row) {
             $trip = $row->tripLog;
@@ -458,6 +486,19 @@ class ReportController extends Controller
         }
     }
 
+    /** @return \Illuminate\Support\Collection<int, TmsVehicle> */
+    private function vehicleOptions(Request $request, ?int $factoryId = null): \Illuminate\Support\Collection
+    {
+        $query = TmsVehicle::orderBy('name');
+
+        $fid = $factoryId ?? $request->user()?->scopedFactoryId();
+        if ($fid) {
+            $query->where('factory_id', $fid);
+        }
+
+        return $query->get();
+    }
+
     /** @return array<int, string> */
     private function departmentOptions(Request $request, ?int $factoryId = null): array
     {
@@ -475,12 +516,32 @@ class ReportController extends Controller
 
     private function applyFactoryScope($query, Request $request, ?string $via = null): void
     {
-        if ($request->user()?->factory_id) {
+        $factoryId = $request->user()?->scopedFactoryId();
+
+        if ($factoryId) {
             if ($via) {
-                $query->whereHas($via, fn ($q) => $q->where('factory_id', $request->user()->factory_id));
+                $query->whereHas($via, fn ($q) => $q->where('factory_id', $factoryId));
             } else {
-                $query->where('factory_id', $request->user()->factory_id);
+                $query->where('factory_id', $factoryId);
             }
+        }
+    }
+
+    private function applyOtFilters($query, Request $request, array $filters): void
+    {
+        $this->applyFactoryScope($query, $request, 'tripLog');
+
+        if (! empty($filters['factory_id'])) {
+            $query->whereHas('tripLog', fn ($q) => $q->where('factory_id', $filters['factory_id']));
+        }
+        if (! empty($filters['from'])) {
+            $query->whereHas('tripLog', fn ($q) => $q->whereDate('duty_end_at', '>=', $filters['from']));
+        }
+        if (! empty($filters['to'])) {
+            $query->whereHas('tripLog', fn ($q) => $q->whereDate('duty_end_at', '<=', $filters['to']));
+        }
+        if (! empty($filters['payment_status'])) {
+            $query->where('payment_status', $filters['payment_status']);
         }
     }
 

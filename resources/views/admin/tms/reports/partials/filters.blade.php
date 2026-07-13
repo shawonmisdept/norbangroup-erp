@@ -23,6 +23,28 @@
         </div>
     @endif
 
+    @if(in_array($tab, ['fuel', 'trips', 'maintenance']))
+        <div>
+            <label class="erp-label">Vehicle</label>
+            <select name="vehicle_id" class="erp-input">
+                <option value="">All</option>
+                @foreach(($vehicles ?? collect()) as $vehicle)
+                    <option value="{{ $vehicle->id }}" @selected(($filters['vehicle_id'] ?? '') == $vehicle->id)>{{ $vehicle->displayLabel() }}</option>
+                @endforeach
+            </select>
+        </div>
+    @endif
+
+    @if($tab === 'fuel')
+        <div>
+            <label class="erp-label">View</label>
+            <select name="fuel_view" class="erp-input">
+                <option value="detail" @selected(($filters['fuel_view'] ?? 'detail') === 'detail')>Detail</option>
+                <option value="by_vehicle" @selected(($filters['fuel_view'] ?? '') === 'by_vehicle')>By Vehicle</option>
+            </select>
+        </div>
+    @endif
+
     @if(in_array($tab, ['requests', 'requests_by_department', 'department_chargeback']))
         <div>
             <label class="erp-label">Department</label>
@@ -60,6 +82,11 @@
 
     <div class="flex gap-2">
         <button type="submit" class="erp-btn-primary">Apply</button>
-        <a href="{{ route('admin.tms.reports.export', array_merge($filters, ['report' => $tab])) }}" class="erp-btn-secondary">Export CSV</a>
+        @php
+            $exportReport = ($tab === 'fuel' && ($filters['fuel_view'] ?? 'detail') === 'by_vehicle')
+                ? 'fuel_by_vehicle'
+                : $tab;
+        @endphp
+        <a href="{{ route('admin.tms.reports.export', array_merge($filters, ['report' => $exportReport])) }}" class="erp-btn-secondary">Export CSV</a>
     </div>
 </form>

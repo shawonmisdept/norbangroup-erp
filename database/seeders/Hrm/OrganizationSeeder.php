@@ -29,6 +29,18 @@ class OrganizationSeeder extends Seeder
                     'lines'        => ['Finishing 1', 'Finishing 2', 'Packing'],
                 ],
             ],
+            'Merchandising Building' => [
+                'Ground Floor' => [
+                    'floor_number' => 0,
+                    'lines'        => [],
+                ],
+            ],
+            'Admin Building' => [
+                'Ground Floor' => [
+                    'floor_number' => 0,
+                    'lines'        => [],
+                ],
+            ],
         ];
 
         /** @var array{factory: string} $headOfficeOrg */

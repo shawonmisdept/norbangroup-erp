@@ -148,6 +148,54 @@ class TmsDriverMultiVehicleTest extends TestCase
         );
     }
 
+    public function test_driver_can_be_assigned_vehicles_from_another_unit(): void
+    {
+        $otherFactory = Factory::create(['name' => 'Norban Comtex Limited', 'is_active' => true]);
+
+        $crossUnitRole = Role::create([
+            'name'        => 'TMS Cross Unit Driver Admin',
+            'permissions' => ['tms.drivers.view', 'tms.drivers.manage'],
+        ]);
+
+        $crossUnitUser = User::create([
+            'name'       => 'Cross Unit Admin',
+            'email'      => 'cross-driver-admin@test.com',
+            'password'   => 'password',
+            'role_id'    => $crossUnitRole->id,
+            'factory_id' => null,
+        ]);
+
+        $otherVehicle = TmsVehicle::create([
+            'factory_id'         => $otherFactory->id,
+            'name'               => 'X-Trail Nissan',
+            'reg_number'         => 'DM-GHA-21-9271',
+            'type'               => 'own',
+            'fuel_type'          => 'octane',
+            'passenger_capacity' => 5,
+            'status'             => 'available',
+        ]);
+
+        $this->actingAs($crossUnitUser)
+            ->post(route('admin.tms.drivers.store'), [
+                'factory_id'         => $this->factory->id,
+                'employee_id'        => $this->employee->id,
+                'vehicle_ids'        => [$this->vehicleA->id, $otherVehicle->id],
+                'primary_vehicle_id' => $otherVehicle->id,
+                'ot_rate'            => 100,
+                'status'             => 'active',
+            ])
+            ->assertRedirect(route('admin.tms.drivers.index'));
+
+        $driver = TmsDriver::first();
+        $this->assertNotNull($driver);
+        $this->assertSame($this->factory->id, $driver->factory_id);
+        $this->assertSame($otherVehicle->id, $driver->primaryVehicleId());
+        $this->assertSame(
+            [$this->vehicleA->id, $otherVehicle->id],
+            $driver->assignedVehicleIds()
+        );
+    }
+
     public function test_vehicle_shows_assigned_driver_from_pivot(): void
     {
         $driver = TmsDriver::create([

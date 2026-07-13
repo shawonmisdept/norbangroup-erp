@@ -61,6 +61,7 @@ class TmsRolePermissionsTest extends TestCase
 
         $this->assertTrue($user->canViewTmsSubmodule('trips'));
         $this->assertTrue($user->canViewTmsSubmodule('odometer'));
+        $this->assertTrue($user->canManageTmsSubmodule('trips'));
         $this->assertTrue($user->canManageTmsSubmodule('odometer'));
     }
 

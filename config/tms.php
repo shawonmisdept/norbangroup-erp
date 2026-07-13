@@ -128,6 +128,7 @@ return [
             'label'       => 'Trips',
             'description' => 'Trip log, start/end time & passenger tracking',
             'permission'  => 'tms.trips.view',
+            'manage'      => 'tms.trips.manage',
             'route'       => 'admin.tms.trips.index',
             'icon'        => 'M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7',
             'status'      => 'active',
@@ -178,7 +179,7 @@ return [
             'manage'      => 'tms.maintenance.manage',
             'route'       => 'admin.tms.maintenance.parts.index',
             'icon'        => 'M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z',
-            'status'      => 'active',
+            'status'      => 'inactive',
         ],
         'rental_charges' => [
             'label'       => 'Rental Charges',
@@ -208,8 +209,18 @@ return [
 
     'nav_groups' => [
         'Operations' => ['requests', 'trips', 'odometer', 'fuel'],
-        'Vehicle Management'      => ['vehicles', 'drivers', 'rental_vendors', 'rental_drivers', 'maintenance', 'maintenance_parts', 'maintenance_posting', 'rental_charges'],
+        'Vehicle Management'      => ['vehicles', 'drivers', 'rental_vendors', 'rental_drivers', 'maintenance', 'maintenance_posting', 'rental_charges'],
         'Setup'      => ['settings', 'destinations', 'device_api'],
+    ],
+
+    'dashboard_quick_actions' => [
+        ['label' => 'Add Vehicle', 'route' => 'admin.tms.vehicles.create', 'submodule' => 'vehicles', 'manage' => true],
+        ['label' => 'Add Driver', 'route' => 'admin.tms.drivers.create', 'submodule' => 'drivers', 'manage' => true],
+        ['label' => 'Add Fuel', 'route' => 'admin.tms.fuel.create', 'submodule' => 'fuel', 'manage' => true],
+        ['label' => 'Log Daily KM', 'route' => 'admin.tms.odometer.morning.create', 'submodule' => 'odometer', 'manage' => true],
+        ['label' => 'Add Rental Vendor', 'route' => 'admin.tms.rental-vendors.create', 'submodule' => 'rental_vendors', 'manage' => true],
+        ['label' => 'Add Rental Driver', 'route' => 'admin.tms.rental-drivers.create', 'submodule' => 'rental_drivers', 'manage' => true],
+        ['label' => 'Add Destination', 'route' => 'admin.tms.destinations.create', 'submodule' => 'destinations', 'manage' => true],
     ],
 
     'gps_providers' => [
@@ -336,9 +347,9 @@ return [
     ],
 
     'vehicle_papers_print_fuel_labels' => [
-        'octane'     => 'Octen',
-        'hybrid'     => 'Elec / Octen',
-        'lpg_octane' => 'LPG / Octen',
+        'octane'     => 'Octane',
+        'hybrid'     => 'Elec / Octane',
+        'lpg_octane' => 'LPG / Octane',
         'gas'        => 'CNG',
         'cng'        => 'CNG',
         'diesel'     => 'Diesel',

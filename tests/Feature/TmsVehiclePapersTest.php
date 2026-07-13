@@ -248,12 +248,29 @@ class TmsVehiclePapersTest extends TestCase
         );
     }
 
+    public function test_alert_papers_lists_non_ok_documents(): void
+    {
+        $service = app(VehiclePaperService::class);
+
+        $alerts = $service->alertPapersForVehicle($this->vehicle);
+
+        $this->assertNotEmpty($alerts);
+        $this->assertTrue(
+            collect($alerts)->contains(fn (array $paper) => $paper['label'] === 'Tax Token' && $paper['status'] === VehiclePaperService::STATUS_EXPIRED)
+        );
+        $this->assertTrue(
+            collect($alerts)->contains(fn (array $paper) => $paper['label'] === 'Insurance' && $paper['status'] === VehiclePaperService::STATUS_URGENT)
+        );
+    }
+
     public function test_dashboard_shows_paper_alert_counts(): void
     {
         $this->actingAs($this->officer)
             ->get(route('admin.tms.dashboard'))
             ->assertOk()
-            ->assertSee('Papers Expired');
+            ->assertSee('Papers Expired')
+            ->assertSee('Add Vehicle')
+            ->assertSee(route('admin.tms.vehicles.create'), false);
     }
 
     public function test_vehicle_form_accepts_extended_asset_and_paper_fields(): void

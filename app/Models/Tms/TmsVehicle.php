@@ -5,6 +5,7 @@ namespace App\Models\Tms;
 use App\Models\Factory;
 use App\Models\Hrm\Employee;
 use App\Models\User;
+use App\Support\TmsDriverVehiclePivot;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -103,11 +104,13 @@ class TmsVehicle extends Model
 
         $drivers = collect();
 
-        $pivotDrivers = $this->relationLoaded('assignedCompanyDrivers')
-            ? $this->assignedCompanyDrivers
-            : $this->assignedCompanyDrivers()->with('employee')->where('status', 'active')->get();
+        if (TmsDriverVehiclePivot::available()) {
+            $pivotDrivers = $this->relationLoaded('assignedCompanyDrivers')
+                ? $this->assignedCompanyDrivers
+                : $this->assignedCompanyDrivers()->with('employee')->where('status', 'active')->get();
 
-        $drivers = $drivers->merge($pivotDrivers->where('status', 'active'));
+            $drivers = $drivers->merge($pivotDrivers->where('status', 'active'));
+        }
 
         $legacyDrivers = $this->relationLoaded('defaultDrivers')
             ? $this->defaultDrivers

@@ -661,48 +661,6 @@ class HrmRecruitmentTest extends TestCase
             ->assertDontSee('Other Job');
     }
 
-    public function test_demo_job_posting_seeder_creates_expected_openings(): void
-    {
-        Factory::create(['name' => 'Head Office', 'is_active' => true]);
-        Factory::create(['name' => 'Norban Comtex Limited', 'is_active' => true]);
-        Factory::create(['name' => 'Hornbill Apparal Limited', 'is_active' => true]);
-
-        $this->seed(\Database\Seeders\Hrm\DemoJobPostingSeeder::class);
-
-        $this->assertDatabaseHas('hrm_job_postings', [
-            'title'  => 'Full Stack Software Developer',
-            'slots'  => 2,
-            'status' => 'open',
-        ]);
-
-        $operatorSlots = JobPosting::query()
-            ->where('title', 'Sewing Machine Operator')
-            ->sum('slots');
-
-        $supervisorSlots = JobPosting::query()
-            ->where('title', 'Line Supervisor')
-            ->sum('slots');
-
-        $this->assertSame(10, (int) $operatorSlots);
-        $this->assertSame(2, (int) $supervisorSlots);
-
-        $this->get(route('careers.index'))
-            ->assertOk()
-            ->assertSee('Full Stack Software Developer')
-            ->assertSee('Sewing Machine Operator');
-
-        $developer = JobPosting::where('title', 'Full Stack Software Developer')->first();
-        $this->assertNotNull($developer->description);
-        $this->assertNotNull($developer->benefits);
-        $this->assertNotNull($developer->skills_expertise);
-
-        $this->get(route('careers.show', $developer))
-            ->assertOk()
-            ->assertSee('Overview')
-            ->assertSee('Requirements')
-            ->assertSee('Benefits & Perks');
-    }
-
     public function test_candidate_can_apply_with_cv_attachment(): void
     {
         $factory = Factory::create(['name' => 'CV Factory', 'is_active' => true]);

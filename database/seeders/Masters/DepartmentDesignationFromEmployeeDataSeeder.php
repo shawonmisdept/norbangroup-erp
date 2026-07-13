@@ -12,7 +12,6 @@ class DepartmentDesignationFromEmployeeDataSeeder extends Seeder
     /** @var list<string> */
     private array $dataFiles = [
         'head_office_employees.php',
-        'demo_employees.php',
     ];
 
     public function run(): void

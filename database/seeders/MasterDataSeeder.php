@@ -15,6 +15,7 @@ use Database\Seeders\Masters\DepartmentSeeder;
 use Database\Seeders\Masters\FabricCategorySeeder;
 use Database\Seeders\Masters\FabricationSeeder;
 use Database\Seeders\Masters\FabricTypeSeeder;
+use Database\Seeders\Masters\FactoryDesignationSeeder;
 use Database\Seeders\Masters\FactorySeeder;
 use Database\Seeders\Masters\GarmentProductionStatusSeeder;
 use Database\Seeders\Masters\GsmSeeder;
@@ -42,13 +43,13 @@ use Database\Seeders\Masters\SustainabilitySeeder;
 use Database\Seeders\Masters\TrimsStatusSeeder;
 use Database\Seeders\Masters\WovenStatusSeeder;
 use Database\Seeders\Masters\YarnStatusSeeder;
-use Database\Seeders\Hrm\AssignEmployeesToHeadOfficeSeeder;
 use Database\Seeders\Hrm\EmployeeDefaultsSeeder;
 use Database\Seeders\Hrm\HeadOfficeEmployeeSeeder;
 use Database\Seeders\Hrm\HeadOfficeUserSeeder;
 use Database\Seeders\Hrm\HrmMasterDataSeeder;
 use Database\Seeders\Hrm\SalaryIncrementSeeder;
 use Database\Seeders\Hrm\SalaryLegacySeeder;
+use Database\Seeders\Hrm\UnitEmployeeSeeder;
 use Illuminate\Database\Seeder;
 
 class MasterDataSeeder extends Seeder
@@ -59,12 +60,13 @@ class MasterDataSeeder extends Seeder
             FactorySeeder::class,
             HrmMasterDataSeeder::class,
             DepartmentSeeder::class,
+            FactoryDesignationSeeder::class,
             HeadOfficeOrgSeeder::class,
             HeadOfficeRoleSeeder::class,
             CompanyCalendarSeeder::class,
             SalaryLegacySeeder::class,
             HeadOfficeEmployeeSeeder::class,
-            AssignEmployeesToHeadOfficeSeeder::class,
+            UnitEmployeeSeeder::class,
             EmployeeDefaultsSeeder::class,
             HeadOfficeUserSeeder::class,
             SalaryIncrementSeeder::class,

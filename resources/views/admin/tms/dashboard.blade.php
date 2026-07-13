@@ -1,7 +1,11 @@
 @extends('layouts.admin')
 @section('title', 'TMS Dashboard')
 @section('admin-content')
-@include('partials.erp.page-header', ['title' => 'Transport Dashboard', 'subtitle' => 'Pending requests, active trips, and payment summary'])
+@include('partials.erp.page-header', [
+    'title' => 'Transport Dashboard',
+    'subtitle' => 'Pending requests, active trips, and payment summary',
+    'actions' => view('admin.tms.partials.dashboard-quick-actions', ['quickActions' => $quickActions ?? []])->render(),
+])
 
 <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-6">
     <div class="erp-panel p-4">

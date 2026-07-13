@@ -46,7 +46,7 @@
                     <td class="text-xs tabular-nums">{{ $log->created_at?->format('d M Y') }}</td>
                     <td class="text-xs">{{ $log->vehicle?->displayLabel() }}</td>
                     <td class="capitalize text-xs">{{ $log->fuel_type }}</td>
-                    <td class="tabular-nums text-xs">{{ $log->quantity }} {{ $log->unit }}</td>
+                    <td class="tabular-nums text-xs">@portalQuantity($log->quantity) {{ $log->unit }}</td>
                     <td class="tabular-nums">৳{{ number_format($log->amount, 2) }}</td>
                     <td class="text-xs capitalize">{{ str_replace('_', ' ', $log->paid_by) }}</td>
                     <td class="text-right whitespace-nowrap space-x-1">

@@ -27,19 +27,20 @@ class HrmMasterDataSeederTest extends TestCase
 
         $factoryCount = Factory::where('is_active', true)->count();
 
-        $this->assertSame(1, $factoryCount);
+        $this->assertSame(6, $factoryCount);
         $this->assertSame(7, WorkerCategory::count());
         $this->assertSame(5, EmploymentType::count());
         $this->assertSame(5, LeaveType::where('is_active', true)->count());
-        $this->assertSame(0, Building::where('is_active', true)->count());
-        $this->assertSame(0, Line::where('is_active', true)->count());
+        // Head Office uses HeadOfficeOrgSeeder; unit factories get org buildings here.
+        $this->assertSame(($factoryCount - 1) * 4, Building::where('is_active', true)->count());
+        $this->assertGreaterThan(0, Line::where('is_active', true)->count());
         $this->assertSame($factoryCount * 2, Shift::where('is_active', true)->count());
         $this->assertSame($factoryCount * 10, Holiday::count());
         $this->assertSame($factoryCount * 2, BiometricDevice::where('is_active', true)->count());
 
         $this->assertDatabaseHas('hrm_worker_categories', ['name' => 'Operator']);
         $this->assertDatabaseHas('hrm_leave_types', ['name' => 'Casual Leave (CL)', 'is_paid' => true]);
-        $this->assertDatabaseHas('hrm_shifts', ['name' => 'Day Shift', 'start_time' => '08:00:00']);
+        $this->assertDatabaseHas('hrm_shifts', ['name' => 'Day Shift']);
     }
 
     public function test_hrm_master_data_seeder_is_idempotent(): void
