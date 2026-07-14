@@ -74,6 +74,14 @@
                 <input type="hidden" name="gate" value="{{ $gate->qr_token }}">
             @endif
 
+            @if ($errors->any())
+                <div class="mb-3 rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-xs text-red-700">
+                    @foreach ($errors->all() as $error)
+                        <p>{{ $error }}</p>
+                    @endforeach
+                </div>
+            @endif
+
             <button type="submit" id="submit-checkin" disabled
                     class="emp-btn w-full py-4 text-base disabled:opacity-40">
                 {{ $nextAction === 'in' ? '✓ Check In Now' : '✓ Check Out Now' }}
@@ -148,10 +156,14 @@
     });
 
     document.getElementById('capture-photo').addEventListener('click', () => {
-        canvas.width = video.videoWidth;
-        canvas.height = video.videoHeight;
-        canvas.getContext('2d').drawImage(video, 0, 0);
-        photoInput.value = canvas.toDataURL('image/jpeg', 0.85);
+        const maxWidth = 720;
+        const srcW = video.videoWidth || 640;
+        const srcH = video.videoHeight || 480;
+        const scale = Math.min(1, maxWidth / srcW);
+        canvas.width = Math.round(srcW * scale);
+        canvas.height = Math.round(srcH * scale);
+        canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+        photoInput.value = canvas.toDataURL('image/jpeg', 0.7);
         hasPhoto = true;
         document.getElementById('capture-photo').textContent = 'Selfie captured ✓';
         updateSubmit();

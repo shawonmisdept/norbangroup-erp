@@ -128,6 +128,7 @@ class AttendanceMultiChannelTest extends TestCase
     public function test_employee_mobile_check_in_with_geofence(): void
     {
         Carbon::setTestNow('2026-06-24 08:05:00');
+        \Illuminate\Support\Facades\Storage::fake('public');
 
         $photo = 'data:image/jpeg;base64,' . base64_encode(str_repeat('x', 100));
 
@@ -146,12 +147,41 @@ class AttendanceMultiChannelTest extends TestCase
             'punch_type'  => 'in',
         ]);
 
+        $punch = AttendanceRawPunch::first();
+        $this->assertNotNull($punch->photo_path);
+        \Illuminate\Support\Facades\Storage::disk('public')->assertExists($punch->photo_path);
+
         $log = AttendanceDailyLog::where('employee_id', $this->employee->id)
             ->whereDate('attendance_date', '2026-06-24')
             ->first();
 
         $this->assertNotNull($log);
         $this->assertContains($log->status, ['present', 'late']);
+    }
+
+    public function test_mobile_check_in_still_succeeds_if_photo_disk_fails(): void
+    {
+        Carbon::setTestNow('2026-06-24 08:10:00');
+
+        \Illuminate\Support\Facades\Storage::shouldReceive('disk')
+            ->with('public')
+            ->andThrow(new \RuntimeException('Disk not writable'));
+
+        $photo = 'data:image/jpeg;base64,' . base64_encode(str_repeat('x', 100));
+
+        $this->actingAs($this->portalUser, 'employee')
+            ->post(route('employee.attendance.check-in.store'), [
+                'punch_type' => 'in',
+                'latitude'   => 23.8104000,
+                'longitude'  => 90.4126000,
+                'photo'      => $photo,
+            ])
+            ->assertRedirect(route('employee.dashboard'));
+
+        $punch = AttendanceRawPunch::where('employee_id', $this->employee->id)->first();
+        $this->assertNotNull($punch);
+        $this->assertNull($punch->photo_path);
+        $this->assertSame('in', $punch->punch_type);
     }
 
     public function test_employee_mobile_check_out_updates_daily_log_after_check_in(): void

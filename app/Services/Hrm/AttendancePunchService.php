@@ -348,24 +348,28 @@ class AttendancePunchService
             return;
         }
 
-        $date = $punch->punched_at->copy()->startOfDay();
-        $period = AttendancePeriod::getOrCreateForMonth(
-            $punch->factory_id,
-            $date->year,
-            $date->month
-        );
+        try {
+            $date = $punch->punched_at->copy()->startOfDay();
+            $period = AttendancePeriod::getOrCreateForMonth(
+                $punch->factory_id,
+                $date->year,
+                $date->month
+            );
 
-        if ($period->isFrozen()) {
-            return;
+            if ($period->isFrozen()) {
+                return;
+            }
+
+            $this->processor->processDate($punch->factory_id, $date, $period);
+
+            AttendanceRawPunch::query()
+                ->where('employee_id', $punch->employee_id)
+                ->whereDate('punched_at', $date->toDateString())
+                ->whereNull('processed_at')
+                ->update(['processed_at' => now()]);
+        } catch (\Throwable $e) {
+            report($e);
         }
-
-        $this->processor->processDate($punch->factory_id, $date, $period);
-
-        AttendanceRawPunch::query()
-            ->where('employee_id', $punch->employee_id)
-            ->whereDate('punched_at', $date->toDateString())
-            ->whereNull('processed_at')
-            ->update(['processed_at' => now()]);
     }
 
     private function guardDuplicateMobilePunch(Employee $employee, Carbon $punchedAt, string $punchType): void
@@ -387,7 +391,7 @@ class AttendancePunchService
         }
     }
 
-    private function storePhoto(Employee $employee, string $base64Photo): string
+    private function storePhoto(Employee $employee, string $base64Photo): ?string
     {
         if (! str_starts_with($base64Photo, 'data:image')) {
             throw ValidationException::withMessages([
@@ -395,22 +399,44 @@ class AttendancePunchService
             ]);
         }
 
-        [, $data] = explode(',', $base64Photo, 2);
-        $binary = base64_decode($data, true);
-
-        if ($binary === false || strlen($binary) > 2_000_000) {
+        if (! str_contains($base64Photo, ',')) {
             throw ValidationException::withMessages([
-                'photo' => 'Photo is invalid or too large (max 2MB).',
+                'photo' => 'Invalid photo data.',
             ]);
         }
 
-        $path = sprintf(
-            'attendance-photos/%s/%s.jpg',
-            $employee->employee_code,
-            now()->format('Ymd_His')
-        );
+        [, $data] = explode(',', $base64Photo, 2);
+        $binary = base64_decode($data, true);
 
-        Storage::disk('public')->put($path, $binary);
+        if ($binary === false || $binary === '') {
+            throw ValidationException::withMessages([
+                'photo' => 'Photo could not be decoded. Please retake the selfie.',
+            ]);
+        }
+
+        if (strlen($binary) > 2_000_000) {
+            throw ValidationException::withMessages([
+                'photo' => 'Photo is too large (max 2MB). Please retake the selfie.',
+            ]);
+        }
+
+        $safeCode = preg_replace('/[^A-Za-z0-9_\-]/', '_', (string) $employee->employee_code) ?: 'emp';
+        $directory = 'attendance-photos/' . $safeCode;
+        $path = sprintf('%s/%s.jpg', $directory, now()->format('Ymd_His'));
+
+        try {
+            $disk = Storage::disk('public');
+            $disk->makeDirectory($directory);
+
+            if (! $disk->put($path, $binary)) {
+                throw new \RuntimeException('Storage put returned false.');
+            }
+        } catch (\Throwable $e) {
+            report($e);
+
+            // Prefer a successful punch without selfie over a hard 500 on production.
+            return null;
+        }
 
         return $path;
     }

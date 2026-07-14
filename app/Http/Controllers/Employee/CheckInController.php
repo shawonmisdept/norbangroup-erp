@@ -64,16 +64,32 @@ class CheckInController extends Controller
                 ->first();
 
             if (! $gatePoint) {
-                return back()->withErrors(['gate' => 'Invalid or inactive gate QR code.'])->withInput();
+                return redirect()
+                    ->route('employee.attendance.check-in', array_filter(['gate' => $validated['gate'] ?? null]))
+                    ->withErrors(['gate' => 'Invalid or inactive gate QR code.'])
+                    ->withInput($request->except('photo'));
             }
         }
 
-        $punchService->recordMobile($employee, $validated['punch_type'], [
-            'latitude'   => (float) $validated['latitude'],
-            'longitude'  => (float) $validated['longitude'],
-            'photo'      => $validated['photo'] ?? null,
-            'gate_point' => $gatePoint,
-        ]);
+        try {
+            $punchService->recordMobile($employee, $validated['punch_type'], [
+                'latitude'   => (float) $validated['latitude'],
+                'longitude'  => (float) $validated['longitude'],
+                'photo'      => $validated['photo'] ?? null,
+                'gate_point' => $gatePoint,
+            ]);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            throw $e;
+        } catch (\Throwable $e) {
+            report($e);
+
+            return redirect()
+                ->route('employee.attendance.check-in', array_filter(['gate' => $validated['gate'] ?? null]))
+                ->withErrors([
+                    'check_in' => 'Could not save check-in right now. Please try again or contact HR.',
+                ])
+                ->withInput($request->except('photo'));
+        }
 
         $label = $validated['punch_type'] === 'in' ? 'Check-in' : 'Check-out';
 
