@@ -34,12 +34,24 @@ class CheckInController extends Controller
             ->whereDate('attendance_date', today())
             ->first();
 
+        $factory = $employee->factory;
+        $fenceLat = $gate?->latitude ?? $factory?->attendance_lat;
+        $fenceLng = $gate?->longitude ?? $factory?->attendance_lng;
+
+        $geofence = [
+            'lat'      => $fenceLat !== null ? (float) $fenceLat : null,
+            'lng'      => $fenceLng !== null ? (float) $fenceLng : null,
+            'radius_m' => (int) ($factory?->attendance_radius_m ?: 200),
+            'label'    => $gate?->name ?? ($factory?->name ?? 'factory'),
+        ];
+
         return view('employee.attendance.check-in', compact(
             'employee',
             'gate',
             'checkInStatus',
             'nextAction',
             'todayLog',
+            'geofence',
         ));
     }
 
@@ -55,6 +67,8 @@ class CheckInController extends Controller
             'gate'       => ['nullable', 'string', 'max:64'],
         ]);
 
+        $checkInQuery = array_filter(['gate' => $validated['gate'] ?? null]);
+
         $gatePoint = null;
         if (! empty($validated['gate'])) {
             $gatePoint = AttendanceGatePoint::query()
@@ -65,7 +79,7 @@ class CheckInController extends Controller
 
             if (! $gatePoint) {
                 return redirect()
-                    ->route('employee.attendance.check-in', array_filter(['gate' => $validated['gate'] ?? null]))
+                    ->route('employee.attendance.check-in', $checkInQuery)
                     ->withErrors(['gate' => 'Invalid or inactive gate QR code.'])
                     ->withInput($request->except('photo'));
             }
@@ -79,12 +93,15 @@ class CheckInController extends Controller
                 'gate_point' => $gatePoint,
             ]);
         } catch (\Illuminate\Validation\ValidationException $e) {
-            throw $e;
+            return redirect()
+                ->route('employee.attendance.check-in', $checkInQuery)
+                ->withErrors($e->errors())
+                ->withInput($request->except('photo'));
         } catch (\Throwable $e) {
             report($e);
 
             return redirect()
-                ->route('employee.attendance.check-in', array_filter(['gate' => $validated['gate'] ?? null]))
+                ->route('employee.attendance.check-in', $checkInQuery)
                 ->withErrors([
                     'check_in' => 'Could not save check-in right now. Please try again or contact HR.',
                 ])

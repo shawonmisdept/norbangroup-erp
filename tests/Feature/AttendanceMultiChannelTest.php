@@ -159,6 +159,30 @@ class AttendanceMultiChannelTest extends TestCase
         $this->assertContains($log->status, ['present', 'late']);
     }
 
+    public function test_employee_mobile_check_in_rejected_outside_geofence(): void
+    {
+        Carbon::setTestNow('2026-06-24 08:20:00');
+
+        $this->factory->update([
+            'attendance_lat'      => 23.7790321,
+            'attendance_lng'      => 90.4178665,
+            'attendance_radius_m' => 10,
+        ]);
+
+        $this->actingAs($this->portalUser, 'employee')
+            ->from(route('employee.attendance.check-in'))
+            ->post(route('employee.attendance.check-in.store'), [
+                'punch_type' => 'in',
+                'latitude'   => 23.774347,
+                'longitude'  => 90.415648,
+            ])
+            ->assertRedirect(route('employee.attendance.check-in'))
+            ->assertSessionHasErrors('latitude');
+
+        $this->assertSame(0, AttendanceRawPunch::count());
+        $this->assertSame(0, AttendanceDailyLog::count());
+    }
+
     public function test_mobile_check_in_still_succeeds_if_photo_disk_fails(): void
     {
         Carbon::setTestNow('2026-06-24 08:10:00');

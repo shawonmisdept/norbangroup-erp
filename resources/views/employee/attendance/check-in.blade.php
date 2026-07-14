@@ -9,7 +9,11 @@
 <div class="space-y-4" id="checkin-app"
      data-action="{{ $nextAction }}"
      data-store-url="{{ route('employee.attendance.check-in.store') }}"
-     data-gate="{{ $gate?->qr_token }}">
+     data-gate="{{ $gate?->qr_token }}"
+     data-fence-lat="{{ $geofence['lat'] ?? '' }}"
+     data-fence-lng="{{ $geofence['lng'] ?? '' }}"
+     data-fence-radius="{{ $geofence['radius_m'] ?? 200 }}"
+     data-fence-label="{{ $geofence['label'] ?? 'factory' }}">
 
     @if($gate)
         <div class="emp-card border border-emerald-200 bg-emerald-50 p-4">
@@ -61,6 +65,7 @@
                 <span id="gps-status" class="text-xs text-gray-400">Waiting…</span>
             </div>
             <p id="gps-coords" class="text-xs tabular-nums text-gray-500">—</p>
+            <p id="gps-hint" class="text-[11px] text-gray-400 hidden"></p>
             <button type="button" id="refresh-gps" class="emp-btn-sm-secondary">Refresh location</button>
         </div>
 
@@ -98,6 +103,7 @@
 @push('scripts')
 <script>
 (function () {
+    const app = document.getElementById('checkin-app');
     const video = document.getElementById('camera');
     const canvas = document.getElementById('snapshot');
     const photoInput = document.getElementById('photo');
@@ -106,35 +112,94 @@
     const submitBtn = document.getElementById('submit-checkin');
     const gpsStatus = document.getElementById('gps-status');
     const gpsCoords = document.getElementById('gps-coords');
+    const gpsHint = document.getElementById('gps-hint');
+    const form = document.getElementById('checkin-form');
+
+    const fenceLat = parseFloat(app.dataset.fenceLat);
+    const fenceLng = parseFloat(app.dataset.fenceLng);
+    const fenceRadius = parseInt(app.dataset.fenceRadius || '200', 10) || 200;
+    const fenceLabel = app.dataset.fenceLabel || 'factory';
+    const hasFence = Number.isFinite(fenceLat) && Number.isFinite(fenceLng);
+
     let stream = null;
     let hasPhoto = false;
     let hasGps = false;
+    let insideFence = !hasFence;
+
+    function distanceMeters(lat1, lng1, lat2, lng2) {
+        const toRad = (d) => d * Math.PI / 180;
+        const earth = 6371000;
+        const dLat = toRad(lat2 - lat1);
+        const dLng = toRad(lng2 - lng1);
+        const a = Math.sin(dLat / 2) ** 2
+            + Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLng / 2) ** 2;
+        return Math.round(earth * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)));
+    }
 
     function updateSubmit() {
-        submitBtn.disabled = !(hasPhoto && hasGps);
+        submitBtn.disabled = !(hasPhoto && hasGps && insideFence);
     }
 
     function setGps(lat, lng) {
         latInput.value = lat;
         lngInput.value = lng;
         gpsCoords.textContent = lat.toFixed(6) + ', ' + lng.toFixed(6);
-        gpsStatus.textContent = 'Ready';
-        gpsStatus.className = 'text-xs font-semibold text-emerald-600';
         hasGps = true;
+
+        if (! hasFence) {
+            insideFence = true;
+            gpsStatus.textContent = 'Ready';
+            gpsStatus.className = 'text-xs font-semibold text-emerald-600';
+            gpsHint.classList.add('hidden');
+            updateSubmit();
+            return;
+        }
+
+        const distance = distanceMeters(fenceLat, fenceLng, lat, lng);
+        insideFence = distance <= fenceRadius;
+
+        if (insideFence) {
+            gpsStatus.textContent = 'Ready';
+            gpsStatus.className = 'text-xs font-semibold text-emerald-600';
+            gpsHint.textContent = distance + 'm from ' + fenceLabel + ' (within ' + fenceRadius + 'm).';
+            gpsHint.className = 'text-[11px] text-emerald-600';
+            gpsHint.classList.remove('hidden');
+        } else {
+            gpsStatus.textContent = 'Deny';
+            gpsStatus.className = 'text-xs font-semibold text-red-600';
+            gpsHint.textContent = 'You are ' + distance + 'm from ' + fenceLabel + '. Must be within ' + fenceRadius + 'm.';
+            gpsHint.className = 'text-[11px] text-red-600';
+            gpsHint.classList.remove('hidden');
+        }
+
         updateSubmit();
     }
 
     function fetchGps() {
         gpsStatus.textContent = 'Locating…';
-        if (!navigator.geolocation) {
+        gpsStatus.className = 'text-xs text-gray-400';
+        gpsHint.classList.add('hidden');
+        hasGps = false;
+        insideFence = !hasFence;
+        updateSubmit();
+
+        if (! navigator.geolocation) {
             gpsStatus.textContent = 'GPS not supported';
+            gpsStatus.className = 'text-xs font-semibold text-red-600';
             return;
         }
+
         navigator.geolocation.getCurrentPosition(
             (pos) => setGps(pos.coords.latitude, pos.coords.longitude),
             () => {
+                hasGps = false;
+                insideFence = false;
                 gpsStatus.textContent = 'GPS denied';
                 gpsStatus.className = 'text-xs font-semibold text-red-600';
+                gpsHint.textContent = 'Allow location permission, then tap Refresh location.';
+                gpsHint.className = 'text-[11px] text-red-600';
+                gpsHint.classList.remove('hidden');
+                updateSubmit();
             },
             { enableHighAccuracy: true, timeout: 15000 }
         );
@@ -156,20 +221,28 @@
     });
 
     document.getElementById('capture-photo').addEventListener('click', () => {
-        const maxWidth = 720;
+        const maxWidth = 480;
         const srcW = video.videoWidth || 640;
         const srcH = video.videoHeight || 480;
         const scale = Math.min(1, maxWidth / srcW);
         canvas.width = Math.round(srcW * scale);
         canvas.height = Math.round(srcH * scale);
         canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
-        photoInput.value = canvas.toDataURL('image/jpeg', 0.7);
+        photoInput.value = canvas.toDataURL('image/jpeg', 0.55);
         hasPhoto = true;
         document.getElementById('capture-photo').textContent = 'Selfie captured ✓';
         updateSubmit();
     });
 
-    document.getElementById('checkin-form').addEventListener('submit', function () {
+    form.addEventListener('submit', function (event) {
+        if (! insideFence) {
+            event.preventDefault();
+            gpsStatus.textContent = 'Deny';
+            gpsStatus.className = 'text-xs font-semibold text-red-600';
+            updateSubmit();
+            return;
+        }
+
         submitBtn.disabled = true;
         submitBtn.textContent = 'Saving…';
         if (stream) stream.getTracks().forEach(t => t.stop());

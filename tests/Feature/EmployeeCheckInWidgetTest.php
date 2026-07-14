@@ -31,6 +31,9 @@ class EmployeeCheckInWidgetTest extends TestCase
             'name'                   => 'Widget Factory',
             'is_active'              => true,
             'mobile_checkin_enabled' => true,
+            'attendance_lat'         => 23.7790321,
+            'attendance_lng'         => 90.4178665,
+            'attendance_radius_m'    => 200,
         ]);
 
         $shift = Shift::create([
@@ -73,7 +76,10 @@ class EmployeeCheckInWidgetTest extends TestCase
             ->assertOk()
             ->assertSee('Check In Now')
             ->assertSee('Start Camera')
-            ->assertSee('Location (GPS)');
+            ->assertSee('Location (GPS)')
+            ->assertSee('data-fence-lat="23.7790321"', false)
+            ->assertSee('data-fence-radius="200"', false)
+            ->assertSee('Must be within', false);
     }
 
     public function test_status_service_reports_active_shift_after_check_in(): void
