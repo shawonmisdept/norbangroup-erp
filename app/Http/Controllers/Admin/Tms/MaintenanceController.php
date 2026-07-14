@@ -26,7 +26,13 @@ class MaintenanceController extends Controller
         $filterOptions = $this->indexFilterOptions($request);
 
         $query = TmsVehicle::query()
-            ->with(['rentalVendor', 'allocatedEmployee.designation', 'allocatedEmployee.department'])
+            ->with(['factory', 'rentalVendor', 'allocatedEmployee.designation', 'allocatedEmployee.department'])
+            ->withCount([
+                'maintenanceBills as bills_count',
+                'maintenanceBills as unposted_bills_count' => fn ($q) => $q->whereNull('posted_to_finance_at'),
+            ])
+            ->withMax('maintenanceBills as last_bill_date', 'bill_date')
+            ->withSum('maintenanceBills as bills_total', 'total_amount')
             ->orderBy('name');
 
         $this->scopeToUserFactory($query, $request);
@@ -40,16 +46,17 @@ class MaintenanceController extends Controller
         }
 
         return view('admin.tms.maintenance.index', [
-            'vehicles'        => $query->paginate(25)->withQueryString(),
-            'factories'       => $this->factoryOptions($request),
-            'filters'         => $filters,
-            'vehicleOptions'  => $filterOptions['vehicles'],
-            'postingCarOptions' => $filterOptions['postingCarNos'],
+            'vehicles'             => $query->paginate(25)->withQueryString(),
+            'factories'            => $this->factoryOptions($request),
+            'filters'              => $filters,
+            'vehicleOptions'       => $filterOptions['vehicles'],
+            'postingCarOptions'    => $filterOptions['postingCarNos'],
             'allocatedUserOptions' => $filterOptions['allocatedUsers'],
+            'types'                => config('tms.vehicle_types'),
         ]);
     }
 
-    /** @return array{factory_id?: ?int, search?: ?string, vehicle_id?: ?int, posting_vehicle_id?: ?int, allocated_employee_id?: ?int} */
+    /** @return array{factory_id?: ?int, search?: ?string, vehicle_id?: ?int, posting_vehicle_id?: ?int, allocated_employee_id?: ?int, type?: ?string} */
     private function indexFilters(Request $request): array
     {
         return $request->validate([
@@ -58,6 +65,7 @@ class MaintenanceController extends Controller
             'vehicle_id'            => ['nullable', 'integer', 'exists:tms_vehicles,id'],
             'posting_vehicle_id'    => ['nullable', 'integer', 'exists:tms_vehicles,id'],
             'allocated_employee_id' => ['nullable', 'integer', 'exists:hrm_employees,id'],
+            'type'                  => ['nullable', 'string', Rule::in(array_keys(config('tms.vehicle_types', [])))],
         ]);
     }
 
@@ -96,7 +104,7 @@ class MaintenanceController extends Controller
     }
 
     /** @param  \Illuminate\Database\Eloquent\Builder<TmsVehicle>  $query
-     * @param  array{factory_id?: ?int, search?: ?string, vehicle_id?: ?int, posting_vehicle_id?: ?int, allocated_employee_id?: ?int}  $filters
+     * @param  array{factory_id?: ?int, search?: ?string, vehicle_id?: ?int, posting_vehicle_id?: ?int, allocated_employee_id?: ?int, type?: ?string}  $filters
      */
     private function applyIndexFilters($query, array $filters): void
     {
@@ -121,6 +129,10 @@ class MaintenanceController extends Controller
 
         if (! empty($filters['allocated_employee_id'])) {
             $query->where('allocated_employee_id', $filters['allocated_employee_id']);
+        }
+
+        if (! empty($filters['type'])) {
+            $query->where('type', $filters['type']);
         }
     }
 

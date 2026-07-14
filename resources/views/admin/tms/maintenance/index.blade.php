@@ -7,7 +7,7 @@
     'actions' => '<a href="' . route('admin.tms.maintenance.posting') . '" class="erp-btn-secondary !py-2 !px-4 text-xs">Bill For Posting</a>',
 ])
 
-<form method="GET" class="erp-panel p-4 mb-4 grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-3 items-end">
+<form method="GET" class="erp-panel p-4 mb-4 grid grid-cols-2 md:grid-cols-3 xl:grid-cols-7 gap-3 items-end">
     <div>
         <label class="erp-label">Search</label>
         <input type="text" name="search" class="erp-input" value="{{ $filters['search'] ?? '' }}" placeholder="Search all…">
@@ -43,6 +43,16 @@
         </select>
     </div>
 
+    <div>
+        <label class="erp-label">Type</label>
+        <select name="type" class="erp-input">
+            <option value="">All</option>
+            @foreach($types as $value => $label)
+                <option value="{{ $value }}" @selected(($filters['type'] ?? '') === $value)>{{ $label }}</option>
+            @endforeach
+        </select>
+    </div>
+
     @if($factories !== [])
         <div>
             <label class="erp-label">Unit</label>
@@ -64,30 +74,57 @@
 </form>
 
 <div class="erp-panel overflow-hidden">
-    <table class="erp-table">
-        <thead>
-            <tr>
-                <th>Vehicle</th>
-                <th>Car No (Posting)</th>
-                <th>Allocated User</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @forelse($vehicles as $vehicle)
+    <div class="overflow-x-auto">
+        <table class="erp-table">
+            <thead>
                 <tr>
-                    <td class="text-sm">{{ $vehicle->displayLabel() }}</td>
-                    <td class="text-xs">{{ $vehicle->postingCarNoLabel() }}</td>
-                    <td class="text-xs">{{ $vehicle->allocatedUserLabel() ?? '—' }}</td>
-                    <td class="text-right">
-                        <a href="{{ route('admin.tms.maintenance.register', $vehicle) }}" class="erp-btn-sm-secondary">Open Register</a>
-                    </td>
+                    <th>Vehicle</th>
+                    <th>Unit</th>
+                    <th>Type</th>
+                    <th>Car No (Posting)</th>
+                    <th>Allocated User</th>
+                    <th class="text-center">Bills</th>
+                    <th>Last Bill</th>
+                    <th class="text-right">Total</th>
+                    <th class="text-right">Actions</th>
                 </tr>
-            @empty
-                <tr><td colspan="4" class="text-center py-8 text-gray-400">No vehicles found.</td></tr>
-            @endforelse
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @forelse($vehicles as $vehicle)
+                    @php
+                        $registerUrl = route('admin.tms.maintenance.register', $vehicle);
+                        $billsCount = (int) ($vehicle->bills_count ?? 0);
+                        $unpostedCount = (int) ($vehicle->unposted_bills_count ?? 0);
+                        $billsTotal = (float) ($vehicle->bills_total ?? 0);
+                    @endphp
+                    <tr class="cursor-pointer" onclick="window.location.href='{{ $registerUrl }}'">
+                        <td class="text-sm font-medium text-indigo-600">{{ $vehicle->displayLabel() }}</td>
+                        <td class="text-xs whitespace-nowrap">{{ $vehicle->factory?->name ?? '—' }}</td>
+                        <td class="text-xs capitalize whitespace-nowrap">{{ $types[$vehicle->type] ?? $vehicle->type }}</td>
+                        <td class="text-xs">{{ $vehicle->postingCarNoLabel() }}</td>
+                        <td class="text-xs">{{ $vehicle->allocatedUserLabel() ?? '—' }}</td>
+                        <td class="text-center text-xs tabular-nums whitespace-nowrap">
+                            <span>{{ $billsCount }}</span>
+                            @if($unpostedCount > 0)
+                                <span class="erp-badge bg-amber-100 text-amber-800 text-[10px] ml-1" title="Unposted to finance">{{ $unpostedCount }} unposted</span>
+                            @endif
+                        </td>
+                        <td class="text-xs whitespace-nowrap tabular-nums">
+                            {{ $vehicle->last_bill_date ? \Carbon\Carbon::parse($vehicle->last_bill_date)->format('d M Y') : '—' }}
+                        </td>
+                        <td class="text-right text-xs tabular-nums whitespace-nowrap">
+                            {{ $billsCount > 0 ? '৳' . number_format($billsTotal, 2) : '—' }}
+                        </td>
+                        <td class="text-right whitespace-nowrap" onclick="event.stopPropagation()">
+                            <a href="{{ $registerUrl }}" class="erp-btn-sm-secondary">Open Register</a>
+                        </td>
+                    </tr>
+                @empty
+                    <tr><td colspan="9" class="text-center py-8 text-gray-400">No vehicles found.</td></tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
 
     @if($vehicles->hasPages())
         <div class="px-4 py-3 border-t">{{ $vehicles->links() }}</div>

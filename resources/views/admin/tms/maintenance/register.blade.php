@@ -91,9 +91,15 @@
                             @foreach($bill->items as $index => $item)
                                 <tr>
                                     @if($index === 0)
-                                        <td rowspan="{{ $bill->items->count() }}" class="align-top font-medium text-center">{{ $bill->bill_no }}</td>
-                                        <td rowspan="{{ $bill->items->count() }}" class="align-top text-xs whitespace-nowrap text-center">{{ $bill->bill_date?->format('d M Y') }}</td>
-                                        <td rowspan="{{ $bill->items->count() }}" class="align-top text-xs text-center">{{ $bill->workshop_name }}</td>
+                                        <td rowspan="{{ $bill->items->count() }}" class="maintenance-bill-merged font-medium">
+                                            <div class="maintenance-bill-merged-inner">{{ $bill->bill_no }}</div>
+                                        </td>
+                                        <td rowspan="{{ $bill->items->count() }}" class="maintenance-bill-merged text-xs whitespace-nowrap">
+                                            <div class="maintenance-bill-merged-inner">{{ $bill->bill_date?->format('d M Y') }}</div>
+                                        </td>
+                                        <td rowspan="{{ $bill->items->count() }}" class="maintenance-bill-merged text-xs">
+                                            <div class="maintenance-bill-merged-inner">{{ $bill->workshop_name }}</div>
+                                        </td>
                                     @endif
 
                                     <td class="text-xs">{{ $item->item_name }}</td>
@@ -106,7 +112,7 @@
                                             <div class="maintenance-bill-action-stack">
                                                 @if($bill->isPostedToFinance())
                                                     <span class="erp-badge bg-green-100 text-green-700 text-[10px]">Posted</span>
-                                                    <p class="text-[10px] text-gray-500">{{ $bill->posted_to_finance_at?->format('d M Y') }}</p>
+                                                    <p class="text-[10px] text-gray-500 text-center w-full m-0">{{ $bill->posted_to_finance_at?->format('d M Y') }}</p>
                                                     <form method="POST" action="{{ route('admin.tms.maintenance.bills.unpost', $bill) }}" data-confirm="Unmark this bill from finance posting?">
                                                         @csrf
                                                         <button type="submit" class="erp-btn-secondary !py-1 !px-2 text-[10px] w-full">Unpost</button>

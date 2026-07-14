@@ -504,14 +504,48 @@ select.emp-input.tomselected {
 .maintenance-bills-table col.col-actions { width: 7.5rem; }
 
 .maintenance-bills-table td.maintenance-bill-actions {
-    @apply align-top p-1.5;
+    vertical-align: middle;
+    padding: 0.375rem;
     width: 7.5rem;
     max-width: 7.5rem;
     overflow: visible;
 }
 
+/* Chrome stretches flex children of table-cells to full rowspan height —
+   center the stack instead of pinning it to the top. */
 .maintenance-bills-table .maintenance-bill-action-stack {
-    @apply flex flex-col items-stretch gap-1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.25rem;
+    min-height: 100%;
+    height: 100%;
+    text-align: center;
+}
+
+.maintenance-bills-table .maintenance-bill-action-stack .erp-badge {
+    align-self: center;
+}
+
+.maintenance-bills-table .maintenance-bill-action-stack > form,
+.maintenance-bills-table .maintenance-bill-action-stack .erp-table-actions {
+    width: 100%;
+    align-self: stretch;
+}
+
+.maintenance-bills-table td.maintenance-bill-merged {
+    vertical-align: middle;
+    text-align: center;
+}
+
+.maintenance-bills-table .maintenance-bill-merged-inner {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100%;
+    height: 100%;
 }
 
 .maintenance-bills-table .maintenance-bill-action-stack .erp-table-actions {

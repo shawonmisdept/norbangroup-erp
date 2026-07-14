@@ -160,7 +160,11 @@ class TmsMaintenanceTest extends TestCase
             ->get(route('admin.tms.maintenance.index', ['vehicle_id' => $this->ownVehicle->id]));
 
         $response->assertOk()
-            ->assertSee('Pickup (DHK-1234-5678)');
+            ->assertSee('Pickup (DHK-1234-5678)')
+            ->assertSee('Unit', false)
+            ->assertSee('Type', false)
+            ->assertSee('Bills', false)
+            ->assertSee('Last Bill', false);
         $this->assertEquals(1, substr_count($response->getContent(), 'Open Register</a>'));
 
         $response = $this->actingAs($this->user)
@@ -183,6 +187,32 @@ class TmsMaintenanceTest extends TestCase
         $response->assertOk()
             ->assertSee('Hiace (DM-GHA-11-8402)');
         $this->assertEquals(1, substr_count($response->getContent(), 'Open Register</a>'));
+
+        $response = $this->actingAs($this->user)
+            ->get(route('admin.tms.maintenance.index', ['type' => 'own']));
+
+        $response->assertOk()
+            ->assertSee('Pickup (DHK-1234-5678)');
+        $this->assertEquals(1, substr_count($response->getContent(), 'Open Register</a>'));
+        $this->assertEquals(1, substr_count($response->getContent(), 'onclick="window.location.href='));
+    }
+
+    public function test_maintenance_index_shows_bill_stats_and_unposted_badge(): void
+    {
+        $this->seedBill($this->ownVehicle, 'IDX-1', '2026-06-10', 1500, [['Oil', 1500]]);
+        $posted = $this->seedBill($this->ownVehicle, 'IDX-2', '2026-06-15', 2500, [['Filter', 2500]]);
+        $posted->update([
+            'posted_to_finance_at' => now(),
+            'posted_to_finance_by' => $this->user->id,
+        ]);
+
+        $this->actingAs($this->user)
+            ->get(route('admin.tms.maintenance.index', ['vehicle_id' => $this->ownVehicle->id]))
+            ->assertOk()
+            ->assertSee('4,000.00')
+            ->assertSee('15 Jun 2026')
+            ->assertSee('1 unposted')
+            ->assertSee($this->factory->name);
     }
 
     public function test_maintenance_bill_crud_on_vehicle_register(): void
@@ -313,6 +343,52 @@ class TmsMaintenanceTest extends TestCase
             ->get(route('admin.tms.reports.index', ['tab' => 'fleet_cost', 'from' => '2026-06-01', 'to' => '2026-06-30']))
             ->assertOk()
             ->assertSee('500.00');
+    }
+
+    public function test_maintenance_report_filters_by_workshop(): void
+    {
+        TmsMaintenanceBill::create([
+            'factory_id'    => $this->factory->id,
+            'vehicle_id'    => $this->ownVehicle->id,
+            'bill_no'       => 'Bill # 1001',
+            'bill_date'     => '2026-06-10',
+            'workshop_name' => 'Jayma Motors',
+            'total_amount'  => 1000,
+            'paid_by'       => 'company',
+        ]);
+
+        TmsMaintenanceBill::create([
+            'factory_id'    => $this->factory->id,
+            'vehicle_id'    => $this->ownVehicle->id,
+            'bill_no'       => 'Bill # 1002',
+            'bill_date'     => '2026-06-12',
+            'workshop_name' => 'JK Motors',
+            'total_amount'  => 2000,
+            'paid_by'       => 'rental_party',
+        ]);
+
+        $this->actingAs($this->user)
+            ->get(route('admin.tms.reports.index', ['tab' => 'maintenance']))
+            ->assertOk()
+            ->assertSee('Workshop', false)
+            ->assertSee('Jayma Motors')
+            ->assertSee('JK Motors')
+            ->assertSee('Bill # 1001')
+            ->assertSee('Bill # 1002')
+            ->assertSee('3,000.00')
+            ->assertSee('1,000.00')
+            ->assertSee('2,000.00');
+
+        $this->actingAs($this->user)
+            ->get(route('admin.tms.reports.index', [
+                'tab'      => 'maintenance',
+                'workshop' => 'Jayma Motors',
+            ]))
+            ->assertOk()
+            ->assertSee('Bill # 1001')
+            ->assertDontSee('Bill # 1002')
+            ->assertSee('1,000.00')
+            ->assertDontSee('2,000.00');
     }
 
     public function test_maintenance_register_filters(): void

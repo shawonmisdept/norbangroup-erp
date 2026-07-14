@@ -36,15 +36,17 @@ class ReportController extends Controller
     public function index(Request $request)
     {
         $tab = $request->input('tab', 'requests');
-        $filters = $request->only(['factory_id', 'from', 'to', 'status', 'destination', 'driver_id', 'vehicle_id', 'payment_status', 'department_id', 'fuel_view']);
+        $filters = $request->only(['factory_id', 'from', 'to', 'status', 'destination', 'driver_id', 'vehicle_id', 'workshop', 'payment_status', 'department_id', 'fuel_view']);
         $filters['fuel_view'] = ($filters['fuel_view'] ?? '') === 'by_vehicle' ? 'by_vehicle' : 'detail';
 
-        $summary = null;
-        if ($tab === 'fleet_cost') {
-            $summary = $this->fleetCostReport->summarize($request, $filters);
-        } elseif ($tab === 'fuel') {
-            $summary = $this->fuelReport->summarize($request, $filters);
-        }
+        $summary = match ($tab) {
+            'fleet_cost'     => $this->fleetCostReport->summarize($request, $filters),
+            'fuel'           => $this->fuelReport->summarize($request, $filters),
+            'maintenance'    => $this->fleetCostReport->summarizeMaintenance($request, $filters),
+            'rental_charges' => $this->fleetCostReport->summarizeRentalCharges($request, $filters),
+            'ot'             => $this->fleetCostReport->summarizeDriverPay($request, $filters),
+            default          => null,
+        };
 
         $data = match ($tab) {
             'trips'                 => $this->tripRows($request, $filters),
@@ -62,11 +64,14 @@ class ReportController extends Controller
             default                 => $this->requestRows($request, $filters),
         };
 
+        $factoryId = isset($filters['factory_id']) ? (int) $filters['factory_id'] : null;
+
         return view('admin.tms.reports.index', [
             'tab'         => $tab,
             'factories'   => $this->factoryOptions($request),
-            'departments' => $this->departmentOptions($request, $filters['factory_id'] ?? null),
-            'vehicles'    => $this->vehicleOptions($request, isset($filters['factory_id']) ? (int) $filters['factory_id'] : null),
+            'departments' => $this->departmentOptions($request, $factoryId),
+            'vehicles'    => $this->vehicleOptions($request, $factoryId),
+            'workshops'   => $tab === 'maintenance' ? $this->workshopOptions($request, $factoryId) : [],
             'filters'     => $filters,
             'rows'        => $data,
             'summary'     => $summary,
@@ -84,6 +89,7 @@ class ReportController extends Controller
             'payment_status' => ['nullable', 'in:pending,paid'],
             'department_id'  => ['nullable', 'integer'],
             'vehicle_id'     => ['nullable', 'integer', 'exists:tms_vehicles,id'],
+            'workshop'       => ['nullable', 'string', 'max:255'],
         ]);
 
         if (! empty($validated['factory_id'])) {
@@ -191,6 +197,10 @@ class ReportController extends Controller
 
         if (! empty($filters['vehicle_id'])) {
             $query->where('vehicle_id', $filters['vehicle_id']);
+        }
+
+        if (! empty($filters['workshop'])) {
+            $query->where('workshop_name', $filters['workshop']);
         }
 
         return $query->latest('bill_date')->paginate(25)->withQueryString();
@@ -368,6 +378,14 @@ class ReportController extends Controller
             $query->where('factory_id', $filters['factory_id']);
         }
 
+        if (! empty($filters['vehicle_id'])) {
+            $query->where('vehicle_id', $filters['vehicle_id']);
+        }
+
+        if (! empty($filters['workshop'])) {
+            $query->where('workshop_name', $filters['workshop']);
+        }
+
         foreach ($query->cursor() as $row) {
             fputcsv($out, [
                 $row->bill_no,
@@ -497,6 +515,24 @@ class ReportController extends Controller
         }
 
         return $query->get();
+    }
+
+    /** @return list<string> */
+    private function workshopOptions(Request $request, ?int $factoryId = null): array
+    {
+        $query = TmsMaintenanceBill::query()
+            ->select('workshop_name')
+            ->whereNotNull('workshop_name')
+            ->where('workshop_name', '!=', '')
+            ->distinct()
+            ->orderBy('workshop_name');
+
+        $fid = $factoryId ?? $request->user()?->scopedFactoryId();
+        if ($fid) {
+            $query->where('factory_id', $fid);
+        }
+
+        return $query->pluck('workshop_name')->values()->all();
     }
 
     /** @return array<int, string> */

@@ -35,6 +35,18 @@
         </div>
     @endif
 
+    @if($tab === 'maintenance')
+        <div>
+            <label class="erp-label">Workshop</label>
+            <select name="workshop" class="erp-input">
+                <option value="">All</option>
+                @foreach(($workshops ?? []) as $workshop)
+                    <option value="{{ $workshop }}" @selected(($filters['workshop'] ?? '') === $workshop)>{{ $workshop }}</option>
+                @endforeach
+            </select>
+        </div>
+    @endif
+
     @if($tab === 'fuel')
         <div>
             <label class="erp-label">View</label>

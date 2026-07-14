@@ -109,7 +109,7 @@
                     $alertPapers = $paperService->alertPapersForVehicle($v);
                 @endphp
                 <tr>
-                <td class="align-top min-w-[10rem]">
+                    <td class="align-middle min-w-[10rem]">
                         <a href="{{ route('admin.tms.vehicles.show', $v) }}" class="font-medium text-indigo-600 hover:underline">
                             {{ $v->name }}
                         </a>
@@ -118,28 +118,28 @@
                             {{ $v->reg_number }} ({{ $v->passenger_capacity }} seats)
                         </p>
                     </td>
-                    <td class="text-xs align-top whitespace-nowrap">{{ $v->factory?->name }}</td>
-                    <td class="text-xs align-top whitespace-nowrap">
+                    <td class="text-xs align-middle whitespace-nowrap">{{ $v->factory?->name }}</td>
+                    <td class="text-xs align-middle whitespace-nowrap">
                         <span class="capitalize">{{ $v->type }}</span>
                         @if($v->is_dedicated)
                             <span class="erp-badge bg-indigo-50 text-indigo-700 text-[10px] ml-1">Dedicated</span>
                         @endif
                     </td>
-                    <td class="text-xs align-top max-w-[10rem]">{{ $v->allocatedUserLabel() ?? '—' }}</td>
-                    <td class="text-xs align-top max-w-[10rem]">{{ $v->assignedDriverNames() }}</td>
-                    <td class="text-center align-top">
-    <span class="erp-badge {{ $paperService->statusBadgeClass($paperStatus) }}">
-        {{ ucfirst($paperStatus) }}
-    </span>
+                    <td class="text-xs align-middle max-w-[10rem]">{{ $v->allocatedUserLabel() ?? '—' }}</td>
+                    <td class="text-xs align-middle max-w-[10rem]">{{ $v->assignedDriverNames() }}</td>
+                    <td class="text-center align-middle">
+                        <span class="erp-badge {{ $paperService->statusBadgeClass($paperStatus) }}">
+                            {{ ucfirst($paperStatus) }}
+                        </span>
 
-    @if($alertPapers !== [])
-        <span class="text-xs text-gray-600">
-            ({{ collect($alertPapers)->pluck('label')->implode(', ') }})
-        </span>
-    @endif
-</td>
-                    <td class="text-center align-top"><span class="erp-badge {{ $v->statusBadgeClass() }}">{{ $v->statusLabel() }}</span></td>
-                    <td class="text-right align-top whitespace-nowrap">
+                        @if($alertPapers !== [])
+                            <span class="text-xs text-gray-600">
+                                ({{ collect($alertPapers)->pluck('label')->implode(', ') }})
+                            </span>
+                        @endif
+                    </td>
+                    <td class="text-center align-middle"><span class="erp-badge {{ $v->statusBadgeClass() }}">{{ $v->statusLabel() }}</span></td>
+                    <td class="text-right align-middle whitespace-nowrap">
                         @include('partials.erp.table-actions', [
                             'viewUrl' => route('admin.tms.vehicles.show', $v),
                             'editUrl' => auth()->user()->canManageTmsSubmodule('vehicles') ? route('admin.tms.vehicles.edit', $v) : null,
