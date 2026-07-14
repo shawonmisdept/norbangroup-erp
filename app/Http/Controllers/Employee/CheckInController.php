@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Employee;
 
 use App\Http\Controllers\Controller;
+use App\Models\Hrm\AttendanceDailyLog;
 use App\Models\Hrm\AttendanceGatePoint;
 use App\Services\Hrm\AttendancePunchService;
 use App\Services\Hrm\EmployeeCheckInStatusService;
@@ -24,8 +25,22 @@ class CheckInController extends Controller
         }
 
         $checkInStatus = $statusService->forEmployee($employee);
+        $nextAction = $checkInStatus['next_action'] === 'done'
+            ? 'out'
+            : ($checkInStatus['next_action'] ?? 'in');
 
-        return view('employee.attendance.check-in', compact('employee', 'gate', 'checkInStatus'));
+        $todayLog = AttendanceDailyLog::query()
+            ->where('employee_id', $employee->id)
+            ->whereDate('attendance_date', today())
+            ->first();
+
+        return view('employee.attendance.check-in', compact(
+            'employee',
+            'gate',
+            'checkInStatus',
+            'nextAction',
+            'todayLog',
+        ));
     }
 
     public function store(Request $request, AttendancePunchService $punchService)

@@ -66,6 +66,16 @@ class EmployeeCheckInWidgetTest extends TestCase
             ->assertSee(route('employee.attendance.check-in', [], false));
     }
 
+    public function test_check_in_page_loads_without_server_error(): void
+    {
+        $this->actingAs($this->portalUser, 'employee')
+            ->get(route('employee.attendance.check-in'))
+            ->assertOk()
+            ->assertSee('Check In Now')
+            ->assertSee('Start Camera')
+            ->assertSee('Location (GPS)');
+    }
+
     public function test_status_service_reports_active_shift_after_check_in(): void
     {
         Carbon::setTestNow('2026-07-06 11:30:00');

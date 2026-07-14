@@ -1,7 +1,7 @@
 @extends('layouts.employee')
 
 @section('title', 'Check In')
-@section('page-title', $nextAction === 'in' ? 'Check In' : 'Check Out')
+@section('page-title', ($checkInStatus['status'] ?? null) === 'done' ? 'Attendance' : ($nextAction === 'in' ? 'Check In' : 'Check Out'))
 @section('page-subtitle', $employee->employee_code)
 @section('back', route('employee.attendance'))
 
@@ -31,55 +31,65 @@
         </div>
     @endif
 
-    <div class="emp-card overflow-hidden">
-        <div class="relative aspect-[4/3] bg-gray-900">
-            <video id="camera" class="h-full w-full object-cover" autoplay playsinline muted></video>
-            <canvas id="snapshot" class="hidden"></canvas>
-            <div id="camera-placeholder" class="absolute inset-0 flex flex-col items-center justify-center text-white/70">
-                <p class="text-sm">Camera preview</p>
-                <p class="mt-1 text-xs text-white/50">Tap start camera below</p>
+    @if(($checkInStatus['status'] ?? null) === 'done')
+        <div class="emp-card p-6 text-center">
+            <p class="text-sm font-semibold text-gray-800">Done for today</p>
+            <p class="mt-1 text-xs text-gray-500">
+                Checked out at {{ $checkInStatus['check_out_label'] ?? '—' }}
+            </p>
+            <a href="{{ route('employee.dashboard') }}" class="emp-btn-secondary mt-4 inline-flex">Back to dashboard</a>
+        </div>
+    @else
+        <div class="emp-card overflow-hidden">
+            <div class="relative aspect-[4/3] bg-gray-900">
+                <video id="camera" class="h-full w-full object-cover" autoplay playsinline muted></video>
+                <canvas id="snapshot" class="hidden"></canvas>
+                <div id="camera-placeholder" class="absolute inset-0 flex flex-col items-center justify-center text-white/70">
+                    <p class="text-sm">Camera preview</p>
+                    <p class="mt-1 text-xs text-white/50">Tap start camera below</p>
+                </div>
+            </div>
+            <div class="border-t border-gray-100 p-4 space-y-3">
+                <button type="button" id="start-camera" class="emp-btn-secondary w-full">Start Camera</button>
+                <button type="button" id="capture-photo" class="emp-btn w-full hidden">Take Selfie</button>
             </div>
         </div>
-        <div class="border-t border-gray-100 p-4 space-y-3">
-            <button type="button" id="start-camera" class="emp-btn-secondary w-full">Start Camera</button>
-            <button type="button" id="capture-photo" class="emp-btn w-full hidden">Take Selfie</button>
+
+        <div class="emp-card p-4 space-y-2">
+            <div class="flex items-center justify-between">
+                <p class="text-sm font-semibold text-gray-900">Location (GPS)</p>
+                <span id="gps-status" class="text-xs text-gray-400">Waiting…</span>
+            </div>
+            <p id="gps-coords" class="text-xs tabular-nums text-gray-500">—</p>
+            <button type="button" id="refresh-gps" class="emp-btn-sm-secondary">Refresh location</button>
         </div>
-    </div>
 
-    <div class="emp-card p-4 space-y-2">
-        <div class="flex items-center justify-between">
-            <p class="text-sm font-semibold text-gray-900">Location (GPS)</p>
-            <span id="gps-status" class="text-xs text-gray-400">Waiting…</span>
-        </div>
-        <p id="gps-coords" class="text-xs tabular-nums text-gray-500">—</p>
-        <button type="button" id="refresh-gps" class="emp-btn-sm-secondary">Refresh location</button>
-    </div>
+        <form method="POST" action="{{ route('employee.attendance.check-in.store') }}" id="checkin-form">
+            @csrf
+            <input type="hidden" name="punch_type" value="{{ $nextAction }}">
+            <input type="hidden" name="latitude" id="latitude" value="{{ old('latitude') }}">
+            <input type="hidden" name="longitude" id="longitude" value="{{ old('longitude') }}">
+            <input type="hidden" name="photo" id="photo" value="">
+            @if($gate)
+                <input type="hidden" name="gate" value="{{ $gate->qr_token }}">
+            @endif
 
-    <form method="POST" action="{{ route('employee.attendance.check-in.store') }}" id="checkin-form">
-        @csrf
-        <input type="hidden" name="punch_type" value="{{ $nextAction }}">
-        <input type="hidden" name="latitude" id="latitude" value="{{ old('latitude') }}">
-        <input type="hidden" name="longitude" id="longitude" value="{{ old('longitude') }}">
-        <input type="hidden" name="photo" id="photo" value="">
-        @if($gate)
-            <input type="hidden" name="gate" value="{{ $gate->qr_token }}">
-        @endif
+            <button type="submit" id="submit-checkin" disabled
+                    class="emp-btn w-full py-4 text-base disabled:opacity-40">
+                {{ $nextAction === 'in' ? '✓ Check In Now' : '✓ Check Out Now' }}
+            </button>
+        </form>
 
-        <button type="submit" id="submit-checkin" disabled
-                class="emp-btn w-full py-4 text-base disabled:opacity-40">
-            {{ $nextAction === 'in' ? '✓ Check In Now' : '✓ Check Out Now' }}
-        </button>
-    </form>
-
-    <p class="px-1 text-center text-[11px] text-gray-400">
-        Stand near the factory gate. GPS + selfie required for mobile attendance.
-    </p>
+        <p class="px-1 text-center text-[11px] text-gray-400">
+            Stand near the factory gate. GPS + selfie required for mobile attendance.
+        </p>
+    @endif
 </div>
 
+@if(($checkInStatus['status'] ?? null) !== 'done')
 @push('scripts')
 <script>
 (function () {
-    const app = document.getElementById('checkin-app');
     const video = document.getElementById('camera');
     const canvas = document.getElementById('snapshot');
     const photoInput = document.getElementById('photo');
@@ -155,4 +165,5 @@
 })();
 </script>
 @endpush
+@endif
 @endsection
