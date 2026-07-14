@@ -137,7 +137,6 @@ class TransportRequestService
             ]);
         }
 
-        $factoryId = (int) $trip->factory_id;
         $totalPassengers = (int) $requests->sum('passenger_count');
         $first = $requests->first();
 
@@ -149,13 +148,12 @@ class TransportRequestService
             $companyDriverId,
             $rentalDriverId,
             $vehicleIdOverride,
-            $factoryId,
             $totalPassengers,
             $first,
         ) {
             if ($driverType === 'company') {
                 $driver = TmsDriver::with(['employee', 'defaultVehicle'])->findOrFail($companyDriverId);
-                $vehicle = $this->resolveVehicleForCompanyDriver($driver, $vehicleIdOverride, $factoryId);
+                $vehicle = $this->resolveVehicleForCompanyDriver($driver, $vehicleIdOverride);
                 $this->validateCompanyAssignment($first, $vehicle, $driver, $totalPassengers);
 
                 $trip->update([
@@ -167,7 +165,7 @@ class TransportRequestService
                 $rentalDriver = null;
             } else {
                 $rentalDriver = TmsRentalDriver::with('defaultVehicle')->findOrFail($rentalDriverId);
-                $vehicle = $this->resolveVehicleForRentalDriver($rentalDriver, $vehicleIdOverride, $factoryId);
+                $vehicle = $this->resolveVehicleForRentalDriver($rentalDriver, $vehicleIdOverride);
                 $this->validateRentalAssignment($first, $vehicle, $rentalDriver, $totalPassengers);
                 $driver = null;
 
@@ -328,7 +326,6 @@ class TransportRequestService
 
         $this->assertMergeable($requests);
 
-        $factoryId = (int) $requests->first()->factory_id;
         $totalPassengers = (int) $requests->sum('passenger_count');
 
         if ($driverType === 'company') {
@@ -336,7 +333,7 @@ class TransportRequestService
             if (! $driver) {
                 throw ValidationException::withMessages(['driver_id' => 'Selected driver was not found.']);
             }
-            $vehicle = $this->resolveVehicleForCompanyDriver($driver, $vehicleIdOverride, $factoryId);
+            $vehicle = $this->resolveVehicleForCompanyDriver($driver, $vehicleIdOverride);
             $this->validateCompanyAssignment($requests->first(), $vehicle, $driver, $totalPassengers);
 
             return $this->createTrip($requests, $user, $vehicle, $driver, null, 'company', $totalPassengers);
@@ -346,7 +343,7 @@ class TransportRequestService
         if (! $rentalDriver) {
             throw ValidationException::withMessages(['rental_driver_id' => 'Selected rental driver was not found.']);
         }
-        $vehicle = $this->resolveVehicleForRentalDriver($rentalDriver, $vehicleIdOverride, $factoryId);
+        $vehicle = $this->resolveVehicleForRentalDriver($rentalDriver, $vehicleIdOverride);
         $this->validateRentalAssignment($requests->first(), $vehicle, $rentalDriver, $totalPassengers);
 
         return $this->createTrip($requests, $user, $vehicle, null, $rentalDriver, 'rental', $totalPassengers);
@@ -441,7 +438,7 @@ class TransportRequestService
         }
     }
 
-    private function resolveVehicleForCompanyDriver(TmsDriver $driver, ?int $overrideId, int $factoryId): TmsVehicle
+    private function resolveVehicleForCompanyDriver(TmsDriver $driver, ?int $overrideId): TmsVehicle
     {
         if ($overrideId) {
             $vehicle = TmsVehicle::find($overrideId);
@@ -467,14 +464,10 @@ class TransportRequestService
             ]);
         }
 
-        if ((int) $vehicle->factory_id !== $factoryId || (int) $driver->factory_id !== $factoryId) {
-            throw ValidationException::withMessages(['vehicle_id' => 'Vehicle must belong to the same unit.']);
-        }
-
         return $vehicle;
     }
 
-    private function resolveVehicleForRentalDriver(TmsRentalDriver $driver, ?int $overrideId, int $factoryId): TmsVehicle
+    private function resolveVehicleForRentalDriver(TmsRentalDriver $driver, ?int $overrideId): TmsVehicle
     {
         if ($overrideId) {
             $vehicle = TmsVehicle::find($overrideId);
@@ -494,10 +487,6 @@ class TransportRequestService
             ]);
         }
 
-        if ((int) $vehicle->factory_id !== $factoryId || (int) $driver->factory_id !== $factoryId) {
-            throw ValidationException::withMessages(['vehicle_id' => 'Vehicle must belong to the same unit.']);
-        }
-
         return $vehicle;
     }
 
@@ -508,10 +497,6 @@ class TransportRequestService
         ?int $totalPassengers = null,
     ): void {
         $passengers = $totalPassengers ?? $request->passenger_count;
-
-        if ((int) $vehicle->factory_id !== (int) $request->factory_id || (int) $driver->factory_id !== (int) $request->factory_id) {
-            throw ValidationException::withMessages(['factory' => 'Vehicle and driver must belong to the same unit.']);
-        }
 
         if (! $vehicle->isAvailable()) {
             throw ValidationException::withMessages(['vehicle_id' => 'Selected vehicle is not available.']);
@@ -548,10 +533,6 @@ class TransportRequestService
         ?int $totalPassengers = null,
     ): void {
         $passengers = $totalPassengers ?? $request->passenger_count;
-
-        if ((int) $vehicle->factory_id !== (int) $request->factory_id || (int) $driver->factory_id !== (int) $request->factory_id) {
-            throw ValidationException::withMessages(['factory' => 'Vehicle and driver must belong to the same unit.']);
-        }
 
         if (! $vehicle->isAvailable()) {
             throw ValidationException::withMessages(['vehicle_id' => 'Selected vehicle is not available.']);

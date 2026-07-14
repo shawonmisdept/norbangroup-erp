@@ -21,6 +21,10 @@
                     @php
                         $primaryVehicleId = $d->primaryVehicleId();
                         $primaryVehicle = $d->vehicles->firstWhere('id', $primaryVehicleId) ?? $d->defaultVehicle;
+                        $driverLabel = $d->assignmentSelectLabel();
+                        if ($d->factory?->name) {
+                            $driverLabel .= ' — ' . $d->factory->name;
+                        }
                     @endphp
                     <option
                         value="{{ $d->id }}"
@@ -29,7 +33,7 @@
                         data-assigned-vehicles="{{ json_encode($d->assignedVehicleIds()) }}"
                         @selected(old('driver_id') == $d->id)
                     >
-                        {{ $d->assignmentSelectLabel() }}
+                        {{ $driverLabel }}
                     </option>
                 @endforeach
             </select>
@@ -41,7 +45,7 @@
                 <option value="">Select…</option>
                 @foreach($rentalDrivers as $d)
                     <option value="{{ $d->id }}" data-vehicle="{{ $d->default_vehicle_id }}" data-capacity="{{ $d->defaultVehicle?->passenger_capacity ?? 0 }}" @selected(old('rental_driver_id') == $d->id)>
-                        {{ $d->displayLabel() }} — {{ $d->defaultVehicle?->displayLabel() ?? 'No vehicle' }}
+                        {{ $d->displayLabel() }} — {{ $d->defaultVehicle?->displayLabel() ?? 'No vehicle' }}@if($d->factory?->name) — {{ $d->factory->name }}@endif
                     </option>
                 @endforeach
             </select>
@@ -53,7 +57,7 @@
                 <option value="">Use driver's primary vehicle</option>
                 @foreach($vehicles as $v)
                     <option value="{{ $v->id }}" data-capacity="{{ $v->passenger_capacity }}" data-warnings="{{ json_encode(($vehiclePaperWarnings ?? [])[$v->id] ?? []) }}" @selected(old('vehicle_id') == $v->id)>
-                        {{ $v->displayLabel() }} ({{ $v->passenger_capacity }} seats)
+                        {{ $v->displayLabel() }} ({{ $v->passenger_capacity }} seats)@if($v->factory?->name) — {{ $v->factory->name }}@endif
                     </option>
                 @endforeach
             </select>

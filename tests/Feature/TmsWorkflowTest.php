@@ -225,6 +225,77 @@ class TmsWorkflowTest extends TestCase
             ->assertSee('Hiace');
     }
 
+    public function test_authority_can_approve_with_driver_and_vehicle_from_another_unit(): void
+    {
+        $crossUnitRole = Role::create([
+            'name'        => 'TMS Cross Unit Authority',
+            'permissions' => [
+                'tms.dashboard.view',
+                'tms.requests.view',
+                'tms.requests.approve',
+                'tms.trips.view',
+            ],
+        ]);
+
+        $crossUnitAdmin = User::create([
+            'name'       => 'Cross Unit Admin',
+            'email'      => 'tms-cross@test.com',
+            'password'   => 'password',
+            'role_id'    => $crossUnitRole->id,
+            'factory_id' => null,
+        ]);
+
+        $otherEmployee = Employee::create([
+            'factory_id'    => $this->otherFactory->id,
+            'employee_code' => 'TMS-DRV-OTHER',
+            'name'          => 'Other Unit Driver',
+            'status'        => 'active',
+        ]);
+
+        $otherVehicle = TmsVehicle::create([
+            'factory_id'         => $this->otherFactory->id,
+            'name'               => 'Pajero Jeep',
+            'reg_number'         => 'DM-GHA-02-0005',
+            'type'               => 'own',
+            'fuel_type'          => 'octane',
+            'passenger_capacity' => 7,
+            'status'             => 'available',
+        ]);
+
+        $otherDriver = TmsDriver::create([
+            'factory_id'         => $this->otherFactory->id,
+            'employee_id'        => $otherEmployee->id,
+            'default_vehicle_id' => $otherVehicle->id,
+            'status'             => 'active',
+            'ot_rate'            => 100,
+        ]);
+        $otherDriver->syncAssignedVehicles([$otherVehicle->id], $otherVehicle->id);
+
+        $transportRequest = TmsTransportRequest::create([
+            'factory_id'         => $this->factory->id,
+            'employee_id'        => $this->requester->id,
+            'pickup_location'    => 'Head Office',
+            'destination_custom' => 'Uttara',
+            'pickup_at'          => '2026-06-18 23:51:00',
+            'purpose'            => 'Visit',
+            'passenger_count'    => 1,
+            'status'             => 'pending',
+        ]);
+
+        $this->actingAs($crossUnitAdmin)
+            ->post(route('admin.tms.requests.approve', $transportRequest), [
+                'driver_type' => 'company',
+                'driver_id'   => $otherDriver->id,
+                'vehicle_id'  => $otherVehicle->id,
+            ])
+            ->assertRedirect();
+
+        $transportRequest->refresh();
+        $this->assertSame('approved', $transportRequest->status);
+        $this->assertSame($otherDriver->id, $transportRequest->driver_id);
+        $this->assertSame($otherVehicle->id, $transportRequest->vehicle_id);
+    }
+
     public function test_full_workflow_with_ot_calculation_without_driver_km(): void
     {
         $this->actingAs($this->requesterPortal, 'employee')

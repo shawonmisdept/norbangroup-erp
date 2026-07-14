@@ -50,19 +50,20 @@ class RequestController extends Controller
             ? (int) $request->factory_id
             : $request->user()?->scopedFactoryId();
 
-        $drivers = TmsDriver::with(TmsDriver::withAssignedVehicles(['employee']))
+        $drivers = TmsDriver::with(TmsDriver::withAssignedVehicles(['employee', 'factory']))
             ->where('status', 'active')
             ->when($factoryId, fn ($q) => $q->where('factory_id', $factoryId))
             ->orderBy('id')
             ->get();
 
-        $rentalDrivers = TmsRentalDriver::with('defaultVehicle')
+        $rentalDrivers = TmsRentalDriver::with(['defaultVehicle', 'factory'])
             ->where('status', 'active')
             ->when($factoryId, fn ($q) => $q->where('factory_id', $factoryId))
             ->orderBy('name')
             ->get();
 
         $vehicles = TmsVehicle::query()
+            ->with('factory')
             ->when($factoryId, fn ($q) => $q->where('factory_id', $factoryId))
             ->orderBy('name')
             ->get();
@@ -89,19 +90,23 @@ class RequestController extends Controller
             'approvedByUser',
         ]);
 
-        $drivers = TmsDriver::with(TmsDriver::withAssignedVehicles(['employee']))
-            ->where('factory_id', $transportRequest->factory_id)
+        $scopedFactoryId = $request->user()?->scopedFactoryId();
+
+        $drivers = TmsDriver::with(TmsDriver::withAssignedVehicles(['employee', 'factory']))
             ->where('status', 'active')
+            ->when($scopedFactoryId, fn ($q) => $q->where('factory_id', $scopedFactoryId))
             ->orderBy('id')
             ->get();
 
-        $rentalDrivers = TmsRentalDriver::with('defaultVehicle')
-            ->where('factory_id', $transportRequest->factory_id)
+        $rentalDrivers = TmsRentalDriver::with(['defaultVehicle', 'factory'])
             ->where('status', 'active')
+            ->when($scopedFactoryId, fn ($q) => $q->where('factory_id', $scopedFactoryId))
             ->orderBy('name')
             ->get();
 
-        $vehicles = TmsVehicle::where('factory_id', $transportRequest->factory_id)
+        $vehicles = TmsVehicle::query()
+            ->with('factory')
+            ->when($scopedFactoryId, fn ($q) => $q->where('factory_id', $scopedFactoryId))
             ->orderBy('name')
             ->get();
 
