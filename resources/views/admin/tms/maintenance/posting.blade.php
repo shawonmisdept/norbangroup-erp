@@ -35,12 +35,12 @@
 
     <div>
         <label class="erp-label">From</label>
-        <input type="date" name="from" class="erp-input" value="{{ $filters['from'] ?? '' }}" required>
+        <input type="date" name="from" class="erp-input" value="{{ $filters['from'] ?? '' }}">
     </div>
 
     <div>
         <label class="erp-label">To</label>
-        <input type="date" name="to" class="erp-input" value="{{ $filters['to'] ?? '' }}" required>
+        <input type="date" name="to" class="erp-input" value="{{ $filters['to'] ?? '' }}">
     </div>
 
     <div>

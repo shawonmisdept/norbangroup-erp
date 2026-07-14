@@ -37,7 +37,7 @@ class MaintenancePostingController extends Controller
         $report = null;
         $workshopFactoryId = ! empty($filters['factory_id']) ? (int) $filters['factory_id'] : null;
 
-        if (! empty($filters['workshop']) && ! empty($filters['from']) && ! empty($filters['to'])) {
+        if (! empty($filters['workshop'])) {
             $report = $this->postingReport->build($request, $filters);
         }
 
@@ -97,8 +97,8 @@ class MaintenancePostingController extends Controller
         $filters = $request->validate([
             'factory_id'    => ['nullable', 'exists:factories,id'],
             'workshop'      => ['required', 'string', 'max:255'],
-            'from'          => ['required', 'date'],
-            'to'            => ['required', 'date', 'after_or_equal:from'],
+            'from'          => ['nullable', 'date'],
+            'to'            => ['nullable', 'date', 'after_or_equal:from'],
             'unposted_only' => ['sometimes', 'boolean'],
         ]);
 

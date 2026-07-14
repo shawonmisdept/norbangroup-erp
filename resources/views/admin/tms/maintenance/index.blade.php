@@ -24,7 +24,7 @@
     </div>
 
     <div>
-        <label class="erp-label">Car No (Posting)</label>
+        <label class="erp-label">Car No</label>
         <select name="posting_vehicle_id" class="erp-input">
             <option value="">All</option>
             @foreach($postingCarOptions as $id => $label)
@@ -79,9 +79,9 @@
             <thead>
                 <tr>
                     <th>Vehicle</th>
+                    <th>Car No</th>
                     <th>Unit</th>
                     <th>Type</th>
-                    <th>Car No (Posting)</th>
                     <th>Allocated User</th>
                     <th class="text-center">Bills</th>
                     <th>Last Bill</th>
@@ -97,11 +97,11 @@
                         $unpostedCount = (int) ($vehicle->unposted_bills_count ?? 0);
                         $billsTotal = (float) ($vehicle->bills_total ?? 0);
                     @endphp
-                    <tr class="cursor-pointer" onclick="window.location.href='{{ $registerUrl }}'">
-                        <td class="text-sm font-medium text-indigo-600">{{ $vehicle->displayLabel() }}</td>
+                    <tr>
+                        <td class="text-sm font-medium">{{ $vehicle->name }}</td>
+                        <td class="text-xs tabular-nums whitespace-nowrap">{{ $vehicle->reg_number }}</td>
                         <td class="text-xs whitespace-nowrap">{{ $vehicle->factory?->name ?? '—' }}</td>
                         <td class="text-xs capitalize whitespace-nowrap">{{ $types[$vehicle->type] ?? $vehicle->type }}</td>
-                        <td class="text-xs">{{ $vehicle->postingCarNoLabel() }}</td>
                         <td class="text-xs">{{ $vehicle->allocatedUserLabel() ?? '—' }}</td>
                         <td class="text-center text-xs tabular-nums whitespace-nowrap">
                             <span>{{ $billsCount }}</span>
@@ -115,7 +115,7 @@
                         <td class="text-right text-xs tabular-nums whitespace-nowrap">
                             {{ $billsCount > 0 ? '৳' . number_format($billsTotal, 2) : '—' }}
                         </td>
-                        <td class="text-right whitespace-nowrap" onclick="event.stopPropagation()">
+                        <td class="text-right whitespace-nowrap">
                             <a href="{{ $registerUrl }}" class="erp-btn-sm-secondary">Open Register</a>
                         </td>
                     </tr>

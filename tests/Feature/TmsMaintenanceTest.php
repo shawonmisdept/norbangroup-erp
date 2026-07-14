@@ -160,41 +160,44 @@ class TmsMaintenanceTest extends TestCase
             ->get(route('admin.tms.maintenance.index', ['vehicle_id' => $this->ownVehicle->id]));
 
         $response->assertOk()
-            ->assertSee('Pickup (DHK-1234-5678)')
+            ->assertSee('Pickup')
+            ->assertSee('DHK-1234-5678')
             ->assertSee('Unit', false)
             ->assertSee('Type', false)
+            ->assertSee('Car No', false)
             ->assertSee('Bills', false)
             ->assertSee('Last Bill', false);
         $this->assertEquals(1, substr_count($response->getContent(), 'Open Register</a>'));
+        $this->assertStringNotContainsString('onclick="window.location.href=', $response->getContent());
 
         $response = $this->actingAs($this->user)
             ->get(route('admin.tms.maintenance.index', ['posting_vehicle_id' => $this->rentalVehicle->id]));
 
         $response->assertOk()
-            ->assertSee('Hiace (DM-GHA-11-8402)');
+            ->assertSee('Hiace')
+            ->assertSee('DM-GHA-11-8402');
         $this->assertEquals(1, substr_count($response->getContent(), 'Open Register</a>'));
 
         $response = $this->actingAs($this->user)
             ->get(route('admin.tms.maintenance.index', ['allocated_employee_id' => $this->ownVehicle->allocated_employee_id]));
 
         $response->assertOk()
-            ->assertSee('Pickup (DHK-1234-5678)');
+            ->assertSee('Pickup');
         $this->assertEquals(1, substr_count($response->getContent(), 'Open Register</a>'));
 
         $response = $this->actingAs($this->user)
             ->get(route('admin.tms.maintenance.index', ['search' => 'GM']));
 
         $response->assertOk()
-            ->assertSee('Hiace (DM-GHA-11-8402)');
+            ->assertSee('Hiace');
         $this->assertEquals(1, substr_count($response->getContent(), 'Open Register</a>'));
 
         $response = $this->actingAs($this->user)
             ->get(route('admin.tms.maintenance.index', ['type' => 'own']));
 
         $response->assertOk()
-            ->assertSee('Pickup (DHK-1234-5678)');
+            ->assertSee('Pickup');
         $this->assertEquals(1, substr_count($response->getContent(), 'Open Register</a>'));
-        $this->assertEquals(1, substr_count($response->getContent(), 'onclick="window.location.href='));
     }
 
     public function test_maintenance_index_shows_bill_stats_and_unposted_badge(): void
@@ -325,6 +328,26 @@ class TmsMaintenanceTest extends TestCase
             ->assertSee('Company Car No: 5678')
             ->assertSee('Sumon Sir')
             ->assertSee('101,750.00');
+    }
+
+    public function test_bill_for_posting_works_without_date_filters(): void
+    {
+        $this->seedBill($this->ownVehicle, '20002', '2026-06-05', 10350, [
+            ['Engine Oil', 10350],
+        ]);
+
+        $response = $this->actingAs($this->user)
+            ->get(route('admin.tms.maintenance.posting', [
+                'workshop' => 'JK Motors',
+            ]));
+
+        $response->assertOk()
+            ->assertSee('Bill For Posting')
+            ->assertSee('Company Car No: 5678')
+            ->assertSee('10,350.00');
+
+        $this->assertStringNotContainsString('name="from" class="erp-input" value="" required', $response->getContent());
+        $this->assertStringNotContainsString('name="to" class="erp-input" value="" required', $response->getContent());
     }
 
     public function test_fleet_cost_report_includes_maintenance_total(): void

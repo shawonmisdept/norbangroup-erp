@@ -89,10 +89,10 @@ class MaintenanceController extends Controller
 
         return [
             'vehicles' => $vehicles
-                ->mapWithKeys(fn (TmsVehicle $vehicle) => [$vehicle->id => $vehicle->displayLabel()])
+                ->mapWithKeys(fn (TmsVehicle $vehicle) => [$vehicle->id => $vehicle->name])
                 ->all(),
             'postingCarNos' => $vehicles
-                ->mapWithKeys(fn (TmsVehicle $vehicle) => [$vehicle->id => $vehicle->postingCarNoLabel()])
+                ->mapWithKeys(fn (TmsVehicle $vehicle) => [$vehicle->id => $vehicle->reg_number])
                 ->all(),
             'allocatedUsers' => $vehicles
                 ->filter(fn (TmsVehicle $vehicle) => $vehicle->allocated_employee_id && $vehicle->allocatedUserLabel())
