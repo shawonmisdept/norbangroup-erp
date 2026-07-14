@@ -239,9 +239,11 @@ class TripService
 
     public function driverForEmployee(Employee $employee): ?TmsDriver
     {
-        return TmsDriver::where('employee_id', $employee->id)
-            ->where('factory_id', $employee->factory_id)
+        // Drivers may be registered under any unit; match by employee only.
+        return TmsDriver::query()
+            ->where('employee_id', $employee->id)
             ->where('status', 'active')
+            ->orderByDesc('id')
             ->first();
     }
 
@@ -268,9 +270,17 @@ class TripService
 
     private function assertAssignedCompanyDriver(TmsTripLog $tripLog, Employee $employee): void
     {
-        $driver = $this->driverForEmployee($employee);
+        if ($tripLog->driver_id === null) {
+            abort(403, 'You are not the assigned driver for this trip.');
+        }
 
-        if (! $driver || $tripLog->driver_id !== $driver->id) {
+        $isAssigned = TmsDriver::query()
+            ->whereKey($tripLog->driver_id)
+            ->where('employee_id', $employee->id)
+            ->where('status', 'active')
+            ->exists();
+
+        if (! $isAssigned) {
             abort(403, 'You are not the assigned driver for this trip.');
         }
     }

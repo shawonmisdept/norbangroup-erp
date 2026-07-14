@@ -49,17 +49,21 @@ class TmsNotificationService
 
     public function requestApproved(TmsTransportRequest $request): void
     {
+        $request->loadMissing(['employee', 'driver.employee', 'rentalDriver']);
+
         if ($this->popupEnabled('request_approved')) {
-            $request->loadMissing(['employee', 'driver.employee', 'rentalDriver']);
+            if ($request->employee_id) {
+                $this->notifyEmployeePortal((int) $request->employee_id, new PortalTmsRequestApprovedNotification($request));
+            }
 
-            $this->notifyEmployeePortal($request->employee_id, new PortalTmsRequestApprovedNotification($request));
+            $driverEmployeeId = $request->driver?->employee_id;
 
-            if ($request->driver?->employee_id) {
-                $this->notifyEmployeePortal($request->driver->employee_id, new PortalTmsDriverTripAssignedNotification($request));
+            if ($driverEmployeeId) {
+                $this->notifyEmployeePortal((int) $driverEmployeeId, new PortalTmsDriverTripAssignedNotification($request));
             }
 
             if ($request->rental_driver_id) {
-                $this->notifyRentalDriverPortal($request->rental_driver_id, new PortalTmsRentalDriverTripAssignedNotification($request));
+                $this->notifyRentalDriverPortal((int) $request->rental_driver_id, new PortalTmsRentalDriverTripAssignedNotification($request));
             }
         }
 
@@ -259,8 +263,21 @@ class TmsNotificationService
     {
         $portalUser = EmployeePortalUser::where('employee_id', $employeeId)->where('is_active', true)->first();
 
-        if ($portalUser) {
+        if (! $portalUser) {
+            return;
+        }
+
+        try {
             $portalUser->notify($notification);
+        } catch (\Throwable $e) {
+            report($e);
+
+            // WebPush (or other channels) must not block the in-app database notification.
+            try {
+                $portalUser->notifyNow($notification, ['database']);
+            } catch (\Throwable $inner) {
+                report($inner);
+            }
         }
     }
 
@@ -268,8 +285,20 @@ class TmsNotificationService
     {
         $portalUser = TmsRentalDriverPortalUser::where('rental_driver_id', $rentalDriverId)->where('is_active', true)->first();
 
-        if ($portalUser) {
+        if (! $portalUser) {
+            return;
+        }
+
+        try {
             $portalUser->notify($notification);
+        } catch (\Throwable $e) {
+            report($e);
+
+            try {
+                $portalUser->notifyNow($notification, ['database']);
+            } catch (\Throwable $inner) {
+                report($inner);
+            }
         }
     }
 }

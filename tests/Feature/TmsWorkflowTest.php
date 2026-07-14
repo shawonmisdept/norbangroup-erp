@@ -296,6 +296,100 @@ class TmsWorkflowTest extends TestCase
         $this->assertSame($otherVehicle->id, $transportRequest->vehicle_id);
     }
 
+    public function test_driver_from_another_unit_can_start_assigned_trip(): void
+    {
+        $otherEmployee = Employee::create([
+            'factory_id'    => $this->otherFactory->id,
+            'employee_code' => 'TMS-DRV-CROSS',
+            'name'          => 'Cross Unit Driver Emp',
+            'status'        => 'active',
+        ]);
+
+        // Driver record unit differs from employee unit (common after cross-unit assignment).
+        $otherDriver = TmsDriver::create([
+            'factory_id'         => $this->factory->id,
+            'employee_id'        => $otherEmployee->id,
+            'default_vehicle_id' => $this->vehicle->id,
+            'status'             => 'active',
+            'ot_rate'            => 100,
+        ]);
+        $otherDriver->syncAssignedVehicles([$this->vehicle->id], $this->vehicle->id);
+
+        $driverPortal = EmployeePortalUser::create([
+            'employee_id' => $otherEmployee->id,
+            'password'    => bcrypt('password'),
+            'is_active'   => true,
+        ]);
+
+        $transportRequest = TmsTransportRequest::create([
+            'factory_id'         => $this->factory->id,
+            'employee_id'        => $this->requester->id,
+            'pickup_location'    => 'Head Office',
+            'destination_custom' => 'Uttara',
+            'pickup_at'          => '2026-06-18 23:51:00',
+            'purpose'            => 'Visit',
+            'passenger_count'    => 1,
+            'status'             => 'pending',
+        ]);
+
+        $this->actingAs($this->authority)
+            ->post(route('admin.tms.requests.approve', $transportRequest), [
+                'driver_type' => 'company',
+                'driver_id'   => $otherDriver->id,
+                'vehicle_id'  => $this->vehicle->id,
+            ])
+            ->assertRedirect();
+
+        $trip = TmsTripLog::first();
+        $this->assertNotNull($trip);
+
+        $this->actingAs($driverPortal, 'employee')
+            ->post(route('employee.transport.trips.start', $trip))
+            ->assertRedirect(route('employee.transport.trips'));
+
+        $this->assertSame('in_progress', $trip->fresh()->trip_status);
+    }
+
+    public function test_driver_receives_trip_assigned_notification_on_approve(): void
+    {
+        \App\Models\AppSetting::query()->delete();
+        \App\Models\AppSetting::create(array_merge(
+            \App\Models\AppSetting::defaults(),
+            [
+                'notify_popup_enabled' => true,
+                'notify_popup_tms' => true,
+                'notify_popup_tms_request_approved' => true,
+            ]
+        ));
+
+        $transportRequest = TmsTransportRequest::create([
+            'factory_id'         => $this->factory->id,
+            'employee_id'        => $this->requester->id,
+            'pickup_location'    => 'Head Office',
+            'destination_custom' => 'Uttara',
+            'pickup_at'          => '2026-06-18 23:51:00',
+            'purpose'            => 'Visit',
+            'passenger_count'    => 1,
+            'status'             => 'pending',
+        ]);
+
+        $this->driver->syncAssignedVehicles([$this->vehicle->id], $this->vehicle->id);
+
+        $this->actingAs($this->authority)
+            ->post(route('admin.tms.requests.approve', $transportRequest), [
+                'driver_type' => 'company',
+                'driver_id'   => $this->driver->id,
+                'vehicle_id'  => $this->vehicle->id,
+            ])
+            ->assertRedirect();
+
+        $this->assertTrue(
+            $this->driverPortal->fresh()->notifications()
+                ->where('data->type', 'tms_trip_assigned')
+                ->exists()
+        );
+    }
+
     public function test_full_workflow_with_ot_calculation_without_driver_km(): void
     {
         $this->actingAs($this->requesterPortal, 'employee')
