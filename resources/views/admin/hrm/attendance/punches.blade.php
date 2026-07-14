@@ -73,6 +73,7 @@
             <thead>
                 <tr>
                     <th>Time</th>
+                    <th>Image</th>
                     <th>Employee</th>
                     <th>Biometric ID</th>
                     <th>Type</th>
@@ -84,6 +85,19 @@
                 @forelse($punches as $punch)
                     <tr>
                         <td class="text-xs tabular-nums whitespace-nowrap">@portalDateTimeSeconds($punch->punched_at)</td>
+                        <td class="w-14">
+                            @if($punch->photoUrl())
+                                <a href="{{ $punch->photoUrl() }}" target="_blank" rel="noopener noreferrer" class="inline-block">
+                                    <img
+                                        src="{{ $punch->photoUrl() }}"
+                                        alt="Punch selfie{{ $punch->employee ? ' for ' . $punch->employee->name : '' }}"
+                                        class="w-10 h-10 rounded-sm object-cover border border-gray-200 bg-gray-50"
+                                    >
+                                </a>
+                            @else
+                                <span class="text-gray-300 text-xs">—</span>
+                            @endif
+                        </td>
                         <td class="text-sm">
                             @if($punch->employee)
                                 <a href="{{ route('admin.hrm.employees.show', $punch->employee) }}" class="text-brand hover:underline">{{ $punch->employee->name }}</a>
@@ -98,7 +112,7 @@
                         <td class="text-xs text-gray-500">{{ $punch->sourceLabel() }}</td>
                     </tr>
                 @empty
-                    <tr><td colspan="6" class="text-center py-10 text-gray-400">No punch records found.</td></tr>
+                    <tr><td colspan="7" class="text-center py-10 text-gray-400">No punch records found.</td></tr>
                 @endforelse
             </tbody>
         </table>

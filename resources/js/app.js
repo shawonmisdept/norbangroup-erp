@@ -969,7 +969,7 @@ Alpine.data('employeeIndexFilters', () => ({
 
     debouncedSearch() {
         clearTimeout(this.searchTimer);
-        this.searchTimer = setTimeout(() => this.submit(), 350);
+        this.searchTimer = setTimeout(() => this.submit(), 900);
     },
 
     onFactoryChange() {
