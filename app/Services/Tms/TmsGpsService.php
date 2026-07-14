@@ -11,24 +11,14 @@ use Illuminate\Support\Collection;
 
 class TmsGpsService
 {
-    public function isEnabled(?int $factoryId): bool
+    public function isEnabled(?int $factoryId = null): bool
     {
-        if (! $factoryId) {
-            return false;
-        }
-
-        $settings = TmsSetting::where('factory_id', $factoryId)->first();
-
-        return (bool) ($settings?->gps_tracking_enabled ?? false);
+        return (bool) (TmsSetting::current()->gps_tracking_enabled ?? false);
     }
 
-    public function providerForFactory(?int $factoryId): string
+    public function providerForFactory(?int $factoryId = null): string
     {
-        if (! $factoryId) {
-            return 'none';
-        }
-
-        return TmsSetting::where('factory_id', $factoryId)->value('gps_provider') ?? 'none';
+        return TmsSetting::current()->gps_provider ?? 'none';
     }
 
     /** @return Collection<int, TmsGpsPosition> */

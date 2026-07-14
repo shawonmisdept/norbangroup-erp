@@ -19,8 +19,8 @@ class RentalRateResolver
             return (float) $vehicle->rentalVendor->rental_km_rate;
         }
 
-        $settings = TmsSetting::where('factory_id', $vehicle->factory_id)->first();
+        $settings = TmsSetting::current();
 
-        return (float) ($settings?->rental_km_rate ?? TmsSetting::defaultValues()['rental_km_rate']);
+        return (float) ($settings->rental_km_rate ?? TmsSetting::defaultValues()['rental_km_rate']);
     }
 }

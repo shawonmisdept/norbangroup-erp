@@ -105,7 +105,6 @@ class TmsRentalKmBillingTest extends TestCase
     {
         $this->actingAs($this->authority)
             ->put(route('admin.tms.settings.update'), [
-                'factory_id'                => $this->factory->id,
                 'office_start'              => '09:00',
                 'office_end'                => '17:00',
                 'ot_basis'                  => 'global_office_time',
@@ -115,9 +114,9 @@ class TmsRentalKmBillingTest extends TestCase
                 'rental_km_rate'            => 15,
                 'weekend_days'              => [5, 6],
             ])
-            ->assertRedirect(route('admin.tms.settings.index', ['factory_id' => $this->factory->id]));
+            ->assertRedirect(route('admin.tms.settings.index'));
 
-        $settings = TmsSetting::where('factory_id', $this->factory->id)->first();
+        $settings = TmsSetting::current();
         $this->assertSame('130.00', $settings->company_night_bill);
         $this->assertSame('15.00', $settings->rental_km_rate);
         $this->assertSame([5, 6], $settings->weekend_days);
@@ -125,7 +124,7 @@ class TmsRentalKmBillingTest extends TestCase
 
     public function test_rate_resolver_uses_vehicle_then_vendor_then_factory(): void
     {
-        TmsSetting::where('factory_id', $this->factory->id)->update(['rental_km_rate' => 12]);
+        TmsSetting::current()->update(['rental_km_rate' => 12]);
 
         $vendor = TmsRentalVendor::create([
             'factory_id'     => $this->factory->id,
@@ -182,11 +181,14 @@ class TmsRentalKmBillingTest extends TestCase
             'last_odometer_km'   => 1000,
         ]);
 
-        $this->driver->update(['default_vehicle_id' => $vehicle->id]);
+        $this->driver->syncAssignedVehicles([$vehicle->id], $vehicle->id);
 
         $this->actingAs($this->driverPortal, 'employee')
-            ->post(route('employee.transport.odometer.morning'), ['morning_km' => 1000])
-            ->assertRedirect(route('employee.transport.odometer'));
+            ->post(route('employee.transport.odometer.morning'), [
+                'vehicle_id' => $vehicle->id,
+                'morning_km' => 1000,
+            ])
+            ->assertRedirect(route('employee.transport.odometer', ['vehicle_id' => $vehicle->id]));
 
         $log = \App\Models\Tms\TmsDailyOdometerLog::first();
 
@@ -194,7 +196,7 @@ class TmsRentalKmBillingTest extends TestCase
 
         $this->actingAs($this->driverPortal, 'employee')
             ->post(route('employee.transport.odometer.evening', $log), ['evening_km' => 1045])
-            ->assertRedirect(route('employee.transport.odometer'));
+            ->assertRedirect(route('employee.transport.odometer', ['vehicle_id' => $vehicle->id]));
 
         $vehicle->refresh();
 

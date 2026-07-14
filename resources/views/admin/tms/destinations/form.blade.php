@@ -3,24 +3,20 @@
 @section('admin-content')
 @include('partials.erp.page-header', [
     'title' => $destination->exists ? 'Edit Destination' : 'Add Destination',
+    'subtitle' => 'Applies to every unit',
     'actions' => '<a href="' . route('admin.tms.destinations.index') . '" class="erp-btn-secondary">← Back</a>',
 ])
 
 <div class="erp-panel p-6 max-w-xl">
+    <p class="text-sm text-gray-600 mb-6 rounded border border-erp-border bg-gray-50 px-3 py-2">
+        This destination will be available for transport requests from <strong>all units</strong>.
+    </p>
+
     <form method="POST" action="{{ $destination->exists ? route('admin.tms.destinations.update', $destination) : route('admin.tms.destinations.store') }}" class="space-y-4">
         @csrf
         @if($destination->exists)
             @method('PUT')
         @endif
-
-        <div>
-            <label class="erp-label">Unit</label>
-            <select name="factory_id" class="erp-input" required>
-                @foreach($factories as $id => $name)
-                    <option value="{{ $id }}" @selected(old('factory_id', $destination->factory_id) == $id)>{{ $name }}</option>
-                @endforeach
-            </select>
-        </div>
 
         <div>
             <label class="erp-label">Name</label>

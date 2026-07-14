@@ -22,17 +22,12 @@ class GpsController extends Controller
     {
         $factoryId = $request->user()->factory_id ?? $request->integer('factory_id') ?: null;
 
-        $settings = null;
+        $settings = TmsSetting::current();
         $positions = collect();
         $vehicles = [];
 
         if ($factoryId) {
             $this->authorizeFactoryAccess($request, $factoryId);
-
-            $settings = TmsSetting::firstOrCreate(
-                ['factory_id' => $factoryId],
-                TmsSetting::defaultValues()
-            );
 
             $query = TmsGpsPosition::query()
                 ->with(['vehicle', 'tripLog'])

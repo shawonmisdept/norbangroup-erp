@@ -10,8 +10,8 @@ class HolidayDetector
 {
     public function isHolidayOrWeekend(int $factoryId, Carbon $date): bool
     {
-        $settings = TmsSetting::where('factory_id', $factoryId)->first();
-        $weekendDays = $settings?->weekend_days ?? TmsSetting::defaultValues()['weekend_days'];
+        $settings = TmsSetting::current();
+        $weekendDays = $settings->weekend_days ?? TmsSetting::defaultValues()['weekend_days'];
 
         if (in_array($date->dayOfWeek, $weekendDays, true)) {
             return true;
@@ -26,16 +26,14 @@ class HolidayDetector
 
     public function officeStart(int $factoryId, Carbon $date): Carbon
     {
-        $settings = TmsSetting::where('factory_id', $factoryId)->first();
-        $start = $settings?->office_start ?? TmsSetting::defaultValues()['office_start'];
+        $start = TmsSetting::current()->office_start ?? TmsSetting::defaultValues()['office_start'];
 
         return $this->combineDateAndTime($date, $start);
     }
 
     public function officeEnd(int $factoryId, Carbon $date): Carbon
     {
-        $settings = TmsSetting::where('factory_id', $factoryId)->first();
-        $end = $settings?->office_end ?? TmsSetting::defaultValues()['office_end'];
+        $end = TmsSetting::current()->office_end ?? TmsSetting::defaultValues()['office_end'];
 
         return $this->combineDateAndTime($date, $end);
     }

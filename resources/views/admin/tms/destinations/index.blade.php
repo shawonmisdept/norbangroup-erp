@@ -3,35 +3,20 @@
 @section('admin-content')
 @include('partials.erp.page-header', [
     'title' => 'Destinations',
-    'subtitle' => 'Predefined transport destinations',
+    'subtitle' => 'Shared transport destinations for every unit',
     'actions' => auth()->user()->canManageTmsSubmodule('destinations')
         ? '<a href="' . route('admin.tms.destinations.create') . '" class="erp-btn-primary !py-2 !px-4 text-xs">Add Destination</a>'
         : '',
 ])
 
-<form method="GET" class="erp-panel p-4 mb-4 grid grid-cols-2 md:grid-cols-4 gap-3 items-end">
-    @if($factories !== [])
-        <div>
-            <label class="erp-label">Unit</label>
-            <select name="factory_id" class="erp-input">
-                <option value="">All</option>
-                @foreach($factories as $id => $name)
-                    <option value="{{ $id }}" @selected(($filters['factory_id'] ?? '') == $id)>{{ $name }}</option>
-                @endforeach
-            </select>
-        </div>
-    @endif
-    <div class="flex gap-2">
-        <button type="submit" class="erp-btn-primary">Apply</button>
-        <a href="{{ route('admin.tms.destinations.index') }}" class="erp-btn-secondary">Reset</a>
-    </div>
-</form>
+<p class="text-sm text-gray-600 mb-4 rounded border border-erp-border bg-gray-50 px-3 py-2 max-w-3xl">
+    Destinations are shared across <strong>all units</strong>. Employees and transport requests from any unit can use this list.
+</p>
 
 <div class="erp-panel overflow-hidden">
     <table class="erp-table">
         <thead>
             <tr>
-                <th>Unit</th>
                 <th>Name</th>
                 <th>Address</th>
                 <th>Active</th>
@@ -41,7 +26,6 @@
         <tbody>
             @forelse($destinations as $d)
                 <tr>
-                    <td class="text-xs">{{ $d->factory?->name }}</td>
                     <td>{{ $d->name }}</td>
                     <td class="text-xs">{{ $d->address ?? '—' }}</td>
                     <td>
@@ -59,7 +43,7 @@
                     </td>
                 </tr>
             @empty
-                <tr><td colspan="5" class="text-center py-8 text-gray-400">No destinations yet.</td></tr>
+                <tr><td colspan="4" class="text-center py-8 text-gray-400">No destinations yet.</td></tr>
             @endforelse
         </tbody>
     </table>

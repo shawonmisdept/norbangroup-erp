@@ -30,9 +30,10 @@ class DriverPayCalculator
             return $this->zeroPay();
         }
 
-        $settings = TmsSetting::where('factory_id', $tripLog->factory_id)->first()
-            ?? new TmsSetting(TmsSetting::defaultValues());
-
+        $settings = TmsSetting::current();
+        if (! $settings->exists) {
+            $settings = new TmsSetting(TmsSetting::defaultValues());
+        }
         if ($tripLog->rental_driver_id) {
             return $this->calculateRentalDriverPay($tripLog, $request, $settings);
         }
@@ -145,8 +146,8 @@ class DriverPayCalculator
 
     public function otThreshold(int $factoryId, TmsDriver $driver, Carbon $pickupAt): ?Carbon
     {
-        $settings = TmsSetting::where('factory_id', $factoryId)->first();
-        $basis = $settings?->ot_basis ?? 'global_office_time';
+        $settings = TmsSetting::current();
+        $basis = $settings->ot_basis ?? 'global_office_time';
 
         if ($basis === 'employee_shift_end') {
             $employee = Employee::with('shift')->find($driver->employee_id);

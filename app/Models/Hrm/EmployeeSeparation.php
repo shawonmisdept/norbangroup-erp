@@ -30,13 +30,14 @@ class EmployeeSeparation extends Model
     ];
 
     protected $casts = [
-        'application_date'  => 'date',
-        'last_working_day'  => 'date',
-        'applied_at'        => 'datetime',
-        'approved_at'       => 'datetime',
-        'rejected_at'       => 'datetime',
-        'exit_clearance'    => 'array',
-        'exit_interview_at' => 'datetime',
+        'application_date'      => 'date',
+        'last_working_day'      => 'date',
+        'applied_at'            => 'datetime',
+        'approved_at'           => 'datetime',
+        'rejected_at'           => 'datetime',
+        'exit_clearance'        => 'array',
+        'exit_interview_at'     => 'datetime',
+        'current_approval_step' => 'integer',
     ];
 
     protected static function booted(): void

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Employee;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Employee\Concerns\ResolvesPortalEmployee;
 use App\Models\Hrm\LeaveApplication;
 use App\Models\Hrm\LeaveType;
 use App\Services\Hrm\LeaveService;
@@ -10,6 +11,8 @@ use Illuminate\Http\Request;
 
 class LeaveController extends Controller
 {
+    use ResolvesPortalEmployee;
+
     public function index(Request $request, LeaveService $leaveService)
     {
         $employee = $request->user('employee')->employee;
@@ -74,9 +77,9 @@ class LeaveController extends Controller
 
     public function approve(Request $request, LeaveApplication $application, LeaveService $leaveService)
     {
-        $employee = $request->user('employee')->employee;
+        $employee = $this->portalEmployee($request);
 
-        if ($application->status !== 'pending' || $application->current_approval_step !== LeaveService::STEP_REPORTING) {
+        if ($application->status !== 'pending' || (int) $application->current_approval_step !== LeaveService::STEP_REPORTING) {
             abort(403);
         }
 
@@ -87,15 +90,15 @@ class LeaveController extends Controller
         $leaveService->approveByEmployee($application, $employee, $validated['notes'] ?? null);
 
         return redirect()
-            ->route('employee.leave')
+            ->to($this->approvalReturnUrl($request))
             ->with('success', 'Leave application forwarded to HR.');
     }
 
     public function reject(Request $request, LeaveApplication $application, LeaveService $leaveService)
     {
-        $employee = $request->user('employee')->employee;
+        $employee = $this->portalEmployee($request);
 
-        if ($application->status !== 'pending' || $application->current_approval_step !== LeaveService::STEP_REPORTING) {
+        if ($application->status !== 'pending' || (int) $application->current_approval_step !== LeaveService::STEP_REPORTING) {
             abort(403);
         }
 
@@ -106,15 +109,15 @@ class LeaveController extends Controller
         $leaveService->rejectByEmployee($application, $employee, $validated['rejection_reason']);
 
         return redirect()
-            ->route('employee.leave')
+            ->to($this->approvalReturnUrl($request))
             ->with('success', 'Leave application rejected.');
     }
 
     public function cancel(Request $request, LeaveApplication $application, LeaveService $leaveService)
     {
-        $employee = $request->user('employee')->employee;
+        $employee = $this->portalEmployee($request);
 
-        if ($application->employee_id !== $employee->id) {
+        if ((int) $application->employee_id !== (int) $employee->id) {
             abort(403);
         }
 
@@ -123,5 +126,14 @@ class LeaveController extends Controller
         return redirect()
             ->route('employee.leave')
             ->with('success', 'Leave application cancelled.');
+    }
+
+    private function approvalReturnUrl(Request $request): string
+    {
+        if ($request->routeIs('employee.team.leave.*')) {
+            return route('employee.team');
+        }
+
+        return route('employee.leave');
     }
 }

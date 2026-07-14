@@ -169,7 +169,7 @@ class EmployeeSeparationService
             throw ValidationException::withMessages(['status' => 'This separation request is no longer pending.']);
         }
 
-        if ($separation->current_approval_step !== self::STEP_HR) {
+        if ((int) $separation->current_approval_step !== self::STEP_HR) {
             throw ValidationException::withMessages(['status' => 'Reporting person approval is required before HR can approve.']);
         }
 
@@ -211,7 +211,7 @@ class EmployeeSeparationService
             throw ValidationException::withMessages(['status' => 'This separation request is no longer pending.']);
         }
 
-        if ($separation->current_approval_step !== self::STEP_HR) {
+        if ((int) $separation->current_approval_step !== self::STEP_HR) {
             throw ValidationException::withMessages(['status' => 'This request is still awaiting reporting person approval.']);
         }
 
@@ -220,7 +220,7 @@ class EmployeeSeparationService
 
     public function cancel(EmployeeSeparation $separation, Employee $employee): EmployeeSeparation
     {
-        if ($separation->employee_id !== $employee->id) {
+        if ((int) $separation->employee_id !== (int) $employee->id) {
             abort(403);
         }
 
@@ -246,7 +246,7 @@ class EmployeeSeparationService
 
     public function saveExitData(EmployeeSeparation $separation, array $data): EmployeeSeparation
     {
-        if (! $separation->isPending() || $separation->current_approval_step !== self::STEP_HR) {
+        if (! $separation->isPending() || (int) $separation->current_approval_step !== self::STEP_HR) {
             throw ValidationException::withMessages(['status' => 'Exit clearance can only be updated while awaiting HR approval.']);
         }
 
@@ -375,13 +375,13 @@ class EmployeeSeparationService
 
     private function assertCanEmployeeActOnStep(EmployeeSeparation $separation, Employee $approver, int $step): void
     {
-        if (! $separation->isPending() || $separation->current_approval_step !== $step) {
+        if (! $separation->isPending() || (int) $separation->current_approval_step !== $step) {
             throw ValidationException::withMessages(['status' => 'You cannot act on this separation request right now.']);
         }
 
         $approval = $separation->approvals()->where('step', $step)->first();
 
-        if (! $approval || $approval->approver_employee_id !== $approver->id) {
+        if (! $approval || (int) $approval->approver_employee_id !== (int) $approver->id) {
             throw ValidationException::withMessages(['status' => 'You are not authorized to approve this step.']);
         }
     }

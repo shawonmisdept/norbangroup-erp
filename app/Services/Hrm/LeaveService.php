@@ -266,7 +266,7 @@ class LeaveService
             ]);
         }
 
-        if ($application->current_approval_step !== self::STEP_HR) {
+        if ((int) $application->current_approval_step !== self::STEP_HR) {
             throw ValidationException::withMessages([
                 'status' => 'Reporting person approval is required before HR can approve.',
             ]);
@@ -321,7 +321,7 @@ class LeaveService
             ]);
         }
 
-        if ($application->current_approval_step !== self::STEP_HR) {
+        if ((int) $application->current_approval_step !== self::STEP_HR) {
             throw ValidationException::withMessages([
                 'status' => 'This application is still awaiting reporting person approval.',
             ]);
@@ -332,7 +332,7 @@ class LeaveService
 
     public function cancel(LeaveApplication $application, Employee $employee): LeaveApplication
     {
-        if ($application->employee_id !== $employee->id) {
+        if ((int) $application->employee_id !== (int) $employee->id) {
             abort(403);
         }
 
@@ -532,7 +532,7 @@ class LeaveService
             ]);
         }
 
-        if ($application->current_approval_step !== $step) {
+        if ((int) $application->current_approval_step !== $step) {
             throw ValidationException::withMessages([
                 'status' => 'This application is not awaiting your approval.',
             ]);
@@ -540,7 +540,7 @@ class LeaveService
 
         $application->loadMissing('employee');
 
-        if ($application->employee->reporting_to_id !== $approver->id) {
+        if ((int) $application->employee->reporting_to_id !== (int) $approver->id) {
             abort(403);
         }
     }

@@ -72,7 +72,7 @@ return [
         ],
         'destinations' => [
             'label'       => 'Destinations',
-            'description' => 'Standard routes & destination master list',
+            'description' => 'Shared destination master list for all units',
             'permission'  => 'tms.settings.view',
             'manage'      => 'tms.settings.manage',
             'route'       => 'admin.tms.destinations.index',

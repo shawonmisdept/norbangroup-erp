@@ -118,7 +118,7 @@ class TmsGpsIntegrationTest extends TestCase
 
     public function test_device_api_rejects_missing_token(): void
     {
-        TmsSetting::where('factory_id', $this->factory->id)->update(['gps_provider' => 'device_api']);
+        TmsSetting::current()->update(['gps_provider' => 'device_api']);
 
         $this->postJson(route('api.tms.gps.positions.store'), [
             'vehicle_id' => $this->vehicle->id,
@@ -129,7 +129,7 @@ class TmsGpsIntegrationTest extends TestCase
 
     public function test_device_api_records_position_with_token(): void
     {
-        TmsSetting::where('factory_id', $this->factory->id)->update(['gps_provider' => 'device_api']);
+        TmsSetting::current()->update(['gps_provider' => 'device_api']);
 
         $this->withToken('test-gps-token-secret')
             ->postJson(route('api.tms.gps.positions.store'), [

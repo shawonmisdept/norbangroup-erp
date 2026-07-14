@@ -10,7 +10,6 @@ use App\Services\Tms\TransportRequestService;
 use App\Services\Tms\TripService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 
 class RequestController extends Controller
 {
@@ -35,10 +34,7 @@ class RequestController extends Controller
     {
         $employee = $this->portalEmployee($request);
 
-        $destinations = TmsDestination::where('factory_id', $employee->factory_id)
-            ->where('is_active', true)
-            ->orderBy('name')
-            ->get();
+        $destinations = TmsDestination::activeShared();
 
         return view('employee.transport.create', compact('employee', 'destinations'));
     }
@@ -62,8 +58,9 @@ class RequestController extends Controller
         }
 
         if (! empty($validated['destination_id'])) {
-            $exists = TmsDestination::where('id', $validated['destination_id'])
-                ->where('factory_id', $employee->factory_id)
+            $exists = TmsDestination::query()
+                ->whereKey($validated['destination_id'])
+                ->where('is_active', true)
                 ->exists();
             if (! $exists) {
                 abort(403);
@@ -91,10 +88,7 @@ class RequestController extends Controller
                 ->with('error', 'Only pending requests can be edited.');
         }
 
-        $destinations = TmsDestination::where('factory_id', $employee->factory_id)
-            ->where('is_active', true)
-            ->orderBy('name')
-            ->get();
+        $destinations = TmsDestination::activeShared();
 
         return view('employee.transport.edit', compact('employee', 'destinations', 'transportRequest'));
     }
@@ -118,8 +112,9 @@ class RequestController extends Controller
         }
 
         if (! empty($validated['destination_id'])) {
-            $exists = TmsDestination::where('id', $validated['destination_id'])
-                ->where('factory_id', $employee->factory_id)
+            $exists = TmsDestination::query()
+                ->whereKey($validated['destination_id'])
+                ->where('is_active', true)
                 ->exists();
             if (! $exists) {
                 abort(403);

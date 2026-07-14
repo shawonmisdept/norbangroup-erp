@@ -10,7 +10,7 @@
     <div class="erp-panel p-4 mb-4 border-l-4 border-amber-400 bg-amber-50/60 text-sm text-amber-900">
         <p class="font-semibold">GPS tracking disabled</p>
         <p class="mt-1 text-amber-800/90">Enable GPS under
-            <a href="{{ route('admin.tms.settings.index', ['factory_id' => $factoryId]) }}" class="font-semibold underline">TMS Settings</a>
+            <a href="{{ route('admin.tms.settings.index') }}" class="font-semibold underline">TMS Settings</a>
             and choose <strong>Driver Mobile GPS</strong> or <strong>Telematics API</strong>.
         </p>
     </div>

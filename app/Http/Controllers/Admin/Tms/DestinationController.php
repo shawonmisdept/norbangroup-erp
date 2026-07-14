@@ -2,89 +2,89 @@
 
 namespace App\Http\Controllers\Admin\Tms;
 
-use App\Http\Controllers\Admin\Hrm\Concerns\ScopesHrmFactory;
 use App\Http\Controllers\Controller;
 use App\Models\Tms\TmsDestination;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\ValidationException;
 
 class DestinationController extends Controller
 {
-    use ScopesHrmFactory;
-
     public function index(Request $request)
     {
-        $query = TmsDestination::query()->with('factory')->latest('id');
-        $this->scopeToUserFactory($query, $request);
-
-        if ($request->filled('factory_id')) {
-            $query->where('factory_id', $request->factory_id);
-        }
+        $destinations = TmsDestination::query()
+            ->shared()
+            ->paginate(25)
+            ->withQueryString();
 
         return view('admin.tms.destinations.index', [
-            'destinations' => $query->paginate(25)->withQueryString(),
-            'factories'    => $this->factoryOptions($request),
-            'filters'      => $request->only(['factory_id']),
+            'destinations' => $destinations,
         ]);
     }
 
-    public function create(Request $request)
+    public function create()
     {
         return view('admin.tms.destinations.form', [
             'destination' => new TmsDestination(['is_active' => true]),
-            'factories'   => $this->factoryOptions($request),
         ]);
     }
 
     public function store(Request $request)
     {
         $validated = $this->validateDestination($request);
-        $this->authorizeFactoryAccess($request, (int) $validated['factory_id']);
+        $factoryId = TmsDestination::anchorFactoryId();
+
+        if (! $factoryId) {
+            throw ValidationException::withMessages([
+                'name' => 'No active unit found to anchor destinations.',
+            ]);
+        }
 
         TmsDestination::create($validated + [
+            'factory_id' => $factoryId,
             'created_by' => $request->user()->id,
             'updated_by' => $request->user()->id,
         ]);
 
-        return redirect()->route('admin.tms.destinations.index')->with('success', 'Destination created.');
+        return redirect()
+            ->route('admin.tms.destinations.index')
+            ->with('success', 'Destination created for all units.');
     }
 
-    public function edit(Request $request, TmsDestination $destination)
+    public function edit(TmsDestination $destination)
     {
-        $this->authorizeFactoryAccess($request, $destination->factory_id);
-
         return view('admin.tms.destinations.form', [
             'destination' => $destination,
-            'factories'   => $this->factoryOptions($request),
         ]);
     }
 
     public function update(Request $request, TmsDestination $destination)
     {
-        $this->authorizeFactoryAccess($request, $destination->factory_id);
         $destination->update($this->validateDestination($request, $destination) + [
             'updated_by' => $request->user()->id,
         ]);
 
-        return redirect()->route('admin.tms.destinations.index')->with('success', 'Destination updated.');
+        return redirect()
+            ->route('admin.tms.destinations.index')
+            ->with('success', 'Destination updated for all units.');
     }
 
-    public function destroy(Request $request, TmsDestination $destination)
+    public function destroy(TmsDestination $destination)
     {
-        $this->authorizeFactoryAccess($request, $destination->factory_id);
         $destination->delete();
 
-        return redirect()->route('admin.tms.destinations.index')->with('success', 'Destination deleted.');
+        return redirect()
+            ->route('admin.tms.destinations.index')
+            ->with('success', 'Destination deleted.');
     }
 
     private function validateDestination(Request $request, ?TmsDestination $destination = null): array
     {
         return $request->validate([
-            'factory_id' => ['required', 'exists:factories,id'],
-            'name'       => [
+            'name' => [
                 'required', 'string', 'max:255',
                 Rule::unique('tms_destinations', 'name')
-                    ->where('factory_id', $request->input('factory_id'))
+                    ->whereNull('deleted_at')
                     ->ignore($destination?->id),
             ],
             'address'   => ['nullable', 'string', 'max:500'],

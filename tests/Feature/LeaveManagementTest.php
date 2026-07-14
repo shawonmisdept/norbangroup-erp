@@ -180,6 +180,44 @@ class LeaveManagementTest extends TestCase
         ]);
     }
 
+    public function test_reporting_person_can_approve_via_team_approvals_route(): void
+    {
+        $this->actingAs($this->portalUser, 'employee')
+            ->post(route('employee.leave.apply.store'), [
+                'leave_type_id' => $this->casualLeave->id,
+                'start_date'    => '2026-06-18',
+                'end_date'      => '2026-06-18',
+                'reason'        => 'Team page approve',
+            ]);
+
+        $application = LeaveApplication::first();
+        $this->assertNotNull($application);
+
+        // Simulate MySQL PDO string attributes that previously tripped strict !== checks.
+        $application->setRawAttributes(array_merge($application->getAttributes(), [
+            'current_approval_step' => '1',
+            'employee_id'           => (string) $application->employee_id,
+        ]));
+
+        $this->employee->setRawAttributes(array_merge($this->employee->getAttributes(), [
+            'reporting_to_id' => (string) $this->manager->id,
+        ]));
+        $application->setRelation('employee', $this->employee);
+
+        $this->assertSame('1', $application->getAttributes()['current_approval_step']);
+        $this->assertSame(1, $application->current_approval_step);
+
+        $this->actingAs($this->managerPortalUser, 'employee')
+            ->from(route('employee.team'))
+            ->post(route('employee.team.leave.approve', $application->getKey()))
+            ->assertRedirect(route('employee.team'))
+            ->assertSessionHas('success');
+
+        $application->refresh();
+        $this->assertSame('pending', $application->status);
+        $this->assertSame(LeaveService::STEP_HR, (int) $application->current_approval_step);
+    }
+
     public function test_hr_cannot_approve_before_reporting_person(): void
     {
         $this->actingAs($this->portalUser, 'employee')

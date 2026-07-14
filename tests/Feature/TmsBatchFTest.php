@@ -154,7 +154,6 @@ class TmsBatchFTest extends TestCase
 
         $this->actingAs($this->user)
             ->put(route('admin.tms.settings.update'), [
-                'factory_id'           => $this->factory->id,
                 'office_start'         => '09:00',
                 'office_end'           => '17:00',
                 'ot_basis'             => 'global_office_time',
@@ -166,12 +165,48 @@ class TmsBatchFTest extends TestCase
                 'gps_tracking_enabled' => 1,
                 'gps_provider'         => 'device_api',
             ])
-            ->assertRedirect();
+            ->assertRedirect(route('admin.tms.settings.index'));
 
-        $settings = TmsSetting::where('factory_id', $this->factory->id)->first();
+        $settings = TmsSetting::current();
         $this->assertTrue($settings->gps_tracking_enabled);
         $this->assertSame('device_api', $settings->gps_provider);
     }
+
+    public function test_tms_settings_are_shared_across_units(): void
+    {
+        $otherFactory = Factory::create(['name' => 'Other Unit', 'is_active' => true]);
+
+        TmsSetting::create(array_merge(
+            TmsSetting::defaultValues(),
+            ['factory_id' => $this->factory->id, 'rental_km_rate' => 10]
+        ));
+        TmsSetting::create(array_merge(
+            TmsSetting::defaultValues(),
+            ['factory_id' => $otherFactory->id, 'rental_km_rate' => 25]
+        ));
+
+        $this->actingAs($this->user)
+            ->put(route('admin.tms.settings.update'), [
+                'office_start'              => '08:30',
+                'office_end'                => '18:00',
+                'ot_basis'                  => 'global_office_time',
+                'company_night_bill'        => 150,
+                'company_holiday_duty_bill' => 350,
+                'rental_ot_hourly_rate'     => 130,
+                'rental_km_rate'            => 15,
+                'weekend_days'              => [5, 6],
+                'gps_tracking_enabled'      => 1,
+                'gps_provider'              => 'browser',
+            ])
+            ->assertRedirect(route('admin.tms.settings.index'));
+
+        $this->assertSame(1, TmsSetting::count());
+        $settings = TmsSetting::current();
+        $this->assertStringStartsWith('08:30', (string) $settings->office_start);
+        $this->assertSame(15.0, (float) $settings->rental_km_rate);
+        $this->assertTrue($settings->gps_tracking_enabled);
+    }
+
 
     public function test_whatsapp_providers_are_registered_in_config(): void
     {

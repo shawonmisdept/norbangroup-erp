@@ -87,7 +87,7 @@
             @if($gpsEnabled)
                 <span class="erp-badge bg-green-100 text-green-800 text-[10px]">Enabled</span>
             @else
-                <a href="{{ route('admin.tms.settings.index', ['factory_id' => $trip->factory_id]) }}" class="text-xs text-indigo-600">Enable in Settings</a>
+                <a href="{{ route('admin.tms.settings.index') }}" class="text-xs text-indigo-600">Enable in Settings</a>
             @endif
         </div>
         @if($trip->gpsPositions->isNotEmpty())

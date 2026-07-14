@@ -28,12 +28,13 @@ class LeaveApplication extends Model
     ];
 
     protected $casts = [
-        'start_date'  => 'date',
-        'end_date'    => 'date',
-        'total_days'  => 'decimal:1',
-        'applied_at'  => 'datetime',
-        'approved_at' => 'datetime',
-        'rejected_at' => 'datetime',
+        'start_date'            => 'date',
+        'end_date'              => 'date',
+        'total_days'            => 'decimal:1',
+        'applied_at'            => 'datetime',
+        'approved_at'           => 'datetime',
+        'rejected_at'           => 'datetime',
+        'current_approval_step' => 'integer',
     ];
 
     protected static function booted(): void

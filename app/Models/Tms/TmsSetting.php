@@ -31,6 +31,63 @@ class TmsSetting extends Model
         ];
     }
 
+    /** Shared TMS settings for every unit (single source of truth). */
+    public static function current(): self
+    {
+        $settings = static::query()->orderBy('id')->first();
+
+        if ($settings) {
+            return $settings;
+        }
+
+        $factoryId = Factory::query()
+            ->where('is_active', true)
+            ->orderBy('id')
+            ->value('id');
+
+        if (! $factoryId) {
+            return new static(static::defaultValues());
+        }
+
+        return static::create(array_merge(
+            ['factory_id' => $factoryId],
+            static::defaultValues()
+        ));
+    }
+
+    /**
+     * Persist shared settings and collapse any legacy per-unit rows
+     * so office time / rates / GPS stay identical for all units.
+     *
+     * @param  array<string, mixed>  $attributes
+     */
+    public static function saveShared(array $attributes): self
+    {
+        $settings = static::current();
+
+        if (! $settings->exists) {
+            $factoryId = Factory::query()->where('is_active', true)->orderBy('id')->value('id');
+
+            if (! $factoryId) {
+                throw new \RuntimeException('No active factory found for TMS settings.');
+            }
+
+            $settings = static::create(array_merge(
+                ['factory_id' => $factoryId],
+                static::defaultValues(),
+                $attributes,
+            ));
+        } else {
+            $settings->update($attributes);
+        }
+
+        static::query()
+            ->where('id', '!=', $settings->id)
+            ->delete();
+
+        return $settings->fresh() ?? $settings;
+    }
+
     /** @return array<string, mixed> */
     public static function defaultValues(): array
     {
@@ -40,7 +97,7 @@ class TmsSetting extends Model
             'ot_basis'                    => 'global_office_time',
             'company_night_bill'          => 120,
             'company_holiday_duty_bill'   => 320,
-            'rental_ot_hourly_rate'      => 120,
+            'rental_ot_hourly_rate'       => 120,
             'rental_km_rate'              => 12,
             'weekend_days'                => [5, 6],
             'gps_tracking_enabled'        => false,
