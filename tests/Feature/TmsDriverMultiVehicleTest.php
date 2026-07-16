@@ -150,7 +150,7 @@ class TmsDriverMultiVehicleTest extends TestCase
 
     public function test_driver_can_be_assigned_vehicles_from_another_unit(): void
     {
-        $otherFactory = Factory::create(['name' => 'Norban Comtex Limited', 'is_active' => true]);
+        $otherFactory = Factory::create(['name' => 'NCL', 'is_active' => true]);
 
         $crossUnitRole = Role::create([
             'name'        => 'TMS Cross Unit Driver Admin',

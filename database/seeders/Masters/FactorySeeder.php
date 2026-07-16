@@ -7,8 +7,16 @@ use Illuminate\Database\Seeder;
 
 class FactorySeeder extends Seeder
 {
+    /** @var array<string, string> new name => legacy name */
+    private const LEGACY_NAMES = [
+        'NCL' => 'Norban Comtex Limited',
+        'HAL' => 'Hornbill Apparel Ltd',
+    ];
+
     public function run(): void
     {
+        $this->renameLegacyFactories();
+
         $records = [
             [
                 'name'    => 'Head Office',
@@ -16,12 +24,12 @@ class FactorySeeder extends Seeder
                 'phone'   => '+88-09666-707635',
             ],
             [
-                'name'    => 'Norban Comtex Limited',
+                'name'    => 'NCL',
                 'address' => null,
                 'phone'   => null,
             ],
             [
-                'name'    => 'Hornbill Apparel Ltd',
+                'name'    => 'HAL',
                 'address' => null,
                 'phone'   => null,
             ],
@@ -56,6 +64,30 @@ class FactorySeeder extends Seeder
                 ['name' => $record['name']],
                 array_merge($record, ['is_active' => true])
             );
+        }
+    }
+
+    private function renameLegacyFactories(): void
+    {
+        foreach (self::LEGACY_NAMES as $newName => $legacyName) {
+            $legacy = Factory::query()->where('name', $legacyName)->first();
+
+            if (! $legacy) {
+                continue;
+            }
+
+            $duplicate = Factory::query()
+                ->where('name', $newName)
+                ->whereKeyNot($legacy->id)
+                ->exists();
+
+            if ($duplicate) {
+                $this->command?->warn("Skipping rename {$legacyName} → {$newName}: target name already exists.");
+
+                continue;
+            }
+
+            $legacy->update(['name' => $newName]);
         }
     }
 }

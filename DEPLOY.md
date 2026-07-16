@@ -58,7 +58,143 @@ php artisan view:cache
 
 ---
 
-## Production queue worker (5000+ employees)
+## Production — Fresh database + full seed
+
+> **Warning:** This **deletes all portal data** (orders, employees, vehicles, bills, etc.).  
+> Production is already running — take a **full backup** before running.  
+> `.env`, uploaded files, and App Settings are **not** restored by seed.
+
+### Step 0 — Backup (required)
+
+1. **cPanel → Backup** or **phpMyAdmin → Export** — save the full database as `.sql`
+2. Copy `storage/app/public/` if you have uploads (logos, documents)
+3. Note current **App Settings** (mail, SMS, logos) — re-enter after seed if needed
+
+### Step 1 — Latest code on server
+
+```bash
+cd ~/portal.norbangroup.com
+git pull origin main
+php composer.phar install --no-dev --optimize-autoloader
+```
+
+Confirm seed data files exist:
+
+- `database/seeders/data/tms_vehicles.php`
+- `database/seeders/data/tms_maintenance.php`
+
+### Step 2 — Fresh migrate + main seed
+
+```bash
+php artisan migrate:fresh --seed --force
+```
+
+This seeds:
+
+| Seeder | Data |
+|--------|------|
+| `AppSettingSeeder` | Default app settings |
+| `RolePermissionSeeder` | Roles & permissions |
+| `KbSeeder` | Knowledge base |
+| Demo users | 6 login accounts (see below) |
+| `MasterDataSeeder` | Factories (**NCL**, **HAL**, Head Office, …), HRM masters, employees, salary, order/garment masters |
+
+### Step 3 — TMS seed (required — not in DatabaseSeeder)
+
+Run in order — vehicles first, then maintenance:
+
+```bash
+php artisan db:seed --class=Database\\Seeders\\Tms\\VehicleSeeder --force
+php artisan db:seed --class=Database\\Seeders\\Tms\\MaintenanceSeeder --force
+```
+
+Expected output:
+
+- **51** vehicles
+- **~2488** maintenance bills (MaintenanceSeeder reports created/updated/pruned counts)
+
+### Step 4 — Rebuild cache
+
+```bash
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
+```
+
+### Step 5 — Verify
+
+```bash
+php database/seeders/scripts/check_db_seed_state.php
+php database/seeders/scripts/audit_tms_seed_integrity.php
+```
+
+| Check | Expected |
+|-------|----------|
+| Vehicles | 51 |
+| Maintenance bills | 2400+ |
+| `DM-GA-30-0062`, `DM-KHA-23-5772`, `DM-U-4801` | vehicle=yes, bills > 0 |
+| Orphan maintenance | 0 |
+
+### Step 6 — Post-seed (manual)
+
+- **Admin → App Settings** — mail, SMS, logos, notifications
+- **Admin → Roles** — confirm HRM/TMS permissions
+- **HRM → Biometric Devices** — device IP/serial for each factory
+- **Queue worker / cron** — see [Production queue worker](#production-queue-worker-5000-employees) above
+
+### Default logins (after seed)
+
+| Role | Email | Password |
+|------|-------|----------|
+| Administrator | `admin@norbangroup.com` | `password` |
+| Management | `mansifsiddiqui@gmail.com` | `password` |
+| Transport Authority | `transport@test.com` | `password` |
+| HR Manager | `hr-manager@test.com` | `password` |
+
+Change passwords after first login on production.
+
+### One-shot copy-paste (after backup)
+
+```bash
+cd ~/portal.norbangroup.com
+git pull origin main
+php composer.phar install --no-dev --optimize-autoloader
+php artisan migrate:fresh --seed --force
+php artisan db:seed --class=Database\\Seeders\\Tms\\VehicleSeeder --force
+php artisan db:seed --class=Database\\Seeders\\Tms\\MaintenanceSeeder --force
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
+php database/seeders/scripts/check_db_seed_state.php
+```
+
+### Common mistakes
+
+1. Skipping **TMS seeders** — portal works but no vehicles/maintenance
+2. Running **MaintenanceSeeder before VehicleSeeder** — bills skipped
+3. **`migrate:fresh` without backup** — all live data lost
+4. Forgetting **App Settings** — mail/notifications stop working
+
+### Factory rename only (NCL / HAL — no full reseed)
+
+If factories still show **Norban Comtex Limited** or **Hornbill Apparel Ltd** after deploy:
+
+```bash
+cd ~/portal.norbangroup.com
+git pull origin main
+php artisan migrate --force
+php artisan config:cache
+```
+
+Or run the seeder alone (preserves factory IDs and linked data):
+
+```bash
+php artisan db:seed --class=Database\\Seeders\\Masters\\FactorySeeder --force
+```
+
+Then refresh **Admin → Master Data → Factories** — names should be **NCL** and **HAL**.
+
+---
 
 In server `.env`:
 

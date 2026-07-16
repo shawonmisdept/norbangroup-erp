@@ -11,8 +11,8 @@ class VehicleSeeder extends Seeder
 {
     /** Spreadsheet Owner codes → factory names. */
     private const UNIT_FACTORY_NAMES = [
-        'NCL'    => 'Norban Comtex Limited',
-        'HAL'    => 'Hornbill Apparel Ltd',
+        'NCL'    => 'NCL',
+        'HAL'    => 'HAL',
         'BD COM' => 'BD Com',
         'BDCOM'  => 'BD Com',
         'NFL'    => 'NFL',

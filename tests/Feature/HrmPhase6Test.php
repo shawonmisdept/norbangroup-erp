@@ -77,7 +77,7 @@ class HrmPhase6Test extends TestCase
         $this->seed(\Database\Seeders\Hrm\HrLetterTemplateSeeder::class);
 
         $factory = Factory::create([
-            'name'      => 'Norban Comtex Limited',
+            'name'      => 'NCL',
             'address'   => 'Head office, House-8/B, Road-1, Gulshan-1, Dhaka-1212.',
             'is_active' => true,
         ]);
@@ -127,7 +127,7 @@ class HrmPhase6Test extends TestCase
         $this->assertStringContainsString('Shawonoor Rahman', $letter->content);
         $this->assertStringContainsString('Data Entry Operator', $letter->content);
         $this->assertStringContainsString('MIS', $letter->content);
-        $this->assertStringContainsString('Norban Comtex Limited', $letter->content);
+        $this->assertStringContainsString('NCL', $letter->content);
         $this->assertStringContainsString('Gulshan-1, Dhaka-1212', $letter->content);
         $this->assertStringContainsString('Musfique Adnan', $letter->content);
         $this->assertStringContainsString('01755511837', $letter->content);

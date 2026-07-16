@@ -59,7 +59,7 @@ class TmsVehicleShowTest extends TestCase
     public function test_vehicle_edit_allocated_user_lists_employees_from_all_units_for_cross_unit_user(): void
     {
         $ho = Factory::create(['name' => 'Head Office', 'is_active' => true]);
-        $ncl = Factory::create(['name' => 'Norban Comtex Limited', 'is_active' => true]);
+        $ncl = Factory::create(['name' => 'NCL', 'is_active' => true]);
 
         $role = Role::create([
             'name'        => 'Transport Admin',
@@ -108,7 +108,7 @@ class TmsVehicleShowTest extends TestCase
             ->assertOk()
             ->assertSee('HO Officer', false)
             ->assertSee('NCL Officer', false)
-            ->assertSee('Norban Comtex Limited', false);
+            ->assertSee('NCL', false);
     }
 
     public function test_vehicle_can_assign_primary_driver_from_another_unit(): void

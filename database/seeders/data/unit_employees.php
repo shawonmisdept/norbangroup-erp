@@ -5,7 +5,7 @@
  */
 return [
     [
-        'factory' => 'Norban Comtex Limited',
+        'factory' => 'NCL',
         'employees' => [
             [
                 'employee_code'    => 'NCL-M001',
@@ -68,7 +68,7 @@ return [
         ],
     ],
     [
-        'factory' => 'Hornbill Apparel Ltd',
+        'factory' => 'HAL',
         'employees' => [
             [
                 'employee_code'    => 'HAL-M001',

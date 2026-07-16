@@ -238,9 +238,9 @@ class TmsVehicleSeederVerificationTest extends TestCase
         $this->seed(VehicleSeeder::class);
 
         $cases = [
-            'DM-GHA-22-1042' => 'Norban Comtex Limited', // NCL
+            'DM-GHA-22-1042' => 'NCL',
             'DM-GA-42-0117'  => 'BD Com',
-            'DM-GHA-02-0005' => 'Hornbill Apparel Ltd', // HAL
+            'DM-GHA-02-0005' => 'HAL',
             'DM-BHA-11-0813' => 'NFL',
             'DM-GHA-21-5864' => 'DHL',
         ];

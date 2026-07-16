@@ -31,7 +31,7 @@ class TmsMaintenanceTest extends TestCase
     {
         parent::setUp();
 
-        $this->factory = Factory::create(['name' => 'Norban Comtex Limited', 'is_active' => true]);
+        $this->factory = Factory::create(['name' => 'NCL', 'is_active' => true]);
 
         $role = Role::create([
             'name'        => 'TMS Maintenance',

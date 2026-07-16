@@ -26,7 +26,7 @@ class FactoryDesignationSeederTest extends TestCase
             FactoryDesignationSeeder::class,
         ]);
 
-        $ncl = Factory::where('name', 'Norban Comtex Limited')->firstOrFail();
+        $ncl = Factory::where('name', 'NCL')->firstOrFail();
         $this->assertDatabaseHas('departments', [
             'factory_id' => $ncl->id,
             'name'       => 'GARMENTS & TEXTILE',

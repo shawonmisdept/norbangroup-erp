@@ -4,7 +4,7 @@
  * Factory unit department → designation maps.
  */
 return [
-    'Norban Comtex Limited' => [
+    'NCL' => [
         'Management' => [
             'Managing Director (MD)',
             'Director',
@@ -33,7 +33,7 @@ return [
             'GM (Operation)',
         ],
     ],
-    'Hornbill Apparel Ltd' => [
+    'HAL' => [
         'Management' => [
             'Managing Director (MD)',
             'Director',
