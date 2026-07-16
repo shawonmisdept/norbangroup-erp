@@ -21,6 +21,13 @@
     <div class="erp-panel"><div class="erp-panel-body"><p class="text-xl font-bold text-orange-600">{{ $stats['pending_reporting'] }}</p><p class="text-xs text-gray-500 uppercase">Awaiting Reporting</p></div></div>
 </div>
 
+@if(($stats['pending_my_team'] ?? 0) > 0)
+    <div class="mb-4 bg-sky-50 border border-sky-200 rounded-sm p-3 text-xs text-sky-900 flex flex-wrap items-center justify-between gap-2">
+        <span><strong>{{ $stats['pending_my_team'] }}</strong> leave {{ $stats['pending_my_team'] === 1 ? 'application' : 'applications' }} awaiting your approval as reporting person.</span>
+        <a href="{{ route('admin.hrm.leave.transactions.index', ['status' => 'pending', 'approval_step' => \App\Services\Hrm\LeaveService::STEP_REPORTING]) }}" class="erp-btn-secondary !py-1.5 !px-3 text-xs">Review pending</a>
+    </div>
+@endif
+
 <div class="erp-panel mb-4">
     <div class="erp-panel-body">
         <form method="GET" action="{{ route('admin.hrm.leave.transactions.index') }}" class="flex flex-wrap items-end gap-3">

@@ -158,6 +158,12 @@ class AttendanceLateAcceptanceTest extends TestCase
 
     public function test_employee_can_apply_for_late_acceptance(): void
     {
+        $this->employee->salaryStructure->update([
+            'pay_type'     => 'monthly',
+            'gross_salary' => 18000,
+            'daily_wage'   => 0,
+        ]);
+
         AttendanceDailyLog::create([
             'factory_id'      => $this->factory->id,
             'employee_id'     => $this->employee->id,

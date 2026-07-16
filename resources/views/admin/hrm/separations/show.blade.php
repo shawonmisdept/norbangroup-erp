@@ -205,7 +205,29 @@
     </div>
 
     <div class="space-y-3">
-        @if($separation->isPending() && $separation->current_approval_step === \App\Services\Hrm\EmployeeSeparationService::STEP_HR && $canApprove)
+        @if($separation->isPending() && $separation->current_approval_step === \App\Services\Hrm\EmployeeSeparationService::STEP_REPORTING && auth()->user()->isReportingManagerFor($separation->employee))
+            <div class="erp-panel">
+                <div class="erp-panel-head"><h2 class="text-xs font-semibold text-gray-700 uppercase">Team Approval</h2></div>
+                <p class="erp-panel-body text-xs text-gray-500 pb-0">You are the reporting person. Approve here to forward to HR.</p>
+                <form method="POST" action="{{ route('admin.hrm.separations.approve-reporting', $separation) }}" class="erp-panel-body space-y-3 pt-2"
+                      data-confirm="Forward this separation request to HR?"
+                      data-confirm-variant="primary"
+                      data-confirm-ok="Yes, approve">
+                    @csrf
+                    <textarea name="notes" rows="2" class="erp-input !text-xs" placeholder="Approval notes (optional)"></textarea>
+                    <button type="submit" class="erp-btn-primary w-full justify-center">Approve &amp; Forward to HR</button>
+                </form>
+            </div>
+            <div class="erp-panel">
+                <div class="erp-panel-head"><h2 class="text-xs font-semibold text-red-700 uppercase">Reject</h2></div>
+                <form method="POST" action="{{ route('admin.hrm.separations.reject-reporting', $separation) }}" class="erp-panel-body space-y-3"
+                      data-confirm="Reject this separation request?">
+                    @csrf
+                    <textarea name="rejection_reason" rows="2" required class="erp-input !text-xs" placeholder="Rejection reason…"></textarea>
+                    <button type="submit" class="erp-btn-danger w-full justify-center">Reject Request</button>
+                </form>
+            </div>
+        @elseif($separation->isPending() && $separation->current_approval_step === \App\Services\Hrm\EmployeeSeparationService::STEP_HR && $canApprove)
             @if(! $separation->exitClearanceComplete())
                 <div class="bg-amber-50 border border-amber-200 rounded-sm p-3 text-xs text-amber-800">
                     Complete all exit clearance departments before approving separation.

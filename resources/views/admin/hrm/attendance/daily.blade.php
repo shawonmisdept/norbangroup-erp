@@ -65,6 +65,7 @@
         <table class="erp-table">
             <thead>
                 <tr>
+                    <th>Selfie</th>
                     <th>Date</th>
                     <th>Employee</th>
                     <th>Check In</th>
@@ -97,6 +98,20 @@
                         $statusLabel = $log->displayStatusLabel();
                     @endphp
                     <tr>
+                        <td class="w-14">
+                            @php $checkInPhoto = $log->mobileCheckInPhotoPunch; @endphp
+                            @if($checkInPhoto?->photoUrl())
+                                <a href="{{ $checkInPhoto->photoUrl() }}" target="_blank" rel="noopener noreferrer" class="inline-block">
+                                    <img
+                                        src="{{ $checkInPhoto->photoUrl() }}"
+                                        alt="Check-in selfie for {{ $log->employee?->name }}"
+                                        class="w-10 h-10 rounded-sm object-cover border border-gray-200 bg-gray-50"
+                                    >
+                                </a>
+                            @else
+                                <span class="text-gray-300 text-xs">—</span>
+                            @endif
+                        </td>
                         <td class="text-xs tabular-nums">{{ $log->attendance_date->format('d M Y') }}</td>
                         <td>
                             <p class="font-medium text-sm">{{ $log->employee?->name }}</p>
@@ -109,7 +124,7 @@
                         <td><span class="erp-badge {{ $badge }}">{{ $statusLabel }}</span></td>
                     </tr>
                 @empty
-                    <tr><td colspan="7" class="text-center py-10 text-gray-400">No daily logs yet. Process attendance from Periods.</td></tr>
+                    <tr><td colspan="8" class="text-center py-10 text-gray-400">No daily logs yet. Process attendance from Periods.</td></tr>
                 @endforelse
             </tbody>
         </table>

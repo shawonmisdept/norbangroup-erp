@@ -84,9 +84,23 @@ class MaintenanceService
     public function billsGroupedByMonth(Collection $bills): Collection
     {
         return $bills
-            ->sortBy([['bill_date', 'desc'], ['id', 'desc']])
             ->groupBy(fn (TmsMaintenanceBill $bill) => $bill->monthKey())
-            ->sortKeysDesc();
+            ->map(fn (Collection $group) => $group
+                ->sortBy([
+                    ['bill_date', 'desc'],
+                    ['id', 'desc'],
+                ])
+                ->values())
+            ->sortByDesc(fn (Collection $group) => $this->monthGroupSortKey($group));
+    }
+
+    /** @param  Collection<int, TmsMaintenanceBill>  $group */
+    private function monthGroupSortKey(Collection $group): string
+    {
+        return $group
+            ->map(fn (TmsMaintenanceBill $bill) => $bill->bill_date?->toDateString() ?? '')
+            ->filter()
+            ->max() ?? '';
     }
 
     /** @return list<string> */

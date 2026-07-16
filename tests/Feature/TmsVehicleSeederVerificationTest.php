@@ -38,7 +38,8 @@ class TmsVehicleSeederVerificationTest extends TestCase
             'DM-GA-15-7196',
             'DM-KHA-12-6032',
             'DM-GA-31-4810',
-            'DM-GA-23-5772',
+            'DM-GA-30-0062',
+            'DM-KHA-23-5772',
             'DM-GA-43-9461',
             'DM-GA-13-5028',
             'DM-KHA-12-1223',
@@ -60,7 +61,7 @@ class TmsVehicleSeederVerificationTest extends TestCase
             'NAR-MA-11-0043',
             'DM-AU-11-4206',
             'DM-AU-14-1095',
-            'DM-U-11-4801',
+            'DM-U-4801',
             'DM-MA-51-8450',
             'DM-MA-14-0155',
             'DM-TA-15-7042',
@@ -76,9 +77,10 @@ class TmsVehicleSeederVerificationTest extends TestCase
         return [
             'DM-GHA-22-1042' => 'BMW Jeep',
             'DM-GA-42-0117'  => 'Mercedes Benz',
-            'DM-GA-23-5772'  => 'Toyota Axio',
+            'DM-KHA-23-5772' => 'Toyota Axio',
+            'DM-GA-30-0062'  => 'Toyota Axio',
             'NAR-MA-11-0043' => 'Cover Van',
-            'DM-U-11-4801'   => 'Covered Van',
+            'DM-U-4801'      => 'Covered Van',
             'DM-GHA-16-2903' => 'Hard Jeep (BYD)',
             'DM-GHA-21-5864' => 'Hard Jeep,Toyota',
             'DM-THA-11-7867' => 'Pic up Double cabin',
@@ -107,11 +109,11 @@ class TmsVehicleSeederVerificationTest extends TestCase
         ];
     }
 
-    public function test_seed_data_file_contains_all_fifty_spreadsheet_vehicles(): void
+    public function test_seed_data_file_contains_all_fifty_one_spreadsheet_vehicles(): void
     {
         $rows = require database_path('seeders/data/tms_vehicles.php');
 
-        $this->assertCount(50, $rows);
+        $this->assertCount(51, $rows);
 
         $regs = array_map(
             static fn (array $row) => strtoupper($row['reg_number']),
@@ -121,12 +123,12 @@ class TmsVehicleSeederVerificationTest extends TestCase
         $this->assertSame($this->expectedRegNumbers(), $regs);
     }
 
-    public function test_vehicle_seeder_inserts_all_fifty_vehicles(): void
+    public function test_vehicle_seeder_inserts_all_fifty_one_vehicles(): void
     {
         $this->seed(FactorySeeder::class);
         $this->seed(VehicleSeeder::class);
 
-        $this->assertSame(50, TmsVehicle::count());
+        $this->assertSame(51, TmsVehicle::count());
 
         foreach ($this->expectedRegNumbers() as $reg) {
             $this->assertDatabaseHas('tms_vehicles', [
@@ -261,12 +263,11 @@ class TmsVehicleSeederVerificationTest extends TestCase
         $factory = Factory::where('name', 'Head Office')->firstOrFail();
 
         $this->seed(VehicleSeeder::class);
-        $this->assertSame(50, TmsVehicle::count());
+        $this->assertSame(51, TmsVehicle::count());
 
         foreach ([
-            ['reg_number' => 'DM-GA-30-0062', 'name' => 'Toyota'],
-            ['reg_number' => 'DM-KHA-23-5772', 'name' => 'Toyota'],
-            ['reg_number' => 'DM-U-4801', 'name' => 'Toyota'],
+            ['reg_number' => 'DM-GA-23-5772', 'name' => 'Toyota'],
+            ['reg_number' => 'DM-U-11-4801', 'name' => 'Toyota'],
         ] as $orphan) {
             TmsVehicle::create([
                 'factory_id'         => $factory->id,
@@ -283,11 +284,11 @@ class TmsVehicleSeederVerificationTest extends TestCase
 
         $this->seed(VehicleSeeder::class);
 
-        $this->assertSame(50, TmsVehicle::count());
-        $this->assertNull(TmsVehicle::where('reg_number', 'DM-GA-30-0062')->first());
-        $this->assertNull(TmsVehicle::where('reg_number', 'DM-KHA-23-5772')->first());
-        $this->assertNull(TmsVehicle::where('reg_number', 'DM-U-4801')->first());
-        $this->assertNotNull(TmsVehicle::where('reg_number', 'DM-GA-23-5772')->first());
-        $this->assertNotNull(TmsVehicle::where('reg_number', 'DM-U-11-4801')->first());
+        $this->assertSame(51, TmsVehicle::count());
+        $this->assertNull(TmsVehicle::where('reg_number', 'DM-GA-23-5772')->first());
+        $this->assertNull(TmsVehicle::where('reg_number', 'DM-U-11-4801')->first());
+        $this->assertNotNull(TmsVehicle::where('reg_number', 'DM-KHA-23-5772')->first());
+        $this->assertNotNull(TmsVehicle::where('reg_number', 'DM-GA-30-0062')->first());
+        $this->assertNotNull(TmsVehicle::where('reg_number', 'DM-U-4801')->first());
     }
 }

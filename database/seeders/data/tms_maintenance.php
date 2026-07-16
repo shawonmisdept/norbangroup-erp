@@ -9,6 +9,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75975',
         'bill_date' => '2026-05-05',
+        'month_of' => 'May-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -124,6 +125,7 @@ return array (
       array (
         'bill_no' => '14801',
         'bill_date' => '2026-05-23',
+        'month_of' => 'May-2026',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -156,6 +158,7 @@ return array (
       array (
         'bill_no' => '3250',
         'bill_date' => '2026-04-26',
+        'month_of' => 'April-2026',
         'workshop_name' => 'Malak Enterprise',
         'paid_by' => 'company',
         'items' => 
@@ -229,6 +232,7 @@ return array (
       array (
         'bill_no' => '260436',
         'bill_date' => '2026-04-08',
+        'month_of' => 'January-2026',
         'workshop_name' => 'A.R Motors Ltd.',
         'paid_by' => 'company',
         'items' => 
@@ -296,6 +300,7 @@ return array (
       array (
         'bill_no' => '1750',
         'bill_date' => '2026-01-22',
+        'month_of' => 'January-2026',
         'workshop_name' => 'Malak Enterprise',
         'paid_by' => 'company',
         'items' => 
@@ -321,6 +326,7 @@ return array (
       array (
         'bill_no' => '2203',
         'bill_date' => '2026-01-22',
+        'month_of' => 'January-2026',
         'workshop_name' => 'Malak Enterprise',
         'paid_by' => 'company',
         'items' => 
@@ -346,6 +352,7 @@ return array (
       array (
         'bill_no' => 'SAL-75978',
         'bill_date' => '2026-01-24',
+        'month_of' => 'January-2026',
         'workshop_name' => 'IDEAL Auto',
         'paid_by' => 'company',
         'items' => 
@@ -370,6 +377,7 @@ return array (
       array (
         'bill_no' => '7562',
         'bill_date' => '2025-08-12',
+        'month_of' => 'July-2025',
         'workshop_name' => 'Mukter Auto Accessories',
         'paid_by' => 'company',
         'items' => 
@@ -394,6 +402,7 @@ return array (
       array (
         'bill_no' => '14816',
         'bill_date' => '2026-06-27',
+        'month_of' => 'June-2026',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -440,6 +449,7 @@ return array (
       array (
         'bill_no' => '14813',
         'bill_date' => '2026-06-15',
+        'month_of' => 'June-2026',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -493,6 +503,7 @@ return array (
       array (
         'bill_no' => '14808',
         'bill_date' => '2026-06-07',
+        'month_of' => 'June-2026',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -609,6 +620,7 @@ return array (
       array (
         'bill_no' => '14802',
         'bill_date' => '2026-05-24',
+        'month_of' => 'May-2026',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -655,6 +667,7 @@ return array (
       array (
         'bill_no' => '13996',
         'bill_date' => '2026-05-15',
+        'month_of' => 'May-2026',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -708,6 +721,7 @@ return array (
       array (
         'bill_no' => '48',
         'bill_date' => '2026-05-04',
+        'month_of' => 'May-2026',
         'workshop_name' => 'The Alamgir Automobile',
         'paid_by' => 'company',
         'items' => 
@@ -768,6 +782,7 @@ return array (
       array (
         'bill_no' => '47',
         'bill_date' => '2026-04-22',
+        'month_of' => 'April-2026',
         'workshop_name' => 'The Alamgir Automobile',
         'paid_by' => 'company',
         'items' => 
@@ -800,6 +815,7 @@ return array (
       array (
         'bill_no' => '45',
         'bill_date' => '2026-04-16',
+        'month_of' => 'April-2026',
         'workshop_name' => 'The Alamgir Automobile',
         'paid_by' => 'company',
         'items' => 
@@ -874,6 +890,7 @@ return array (
       array (
         'bill_no' => '42',
         'bill_date' => '2026-03-08',
+        'month_of' => 'March-2026',
         'workshop_name' => 'The Alamgir Automobile',
         'paid_by' => 'company',
         'items' => 
@@ -941,6 +958,7 @@ return array (
       array (
         'bill_no' => '35',
         'bill_date' => '2026-02-17',
+        'month_of' => 'February-2026',
         'workshop_name' => 'The Alamgir Automobile',
         'paid_by' => 'company',
         'items' => 
@@ -987,6 +1005,7 @@ return array (
       array (
         'bill_no' => '13967',
         'bill_date' => '2026-02-14',
+        'month_of' => 'February-2026',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -1026,6 +1045,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75082',
         'bill_date' => '2026-01-28',
+        'month_of' => 'January-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -1079,6 +1099,7 @@ return array (
       array (
         'bill_no' => '29',
         'bill_date' => '2026-01-01',
+        'month_of' => 'January-2026',
         'workshop_name' => 'The Alamgir Automobile',
         'paid_by' => 'company',
         'items' => 
@@ -1153,6 +1174,7 @@ return array (
       array (
         'bill_no' => '27',
         'bill_date' => '2025-12-24',
+        'month_of' => 'December-2025',
         'workshop_name' => 'The Alamgir Automobile',
         'paid_by' => 'company',
         'items' => 
@@ -1220,6 +1242,7 @@ return array (
       array (
         'bill_no' => 'Bill # 74653',
         'bill_date' => '2025-12-11',
+        'month_of' => 'December-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -1245,6 +1268,7 @@ return array (
       array (
         'bill_no' => 'Bill # 74517',
         'bill_date' => '2025-12-02',
+        'month_of' => 'December-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -1298,6 +1322,7 @@ return array (
       array (
         'bill_no' => '25',
         'bill_date' => '2025-11-25',
+        'month_of' => 'November-2025',
         'workshop_name' => 'The Alamgir Automobile',
         'paid_by' => 'company',
         'items' => 
@@ -1351,6 +1376,7 @@ return array (
       array (
         'bill_no' => '23',
         'bill_date' => '2025-11-17',
+        'month_of' => 'November-2025',
         'workshop_name' => 'The Alamgir Automobile',
         'paid_by' => 'company',
         'items' => 
@@ -1432,6 +1458,7 @@ return array (
       array (
         'bill_no' => '13926',
         'bill_date' => '2025-11-02',
+        'month_of' => 'November-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -1471,6 +1498,7 @@ return array (
       array (
         'bill_no' => 'Bill # 74084',
         'bill_date' => '2025-10-14',
+        'month_of' => 'October-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -1552,6 +1580,7 @@ return array (
       array (
         'bill_no' => 'Bill # 73754',
         'bill_date' => '2025-10-13',
+        'month_of' => 'October-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -1598,6 +1627,7 @@ return array (
       array (
         'bill_no' => 'Bill # 73887',
         'bill_date' => '2025-10-13',
+        'month_of' => 'October-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -1630,6 +1660,7 @@ return array (
       array (
         'bill_no' => 'Bill # 73796',
         'bill_date' => '2025-09-18',
+        'month_of' => 'September-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -1697,6 +1728,7 @@ return array (
       array (
         'bill_no' => 'Bill # 73700',
         'bill_date' => '2025-09-09',
+        'month_of' => 'September-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -1750,6 +1782,7 @@ return array (
       array (
         'bill_no' => '442',
         'bill_date' => '2025-09-03',
+        'month_of' => 'September-2025',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -1775,6 +1808,7 @@ return array (
       array (
         'bill_no' => 'Bill # 73384',
         'bill_date' => '2025-08-12',
+        'month_of' => 'August-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -1828,6 +1862,7 @@ return array (
       array (
         'bill_no' => '301',
         'bill_date' => '2025-07-30',
+        'month_of' => 'July-2025',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -1846,6 +1881,7 @@ return array (
       array (
         'bill_no' => 'Bill # 73176',
         'bill_date' => '2025-07-27',
+        'month_of' => 'July-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -1948,6 +1984,7 @@ return array (
       array (
         'bill_no' => 'Bill # 73066',
         'bill_date' => '2025-07-06',
+        'month_of' => 'July-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -2001,6 +2038,7 @@ return array (
       array (
         'bill_no' => 'Bill # 72921',
         'bill_date' => '2025-06-26',
+        'month_of' => 'June-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -2110,6 +2148,7 @@ return array (
       array (
         'bill_no' => 'Bill # 72730',
         'bill_date' => '2025-05-29',
+        'month_of' => 'May-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -2177,6 +2216,7 @@ return array (
       array (
         'bill_no' => '13357',
         'bill_date' => '2025-05-10',
+        'month_of' => 'May-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -2209,6 +2249,7 @@ return array (
       array (
         'bill_no' => '3372',
         'bill_date' => '2025-05-10',
+        'month_of' => 'May-2025',
         'workshop_name' => 'M/S. Srabon Abdullah Machineries & Tools',
         'paid_by' => 'company',
         'items' => 
@@ -2227,6 +2268,7 @@ return array (
       array (
         'bill_no' => '361',
         'bill_date' => '2025-05-10',
+        'month_of' => 'May-2025',
         'workshop_name' => 'AR Motors',
         'paid_by' => 'company',
         'items' => 
@@ -2245,6 +2287,7 @@ return array (
       array (
         'bill_no' => 'Bill # 72463',
         'bill_date' => '2025-05-07',
+        'month_of' => 'May-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -2284,6 +2327,7 @@ return array (
       array (
         'bill_no' => 'Bill # 72370',
         'bill_date' => '2025-04-22',
+        'month_of' => 'April-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -2344,6 +2388,7 @@ return array (
       array (
         'bill_no' => '871',
         'bill_date' => '2025-04-12',
+        'month_of' => 'April-2025',
         'workshop_name' => 'MALAK Enterprise',
         'paid_by' => 'company',
         'items' => 
@@ -2453,6 +2498,7 @@ return array (
       array (
         'bill_no' => '956',
         'bill_date' => '2025-04-01',
+        'month_of' => 'April-2025',
         'workshop_name' => 'ASIA Motors',
         'paid_by' => 'company',
         'items' => 
@@ -2471,6 +2517,7 @@ return array (
       array (
         'bill_no' => 'Bill # 72077',
         'bill_date' => '2025-03-18',
+        'month_of' => 'March-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -2496,6 +2543,7 @@ return array (
       array (
         'bill_no' => '13342',
         'bill_date' => '2025-03-16',
+        'month_of' => 'March-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -2535,6 +2583,7 @@ return array (
       array (
         'bill_no' => '13341',
         'bill_date' => '2025-03-16',
+        'month_of' => 'March-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -2644,6 +2693,7 @@ return array (
       array (
         'bill_no' => 'Bill # 72014',
         'bill_date' => '2025-03-12',
+        'month_of' => 'March-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -2697,6 +2747,7 @@ return array (
       array (
         'bill_no' => '1148',
         'bill_date' => '2025-03-10',
+        'month_of' => 'March-2025',
         'workshop_name' => 'Panama CNG Conversion',
         'paid_by' => 'company',
         'items' => 
@@ -2721,6 +2772,7 @@ return array (
       array (
         'bill_no' => 'Bill # 76258',
         'bill_date' => '2026-06-10',
+        'month_of' => 'June-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -2802,6 +2854,7 @@ return array (
       array (
         'bill_no' => 'Bill # 76093',
         'bill_date' => '2026-05-17',
+        'month_of' => 'May-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -2897,6 +2950,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75804',
         'bill_date' => '2026-04-15',
+        'month_of' => 'April-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -2950,6 +3004,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75806',
         'bill_date' => '2026-04-15',
+        'month_of' => 'April-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -2982,6 +3037,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75601',
         'bill_date' => '2026-03-17',
+        'month_of' => 'March-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -3035,6 +3091,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75451',
         'bill_date' => '2026-03-17',
+        'month_of' => 'March-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -3144,6 +3201,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75311',
         'bill_date' => '2026-02-15',
+        'month_of' => 'February-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -3197,6 +3255,7 @@ return array (
       array (
         'bill_no' => '745',
         'bill_date' => '2026-01-21',
+        'month_of' => 'January-2026',
         'workshop_name' => 'Palash Car A/C Centre',
         'paid_by' => 'company',
         'items' => 
@@ -3264,6 +3323,7 @@ return array (
       array (
         'bill_no' => 'Bill # 74952',
         'bill_date' => '2026-01-03',
+        'month_of' => 'January-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -3324,6 +3384,7 @@ return array (
       array (
         'bill_no' => 'Bill # 74634',
         'bill_date' => '2025-12-10',
+        'month_of' => 'December-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -3419,6 +3480,7 @@ return array (
       array (
         'bill_no' => '2257',
         'bill_date' => '2025-12-07',
+        'month_of' => 'December-2025',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -3437,6 +3499,7 @@ return array (
       array (
         'bill_no' => 'Bill # 74419',
         'bill_date' => '2025-11-18',
+        'month_of' => 'November-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -3462,6 +3525,7 @@ return array (
       array (
         'bill_no' => 'Bill # 74247',
         'bill_date' => '2025-11-09',
+        'month_of' => 'November-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -3522,6 +3586,7 @@ return array (
       array (
         'bill_no' => 'Bill # 74042',
         'bill_date' => '2025-10-11',
+        'month_of' => 'October-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -3617,6 +3682,7 @@ return array (
       array (
         'bill_no' => 'Bill # 73871',
         'bill_date' => '2025-09-25',
+        'month_of' => 'September-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -3656,6 +3722,7 @@ return array (
       array (
         'bill_no' => 'Bill # 73674',
         'bill_date' => '2025-09-07',
+        'month_of' => 'September-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -3716,6 +3783,7 @@ return array (
       array (
         'bill_no' => 'Bill # 73555',
         'bill_date' => '2025-08-30',
+        'month_of' => 'August-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -3769,6 +3837,7 @@ return array (
       array (
         'bill_no' => 'Bill # 73318',
         'bill_date' => '2025-08-03',
+        'month_of' => 'August-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -3871,6 +3940,7 @@ return array (
       array (
         'bill_no' => 'Bill # 73254',
         'bill_date' => '2025-07-27',
+        'month_of' => 'July-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -3896,6 +3966,7 @@ return array (
       array (
         'bill_no' => '1478',
         'bill_date' => '2025-07-16',
+        'month_of' => 'July-2025',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -3914,6 +3985,7 @@ return array (
       array (
         'bill_no' => '1199',
         'bill_date' => '2025-06-13',
+        'month_of' => 'July-2025',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -3932,6 +4004,7 @@ return array (
       array (
         'bill_no' => 'Bill # 73076',
         'bill_date' => '2025-07-07',
+        'month_of' => 'July-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -4013,6 +4086,7 @@ return array (
       array (
         'bill_no' => '715',
         'bill_date' => '2025-07-04',
+        'month_of' => 'July-2025',
         'workshop_name' => 'Palash Car A/C Centre',
         'paid_by' => 'company',
         'items' => 
@@ -4101,6 +4175,7 @@ return array (
       array (
         'bill_no' => 'Bill # 72767',
         'bill_date' => '2025-06-26',
+        'month_of' => 'June-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -4175,6 +4250,7 @@ return array (
       array (
         'bill_no' => '8',
         'bill_date' => '2025-06-14',
+        'month_of' => 'June-2025',
         'workshop_name' => 'The Alamgir Automobile',
         'paid_by' => 'company',
         'items' => 
@@ -4214,6 +4290,7 @@ return array (
       array (
         'bill_no' => 'Bill # 72717',
         'bill_date' => '2025-05-28',
+        'month_of' => 'May-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -4267,6 +4344,7 @@ return array (
       array (
         'bill_no' => 'Bill # 72221',
         'bill_date' => '2025-04-07',
+        'month_of' => 'April-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -4299,6 +4377,7 @@ return array (
       array (
         'bill_no' => '778',
         'bill_date' => '2025-03-17',
+        'month_of' => 'March-2025',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -4317,6 +4396,7 @@ return array (
       array (
         'bill_no' => '379',
         'bill_date' => '2025-03-15',
+        'month_of' => 'March-2025',
         'workshop_name' => 'MALAK Enterprise',
         'paid_by' => 'company',
         'items' => 
@@ -4363,6 +4443,7 @@ return array (
       array (
         'bill_no' => '13337',
         'bill_date' => '2025-03-13',
+        'month_of' => 'March-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -4479,6 +4560,7 @@ return array (
       array (
         'bill_no' => '13336',
         'bill_date' => '2025-03-11',
+        'month_of' => 'March-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -4525,6 +4607,7 @@ return array (
       array (
         'bill_no' => '1148',
         'bill_date' => '2025-03-10',
+        'month_of' => 'March-2025',
         'workshop_name' => 'Panama CNG Conversion',
         'paid_by' => 'company',
         'items' => 
@@ -4549,6 +4632,7 @@ return array (
       array (
         'bill_no' => 'SO-11094',
         'bill_date' => '2025-09-21',
+        'month_of' => 'September-2025',
         'workshop_name' => 'Continental Works Ltd',
         'paid_by' => 'company',
         'items' => 
@@ -4602,6 +4686,7 @@ return array (
       array (
         'bill_no' => 'SO-05987',
         'bill_date' => '2023-12-26',
+        'month_of' => 'December-2023',
         'workshop_name' => 'Continental Works Ltd',
         'paid_by' => 'company',
         'items' => 
@@ -4626,6 +4711,7 @@ return array (
       array (
         'bill_no' => 'MSPBD04250002991',
         'bill_date' => '2026-02-02',
+        'month_of' => 'February-2026',
         'workshop_name' => 'IFAD Auto Services Limited.',
         'paid_by' => 'company',
         'items' => 
@@ -4749,6 +4835,7 @@ return array (
       array (
         'bill_no' => '1591',
         'bill_date' => '2025-10-16',
+        'month_of' => 'October-2025',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -4767,6 +4854,7 @@ return array (
       array (
         'bill_no' => '1123',
         'bill_date' => '2025-04-16',
+        'month_of' => 'April-2025',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -4785,6 +4873,7 @@ return array (
       array (
         'bill_no' => '127',
         'bill_date' => '2024-12-05',
+        'month_of' => 'December-2024',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -4803,6 +4892,7 @@ return array (
       array (
         'bill_no' => 'MSIBD04240000109',
         'bill_date' => '2024-08-28',
+        'month_of' => 'August-2024',
         'workshop_name' => 'IFAD Auto Services Limited.',
         'paid_by' => 'company',
         'items' => 
@@ -5024,6 +5114,7 @@ return array (
       array (
         'bill_no' => '243',
         'bill_date' => '2024-03-21',
+        'month_of' => 'March-2024',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -5042,6 +5133,7 @@ return array (
       array (
         'bill_no' => 'SA 944',
         'bill_date' => '2023-09-17',
+        'month_of' => 'September-2023',
         'workshop_name' => 'IFAD Auto Services Limited.',
         'paid_by' => 'company',
         'items' => 
@@ -5416,6 +5508,7 @@ return array (
       array (
         'bill_no' => '139',
         'bill_date' => '2023-11-25',
+        'month_of' => 'November-2023',
         'workshop_name' => 'Palash Car A/C Centre',
         'paid_by' => 'company',
         'items' => 
@@ -5462,6 +5555,7 @@ return array (
       array (
         'bill_no' => '10244',
         'bill_date' => '2023-10-05',
+        'month_of' => 'October-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -5508,6 +5602,7 @@ return array (
       array (
         'bill_no' => '129',
         'bill_date' => '2023-10-05',
+        'month_of' => 'October-2023',
         'workshop_name' => 'Palash Car A/C Centre',
         'paid_by' => 'company',
         'items' => 
@@ -5581,6 +5676,7 @@ return array (
       array (
         'bill_no' => '2917',
         'bill_date' => '2026-01-26',
+        'month_of' => 'January-2026',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -5599,6 +5695,7 @@ return array (
       array (
         'bill_no' => '13398',
         'bill_date' => '2025-09-21',
+        'month_of' => 'September-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -5645,6 +5742,7 @@ return array (
       array (
         'bill_no' => '13340',
         'bill_date' => '2025-03-16',
+        'month_of' => 'March-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -5684,6 +5782,7 @@ return array (
       array (
         'bill_no' => '485',
         'bill_date' => '2024-10-22',
+        'month_of' => 'October-2024',
         'workshop_name' => 'Parvez Automobile',
         'paid_by' => 'company',
         'items' => 
@@ -5702,6 +5801,7 @@ return array (
       array (
         'bill_no' => '676',
         'bill_date' => '2024-10-21',
+        'month_of' => 'October-2024',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -5720,6 +5820,7 @@ return array (
       array (
         'bill_no' => '11769',
         'bill_date' => '2024-09-24',
+        'month_of' => 'September-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -5759,6 +5860,7 @@ return array (
       array (
         'bill_no' => '10300',
         'bill_date' => '2024-03-16',
+        'month_of' => 'March-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -5798,6 +5900,7 @@ return array (
       array (
         'bill_no' => '133',
         'bill_date' => '2023-12-13',
+        'month_of' => 'December-2023',
         'workshop_name' => 'Palash Car A/C Centre',
         'paid_by' => 'company',
         'items' => 
@@ -5830,6 +5933,7 @@ return array (
       array (
         'bill_no' => '10217',
         'bill_date' => '2023-08-19',
+        'month_of' => 'August-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -5875,6 +5979,7 @@ return array (
       array (
         'bill_no' => '2245',
         'bill_date' => '2023-08-16',
+        'month_of' => 'August-2023',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -5899,6 +6004,7 @@ return array (
       array (
         'bill_no' => '161461',
         'bill_date' => '2026-06-16',
+        'month_of' => 'June-2026',
         'workshop_name' => 'Jayma Motors',
         'paid_by' => 'company',
         'items' => 
@@ -5945,6 +6051,7 @@ return array (
       array (
         'bill_no' => '2340',
         'bill_date' => '2026-06-14',
+        'month_of' => 'June-2026',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -5963,6 +6070,7 @@ return array (
       array (
         'bill_no' => 'Bill # 76174',
         'bill_date' => '2026-06-10',
+        'month_of' => 'June-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -5995,6 +6103,7 @@ return array (
       array (
         'bill_no' => '14807',
         'bill_date' => '2026-06-06',
+        'month_of' => 'June-2026',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -6027,6 +6136,7 @@ return array (
       array (
         'bill_no' => 'Bill # 76003',
         'bill_date' => '2026-05-10',
+        'month_of' => 'May-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -6094,6 +6204,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75428',
         'bill_date' => '2026-04-01',
+        'month_of' => 'April-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -6182,6 +6293,7 @@ return array (
       array (
         'bill_no' => '13970',
         'bill_date' => '2026-03-05',
+        'month_of' => 'March-2026',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -6249,6 +6361,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75260',
         'bill_date' => '2026-02-07',
+        'month_of' => 'February-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -6274,6 +6387,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75157',
         'bill_date' => '2026-01-17',
+        'month_of' => 'January-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -6341,6 +6455,7 @@ return array (
       array (
         'bill_no' => '30',
         'bill_date' => '2026-01-05',
+        'month_of' => 'January-2026',
         'workshop_name' => 'The Alamgir Automobile',
         'paid_by' => 'company',
         'items' => 
@@ -6408,6 +6523,7 @@ return array (
       array (
         'bill_no' => 'Bill # 74804',
         'bill_date' => '2026-01-01',
+        'month_of' => 'January-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -6433,6 +6549,7 @@ return array (
       array (
         'bill_no' => 'Bill # 74643',
         'bill_date' => '2025-12-14',
+        'month_of' => 'October-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -6486,6 +6603,7 @@ return array (
       array (
         'bill_no' => 'Bill # 74431',
         'bill_date' => '2025-11-19',
+        'month_of' => 'November-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -6539,6 +6657,7 @@ return array (
       array (
         'bill_no' => '13931',
         'bill_date' => '2025-11-04',
+        'month_of' => 'November-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -6571,6 +6690,7 @@ return array (
       array (
         'bill_no' => 'Bill # 73979',
         'bill_date' => '2025-10-30',
+        'month_of' => 'October-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -6631,6 +6751,7 @@ return array (
       array (
         'bill_no' => '13905',
         'bill_date' => '2025-10-07',
+        'month_of' => 'October-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -6719,6 +6840,7 @@ return array (
       array (
         'bill_no' => '13400',
         'bill_date' => '2025-09-22',
+        'month_of' => 'September-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -6737,6 +6859,7 @@ return array (
       array (
         'bill_no' => 'SO-00219',
         'bill_date' => '2025-09-22',
+        'month_of' => 'September-2025',
         'workshop_name' => 'Continental Works Ltd.',
         'paid_by' => 'company',
         'items' => 
@@ -6783,6 +6906,7 @@ return array (
       array (
         'bill_no' => 'Bill # 73720',
         'bill_date' => '2025-09-11',
+        'month_of' => 'September-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -6843,6 +6967,7 @@ return array (
       array (
         'bill_no' => '485',
         'bill_date' => '2025-08-09',
+        'month_of' => 'August-2025',
         'workshop_name' => 'Panama CNG Conversion',
         'paid_by' => 'company',
         'items' => 
@@ -6861,6 +6986,7 @@ return array (
       array (
         'bill_no' => '13370',
         'bill_date' => '2025-05-02',
+        'month_of' => 'July-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -6914,6 +7040,7 @@ return array (
       array (
         'bill_no' => '1297',
         'bill_date' => '2025-07-02',
+        'month_of' => 'July-2025',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -6932,6 +7059,7 @@ return array (
       array (
         'bill_no' => '13308',
         'bill_date' => '2024-11-30',
+        'month_of' => 'November-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -6957,6 +7085,7 @@ return array (
       array (
         'bill_no' => '11797',
         'bill_date' => '2024-11-06',
+        'month_of' => 'November-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -7073,6 +7202,7 @@ return array (
       array (
         'bill_no' => '13301',
         'bill_date' => '2024-10-31',
+        'month_of' => 'October-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -7098,6 +7228,7 @@ return array (
       array (
         'bill_no' => '529',
         'bill_date' => '2024-10-31',
+        'month_of' => 'October-2024',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -7116,6 +7247,7 @@ return array (
       array (
         'bill_no' => '11753',
         'bill_date' => '2024-08-18',
+        'month_of' => 'August-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -7141,6 +7273,7 @@ return array (
       array (
         'bill_no' => '11704',
         'bill_date' => '2024-02-20',
+        'month_of' => 'February-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -7159,6 +7292,7 @@ return array (
       array (
         'bill_no' => '10288',
         'bill_date' => '2024-02-01',
+        'month_of' => 'February-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -7219,6 +7353,7 @@ return array (
       array (
         'bill_no' => '10283',
         'bill_date' => '2024-01-29',
+        'month_of' => 'January-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -7237,6 +7372,7 @@ return array (
       array (
         'bill_no' => '10275',
         'bill_date' => '2024-01-14',
+        'month_of' => 'January-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -7255,6 +7391,7 @@ return array (
       array (
         'bill_no' => '2193',
         'bill_date' => '2023-12-18',
+        'month_of' => 'December-2023',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -7273,6 +7410,7 @@ return array (
       array (
         'bill_no' => '10260',
         'bill_date' => '2023-11-29',
+        'month_of' => 'November-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -7347,6 +7485,7 @@ return array (
       array (
         'bill_no' => '10245',
         'bill_date' => '2023-10-09',
+        'month_of' => 'October-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -7372,6 +7511,7 @@ return array (
       array (
         'bill_no' => '127',
         'bill_date' => '2023-09-28',
+        'month_of' => 'September-2023',
         'workshop_name' => 'Palash Car A/C Centre',
         'paid_by' => 'company',
         'items' => 
@@ -7474,6 +7614,7 @@ return array (
       array (
         'bill_no' => '10218',
         'bill_date' => '2023-08-19',
+        'month_of' => 'August-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -7520,6 +7661,7 @@ return array (
       array (
         'bill_no' => '18169',
         'bill_date' => '2023-04-17',
+        'month_of' => 'April-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -7538,6 +7680,7 @@ return array (
       array (
         'bill_no' => '5464',
         'bill_date' => '2023-04-03',
+        'month_of' => 'April-2023',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -7563,6 +7706,7 @@ return array (
       array (
         'bill_no' => 'SO-02744',
         'bill_date' => '2023-02-05',
+        'month_of' => 'February-2023',
         'workshop_name' => 'Continental Works Ltd.',
         'paid_by' => 'company',
         'items' => 
@@ -8098,6 +8242,7 @@ return array (
       array (
         'bill_no' => '1814',
         'bill_date' => '2026-05-23',
+        'month_of' => 'May-2026',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -8116,6 +8261,7 @@ return array (
       array (
         'bill_no' => '14000',
         'bill_date' => '2026-05-20',
+        'month_of' => 'May-2026',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -8148,6 +8294,7 @@ return array (
       array (
         'bill_no' => '13999',
         'bill_date' => '2026-05-20',
+        'month_of' => 'May-2026',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -8257,6 +8404,7 @@ return array (
       array (
         'bill_no' => '2930',
         'bill_date' => '2026-01-28',
+        'month_of' => 'January-2026',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -8275,6 +8423,7 @@ return array (
       array (
         'bill_no' => '769',
         'bill_date' => '2025-03-16',
+        'month_of' => 'March-2025',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -8293,6 +8442,7 @@ return array (
       array (
         'bill_no' => '11792',
         'bill_date' => '2024-11-04',
+        'month_of' => 'November-2024',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -8353,6 +8503,7 @@ return array (
       array (
         'bill_no' => '11749',
         'bill_date' => '2024-08-03',
+        'month_of' => 'August-2024',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -8448,6 +8599,7 @@ return array (
       array (
         'bill_no' => '11741',
         'bill_date' => '2024-07-07',
+        'month_of' => 'July-2024',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -8571,6 +8723,7 @@ return array (
       array (
         'bill_no' => '11742',
         'bill_date' => '2024-07-07',
+        'month_of' => 'July-2024',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -8638,6 +8791,7 @@ return array (
       array (
         'bill_no' => '10292',
         'bill_date' => '2024-03-04',
+        'month_of' => 'March-2024',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -8677,6 +8831,7 @@ return array (
       array (
         'bill_no' => '6394',
         'bill_date' => '2024-03-01',
+        'month_of' => 'March-2024',
         'workshop_name' => 'MALAK ENTERPRISE',
         'paid_by' => 'company',
         'items' => 
@@ -8702,6 +8857,7 @@ return array (
       array (
         'bill_no' => '2360',
         'bill_date' => '2023-12-28',
+        'month_of' => 'December-2023',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -8720,6 +8876,7 @@ return array (
       array (
         'bill_no' => '1169',
         'bill_date' => '2023-06-06',
+        'month_of' => 'June-2023',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -8752,6 +8909,7 @@ return array (
       array (
         'bill_no' => '5359',
         'bill_date' => '2023-03-14',
+        'month_of' => 'March-2023',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -8776,6 +8934,7 @@ return array (
       array (
         'bill_no' => '2750',
         'bill_date' => '2026-04-13',
+        'month_of' => 'April-2026',
         'workshop_name' => 'Soniya Tyre & Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -8794,6 +8953,7 @@ return array (
       array (
         'bill_no' => 'SO-12232',
         'bill_date' => '2026-03-29',
+        'month_of' => 'March-2026',
         'workshop_name' => 'Continental Work Ltd',
         'paid_by' => 'company',
         'items' => 
@@ -8847,6 +9007,7 @@ return array (
       array (
         'bill_no' => 'SO-11687',
         'bill_date' => '2025-12-22',
+        'month_of' => 'December-2025',
         'workshop_name' => 'Continental Work Ltd',
         'paid_by' => 'company',
         'items' => 
@@ -8900,6 +9061,7 @@ return array (
       array (
         'bill_no' => 'SO-11098',
         'bill_date' => '2025-09-21',
+        'month_of' => 'September-2025',
         'workshop_name' => 'Continental Work Ltd',
         'paid_by' => 'company',
         'items' => 
@@ -8953,6 +9115,7 @@ return array (
       array (
         'bill_no' => 'SO-10409',
         'bill_date' => '2025-06-22',
+        'month_of' => 'June-2025',
         'workshop_name' => 'Continental Work Ltd',
         'paid_by' => 'company',
         'items' => 
@@ -9013,6 +9176,7 @@ return array (
       array (
         'bill_no' => 'SO-09644',
         'bill_date' => '2025-03-15',
+        'month_of' => 'March-2025',
         'workshop_name' => 'Continental Work Ltd',
         'paid_by' => 'company',
         'items' => 
@@ -9087,6 +9251,7 @@ return array (
       array (
         'bill_no' => 'SO-08387',
         'bill_date' => '2024-10-05',
+        'month_of' => 'October-2024',
         'workshop_name' => 'Continental Work Ltd',
         'paid_by' => 'company',
         'items' => 
@@ -9133,6 +9298,7 @@ return array (
       array (
         'bill_no' => 'SO-07865',
         'bill_date' => '2024-07-13',
+        'month_of' => 'July-2024',
         'workshop_name' => 'Continental Work Ltd',
         'paid_by' => 'company',
         'items' => 
@@ -9193,6 +9359,7 @@ return array (
       array (
         'bill_no' => 'SO-026628',
         'bill_date' => '2024-03-03',
+        'month_of' => 'March-2024',
         'workshop_name' => 'Continental Work Ltd',
         'paid_by' => 'company',
         'items' => 
@@ -9246,6 +9413,7 @@ return array (
       array (
         'bill_no' => 'SO-05655',
         'bill_date' => '2023-11-26',
+        'month_of' => 'November-2023',
         'workshop_name' => 'Continental Work Ltd',
         'paid_by' => 'company',
         'items' => 
@@ -9278,6 +9446,7 @@ return array (
       array (
         'bill_no' => 'SO-04481',
         'bill_date' => '2023-08-06',
+        'month_of' => 'August-2023',
         'workshop_name' => 'Continental Work Ltd',
         'paid_by' => 'company',
         'items' => 
@@ -9303,6 +9472,7 @@ return array (
       array (
         'bill_no' => '18152',
         'bill_date' => '2023-03-05',
+        'month_of' => 'March-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -9327,6 +9497,7 @@ return array (
       array (
         'bill_no' => '2798',
         'bill_date' => '2026-04-21',
+        'month_of' => 'April-2026',
         'workshop_name' => 'Soniya Tyre & Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -9345,6 +9516,7 @@ return array (
       array (
         'bill_no' => '13985',
         'bill_date' => '2026-04-21',
+        'month_of' => 'April-2026',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -9398,6 +9570,7 @@ return array (
       array (
         'bill_no' => '13974',
         'bill_date' => '2026-03-10',
+        'month_of' => 'March-2026',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -9416,6 +9589,7 @@ return array (
       array (
         'bill_no' => '2993',
         'bill_date' => '2026-02-14',
+        'month_of' => 'February-2026',
         'workshop_name' => 'Soniya Tyre & Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -9434,6 +9608,7 @@ return array (
       array (
         'bill_no' => '13964',
         'bill_date' => '2026-01-18',
+        'month_of' => 'January-2026',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -9529,6 +9704,7 @@ return array (
       array (
         'bill_no' => '13963',
         'bill_date' => '2026-01-18',
+        'month_of' => 'January-2026',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -9652,6 +9828,7 @@ return array (
       array (
         'bill_no' => '13916',
         'bill_date' => '2025-10-22',
+        'month_of' => 'October-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -9705,6 +9882,7 @@ return array (
       array (
         'bill_no' => 'SO-11184',
         'bill_date' => '2025-10-04',
+        'month_of' => 'October-2025',
         'workshop_name' => 'Continental Works Ltd',
         'paid_by' => 'company',
         'items' => 
@@ -9786,6 +9964,7 @@ return array (
       array (
         'bill_no' => '450',
         'bill_date' => '2025-09-06',
+        'month_of' => 'September-2025',
         'workshop_name' => 'Soniya Tyre & Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -9804,6 +9983,7 @@ return array (
       array (
         'bill_no' => 'SO-10537',
         'bill_date' => '2025-07-07',
+        'month_of' => 'July-2025',
         'workshop_name' => 'Continental Works Ltd',
         'paid_by' => 'company',
         'items' => 
@@ -9871,6 +10051,7 @@ return array (
       array (
         'bill_no' => 'SO-09792',
         'bill_date' => '2025-04-07',
+        'month_of' => 'April-2025',
         'workshop_name' => 'Continental Works Ltd',
         'paid_by' => 'company',
         'items' => 
@@ -10148,6 +10329,7 @@ return array (
       array (
         'bill_no' => '18192',
         'bill_date' => '2023-06-24',
+        'month_of' => 'June-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -10208,6 +10390,7 @@ return array (
       array (
         'bill_no' => '18181',
         'bill_date' => '2023-05-25',
+        'month_of' => 'May-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -10268,6 +10451,7 @@ return array (
       array (
         'bill_no' => '5233',
         'bill_date' => '2023-02-22',
+        'month_of' => 'February-2023',
         'workshop_name' => 'Soniya Tyre & Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -10292,6 +10476,7 @@ return array (
       array (
         'bill_no' => 'Bill # 76285',
         'bill_date' => '2026-06-11',
+        'month_of' => 'June-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -10317,6 +10502,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75908',
         'bill_date' => '2026-04-28',
+        'month_of' => 'April-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -10377,6 +10563,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75516',
         'bill_date' => '2026-03-02',
+        'month_of' => 'March-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -10451,6 +10638,7 @@ return array (
       array (
         'bill_no' => 'Bill # 74413',
         'bill_date' => '2025-11-18',
+        'month_of' => 'November-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -10476,6 +10664,7 @@ return array (
       array (
         'bill_no' => 'Bill # 74044',
         'bill_date' => '2025-10-11',
+        'month_of' => 'October-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -10536,6 +10725,7 @@ return array (
       array (
         'bill_no' => 'Bill # 73957',
         'bill_date' => '2025-10-11',
+        'month_of' => 'October-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -10603,6 +10793,7 @@ return array (
       array (
         'bill_no' => 'Bill # 73957',
         'bill_date' => '2025-10-02',
+        'month_of' => 'October-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -10670,6 +10861,7 @@ return array (
       array (
         'bill_no' => '1125',
         'bill_date' => '2025-05-26',
+        'month_of' => 'May-2025',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -10688,6 +10880,7 @@ return array (
       array (
         'bill_no' => 'Bill # 72281',
         'bill_date' => '2025-04-13',
+        'month_of' => 'April-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -10720,6 +10913,7 @@ return array (
       array (
         'bill_no' => '781',
         'bill_date' => '2025-03-18',
+        'month_of' => 'March-2025',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -10738,6 +10932,7 @@ return array (
       array (
         'bill_no' => '2028009181',
         'bill_date' => '2024-12-29',
+        'month_of' => 'December-2024',
         'workshop_name' => 'IFAD Auto Services Limited',
         'paid_by' => 'company',
         'items' => 
@@ -10903,6 +11098,7 @@ return array (
       array (
         'bill_no' => 'SA 223',
         'bill_date' => '2024-09-17',
+        'month_of' => 'September-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -10942,6 +11138,7 @@ return array (
       array (
         'bill_no' => 'SA 332',
         'bill_date' => '2024-09-17',
+        'month_of' => 'September-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -10967,6 +11164,7 @@ return array (
       array (
         'bill_no' => 'SA 80',
         'bill_date' => '2024-08-22',
+        'month_of' => 'August-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -10992,6 +11190,7 @@ return array (
       array (
         'bill_no' => '995',
         'bill_date' => '2024-08-01',
+        'month_of' => 'August-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -11017,6 +11216,7 @@ return array (
       array (
         'bill_no' => 'SA 115',
         'bill_date' => '2024-08-01',
+        'month_of' => 'August-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -11056,6 +11256,7 @@ return array (
       array (
         'bill_no' => 'SA 2077',
         'bill_date' => '2024-07-09',
+        'month_of' => 'July-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -11074,6 +11275,7 @@ return array (
       array (
         'bill_no' => 'SA 1726',
         'bill_date' => '2024-05-09',
+        'month_of' => 'May-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -11092,6 +11294,7 @@ return array (
       array (
         'bill_no' => 'SA 1626',
         'bill_date' => '2024-04-21',
+        'month_of' => 'April-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -11110,6 +11313,7 @@ return array (
       array (
         'bill_no' => 'SA 482',
         'bill_date' => '2024-04-01',
+        'month_of' => 'April-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -11128,6 +11332,7 @@ return array (
       array (
         'bill_no' => 'SA 2036',
         'bill_date' => '2024-04-01',
+        'month_of' => 'April-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -11153,6 +11358,7 @@ return array (
       array (
         'bill_no' => 'SA 2021',
         'bill_date' => '2023-07-13',
+        'month_of' => 'July-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -11171,6 +11377,7 @@ return array (
       array (
         'bill_no' => '1757',
         'bill_date' => '2023-05-15',
+        'month_of' => 'May-2023',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -11189,6 +11396,7 @@ return array (
       array (
         'bill_no' => 'SA 1707',
         'bill_date' => '2023-05-24',
+        'month_of' => 'May-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -11214,6 +11422,7 @@ return array (
       array (
         'bill_no' => 'SA 2138',
         'bill_date' => '2023-05-01',
+        'month_of' => 'May-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -11253,6 +11462,7 @@ return array (
       array (
         'bill_no' => 'SA 1687',
         'bill_date' => '2023-05-20',
+        'month_of' => 'May-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -11292,6 +11502,7 @@ return array (
       array (
         'bill_no' => 'SA 2101',
         'bill_date' => '2023-05-01',
+        'month_of' => 'May-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -11310,6 +11521,7 @@ return array (
       array (
         'bill_no' => 'SA 825',
         'bill_date' => '2022-12-11',
+        'month_of' => 'December-2022',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -11341,6 +11553,7 @@ return array (
       array (
         'bill_no' => '042 50005301',
         'bill_date' => '2026-06-13',
+        'month_of' => 'June-2026',
         'workshop_name' => 'IFAD Auto Services Limited',
         'paid_by' => 'company',
         'items' => 
@@ -11436,6 +11649,7 @@ return array (
       array (
         'bill_no' => '1894',
         'bill_date' => '2026-06-07',
+        'month_of' => 'June-2026',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -11454,6 +11668,7 @@ return array (
       array (
         'bill_no' => 'Bill # 76036',
         'bill_date' => '2026-05-12',
+        'month_of' => 'May-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -11479,6 +11694,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75775',
         'bill_date' => '2026-04-16',
+        'month_of' => 'December-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -11511,6 +11727,7 @@ return array (
       array (
         'bill_no' => 'Bill # 74801',
         'bill_date' => '2025-12-18',
+        'month_of' => 'December-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -11557,6 +11774,7 @@ return array (
       array (
         'bill_no' => '927',
         'bill_date' => '2025-11-09',
+        'month_of' => 'November-2025',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -11575,6 +11793,7 @@ return array (
       array (
         'bill_no' => 'MSPBD 04250001313',
         'bill_date' => '2025-09-30',
+        'month_of' => 'September-2025',
         'workshop_name' => 'IFAD Auto Services Limited',
         'paid_by' => 'company',
         'items' => 
@@ -11817,6 +12036,7 @@ return array (
       array (
         'bill_no' => 'MSPBD 04250000235',
         'bill_date' => '2025-07-29',
+        'month_of' => 'July-2025',
         'workshop_name' => 'IFAD Auto Services Limited',
         'paid_by' => 'company',
         'items' => 
@@ -11982,6 +12202,7 @@ return array (
       array (
         'bill_no' => 'Bill # 72089',
         'bill_date' => '2025-07-14',
+        'month_of' => 'July-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -12063,6 +12284,7 @@ return array (
       array (
         'bill_no' => 'Bill # 71887',
         'bill_date' => '2025-03-02',
+        'month_of' => 'March-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -12144,6 +12366,7 @@ return array (
       array (
         'bill_no' => 'Bill # 71327',
         'bill_date' => '2025-01-06',
+        'month_of' => 'January-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -12190,6 +12413,7 @@ return array (
       array (
         'bill_no' => '788',
         'bill_date' => '2024-11-30',
+        'month_of' => 'November-2024',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -12208,6 +12432,7 @@ return array (
       array (
         'bill_no' => 'SA 193',
         'bill_date' => '2024-08-31',
+        'month_of' => 'August-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -12233,6 +12458,7 @@ return array (
       array (
         'bill_no' => 'SA 2151',
         'bill_date' => '2024-07-27',
+        'month_of' => 'July-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -12321,6 +12547,7 @@ return array (
       array (
         'bill_no' => 'SA 2723',
         'bill_date' => '2024-07-01',
+        'month_of' => 'July-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -12353,6 +12580,7 @@ return array (
       array (
         'bill_no' => 'SA 1430',
         'bill_date' => '2024-03-18',
+        'month_of' => 'March-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -12378,6 +12606,7 @@ return array (
       array (
         'bill_no' => '030',
         'bill_date' => '2024-01-10',
+        'month_of' => 'January-2024',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -12396,6 +12625,7 @@ return array (
       array (
         'bill_no' => 'SA 254',
         'bill_date' => '2023-09-10',
+        'month_of' => 'September-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -12463,6 +12693,7 @@ return array (
       array (
         'bill_no' => 'SA 291',
         'bill_date' => '2023-09-01',
+        'month_of' => 'September-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -12481,6 +12712,7 @@ return array (
       array (
         'bill_no' => 'SA 1506',
         'bill_date' => '2023-04-12',
+        'month_of' => 'April-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -12506,6 +12738,7 @@ return array (
       array (
         'bill_no' => 'SA 864',
         'bill_date' => '2022-12-17',
+        'month_of' => 'December-2022',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -12524,6 +12757,7 @@ return array (
       array (
         'bill_no' => 'SA 1071',
         'bill_date' => '2022-12-01',
+        'month_of' => 'December-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -12542,6 +12776,7 @@ return array (
       array (
         'bill_no' => 'SA 1332',
         'bill_date' => '2022-11-30',
+        'month_of' => 'November-2022',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -12566,6 +12801,7 @@ return array (
       array (
         'bill_no' => '260558',
         'bill_date' => '2026-05-12',
+        'month_of' => 'May-2026',
         'workshop_name' => 'A.R Motors',
         'paid_by' => 'company',
         'items' => 
@@ -12591,6 +12827,7 @@ return array (
       array (
         'bill_no' => 'SO-11354',
         'bill_date' => '2025-10-27',
+        'month_of' => 'October-2025',
         'workshop_name' => 'Continental Works Ltd.',
         'paid_by' => 'company',
         'items' => 
@@ -12616,6 +12853,7 @@ return array (
       array (
         'bill_no' => 'SO-04644',
         'bill_date' => '2023-08-24',
+        'month_of' => 'August-2023',
         'workshop_name' => 'Continental Works Ltd.',
         'paid_by' => 'company',
         'items' => 
@@ -12648,6 +12886,7 @@ return array (
       array (
         'bill_no' => 'SO-02135',
         'bill_date' => '2022-11-26',
+        'month_of' => 'November-2022',
         'workshop_name' => 'Continental Works Ltd.',
         'paid_by' => 'company',
         'items' => 
@@ -12707,6 +12946,7 @@ return array (
       array (
         'bill_no' => '1782',
         'bill_date' => '2026-05-02',
+        'month_of' => 'September-2025',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -12725,6 +12965,7 @@ return array (
       array (
         'bill_no' => '507',
         'bill_date' => '2025-09-14',
+        'month_of' => 'September-2025',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -12743,6 +12984,7 @@ return array (
       array (
         'bill_no' => '659',
         'bill_date' => '2024-06-04',
+        'month_of' => 'June-2024',
         'workshop_name' => 'M/S. Saddam Engineering Workshop',
         'paid_by' => 'company',
         'items' => 
@@ -12817,6 +13059,7 @@ return array (
       array (
         'bill_no' => '828',
         'bill_date' => '2023-03-15',
+        'month_of' => 'March-2023',
         'workshop_name' => 'Malak Enterprise',
         'paid_by' => 'company',
         'items' => 
@@ -12835,6 +13078,7 @@ return array (
       array (
         'bill_no' => '9836',
         'bill_date' => '2022-11-01',
+        'month_of' => 'September-2022',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -12859,6 +13103,7 @@ return array (
       array (
         'bill_no' => '042 50005244',
         'bill_date' => '2026-06-10',
+        'month_of' => 'June-2026',
         'workshop_name' => 'IFAD Auto Services Limited',
         'paid_by' => 'company',
         'items' => 
@@ -12940,6 +13185,7 @@ return array (
       array (
         'bill_no' => '2824',
         'bill_date' => '2026-05-07',
+        'month_of' => 'May-2026',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -12958,6 +13204,7 @@ return array (
       array (
         'bill_no' => '042 50001983',
         'bill_date' => '2026-03-08',
+        'month_of' => 'March-2026',
         'workshop_name' => 'IFAD Auto Services Limited',
         'paid_by' => 'company',
         'items' => 
@@ -13067,6 +13314,7 @@ return array (
       array (
         'bill_no' => '042 5000 1333',
         'bill_date' => '2026-01-04',
+        'month_of' => 'January-2026',
         'workshop_name' => 'IFAD Auto Services Limited',
         'paid_by' => 'company',
         'items' => 
@@ -13099,6 +13347,7 @@ return array (
       array (
         'bill_no' => '042 5000 1271',
         'bill_date' => '2025-12-23',
+        'month_of' => 'December-2025',
         'workshop_name' => 'IFAD Auto Services Limited',
         'paid_by' => 'company',
         'items' => 
@@ -13208,6 +13457,7 @@ return array (
       array (
         'bill_no' => '222 50000 446',
         'bill_date' => '2025-09-18',
+        'month_of' => 'September-2025',
         'workshop_name' => 'IFAD Auto Services Limited',
         'paid_by' => 'company',
         'items' => 
@@ -13275,6 +13525,7 @@ return array (
       array (
         'bill_no' => '222 500000 68',
         'bill_date' => '2025-07-13',
+        'month_of' => 'July-2025',
         'workshop_name' => 'IFAD Auto Services Limited',
         'paid_by' => 'company',
         'items' => 
@@ -13384,6 +13635,7 @@ return array (
       array (
         'bill_no' => '1241',
         'bill_date' => '2025-06-21',
+        'month_of' => 'June-2025',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -13402,6 +13654,7 @@ return array (
       array (
         'bill_no' => '1980',
         'bill_date' => '2025-04-28',
+        'month_of' => 'April-2025',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -13420,6 +13673,7 @@ return array (
       array (
         'bill_no' => '2029656482',
         'bill_date' => '2025-04-15',
+        'month_of' => 'April-2025',
         'workshop_name' => 'IFAD Auto Services Limited',
         'paid_by' => 'company',
         'items' => 
@@ -13494,6 +13748,7 @@ return array (
       array (
         'bill_no' => '162',
         'bill_date' => '2025-01-11',
+        'month_of' => 'January-2025',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -13512,6 +13767,7 @@ return array (
       array (
         'bill_no' => '4472',
         'bill_date' => '2024-09-11',
+        'month_of' => 'September-2024',
         'workshop_name' => 'Satata Motors',
         'paid_by' => 'company',
         'items' => 
@@ -13537,6 +13793,7 @@ return array (
       array (
         'bill_no' => 'BD22230002096',
         'bill_date' => '2024-05-22',
+        'month_of' => 'May-2024',
         'workshop_name' => 'IFAD Auto Services Limited',
         'paid_by' => 'company',
         'items' => 
@@ -13667,6 +13924,7 @@ return array (
       array (
         'bill_no' => '1256',
         'bill_date' => '2023-11-25',
+        'month_of' => 'Novemberr-2023',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -13685,6 +13943,7 @@ return array (
       array (
         'bill_no' => '112',
         'bill_date' => '2023-05-01',
+        'month_of' => 'May-2023',
         'workshop_name' => 'MS.Saddam Eng. Workshop',
         'paid_by' => 'company',
         'items' => 
@@ -13745,6 +14004,7 @@ return array (
       array (
         'bill_no' => '9832',
         'bill_date' => '2022-11-01',
+        'month_of' => 'September-2022',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -13769,6 +14029,7 @@ return array (
       array (
         'bill_no' => 'INV - 012026020167',
         'bill_date' => '2026-02-22',
+        'month_of' => 'February-2026',
         'workshop_name' => 'Automotive Garage',
         'paid_by' => 'company',
         'items' => 
@@ -13815,6 +14076,7 @@ return array (
       array (
         'bill_no' => 'INV - 012026020147',
         'bill_date' => '2026-02-18',
+        'month_of' => 'February-2026',
         'workshop_name' => 'Automotive Garage',
         'paid_by' => 'company',
         'items' => 
@@ -13861,6 +14123,7 @@ return array (
       array (
         'bill_no' => 'INV - 012026020146',
         'bill_date' => '2026-02-16',
+        'month_of' => 'February-2026',
         'workshop_name' => 'Automotive Garage',
         'paid_by' => 'company',
         'items' => 
@@ -14054,6 +14317,7 @@ return array (
       array (
         'bill_no' => '13935',
         'bill_date' => '2025-11-09',
+        'month_of' => 'November-2024',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -14079,6 +14343,7 @@ return array (
       array (
         'bill_no' => '13929',
         'bill_date' => '2025-11-03',
+        'month_of' => 'November-2024',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -14125,6 +14390,7 @@ return array (
       array (
         'bill_no' => '845',
         'bill_date' => '2025-10-21',
+        'month_of' => 'October-2024',
         'workshop_name' => 'M/S Eastern Engineering Works',
         'paid_by' => 'company',
         'items' => 
@@ -14143,6 +14409,7 @@ return array (
       array (
         'bill_no' => '1046',
         'bill_date' => '2025-10-21',
+        'month_of' => 'October-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -14161,6 +14428,7 @@ return array (
       array (
         'bill_no' => '1119',
         'bill_date' => '2025-10-29',
+        'month_of' => 'October-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -14186,6 +14454,7 @@ return array (
       array (
         'bill_no' => '519',
         'bill_date' => '2025-10-21',
+        'month_of' => 'October-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -14337,6 +14606,7 @@ return array (
       array (
         'bill_no' => 'INV-5856',
         'bill_date' => '2025-10-18',
+        'month_of' => 'October-2024',
         'workshop_name' => 'Mollah Auto Parts',
         'paid_by' => 'company',
         'items' => 
@@ -14404,6 +14674,7 @@ return array (
       array (
         'bill_no' => 'INV-6073',
         'bill_date' => '2025-10-27',
+        'month_of' => 'October-2024',
         'workshop_name' => 'Mollah Auto Parts',
         'paid_by' => 'company',
         'items' => 
@@ -14555,6 +14826,7 @@ return array (
       array (
         'bill_no' => '13923',
         'bill_date' => '2025-10-27',
+        'month_of' => 'October-2024',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -14608,6 +14880,7 @@ return array (
       array (
         'bill_no' => '980126880',
         'bill_date' => '2025-07-27',
+        'month_of' => 'July-2025',
         'workshop_name' => 'Rangs Workshop Limited',
         'paid_by' => 'company',
         'items' => 
@@ -14640,6 +14913,7 @@ return array (
       array (
         'bill_no' => '13373',
         'bill_date' => '2025-07-06',
+        'month_of' => 'July-2025',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -14665,6 +14939,7 @@ return array (
       array (
         'bill_no' => '1300',
         'bill_date' => '2025-07-02',
+        'month_of' => 'July-2025',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -14683,6 +14958,7 @@ return array (
       array (
         'bill_no' => '11736',
         'bill_date' => '2024-04-20',
+        'month_of' => 'April-2024',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -14715,6 +14991,7 @@ return array (
       array (
         'bill_no' => '11720',
         'bill_date' => '2024-04-07',
+        'month_of' => 'April-2024',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -14768,6 +15045,7 @@ return array (
       array (
         'bill_no' => 'SA 1566',
         'bill_date' => '2024-04-04',
+        'month_of' => 'April-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -14793,6 +15071,7 @@ return array (
       array (
         'bill_no' => 'SA 1938',
         'bill_date' => '2024-04-01',
+        'month_of' => 'April-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -14825,6 +15104,7 @@ return array (
       array (
         'bill_no' => 'SA 1541',
         'bill_date' => '2024-04-01',
+        'month_of' => 'April-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -14864,6 +15144,7 @@ return array (
       array (
         'bill_no' => 'SA 1899',
         'bill_date' => '2024-04-01',
+        'month_of' => 'April-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -14889,6 +15170,7 @@ return array (
       array (
         'bill_no' => 'SA 1542',
         'bill_date' => '2024-04-01',
+        'month_of' => 'April-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -14928,6 +15210,7 @@ return array (
       array (
         'bill_no' => 'SA 1900',
         'bill_date' => '2024-04-01',
+        'month_of' => 'April-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -14953,6 +15236,7 @@ return array (
       array (
         'bill_no' => 'SA 1468',
         'bill_date' => '2024-03-23',
+        'month_of' => 'March-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -14971,6 +15255,7 @@ return array (
       array (
         'bill_no' => 'SA 1361',
         'bill_date' => '2024-03-06',
+        'month_of' => 'March-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -15010,6 +15295,7 @@ return array (
       array (
         'bill_no' => 'SA 1694',
         'bill_date' => '2024-03-01',
+        'month_of' => 'March-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -15028,6 +15314,7 @@ return array (
       array (
         'bill_no' => 'SA 1272',
         'bill_date' => '2024-02-24',
+        'month_of' => 'February-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -15046,6 +15333,7 @@ return array (
       array (
         'bill_no' => 'SA 1202',
         'bill_date' => '2024-02-10',
+        'month_of' => 'February-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -15085,6 +15373,7 @@ return array (
       array (
         'bill_no' => 'SA 1469',
         'bill_date' => '2024-02-01',
+        'month_of' => 'February-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -15110,6 +15399,7 @@ return array (
       array (
         'bill_no' => '10298',
         'bill_date' => '2024-02-06',
+        'month_of' => 'February-2024',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -15135,6 +15425,7 @@ return array (
       array (
         'bill_no' => 'SA 1145',
         'bill_date' => '2024-01-31',
+        'month_of' => 'January-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -15153,6 +15444,7 @@ return array (
       array (
         'bill_no' => 'SA 1394',
         'bill_date' => '2024-01-01',
+        'month_of' => 'January-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -15171,6 +15463,7 @@ return array (
       array (
         'bill_no' => 'SA 1076',
         'bill_date' => '2024-01-23',
+        'month_of' => 'January-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -15189,6 +15482,7 @@ return array (
       array (
         'bill_no' => 'SA 997',
         'bill_date' => '2024-01-09',
+        'month_of' => 'January-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -15228,6 +15522,7 @@ return array (
       array (
         'bill_no' => 'SA 1212',
         'bill_date' => '2024-01-01',
+        'month_of' => 'January-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -15253,6 +15548,7 @@ return array (
       array (
         'bill_no' => 'SA 804',
         'bill_date' => '2023-12-09',
+        'month_of' => 'December-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -15292,6 +15588,7 @@ return array (
       array (
         'bill_no' => 'SA 963',
         'bill_date' => '2023-12-01',
+        'month_of' => 'December-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -15310,6 +15607,7 @@ return array (
       array (
         'bill_no' => '10262',
         'bill_date' => '2023-12-04',
+        'month_of' => 'December-2023',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -15335,6 +15633,7 @@ return array (
       array (
         'bill_no' => 'SA 678',
         'bill_date' => '2023-11-18',
+        'month_of' => 'November-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -15353,6 +15652,7 @@ return array (
       array (
         'bill_no' => 'SA 661',
         'bill_date' => '2023-11-12',
+        'month_of' => 'November-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -15441,6 +15741,7 @@ return array (
       array (
         'bill_no' => 'SA 789',
         'bill_date' => '2023-11-01',
+        'month_of' => 'November-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -15473,6 +15774,7 @@ return array (
       array (
         'bill_no' => 'SA 441',
         'bill_date' => '2023-10-07',
+        'month_of' => 'October-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -15505,6 +15807,7 @@ return array (
       array (
         'bill_no' => 'SA 513',
         'bill_date' => '2023-10-01',
+        'month_of' => 'October-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -15523,6 +15826,7 @@ return array (
       array (
         'bill_no' => 'SA 381',
         'bill_date' => '2023-09-28',
+        'month_of' => 'September-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -15555,6 +15859,7 @@ return array (
       array (
         'bill_no' => 'SA 442',
         'bill_date' => '2023-09-01',
+        'month_of' => 'September-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -15580,6 +15885,7 @@ return array (
       array (
         'bill_no' => 'SA 307',
         'bill_date' => '2023-09-18',
+        'month_of' => 'September-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -15612,6 +15918,7 @@ return array (
       array (
         'bill_no' => 'SA 358',
         'bill_date' => '2023-09-01',
+        'month_of' => 'September-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -15630,6 +15937,7 @@ return array (
       array (
         'bill_no' => '10226',
         'bill_date' => '2023-08-24',
+        'month_of' => 'August-2023',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -15648,6 +15956,7 @@ return array (
       array (
         'bill_no' => '10220',
         'bill_date' => '2023-08-17',
+        'month_of' => 'August-2023',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -15694,6 +16003,7 @@ return array (
       array (
         'bill_no' => '10215',
         'bill_date' => '2023-08-07',
+        'month_of' => 'August-2023',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -15733,6 +16043,7 @@ return array (
       array (
         'bill_no' => 'SA 165',
         'bill_date' => '2023-08-28',
+        'month_of' => 'August-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -15765,6 +16076,7 @@ return array (
       array (
         'bill_no' => 'SA 183',
         'bill_date' => '2023-08-01',
+        'month_of' => 'August-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -15790,6 +16102,7 @@ return array (
       array (
         'bill_no' => 'SA 1317',
         'bill_date' => '2023-08-22',
+        'month_of' => 'August-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -15808,6 +16121,7 @@ return array (
       array (
         'bill_no' => 'SA 59',
         'bill_date' => '2023-08-10',
+        'month_of' => 'August-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -15826,6 +16140,7 @@ return array (
       array (
         'bill_no' => 'SA 2111',
         'bill_date' => '2023-07-30',
+        'month_of' => 'July-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -15865,6 +16180,7 @@ return array (
       array (
         'bill_no' => 'SA 2609',
         'bill_date' => '2023-07-01',
+        'month_of' => 'July-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -15897,6 +16213,7 @@ return array (
       array (
         'bill_no' => 'SA 2062',
         'bill_date' => '2023-07-20',
+        'month_of' => 'July-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -15915,6 +16232,7 @@ return array (
       array (
         'bill_no' => 'SA 2022',
         'bill_date' => '2023-07-13',
+        'month_of' => 'July-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -15933,6 +16251,7 @@ return array (
       array (
         'bill_no' => 'SA 1966',
         'bill_date' => '2023-07-05',
+        'month_of' => 'July-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -16021,6 +16340,7 @@ return array (
       array (
         'bill_no' => 'SA 2426',
         'bill_date' => '2023-07-01',
+        'month_of' => 'July-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -16060,6 +16380,7 @@ return array (
       array (
         'bill_no' => '2996',
         'bill_date' => '2023-06-23',
+        'month_of' => 'June-2023',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -16078,6 +16399,7 @@ return array (
       array (
         'bill_no' => 'SA 1868',
         'bill_date' => '2023-06-17',
+        'month_of' => 'June-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -16096,6 +16418,7 @@ return array (
       array (
         'bill_no' => 'SA 1836',
         'bill_date' => '2023-06-10',
+        'month_of' => 'June-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -16114,6 +16437,7 @@ return array (
       array (
         'bill_no' => 'SA 1782',
         'bill_date' => '2023-06-03',
+        'month_of' => 'June-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -16132,6 +16456,7 @@ return array (
       array (
         'bill_no' => 'SA 1762',
         'bill_date' => '2023-05-31',
+        'month_of' => 'May-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -16213,6 +16538,7 @@ return array (
       array (
         'bill_no' => 'SA 2197',
         'bill_date' => '2023-05-01',
+        'month_of' => 'May-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -16252,6 +16578,7 @@ return array (
       array (
         'bill_no' => 'SA 1669',
         'bill_date' => '2023-05-16',
+        'month_of' => 'May-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -16270,6 +16597,7 @@ return array (
       array (
         'bill_no' => 'SA 1623',
         'bill_date' => '2023-05-08',
+        'month_of' => 'May-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -16288,6 +16616,7 @@ return array (
       array (
         'bill_no' => 'SA 1545',
         'bill_date' => '2023-04-18',
+        'month_of' => 'April-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -16306,6 +16635,7 @@ return array (
       array (
         'bill_no' => 'SA 1469',
         'bill_date' => '2023-04-08',
+        'month_of' => 'April-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -16324,6 +16654,7 @@ return array (
       array (
         'bill_no' => 'SA 1399',
         'bill_date' => '2023-03-27',
+        'month_of' => 'March-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -16356,6 +16687,7 @@ return array (
       array (
         'bill_no' => 'SA 1771',
         'bill_date' => '2023-03-01',
+        'month_of' => 'March-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -16374,6 +16706,7 @@ return array (
       array (
         'bill_no' => 'SA 1343',
         'bill_date' => '2023-03-11',
+        'month_of' => 'March-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -16448,6 +16781,7 @@ return array (
       array (
         'bill_no' => 'SA 1690',
         'bill_date' => '2023-03-01',
+        'month_of' => 'March-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -16473,6 +16807,7 @@ return array (
       array (
         'bill_no' => 'SA 1317',
         'bill_date' => '2023-03-11',
+        'month_of' => 'March-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -16533,6 +16868,7 @@ return array (
       array (
         'bill_no' => 'SA 1662',
         'bill_date' => '2023-03-01',
+        'month_of' => 'March-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -16572,6 +16908,7 @@ return array (
       array (
         'bill_no' => 'SA 1188',
         'bill_date' => '2023-02-14',
+        'month_of' => 'February-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -16590,6 +16927,7 @@ return array (
       array (
         'bill_no' => 'SA 1141',
         'bill_date' => '2023-02-06',
+        'month_of' => 'February-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -16629,6 +16967,7 @@ return array (
       array (
         'bill_no' => 'SA 1439',
         'bill_date' => '2023-02-01',
+        'month_of' => 'February-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -16647,6 +16986,7 @@ return array (
       array (
         'bill_no' => 'SA 1086',
         'bill_date' => '2023-01-28',
+        'month_of' => 'January-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -16665,6 +17005,7 @@ return array (
       array (
         'bill_no' => 'SA 1038',
         'bill_date' => '2023-01-18',
+        'month_of' => 'January-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -16704,6 +17045,7 @@ return array (
       array (
         'bill_no' => 'SA 1306',
         'bill_date' => '2023-01-01',
+        'month_of' => 'January-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -16729,6 +17071,7 @@ return array (
       array (
         'bill_no' => 'SA 982',
         'bill_date' => '2023-01-05',
+        'month_of' => 'January-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -16747,6 +17090,7 @@ return array (
       array (
         'bill_no' => 'SA 941',
         'bill_date' => '2022-12-29',
+        'month_of' => 'December-2022',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -16765,6 +17109,7 @@ return array (
       array (
         'bill_no' => 'SA 1169',
         'bill_date' => '2022-12-01',
+        'month_of' => 'December-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -16783,6 +17128,7 @@ return array (
       array (
         'bill_no' => 'SA 786',
         'bill_date' => '2022-12-04',
+        'month_of' => 'December-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -16808,6 +17154,7 @@ return array (
       array (
         'bill_no' => 'SA 988',
         'bill_date' => '2022-12-01',
+        'month_of' => 'December-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -16833,6 +17180,7 @@ return array (
       array (
         'bill_no' => 'SA 785',
         'bill_date' => '2022-12-01',
+        'month_of' => 'December-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -16851,6 +17199,7 @@ return array (
       array (
         'bill_no' => '18122',
         'bill_date' => '2022-12-22',
+        'month_of' => 'December-2022',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -16883,6 +17232,7 @@ return array (
       array (
         'bill_no' => '18119',
         'bill_date' => '2022-12-15',
+        'month_of' => 'December-2022',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -16950,6 +17300,7 @@ return array (
       array (
         'bill_no' => 'SA 719',
         'bill_date' => '2022-11-22',
+        'month_of' => 'November-2022',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -16968,6 +17319,7 @@ return array (
       array (
         'bill_no' => 'SA 657',
         'bill_date' => '2022-11-14',
+        'month_of' => 'November-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -16986,6 +17338,7 @@ return array (
       array (
         'bill_no' => 'SA 829',
         'bill_date' => '2022-11-14',
+        'month_of' => 'November-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -17004,6 +17357,7 @@ return array (
       array (
         'bill_no' => '854',
         'bill_date' => '2022-11-01',
+        'month_of' => 'November-2022',
         'workshop_name' => 'Palash Car A/C Centre',
         'paid_by' => 'company',
         'items' => 
@@ -17029,6 +17383,7 @@ return array (
       array (
         'bill_no' => '16797',
         'bill_date' => '2022-11-01',
+        'month_of' => 'November-2022',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -17067,6 +17422,7 @@ return array (
       array (
         'bill_no' => 'MSPBD04250002792',
         'bill_date' => '2026-01-25',
+        'month_of' => 'January-2026',
         'workshop_name' => 'IFAD Auto Services Limited',
         'paid_by' => 'company',
         'items' => 
@@ -17141,6 +17497,7 @@ return array (
       array (
         'bill_no' => 'MSIBD04250001392',
         'bill_date' => '2026-01-10',
+        'month_of' => 'January-2026',
         'workshop_name' => 'IFAD Auto Services Limited',
         'paid_by' => 'company',
         'items' => 
@@ -17194,6 +17551,7 @@ return array (
       array (
         'bill_no' => '13952',
         'bill_date' => '2025-12-20',
+        'month_of' => 'December-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -17226,6 +17584,7 @@ return array (
       array (
         'bill_no' => 'MSIBD04250000868',
         'bill_date' => '2025-11-03',
+        'month_of' => 'November-2025',
         'workshop_name' => 'IFAD Auto Services Limited',
         'paid_by' => 'company',
         'items' => 
@@ -17279,6 +17638,7 @@ return array (
       array (
         'bill_no' => '13922',
         'bill_date' => '2025-10-27',
+        'month_of' => 'October-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -17304,6 +17664,7 @@ return array (
       array (
         'bill_no' => 'MSIBD04250000785',
         'bill_date' => '2025-10-08',
+        'month_of' => 'October-2025',
         'workshop_name' => 'IFAD Auto Services Limited',
         'paid_by' => 'company',
         'items' => 
@@ -17357,6 +17718,7 @@ return array (
       array (
         'bill_no' => 'MSPBD04250000665',
         'bill_date' => '2025-08-17',
+        'month_of' => 'August-2025',
         'workshop_name' => 'IFAD Auto Services Limited',
         'paid_by' => 'company',
         'items' => 
@@ -17564,6 +17926,7 @@ return array (
       array (
         'bill_no' => 'Bill # 73236',
         'bill_date' => '2025-07-26',
+        'month_of' => 'July-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -17596,6 +17959,7 @@ return array (
       array (
         'bill_no' => '1230',
         'bill_date' => '2025-06-18',
+        'month_of' => 'June-2025',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -17614,6 +17978,7 @@ return array (
       array (
         'bill_no' => 'MSPBD04240004704',
         'bill_date' => '2025-05-26',
+        'month_of' => 'May-2025',
         'workshop_name' => 'IFAD Auto Services Limited',
         'paid_by' => 'company',
         'items' => 
@@ -17723,6 +18088,7 @@ return array (
       array (
         'bill_no' => 'MSIBD04240002153',
         'bill_date' => '2025-04-21',
+        'month_of' => 'April-2025',
         'workshop_name' => 'IFAD Auto Services Limited',
         'paid_by' => 'company',
         'items' => 
@@ -17804,6 +18170,7 @@ return array (
       array (
         'bill_no' => 'Bill # 72320',
         'bill_date' => '2025-04-17',
+        'month_of' => 'April-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -17836,6 +18203,7 @@ return array (
       array (
         'bill_no' => 'MSIBD04240001848',
         'bill_date' => '2025-03-04',
+        'month_of' => 'March-2025',
         'workshop_name' => 'IFAD Auto Services Limited',
         'paid_by' => 'company',
         'items' => 
@@ -17917,6 +18285,7 @@ return array (
       array (
         'bill_no' => '13319',
         'bill_date' => '2025-01-11',
+        'month_of' => 'January-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -17942,6 +18311,7 @@ return array (
       array (
         'bill_no' => 'BD04240000965',
         'bill_date' => '2024-12-11',
+        'month_of' => 'December-2024',
         'workshop_name' => 'IFAD Auto Services Limited',
         'paid_by' => 'company',
         'items' => 
@@ -18023,6 +18393,7 @@ return array (
       array (
         'bill_no' => '11758',
         'bill_date' => '2024-08-27',
+        'month_of' => 'August-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -18048,6 +18419,7 @@ return array (
       array (
         'bill_no' => '79',
         'bill_date' => '2024-08-01',
+        'month_of' => 'August-2024',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -18066,6 +18438,7 @@ return array (
       array (
         'bill_no' => 'BD04230002551',
         'bill_date' => '2024-06-29',
+        'month_of' => 'June-2024',
         'workshop_name' => 'IFAD Auto Services Limited',
         'paid_by' => 'company',
         'items' => 
@@ -18147,6 +18520,7 @@ return array (
       array (
         'bill_no' => '11711',
         'bill_date' => '2024-04-02',
+        'month_of' => 'April-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -18165,6 +18539,7 @@ return array (
       array (
         'bill_no' => 'SA 1264',
         'bill_date' => '2024-02-22',
+        'month_of' => 'February-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -18183,6 +18558,7 @@ return array (
       array (
         'bill_no' => 'SA 1560',
         'bill_date' => '2024-02-01',
+        'month_of' => 'February-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -18201,6 +18577,7 @@ return array (
       array (
         'bill_no' => 'BD04230001336',
         'bill_date' => '2023-12-13',
+        'month_of' => 'December-2023',
         'workshop_name' => 'IFAD Auto Services Limited',
         'paid_by' => 'company',
         'items' => 
@@ -18275,6 +18652,7 @@ return array (
       array (
         'bill_no' => 'SA 649',
         'bill_date' => '2023-11-10',
+        'month_of' => 'November-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -18293,6 +18671,7 @@ return array (
       array (
         'bill_no' => 'BD 04230000555',
         'bill_date' => '2023-09-07',
+        'month_of' => 'September-2023',
         'workshop_name' => 'IFAD Auto Services Limited',
         'paid_by' => 'company',
         'items' => 
@@ -18332,6 +18711,7 @@ return array (
       array (
         'bill_no' => 'BD 04230000504',
         'bill_date' => '2023-08-31',
+        'month_of' => 'August-2023',
         'workshop_name' => 'IFAD Auto Services Limited',
         'paid_by' => 'company',
         'items' => 
@@ -18385,6 +18765,7 @@ return array (
       array (
         'bill_no' => '5307',
         'bill_date' => '2023-03-07',
+        'month_of' => 'March-2023',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -18403,6 +18784,7 @@ return array (
       array (
         'bill_no' => 'SA 1147',
         'bill_date' => '2023-02-08',
+        'month_of' => 'February-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -18421,6 +18803,7 @@ return array (
       array (
         'bill_no' => 'SA 1446',
         'bill_date' => '2023-02-01',
+        'month_of' => 'February-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -18439,6 +18822,7 @@ return array (
       array (
         'bill_no' => 'SA 808',
         'bill_date' => '2022-12-07',
+        'month_of' => 'December-2022',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -18457,6 +18841,7 @@ return array (
       array (
         'bill_no' => '5870',
         'bill_date' => '2022-11-25',
+        'month_of' => 'November-2022',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -18475,6 +18860,7 @@ return array (
       array (
         'bill_no' => 'SA 638',
         'bill_date' => '2022-11-10',
+        'month_of' => 'November-2022',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -18500,6 +18886,7 @@ return array (
       array (
         'bill_no' => 'SA 804',
         'bill_date' => '2022-11-10',
+        'month_of' => 'November-2022',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -18518,6 +18905,7 @@ return array (
       array (
         'bill_no' => '7699',
         'bill_date' => '2022-10-18',
+        'month_of' => 'September-2022',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -18542,6 +18930,7 @@ return array (
       array (
         'bill_no' => 'JO-014269',
         'bill_date' => '2026-03-16',
+        'month_of' => 'March-2026',
         'workshop_name' => 'ACE Workshop Ltd.',
         'paid_by' => 'company',
         'items' => 
@@ -18609,6 +18998,7 @@ return array (
       array (
         'bill_no' => 'JO-014027',
         'bill_date' => '2026-02-18',
+        'month_of' => 'February-2026',
         'workshop_name' => 'ACE Workshop Ltd.',
         'paid_by' => 'company',
         'items' => 
@@ -18662,6 +19052,7 @@ return array (
       array (
         'bill_no' => '13958',
         'bill_date' => '2026-01-07',
+        'month_of' => 'January-2026',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -18680,6 +19071,7 @@ return array (
       array (
         'bill_no' => 'JO-013295',
         'bill_date' => '2025-12-04',
+        'month_of' => 'December-2025',
         'workshop_name' => 'ACE Workshop Ltd.',
         'paid_by' => 'company',
         'items' => 
@@ -18754,6 +19146,7 @@ return array (
       array (
         'bill_no' => 'JO-012914',
         'bill_date' => '2025-10-27',
+        'month_of' => 'October-2025',
         'workshop_name' => 'ACE Workshop Ltd.',
         'paid_by' => 'company',
         'items' => 
@@ -18786,6 +19179,7 @@ return array (
       array (
         'bill_no' => '13901',
         'bill_date' => '2025-09-25',
+        'month_of' => 'September-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -18811,6 +19205,7 @@ return array (
       array (
         'bill_no' => 'JO-012412',
         'bill_date' => '2025-09-11',
+        'month_of' => 'September-2025',
         'workshop_name' => 'ACE Workshop Ltd.',
         'paid_by' => 'company',
         'items' => 
@@ -18864,6 +19259,7 @@ return array (
       array (
         'bill_no' => 'JO-012306',
         'bill_date' => '2025-09-01',
+        'month_of' => 'September-2025',
         'workshop_name' => 'ACE Workshop Ltd.',
         'paid_by' => 'company',
         'items' => 
@@ -18896,6 +19292,7 @@ return array (
       array (
         'bill_no' => 'JO-011526',
         'bill_date' => '2025-06-22',
+        'month_of' => 'June-2025',
         'workshop_name' => 'ACE Workshop Ltd.',
         'paid_by' => 'company',
         'items' => 
@@ -18956,6 +19353,7 @@ return array (
       array (
         'bill_no' => '1194',
         'bill_date' => '2025-06-07',
+        'month_of' => 'June-2025',
         'workshop_name' => 'Maa Motors',
         'paid_by' => 'company',
         'items' => 
@@ -18974,6 +19372,7 @@ return array (
       array (
         'bill_no' => 'JO-010872',
         'bill_date' => '2025-04-30',
+        'month_of' => 'April-2025',
         'workshop_name' => 'ACE Workshop Ltd.',
         'paid_by' => 'company',
         'items' => 
@@ -19020,6 +19419,7 @@ return array (
       array (
         'bill_no' => 'JO-010857',
         'bill_date' => '2025-04-29',
+        'month_of' => 'April-2025',
         'workshop_name' => 'ACE Workshop Ltd.',
         'paid_by' => 'company',
         'items' => 
@@ -19101,6 +19501,7 @@ return array (
       array (
         'bill_no' => '1983',
         'bill_date' => '2025-04-29',
+        'month_of' => 'April-2025',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -19119,6 +19520,7 @@ return array (
       array (
         'bill_no' => 'Bill No # 71128',
         'bill_date' => '2024-12-18',
+        'month_of' => 'December-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -19144,6 +19546,7 @@ return array (
       array (
         'bill_no' => 'JO-007736',
         'bill_date' => '2024-08-18',
+        'month_of' => 'August-2024',
         'workshop_name' => 'ACE Workshop Ltd.',
         'paid_by' => 'company',
         'items' => 
@@ -19211,6 +19614,7 @@ return array (
       array (
         'bill_no' => 'JO-007251',
         'bill_date' => '2024-06-24',
+        'month_of' => 'June-2024',
         'workshop_name' => 'ACE Workshop Ltd.',
         'paid_by' => 'company',
         'items' => 
@@ -19236,6 +19640,7 @@ return array (
       array (
         'bill_no' => 'JO-006539',
         'bill_date' => '2024-05-06',
+        'month_of' => 'May-2024',
         'workshop_name' => 'ACE Workshop Ltd.',
         'paid_by' => 'company',
         'items' => 
@@ -19275,6 +19680,7 @@ return array (
       array (
         'bill_no' => 'JO-004957',
         'bill_date' => '2024-01-09',
+        'month_of' => 'January-2024',
         'workshop_name' => 'ACE Workshop Ltd.',
         'paid_by' => 'company',
         'items' => 
@@ -19328,6 +19734,7 @@ return array (
       array (
         'bill_no' => '10249',
         'bill_date' => '2023-10-18',
+        'month_of' => 'October-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -19346,6 +19753,7 @@ return array (
       array (
         'bill_no' => '10207',
         'bill_date' => '2023-08-03',
+        'month_of' => 'August-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -19378,6 +19786,7 @@ return array (
       array (
         'bill_no' => 'SA 2268',
         'bill_date' => '2023-06-08',
+        'month_of' => 'June-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -19396,6 +19805,7 @@ return array (
       array (
         'bill_no' => '18168',
         'bill_date' => '2023-04-16',
+        'month_of' => 'April-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -19421,6 +19831,7 @@ return array (
       array (
         'bill_no' => '18151',
         'bill_date' => '2023-03-05',
+        'month_of' => 'March-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -19439,6 +19850,7 @@ return array (
       array (
         'bill_no' => '18136',
         'bill_date' => '2023-02-06',
+        'month_of' => 'February-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -19464,6 +19876,7 @@ return array (
       array (
         'bill_no' => '5995',
         'bill_date' => '2023-02-01',
+        'month_of' => 'February-2023',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -19482,6 +19895,7 @@ return array (
       array (
         'bill_no' => 'SA 578',
         'bill_date' => '2022-10-14',
+        'month_of' => 'October-2022',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -19506,6 +19920,7 @@ return array (
       array (
         'bill_no' => 'Bill # 76256',
         'bill_date' => '2026-06-07',
+        'month_of' => 'June-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -19531,6 +19946,7 @@ return array (
       array (
         'bill_no' => 'Bill # 76167',
         'bill_date' => '2026-05-24',
+        'month_of' => 'May-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -19584,6 +20000,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75961',
         'bill_date' => '2026-05-04',
+        'month_of' => 'May-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -19665,6 +20082,7 @@ return array (
       array (
         'bill_no' => '13981',
         'bill_date' => '2026-04-12',
+        'month_of' => 'April-2026',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -19711,6 +20129,7 @@ return array (
       array (
         'bill_no' => '611',
         'bill_date' => '2026-04-11',
+        'month_of' => 'April-2026',
         'workshop_name' => 'Arif Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -19757,6 +20176,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75498',
         'bill_date' => '2026-03-16',
+        'month_of' => 'March-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -19782,6 +20202,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75449',
         'bill_date' => '2026-03-14',
+        'month_of' => 'March-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -19821,6 +20242,7 @@ return array (
       array (
         'bill_no' => '43',
         'bill_date' => '2026-03-13',
+        'month_of' => 'March-2025',
         'workshop_name' => 'The Alamgir Automobile',
         'paid_by' => 'company',
         'items' => 
@@ -19881,6 +20303,7 @@ return array (
       array (
         'bill_no' => '13971',
         'bill_date' => '2026-03-06',
+        'month_of' => 'March-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -19906,6 +20329,7 @@ return array (
       array (
         'bill_no' => '13969',
         'bill_date' => '2026-02-28',
+        'month_of' => 'February-2026',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -19966,6 +20390,7 @@ return array (
       array (
         'bill_no' => '13966',
         'bill_date' => '2026-02-08',
+        'month_of' => 'February-2026',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -20068,6 +20493,7 @@ return array (
       array (
         'bill_no' => '34',
         'bill_date' => '2026-01-31',
+        'month_of' => 'January-2026',
         'workshop_name' => 'The Alamgir Automobile',
         'paid_by' => 'company',
         'items' => 
@@ -20114,6 +20540,7 @@ return array (
       array (
         'bill_no' => '1752',
         'bill_date' => '2026-01-24',
+        'month_of' => 'January-2026',
         'workshop_name' => 'Malek Enterprise',
         'paid_by' => 'company',
         'items' => 
@@ -20139,6 +20566,7 @@ return array (
       array (
         'bill_no' => '31',
         'bill_date' => '2026-01-19',
+        'month_of' => 'January-2026',
         'workshop_name' => 'The Alamgir Automobile',
         'paid_by' => 'company',
         'items' => 
@@ -20185,6 +20613,7 @@ return array (
       array (
         'bill_no' => '13957',
         'bill_date' => '2026-01-03',
+        'month_of' => 'January-2026',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -20224,6 +20653,7 @@ return array (
       array (
         'bill_no' => '13955',
         'bill_date' => '2025-12-28',
+        'month_of' => 'December-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -20270,6 +20700,7 @@ return array (
       array (
         'bill_no' => '13948',
         'bill_date' => '2025-12-06',
+        'month_of' => 'December-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -20309,6 +20740,7 @@ return array (
       array (
         'bill_no' => '13944',
         'bill_date' => '2025-11-22',
+        'month_of' => 'November-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -20404,6 +20836,7 @@ return array (
       array (
         'bill_no' => '13915',
         'bill_date' => '2025-10-18',
+        'month_of' => 'October-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -20436,6 +20869,7 @@ return array (
       array (
         'bill_no' => '13914',
         'bill_date' => '2025-10-18',
+        'month_of' => 'October-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -20545,6 +20979,7 @@ return array (
       array (
         'bill_no' => '1517',
         'bill_date' => '2025-10-04',
+        'month_of' => 'September-2025',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -20563,6 +20998,7 @@ return array (
       array (
         'bill_no' => '13385',
         'bill_date' => '2025-08-17',
+        'month_of' => 'August-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -20637,6 +21073,7 @@ return array (
       array (
         'bill_no' => 'Bill # 73274',
         'bill_date' => '2025-07-31',
+        'month_of' => 'July-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -20669,6 +21106,7 @@ return array (
       array (
         'bill_no' => 'Bill # 72926',
         'bill_date' => '2025-06-29',
+        'month_of' => 'June-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -20722,6 +21160,7 @@ return array (
       array (
         'bill_no' => '707',
         'bill_date' => '2025-06-14',
+        'month_of' => 'June-2025',
         'workshop_name' => 'Palash Car A/C Centre',
         'paid_by' => 'company',
         'items' => 
@@ -20775,6 +21214,7 @@ return array (
       array (
         'bill_no' => '13364',
         'bill_date' => '2025-06-14',
+        'month_of' => 'June-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -20807,6 +21247,7 @@ return array (
       array (
         'bill_no' => '13363',
         'bill_date' => '2025-06-14',
+        'month_of' => 'June-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -20853,6 +21294,7 @@ return array (
       array (
         'bill_no' => 'Bill # 72563',
         'bill_date' => '2025-06-02',
+        'month_of' => 'June-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -20927,6 +21369,7 @@ return array (
       array (
         'bill_no' => 'Bill # 72230',
         'bill_date' => '2025-04-08',
+        'month_of' => 'April-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -20987,6 +21430,7 @@ return array (
       array (
         'bill_no' => 'Bill # 71427',
         'bill_date' => '2025-03-25',
+        'month_of' => 'March-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -21047,6 +21491,7 @@ return array (
       array (
         'bill_no' => '185',
         'bill_date' => '2025-03-06',
+        'month_of' => 'March-2025',
         'workshop_name' => 'Panama CNG Conversion',
         'paid_by' => 'company',
         'items' => 
@@ -21065,6 +21510,7 @@ return array (
       array (
         'bill_no' => 'Bill # 71815',
         'bill_date' => '2025-02-20',
+        'month_of' => 'February-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -21153,6 +21599,7 @@ return array (
       array (
         'bill_no' => 'Bill # 71578',
         'bill_date' => '2025-02-06',
+        'month_of' => 'February-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -21234,6 +21681,7 @@ return array (
       array (
         'bill_no' => 'Bill # 71562',
         'bill_date' => '2025-01-26',
+        'month_of' => 'January-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -21273,6 +21721,7 @@ return array (
       array (
         'bill_no' => 'Bill # 70655',
         'bill_date' => '2025-01-23',
+        'month_of' => 'January-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -21319,6 +21768,7 @@ return array (
       array (
         'bill_no' => 'Bill # 70655',
         'bill_date' => '2024-12-18',
+        'month_of' => 'December-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -21351,6 +21801,7 @@ return array (
       array (
         'bill_no' => '13313',
         'bill_date' => '2024-12-17',
+        'month_of' => 'December-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -21397,6 +21848,7 @@ return array (
       array (
         'bill_no' => '13311',
         'bill_date' => '2024-12-05',
+        'month_of' => 'December-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -21422,6 +21874,7 @@ return array (
       array (
         'bill_no' => '13304',
         'bill_date' => '2024-11-26',
+        'month_of' => 'November-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -21545,6 +21998,7 @@ return array (
       array (
         'bill_no' => '13305',
         'bill_date' => '2024-11-26',
+        'month_of' => 'November-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -21647,6 +22101,7 @@ return array (
       array (
         'bill_no' => 'SA 482',
         'bill_date' => '2024-10-31',
+        'month_of' => 'October-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -21679,6 +22134,7 @@ return array (
       array (
         'bill_no' => 'SA 710',
         'bill_date' => '2024-10-01',
+        'month_of' => 'October-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -21704,6 +22160,7 @@ return array (
       array (
         'bill_no' => 'SA 433',
         'bill_date' => '2024-10-24',
+        'month_of' => 'October-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -21729,6 +22186,7 @@ return array (
       array (
         'bill_no' => 'SA 353',
         'bill_date' => '2024-10-10',
+        'month_of' => 'October-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -21768,6 +22226,7 @@ return array (
       array (
         'bill_no' => 'SA 512',
         'bill_date' => '2024-10-01',
+        'month_of' => 'October-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -21807,6 +22266,7 @@ return array (
       array (
         'bill_no' => 'SA 312',
         'bill_date' => '2024-10-03',
+        'month_of' => 'October-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -21853,6 +22313,7 @@ return array (
       array (
         'bill_no' => 'SA 461',
         'bill_date' => '2024-10-01',
+        'month_of' => 'October-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -21878,6 +22339,7 @@ return array (
       array (
         'bill_no' => 'SA 296',
         'bill_date' => '2024-09-30',
+        'month_of' => 'September-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -21910,6 +22372,7 @@ return array (
       array (
         'bill_no' => '269',
         'bill_date' => '2024-09-09',
+        'month_of' => 'September-2024',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -21928,6 +22391,7 @@ return array (
       array (
         'bill_no' => 'SA 72',
         'bill_date' => '2024-08-21',
+        'month_of' => 'August-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -21960,6 +22424,7 @@ return array (
       array (
         'bill_no' => 'SA 106',
         'bill_date' => '2024-08-01',
+        'month_of' => 'August-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -21978,6 +22443,7 @@ return array (
       array (
         'bill_no' => 'SA 1985',
         'bill_date' => '2024-06-24',
+        'month_of' => 'June-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -22024,6 +22490,7 @@ return array (
       array (
         'bill_no' => 'SA 2498',
         'bill_date' => '2024-06-01',
+        'month_of' => 'June-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -22056,6 +22523,7 @@ return array (
       array (
         'bill_no' => '1936',
         'bill_date' => '2024-05-29',
+        'month_of' => 'May-2024',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -22074,6 +22542,7 @@ return array (
       array (
         'bill_no' => 'SA 1717',
         'bill_date' => '2024-05-06',
+        'month_of' => 'May-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -22106,6 +22575,7 @@ return array (
       array (
         'bill_no' => 'SA 2143',
         'bill_date' => '2024-05-01',
+        'month_of' => 'May-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -22124,6 +22594,7 @@ return array (
       array (
         'bill_no' => 'SA 1606',
         'bill_date' => '2024-04-17',
+        'month_of' => 'April-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -22142,6 +22613,7 @@ return array (
       array (
         'bill_no' => 'SA 2002',
         'bill_date' => '2024-04-01',
+        'month_of' => 'April-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -22174,6 +22646,7 @@ return array (
       array (
         'bill_no' => 'SA 1384',
         'bill_date' => '2024-03-10',
+        'month_of' => 'March-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -22213,6 +22686,7 @@ return array (
       array (
         'bill_no' => 'SA 1730',
         'bill_date' => '2024-03-01',
+        'month_of' => 'March-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -22231,6 +22705,7 @@ return array (
       array (
         'bill_no' => '1015',
         'bill_date' => '2024-02-09',
+        'month_of' => 'February-2024',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -22249,6 +22724,7 @@ return array (
       array (
         'bill_no' => 'SA 1048',
         'bill_date' => '2024-01-17',
+        'month_of' => 'January-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -22267,6 +22743,7 @@ return array (
       array (
         'bill_no' => 'SA 1275',
         'bill_date' => '2024-01-01',
+        'month_of' => 'January-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -22285,6 +22762,7 @@ return array (
       array (
         'bill_no' => 'SA 1009',
         'bill_date' => '2024-01-11',
+        'month_of' => 'January-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -22331,6 +22809,7 @@ return array (
       array (
         'bill_no' => 'SA 1227',
         'bill_date' => '2024-01-01',
+        'month_of' => 'January-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -22356,6 +22835,7 @@ return array (
       array (
         'bill_no' => '10282',
         'bill_date' => '2024-01-05',
+        'month_of' => 'January-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -22374,6 +22854,7 @@ return array (
       array (
         'bill_no' => '4',
         'bill_date' => '2024-01-05',
+        'month_of' => 'January-2024',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -22392,6 +22873,7 @@ return array (
       array (
         'bill_no' => 'SA 941',
         'bill_date' => '2023-12-30',
+        'month_of' => 'December-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -22410,6 +22892,7 @@ return array (
       array (
         'bill_no' => 'SA 1147',
         'bill_date' => '2023-12-01',
+        'month_of' => 'December-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -22428,6 +22911,7 @@ return array (
       array (
         'bill_no' => 'SA 671',
         'bill_date' => '2023-11-15',
+        'month_of' => 'November-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -22467,6 +22951,7 @@ return array (
       array (
         'bill_no' => 'SA 812',
         'bill_date' => '2023-11-01',
+        'month_of' => 'November-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -22485,6 +22970,7 @@ return array (
       array (
         'bill_no' => 'SA 613',
         'bill_date' => '2023-10-31',
+        'month_of' => 'October-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -22510,6 +22996,7 @@ return array (
       array (
         'bill_no' => 'SA 729',
         'bill_date' => '2023-10-01',
+        'month_of' => 'October-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -22535,6 +23022,7 @@ return array (
       array (
         'bill_no' => 'SA 728',
         'bill_date' => '2023-10-31',
+        'month_of' => 'October-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -22553,6 +23041,7 @@ return array (
       array (
         'bill_no' => 'SA 347',
         'bill_date' => '2023-09-24',
+        'month_of' => 'September-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -22592,6 +23081,7 @@ return array (
       array (
         'bill_no' => 'SA 403',
         'bill_date' => '2023-09-01',
+        'month_of' => 'September-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -22610,6 +23100,7 @@ return array (
       array (
         'bill_no' => '10225',
         'bill_date' => '2023-08-27',
+        'month_of' => 'August-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -22649,6 +23140,7 @@ return array (
       array (
         'bill_no' => '10224',
         'bill_date' => '2023-08-27',
+        'month_of' => 'August-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -22758,6 +23250,7 @@ return array (
       array (
         'bill_no' => 'SA 136',
         'bill_date' => '2023-08-23',
+        'month_of' => 'August-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -22783,6 +23276,7 @@ return array (
       array (
         'bill_no' => 'SA 154',
         'bill_date' => '2023-08-01',
+        'month_of' => 'August-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -22801,6 +23295,7 @@ return array (
       array (
         'bill_no' => 'SA 58',
         'bill_date' => '2023-08-10',
+        'month_of' => 'August-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -22840,6 +23335,7 @@ return array (
       array (
         'bill_no' => 'SA 63',
         'bill_date' => '2023-08-01',
+        'month_of' => 'August-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -22858,6 +23354,7 @@ return array (
       array (
         'bill_no' => 'SA 2083',
         'bill_date' => '2023-07-25',
+        'month_of' => 'July-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -22897,6 +23394,7 @@ return array (
       array (
         'bill_no' => 'SA 2577',
         'bill_date' => '2023-07-01',
+        'month_of' => 'July-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -22936,6 +23434,7 @@ return array (
       array (
         'bill_no' => 'SA 1901',
         'bill_date' => '2023-06-21',
+        'month_of' => 'June-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -23031,6 +23530,7 @@ return array (
       array (
         'bill_no' => 'SA 2354',
         'bill_date' => '2023-06-01',
+        'month_of' => 'June-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -23063,6 +23563,7 @@ return array (
       array (
         'bill_no' => 'SA 1622',
         'bill_date' => '2023-05-08',
+        'month_of' => 'May-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -23116,6 +23617,7 @@ return array (
       array (
         'bill_no' => 'SA 2020',
         'bill_date' => '2023-05-01',
+        'month_of' => 'May-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -23141,6 +23643,7 @@ return array (
       array (
         'bill_no' => 'SA 1369',
         'bill_date' => '2023-03-20',
+        'month_of' => 'March-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -23194,6 +23697,7 @@ return array (
       array (
         'bill_no' => 'SA 1723',
         'bill_date' => '2023-03-01',
+        'month_of' => 'March-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -23219,6 +23723,7 @@ return array (
       array (
         'bill_no' => 'SA 1113',
         'bill_date' => '2023-01-31',
+        'month_of' => 'January-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -23244,6 +23749,7 @@ return array (
       array (
         'bill_no' => 'SA 1399',
         'bill_date' => '2023-01-01',
+        'month_of' => 'January-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -23262,6 +23768,7 @@ return array (
       array (
         'bill_no' => 'SA 1101',
         'bill_date' => '2023-01-30',
+        'month_of' => 'January-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -23322,6 +23829,7 @@ return array (
       array (
         'bill_no' => 'SA 1383',
         'bill_date' => '2023-01-01',
+        'month_of' => 'January-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -23340,6 +23848,7 @@ return array (
       array (
         'bill_no' => 'SA 815',
         'bill_date' => '2022-12-10',
+        'month_of' => 'December-2022',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -23379,6 +23888,7 @@ return array (
       array (
         'bill_no' => 'SA 1019',
         'bill_date' => '2022-12-01',
+        'month_of' => 'December-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -23397,6 +23907,7 @@ return array (
       array (
         'bill_no' => 'SA 532',
         'bill_date' => '2022-10-29',
+        'month_of' => 'October-2022',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -23443,6 +23954,7 @@ return array (
       array (
         'bill_no' => 'SA 678',
         'bill_date' => '2022-10-29',
+        'month_of' => 'October-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -23461,6 +23973,7 @@ return array (
       array (
         'bill_no' => 'SA 366',
         'bill_date' => '2022-10-01',
+        'month_of' => 'October-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -23521,6 +24034,7 @@ return array (
       array (
         'bill_no' => 'SA 473',
         'bill_date' => '2022-10-01',
+        'month_of' => 'October-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -23546,6 +24060,7 @@ return array (
       array (
         'bill_no' => 'SA 242',
         'bill_date' => '2022-09-09',
+        'month_of' => 'September-2022',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -23585,6 +24100,7 @@ return array (
       array (
         'bill_no' => 'SA 297',
         'bill_date' => '2022-09-09',
+        'month_of' => 'September-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -23609,6 +24125,7 @@ return array (
       array (
         'bill_no' => 'Bill # 76161',
         'bill_date' => '2026-05-23',
+        'month_of' => 'May-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -23641,6 +24158,7 @@ return array (
       array (
         'bill_no' => 'Bill # 76087',
         'bill_date' => '2026-05-16',
+        'month_of' => 'May-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -23729,6 +24247,7 @@ return array (
       array (
         'bill_no' => '46',
         'bill_date' => '2026-04-16',
+        'month_of' => 'April-2026',
         'workshop_name' => 'The Alamgir Automobile',
         'paid_by' => 'company',
         'items' => 
@@ -23796,6 +24315,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75373',
         'bill_date' => '2026-04-13',
+        'month_of' => 'April-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -23842,6 +24362,7 @@ return array (
       array (
         'bill_no' => '2499',
         'bill_date' => '2026-03-07',
+        'month_of' => 'March-2026',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -23860,6 +24381,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75533',
         'bill_date' => '2026-03-02',
+        'month_of' => 'March-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -23885,6 +24407,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75318',
         'bill_date' => '2026-02-16',
+        'month_of' => 'February-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -23931,6 +24454,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75314',
         'bill_date' => '2026-02-15',
+        'month_of' => 'February-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -23963,6 +24487,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75122',
         'bill_date' => '2026-01-11',
+        'month_of' => 'January-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -24009,6 +24534,7 @@ return array (
       array (
         'bill_no' => 'Bill # 74244',
         'bill_date' => '2025-11-11',
+        'month_of' => 'November-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -24083,6 +24609,7 @@ return array (
       array (
         'bill_no' => 'Bill # 73754',
         'bill_date' => '2025-10-13',
+        'month_of' => 'October-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -24129,6 +24656,7 @@ return array (
       array (
         'bill_no' => '2096',
         'bill_date' => '2025-09-13',
+        'month_of' => 'September-2025',
         'workshop_name' => 'Sabia Motors',
         'paid_by' => 'company',
         'items' => 
@@ -24154,6 +24682,7 @@ return array (
       array (
         'bill_no' => 'SO-00178',
         'bill_date' => '2025-09-10',
+        'month_of' => 'September-2025',
         'workshop_name' => 'Continental Works Ltd.',
         'paid_by' => 'company',
         'items' => 
@@ -24179,6 +24708,7 @@ return array (
       array (
         'bill_no' => 'Bill # 73620',
         'bill_date' => '2025-09-09',
+        'month_of' => 'September-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -24225,6 +24755,7 @@ return array (
       array (
         'bill_no' => 'Bill # 73549',
         'bill_date' => '2025-08-30',
+        'month_of' => 'August-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -24285,6 +24816,7 @@ return array (
       array (
         'bill_no' => 'Bill # 73387',
         'bill_date' => '2025-08-11',
+        'month_of' => 'August-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -24338,6 +24870,7 @@ return array (
       array (
         'bill_no' => 'Bill # 73349',
         'bill_date' => '2025-08-07',
+        'month_of' => 'August-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -24370,6 +24903,7 @@ return array (
       array (
         'bill_no' => '19',
         'bill_date' => '2025-08-02',
+        'month_of' => 'August-2025',
         'workshop_name' => 'The Alamgir Automobile',
         'paid_by' => 'company',
         'items' => 
@@ -24402,6 +24936,7 @@ return array (
       array (
         'bill_no' => '16',
         'bill_date' => '2025-07-29',
+        'month_of' => 'July-2025',
         'workshop_name' => 'The Alamgir Automobile',
         'paid_by' => 'company',
         'items' => 
@@ -24469,6 +25004,7 @@ return array (
       array (
         'bill_no' => 'Bill # 72603',
         'bill_date' => '2025-07-17',
+        'month_of' => 'July-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -24522,6 +25058,7 @@ return array (
       array (
         'bill_no' => '11',
         'bill_date' => '2025-07-03',
+        'month_of' => 'July-2025',
         'workshop_name' => 'The Alamgir Automobile',
         'paid_by' => 'company',
         'items' => 
@@ -24638,6 +25175,7 @@ return array (
       array (
         'bill_no' => '5217',
         'bill_date' => '2025-07-03',
+        'month_of' => 'July-2025',
         'workshop_name' => 'Rashid Motors',
         'paid_by' => 'company',
         'items' => 
@@ -24656,6 +25194,7 @@ return array (
       array (
         'bill_no' => '4',
         'bill_date' => '2025-05-24',
+        'month_of' => 'May-2025',
         'workshop_name' => 'The Alamgir Automobile',
         'paid_by' => 'company',
         'items' => 
@@ -24723,6 +25262,7 @@ return array (
       array (
         'bill_no' => 'Bill # 72538',
         'bill_date' => '2025-05-12',
+        'month_of' => 'May-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -24776,6 +25316,7 @@ return array (
       array (
         'bill_no' => 'Bill # 72128',
         'bill_date' => '2025-04-08',
+        'month_of' => 'April-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -24836,6 +25377,7 @@ return array (
       array (
         'bill_no' => '783',
         'bill_date' => '2025-03-18',
+        'month_of' => 'March-2025',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -24854,6 +25396,7 @@ return array (
       array (
         'bill_no' => 'Bill # 72058',
         'bill_date' => '2025-03-17',
+        'month_of' => 'March-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -24879,6 +25422,7 @@ return array (
       array (
         'bill_no' => '180',
         'bill_date' => '2025-03-15',
+        'month_of' => 'March-2025',
         'workshop_name' => 'Palash Car A/C Centre',
         'paid_by' => 'company',
         'items' => 
@@ -24918,6 +25462,7 @@ return array (
       array (
         'bill_no' => 'Bill # 72017',
         'bill_date' => '2025-03-12',
+        'month_of' => 'March-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -24964,6 +25509,7 @@ return array (
       array (
         'bill_no' => 'Bill # 71962',
         'bill_date' => '2025-03-08',
+        'month_of' => 'March-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -25031,6 +25577,7 @@ return array (
       array (
         'bill_no' => 'Bill # 71900',
         'bill_date' => '2025-03-01',
+        'month_of' => 'March-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -25077,6 +25624,7 @@ return array (
       array (
         'bill_no' => 'Bill # 71580',
         'bill_date' => '2025-02-04',
+        'month_of' => 'February-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -25102,6 +25650,7 @@ return array (
       array (
         'bill_no' => 'Bill # 71617',
         'bill_date' => '2025-02-01',
+        'month_of' => 'February-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -25155,6 +25704,7 @@ return array (
       array (
         'bill_no' => 'Bill # 71410',
         'bill_date' => '2025-01-12',
+        'month_of' => 'January-202524',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -25201,6 +25751,7 @@ return array (
       array (
         'bill_no' => 'Bill  # 71216',
         'bill_date' => '2024-12-28',
+        'month_of' => 'December-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -25247,6 +25798,7 @@ return array (
       array (
         'bill_no' => '13314',
         'bill_date' => '2024-12-21',
+        'month_of' => 'December-2024',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -25265,6 +25817,7 @@ return array (
       array (
         'bill_no' => 'SA 693',
         'bill_date' => '2024-12-14',
+        'month_of' => 'December-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -25304,6 +25857,7 @@ return array (
       array (
         'bill_no' => 'SA 1008',
         'bill_date' => '2024-12-01',
+        'month_of' => 'December-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -25350,6 +25904,7 @@ return array (
       array (
         'bill_no' => 'SA 586',
         'bill_date' => '2024-11-20',
+        'month_of' => 'November-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -25389,6 +25944,7 @@ return array (
       array (
         'bill_no' => 'SA 857',
         'bill_date' => '2024-11-01',
+        'month_of' => 'November-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -25414,6 +25970,7 @@ return array (
       array (
         'bill_no' => '577',
         'bill_date' => '2024-11-09',
+        'month_of' => 'November-2024',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -25432,6 +25989,7 @@ return array (
       array (
         'bill_no' => 'SA 389',
         'bill_date' => '2024-10-16',
+        'month_of' => 'July-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -25485,6 +26043,7 @@ return array (
       array (
         'bill_no' => 'SA 576',
         'bill_date' => '2024-07-01',
+        'month_of' => 'July-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -25517,6 +26076,7 @@ return array (
       array (
         'bill_no' => 'SA 253',
         'bill_date' => '2024-09-24',
+        'month_of' => 'September-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -25542,6 +26102,7 @@ return array (
       array (
         'bill_no' => 'SA 382',
         'bill_date' => '2024-09-01',
+        'month_of' => 'September-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -25567,6 +26128,7 @@ return array (
       array (
         'bill_no' => 'SA 242',
         'bill_date' => '2024-09-22',
+        'month_of' => 'September-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -25613,6 +26175,7 @@ return array (
       array (
         'bill_no' => 'SA 366',
         'bill_date' => '2024-09-01',
+        'month_of' => 'September-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -25638,6 +26201,7 @@ return array (
       array (
         'bill_no' => '11754',
         'bill_date' => '2024-08-22',
+        'month_of' => 'August-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -25761,6 +26325,7 @@ return array (
       array (
         'bill_no' => '11756',
         'bill_date' => '2024-08-01',
+        'month_of' => 'August-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -25786,6 +26351,7 @@ return array (
       array (
         'bill_no' => 'SA 6',
         'bill_date' => '2024-08-03',
+        'month_of' => 'August-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -25825,6 +26391,7 @@ return array (
       array (
         'bill_no' => 'SA 6',
         'bill_date' => '2024-08-01',
+        'month_of' => 'August-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -25850,6 +26417,7 @@ return array (
       array (
         'bill_no' => 'SA 2154',
         'bill_date' => '2024-07-27',
+        'month_of' => 'July-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -25889,6 +26457,7 @@ return array (
       array (
         'bill_no' => 'SA 2727',
         'bill_date' => '2024-07-01',
+        'month_of' => 'July-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -25921,6 +26490,7 @@ return array (
       array (
         'bill_no' => '225',
         'bill_date' => '2024-07-10',
+        'month_of' => 'July-2024',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -25939,6 +26509,7 @@ return array (
       array (
         'bill_no' => 'SA 2052',
         'bill_date' => '2024-07-06',
+        'month_of' => 'July-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -25992,6 +26563,7 @@ return array (
       array (
         'bill_no' => 'SA 2582',
         'bill_date' => '2024-07-01',
+        'month_of' => 'July-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -26031,6 +26603,7 @@ return array (
       array (
         'bill_no' => 'SA 1961',
         'bill_date' => '2024-06-12',
+        'month_of' => 'June-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -26049,6 +26622,7 @@ return array (
       array (
         'bill_no' => 'SA 2451',
         'bill_date' => '2024-06-01',
+        'month_of' => 'June-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -26067,6 +26641,7 @@ return array (
       array (
         'bill_no' => 'SA 1930',
         'bill_date' => '2024-06-09',
+        'month_of' => 'June-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -26106,6 +26681,7 @@ return array (
       array (
         'bill_no' => 'SA 2412',
         'bill_date' => '2024-06-01',
+        'month_of' => 'June-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -26124,6 +26700,7 @@ return array (
       array (
         'bill_no' => '11727',
         'bill_date' => '2024-05-15',
+        'month_of' => 'May-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -26219,6 +26796,7 @@ return array (
       array (
         'bill_no' => 'SA 1754',
         'bill_date' => '2024-05-11',
+        'month_of' => 'May-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -26244,6 +26822,7 @@ return array (
       array (
         'bill_no' => 'SA 2183',
         'bill_date' => '2024-05-01',
+        'month_of' => 'May-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -26262,6 +26841,7 @@ return array (
       array (
         'bill_no' => 'SA 1688',
         'bill_date' => '2024-04-30',
+        'month_of' => 'April-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -26294,6 +26874,7 @@ return array (
       array (
         'bill_no' => 'SA 2105',
         'bill_date' => '2024-04-01',
+        'month_of' => 'April-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -26319,6 +26900,7 @@ return array (
       array (
         'bill_no' => 'SA 1646',
         'bill_date' => '2024-04-23',
+        'month_of' => 'April-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -26358,6 +26940,7 @@ return array (
       array (
         'bill_no' => 'SA 2058',
         'bill_date' => '2024-04-01',
+        'month_of' => 'April-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -26376,6 +26959,7 @@ return array (
       array (
         'bill_no' => '144',
         'bill_date' => '2024-04-04',
+        'month_of' => 'April-2024',
         'workshop_name' => 'Palash Car A/C Centre',
         'paid_by' => 'company',
         'items' => 
@@ -26429,6 +27013,7 @@ return array (
       array (
         'bill_no' => 'SA 1417',
         'bill_date' => '2024-03-16',
+        'month_of' => 'March-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -26468,6 +27053,7 @@ return array (
       array (
         'bill_no' => 'SA 1759',
         'bill_date' => '2024-03-01',
+        'month_of' => 'March-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -26486,6 +27072,7 @@ return array (
       array (
         'bill_no' => 'SA 1445',
         'bill_date' => '2024-03-13',
+        'month_of' => 'March-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -26518,6 +27105,7 @@ return array (
       array (
         'bill_no' => 'SA 1787',
         'bill_date' => '2024-03-01',
+        'month_of' => 'March-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -26543,6 +27131,7 @@ return array (
       array (
         'bill_no' => 'SA 1201',
         'bill_date' => '2024-02-13',
+        'month_of' => 'February-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -26582,6 +27171,7 @@ return array (
       array (
         'bill_no' => 'SA 1463',
         'bill_date' => '2024-02-01',
+        'month_of' => 'February-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -26600,6 +27190,7 @@ return array (
       array (
         'bill_no' => 'SA 1033',
         'bill_date' => '2024-01-15',
+        'month_of' => 'January-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -26639,6 +27230,7 @@ return array (
       array (
         'bill_no' => 'SA 1259',
         'bill_date' => '2024-01-01',
+        'month_of' => 'January-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -26657,6 +27249,7 @@ return array (
       array (
         'bill_no' => 'SA 948',
         'bill_date' => '2023-12-31',
+        'month_of' => 'December-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -26703,6 +27296,7 @@ return array (
       array (
         'bill_no' => 'SA 1155',
         'bill_date' => '2023-12-01',
+        'month_of' => 'December-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -26735,6 +27329,7 @@ return array (
       array (
         'bill_no' => 'SA 892',
         'bill_date' => '2023-12-21',
+        'month_of' => 'December-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -26760,6 +27355,7 @@ return array (
       array (
         'bill_no' => 'SA 1087',
         'bill_date' => '2023-12-01',
+        'month_of' => 'December-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -26785,6 +27381,7 @@ return array (
       array (
         'bill_no' => 'SA 782',
         'bill_date' => '2023-12-05',
+        'month_of' => 'December-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -26810,6 +27407,7 @@ return array (
       array (
         'bill_no' => 'SA 940',
         'bill_date' => '2023-12-01',
+        'month_of' => 'December-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -26828,6 +27426,7 @@ return array (
       array (
         'bill_no' => '10261',
         'bill_date' => '2023-12-02',
+        'month_of' => 'December-2023',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -26874,6 +27473,7 @@ return array (
       array (
         'bill_no' => 'SA 377',
         'bill_date' => '2023-09-27',
+        'month_of' => 'September-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -26906,6 +27506,7 @@ return array (
       array (
         'bill_no' => 'SA 435',
         'bill_date' => '2023-09-01',
+        'month_of' => 'September-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -26924,6 +27525,7 @@ return array (
       array (
         'bill_no' => 'SA 69',
         'bill_date' => '2023-08-12',
+        'month_of' => 'August-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -26963,6 +27565,7 @@ return array (
       array (
         'bill_no' => 'SA 75',
         'bill_date' => '2023-08-01',
+        'month_of' => 'August-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -26981,6 +27584,7 @@ return array (
       array (
         'bill_no' => '10214',
         'bill_date' => '2023-08-06',
+        'month_of' => 'August-2023',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -27006,6 +27610,7 @@ return array (
       array (
         'bill_no' => '10209',
         'bill_date' => '2023-08-05',
+        'month_of' => 'August-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -27122,6 +27727,7 @@ return array (
       array (
         'bill_no' => 'SA 2064',
         'bill_date' => '2023-07-22',
+        'month_of' => 'July-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -27154,6 +27760,7 @@ return array (
       array (
         'bill_no' => 'SA 2063',
         'bill_date' => '2023-07-01',
+        'month_of' => 'July-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -27179,6 +27786,7 @@ return array (
       array (
         'bill_no' => 'SA 1812',
         'bill_date' => '2023-06-07',
+        'month_of' => 'June-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -27218,6 +27826,7 @@ return array (
       array (
         'bill_no' => 'SA 2257',
         'bill_date' => '2023-06-01',
+        'month_of' => 'June-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -27250,6 +27859,7 @@ return array (
       array (
         'bill_no' => 'SA 1742',
         'bill_date' => '2023-05-27',
+        'month_of' => 'May-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -27282,6 +27892,7 @@ return array (
       array (
         'bill_no' => 'SA 2153',
         'bill_date' => '2023-05-01',
+        'month_of' => 'May-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -27300,6 +27911,7 @@ return array (
       array (
         'bill_no' => '18172',
         'bill_date' => '2023-04-18',
+        'month_of' => 'April-2023',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -27339,6 +27951,7 @@ return array (
       array (
         'bill_no' => 'SA 1421',
         'bill_date' => '2023-04-01',
+        'month_of' => 'April-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -27385,6 +27998,7 @@ return array (
       array (
         'bill_no' => 'SA 1795',
         'bill_date' => '2023-04-01',
+        'month_of' => 'April-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -27403,6 +28017,7 @@ return array (
       array (
         'bill_no' => '18154',
         'bill_date' => '2023-03-07',
+        'month_of' => 'March-2023',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -27442,6 +28057,7 @@ return array (
       array (
         'bill_no' => '5929',
         'bill_date' => '2023-01-19',
+        'month_of' => 'January-2023',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -27460,6 +28076,7 @@ return array (
       array (
         'bill_no' => 'SA 1068',
         'bill_date' => '2023-01-24',
+        'month_of' => 'January-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -27499,6 +28116,7 @@ return array (
       array (
         'bill_no' => 'SA 1345',
         'bill_date' => '2023-01-24',
+        'month_of' => 'January-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -27517,6 +28135,7 @@ return array (
       array (
         'bill_no' => '18120',
         'bill_date' => '2022-12-03',
+        'month_of' => 'December-2022',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -27542,6 +28161,7 @@ return array (
       array (
         'bill_no' => '18118',
         'bill_date' => '2022-12-03',
+        'month_of' => 'December-2022',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -27567,6 +28187,7 @@ return array (
       array (
         'bill_no' => '18108',
         'bill_date' => '2022-11-14',
+        'month_of' => 'November-2022',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -27627,6 +28248,7 @@ return array (
       array (
         'bill_no' => '18107',
         'bill_date' => '2022-11-10',
+        'month_of' => 'November-2022',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -27666,6 +28288,7 @@ return array (
       array (
         'bill_no' => 'SA 405',
         'bill_date' => '2022-10-08',
+        'month_of' => 'October-2022',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -27719,6 +28342,7 @@ return array (
       array (
         'bill_no' => 'SA 530',
         'bill_date' => '2022-10-08',
+        'month_of' => 'October-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -27737,6 +28361,7 @@ return array (
       array (
         'bill_no' => 'SA 217',
         'bill_date' => '2022-09-05',
+        'month_of' => 'September-2022',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -27761,6 +28386,7 @@ return array (
       array (
         'bill_no' => '14811',
         'bill_date' => '2026-06-10',
+        'month_of' => 'June-2026',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -27814,6 +28440,7 @@ return array (
       array (
         'bill_no' => '13990',
         'bill_date' => '2026-04-30',
+        'month_of' => 'April-2026',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -27832,6 +28459,7 @@ return array (
       array (
         'bill_no' => '13989',
         'bill_date' => '2026-04-30',
+        'month_of' => 'April-2026',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -27927,6 +28555,7 @@ return array (
       array (
         'bill_no' => '13988',
         'bill_date' => '2026-04-30',
+        'month_of' => 'April-2026',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -28050,6 +28679,7 @@ return array (
       array (
         'bill_no' => '44',
         'bill_date' => '2026-04-16',
+        'month_of' => 'April-2026',
         'workshop_name' => 'The Alamgir Automobile',
         'paid_by' => 'company',
         'items' => 
@@ -28082,6 +28712,7 @@ return array (
       array (
         'bill_no' => '13975',
         'bill_date' => '2026-03-17',
+        'month_of' => 'March-2026',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -28114,6 +28745,7 @@ return array (
       array (
         'bill_no' => '13965',
         'bill_date' => '2026-01-24',
+        'month_of' => 'January-2026',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -28132,6 +28764,7 @@ return array (
       array (
         'bill_no' => '13947',
         'bill_date' => '2025-12-06',
+        'month_of' => 'December-2025',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -28178,6 +28811,7 @@ return array (
       array (
         'bill_no' => '13934',
         'bill_date' => '2025-11-22',
+        'month_of' => 'November-2025',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -28231,6 +28865,7 @@ return array (
       array (
         'bill_no' => '951',
         'bill_date' => '2025-11-15',
+        'month_of' => 'November-2025',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -28249,6 +28884,7 @@ return array (
       array (
         'bill_no' => '896',
         'bill_date' => '2025-11-04',
+        'month_of' => 'November-2025',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -28267,6 +28903,7 @@ return array (
       array (
         'bill_no' => '13908',
         'bill_date' => '2025-10-12',
+        'month_of' => 'October-2025',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -28292,6 +28929,7 @@ return array (
       array (
         'bill_no' => '13919',
         'bill_date' => '2025-10-07',
+        'month_of' => 'October-2025',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -28317,6 +28955,7 @@ return array (
       array (
         'bill_no' => '13394',
         'bill_date' => '2025-09-10',
+        'month_of' => 'September-2025',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -28377,6 +29016,7 @@ return array (
       array (
         'bill_no' => '13391',
         'bill_date' => '2025-08-28',
+        'month_of' => 'August-2025',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -28444,6 +29084,7 @@ return array (
       array (
         'bill_no' => '1077',
         'bill_date' => '2025-08-25',
+        'month_of' => 'August-2025',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -28462,6 +29103,7 @@ return array (
       array (
         'bill_no' => '13',
         'bill_date' => '2025-07-09',
+        'month_of' => 'July-2025',
         'workshop_name' => 'The Alamgir Automobile',
         'paid_by' => 'company',
         'items' => 
@@ -28494,6 +29136,7 @@ return array (
       array (
         'bill_no' => '12',
         'bill_date' => '2025-07-05',
+        'month_of' => 'July-2025',
         'workshop_name' => 'The Alamgir Automobile',
         'paid_by' => 'company',
         'items' => 
@@ -28526,6 +29169,7 @@ return array (
       array (
         'bill_no' => 'SO-10348',
         'bill_date' => '2025-06-15',
+        'month_of' => 'June-2025',
         'workshop_name' => 'Continental Works Limited',
         'paid_by' => 'company',
         'items' => 
@@ -28565,6 +29209,7 @@ return array (
       array (
         'bill_no' => '12025050063',
         'bill_date' => '2025-05-17',
+        'month_of' => 'May-2025',
         'workshop_name' => 'Anan Auto Solution',
         'paid_by' => 'company',
         'items' => 
@@ -28583,6 +29228,7 @@ return array (
       array (
         'bill_no' => '120250590',
         'bill_date' => '2025-04-26',
+        'month_of' => 'April-2025',
         'workshop_name' => 'Anan Auto Solution',
         'paid_by' => 'company',
         'items' => 
@@ -28622,6 +29268,7 @@ return array (
       array (
         'bill_no' => '120250521',
         'bill_date' => '2025-03-09',
+        'month_of' => 'March-2025',
         'workshop_name' => 'Anan Auto Solution',
         'paid_by' => 'company',
         'items' => 
@@ -28815,6 +29462,7 @@ return array (
       array (
         'bill_no' => '13325',
         'bill_date' => '2025-02-05',
+        'month_of' => 'February-2025',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -28854,6 +29502,7 @@ return array (
       array (
         'bill_no' => '12024120073',
         'bill_date' => '2024-12-17',
+        'month_of' => 'December-2024',
         'workshop_name' => 'Anan Auto Solution',
         'paid_by' => 'company',
         'items' => 
@@ -28886,6 +29535,7 @@ return array (
       array (
         'bill_no' => '11790',
         'bill_date' => '2024-12-07',
+        'month_of' => 'December-2024',
         'workshop_name' => 'Anan Auto Solution',
         'paid_by' => 'company',
         'items' => 
@@ -28918,6 +29568,7 @@ return array (
       array (
         'bill_no' => '13307',
         'bill_date' => '2024-11-28',
+        'month_of' => 'Novembery-2024',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -28943,6 +29594,7 @@ return array (
       array (
         'bill_no' => '11796',
         'bill_date' => '2024-11-07',
+        'month_of' => 'Novembery-2024',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -28961,6 +29613,7 @@ return array (
       array (
         'bill_no' => '11790',
         'bill_date' => '2024-10-22',
+        'month_of' => 'October-2024',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -29007,6 +29660,7 @@ return array (
       array (
         'bill_no' => '2048',
         'bill_date' => '2024-07-01',
+        'month_of' => 'July-2024',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -29025,6 +29679,7 @@ return array (
       array (
         'bill_no' => '11737',
         'bill_date' => '2024-06-30',
+        'month_of' => 'June-2024',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -29043,6 +29698,7 @@ return array (
       array (
         'bill_no' => '11730',
         'bill_date' => '2024-05-28',
+        'month_of' => 'May-2024',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -29075,6 +29731,7 @@ return array (
       array (
         'bill_no' => '11718',
         'bill_date' => '2024-04-07',
+        'month_of' => 'April-2024',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -29093,6 +29750,7 @@ return array (
       array (
         'bill_no' => '11710',
         'bill_date' => '2024-04-01',
+        'month_of' => 'April-2024',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -29125,6 +29783,7 @@ return array (
       array (
         'bill_no' => '231',
         'bill_date' => '2024-03-19',
+        'month_of' => 'March-2024',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -29143,6 +29802,7 @@ return array (
       array (
         'bill_no' => '10295',
         'bill_date' => '2024-03-10',
+        'month_of' => 'March-2024',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -29168,6 +29828,7 @@ return array (
       array (
         'bill_no' => '1077',
         'bill_date' => '2024-02-20',
+        'month_of' => 'February-2024',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -29186,6 +29847,7 @@ return array (
       array (
         'bill_no' => '918',
         'bill_date' => '2024-01-23',
+        'month_of' => 'January-2024',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -29204,6 +29866,7 @@ return array (
       array (
         'bill_no' => '10273',
         'bill_date' => '2024-01-01',
+        'month_of' => 'January-2024',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -29250,6 +29913,7 @@ return array (
       array (
         'bill_no' => '8673',
         'bill_date' => '2023-11-02',
+        'month_of' => 'November-2023',
         'workshop_name' => 'N.A Motors',
         'paid_by' => 'company',
         'items' => 
@@ -29275,6 +29939,7 @@ return array (
       array (
         'bill_no' => '10252',
         'bill_date' => '2023-10-23',
+        'month_of' => 'October-2023',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -29412,6 +30077,7 @@ return array (
       array (
         'bill_no' => '10236',
         'bill_date' => '2023-09-06',
+        'month_of' => 'September-2023',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -29444,6 +30110,7 @@ return array (
       array (
         'bill_no' => '22969',
         'bill_date' => '2023-08-14',
+        'month_of' => 'August-2023',
         'workshop_name' => 'N.A Motors',
         'paid_by' => 'company',
         'items' => 
@@ -29476,6 +30143,7 @@ return array (
       array (
         'bill_no' => '10240',
         'bill_date' => '2023-07-30',
+        'month_of' => 'July-2023',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -29515,6 +30183,7 @@ return array (
       array (
         'bill_no' => 'SA 1959',
         'bill_date' => '2023-07-04',
+        'month_of' => 'July-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -29533,6 +30202,7 @@ return array (
       array (
         'bill_no' => 'SA 2419',
         'bill_date' => '2023-07-01',
+        'month_of' => 'July-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -29551,6 +30221,7 @@ return array (
       array (
         'bill_no' => '18176',
         'bill_date' => '2023-05-07',
+        'month_of' => 'May-2023',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -29590,6 +30261,7 @@ return array (
       array (
         'bill_no' => '19144',
         'bill_date' => '2023-04-27',
+        'month_of' => 'April-2023',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -29622,6 +30294,7 @@ return array (
       array (
         'bill_no' => '18127',
         'bill_date' => '2023-01-04',
+        'month_of' => 'January-2023',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -29640,6 +30313,7 @@ return array (
       array (
         'bill_no' => '856',
         'bill_date' => '2022-12-12',
+        'month_of' => 'December-2022',
         'workshop_name' => 'Palash Car A/C Centre',
         'paid_by' => 'company',
         'items' => 
@@ -29700,6 +30374,7 @@ return array (
       array (
         'bill_no' => '16799',
         'bill_date' => '2022-11-02',
+        'month_of' => 'November-2022',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -29752,6 +30427,7 @@ return array (
       array (
         'bill_no' => 'Bill # 21494',
         'bill_date' => '2025-09-03',
+        'month_of' => 'September-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -29847,6 +30523,7 @@ return array (
       array (
         'bill_no' => '1124',
         'bill_date' => '2025-05-26',
+        'month_of' => 'May-2025',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -29865,6 +30542,7 @@ return array (
       array (
         'bill_no' => 'MSIBD04240001942',
         'bill_date' => '2025-03-16',
+        'month_of' => 'March-2025',
         'workshop_name' => 'IFAD Auto Services Limited',
         'paid_by' => 'company',
         'items' => 
@@ -29953,6 +30631,7 @@ return array (
       array (
         'bill_no' => '044',
         'bill_date' => '2024-01-14',
+        'month_of' => 'January-2025',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -29971,6 +30650,7 @@ return array (
       array (
         'bill_no' => 'SA 1075',
         'bill_date' => '2022-09-22',
+        'month_of' => 'September-2022',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -29989,6 +30669,7 @@ return array (
       array (
         'bill_no' => 'SA 317',
         'bill_date' => '2022-09-01',
+        'month_of' => 'September-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -30007,6 +30688,7 @@ return array (
       array (
         'bill_no' => 'SA 1806',
         'bill_date' => '2022-09-01',
+        'month_of' => 'September-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -30031,6 +30713,7 @@ return array (
       array (
         'bill_no' => '260677',
         'bill_date' => '2026-06-17',
+        'month_of' => 'June-2026',
         'workshop_name' => 'A.R Motors Ltd.',
         'paid_by' => 'company',
         'items' => 
@@ -30161,6 +30844,7 @@ return array (
       array (
         'bill_no' => '13992',
         'bill_date' => '2026-05-07',
+        'month_of' => 'May-2026',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -30179,6 +30863,7 @@ return array (
       array (
         'bill_no' => '2752',
         'bill_date' => '2026-04-14',
+        'month_of' => 'April-2026',
         'workshop_name' => 'Sonya Tyre & Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -30197,6 +30882,7 @@ return array (
       array (
         'bill_no' => '2512132',
         'bill_date' => '2025-12-31',
+        'month_of' => 'December-2025',
         'workshop_name' => 'A.R Motors Ltd.',
         'paid_by' => 'company',
         'items' => 
@@ -30271,6 +30957,7 @@ return array (
       array (
         'bill_no' => '13377',
         'bill_date' => '2025-07-30',
+        'month_of' => 'July-2025',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -30289,6 +30976,7 @@ return array (
       array (
         'bill_no' => '1229',
         'bill_date' => '2025-06-18',
+        'month_of' => 'June-2025',
         'workshop_name' => 'Sonya Tyre & Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -30307,6 +30995,7 @@ return array (
       array (
         'bill_no' => 'SO-10266',
         'bill_date' => '2025-06-01',
+        'month_of' => 'December-2024',
         'workshop_name' => 'Continental Works Ltd',
         'paid_by' => 'company',
         'items' => 
@@ -30374,6 +31063,7 @@ return array (
       array (
         'bill_no' => '13355',
         'bill_date' => '2025-05-07',
+        'month_of' => 'May-2025',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -30413,6 +31103,7 @@ return array (
       array (
         'bill_no' => 'SO-08863',
         'bill_date' => '2024-12-03',
+        'month_of' => 'December-2024',
         'workshop_name' => 'Continental Works Ltd',
         'paid_by' => 'company',
         'items' => 
@@ -30459,6 +31150,7 @@ return array (
       array (
         'bill_no' => 'SO-07509',
         'bill_date' => '2024-06-05',
+        'month_of' => 'June-2024',
         'workshop_name' => 'Continental Works Ltd',
         'paid_by' => 'company',
         'items' => 
@@ -30624,6 +31316,7 @@ return array (
       array (
         'bill_no' => '10232',
         'bill_date' => '2023-09-05',
+        'month_of' => 'September-2023',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -30656,6 +31349,7 @@ return array (
       array (
         'bill_no' => '10202',
         'bill_date' => '2023-07-25',
+        'month_of' => 'July-2023',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -30716,6 +31410,7 @@ return array (
       array (
         'bill_no' => '1040',
         'bill_date' => '2023-01-31',
+        'month_of' => 'January-2023',
         'workshop_name' => 'S.M. Tyre & Battery',
         'paid_by' => 'company',
         'items' => 
@@ -30734,6 +31429,7 @@ return array (
       array (
         'bill_no' => 'SO-02202',
         'bill_date' => '2022-12-03',
+        'month_of' => 'December-2022',
         'workshop_name' => 'Continental Works Ltd',
         'paid_by' => 'company',
         'items' => 
@@ -30787,6 +31483,7 @@ return array (
       array (
         'bill_no' => '16793',
         'bill_date' => '2022-10-18',
+        'month_of' => 'October-2022',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -30846,6 +31543,7 @@ return array (
       array (
         'bill_no' => '758',
         'bill_date' => '2026-04-02',
+        'month_of' => 'April-2026',
         'workshop_name' => 'Palash Car A/C Centre',
         'paid_by' => 'company',
         'items' => 
@@ -30899,6 +31597,7 @@ return array (
       array (
         'bill_no' => '13979',
         'bill_date' => '2026-04-02',
+        'month_of' => 'April-2026',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -30952,6 +31651,7 @@ return array (
       array (
         'bill_no' => '13976',
         'bill_date' => '2026-03-17',
+        'month_of' => 'March-2026',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -30970,6 +31670,7 @@ return array (
       array (
         'bill_no' => '13956',
         'bill_date' => '2025-01-02',
+        'month_of' => 'January-2026',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -30995,6 +31696,7 @@ return array (
       array (
         'bill_no' => '1065',
         'bill_date' => '2025-11-30',
+        'month_of' => 'November-2025',
         'workshop_name' => 'Shahin Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -31013,6 +31715,7 @@ return array (
       array (
         'bill_no' => '13946',
         'bill_date' => '2025-11-29',
+        'month_of' => 'November-2025',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -31052,6 +31755,7 @@ return array (
       array (
         'bill_no' => 'SO-11036',
         'bill_date' => '2025-09-11',
+        'month_of' => 'September-2025',
         'workshop_name' => 'Continental Work Ltd',
         'paid_by' => 'company',
         'items' => 
@@ -31105,6 +31809,7 @@ return array (
       array (
         'bill_no' => '294',
         'bill_date' => '2025-01-30',
+        'month_of' => 'January-2025',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -31123,6 +31828,7 @@ return array (
       array (
         'bill_no' => 'SO-08867',
         'bill_date' => '2024-12-03',
+        'month_of' => 'December-2024',
         'workshop_name' => 'Continental Work Ltd',
         'paid_by' => 'company',
         'items' => 
@@ -31176,6 +31882,7 @@ return array (
       array (
         'bill_no' => 'SO-08276',
         'bill_date' => '2024-09-17',
+        'month_of' => 'September-2024',
         'workshop_name' => 'Continental Work Ltd',
         'paid_by' => 'company',
         'items' => 
@@ -31194,6 +31901,7 @@ return array (
       array (
         'bill_no' => 'SO-07494',
         'bill_date' => '2024-06-04',
+        'month_of' => 'June-2024',
         'workshop_name' => 'Continental Work Ltd',
         'paid_by' => 'company',
         'items' => 
@@ -31254,6 +31962,7 @@ return array (
       array (
         'bill_no' => '11719',
         'bill_date' => '2024-04-07',
+        'month_of' => 'April-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -31272,6 +31981,7 @@ return array (
       array (
         'bill_no' => '10259',
         'bill_date' => '2023-11-29',
+        'month_of' => 'November-2023',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -31304,6 +32014,7 @@ return array (
       array (
         'bill_no' => '18170',
         'bill_date' => '2023-04-17',
+        'month_of' => 'April-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -31322,6 +32033,7 @@ return array (
       array (
         'bill_no' => '16790',
         'bill_date' => '2022-10-11',
+        'month_of' => 'October-2022',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -31374,6 +32086,7 @@ return array (
       array (
         'bill_no' => '14804',
         'bill_date' => '2026-06-04',
+        'month_of' => 'June-2026',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -31406,6 +32119,7 @@ return array (
       array (
         'bill_no' => '615',
         'bill_date' => '2026-04-23',
+        'month_of' => 'April-2026',
         'workshop_name' => 'Arif Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -31480,6 +32194,7 @@ return array (
       array (
         'bill_no' => '616',
         'bill_date' => '2026-04-23',
+        'month_of' => 'April-2026',
         'workshop_name' => 'Arif Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -31561,6 +32276,7 @@ return array (
       array (
         'bill_no' => '13986',
         'bill_date' => '2026-04-21',
+        'month_of' => 'April-2026',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -31649,6 +32365,7 @@ return array (
       array (
         'bill_no' => '13951',
         'bill_date' => '2025-12-13',
+        'month_of' => 'December-2025',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -31702,6 +32419,7 @@ return array (
       array (
         'bill_no' => '13950',
         'bill_date' => '2025-12-13',
+        'month_of' => 'December-2025',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -31811,6 +32529,7 @@ return array (
       array (
         'bill_no' => '721',
         'bill_date' => '2025-09-01',
+        'month_of' => 'September-2025',
         'workshop_name' => 'Palash Car A/C Centre',
         'paid_by' => 'company',
         'items' => 
@@ -31836,6 +32555,7 @@ return array (
       array (
         'bill_no' => '13384',
         'bill_date' => '2025-08-16',
+        'month_of' => 'August-2025',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -31889,6 +32609,7 @@ return array (
       array (
         'bill_no' => '15',
         'bill_date' => '2025-07-24',
+        'month_of' => 'July-2025',
         'workshop_name' => 'The Alamgir Automobile',
         'paid_by' => 'company',
         'items' => 
@@ -32061,6 +32782,7 @@ return array (
       array (
         'bill_no' => '1302',
         'bill_date' => '2025-07-20',
+        'month_of' => 'July-2025',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -32079,6 +32801,7 @@ return array (
       array (
         'bill_no' => '13353',
         'bill_date' => '2025-04-23',
+        'month_of' => 'April-2025',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -32104,6 +32827,7 @@ return array (
       array (
         'bill_no' => '13352',
         'bill_date' => '2025-04-21',
+        'month_of' => 'April-2025',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -32136,6 +32860,7 @@ return array (
       array (
         'bill_no' => '758',
         'bill_date' => '2025-03-14',
+        'month_of' => 'March-2025',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -32154,6 +32879,7 @@ return array (
       array (
         'bill_no' => '13337',
         'bill_date' => '2025-03-14',
+        'month_of' => 'March-2025',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -32186,6 +32912,7 @@ return array (
       array (
         'bill_no' => '13324',
         'bill_date' => '2025-02-05',
+        'month_of' => 'February-2025',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -32246,6 +32973,7 @@ return array (
       array (
         'bill_no' => '11791',
         'bill_date' => '2024-10-28',
+        'month_of' => 'October-2024',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -32292,6 +33020,7 @@ return array (
       array (
         'bill_no' => '11764',
         'bill_date' => '2024-09-17',
+        'month_of' => 'September-2024',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -32310,6 +33039,7 @@ return array (
       array (
         'bill_no' => '11752',
         'bill_date' => '2024-08-18',
+        'month_of' => 'August-2024',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -32349,6 +33079,7 @@ return array (
       array (
         'bill_no' => '11751',
         'bill_date' => '2024-08-12',
+        'month_of' => 'August-2024',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -32430,6 +33161,7 @@ return array (
       array (
         'bill_no' => '10263',
         'bill_date' => '2023-12-05',
+        'month_of' => 'December-2023',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -32504,6 +33236,7 @@ return array (
       array (
         'bill_no' => '10253',
         'bill_date' => '2023-10-23',
+        'month_of' => 'October-2023',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -32543,6 +33276,7 @@ return array (
       array (
         'bill_no' => '10240',
         'bill_date' => '2023-09-18',
+        'month_of' => 'September-2023',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -32610,6 +33344,7 @@ return array (
       array (
         'bill_no' => '10216',
         'bill_date' => '2023-08-17',
+        'month_of' => 'August-2023',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -32670,6 +33405,7 @@ return array (
       array (
         'bill_no' => '1377',
         'bill_date' => '2023-07-24',
+        'month_of' => 'July-2023',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -32688,6 +33424,7 @@ return array (
       array (
         'bill_no' => '10201',
         'bill_date' => '2023-07-24',
+        'month_of' => 'July-2023',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -32727,6 +33464,7 @@ return array (
       array (
         'bill_no' => '16792',
         'bill_date' => '2022-10-16',
+        'month_of' => 'March-2023',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -32787,13 +33525,98 @@ return array (
             'unit' => NULL,
             'amount' => 400.0,
           ),
+          8 => 
+          array (
+            'item_name' => 'Water Pump',
+            'quantity' => NULL,
+            'unit' => NULL,
+            'amount' => 2100.0,
+          ),
+          9 => 
+          array (
+            'item_name' => 'Spark Plug',
+            'quantity' => NULL,
+            'unit' => NULL,
+            'amount' => 4800.0,
+          ),
+          10 => 
+          array (
+            'item_name' => 'Oil Filter',
+            'quantity' => NULL,
+            'unit' => NULL,
+            'amount' => 350.0,
+          ),
+          11 => 
+          array (
+            'item_name' => 'Air Filter',
+            'quantity' => NULL,
+            'unit' => NULL,
+            'amount' => 300.0,
+          ),
+          12 => 
+          array (
+            'item_name' => 'A/C Filter',
+            'quantity' => NULL,
+            'unit' => NULL,
+            'amount' => 350.0,
+          ),
+          13 => 
+          array (
+            'item_name' => 'Engine Oil',
+            'quantity' => NULL,
+            'unit' => NULL,
+            'amount' => 1850.0,
+          ),
+          14 => 
+          array (
+            'item_name' => 'CNG T',
+            'quantity' => NULL,
+            'unit' => NULL,
+            'amount' => 250.0,
+          ),
+          15 => 
+          array (
+            'item_name' => 'Dynama Bearing With Fitting',
+            'quantity' => NULL,
+            'unit' => NULL,
+            'amount' => 1000.0,
+          ),
+          16 => 
+          array (
+            'item_name' => 'Air Pipe',
+            'quantity' => NULL,
+            'unit' => NULL,
+            'amount' => 200.0,
+          ),
+          17 => 
+          array (
+            'item_name' => 'Water Car Wash',
+            'quantity' => NULL,
+            'unit' => NULL,
+            'amount' => 500.0,
+          ),
+          18 => 
+          array (
+            'item_name' => 'Water Pump,Dynama,Spark Plug, Engine Oil,Butterfly Wash With S/C',
+            'quantity' => NULL,
+            'unit' => NULL,
+            'amount' => 1200.0,
+          ),
+          19 => 
+          array (
+            'item_name' => 'Radiator Cap',
+            'quantity' => NULL,
+            'unit' => NULL,
+            'amount' => 500.0,
+          ),
         ),
-        'total_amount' => 4730.0,
+        'total_amount' => 18130.0,
       ),
       26 => 
       array (
         'bill_no' => '18134',
         'bill_date' => '2023-01-31',
+        'month_of' => 'January-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -32812,6 +33635,7 @@ return array (
       array (
         'bill_no' => '858',
         'bill_date' => '2023-01-31',
+        'month_of' => 'January-2023',
         'workshop_name' => 'Palash Car A/C Centre',
         'paid_by' => 'company',
         'items' => 
@@ -32886,6 +33710,7 @@ return array (
       array (
         'bill_no' => '18111',
         'bill_date' => '2022-11-28',
+        'month_of' => 'November-2022',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -32944,103 +33769,9 @@ return array (
       ),
       29 => 
       array (
-        'bill_no' => '16792',
-        'bill_date' => '2022-10-16',
-        'workshop_name' => 'JK Motors',
-        'paid_by' => 'company',
-        'items' => 
-        array (
-          0 => 
-          array (
-            'item_name' => 'Water Pump',
-            'quantity' => NULL,
-            'unit' => NULL,
-            'amount' => 2100.0,
-          ),
-          1 => 
-          array (
-            'item_name' => 'Spark Plug',
-            'quantity' => NULL,
-            'unit' => NULL,
-            'amount' => 4800.0,
-          ),
-          2 => 
-          array (
-            'item_name' => 'Oil Filter',
-            'quantity' => NULL,
-            'unit' => NULL,
-            'amount' => 350.0,
-          ),
-          3 => 
-          array (
-            'item_name' => 'Air Filter',
-            'quantity' => NULL,
-            'unit' => NULL,
-            'amount' => 300.0,
-          ),
-          4 => 
-          array (
-            'item_name' => 'A/C Filter',
-            'quantity' => NULL,
-            'unit' => NULL,
-            'amount' => 350.0,
-          ),
-          5 => 
-          array (
-            'item_name' => 'Engine Oil',
-            'quantity' => NULL,
-            'unit' => NULL,
-            'amount' => 1850.0,
-          ),
-          6 => 
-          array (
-            'item_name' => 'CNG T',
-            'quantity' => NULL,
-            'unit' => NULL,
-            'amount' => 250.0,
-          ),
-          7 => 
-          array (
-            'item_name' => 'Dynama Bearing With Fitting',
-            'quantity' => NULL,
-            'unit' => NULL,
-            'amount' => 1000.0,
-          ),
-          8 => 
-          array (
-            'item_name' => 'Air Pipe',
-            'quantity' => NULL,
-            'unit' => NULL,
-            'amount' => 200.0,
-          ),
-          9 => 
-          array (
-            'item_name' => 'Water Car Wash',
-            'quantity' => NULL,
-            'unit' => NULL,
-            'amount' => 500.0,
-          ),
-          10 => 
-          array (
-            'item_name' => 'Water Pump,Dynama,Spark Plug, Engine Oil,Butterfly Wash With S/C',
-            'quantity' => NULL,
-            'unit' => NULL,
-            'amount' => 1200.0,
-          ),
-          11 => 
-          array (
-            'item_name' => 'Radiator Cap',
-            'quantity' => NULL,
-            'unit' => NULL,
-            'amount' => 500.0,
-          ),
-        ),
-        'total_amount' => 13400.0,
-      ),
-      30 => 
-      array (
         'bill_no' => 'SA 155',
         'bill_date' => '2022-08-22',
+        'month_of' => 'August-2022',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -33076,10 +33807,11 @@ return array (
         ),
         'total_amount' => 4240.0,
       ),
-      31 => 
+      30 => 
       array (
         'bill_no' => 'SA 187',
         'bill_date' => '2022-08-22',
+        'month_of' => 'August-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -33094,10 +33826,11 @@ return array (
         ),
         'total_amount' => 215.0,
       ),
-      32 => 
+      31 => 
       array (
         'bill_no' => 'SA 156',
         'bill_date' => '2022-08-22',
+        'month_of' => 'August-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -33119,10 +33852,11 @@ return array (
         ),
         'total_amount' => 4870.0,
       ),
-      33 => 
+      32 => 
       array (
         'bill_no' => 'SA 188',
         'bill_date' => '2022-08-22',
+        'month_of' => 'August-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -33147,6 +33881,7 @@ return array (
       array (
         'bill_no' => '14805',
         'bill_date' => '2026-06-06',
+        'month_of' => 'June-2026',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -33200,6 +33935,7 @@ return array (
       array (
         'bill_no' => '13997',
         'bill_date' => '2026-05-19',
+        'month_of' => 'May-2026',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -33253,6 +33989,7 @@ return array (
       array (
         'bill_no' => '762',
         'bill_date' => '2026-05-06',
+        'month_of' => 'May-2026',
         'workshop_name' => 'Palash Car A/C Centre',
         'paid_by' => 'company',
         'items' => 
@@ -33320,6 +34057,7 @@ return array (
       array (
         'bill_no' => '13991',
         'bill_date' => '2026-05-06',
+        'month_of' => 'May-2026',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -33359,6 +34097,7 @@ return array (
       array (
         'bill_no' => '13984',
         'bill_date' => '2026-04-18',
+        'month_of' => 'April-2026',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -33468,6 +34207,7 @@ return array (
       array (
         'bill_no' => '2738',
         'bill_date' => '2026-04-11',
+        'month_of' => 'April-2026',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -33486,6 +34226,7 @@ return array (
       array (
         'bill_no' => '13972',
         'bill_date' => '2026-03-07',
+        'month_of' => 'March-2026',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -33518,6 +34259,7 @@ return array (
       array (
         'bill_no' => '40',
         'bill_date' => '2026-03-01',
+        'month_of' => 'March-2026',
         'workshop_name' => 'The Alamgir Automobile',
         'paid_by' => 'company',
         'items' => 
@@ -33571,6 +34313,7 @@ return array (
       array (
         'bill_no' => '39',
         'bill_date' => '2026-02-22',
+        'month_of' => 'February-2026',
         'workshop_name' => 'The Alamgir Automobile',
         'paid_by' => 'company',
         'items' => 
@@ -33631,6 +34374,7 @@ return array (
       array (
         'bill_no' => '13960',
         'bill_date' => '2026-01-21',
+        'month_of' => 'January-2026',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -33656,6 +34400,7 @@ return array (
       array (
         'bill_no' => 'Bill # 74952',
         'bill_date' => '2026-01-01',
+        'month_of' => 'January-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -33709,6 +34454,7 @@ return array (
       array (
         'bill_no' => '741',
         'bill_date' => '2025-11-23',
+        'month_of' => 'November-2025',
         'workshop_name' => 'Palash Car A/C Centre',
         'paid_by' => 'company',
         'items' => 
@@ -33755,6 +34501,7 @@ return array (
       array (
         'bill_no' => 'Bill # 74367',
         'bill_date' => '2025-11-11',
+        'month_of' => 'November-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -33815,6 +34562,7 @@ return array (
       array (
         'bill_no' => '21',
         'bill_date' => '2025-10-19',
+        'month_of' => 'October-2025',
         'workshop_name' => 'The Alamgir Automobile',
         'paid_by' => 'company',
         'items' => 
@@ -33861,6 +34609,7 @@ return array (
       array (
         'bill_no' => '735',
         'bill_date' => '2025-10-19',
+        'month_of' => 'October-2025',
         'workshop_name' => 'Palash Car A/C Centre',
         'paid_by' => 'company',
         'items' => 
@@ -33928,6 +34677,7 @@ return array (
       array (
         'bill_no' => '13397',
         'bill_date' => '2025-09-20',
+        'month_of' => 'September-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -34023,6 +34773,7 @@ return array (
       array (
         'bill_no' => '13392',
         'bill_date' => '2025-08-30',
+        'month_of' => 'August-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -34062,6 +34813,7 @@ return array (
       array (
         'bill_no' => '318',
         'bill_date' => '2025-08-02',
+        'month_of' => 'August-2025',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -34080,6 +34832,7 @@ return array (
       array (
         'bill_no' => '13378',
         'bill_date' => '2025-07-30',
+        'month_of' => 'July-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -34196,6 +34949,7 @@ return array (
       array (
         'bill_no' => '13376',
         'bill_date' => '2025-07-29',
+        'month_of' => 'July-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -34305,6 +35059,7 @@ return array (
       array (
         'bill_no' => '713',
         'bill_date' => '2025-06-29',
+        'month_of' => 'June-2025',
         'workshop_name' => 'Palash Car A/C Centre',
         'paid_by' => 'company',
         'items' => 
@@ -34337,6 +35092,7 @@ return array (
       array (
         'bill_no' => '709',
         'bill_date' => '2025-06-15',
+        'month_of' => 'June-2025',
         'workshop_name' => 'Palash Car A/C Centre',
         'paid_by' => 'company',
         'items' => 
@@ -34411,6 +35167,7 @@ return array (
       array (
         'bill_no' => '13365',
         'bill_date' => '2025-06-15',
+        'month_of' => 'June-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -34457,6 +35214,7 @@ return array (
       array (
         'bill_no' => '13362',
         'bill_date' => '2025-05-30',
+        'month_of' => 'May-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -34482,6 +35240,7 @@ return array (
       array (
         'bill_no' => '13361',
         'bill_date' => '2025-05-29',
+        'month_of' => 'May-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -34500,6 +35259,7 @@ return array (
       array (
         'bill_no' => '13349',
         'bill_date' => '2025-04-12',
+        'month_of' => 'April-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -34525,6 +35285,7 @@ return array (
       array (
         'bill_no' => '656',
         'bill_date' => '2025-04-06',
+        'month_of' => 'April-2025',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -34543,6 +35304,7 @@ return array (
       array (
         'bill_no' => '13343',
         'bill_date' => '2025-03-17',
+        'month_of' => 'March-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -34624,6 +35386,7 @@ return array (
       array (
         'bill_no' => '13318',
         'bill_date' => '2025-01-07',
+        'month_of' => 'January-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -34656,6 +35419,7 @@ return array (
       array (
         'bill_no' => '13316',
         'bill_date' => '2024-12-31',
+        'month_of' => 'December-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -34730,6 +35494,7 @@ return array (
       array (
         'bill_no' => '11795',
         'bill_date' => '2024-11-04',
+        'month_of' => 'November-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -34769,6 +35534,7 @@ return array (
       array (
         'bill_no' => '711',
         'bill_date' => '2024-10-27',
+        'month_of' => 'October-2024',
         'workshop_name' => 'Panama CNG Conversion',
         'paid_by' => 'company',
         'items' => 
@@ -34787,6 +35553,7 @@ return array (
       array (
         'bill_no' => '11781',
         'bill_date' => '2024-10-07',
+        'month_of' => 'October-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -34805,6 +35572,7 @@ return array (
       array (
         'bill_no' => '11779',
         'bill_date' => '2024-10-05',
+        'month_of' => 'October-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -34865,6 +35633,7 @@ return array (
       array (
         'bill_no' => '11775',
         'bill_date' => '2024-09-28',
+        'month_of' => 'September-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -34904,6 +35673,7 @@ return array (
       array (
         'bill_no' => '11748',
         'bill_date' => '2024-08-03',
+        'month_of' => 'August-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -34943,6 +35713,7 @@ return array (
       array (
         'bill_no' => '11745',
         'bill_date' => '2024-07-27',
+        'month_of' => 'Jaly-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -35066,6 +35837,7 @@ return array (
       array (
         'bill_no' => '11746',
         'bill_date' => '2024-07-27',
+        'month_of' => 'Jaly-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -35133,6 +35905,7 @@ return array (
       array (
         'bill_no' => '11738',
         'bill_date' => '2024-07-04',
+        'month_of' => 'Jaly-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -35151,6 +35924,7 @@ return array (
       array (
         'bill_no' => '11728',
         'bill_date' => '2024-06-05',
+        'month_of' => 'June-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -35239,6 +36013,7 @@ return array (
       array (
         'bill_no' => '11726',
         'bill_date' => '2024-05-05',
+        'month_of' => 'May-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -35285,6 +36060,7 @@ return array (
       array (
         'bill_no' => '11721',
         'bill_date' => '2024-04-08',
+        'month_of' => 'April-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -35310,6 +36086,7 @@ return array (
       array (
         'bill_no' => '11714',
         'bill_date' => '2024-04-06',
+        'month_of' => 'April-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -35363,6 +36140,7 @@ return array (
       array (
         'bill_no' => '683',
         'bill_date' => '2024-02-10',
+        'month_of' => 'February-2024',
         'workshop_name' => 'AR Motors',
         'paid_by' => 'company',
         'items' => 
@@ -35409,6 +36187,7 @@ return array (
       array (
         'bill_no' => '10280',
         'bill_date' => '2024-01-29',
+        'month_of' => 'January-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -35427,6 +36206,7 @@ return array (
       array (
         'bill_no' => '11709',
         'bill_date' => '2024-01-29',
+        'month_of' => 'January-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -35459,6 +36239,7 @@ return array (
       array (
         'bill_no' => '134',
         'bill_date' => '2024-01-26',
+        'month_of' => 'January-2024',
         'workshop_name' => 'Palash Car A/C Centre',
         'paid_by' => 'company',
         'items' => 
@@ -35498,6 +36279,7 @@ return array (
       array (
         'bill_no' => '10278',
         'bill_date' => '2024-01-25',
+        'month_of' => 'January-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -35600,6 +36382,7 @@ return array (
       array (
         'bill_no' => '10266',
         'bill_date' => '2023-12-10',
+        'month_of' => 'December-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -35653,6 +36436,7 @@ return array (
       array (
         'bill_no' => '10250',
         'bill_date' => '2023-10-21',
+        'month_of' => 'October-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -35706,6 +36490,7 @@ return array (
       array (
         'bill_no' => '2439',
         'bill_date' => '2023-10-06',
+        'month_of' => 'October-2023',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -35724,6 +36509,7 @@ return array (
       array (
         'bill_no' => '10243',
         'bill_date' => '2023-09-29',
+        'month_of' => 'September-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -35763,6 +36549,7 @@ return array (
       array (
         'bill_no' => '10229',
         'bill_date' => '2023-09-03',
+        'month_of' => 'September-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -35781,6 +36568,7 @@ return array (
       array (
         'bill_no' => '10228',
         'bill_date' => '2023-08-29',
+        'month_of' => 'August-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -35883,6 +36671,7 @@ return array (
       array (
         'bill_no' => '10223',
         'bill_date' => '2023-08-27',
+        'month_of' => 'August-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -35929,6 +36718,7 @@ return array (
       array (
         'bill_no' => '122',
         'bill_date' => '2023-07-29',
+        'month_of' => 'July-2023',
         'workshop_name' => 'Palash Car A/C Centre',
         'paid_by' => 'company',
         'items' => 
@@ -35968,6 +36758,7 @@ return array (
       array (
         'bill_no' => '117',
         'bill_date' => '2023-07-10',
+        'month_of' => 'July-2023',
         'workshop_name' => 'Palash Car A/C Centre',
         'paid_by' => 'company',
         'items' => 
@@ -35993,6 +36784,7 @@ return array (
       array (
         'bill_no' => '18188',
         'bill_date' => '2023-06-12',
+        'month_of' => 'June-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -36039,6 +36831,7 @@ return array (
       array (
         'bill_no' => '18185',
         'bill_date' => '2023-06-08',
+        'month_of' => 'June-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -36106,6 +36899,7 @@ return array (
       array (
         'bill_no' => '883',
         'bill_date' => '2023-05-03',
+        'month_of' => 'May-2023',
         'workshop_name' => 'Palash Car A/C Centre',
         'paid_by' => 'company',
         'items' => 
@@ -36194,6 +36988,7 @@ return array (
       array (
         'bill_no' => '18173',
         'bill_date' => '2023-04-19',
+        'month_of' => 'April-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -36247,6 +37042,7 @@ return array (
       array (
         'bill_no' => '5391',
         'bill_date' => '2023-03-21',
+        'month_of' => 'March-2023',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -36265,6 +37061,7 @@ return array (
       array (
         'bill_no' => '18133',
         'bill_date' => '2023-01-29',
+        'month_of' => 'January-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -36297,6 +37094,7 @@ return array (
       array (
         'bill_no' => '18126',
         'bill_date' => '2023-01-07',
+        'month_of' => 'January-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -36322,6 +37120,7 @@ return array (
       array (
         'bill_no' => '18124',
         'bill_date' => '2022-12-31',
+        'month_of' => 'December-2022',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -36389,6 +37188,7 @@ return array (
       array (
         'bill_no' => '18105',
         'bill_date' => '2022-11-12',
+        'month_of' => 'November-2022',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -36442,6 +37242,7 @@ return array (
       array (
         'bill_no' => '16785',
         'bill_date' => '2022-09-29',
+        'month_of' => 'September-2022',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -36502,6 +37303,7 @@ return array (
       array (
         'bill_no' => '16721',
         'bill_date' => '2022-06-06',
+        'month_of' => 'June-2022',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -36618,6 +37420,7 @@ return array (
       array (
         'bill_no' => '16722',
         'bill_date' => '2022-06-06',
+        'month_of' => 'June-2022',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -36698,6 +37501,7 @@ return array (
       array (
         'bill_no' => 'Bill # 76236',
         'bill_date' => '2026-06-10',
+        'month_of' => 'June-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -36793,6 +37597,7 @@ return array (
       array (
         'bill_no' => 'Bill # 76139',
         'bill_date' => '2026-05-23',
+        'month_of' => 'May-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -36818,6 +37623,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75954',
         'bill_date' => '2026-05-03',
+        'month_of' => 'May-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -36871,6 +37677,7 @@ return array (
       array (
         'bill_no' => 'Bill # 73601',
         'bill_date' => '2026-04-28',
+        'month_of' => 'April-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -36910,6 +37717,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75905',
         'bill_date' => '2026-08-27',
+        'month_of' => 'April-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -36942,6 +37750,7 @@ return array (
       array (
         'bill_no' => '2780',
         'bill_date' => '2026-04-19',
+        'month_of' => 'April-2026',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -36960,6 +37769,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75679',
         'bill_date' => '2026-04-01',
+        'month_of' => 'April-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -37020,6 +37830,7 @@ return array (
       array (
         'bill_no' => '13977',
         'bill_date' => '2026-03-29',
+        'month_of' => 'March-2026',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -37052,6 +37863,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75532',
         'bill_date' => '2026-03-02',
+        'month_of' => 'March-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -37105,6 +37917,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75247',
         'bill_date' => '2026-03-01',
+        'month_of' => 'March-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -37151,6 +37964,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75013',
         'bill_date' => '2026-02-02',
+        'month_of' => 'February-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -37211,6 +38025,7 @@ return array (
       array (
         'bill_no' => 'Bill # 74943',
         'bill_date' => '2026-01-01',
+        'month_of' => 'January-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -37278,6 +38093,7 @@ return array (
       array (
         'bill_no' => 'Bill # 74882',
         'bill_date' => '2025-12-27',
+        'month_of' => 'December-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -37303,6 +38119,7 @@ return array (
       array (
         'bill_no' => '13949',
         'bill_date' => '2025-12-11',
+        'month_of' => 'December-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -37321,6 +38138,7 @@ return array (
       array (
         'bill_no' => 'Bill # 74592',
         'bill_date' => '2025-12-07',
+        'month_of' => 'December-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -37360,6 +38178,7 @@ return array (
       array (
         'bill_no' => 'Bill # 74527',
         'bill_date' => '2025-12-03',
+        'month_of' => 'December-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -37413,6 +38232,7 @@ return array (
       array (
         'bill_no' => 'Bill # 74376',
         'bill_date' => '2025-11-12',
+        'month_of' => 'November-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -37459,6 +38279,7 @@ return array (
       array (
         'bill_no' => 'Bill # 74302',
         'bill_date' => '2025-11-05',
+        'month_of' => 'November-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -37526,6 +38347,7 @@ return array (
       array (
         'bill_no' => 'JOB # 99177',
         'bill_date' => '2025-11-01',
+        'month_of' => 'November-2025',
         'workshop_name' => 'Southern Automobiles Ltd',
         'paid_by' => 'company',
         'items' => 
@@ -37558,6 +38380,7 @@ return array (
       array (
         'bill_no' => 'Bill # 74013',
         'bill_date' => '2025-10-30',
+        'month_of' => 'October-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -37604,6 +38427,7 @@ return array (
       array (
         'bill_no' => 'Bill # 73984',
         'bill_date' => '2025-10-11',
+        'month_of' => 'October-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -37636,6 +38460,7 @@ return array (
       array (
         'bill_no' => 'Bill # 73950',
         'bill_date' => '2025-10-08',
+        'month_of' => 'October-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -37696,6 +38521,7 @@ return array (
       array (
         'bill_no' => '13903',
         'bill_date' => '2025-09-30',
+        'month_of' => 'September-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -37721,6 +38547,7 @@ return array (
       array (
         'bill_no' => 'Bill # 73644',
         'bill_date' => '2025-09-07',
+        'month_of' => 'September-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -37774,6 +38601,7 @@ return array (
       array (
         'bill_no' => 'Bill # 73601',
         'bill_date' => '2025-08-31',
+        'month_of' => 'August-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -37841,6 +38669,7 @@ return array (
       array (
         'bill_no' => '497',
         'bill_date' => '2025-08-24',
+        'month_of' => 'August-2025',
         'workshop_name' => 'Arif Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -37866,6 +38695,7 @@ return array (
       array (
         'bill_no' => '1051',
         'bill_date' => '2025-08-21',
+        'month_of' => 'August-2025',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -37884,6 +38714,7 @@ return array (
       array (
         'bill_no' => 'Bill # 73401',
         'bill_date' => '2025-08-12',
+        'month_of' => 'August-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -37937,6 +38768,7 @@ return array (
       array (
         'bill_no' => '95416',
         'bill_date' => '2025-07-22',
+        'month_of' => 'July-2025',
         'workshop_name' => 'Southern Automobiles Ltd',
         'paid_by' => 'company',
         'items' => 
@@ -37962,6 +38794,7 @@ return array (
       array (
         'bill_no' => '486',
         'bill_date' => '2025-07-20',
+        'month_of' => 'July-2025',
         'workshop_name' => 'Arif Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -38022,6 +38855,7 @@ return array (
       array (
         'bill_no' => 'Bill # 73034',
         'bill_date' => '2025-07-01',
+        'month_of' => 'July-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -38075,6 +38909,7 @@ return array (
       array (
         'bill_no' => '10',
         'bill_date' => '2025-06-13',
+        'month_of' => 'June-2025',
         'workshop_name' => 'The Alamgir Automobile',
         'paid_by' => 'company',
         'items' => 
@@ -38114,6 +38949,7 @@ return array (
       array (
         'bill_no' => 'Bill # 72754',
         'bill_date' => '2025-06-01',
+        'month_of' => 'June-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -38167,6 +39003,7 @@ return array (
       array (
         'bill_no' => 'Bill # 72413',
         'bill_date' => '2025-05-06',
+        'month_of' => 'May-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -38241,6 +39078,7 @@ return array (
       array (
         'bill_no' => '92855',
         'bill_date' => '2025-04-30',
+        'month_of' => 'April-2025',
         'workshop_name' => 'Southern Automobiles Ltd',
         'paid_by' => 'company',
         'items' => 
@@ -38273,6 +39111,7 @@ return array (
       array (
         'bill_no' => 'Bill # 72369',
         'bill_date' => '2025-04-26',
+        'month_of' => 'April-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -38312,6 +39151,7 @@ return array (
       array (
         'bill_no' => 'Bill # 72144',
         'bill_date' => '2025-04-07',
+        'month_of' => 'April-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -38372,6 +39212,7 @@ return array (
       array (
         'bill_no' => '182',
         'bill_date' => '2025-03-24',
+        'month_of' => 'March-2025',
         'workshop_name' => 'Palash Car A/C Centre',
         'paid_by' => 'company',
         'items' => 
@@ -38439,6 +39280,7 @@ return array (
       array (
         'bill_no' => 'Bill # 72020',
         'bill_date' => '2025-03-16',
+        'month_of' => 'March-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -38485,6 +39327,7 @@ return array (
       array (
         'bill_no' => 'Bill # 71915',
         'bill_date' => '2025-03-02',
+        'month_of' => 'March-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -38538,6 +39381,7 @@ return array (
       array (
         'bill_no' => 'Bill # 71653',
         'bill_date' => '2025-02-18',
+        'month_of' => 'February-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -38570,6 +39414,7 @@ return array (
       array (
         'bill_no' => '13326',
         'bill_date' => '2025-02-08',
+        'month_of' => 'February-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -38609,6 +39454,7 @@ return array (
       array (
         'bill_no' => 'Bill # 71616',
         'bill_date' => '2025-02-01',
+        'month_of' => 'February-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -38662,6 +39508,7 @@ return array (
       array (
         'bill_no' => '265',
         'bill_date' => '2025-01-26',
+        'month_of' => 'January-2025',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -38680,6 +39527,7 @@ return array (
       array (
         'bill_no' => 'Bill No # 71577',
         'bill_date' => '2025-01-27',
+        'month_of' => 'December-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -38719,6 +39567,7 @@ return array (
       array (
         'bill_no' => 'Bill No # 71268',
         'bill_date' => '2025-01-01',
+        'month_of' => 'December-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -38779,6 +39628,7 @@ return array (
       array (
         'bill_no' => 'Bill No # 71260',
         'bill_date' => '2024-12-31',
+        'month_of' => 'December-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -38804,6 +39654,7 @@ return array (
       array (
         'bill_no' => 'Bill No # 71180',
         'bill_date' => '2024-12-29',
+        'month_of' => 'December-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -38836,6 +39687,7 @@ return array (
       array (
         'bill_no' => 'SA 653',
         'bill_date' => '2024-12-05',
+        'month_of' => 'December-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -38868,6 +39720,7 @@ return array (
       array (
         'bill_no' => 'SA 950',
         'bill_date' => '2024-12-01',
+        'month_of' => 'December-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -38893,6 +39746,7 @@ return array (
       array (
         'bill_no' => 'SA 635',
         'bill_date' => '2024-12-01',
+        'month_of' => 'December-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -38939,6 +39793,7 @@ return array (
       array (
         'bill_no' => 'SA 928',
         'bill_date' => '2024-12-01',
+        'month_of' => 'December-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -38964,6 +39819,7 @@ return array (
       array (
         'bill_no' => 'SA 849',
         'bill_date' => '2024-11-17',
+        'month_of' => 'November-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -38996,6 +39852,7 @@ return array (
       array (
         'bill_no' => 'SA 515',
         'bill_date' => '2024-11-06',
+        'month_of' => 'November-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -39049,6 +39906,7 @@ return array (
       array (
         'bill_no' => 'SA 758',
         'bill_date' => '2024-11-01',
+        'month_of' => 'November-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -39088,6 +39946,7 @@ return array (
       array (
         'bill_no' => 'SA 326',
         'bill_date' => '2024-11-06',
+        'month_of' => 'October-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -39120,6 +39979,7 @@ return array (
       array (
         'bill_no' => 'SA 478',
         'bill_date' => '2024-10-01',
+        'month_of' => 'October-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -39145,6 +40005,7 @@ return array (
       array (
         'bill_no' => 'SA 317',
         'bill_date' => '2024-10-05',
+        'month_of' => 'October-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -39184,6 +40045,7 @@ return array (
       array (
         'bill_no' => 'SA 468',
         'bill_date' => '2024-10-01',
+        'month_of' => 'October-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -39216,6 +40078,7 @@ return array (
       array (
         'bill_no' => 'SA 199',
         'bill_date' => '2024-09-12',
+        'month_of' => 'September-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -39269,6 +40132,7 @@ return array (
       array (
         'bill_no' => 'SA 296',
         'bill_date' => '2024-09-01',
+        'month_of' => 'September-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -39294,6 +40158,7 @@ return array (
       array (
         'bill_no' => 'SA 214',
         'bill_date' => '2024-09-03',
+        'month_of' => 'September-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -39326,6 +40191,7 @@ return array (
       array (
         'bill_no' => 'SA 76',
         'bill_date' => '2024-08-21',
+        'month_of' => 'August-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -39351,6 +40217,7 @@ return array (
       array (
         'bill_no' => 'SA 111',
         'bill_date' => '2024-08-01',
+        'month_of' => 'August-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -39383,6 +40250,7 @@ return array (
       array (
         'bill_no' => 'SA 31',
         'bill_date' => '2024-08-10',
+        'month_of' => 'August-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -39401,6 +40269,7 @@ return array (
       array (
         'bill_no' => 'SA 22',
         'bill_date' => '2024-08-09',
+        'month_of' => 'August-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -39440,6 +40309,7 @@ return array (
       array (
         'bill_no' => 'SA 23',
         'bill_date' => '2024-08-01',
+        'month_of' => 'August-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -39472,6 +40342,7 @@ return array (
       array (
         'bill_no' => 'SA 21',
         'bill_date' => '2024-08-09',
+        'month_of' => 'August-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -39497,6 +40368,7 @@ return array (
       array (
         'bill_no' => 'SA 22',
         'bill_date' => '2024-08-01',
+        'month_of' => 'August-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -39515,6 +40387,7 @@ return array (
       array (
         'bill_no' => 'SA 2089',
         'bill_date' => '2024-07-10',
+        'month_of' => 'July-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -39568,6 +40441,7 @@ return array (
       array (
         'bill_no' => 'SA 2634',
         'bill_date' => '2024-07-01',
+        'month_of' => 'July-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -39593,6 +40467,7 @@ return array (
       array (
         'bill_no' => 'SA 1943',
         'bill_date' => '2024-06-10',
+        'month_of' => 'June-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -39646,6 +40521,7 @@ return array (
       array (
         'bill_no' => 'SA 2425',
         'bill_date' => '2024-06-01',
+        'month_of' => 'June-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -39678,6 +40554,7 @@ return array (
       array (
         'bill_no' => 'SA 1844',
         'bill_date' => '2024-05-23',
+        'month_of' => 'May-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -39696,6 +40573,7 @@ return array (
       array (
         'bill_no' => 'SA 2286',
         'bill_date' => '2024-05-01',
+        'month_of' => 'May-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -39714,6 +40592,7 @@ return array (
       array (
         'bill_no' => 'SA 1777',
         'bill_date' => '2024-05-14',
+        'month_of' => 'May-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -39760,6 +40639,7 @@ return array (
       array (
         'bill_no' => 'SA 2208',
         'bill_date' => '2024-05-01',
+        'month_of' => 'May-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -39778,6 +40658,7 @@ return array (
       array (
         'bill_no' => 'SA 1658',
         'bill_date' => '2024-04-25',
+        'month_of' => 'April-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -39831,6 +40712,7 @@ return array (
       array (
         'bill_no' => 'SA 2072',
         'bill_date' => '2024-04-01',
+        'month_of' => 'April-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -39856,6 +40738,7 @@ return array (
       array (
         'bill_no' => 'SA 1637',
         'bill_date' => '2024-04-22',
+        'month_of' => 'April-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -39874,6 +40757,7 @@ return array (
       array (
         'bill_no' => 'SA 1543',
         'bill_date' => '2024-04-01',
+        'month_of' => 'April-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -39899,6 +40783,7 @@ return array (
       array (
         'bill_no' => 'SA 1477',
         'bill_date' => '2024-03-24',
+        'month_of' => 'March-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -39959,6 +40844,7 @@ return array (
       array (
         'bill_no' => 'SA 1827',
         'bill_date' => '2024-03-01',
+        'month_of' => 'March-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -39984,6 +40870,7 @@ return array (
       array (
         'bill_no' => 'SA 1237',
         'bill_date' => '2024-02-18',
+        'month_of' => 'February-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -40030,6 +40917,7 @@ return array (
       array (
         'bill_no' => 'SA 1531',
         'bill_date' => '2024-02-01',
+        'month_of' => 'February-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -40055,6 +40943,7 @@ return array (
       array (
         'bill_no' => 'SA 983',
         'bill_date' => '2024-01-06',
+        'month_of' => 'January-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -40115,6 +41004,7 @@ return array (
       array (
         'bill_no' => 'SA 1199',
         'bill_date' => '2024-01-01',
+        'month_of' => 'January-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -40140,6 +41030,7 @@ return array (
       array (
         'bill_no' => 'SA 855',
         'bill_date' => '2023-12-18',
+        'month_of' => 'December-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -40165,6 +41056,7 @@ return array (
       array (
         'bill_no' => 'SA 1037',
         'bill_date' => '2023-12-01',
+        'month_of' => 'December-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -40183,6 +41075,7 @@ return array (
       array (
         'bill_no' => 'SA 698',
         'bill_date' => '2023-11-21',
+        'month_of' => 'November-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -40236,6 +41129,7 @@ return array (
       array (
         'bill_no' => 'SA 841',
         'bill_date' => '2023-11-01',
+        'month_of' => 'November-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -40254,6 +41148,7 @@ return array (
       array (
         'bill_no' => 'SA 477',
         'bill_date' => '2023-10-12',
+        'month_of' => 'October-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -40300,6 +41195,7 @@ return array (
       array (
         'bill_no' => 'SA 561',
         'bill_date' => '2023-10-01',
+        'month_of' => 'October-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -40318,6 +41214,7 @@ return array (
       array (
         'bill_no' => 'SA 1',
         'bill_date' => '2023-08-01',
+        'month_of' => 'August-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -40343,18 +41240,7 @@ return array (
             'unit' => NULL,
             'amount' => 2650.0,
           ),
-        ),
-        'total_amount' => 3498.0,
-      ),
-      94 => 
-      array (
-        'bill_no' => 'SA 1',
-        'bill_date' => '2023-08-01',
-        'workshop_name' => '',
-        'paid_by' => 'company',
-        'items' => 
-        array (
-          0 => 
+          3 => 
           array (
             'item_name' => 'A/C System Service & N/W, A/C System Check Up',
             'quantity' => NULL,
@@ -40362,12 +41248,13 @@ return array (
             'amount' => 1060.0,
           ),
         ),
-        'total_amount' => 1060.0,
+        'total_amount' => 4558.0,
       ),
-      95 => 
+      94 => 
       array (
         'bill_no' => 'SA 2124',
         'bill_date' => '2023-07-31',
+        'month_of' => 'July-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -40438,10 +41325,11 @@ return array (
         ),
         'total_amount' => 77860.0,
       ),
-      96 => 
+      95 => 
       array (
         'bill_no' => 'SA 2623',
         'bill_date' => '2023-07-01',
+        'month_of' => 'July-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -40470,10 +41358,11 @@ return array (
         ),
         'total_amount' => 52470.0,
       ),
-      97 => 
+      96 => 
       array (
         'bill_no' => '1425',
         'bill_date' => '2023-07-30',
+        'month_of' => 'July-2023',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -40488,10 +41377,11 @@ return array (
         ),
         'total_amount' => 22900.0,
       ),
-      98 => 
+      97 => 
       array (
         'bill_no' => 'SA 1910',
         'bill_date' => '2023-06-22',
+        'month_of' => 'June-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -40527,10 +41417,11 @@ return array (
         ),
         'total_amount' => 4506.0,
       ),
-      99 => 
+      98 => 
       array (
         'bill_no' => 'SA 2361',
         'bill_date' => '2023-06-01',
+        'month_of' => 'June-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -40545,10 +41436,11 @@ return array (
         ),
         'total_amount' => 212.0,
       ),
-      100 => 
+      99 => 
       array (
         'bill_no' => '2611',
         'bill_date' => '2023-05-20',
+        'month_of' => 'May-2023',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -40563,10 +41455,11 @@ return array (
         ),
         'total_amount' => 21800.0,
       ),
-      101 => 
+      100 => 
       array (
         'bill_no' => 'SA 2084',
         'bill_date' => '2023-05-17',
+        'month_of' => 'May-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -40581,10 +41474,11 @@ return array (
         ),
         'total_amount' => 636.0,
       ),
-      102 => 
+      101 => 
       array (
         'bill_no' => 'SA 1627',
         'bill_date' => '2023-05-04',
+        'month_of' => 'May-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -40599,10 +41493,11 @@ return array (
         ),
         'total_amount' => 954.0,
       ),
-      103 => 
+      102 => 
       array (
         'bill_no' => 'SA 1601',
         'bill_date' => '2023-05-04',
+        'month_of' => 'May-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -40638,10 +41533,11 @@ return array (
         ),
         'total_amount' => 4611.0,
       ),
-      104 => 
+      103 => 
       array (
         'bill_no' => 'SA 1992',
         'bill_date' => '2023-05-01',
+        'month_of' => 'May-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -40656,10 +41552,11 @@ return array (
         ),
         'total_amount' => 424.0,
       ),
-      105 => 
+      104 => 
       array (
         'bill_no' => 'SA 1380',
         'bill_date' => '2023-03-22',
+        'month_of' => 'March-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -40695,10 +41592,11 @@ return array (
         ),
         'total_amount' => 4506.0,
       ),
-      106 => 
+      105 => 
       array (
         'bill_no' => 'SA 1736',
         'bill_date' => '2023-03-01',
+        'month_of' => 'March-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -40713,10 +41611,11 @@ return array (
         ),
         'total_amount' => 212.0,
       ),
-      107 => 
+      106 => 
       array (
         'bill_no' => 'SA 1138',
         'bill_date' => '2023-02-06',
+        'month_of' => 'February-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -40752,10 +41651,11 @@ return array (
         ),
         'total_amount' => 4611.0,
       ),
-      108 => 
+      107 => 
       array (
         'bill_no' => 'SA 1436',
         'bill_date' => '2023-02-01',
+        'month_of' => 'February-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -40777,10 +41677,11 @@ return array (
         ),
         'total_amount' => 848.0,
       ),
-      109 => 
+      108 => 
       array (
         'bill_no' => '16774',
         'bill_date' => '2022-09-17',
+        'month_of' => 'September-2022',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -40847,6 +41748,7 @@ return array (
       array (
         'bill_no' => '14812',
         'bill_date' => '2026-06-11',
+        'month_of' => 'June-2026',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -40886,6 +41788,7 @@ return array (
       array (
         'bill_no' => 'Bill # 76124',
         'bill_date' => '2026-05-20',
+        'month_of' => 'May-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -40939,6 +41842,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75836',
         'bill_date' => '2026-04-18',
+        'month_of' => 'April-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -40985,6 +41889,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75406',
         'bill_date' => '2026-03-09',
+        'month_of' => 'March-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -41031,6 +41936,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75203',
         'bill_date' => '2026-02-02',
+        'month_of' => 'February-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -41112,6 +42018,7 @@ return array (
       array (
         'bill_no' => '13953',
         'bill_date' => '2025-12-21',
+        'month_of' => 'December-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -41165,6 +42072,7 @@ return array (
       array (
         'bill_no' => '13934',
         'bill_date' => '2025-11-06',
+        'month_of' => 'November-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -41239,6 +42147,7 @@ return array (
       array (
         'bill_no' => '13912',
         'bill_date' => '2025-10-16',
+        'month_of' => 'October-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -41278,6 +42187,7 @@ return array (
       array (
         'bill_no' => '13909',
         'bill_date' => '2025-10-14',
+        'month_of' => 'October-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -41324,6 +42234,7 @@ return array (
       array (
         'bill_no' => '13906',
         'bill_date' => '2025-10-09',
+        'month_of' => 'October-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -41363,6 +42274,7 @@ return array (
       array (
         'bill_no' => '13904',
         'bill_date' => '2025-10-02',
+        'month_of' => 'October-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -41430,6 +42342,7 @@ return array (
       array (
         'bill_no' => '4687',
         'bill_date' => '2025-09-16',
+        'month_of' => 'September-2025',
         'workshop_name' => 'Mamun Fuel Pump Service',
         'paid_by' => 'company',
         'items' => 
@@ -41455,6 +42368,7 @@ return array (
       array (
         'bill_no' => '13396',
         'bill_date' => '2025-09-16',
+        'month_of' => 'September-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -41480,6 +42394,7 @@ return array (
       array (
         'bill_no' => '13395',
         'bill_date' => '2025-09-14',
+        'month_of' => 'September-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -41512,6 +42427,7 @@ return array (
       array (
         'bill_no' => '13397',
         'bill_date' => '2025-08-17',
+        'month_of' => 'August-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -41614,6 +42530,7 @@ return array (
       array (
         'bill_no' => '371',
         'bill_date' => '2025-08-08',
+        'month_of' => 'August-2025',
         'workshop_name' => 'Soniya Tyre & Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -41639,6 +42556,7 @@ return array (
       array (
         'bill_no' => '13372',
         'bill_date' => '2025-07-13',
+        'month_of' => 'July-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -41699,6 +42617,7 @@ return array (
       array (
         'bill_no' => '13358',
         'bill_date' => '2025-05-22',
+        'month_of' => 'May-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -41773,6 +42692,7 @@ return array (
       array (
         'bill_no' => '13346',
         'bill_date' => '2025-03-24',
+        'month_of' => 'March-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -41840,6 +42760,7 @@ return array (
       array (
         'bill_no' => '13322',
         'bill_date' => '2025-02-02',
+        'month_of' => 'February-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -41928,6 +42849,7 @@ return array (
       array (
         'bill_no' => 'Bill No # 71156',
         'bill_date' => '2024-12-21',
+        'month_of' => 'December-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -41953,6 +42875,7 @@ return array (
       array (
         'bill_no' => 'Bill No # 70655',
         'bill_date' => '2024-12-18',
+        'month_of' => 'December-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -41985,6 +42908,7 @@ return array (
       array (
         'bill_no' => '13310',
         'bill_date' => '2024-12-08',
+        'month_of' => 'December-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -42073,6 +42997,7 @@ return array (
       array (
         'bill_no' => 'SA 553',
         'bill_date' => '2024-11-11',
+        'month_of' => 'November-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -42105,6 +43030,7 @@ return array (
       array (
         'bill_no' => '11784',
         'bill_date' => '2024-10-17',
+        'month_of' => 'October-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -42179,6 +43105,7 @@ return array (
       array (
         'bill_no' => '11747',
         'bill_date' => '2024-07-30',
+        'month_of' => 'July-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -42260,6 +43187,7 @@ return array (
       array (
         'bill_no' => '11733',
         'bill_date' => '2024-06-08',
+        'month_of' => 'June-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -42327,6 +43255,7 @@ return array (
       array (
         'bill_no' => '11723',
         'bill_date' => '2024-04-28',
+        'month_of' => 'April-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -42408,6 +43337,7 @@ return array (
       array (
         'bill_no' => '11703',
         'bill_date' => '2024-03-22',
+        'month_of' => 'March-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -42447,6 +43377,7 @@ return array (
       array (
         'bill_no' => '241',
         'bill_date' => '2024-03-21',
+        'month_of' => 'March-2024',
         'workshop_name' => 'Soniya Tyre & Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -42465,6 +43396,7 @@ return array (
       array (
         'bill_no' => '10293',
         'bill_date' => '2024-03-05',
+        'month_of' => 'March-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -42546,6 +43478,7 @@ return array (
       array (
         'bill_no' => '10276',
         'bill_date' => '2024-01-22',
+        'month_of' => 'January-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -42599,6 +43532,7 @@ return array (
       array (
         'bill_no' => '10270',
         'bill_date' => '2023-12-17',
+        'month_of' => 'December-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -42659,6 +43593,7 @@ return array (
       array (
         'bill_no' => '828',
         'bill_date' => '2023-11-02',
+        'month_of' => 'November-2023',
         'workshop_name' => 'Soniya Tyre & Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -42677,6 +43612,7 @@ return array (
       array (
         'bill_no' => '10256',
         'bill_date' => '2023-11-05',
+        'month_of' => 'October-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -42709,6 +43645,7 @@ return array (
       array (
         'bill_no' => '10255',
         'bill_date' => '2023-11-02',
+        'month_of' => 'October-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -42762,6 +43699,7 @@ return array (
       array (
         'bill_no' => '10246',
         'bill_date' => '2023-10-09',
+        'month_of' => 'October-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -42871,6 +43809,7 @@ return array (
       array (
         'bill_no' => '10238',
         'bill_date' => '2023-09-07',
+        'month_of' => 'September-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -42945,6 +43884,7 @@ return array (
       array (
         'bill_no' => '18200',
         'bill_date' => '2023-07-23',
+        'month_of' => 'July-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -43012,6 +43952,7 @@ return array (
       array (
         'bill_no' => '18187',
         'bill_date' => '2023-06-14',
+        'month_of' => 'June-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -43079,6 +44020,7 @@ return array (
       array (
         'bill_no' => '18175',
         'bill_date' => '2023-05-04',
+        'month_of' => 'May-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -43153,6 +44095,7 @@ return array (
       array (
         'bill_no' => '18158',
         'bill_date' => '2023-03-19',
+        'month_of' => 'March-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -43213,6 +44156,7 @@ return array (
       array (
         'bill_no' => '18139',
         'bill_date' => '2023-02-08',
+        'month_of' => 'February-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -43266,6 +44210,7 @@ return array (
       array (
         'bill_no' => '18529',
         'bill_date' => '2023-01-25',
+        'month_of' => 'January-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -43284,6 +44229,7 @@ return array (
       array (
         'bill_no' => '18123',
         'bill_date' => '2022-12-27',
+        'month_of' => 'December-2022',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -43344,6 +44290,7 @@ return array (
       array (
         'bill_no' => '18102',
         'bill_date' => '2022-11-10',
+        'month_of' => 'November-2022',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -43418,6 +44365,7 @@ return array (
       array (
         'bill_no' => '16787',
         'bill_date' => '2022-10-09',
+        'month_of' => 'October-2022',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -43443,6 +44391,7 @@ return array (
       array (
         'bill_no' => '16800',
         'bill_date' => '2022-10-03',
+        'month_of' => 'October-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -43489,6 +44438,7 @@ return array (
       array (
         'bill_no' => '16777',
         'bill_date' => '2022-09-19',
+        'month_of' => 'September-2022',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -43562,6 +44512,7 @@ return array (
       array (
         'bill_no' => 'Bill # 76234',
         'bill_date' => '2026-06-06',
+        'month_of' => 'Jue-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -43622,6 +44573,7 @@ return array (
       array (
         'bill_no' => '13980',
         'bill_date' => '2026-04-11',
+        'month_of' => 'April-2026',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -43682,6 +44634,7 @@ return array (
       array (
         'bill_no' => '37',
         'bill_date' => '2026-02-19',
+        'month_of' => 'February-2026',
         'workshop_name' => 'The Alamgir Automobile',
         'paid_by' => 'company',
         'items' => 
@@ -43735,6 +44688,7 @@ return array (
       array (
         'bill_no' => '32',
         'bill_date' => '2026-01-31',
+        'month_of' => 'January-2026',
         'workshop_name' => 'The Alamgir Automobile',
         'paid_by' => 'company',
         'items' => 
@@ -43781,6 +44735,7 @@ return array (
       array (
         'bill_no' => '13959',
         'bill_date' => '2026-01-21',
+        'month_of' => 'January-2026',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -43813,6 +44768,7 @@ return array (
       array (
         'bill_no' => '28',
         'bill_date' => '2025-12-29',
+        'month_of' => 'December-2025',
         'workshop_name' => 'The Alamgir Automobile',
         'paid_by' => 'company',
         'items' => 
@@ -43894,6 +44850,7 @@ return array (
       array (
         'bill_no' => '13945',
         'bill_date' => '2025-11-22',
+        'month_of' => 'November-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -43926,6 +44883,7 @@ return array (
       array (
         'bill_no' => '13940',
         'bill_date' => '2025-11-17',
+        'month_of' => 'November-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -43972,6 +44930,7 @@ return array (
       array (
         'bill_no' => '13907',
         'bill_date' => '2025-10-11',
+        'month_of' => 'October-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -44088,6 +45047,7 @@ return array (
       array (
         'bill_no' => '13390',
         'bill_date' => '2025-08-25',
+        'month_of' => 'August-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -44148,6 +45108,7 @@ return array (
       array (
         'bill_no' => '13374',
         'bill_date' => '2025-07-24',
+        'month_of' => 'July-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -44166,6 +45127,7 @@ return array (
       array (
         'bill_no' => '1442',
         'bill_date' => '2025-07-08',
+        'month_of' => 'July-2025',
         'workshop_name' => 'Soniya Tyre & Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -44184,6 +45146,7 @@ return array (
       array (
         'bill_no' => '13366',
         'bill_date' => '2025-06-17',
+        'month_of' => 'Jue-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -44251,6 +45214,7 @@ return array (
       array (
         'bill_no' => '13354',
         'bill_date' => '2025-05-04',
+        'month_of' => 'May-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -44311,6 +45275,7 @@ return array (
       array (
         'bill_no' => '186',
         'bill_date' => '2025-05-04',
+        'month_of' => 'May-2025',
         'workshop_name' => 'Palash Car A/C Centre',
         'paid_by' => 'company',
         'items' => 
@@ -44343,6 +45308,7 @@ return array (
       array (
         'bill_no' => '13347',
         'bill_date' => '2025-03-25',
+        'month_of' => 'March-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -44396,6 +45362,7 @@ return array (
       array (
         'bill_no' => '177',
         'bill_date' => '2025-02-23',
+        'month_of' => 'February-2025',
         'workshop_name' => 'Palash Car A/C Centre',
         'paid_by' => 'company',
         'items' => 
@@ -44414,6 +45381,7 @@ return array (
       array (
         'bill_no' => '13329',
         'bill_date' => '2025-02-23',
+        'month_of' => 'February-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -44467,6 +45435,7 @@ return array (
       array (
         'bill_no' => 'Bill # 71740',
         'bill_date' => '2025-02-12',
+        'month_of' => 'February-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -44527,6 +45496,7 @@ return array (
       array (
         'bill_no' => '11799',
         'bill_date' => '2024-11-12',
+        'month_of' => 'November-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -44580,6 +45550,7 @@ return array (
       array (
         'bill_no' => '710',
         'bill_date' => '2024-10-26',
+        'month_of' => 'October-2024',
         'workshop_name' => 'Panama CNG Conversion',
         'paid_by' => 'company',
         'items' => 
@@ -44598,6 +45569,7 @@ return array (
       array (
         'bill_no' => '11782',
         'bill_date' => '2024-10-09',
+        'month_of' => 'October-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -44616,6 +45588,7 @@ return array (
       array (
         'bill_no' => '166',
         'bill_date' => '2024-10-03',
+        'month_of' => 'October-2024',
         'workshop_name' => 'Palash Car A/C Centre',
         'paid_by' => 'company',
         'items' => 
@@ -44669,6 +45642,7 @@ return array (
       array (
         'bill_no' => '11777',
         'bill_date' => '2024-10-02',
+        'month_of' => 'October-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -44792,6 +45766,7 @@ return array (
       array (
         'bill_no' => '11778',
         'bill_date' => '2024-10-02',
+        'month_of' => 'October-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -44852,6 +45827,7 @@ return array (
       array (
         'bill_no' => '176',
         'bill_date' => '2024-08-25',
+        'month_of' => 'August-2024',
         'workshop_name' => 'Soniya Tyre & Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -44870,6 +45846,7 @@ return array (
       array (
         'bill_no' => 'SA 74',
         'bill_date' => '2024-08-21',
+        'month_of' => 'August-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -44916,6 +45893,7 @@ return array (
       array (
         'bill_no' => 'SA 108',
         'bill_date' => '2024-08-01',
+        'month_of' => 'August-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -44934,6 +45912,7 @@ return array (
       array (
         'bill_no' => '11744',
         'bill_date' => '2024-07-14',
+        'month_of' => 'July-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -44994,6 +45973,7 @@ return array (
       array (
         'bill_no' => '11743',
         'bill_date' => '2024-07-09',
+        'month_of' => 'July-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -45047,6 +46027,7 @@ return array (
       array (
         'bill_no' => 'SA 2404',
         'bill_date' => '2024-06-08',
+        'month_of' => 'June-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -45065,6 +46046,7 @@ return array (
       array (
         'bill_no' => '1945',
         'bill_date' => '2024-05-13',
+        'month_of' => 'May-2024',
         'workshop_name' => 'Soniya Tyre & Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -45083,6 +46065,7 @@ return array (
       array (
         'bill_no' => '11724',
         'bill_date' => '2024-04-30',
+        'month_of' => 'Apri-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -45157,6 +46140,7 @@ return array (
       array (
         'bill_no' => '10296',
         'bill_date' => '2024-03-10',
+        'month_of' => 'March-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -45231,6 +46215,7 @@ return array (
       array (
         'bill_no' => '10277',
         'bill_date' => '2024-01-23',
+        'month_of' => 'January-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -45298,6 +46283,7 @@ return array (
       array (
         'bill_no' => '10272',
         'bill_date' => '2024-01-01',
+        'month_of' => 'January-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -45330,6 +46316,7 @@ return array (
       array (
         'bill_no' => '2305',
         'bill_date' => '2023-12-20',
+        'month_of' => 'December-2023',
         'workshop_name' => 'Soniya Tyre & Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -45348,6 +46335,7 @@ return array (
       array (
         'bill_no' => '10264',
         'bill_date' => '2023-12-06',
+        'month_of' => 'December-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -45394,6 +46382,7 @@ return array (
       array (
         'bill_no' => '10248',
         'bill_date' => '2023-10-17',
+        'month_of' => 'October-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -45440,6 +46429,7 @@ return array (
       array (
         'bill_no' => '10242',
         'bill_date' => '2023-09-26',
+        'month_of' => 'September-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -45458,6 +46448,7 @@ return array (
       array (
         'bill_no' => '10241',
         'bill_date' => '2023-09-18',
+        'month_of' => 'September-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -45490,6 +46481,7 @@ return array (
       array (
         'bill_no' => '10233',
         'bill_date' => '2023-09-06',
+        'month_of' => 'September-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -45522,6 +46514,7 @@ return array (
       array (
         'bill_no' => '10219',
         'bill_date' => '2023-08-19',
+        'month_of' => 'August-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -45561,6 +46554,7 @@ return array (
       array (
         'bill_no' => '10212',
         'bill_date' => '2023-08-05',
+        'month_of' => 'August-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -45600,6 +46594,7 @@ return array (
       array (
         'bill_no' => '10211',
         'bill_date' => '2023-08-03',
+        'month_of' => 'August-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -45639,6 +46634,7 @@ return array (
       array (
         'bill_no' => '10206',
         'bill_date' => '2023-08-03',
+        'month_of' => 'August-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -45734,6 +46730,7 @@ return array (
       array (
         'bill_no' => '10205',
         'bill_date' => '2023-08-03',
+        'month_of' => 'August-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -45857,6 +46854,7 @@ return array (
       array (
         'bill_no' => '119',
         'bill_date' => '2023-07-23',
+        'month_of' => 'July-2023',
         'workshop_name' => 'Palash Car A/C Centre',
         'paid_by' => 'company',
         'items' => 
@@ -45882,6 +46880,7 @@ return array (
       array (
         'bill_no' => '1358',
         'bill_date' => '2023-07-20',
+        'month_of' => 'July-2023',
         'workshop_name' => 'Soniya Tyre & Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -45900,6 +46899,7 @@ return array (
       array (
         'bill_no' => '18191',
         'bill_date' => '2023-06-23',
+        'month_of' => 'June-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -45932,6 +46932,7 @@ return array (
       array (
         'bill_no' => '18186',
         'bill_date' => '2023-06-12',
+        'month_of' => 'June-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -45999,6 +47000,7 @@ return array (
       array (
         'bill_no' => '18171',
         'bill_date' => '2023-04-18',
+        'month_of' => 'April-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -46017,6 +47019,7 @@ return array (
       array (
         'bill_no' => '867',
         'bill_date' => '2023-04-06',
+        'month_of' => 'April-2023',
         'workshop_name' => 'Palash Car A/C Centre',
         'paid_by' => 'company',
         'items' => 
@@ -46098,6 +47101,7 @@ return array (
       array (
         'bill_no' => '18162',
         'bill_date' => '2023-04-03',
+        'month_of' => 'April-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -46151,6 +47155,7 @@ return array (
       array (
         'bill_no' => '5213',
         'bill_date' => '2023-02-19',
+        'month_of' => 'February-2023',
         'workshop_name' => 'Soniya Tyre & Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -46169,6 +47174,7 @@ return array (
       array (
         'bill_no' => '18137',
         'bill_date' => '2023-02-06',
+        'month_of' => 'February-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -46243,6 +47249,7 @@ return array (
       array (
         'bill_no' => '18121',
         'bill_date' => '2022-12-17',
+        'month_of' => 'December-2022',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -46317,6 +47324,7 @@ return array (
       array (
         'bill_no' => '3600',
         'bill_date' => '2022-11-12',
+        'month_of' => 'October-2022',
         'workshop_name' => 'Malak Enterprise',
         'paid_by' => 'company',
         'items' => 
@@ -46349,6 +47357,7 @@ return array (
       array (
         'bill_no' => '16775',
         'bill_date' => '2022-09-19',
+        'month_of' => 'September-2022',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -46416,6 +47425,7 @@ return array (
       array (
         'bill_no' => '16776',
         'bill_date' => '2022-09-18',
+        'month_of' => 'September-2022',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -46440,6 +47450,7 @@ return array (
       array (
         'bill_no' => '768',
         'bill_date' => '2026-06-08',
+        'month_of' => 'June-2026',
         'workshop_name' => 'Palash Car A/C Centre',
         'paid_by' => 'company',
         'items' => 
@@ -46507,6 +47518,7 @@ return array (
       array (
         'bill_no' => '14809',
         'bill_date' => '2026-06-08',
+        'month_of' => 'June-2026',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -46525,6 +47537,7 @@ return array (
       array (
         'bill_no' => '14803',
         'bill_date' => '2026-06-03',
+        'month_of' => 'June-2026',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -46613,6 +47626,7 @@ return array (
       array (
         'bill_no' => '13983',
         'bill_date' => '2026-04-13',
+        'month_of' => 'April-2026',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -46666,6 +47680,7 @@ return array (
       array (
         'bill_no' => '2986',
         'bill_date' => '2026-02-10',
+        'month_of' => 'February-2026',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -46684,6 +47699,7 @@ return array (
       array (
         'bill_no' => '13961',
         'bill_date' => '2026-01-21',
+        'month_of' => 'January-2026',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -46751,6 +47767,7 @@ return array (
       array (
         'bill_no' => '13942',
         'bill_date' => '2025-11-22',
+        'month_of' => 'November-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -46797,6 +47814,7 @@ return array (
       array (
         'bill_no' => '13938',
         'bill_date' => '2025-11-11',
+        'month_of' => 'November-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -46843,6 +47861,7 @@ return array (
       array (
         'bill_no' => '734',
         'bill_date' => '2025-10-18',
+        'month_of' => 'October-2025',
         'workshop_name' => 'Palash Car A/C Centre',
         'paid_by' => 'company',
         'items' => 
@@ -46889,6 +47908,7 @@ return array (
       array (
         'bill_no' => '13913',
         'bill_date' => '2025-10-18',
+        'month_of' => 'October-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -46949,6 +47969,7 @@ return array (
       array (
         'bill_no' => '13389',
         'bill_date' => '2025-08-23',
+        'month_of' => 'August-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -47016,6 +48037,7 @@ return array (
       array (
         'bill_no' => '13388',
         'bill_date' => '2025-08-23',
+        'month_of' => 'August-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -47125,6 +48147,7 @@ return array (
       array (
         'bill_no' => '13371',
         'bill_date' => '2025-07-05',
+        'month_of' => 'July-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -47192,6 +48215,7 @@ return array (
       array (
         'bill_no' => 'Bill # 72525',
         'bill_date' => '2025-05-10',
+        'month_of' => 'May-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -47238,6 +48262,7 @@ return array (
       array (
         'bill_no' => '13345',
         'bill_date' => '2025-03-22',
+        'month_of' => 'March-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -47305,6 +48330,7 @@ return array (
       array (
         'bill_no' => '754',
         'bill_date' => '2025-03-12',
+        'month_of' => 'March-2025',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -47323,6 +48349,7 @@ return array (
       array (
         'bill_no' => '7877',
         'bill_date' => '2025-02-20',
+        'month_of' => 'February-2025',
         'workshop_name' => 'MALAK Enterprise',
         'paid_by' => 'company',
         'items' => 
@@ -47341,6 +48368,7 @@ return array (
       array (
         'bill_no' => '402',
         'bill_date' => '2024-12-30',
+        'month_of' => 'December-2024',
         'workshop_name' => 'Arif Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -47366,6 +48394,7 @@ return array (
       array (
         'bill_no' => '13315',
         'bill_date' => '2024-12-16',
+        'month_of' => 'December-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -47391,6 +48420,7 @@ return array (
       array (
         'bill_no' => '13312',
         'bill_date' => '2024-12-14',
+        'month_of' => 'December-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -47451,6 +48481,7 @@ return array (
       array (
         'bill_no' => '11800',
         'bill_date' => '2024-11-12',
+        'month_of' => 'November-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -47490,6 +48521,7 @@ return array (
       array (
         'bill_no' => '168',
         'bill_date' => '2024-10-21',
+        'month_of' => 'October-2024',
         'workshop_name' => 'Palash Car A/C Centre',
         'paid_by' => 'company',
         'items' => 
@@ -47557,6 +48589,7 @@ return array (
       array (
         'bill_no' => '11783',
         'bill_date' => '2024-10-09',
+        'month_of' => 'October-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -47589,6 +48622,7 @@ return array (
       array (
         'bill_no' => '11768',
         'bill_date' => '2024-09-24',
+        'month_of' => 'September-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -47635,6 +48669,7 @@ return array (
       array (
         'bill_no' => '11763',
         'bill_date' => '2024-09-15',
+        'month_of' => 'September-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -47660,6 +48695,7 @@ return array (
       array (
         'bill_no' => '11766',
         'bill_date' => '2024-09-15',
+        'month_of' => 'September-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -47685,6 +48721,7 @@ return array (
       array (
         'bill_no' => '11755',
         'bill_date' => '2024-08-24',
+        'month_of' => 'August-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -47738,6 +48775,7 @@ return array (
       array (
         'bill_no' => '11761',
         'bill_date' => '2024-08-07',
+        'month_of' => 'August-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -47770,6 +48808,7 @@ return array (
       array (
         'bill_no' => '1921',
         'bill_date' => '2024-05-29',
+        'month_of' => 'May-2024',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -47788,6 +48827,7 @@ return array (
       array (
         'bill_no' => '11729',
         'bill_date' => '2024-05-25',
+        'month_of' => 'May-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -47834,6 +48874,7 @@ return array (
       array (
         'bill_no' => '11725',
         'bill_date' => '2024-05-04',
+        'month_of' => 'May-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -47894,6 +48935,7 @@ return array (
       array (
         'bill_no' => '10284',
         'bill_date' => '2024-02-11',
+        'month_of' => 'February-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -47954,6 +48996,7 @@ return array (
       array (
         'bill_no' => '10268',
         'bill_date' => '2023-12-11',
+        'month_of' => 'December-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -48028,6 +49071,7 @@ return array (
       array (
         'bill_no' => 'SA 473',
         'bill_date' => '2023-10-01',
+        'month_of' => 'October-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -48046,6 +49090,7 @@ return array (
       array (
         'bill_no' => '10208',
         'bill_date' => '2023-08-03',
+        'month_of' => 'August-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -48099,6 +49144,7 @@ return array (
       array (
         'bill_no' => '18193',
         'bill_date' => '2023-06-25',
+        'month_of' => 'June-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -48117,6 +49163,7 @@ return array (
       array (
         'bill_no' => '18179',
         'bill_date' => '2023-05-24',
+        'month_of' => 'May-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -48156,6 +49203,7 @@ return array (
       array (
         'bill_no' => 'SA 1725',
         'bill_date' => '2023-05-27',
+        'month_of' => 'May-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -48195,6 +49243,7 @@ return array (
       array (
         'bill_no' => 'SA 2154',
         'bill_date' => '2023-05-01',
+        'month_of' => 'May-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -48213,6 +49262,7 @@ return array (
       array (
         'bill_no' => '869',
         'bill_date' => '2023-04-12',
+        'month_of' => 'April-2023',
         'workshop_name' => 'Palash Car A/C Centre',
         'paid_by' => 'company',
         'items' => 
@@ -48259,6 +49309,7 @@ return array (
       array (
         'bill_no' => 'SA 1404',
         'bill_date' => '2023-03-28',
+        'month_of' => 'March-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -48305,6 +49356,7 @@ return array (
       array (
         'bill_no' => 'SA 1775',
         'bill_date' => '2023-03-01',
+        'month_of' => 'March-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -48323,6 +49375,7 @@ return array (
       array (
         'bill_no' => 'SA 1230',
         'bill_date' => '2023-02-22',
+        'month_of' => 'February-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -48362,6 +49415,7 @@ return array (
       array (
         'bill_no' => 'SA 1550',
         'bill_date' => '2023-02-01',
+        'month_of' => 'February-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -48387,6 +49441,7 @@ return array (
       array (
         'bill_no' => 'SA 1536',
         'bill_date' => '2023-02-20',
+        'month_of' => 'February-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -48405,6 +49460,7 @@ return array (
       array (
         'bill_no' => '5903',
         'bill_date' => '2023-01-16',
+        'month_of' => 'January-2023',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -48423,6 +49479,7 @@ return array (
       array (
         'bill_no' => 'SA 1092',
         'bill_date' => '2023-01-29',
+        'month_of' => 'January-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -48441,6 +49498,7 @@ return array (
       array (
         'bill_no' => 'SA 1022',
         'bill_date' => '2023-01-14',
+        'month_of' => 'January-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -48487,6 +49545,7 @@ return array (
       array (
         'bill_no' => 'SA 1288',
         'bill_date' => '2023-01-14',
+        'month_of' => 'January-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -48519,6 +49578,7 @@ return array (
       array (
         'bill_no' => 'SA 456',
         'bill_date' => '2023-01-03',
+        'month_of' => 'January-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -48544,6 +49604,7 @@ return array (
       array (
         'bill_no' => 'SA 817',
         'bill_date' => '2022-12-10',
+        'month_of' => 'December-2022',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -48590,6 +49651,7 @@ return array (
       array (
         'bill_no' => 'SA 1022',
         'bill_date' => '2022-12-10',
+        'month_of' => 'December-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -48615,6 +49677,7 @@ return array (
       array (
         'bill_no' => 'SA 889',
         'bill_date' => '2022-11-20',
+        'month_of' => 'November-2022',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -48661,6 +49724,7 @@ return array (
       array (
         'bill_no' => 'SA 697',
         'bill_date' => '2022-11-20',
+        'month_of' => 'November-2022',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -48679,6 +49743,7 @@ return array (
       array (
         'bill_no' => 'SA 583',
         'bill_date' => '2022-11-02',
+        'month_of' => 'November-2022',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -48718,6 +49783,7 @@ return array (
       array (
         'bill_no' => 'SA 734',
         'bill_date' => '2022-11-02',
+        'month_of' => 'November-2022',
         'workshop_name' => 'N.Islam Automobile',
         'paid_by' => 'company',
         'items' => 
@@ -48743,6 +49809,7 @@ return array (
       array (
         'bill_no' => '852',
         'bill_date' => '2022-10-12',
+        'month_of' => 'October-2022',
         'workshop_name' => 'Palash Car A/C Centre',
         'paid_by' => 'company',
         'items' => 
@@ -48803,6 +49870,7 @@ return array (
       array (
         'bill_no' => '16778',
         'bill_date' => '2022-09-17',
+        'month_of' => 'September-2022',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -48842,6 +49910,7 @@ return array (
       array (
         'bill_no' => '16780',
         'bill_date' => '2022-09-26',
+        'month_of' => 'September-2022',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -48895,6 +49964,7 @@ return array (
       array (
         'bill_no' => 'SA 309',
         'bill_date' => '2022-09-21',
+        'month_of' => 'September-2022',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -48934,6 +50004,7 @@ return array (
       array (
         'bill_no' => 'SA 389',
         'bill_date' => '2022-09-21',
+        'month_of' => 'September-2022',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -48952,6 +50023,7 @@ return array (
       array (
         'bill_no' => 'SA 45',
         'bill_date' => '2022-08-07',
+        'month_of' => 'August-2022',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -48991,6 +50063,7 @@ return array (
       array (
         'bill_no' => 'SA 65',
         'bill_date' => '2022-08-07',
+        'month_of' => 'August-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -49009,6 +50082,7 @@ return array (
       array (
         'bill_no' => 'SA 52',
         'bill_date' => '2022-08-08',
+        'month_of' => 'August-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -49034,6 +50108,7 @@ return array (
       array (
         'bill_no' => 'SA 62',
         'bill_date' => '2022-08-08',
+        'month_of' => 'August-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -49052,6 +50127,7 @@ return array (
       array (
         'bill_no' => 'SA 148',
         'bill_date' => '2022-08-21',
+        'month_of' => 'August-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -49105,6 +50181,7 @@ return array (
       array (
         'bill_no' => 'SA 179',
         'bill_date' => '2022-08-21',
+        'month_of' => 'August-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -49136,6 +50213,7 @@ return array (
       array (
         'bill_no' => '13994',
         'bill_date' => '2026-05-09',
+        'month_of' => 'May-2026',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -49182,6 +50260,7 @@ return array (
       array (
         'bill_no' => '13973',
         'bill_date' => '2026-03-08',
+        'month_of' => 'March-2026',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -49207,6 +50286,7 @@ return array (
       array (
         'bill_no' => '13968',
         'bill_date' => '2026-02-28',
+        'month_of' => 'February-2026',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -49232,6 +50312,7 @@ return array (
       array (
         'bill_no' => '2423',
         'bill_date' => '2026-02-22',
+        'month_of' => 'February-2026',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -49250,6 +50331,7 @@ return array (
       array (
         'bill_no' => '13954',
         'bill_date' => '2025-12-28',
+        'month_of' => 'December-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -49296,6 +50378,7 @@ return array (
       array (
         'bill_no' => '13921',
         'bill_date' => '2025-10-25',
+        'month_of' => 'October-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -49349,6 +50432,7 @@ return array (
       array (
         'bill_no' => '13920',
         'bill_date' => '2025-10-25',
+        'month_of' => 'October-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -49472,6 +50556,7 @@ return array (
       array (
         'bill_no' => '13911',
         'bill_date' => '2025-10-15',
+        'month_of' => 'October-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -49553,6 +50638,7 @@ return array (
       array (
         'bill_no' => '13375',
         'bill_date' => '2025-07-27',
+        'month_of' => 'July-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -49578,6 +50664,7 @@ return array (
       array (
         'bill_no' => '13351',
         'bill_date' => '2025-04-19',
+        'month_of' => 'April-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -49652,6 +50739,7 @@ return array (
       array (
         'bill_no' => '13339',
         'bill_date' => '2025-03-15',
+        'month_of' => 'March-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -49705,6 +50793,7 @@ return array (
       array (
         'bill_no' => '725',
         'bill_date' => '2025-03-04',
+        'month_of' => 'March-2025',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -49723,6 +50812,7 @@ return array (
       array (
         'bill_no' => '13330',
         'bill_date' => '2025-02-24',
+        'month_of' => 'February-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -49804,6 +50894,7 @@ return array (
       array (
         'bill_no' => '13327',
         'bill_date' => '2025-02-12',
+        'month_of' => 'February-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -49857,6 +50948,7 @@ return array (
       array (
         'bill_no' => '407',
         'bill_date' => '2025-01-15',
+        'month_of' => 'January-2025',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -49875,6 +50967,7 @@ return array (
       array (
         'bill_no' => '994',
         'bill_date' => '2024-12-22',
+        'month_of' => 'December-2024',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -49893,6 +50986,7 @@ return array (
       array (
         'bill_no' => '13303',
         'bill_date' => '2024-11-26',
+        'month_of' => 'November-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -49960,6 +51054,7 @@ return array (
       array (
         'bill_no' => '11794',
         'bill_date' => '2024-11-05',
+        'month_of' => 'November-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -50006,6 +51101,7 @@ return array (
       array (
         'bill_no' => '11780',
         'bill_date' => '2024-10-07',
+        'month_of' => 'October-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -50059,6 +51155,7 @@ return array (
       array (
         'bill_no' => 'SA 42',
         'bill_date' => '2024-08-14',
+        'month_of' => 'August-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -50098,6 +51195,7 @@ return array (
       array (
         'bill_no' => 'SA 61',
         'bill_date' => '2024-08-01',
+        'month_of' => 'August-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -50123,6 +51221,7 @@ return array (
       array (
         'bill_no' => '11731',
         'bill_date' => '2024-06-01',
+        'month_of' => 'June-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -50183,6 +51282,7 @@ return array (
       array (
         'bill_no' => '11713',
         'bill_date' => '2024-04-04',
+        'month_of' => 'April-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -50236,6 +51336,7 @@ return array (
       array (
         'bill_no' => '142',
         'bill_date' => '2024-03-27',
+        'month_of' => 'March-2024',
         'workshop_name' => 'Palash Car A/C Centre',
         'paid_by' => 'company',
         'items' => 
@@ -50310,6 +51411,7 @@ return array (
       array (
         'bill_no' => '11706',
         'bill_date' => '2024-03-27',
+        'month_of' => 'March-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -50363,6 +51465,7 @@ return array (
       array (
         'bill_no' => '10299',
         'bill_date' => '2024-02-21',
+        'month_of' => 'February-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -50395,6 +51498,7 @@ return array (
       array (
         'bill_no' => '10279',
         'bill_date' => '2024-01-27',
+        'month_of' => 'January-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -50434,6 +51538,7 @@ return array (
       array (
         'bill_no' => '10281',
         'bill_date' => '2024-01-04',
+        'month_of' => 'January-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -50452,6 +51557,7 @@ return array (
       array (
         'bill_no' => '10257',
         'bill_date' => '2023-11-07',
+        'month_of' => 'November-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -50526,6 +51632,7 @@ return array (
       array (
         'bill_no' => '10237',
         'bill_date' => '2023-09-07',
+        'month_of' => 'September-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -50551,6 +51658,7 @@ return array (
       array (
         'bill_no' => '10227',
         'bill_date' => '2023-08-28',
+        'month_of' => 'August-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -50583,6 +51691,7 @@ return array (
       array (
         'bill_no' => '10213',
         'bill_date' => '2023-08-05',
+        'month_of' => 'August-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -50643,6 +51752,7 @@ return array (
       array (
         'bill_no' => '1454',
         'bill_date' => '2023-08-03',
+        'month_of' => 'August-2023',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -50661,6 +51771,7 @@ return array (
       array (
         'bill_no' => '18196',
         'bill_date' => '2023-07-18',
+        'month_of' => 'July-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -50721,6 +51832,7 @@ return array (
       array (
         'bill_no' => '18197',
         'bill_date' => '2023-07-18',
+        'month_of' => 'July-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -50739,6 +51851,7 @@ return array (
       array (
         'bill_no' => '18183',
         'bill_date' => '2023-06-07',
+        'month_of' => 'June-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -50841,6 +51954,7 @@ return array (
       array (
         'bill_no' => '18178',
         'bill_date' => '2023-05-23',
+        'month_of' => 'May-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -50880,6 +51994,7 @@ return array (
       array (
         'bill_no' => '1577',
         'bill_date' => '2023-04-16',
+        'month_of' => 'April-2023',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -50905,6 +52020,7 @@ return array (
       array (
         'bill_no' => '18166',
         'bill_date' => '2023-04-15',
+        'month_of' => 'April-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -50958,6 +52074,7 @@ return array (
       array (
         'bill_no' => '18161',
         'bill_date' => '2023-03-25',
+        'month_of' => 'March-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -50976,6 +52093,7 @@ return array (
       array (
         'bill_no' => '18132',
         'bill_date' => '2023-01-28',
+        'month_of' => 'January-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -51015,6 +52133,7 @@ return array (
       array (
         'bill_no' => '18128',
         'bill_date' => '2023-01-14',
+        'month_of' => 'January-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -51040,6 +52159,7 @@ return array (
       array (
         'bill_no' => '18125',
         'bill_date' => '2023-01-02',
+        'month_of' => 'January-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -51100,6 +52220,7 @@ return array (
       array (
         'bill_no' => '18112',
         'bill_date' => '2022-11-29',
+        'month_of' => 'November-2022',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -51153,6 +52274,7 @@ return array (
       array (
         'bill_no' => '18109',
         'bill_date' => '2022-11-15',
+        'month_of' => 'November-2022',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -51185,6 +52307,7 @@ return array (
       array (
         'bill_no' => '18101',
         'bill_date' => '2022-11-05',
+        'month_of' => 'November-2022',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -51231,6 +52354,7 @@ return array (
       array (
         'bill_no' => '16791',
         'bill_date' => '2022-10-15',
+        'month_of' => 'October-2022',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -51326,6 +52450,7 @@ return array (
       array (
         'bill_no' => '16779',
         'bill_date' => '2022-09-26',
+        'month_of' => 'September-2022',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -51399,6 +52524,7 @@ return array (
       array (
         'bill_no' => 'Bill # 76264',
         'bill_date' => '2026-06-10',
+        'month_of' => 'June-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -51466,6 +52592,7 @@ return array (
       array (
         'bill_no' => 'Bill # 76142',
         'bill_date' => '2026-05-21',
+        'month_of' => 'May-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -51519,6 +52646,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75996',
         'bill_date' => '2026-05-10',
+        'month_of' => 'May-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -51551,6 +52679,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75793',
         'bill_date' => '2026-04-16',
+        'month_of' => 'April-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -51611,6 +52740,7 @@ return array (
       array (
         'bill_no' => '2721',
         'bill_date' => '2026-04-06',
+        'month_of' => 'April-2026',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -51629,6 +52759,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75697',
         'bill_date' => '2026-04-02',
+        'month_of' => 'April-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -51689,6 +52820,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75268',
         'bill_date' => '2026-03-09',
+        'month_of' => 'March-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -51714,6 +52846,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75392',
         'bill_date' => '2026-03-03',
+        'month_of' => 'March-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -51760,6 +52893,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75072',
         'bill_date' => '2026-01-27',
+        'month_of' => 'January-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -51827,6 +52961,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75128',
         'bill_date' => '2026-01-10',
+        'month_of' => 'January-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -51852,6 +52987,7 @@ return array (
       array (
         'bill_no' => 'Bill # 74902',
         'bill_date' => '2025-12-29',
+        'month_of' => 'December-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -51961,6 +53097,7 @@ return array (
       array (
         'bill_no' => 'Bill # 74160',
         'bill_date' => '2025-11-01',
+        'month_of' => 'November-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -52084,6 +53221,7 @@ return array (
       array (
         'bill_no' => 'Bill # 74039',
         'bill_date' => '2025-10-18',
+        'month_of' => 'October-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -52172,6 +53310,7 @@ return array (
       array (
         'bill_no' => '13910',
         'bill_date' => '2025-10-15',
+        'month_of' => 'October-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -52211,6 +53350,7 @@ return array (
       array (
         'bill_no' => '13399',
         'bill_date' => '2025-09-21',
+        'month_of' => 'September-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -52271,6 +53411,7 @@ return array (
       array (
         'bill_no' => 'Bill # 73451',
         'bill_date' => '2025-08-24',
+        'month_of' => 'August-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -52338,6 +53479,7 @@ return array (
       array (
         'bill_no' => 'Bill # 73328',
         'bill_date' => '2025-08-13',
+        'month_of' => 'August-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -52412,6 +53554,7 @@ return array (
       array (
         'bill_no' => '1961',
         'bill_date' => '2025-08-12',
+        'month_of' => 'August-2025',
         'workshop_name' => 'Vai Vai Auto Gear Solution',
         'paid_by' => 'company',
         'items' => 
@@ -52430,6 +53573,7 @@ return array (
       array (
         'bill_no' => 'Bill # 73280',
         'bill_date' => '2025-07-31',
+        'month_of' => 'July-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -52497,6 +53641,7 @@ return array (
       array (
         'bill_no' => '1472',
         'bill_date' => '2025-07-15',
+        'month_of' => 'July-2025',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -52515,6 +53660,7 @@ return array (
       array (
         'bill_no' => 'Bill # 73053',
         'bill_date' => '2025-07-03',
+        'month_of' => 'July-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -52568,6 +53714,7 @@ return array (
       array (
         'bill_no' => '716',
         'bill_date' => '2025-07-07',
+        'month_of' => 'July-2025',
         'workshop_name' => 'Palash Car A/C Centre',
         'paid_by' => 'company',
         'items' => 
@@ -52656,6 +53803,7 @@ return array (
       array (
         'bill_no' => 'Bill # 72889',
         'bill_date' => '2025-06-26',
+        'month_of' => 'June-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -52751,6 +53899,7 @@ return array (
       array (
         'bill_no' => 'Bill # 72766',
         'bill_date' => '2025-06-04',
+        'month_of' => 'June-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -52797,6 +53946,7 @@ return array (
       array (
         'bill_no' => '1112',
         'bill_date' => '2025-05-24',
+        'month_of' => 'May-2025',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -52815,6 +53965,7 @@ return array (
       array (
         'bill_no' => 'Bill # 72615',
         'bill_date' => '2025-05-24',
+        'month_of' => 'May-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -52889,6 +54040,7 @@ return array (
       array (
         'bill_no' => 'Bill # 72143',
         'bill_date' => '2025-05-07',
+        'month_of' => 'May-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -52949,6 +54101,7 @@ return array (
       array (
         'bill_no' => 'Bill # 72127',
         'bill_date' => '2025-03-24',
+        'month_of' => 'March-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -53016,6 +54169,7 @@ return array (
       array (
         'bill_no' => 'Bill # 72060',
         'bill_date' => '2025-03-17',
+        'month_of' => 'March-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -53041,6 +54195,7 @@ return array (
       array (
         'bill_no' => '12025030046',
         'bill_date' => '2025-02-17',
+        'month_of' => 'February-2025',
         'workshop_name' => 'ANAN Auto Solution',
         'paid_by' => 'company',
         'items' => 
@@ -53248,6 +54403,7 @@ return array (
       array (
         'bill_no' => 'Bill # 71279',
         'bill_date' => '2025-01-02',
+        'month_of' => 'January-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -53301,6 +54457,7 @@ return array (
       array (
         'bill_no' => 'SA 692',
         'bill_date' => '2024-12-14',
+        'month_of' => 'December-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -53375,6 +54532,7 @@ return array (
       array (
         'bill_no' => 'SA 1007',
         'bill_date' => '2024-12-01',
+        'month_of' => 'December-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -53407,6 +54565,7 @@ return array (
       array (
         'bill_no' => 'SA 473',
         'bill_date' => '2024-10-30',
+        'month_of' => 'October-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -53453,6 +54612,7 @@ return array (
       array (
         'bill_no' => 'SA 701',
         'bill_date' => '2024-10-01',
+        'month_of' => 'October-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -53492,6 +54652,7 @@ return array (
       array (
         'bill_no' => 'SA 252',
         'bill_date' => '2024-09-23',
+        'month_of' => 'September-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -53531,6 +54692,7 @@ return array (
       array (
         'bill_no' => 'SA 379',
         'bill_date' => '2024-09-01',
+        'month_of' => 'September-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -53556,6 +54718,7 @@ return array (
       array (
         'bill_no' => '381',
         'bill_date' => '2024-09-23',
+        'month_of' => 'September-2024',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -53574,6 +54737,7 @@ return array (
       array (
         'bill_no' => '11765',
         'bill_date' => '2024-09-20',
+        'month_of' => 'September-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -53599,6 +54763,7 @@ return array (
       array (
         'bill_no' => 'SA 91',
         'bill_date' => '2024-08-25',
+        'month_of' => 'August-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -53645,6 +54810,7 @@ return array (
       array (
         'bill_no' => 'SA 127',
         'bill_date' => '2024-08-01',
+        'month_of' => 'August-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -53670,6 +54836,7 @@ return array (
       array (
         'bill_no' => 'SA 88',
         'bill_date' => '2024-08-25',
+        'month_of' => 'August-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -53709,6 +54876,7 @@ return array (
       array (
         'bill_no' => 'SA 132',
         'bill_date' => '2024-08-01',
+        'month_of' => 'August-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -53734,6 +54902,7 @@ return array (
       array (
         'bill_no' => 'SA 2178',
         'bill_date' => '2024-07-30',
+        'month_of' => 'July-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -53766,6 +54935,7 @@ return array (
       array (
         'bill_no' => 'SA 2756',
         'bill_date' => '2024-07-01',
+        'month_of' => 'July-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -53784,6 +54954,7 @@ return array (
       array (
         'bill_no' => 'SA 2080',
         'bill_date' => '2024-07-09',
+        'month_of' => 'July-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -53816,6 +54987,7 @@ return array (
       array (
         'bill_no' => 'SA 2623',
         'bill_date' => '2024-07-01',
+        'month_of' => 'July-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -53848,6 +55020,7 @@ return array (
       array (
         'bill_no' => 'SA 1894',
         'bill_date' => '2024-06-02',
+        'month_of' => 'June-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -53880,6 +55053,7 @@ return array (
       array (
         'bill_no' => 'SA 2355',
         'bill_date' => '2024-06-01',
+        'month_of' => 'June-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -53905,6 +55079,7 @@ return array (
       array (
         'bill_no' => 'SA 1858',
         'bill_date' => '2024-05-25',
+        'month_of' => 'May-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -53930,6 +55105,7 @@ return array (
       array (
         'bill_no' => 'SA 2305',
         'bill_date' => '2024-05-01',
+        'month_of' => 'May-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -53948,6 +55124,7 @@ return array (
       array (
         'bill_no' => 'SA 1853',
         'bill_date' => '2024-05-23',
+        'month_of' => 'May-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -53966,6 +55143,7 @@ return array (
       array (
         'bill_no' => 'SA 2293',
         'bill_date' => '2024-05-01',
+        'month_of' => 'May-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -53984,6 +55162,7 @@ return array (
       array (
         'bill_no' => 'SA 1668',
         'bill_date' => '2024-04-27',
+        'month_of' => 'April-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -54002,6 +55181,7 @@ return array (
       array (
         'bill_no' => 'SA 2086',
         'bill_date' => '2024-04-01',
+        'month_of' => 'April-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -54020,6 +55200,7 @@ return array (
       array (
         'bill_no' => 'SA 1653',
         'bill_date' => '2024-04-24',
+        'month_of' => 'April-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -54059,6 +55240,7 @@ return array (
       array (
         'bill_no' => 'SA 2068',
         'bill_date' => '2024-04-01',
+        'month_of' => 'April-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -54077,6 +55259,7 @@ return array (
       array (
         'bill_no' => 'SA 1383',
         'bill_date' => '2024-03-10',
+        'month_of' => 'March-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -54123,6 +55306,7 @@ return array (
       array (
         'bill_no' => 'SA 1728',
         'bill_date' => '2024-03-01',
+        'month_of' => 'March-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -54141,6 +55325,7 @@ return array (
       array (
         'bill_no' => 'SA 1239',
         'bill_date' => '2024-02-18',
+        'month_of' => 'February-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -54180,6 +55365,7 @@ return array (
       array (
         'bill_no' => 'SA 1533',
         'bill_date' => '2024-02-01',
+        'month_of' => 'February-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -54198,6 +55384,7 @@ return array (
       array (
         'bill_no' => 'SA 1146',
         'bill_date' => '2024-01-31',
+        'month_of' => 'January-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -54216,6 +55403,7 @@ return array (
       array (
         'bill_no' => 'SA 1396',
         'bill_date' => '2024-01-01',
+        'month_of' => 'January-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -54234,6 +55422,7 @@ return array (
       array (
         'bill_no' => 'SA 1147',
         'bill_date' => '2024-01-31',
+        'month_of' => 'January-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -54259,6 +55448,7 @@ return array (
       array (
         'bill_no' => 'SA 1397',
         'bill_date' => '2024-01-01',
+        'month_of' => 'January-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -54277,6 +55467,7 @@ return array (
       array (
         'bill_no' => '2837',
         'bill_date' => '2024-01-28',
+        'month_of' => 'January-2024',
         'workshop_name' => 'Rupantarita Prakritik Gas Copmpany Ltd',
         'paid_by' => 'company',
         'items' => 
@@ -54295,6 +55486,7 @@ return array (
       array (
         'bill_no' => 'SA 1102',
         'bill_date' => '2024-01-27',
+        'month_of' => 'January-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -54341,6 +55533,7 @@ return array (
       array (
         'bill_no' => 'SA 1346',
         'bill_date' => '2024-01-01',
+        'month_of' => 'January-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -54366,6 +55559,7 @@ return array (
       array (
         'bill_no' => '043',
         'bill_date' => '2024-01-14',
+        'month_of' => 'January-2024',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -54384,6 +55578,7 @@ return array (
       array (
         'bill_no' => 'SA 932',
         'bill_date' => '2023-12-28',
+        'month_of' => 'December-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -54402,6 +55597,7 @@ return array (
       array (
         'bill_no' => 'SA 1139',
         'bill_date' => '2023-12-01',
+        'month_of' => 'December-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -54427,6 +55623,7 @@ return array (
       array (
         'bill_no' => 'SA 783',
         'bill_date' => '2023-12-06',
+        'month_of' => 'December-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -54459,6 +55656,7 @@ return array (
       array (
         'bill_no' => 'SA 941',
         'bill_date' => '2023-12-01',
+        'month_of' => 'December-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -54484,6 +55682,7 @@ return array (
       array (
         'bill_no' => 'SA 688',
         'bill_date' => '2023-11-20',
+        'month_of' => 'November-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -54537,6 +55736,7 @@ return array (
       array (
         'bill_no' => 'SA 833',
         'bill_date' => '2023-11-01',
+        'month_of' => 'November-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -54576,6 +55776,7 @@ return array (
       array (
         'bill_no' => '10247',
         'bill_date' => '2023-10-17',
+        'month_of' => 'October-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -54594,6 +55795,7 @@ return array (
       array (
         'bill_no' => 'SA 581',
         'bill_date' => '2023-10-25',
+        'month_of' => 'October-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -54640,6 +55842,7 @@ return array (
       array (
         'bill_no' => 'SA 687',
         'bill_date' => '2023-10-01',
+        'month_of' => 'October-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -54672,6 +55875,7 @@ return array (
       array (
         'bill_no' => 'SA 459',
         'bill_date' => '2023-10-09',
+        'month_of' => 'October-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -54690,6 +55894,7 @@ return array (
       array (
         'bill_no' => 'SA 536',
         'bill_date' => '2023-10-01',
+        'month_of' => 'October-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -54708,6 +55913,7 @@ return array (
       array (
         'bill_no' => 'SA 437',
         'bill_date' => '2023-10-06',
+        'month_of' => 'October-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -54726,6 +55932,7 @@ return array (
       array (
         'bill_no' => 'SA 510',
         'bill_date' => '2023-10-01',
+        'month_of' => 'October-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -54744,6 +55951,7 @@ return array (
       array (
         'bill_no' => '1177',
         'bill_date' => '2023-10-19',
+        'month_of' => 'October-2023',
         'workshop_name' => 'Vai Vai Auto Gear Solution',
         'paid_by' => 'company',
         'items' => 
@@ -54762,6 +55970,7 @@ return array (
       array (
         'bill_no' => '10230',
         'bill_date' => '2023-09-04',
+        'month_of' => 'September-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -54815,6 +56024,7 @@ return array (
       array (
         'bill_no' => '2719',
         'bill_date' => '2023-08-26',
+        'month_of' => 'August-2023',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -54833,6 +56043,7 @@ return array (
       array (
         'bill_no' => '18199',
         'bill_date' => '2023-07-22',
+        'month_of' => 'July-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -54900,6 +56111,7 @@ return array (
       array (
         'bill_no' => '18194',
         'bill_date' => '2023-07-09',
+        'month_of' => 'July-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -54925,6 +56137,7 @@ return array (
       array (
         'bill_no' => 'SA 1791',
         'bill_date' => '2023-06-05',
+        'month_of' => 'June-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -54978,6 +56191,7 @@ return array (
       array (
         'bill_no' => 'SA 2237',
         'bill_date' => '2023-06-01',
+        'month_of' => 'June-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -55003,6 +56217,7 @@ return array (
       array (
         'bill_no' => '18174',
         'bill_date' => '2023-05-04',
+        'month_of' => 'May-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -55042,6 +56257,7 @@ return array (
       array (
         'bill_no' => '5479',
         'bill_date' => '2023-04-04',
+        'month_of' => 'April-2023',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -55060,6 +56276,7 @@ return array (
       array (
         'bill_no' => '868',
         'bill_date' => '2023-04-02',
+        'month_of' => 'April-2023',
         'workshop_name' => 'Palash Car A/C Centre',
         'paid_by' => 'company',
         'items' => 
@@ -55085,6 +56302,7 @@ return array (
       array (
         'bill_no' => '18163',
         'bill_date' => '2023-04-04',
+        'month_of' => 'April-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -55110,6 +56328,7 @@ return array (
       array (
         'bill_no' => '18157',
         'bill_date' => '2023-03-15',
+        'month_of' => 'March-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -55170,6 +56389,7 @@ return array (
       array (
         'bill_no' => '18155',
         'bill_date' => '2023-03-02',
+        'month_of' => 'March-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -55195,6 +56415,7 @@ return array (
       array (
         'bill_no' => '18150',
         'bill_date' => '2023-02-23',
+        'month_of' => 'February-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -55269,6 +56490,7 @@ return array (
       array (
         'bill_no' => '18148',
         'bill_date' => '2023-02-12',
+        'month_of' => 'February-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -55385,6 +56607,7 @@ return array (
       array (
         'bill_no' => '18144',
         'bill_date' => '2023-02-12',
+        'month_of' => 'February-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -55445,6 +56668,7 @@ return array (
       array (
         'bill_no' => '18143',
         'bill_date' => '2023-02-12',
+        'month_of' => 'February-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -55547,6 +56771,7 @@ return array (
       array (
         'bill_no' => '18129',
         'bill_date' => '2023-01-11',
+        'month_of' => 'January-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -55565,6 +56790,7 @@ return array (
       array (
         'bill_no' => 'SA 986',
         'bill_date' => '2023-01-07',
+        'month_of' => 'January-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -55597,6 +56823,7 @@ return array (
       array (
         'bill_no' => 'SA 1237',
         'bill_date' => '2023-01-01',
+        'month_of' => 'January-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -55622,6 +56849,7 @@ return array (
       array (
         'bill_no' => '18117',
         'bill_date' => '2022-12-13',
+        'month_of' => 'December-2022',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -55640,6 +56868,7 @@ return array (
       array (
         'bill_no' => '18115',
         'bill_date' => '2022-12-05',
+        'month_of' => 'December-2022',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -55679,6 +56908,7 @@ return array (
       array (
         'bill_no' => '16796',
         'bill_date' => '2022-10-30',
+        'month_of' => 'October-2022',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -55718,6 +56948,7 @@ return array (
       array (
         'bill_no' => '7151',
         'bill_date' => '2022-10-25',
+        'month_of' => 'October-2022',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -55736,6 +56967,7 @@ return array (
       array (
         'bill_no' => '16782',
         'bill_date' => '2022-09-29',
+        'month_of' => 'September-2022',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -55781,6 +57013,7 @@ return array (
       array (
         'bill_no' => '1789',
         'bill_date' => '2026-06-08',
+        'month_of' => 'June-2026',
         'workshop_name' => 'Malak Enterprise',
         'paid_by' => 'company',
         'items' => 
@@ -55820,6 +57053,7 @@ return array (
       array (
         'bill_no' => '181359',
         'bill_date' => '2026-06-07',
+        'month_of' => 'June-2026',
         'workshop_name' => 'Jayma Motors',
         'paid_by' => 'company',
         'items' => 
@@ -55894,6 +57128,7 @@ return array (
       array (
         'bill_no' => '14806',
         'bill_date' => '2026-06-01',
+        'month_of' => 'June-2026',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -55912,6 +57147,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75787',
         'bill_date' => '2026-04-28',
+        'month_of' => 'April-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -55965,6 +57201,7 @@ return array (
       array (
         'bill_no' => '13987',
         'bill_date' => '2026-04-23',
+        'month_of' => 'April-2026',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -56004,6 +57241,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75373',
         'bill_date' => '2026-04-13',
+        'month_of' => 'April-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -56141,6 +57379,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75576',
         'bill_date' => '2026-03-07',
+        'month_of' => 'March-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -56194,6 +57433,7 @@ return array (
       array (
         'bill_no' => 'Bill # 74690',
         'bill_date' => '2026-02-23',
+        'month_of' => 'February-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -56296,6 +57536,7 @@ return array (
       array (
         'bill_no' => '38',
         'bill_date' => '2026-02-22',
+        'month_of' => 'February-2026',
         'workshop_name' => 'The Alamgir Automobile',
         'paid_by' => 'company',
         'items' => 
@@ -56321,6 +57562,7 @@ return array (
       array (
         'bill_no' => 'Bill # 74983',
         'bill_date' => '2026-01-06',
+        'month_of' => 'January-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -56381,6 +57623,7 @@ return array (
       array (
         'bill_no' => 'Bill # 74647',
         'bill_date' => '2025-12-11',
+        'month_of' => 'December-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -56434,6 +57677,7 @@ return array (
       array (
         'bill_no' => 'Bill # 74124',
         'bill_date' => '2025-11-10',
+        'month_of' => 'November-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -56508,6 +57752,7 @@ return array (
       array (
         'bill_no' => '883',
         'bill_date' => '2025-11-02',
+        'month_of' => 'November-2025',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -56526,6 +57771,7 @@ return array (
       array (
         'bill_no' => 'SO-11299',
         'bill_date' => '2025-10-28',
+        'month_of' => 'October-2025',
         'workshop_name' => 'Continental Works Ltd',
         'paid_by' => 'company',
         'items' => 
@@ -56600,6 +57846,7 @@ return array (
       array (
         'bill_no' => 'SO-11283',
         'bill_date' => '2025-10-18',
+        'month_of' => 'October-2025',
         'workshop_name' => 'Continental Works Ltd',
         'paid_by' => 'company',
         'items' => 
@@ -56632,6 +57879,7 @@ return array (
       array (
         'bill_no' => 'Bill # 74025',
         'bill_date' => '2025-10-13',
+        'month_of' => 'October-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -56685,6 +57933,7 @@ return array (
       array (
         'bill_no' => 'Bill # 73940',
         'bill_date' => '2025-09-30',
+        'month_of' => 'September-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -56717,32 +57966,21 @@ return array (
             'unit' => NULL,
             'amount' => 200.0,
           ),
-        ),
-        'total_amount' => 2200.0,
-      ),
-      17 => 
-      array (
-        'bill_no' => 'Bill # 73940',
-        'bill_date' => '2025-09-30',
-        'workshop_name' => 'N.Islam Automobiles',
-        'paid_by' => 'company',
-        'items' => 
-        array (
-          0 => 
+          4 => 
           array (
             'item_name' => 'Gear Oil',
             'quantity' => 1.0,
             'unit' => 'Ltr',
             'amount' => 889.0,
           ),
-          1 => 
+          5 => 
           array (
             'item_name' => 'Propular Shaft Open & Fitting',
             'quantity' => NULL,
             'unit' => NULL,
             'amount' => 556.0,
           ),
-          2 => 
+          6 => 
           array (
             'item_name' => 'VAT (10%)',
             'quantity' => NULL,
@@ -56750,12 +57988,13 @@ return array (
             'amount' => 144.0,
           ),
         ),
-        'total_amount' => 1589.0,
+        'total_amount' => 3789.0,
       ),
-      18 => 
+      17 => 
       array (
         'bill_no' => 'Bill # 73751',
         'bill_date' => '2025-09-24',
+        'month_of' => 'September-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -56812,10 +58051,11 @@ return array (
         ),
         'total_amount' => 8004.0,
       ),
-      19 => 
+      18 => 
       array (
         'bill_no' => 'SO-10978',
         'bill_date' => '2025-09-07',
+        'month_of' => 'September-2025',
         'workshop_name' => 'Continental Works Ltd',
         'paid_by' => 'company',
         'items' => 
@@ -56872,10 +58112,11 @@ return array (
         ),
         'total_amount' => 22874.0,
       ),
-      20 => 
+      19 => 
       array (
         'bill_no' => '13382',
         'bill_date' => '2025-08-14',
+        'month_of' => 'August-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -56953,10 +58194,11 @@ return array (
         ),
         'total_amount' => 54950.0,
       ),
-      21 => 
+      20 => 
       array (
         'bill_no' => 'Bill # 73307',
         'bill_date' => '2025-08-02',
+        'month_of' => 'August-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -57013,10 +58255,11 @@ return array (
         ),
         'total_amount' => 7925.0,
       ),
-      22 => 
+      21 => 
       array (
         'bill_no' => 'Bill # 73006',
         'bill_date' => '2025-06-29',
+        'month_of' => 'June-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -57073,10 +58316,11 @@ return array (
         ),
         'total_amount' => 7926.0,
       ),
-      23 => 
+      22 => 
       array (
         'bill_no' => 'Bill # 72882',
         'bill_date' => '2025-06-22',
+        'month_of' => 'June-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -57112,10 +58356,11 @@ return array (
         ),
         'total_amount' => 3388.0,
       ),
-      24 => 
+      23 => 
       array (
         'bill_no' => 'SO-10466',
         'bill_date' => '2025-06-28',
+        'month_of' => 'June-2025',
         'workshop_name' => 'Continental Works Ltd',
         'paid_by' => 'company',
         'items' => 
@@ -57151,10 +58396,11 @@ return array (
         ),
         'total_amount' => 17710.0,
       ),
-      25 => 
+      24 => 
       array (
         'bill_no' => 'SO-09913',
         'bill_date' => '2025-04-20',
+        'month_of' => 'April-2025',
         'workshop_name' => 'Continental Works Ltd',
         'paid_by' => 'company',
         'items' => 
@@ -57533,10 +58779,11 @@ return array (
         ),
         'total_amount' => 541216.0,
       ),
-      26 => 
+      25 => 
       array (
         'bill_no' => 'Bill # 71943',
         'bill_date' => '2025-03-06',
+        'month_of' => 'March-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -57600,10 +58847,11 @@ return array (
         ),
         'total_amount' => 9135.0,
       ),
-      27 => 
+      26 => 
       array (
         'bill_no' => '13335',
         'bill_date' => '2025-03-03',
+        'month_of' => 'March-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -57632,10 +58880,11 @@ return array (
         ),
         'total_amount' => 4000.0,
       ),
-      28 => 
+      27 => 
       array (
         'bill_no' => 'Bill # 71618',
         'bill_date' => '2025-02-01',
+        'month_of' => 'February-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -57699,10 +58948,11 @@ return array (
         ),
         'total_amount' => 7892.0,
       ),
-      29 => 
+      28 => 
       array (
         'bill_no' => 'Bill # 71294',
         'bill_date' => '2025-01-04',
+        'month_of' => 'January-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -57759,10 +59009,11 @@ return array (
         ),
         'total_amount' => 7804.0,
       ),
-      30 => 
+      29 => 
       array (
         'bill_no' => 'Bill # 71176',
         'bill_date' => '2024-12-23',
+        'month_of' => 'December-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -57791,10 +59042,11 @@ return array (
         ),
         'total_amount' => 9438.0,
       ),
-      31 => 
+      30 => 
       array (
         'bill_no' => 'SA 644',
         'bill_date' => '2024-12-02',
+        'month_of' => 'December-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -57844,10 +59096,11 @@ return array (
         ),
         'total_amount' => 7320.0,
       ),
-      32 => 
+      31 => 
       array (
         'bill_no' => 'SA 937',
         'bill_date' => '2024-12-01',
+        'month_of' => 'December-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -57869,10 +59122,11 @@ return array (
         ),
         'total_amount' => 605.0,
       ),
-      33 => 
+      32 => 
       array (
         'bill_no' => 'SA 630',
         'bill_date' => '2024-11-30',
+        'month_of' => 'November-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -57936,10 +59190,11 @@ return array (
         ),
         'total_amount' => 18997.0,
       ),
-      34 => 
+      33 => 
       array (
         'bill_no' => 'SA 920',
         'bill_date' => '2024-11-01',
+        'month_of' => 'November-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -57975,10 +59230,11 @@ return array (
         ),
         'total_amount' => 16577.0,
       ),
-      35 => 
+      34 => 
       array (
         'bill_no' => '740',
         'bill_date' => '2024-11-18',
+        'month_of' => 'November-2024',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -57993,10 +59249,11 @@ return array (
         ),
         'total_amount' => 14800.0,
       ),
-      36 => 
+      35 => 
       array (
         'bill_no' => 'SA 520',
         'bill_date' => '2024-11-06',
+        'month_of' => 'November-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -58046,10 +59303,11 @@ return array (
         ),
         'total_amount' => 7321.0,
       ),
-      37 => 
+      36 => 
       array (
         'bill_no' => 'SA 766',
         'bill_date' => '2024-11-01',
+        'month_of' => 'November-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -58071,10 +59329,11 @@ return array (
         ),
         'total_amount' => 605.0,
       ),
-      38 => 
+      37 => 
       array (
         'bill_no' => 'SA 666',
         'bill_date' => '2024-10-27',
+        'month_of' => 'October-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -58096,10 +59355,11 @@ return array (
         ),
         'total_amount' => 1452.0,
       ),
-      39 => 
+      38 => 
       array (
         'bill_no' => 'SA 414',
         'bill_date' => '2024-10-20',
+        'month_of' => 'October-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -58128,10 +59388,11 @@ return array (
         ),
         'total_amount' => 13734.0,
       ),
-      40 => 
+      39 => 
       array (
         'bill_no' => 'SA 612',
         'bill_date' => '2024-10-01',
+        'month_of' => 'October-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -58160,10 +59421,11 @@ return array (
         ),
         'total_amount' => 1452.0,
       ),
-      41 => 
+      40 => 
       array (
         'bill_no' => 'SA 370',
         'bill_date' => '2024-10-12',
+        'month_of' => 'October-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -58220,10 +59482,11 @@ return array (
         ),
         'total_amount' => 7562.0,
       ),
-      42 => 
+      41 => 
       array (
         'bill_no' => 'SA 535',
         'bill_date' => '2024-10-01',
+        'month_of' => 'October-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -58245,10 +59508,11 @@ return array (
         ),
         'total_amount' => 605.0,
       ),
-      43 => 
+      42 => 
       array (
         'bill_no' => 'SA 322',
         'bill_date' => '2024-10-06',
+        'month_of' => 'October-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -58270,10 +59534,11 @@ return array (
         ),
         'total_amount' => 15125.0,
       ),
-      44 => 
+      43 => 
       array (
         'bill_no' => 'SA 472',
         'bill_date' => '2024-10-01',
+        'month_of' => 'October-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -58295,10 +59560,11 @@ return array (
         ),
         'total_amount' => 1210.0,
       ),
-      45 => 
+      44 => 
       array (
         'bill_no' => '527',
         'bill_date' => '2024-10-30',
+        'month_of' => 'October-2024',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -58313,10 +59579,11 @@ return array (
         ),
         'total_amount' => 8500.0,
       ),
-      46 => 
+      45 => 
       array (
         'bill_no' => 'SA 298',
         'bill_date' => '2024-09-30',
+        'month_of' => 'September-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -58366,10 +59633,11 @@ return array (
         ),
         'total_amount' => 11979.0,
       ),
-      47 => 
+      46 => 
       array (
         'bill_no' => 'SA 440',
         'bill_date' => '2024-09-01',
+        'month_of' => 'September-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -58391,10 +59659,11 @@ return array (
         ),
         'total_amount' => 968.0,
       ),
-      48 => 
+      47 => 
       array (
         'bill_no' => 'SA 198',
         'bill_date' => '2024-09-12',
+        'month_of' => 'September-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -58444,10 +59713,11 @@ return array (
         ),
         'total_amount' => 7260.0,
       ),
-      49 => 
+      48 => 
       array (
         'bill_no' => 'SA 295',
         'bill_date' => '2024-09-01',
+        'month_of' => 'September-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -58469,10 +59739,11 @@ return array (
         ),
         'total_amount' => 605.0,
       ),
-      50 => 
+      49 => 
       array (
         'bill_no' => 'SA 84',
         'bill_date' => '2024-08-24',
+        'month_of' => 'August-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -58501,10 +59772,11 @@ return array (
         ),
         'total_amount' => 847.0,
       ),
-      51 => 
+      50 => 
       array (
         'bill_no' => 'SA 51',
         'bill_date' => '2024-08-17',
+        'month_of' => 'August-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -58519,10 +59791,11 @@ return array (
         ),
         'total_amount' => 1060.0,
       ),
-      52 => 
+      51 => 
       array (
         'bill_no' => 'SA 77',
         'bill_date' => '2024-08-01',
+        'month_of' => 'August-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -58537,10 +59810,11 @@ return array (
         ),
         'total_amount' => 1060.0,
       ),
-      53 => 
+      52 => 
       array (
         'bill_no' => 'SA 12',
         'bill_date' => '2024-08-04',
+        'month_of' => 'August-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -58583,10 +59857,11 @@ return array (
         ),
         'total_amount' => 6338.0,
       ),
-      54 => 
+      53 => 
       array (
         'bill_no' => 'SA 14',
         'bill_date' => '2024-08-01',
+        'month_of' => 'August-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -58601,10 +59876,11 @@ return array (
         ),
         'total_amount' => 530.0,
       ),
-      55 => 
+      54 => 
       array (
         'bill_no' => 'SA 2073',
         'bill_date' => '2024-07-08',
+        'month_of' => 'July-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -58647,10 +59923,11 @@ return array (
         ),
         'total_amount' => 6338.0,
       ),
-      56 => 
+      55 => 
       array (
         'bill_no' => 'SA 2614',
         'bill_date' => '2024-07-01',
+        'month_of' => 'July-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -58665,10 +59942,11 @@ return array (
         ),
         'total_amount' => 530.0,
       ),
-      57 => 
+      56 => 
       array (
         'bill_no' => 'SA 1912',
         'bill_date' => '2024-06-06',
+        'month_of' => 'June-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -58732,10 +60010,11 @@ return array (
         ),
         'total_amount' => 6821.0,
       ),
-      58 => 
+      57 => 
       array (
         'bill_no' => 'SA 2384',
         'bill_date' => '2024-06-01',
+        'month_of' => 'June-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -58750,10 +60029,11 @@ return array (
         ),
         'total_amount' => 530.0,
       ),
-      59 => 
+      58 => 
       array (
         'bill_no' => 'SA 1756',
         'bill_date' => '2024-05-11',
+        'month_of' => 'May-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -58810,10 +60090,11 @@ return array (
         ),
         'total_amount' => 6924.0,
       ),
-      60 => 
+      59 => 
       array (
         'bill_no' => 'SA 2185',
         'bill_date' => '2024-05-01',
+        'month_of' => 'May-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -58842,10 +60123,11 @@ return array (
         ),
         'total_amount' => 2120.0,
       ),
-      61 => 
+      60 => 
       array (
         'bill_no' => '338',
         'bill_date' => '2024-04-26',
+        'month_of' => 'April-2024',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -58860,10 +60142,11 @@ return array (
         ),
         'total_amount' => 30000.0,
       ),
-      62 => 
+      61 => 
       array (
         'bill_no' => 'SA 1579',
         'bill_date' => '2024-04-07',
+        'month_of' => 'April-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -58913,10 +60196,11 @@ return array (
         ),
         'total_amount' => 16112.0,
       ),
-      63 => 
+      62 => 
       array (
         'bill_no' => 'SA 1957',
         'bill_date' => '2024-04-01',
+        'month_of' => 'April-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -58938,10 +60222,11 @@ return array (
         ),
         'total_amount' => 1378.0,
       ),
-      64 => 
+      63 => 
       array (
         'bill_no' => 'SA 1478',
         'bill_date' => '2024-03-25',
+        'month_of' => 'March-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -58977,10 +60262,11 @@ return array (
         ),
         'total_amount' => 4028.0,
       ),
-      65 => 
+      64 => 
       array (
         'bill_no' => 'SA 1828',
         'bill_date' => '2024-03-01',
+        'month_of' => 'March-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -59016,10 +60302,11 @@ return array (
         ),
         'total_amount' => 5238.0,
       ),
-      66 => 
+      65 => 
       array (
         'bill_no' => 'SA 1405',
         'bill_date' => '2024-03-13',
+        'month_of' => 'March-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -59034,10 +60321,11 @@ return array (
         ),
         'total_amount' => 318.0,
       ),
-      67 => 
+      66 => 
       array (
         'bill_no' => 'SA 1749',
         'bill_date' => '2024-03-01',
+        'month_of' => 'March-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -59052,10 +60340,11 @@ return array (
         ),
         'total_amount' => 848.0,
       ),
-      68 => 
+      67 => 
       array (
         'bill_no' => '136',
         'bill_date' => '2024-03-07',
+        'month_of' => 'March-2024',
         'workshop_name' => 'Palash Car A/C Centre',
         'paid_by' => 'company',
         'items' => 
@@ -59119,10 +60408,11 @@ return array (
         ),
         'total_amount' => 19100.0,
       ),
-      69 => 
+      68 => 
       array (
         'bill_no' => '10294',
         'bill_date' => '2024-03-07',
+        'month_of' => 'March-2024',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -59137,10 +60427,11 @@ return array (
         ),
         'total_amount' => 4800.0,
       ),
-      70 => 
+      69 => 
       array (
         'bill_no' => 'SA 1351',
         'bill_date' => '2024-03-05',
+        'month_of' => 'March-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -59183,10 +60474,11 @@ return array (
         ),
         'total_amount' => 6201.0,
       ),
-      71 => 
+      70 => 
       array (
         'bill_no' => 'SA 1686',
         'bill_date' => '2024-03-01',
+        'month_of' => 'March-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -59201,10 +60493,11 @@ return array (
         ),
         'total_amount' => 530.0,
       ),
-      72 => 
+      71 => 
       array (
         'bill_no' => 'SA 1183',
         'bill_date' => '2024-02-06',
+        'month_of' => 'February-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -59254,10 +60547,11 @@ return array (
         ),
         'total_amount' => 13568.0,
       ),
-      73 => 
+      72 => 
       array (
         'bill_no' => 'SA 1439',
         'bill_date' => '2024-02-01',
+        'month_of' => 'February-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -59279,10 +60573,11 @@ return array (
         ),
         'total_amount' => 1378.0,
       ),
-      74 => 
+      73 => 
       array (
         'bill_no' => '11708',
         'bill_date' => '2024-02-03',
+        'month_of' => 'February-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -59339,10 +60634,11 @@ return array (
         ),
         'total_amount' => 31800.0,
       ),
-      75 => 
+      74 => 
       array (
         'bill_no' => '1179',
         'bill_date' => '2024-02-03',
+        'month_of' => 'February-2024',
         'workshop_name' => 'M/S. Dholaikhal Motors',
         'paid_by' => 'company',
         'items' => 
@@ -59357,10 +60653,11 @@ return array (
         ),
         'total_amount' => 29000.0,
       ),
-      76 => 
+      75 => 
       array (
         'bill_no' => '045',
         'bill_date' => '2024-01-14',
+        'month_of' => 'January-2024',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -59375,10 +60672,11 @@ return array (
         ),
         'total_amount' => 13000.0,
       ),
-      77 => 
+      76 => 
       array (
         'bill_no' => 'SA 993',
         'bill_date' => '2024-01-09',
+        'month_of' => 'January-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -59421,10 +60719,11 @@ return array (
         ),
         'total_amount' => 6042.0,
       ),
-      78 => 
+      77 => 
       array (
         'bill_no' => 'SA 1210',
         'bill_date' => '2024-01-01',
+        'month_of' => 'January-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -59439,10 +60738,11 @@ return array (
         ),
         'total_amount' => 530.0,
       ),
-      79 => 
+      78 => 
       array (
         'bill_no' => 'SA 952',
         'bill_date' => '2023-12-31',
+        'month_of' => 'December-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -59478,10 +60778,11 @@ return array (
         ),
         'total_amount' => 25970.0,
       ),
-      80 => 
+      79 => 
       array (
         'bill_no' => 'SA 1159',
         'bill_date' => '2023-12-01',
+        'month_of' => 'December-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -59517,10 +60818,11 @@ return array (
         ),
         'total_amount' => 4770.0,
       ),
-      81 => 
+      80 => 
       array (
         'bill_no' => 'SA 799',
         'bill_date' => '2023-12-09',
+        'month_of' => 'December-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -59563,10 +60865,11 @@ return array (
         ),
         'total_amount' => 6042.0,
       ),
-      82 => 
+      81 => 
       array (
         'bill_no' => 'SA 959',
         'bill_date' => '2023-12-01',
+        'month_of' => 'December-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -59581,10 +60884,11 @@ return array (
         ),
         'total_amount' => 530.0,
       ),
-      83 => 
+      82 => 
       array (
         'bill_no' => 'SA 625',
         'bill_date' => '2023-11-04',
+        'month_of' => 'November-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -59627,10 +60931,11 @@ return array (
         ),
         'total_amount' => 6042.0,
       ),
-      84 => 
+      83 => 
       array (
         'bill_no' => 'SA 744',
         'bill_date' => '2023-11-01',
+        'month_of' => 'November-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -59645,10 +60950,11 @@ return array (
         ),
         'total_amount' => 530.0,
       ),
-      85 => 
+      84 => 
       array (
         'bill_no' => 'SA 534',
         'bill_date' => '2023-10-21',
+        'month_of' => 'October-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -59663,10 +60969,11 @@ return array (
         ),
         'total_amount' => 5510.0,
       ),
-      86 => 
+      85 => 
       array (
         'bill_no' => 'SA 629',
         'bill_date' => '2023-10-01',
+        'month_of' => 'October-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -59695,10 +61002,11 @@ return array (
         ),
         'total_amount' => 2440.0,
       ),
-      87 => 
+      86 => 
       array (
         'bill_no' => 'SA 419',
         'bill_date' => '2023-10-03',
+        'month_of' => 'October-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -59734,10 +61042,11 @@ return array (
         ),
         'total_amount' => 6042.0,
       ),
-      88 => 
+      87 => 
       array (
         'bill_no' => 'SA 492',
         'bill_date' => '2023-10-01',
+        'month_of' => 'October-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -59773,10 +61082,11 @@ return array (
         ),
         'total_amount' => 3180.0,
       ),
-      89 => 
+      88 => 
       array (
         'bill_no' => 'SA 226',
         'bill_date' => '2023-09-05',
+        'month_of' => 'September-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -59819,10 +61129,11 @@ return array (
         ),
         'total_amount' => 6041.0,
       ),
-      90 => 
+      89 => 
       array (
         'bill_no' => 'SA 257',
         'bill_date' => '2023-09-01',
+        'month_of' => 'September-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -59837,10 +61148,11 @@ return array (
         ),
         'total_amount' => 530.0,
       ),
-      91 => 
+      90 => 
       array (
         'bill_no' => 'SA 175',
         'bill_date' => '2023-08-30',
+        'month_of' => 'August-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -59869,10 +61181,11 @@ return array (
         ),
         'total_amount' => 3604.0,
       ),
-      92 => 
+      91 => 
       array (
         'bill_no' => 'SA 195',
         'bill_date' => '2023-08-01',
+        'month_of' => 'August-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -59908,10 +61221,11 @@ return array (
         ),
         'total_amount' => 2490.0,
       ),
-      93 => 
+      92 => 
       array (
         'bill_no' => 'SA 94',
         'bill_date' => '2023-08-14',
+        'month_of' => 'August-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -59926,10 +61240,11 @@ return array (
         ),
         'total_amount' => 318.0,
       ),
-      94 => 
+      93 => 
       array (
         'bill_no' => 'SA 104',
         'bill_date' => '2023-08-01',
+        'month_of' => 'August-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -59944,10 +61259,11 @@ return array (
         ),
         'total_amount' => 5088.0,
       ),
-      95 => 
+      94 => 
       array (
         'bill_no' => 'SA 25',
         'bill_date' => '2023-08-05',
+        'month_of' => 'August-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -59990,10 +61306,11 @@ return array (
         ),
         'total_amount' => 6043.0,
       ),
-      96 => 
+      95 => 
       array (
         'bill_no' => 'SA 30',
         'bill_date' => '2023-08-01',
+        'month_of' => 'August-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -60015,10 +61332,11 @@ return array (
         ),
         'total_amount' => 1378.0,
       ),
-      97 => 
+      96 => 
       array (
         'bill_no' => 'SA 1971',
         'bill_date' => '2023-07-06',
+        'month_of' => 'July-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -60068,10 +61386,11 @@ return array (
         ),
         'total_amount' => 7314.0,
       ),
-      98 => 
+      97 => 
       array (
         'bill_no' => 'SA 2433',
         'bill_date' => '2023-07-01',
+        'month_of' => 'July-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -60086,10 +61405,11 @@ return array (
         ),
         'total_amount' => 530.0,
       ),
-      99 => 
+      98 => 
       array (
         'bill_no' => 'SA 1782',
         'bill_date' => '2023-06-04',
+        'month_of' => 'June-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -60132,10 +61452,11 @@ return array (
         ),
         'total_amount' => 6040.0,
       ),
-      100 => 
+      99 => 
       array (
         'bill_no' => 'SA 2230',
         'bill_date' => '2023-06-01',
+        'month_of' => 'June-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -60150,10 +61471,11 @@ return array (
         ),
         'total_amount' => 530.0,
       ),
-      101 => 
+      100 => 
       array (
         'bill_no' => 'SA 1699',
         'bill_date' => '2023-05-23',
+        'month_of' => 'May-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -60175,10 +61497,11 @@ return array (
         ),
         'total_amount' => 11554.0,
       ),
-      102 => 
+      101 => 
       array (
         'bill_no' => 'SA 2125',
         'bill_date' => '2023-05-01',
+        'month_of' => 'May-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -60200,10 +61523,11 @@ return array (
         ),
         'total_amount' => 1590.0,
       ),
-      103 => 
+      102 => 
       array (
         'bill_no' => 'SA 1608',
         'bill_date' => '2023-05-06',
+        'month_of' => 'May-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -60239,10 +61563,11 @@ return array (
         ),
         'total_amount' => 5300.0,
       ),
-      104 => 
+      103 => 
       array (
         'bill_no' => 'SA 2002',
         'bill_date' => '2023-05-01',
+        'month_of' => 'May-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -60257,10 +61582,11 @@ return array (
         ),
         'total_amount' => 530.0,
       ),
-      105 => 
+      104 => 
       array (
         'bill_no' => 'SA 1605',
         'bill_date' => '2023-05-04',
+        'month_of' => 'May-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -60275,10 +61601,11 @@ return array (
         ),
         'total_amount' => 1272.0,
       ),
-      106 => 
+      105 => 
       array (
         'bill_no' => 'SA 1606',
         'bill_date' => '2023-05-01',
+        'month_of' => 'May-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -60349,10 +61676,11 @@ return array (
         ),
         'total_amount' => 15284.0,
       ),
-      107 => 
+      106 => 
       array (
         'bill_no' => 'SA 1997',
         'bill_date' => '2023-05-01',
+        'month_of' => 'May-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -60388,10 +61716,11 @@ return array (
         ),
         'total_amount' => 2650.0,
       ),
-      108 => 
+      107 => 
       array (
         'bill_no' => '1589',
         'bill_date' => '2023-04-18',
+        'month_of' => 'April-2023',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -60406,10 +61735,11 @@ return array (
         ),
         'total_amount' => 9500.0,
       ),
-      109 => 
+      108 => 
       array (
         'bill_no' => 'SA 1287',
         'bill_date' => '2023-03-02',
+        'month_of' => 'March-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -60445,10 +61775,11 @@ return array (
         ),
         'total_amount' => 5300.0,
       ),
-      110 => 
+      109 => 
       array (
         'bill_no' => 'SA 1622',
         'bill_date' => '2023-03-01',
+        'month_of' => 'March-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -60463,10 +61794,11 @@ return array (
         ),
         'total_amount' => 212.0,
       ),
-      111 => 
+      110 => 
       array (
         'bill_no' => 'SA 169',
         'bill_date' => '2023-02-28',
+        'month_of' => 'February-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -60481,10 +61813,11 @@ return array (
         ),
         'total_amount' => 786.0,
       ),
-      112 => 
+      111 => 
       array (
         'bill_no' => 'SA 1207',
         'bill_date' => '2023-02-01',
+        'month_of' => 'February-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -60632,10 +61965,11 @@ return array (
         ),
         'total_amount' => 153232.0,
       ),
-      113 => 
+      112 => 
       array (
         'bill_no' => 'SA 1524',
         'bill_date' => '2023-02-01',
+        'month_of' => 'February-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -60678,10 +62012,11 @@ return array (
         ),
         'total_amount' => 36150.0,
       ),
-      114 => 
+      113 => 
       array (
         'bill_no' => 'SA 1066',
         'bill_date' => '2023-01-23',
+        'month_of' => 'January-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -60724,10 +62059,11 @@ return array (
         ),
         'total_amount' => 9116.0,
       ),
-      115 => 
+      114 => 
       array (
         'bill_no' => 'SA 1342',
         'bill_date' => '2023-01-23',
+        'month_of' => 'January-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -60756,10 +62092,11 @@ return array (
         ),
         'total_amount' => 2226.0,
       ),
-      116 => 
+      115 => 
       array (
         'bill_no' => 'SA 966',
         'bill_date' => '2023-01-03',
+        'month_of' => 'January-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -60816,10 +62153,11 @@ return array (
         ),
         'total_amount' => 6455.0,
       ),
-      117 => 
+      116 => 
       array (
         'bill_no' => 'SA 1206',
         'bill_date' => '2023-01-01',
+        'month_of' => 'January-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -60834,10 +62172,11 @@ return array (
         ),
         'total_amount' => 530.0,
       ),
-      118 => 
+      117 => 
       array (
         'bill_no' => 'SA 935',
         'bill_date' => '2022-12-28',
+        'month_of' => 'December-2022',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -60852,10 +62191,11 @@ return array (
         ),
         'total_amount' => 7420.0,
       ),
-      119 => 
+      118 => 
       array (
         'bill_no' => 'SA 872',
         'bill_date' => '2022-12-18',
+        'month_of' => 'December-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -60870,10 +62210,11 @@ return array (
         ),
         'total_amount' => 10070.0,
       ),
-      120 => 
+      119 => 
       array (
         'bill_no' => 'SA 1080',
         'bill_date' => '2022-12-01',
+        'month_of' => 'December-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -60888,10 +62229,11 @@ return array (
         ),
         'total_amount' => 2650.0,
       ),
-      121 => 
+      120 => 
       array (
         'bill_no' => 'SA 787',
         'bill_date' => '2022-12-04',
+        'month_of' => 'December-2022',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -60934,10 +62276,11 @@ return array (
         ),
         'total_amount' => 7210.0,
       ),
-      122 => 
+      121 => 
       array (
         'bill_no' => 'SA 989',
         'bill_date' => '2022-12-04',
+        'month_of' => 'December-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -60987,10 +62330,11 @@ return array (
         ),
         'total_amount' => 4603.0,
       ),
-      123 => 
+      122 => 
       array (
         'bill_no' => 'SA 595',
         'bill_date' => '2022-11-04',
+        'month_of' => 'November-2022',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -61033,10 +62377,11 @@ return array (
         ),
         'total_amount' => 5830.0,
       ),
-      124 => 
+      123 => 
       array (
         'bill_no' => 'SA 402',
         'bill_date' => '2022-10-06',
+        'month_of' => 'October-2022',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -61072,10 +62417,11 @@ return array (
         ),
         'total_amount' => 5089.0,
       ),
-      125 => 
+      124 => 
       array (
         'bill_no' => 'SA 521',
         'bill_date' => '2022-10-06',
+        'month_of' => 'October-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -61090,10 +62436,11 @@ return array (
         ),
         'total_amount' => 212.0,
       ),
-      126 => 
+      125 => 
       array (
         'bill_no' => 'SA 547',
         'bill_date' => '2022-10-10',
+        'month_of' => 'October-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -61108,10 +62455,11 @@ return array (
         ),
         'total_amount' => 848.0,
       ),
-      127 => 
+      126 => 
       array (
         'bill_no' => '848',
         'bill_date' => '2022-09-20',
+        'month_of' => 'September-2022',
         'workshop_name' => 'Palash Car A/C Centre',
         'paid_by' => 'company',
         'items' => 
@@ -61182,10 +62530,11 @@ return array (
         ),
         'total_amount' => 51000.0,
       ),
-      128 => 
+      127 => 
       array (
         'bill_no' => '7586',
         'bill_date' => '2022-09-12',
+        'month_of' => 'September-2022',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -61200,10 +62549,11 @@ return array (
         ),
         'total_amount' => 12000.0,
       ),
-      129 => 
+      128 => 
       array (
         'bill_no' => 'SA 220',
         'bill_date' => '2022-09-05',
+        'month_of' => 'September-2022',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -61239,10 +62589,11 @@ return array (
         ),
         'total_amount' => 4996.0,
       ),
-      130 => 
+      129 => 
       array (
         'bill_no' => 'SA 275',
         'bill_date' => '2022-09-05',
+        'month_of' => 'September-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -61257,10 +62608,11 @@ return array (
         ),
         'total_amount' => 212.0,
       ),
-      131 => 
+      130 => 
       array (
         'bill_no' => 'SA 243',
         'bill_date' => '2022-09-10',
+        'month_of' => 'September-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -61289,10 +62641,11 @@ return array (
         ),
         'total_amount' => 150.0,
       ),
-      132 => 
+      131 => 
       array (
         'bill_no' => 'SA 299',
         'bill_date' => '2022-09-10',
+        'month_of' => 'September-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -61307,10 +62660,11 @@ return array (
         ),
         'total_amount' => 1060.0,
       ),
-      133 => 
+      132 => 
       array (
         'bill_no' => 'SA 22',
         'bill_date' => '2022-08-04',
+        'month_of' => 'August-2022',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -61346,10 +62700,11 @@ return array (
         ),
         'total_amount' => 4615.0,
       ),
-      134 => 
+      133 => 
       array (
         'bill_no' => 'SA 31',
         'bill_date' => '2022-08-04',
+        'month_of' => 'August-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -61364,10 +62719,11 @@ return array (
         ),
         'total_amount' => 210.0,
       ),
-      135 => 
+      134 => 
       array (
         'bill_no' => 'SA 23',
         'bill_date' => '2022-08-04',
+        'month_of' => 'August-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -61382,10 +62738,11 @@ return array (
         ),
         'total_amount' => 320.0,
       ),
-      136 => 
+      135 => 
       array (
         'bill_no' => 'SA 32',
         'bill_date' => '2022-08-04',
+        'month_of' => 'August-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -61400,10 +62757,11 @@ return array (
         ),
         'total_amount' => 530.0,
       ),
-      137 => 
+      136 => 
       array (
         'bill_no' => 'SA 247',
         'bill_date' => '2022-08-31',
+        'month_of' => 'August-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -61435,6 +62793,7 @@ return array (
       array (
         'bill_no' => '5064',
         'bill_date' => '2026-06-15',
+        'month_of' => 'June-2026',
         'workshop_name' => 'Rashid Motors',
         'paid_by' => 'company',
         'items' => 
@@ -61460,6 +62819,7 @@ return array (
       array (
         'bill_no' => 'Bill # 76165',
         'bill_date' => '2026-06-10',
+        'month_of' => 'June-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -61548,6 +62908,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75870',
         'bill_date' => '2026-05-23',
+        'month_of' => 'May-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -61587,6 +62948,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75939',
         'bill_date' => '2026-05-12',
+        'month_of' => 'May-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -61640,6 +63002,7 @@ return array (
       array (
         'bill_no' => '761',
         'bill_date' => '2026-05-05',
+        'month_of' => 'May-2026',
         'workshop_name' => 'Palash Car A/C Centre',
         'paid_by' => 'company',
         'items' => 
@@ -61714,6 +63077,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75699',
         'bill_date' => '2026-04-13',
+        'month_of' => 'April-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -61788,6 +63152,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75415',
         'bill_date' => '2026-04-01',
+        'month_of' => 'April-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -61813,6 +63178,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75658',
         'bill_date' => '2026-03-30',
+        'month_of' => 'March-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -61838,6 +63204,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75410',
         'bill_date' => '2026-03-10',
+        'month_of' => 'March-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -61912,6 +63279,7 @@ return array (
       array (
         'bill_no' => '2486',
         'bill_date' => '2026-03-06',
+        'month_of' => 'March-2026',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -61930,6 +63298,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75243',
         'bill_date' => '2026-02-05',
+        'month_of' => 'February-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -61990,6 +63359,7 @@ return array (
       array (
         'bill_no' => '2911',
         'bill_date' => '2026-01-24',
+        'month_of' => 'January-2026',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -62008,6 +63378,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75134',
         'bill_date' => '2026-01-15',
+        'month_of' => 'January-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -62061,6 +63432,7 @@ return array (
       array (
         'bill_no' => 'Bill # 74961',
         'bill_date' => '2026-01-04',
+        'month_of' => 'January-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -62121,6 +63493,7 @@ return array (
       array (
         'bill_no' => 'Bill # 74550',
         'bill_date' => '2025-12-03',
+        'month_of' => 'December-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -62188,6 +63561,7 @@ return array (
       array (
         'bill_no' => '2228',
         'bill_date' => '2025-11-30',
+        'month_of' => 'November-2025',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -62206,6 +63580,7 @@ return array (
       array (
         'bill_no' => 'Bill # 74423',
         'bill_date' => '2025-11-19',
+        'month_of' => 'November-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -62238,6 +63613,7 @@ return array (
       array (
         'bill_no' => '13939',
         'bill_date' => '2025-11-12',
+        'month_of' => 'November-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -62361,6 +63737,7 @@ return array (
       array (
         'bill_no' => 'Bill # 74073',
         'bill_date' => '2025-10-25',
+        'month_of' => 'October-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -62414,6 +63791,7 @@ return array (
       array (
         'bill_no' => 'Bill # 73694',
         'bill_date' => '2025-09-24',
+        'month_of' => 'September-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -62537,6 +63915,7 @@ return array (
       array (
         'bill_no' => 'Bill # 73607',
         'bill_date' => '2027-09-07',
+        'month_of' => 'September-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -62618,6 +63997,7 @@ return array (
       array (
         'bill_no' => 'Bill # 73265',
         'bill_date' => '2025-08-10',
+        'month_of' => 'August-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -62706,6 +64086,7 @@ return array (
       array (
         'bill_no' => '95640',
         'bill_date' => '2025-07-29',
+        'month_of' => 'July-2025',
         'workshop_name' => 'Southern Automobiles Ltd',
         'paid_by' => 'company',
         'items' => 
@@ -62738,6 +64119,7 @@ return array (
       array (
         'bill_no' => 'Bill # 73023',
         'bill_date' => '2025-07-17',
+        'month_of' => 'July-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -62847,6 +64229,7 @@ return array (
       array (
         'bill_no' => 'Bill # 72788',
         'bill_date' => '2025-06-21',
+        'month_of' => 'June-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -62907,6 +64290,7 @@ return array (
       array (
         'bill_no' => '709',
         'bill_date' => '2025-06-16',
+        'month_of' => 'June-2025',
         'workshop_name' => 'Palash Car A/C Centre',
         'paid_by' => 'company',
         'items' => 
@@ -62967,6 +64351,7 @@ return array (
       array (
         'bill_no' => 'Bill # 72490',
         'bill_date' => '2025-06-01',
+        'month_of' => 'June-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -63034,6 +64419,7 @@ return array (
       array (
         'bill_no' => '6',
         'bill_date' => '2025-05-29',
+        'month_of' => 'May-2025',
         'workshop_name' => 'The Alamgir Automobile',
         'paid_by' => 'company',
         'items' => 
@@ -63080,6 +64466,7 @@ return array (
       array (
         'bill_no' => '13360',
         'bill_date' => '2025-05-28',
+        'month_of' => 'May-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -63112,6 +64499,7 @@ return array (
       array (
         'bill_no' => 'Bill # 72095',
         'bill_date' => '2025-04-21',
+        'month_of' => 'April-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -63144,6 +64532,7 @@ return array (
       array (
         'bill_no' => 'Bill # 72218',
         'bill_date' => '2025-04-12',
+        'month_of' => 'April-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -63211,6 +64600,7 @@ return array (
       array (
         'bill_no' => 'Bill # 71731',
         'bill_date' => '2025-03-04',
+        'month_of' => 'March-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -63285,6 +64675,7 @@ return array (
       array (
         'bill_no' => '13333',
         'bill_date' => '2025-03-01',
+        'month_of' => 'March-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -63317,6 +64708,7 @@ return array (
       array (
         'bill_no' => 'Bill # 71687',
         'bill_date' => '2025-02-08',
+        'month_of' => 'February-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -63391,6 +64783,7 @@ return array (
       array (
         'bill_no' => 'Bill # 71295',
         'bill_date' => '2024-12-07',
+        'month_of' => 'January-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -63479,6 +64872,7 @@ return array (
       array (
         'bill_no' => 'SA 661',
         'bill_date' => '2024-12-07',
+        'month_of' => 'December-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -63532,6 +64926,7 @@ return array (
       array (
         'bill_no' => 'SA 958',
         'bill_date' => '2024-12-01',
+        'month_of' => 'December-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -63557,6 +64952,7 @@ return array (
       array (
         'bill_no' => 'SA 513',
         'bill_date' => '2024-11-06',
+        'month_of' => 'November-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -63624,6 +65020,7 @@ return array (
       array (
         'bill_no' => 'SA 756',
         'bill_date' => '2024-11-01',
+        'month_of' => 'November-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -63656,6 +65053,7 @@ return array (
       array (
         'bill_no' => 'SA 392',
         'bill_date' => '2024-10-16',
+        'month_of' => 'October-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -63681,6 +65079,7 @@ return array (
       array (
         'bill_no' => 'SA 582',
         'bill_date' => '2024-10-01',
+        'month_of' => 'October-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -63720,6 +65119,7 @@ return array (
       array (
         'bill_no' => 'SA 322',
         'bill_date' => '2024-10-06',
+        'month_of' => 'October-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -63780,6 +65180,7 @@ return array (
       array (
         'bill_no' => 'SA 471',
         'bill_date' => '2024-10-01',
+        'month_of' => 'October-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -63812,6 +65213,7 @@ return array (
       array (
         'bill_no' => 'SA 201',
         'bill_date' => '2024-09-12',
+        'month_of' => 'September-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -63886,6 +65288,7 @@ return array (
       array (
         'bill_no' => 'SA 298',
         'bill_date' => '2024-09-01',
+        'month_of' => 'September-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -63925,6 +65328,7 @@ return array (
       array (
         'bill_no' => 'SA 171',
         'bill_date' => '2024-08-29',
+        'month_of' => 'August-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -63950,6 +65354,7 @@ return array (
       array (
         'bill_no' => '11757',
         'bill_date' => '2024-08-25',
+        'month_of' => 'August-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -64052,6 +65457,7 @@ return array (
       array (
         'bill_no' => '100',
         'bill_date' => '2024-08-08',
+        'month_of' => 'August-2024',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -64070,6 +65476,7 @@ return array (
       array (
         'bill_no' => 'SA 12',
         'bill_date' => '2024-08-04',
+        'month_of' => 'August-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -64137,6 +65544,7 @@ return array (
       array (
         'bill_no' => 'SA 2070',
         'bill_date' => '2024-07-08',
+        'month_of' => 'July-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -64211,6 +65619,7 @@ return array (
       array (
         'bill_no' => 'SA 2609',
         'bill_date' => '2024-07-01',
+        'month_of' => 'July-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -64250,6 +65659,7 @@ return array (
       array (
         'bill_no' => 'SA 1939',
         'bill_date' => '2024-06-10',
+        'month_of' => 'June-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -64303,6 +65713,7 @@ return array (
       array (
         'bill_no' => 'SA 2421',
         'bill_date' => '2024-06-01',
+        'month_of' => 'June-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -64335,6 +65746,7 @@ return array (
       array (
         'bill_no' => 'SA 1735',
         'bill_date' => '2024-05-08',
+        'month_of' => 'May-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -64395,6 +65807,7 @@ return array (
       array (
         'bill_no' => 'SA 2165',
         'bill_date' => '2024-05-01',
+        'month_of' => 'May-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -64434,6 +65847,7 @@ return array (
       array (
         'bill_no' => 'SA 1691',
         'bill_date' => '2024-04-30',
+        'month_of' => 'April-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -64452,6 +65866,7 @@ return array (
       array (
         'bill_no' => 'SA 2108',
         'bill_date' => '2024-04-01',
+        'month_of' => 'April-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -64470,6 +65885,7 @@ return array (
       array (
         'bill_no' => 'SA 1560',
         'bill_date' => '2024-04-04',
+        'month_of' => 'April-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -64516,6 +65932,7 @@ return array (
       array (
         'bill_no' => 'SA 1925',
         'bill_date' => '2024-04-01',
+        'month_of' => 'April-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -64534,6 +65951,7 @@ return array (
       array (
         'bill_no' => 'SA 1452',
         'bill_date' => '2024-03-20',
+        'month_of' => 'March-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -64559,6 +65977,7 @@ return array (
       array (
         'bill_no' => 'SA 1793',
         'bill_date' => '2024-03-01',
+        'month_of' => 'March-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -64577,6 +65996,7 @@ return array (
       array (
         'bill_no' => 'SA 1676',
         'bill_date' => '2024-03-04',
+        'month_of' => 'March-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -64595,6 +66015,7 @@ return array (
       array (
         'bill_no' => 'SA 1345',
         'bill_date' => '2024-03-01',
+        'month_of' => 'March-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -64641,6 +66062,7 @@ return array (
       array (
         'bill_no' => 'SA 1678',
         'bill_date' => '2024-03-01',
+        'month_of' => 'March-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -64666,6 +66088,7 @@ return array (
       array (
         'bill_no' => 'SA 1167',
         'bill_date' => '2024-02-03',
+        'month_of' => 'February-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -64712,6 +66135,7 @@ return array (
       array (
         'bill_no' => 'SA 1422',
         'bill_date' => '2024-02-01',
+        'month_of' => 'February-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -64737,6 +66161,7 @@ return array (
       array (
         'bill_no' => 'SA 1013',
         'bill_date' => '2024-01-13',
+        'month_of' => 'January-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -64811,6 +66236,7 @@ return array (
       array (
         'bill_no' => '46',
         'bill_date' => '2024-01-01',
+        'month_of' => 'January-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -64829,6 +66255,7 @@ return array (
       array (
         'bill_no' => 'SA 1232',
         'bill_date' => '2024-01-01',
+        'month_of' => 'January-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -64854,6 +66281,7 @@ return array (
       array (
         'bill_no' => 'SA 778',
         'bill_date' => '2023-12-05',
+        'month_of' => 'December-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -64907,6 +66335,7 @@ return array (
       array (
         'bill_no' => 'SA 935',
         'bill_date' => '2023-12-01',
+        'month_of' => 'December-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -64939,6 +66368,7 @@ return array (
       array (
         'bill_no' => '131',
         'bill_date' => '2023-12-08',
+        'month_of' => 'December-2023',
         'workshop_name' => 'Palash Car A/C Centre',
         'paid_by' => 'company',
         'items' => 
@@ -65027,6 +66457,7 @@ return array (
       array (
         'bill_no' => '1234',
         'bill_date' => '2023-11-21',
+        'month_of' => 'November-2023',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -65045,6 +66476,7 @@ return array (
       array (
         'bill_no' => 'SA 629',
         'bill_date' => '2023-11-05',
+        'month_of' => 'November-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -65091,6 +66523,7 @@ return array (
       array (
         'bill_no' => 'SA 750',
         'bill_date' => '2023-11-01',
+        'month_of' => 'November-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -65109,6 +66542,7 @@ return array (
       array (
         'bill_no' => 'SA 598',
         'bill_date' => '2023-10-29',
+        'month_of' => 'October-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -65134,6 +66568,7 @@ return array (
       array (
         'bill_no' => 'SA 710',
         'bill_date' => '2023-10-01',
+        'month_of' => 'October-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -65152,6 +66587,7 @@ return array (
       array (
         'bill_no' => 'SA 458',
         'bill_date' => '2023-10-09',
+        'month_of' => 'October-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -65198,6 +66634,7 @@ return array (
       array (
         'bill_no' => 'SA 534',
         'bill_date' => '2023-10-01',
+        'month_of' => 'October-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -65230,6 +66667,7 @@ return array (
       array (
         'bill_no' => 'SA 296',
         'bill_date' => '2023-09-16',
+        'month_of' => 'September-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -65297,6 +66735,7 @@ return array (
       array (
         'bill_no' => 'SA 348',
         'bill_date' => '2023-09-01',
+        'month_of' => 'September-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -65329,6 +66768,7 @@ return array (
       array (
         'bill_no' => 'SA 230',
         'bill_date' => '2023-09-06',
+        'month_of' => 'September-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -65368,6 +66808,7 @@ return array (
       array (
         'bill_no' => 'SA 263',
         'bill_date' => '2023-09-01',
+        'month_of' => 'September-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -65386,6 +66827,7 @@ return array (
       array (
         'bill_no' => '10222',
         'bill_date' => '2023-08-21',
+        'month_of' => 'August-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -65425,6 +66867,7 @@ return array (
       array (
         'bill_no' => 'SA 8',
         'bill_date' => '2023-08-01',
+        'month_of' => 'August-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -65471,6 +66914,7 @@ return array (
       array (
         'bill_no' => 'SA 10',
         'bill_date' => '2023-08-01',
+        'month_of' => 'August-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -65489,6 +66933,7 @@ return array (
       array (
         'bill_no' => 'SA 2126',
         'bill_date' => '2023-07-31',
+        'month_of' => 'July-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -65521,6 +66966,7 @@ return array (
       array (
         'bill_no' => 'SA 2625',
         'bill_date' => '2023-07-01',
+        'month_of' => 'July-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -65546,6 +66992,7 @@ return array (
       array (
         'bill_no' => 'SA 2071',
         'bill_date' => '2023-07-23',
+        'month_of' => 'July-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -65648,6 +67095,7 @@ return array (
       array (
         'bill_no' => 'SA 2560',
         'bill_date' => '2023-07-01',
+        'month_of' => 'July-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -65687,6 +67135,7 @@ return array (
       array (
         'bill_no' => 'SA 1893',
         'bill_date' => '2023-06-20',
+        'month_of' => 'June-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -65726,6 +67175,7 @@ return array (
       array (
         'bill_no' => 'SA 2346',
         'bill_date' => '2023-06-01',
+        'month_of' => 'June-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -65751,6 +67201,7 @@ return array (
       array (
         'bill_no' => 'SA 1781',
         'bill_date' => '2023-06-04',
+        'month_of' => 'June-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -65797,6 +67248,7 @@ return array (
       array (
         'bill_no' => 'SA 2229',
         'bill_date' => '2023-06-01',
+        'month_of' => 'June-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -65822,6 +67274,7 @@ return array (
       array (
         'bill_no' => 'SA 1621',
         'bill_date' => '2023-05-08',
+        'month_of' => 'May-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -65875,6 +67328,7 @@ return array (
       array (
         'bill_no' => 'SA 2019',
         'bill_date' => '2023-05-01',
+        'month_of' => 'May-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -65893,6 +67347,7 @@ return array (
       array (
         'bill_no' => 'SA 1455',
         'bill_date' => '2023-04-06',
+        'month_of' => 'April-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -65953,6 +67408,7 @@ return array (
       array (
         'bill_no' => 'SA 1827',
         'bill_date' => '2023-04-01',
+        'month_of' => 'April-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -65978,6 +67434,7 @@ return array (
       array (
         'bill_no' => '18160',
         'bill_date' => '2023-03-21',
+        'month_of' => 'March-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -66038,6 +67495,7 @@ return array (
       array (
         'bill_no' => 'SA 1350',
         'bill_date' => '2023-03-16',
+        'month_of' => 'March-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -66091,6 +67549,7 @@ return array (
       array (
         'bill_no' => 'SA 1697',
         'bill_date' => '2023-03-01',
+        'month_of' => 'March-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -66116,6 +67575,7 @@ return array (
       array (
         'bill_no' => 'SA 1272',
         'bill_date' => '2023-03-01',
+        'month_of' => 'March-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -66183,6 +67643,7 @@ return array (
       array (
         'bill_no' => 'SA 1604',
         'bill_date' => '2023-03-01',
+        'month_of' => 'March-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -66208,6 +67669,7 @@ return array (
       array (
         'bill_no' => 'SA 1122',
         'bill_date' => '2023-02-04',
+        'month_of' => 'February-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -66254,6 +67716,7 @@ return array (
       array (
         'bill_no' => 'SA 1418',
         'bill_date' => '2023-02-01',
+        'month_of' => 'February-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -66272,6 +67735,7 @@ return array (
       array (
         'bill_no' => '18130',
         'bill_date' => '2023-01-18',
+        'month_of' => 'January-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -66304,6 +67768,7 @@ return array (
       array (
         'bill_no' => '18131',
         'bill_date' => '2023-01-28',
+        'month_of' => 'January-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -66336,6 +67801,7 @@ return array (
       array (
         'bill_no' => 'SA 959',
         'bill_date' => '2023-01-02',
+        'month_of' => 'January-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -66382,6 +67848,7 @@ return array (
       array (
         'bill_no' => 'SA 1197',
         'bill_date' => '2023-01-01',
+        'month_of' => 'January-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -66400,6 +67867,7 @@ return array (
       array (
         'bill_no' => 'SA 777',
         'bill_date' => '2022-12-03',
+        'month_of' => 'December-2022',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -66453,6 +67921,7 @@ return array (
       array (
         'bill_no' => 'SA 979',
         'bill_date' => '2022-12-03',
+        'month_of' => 'December-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -66485,6 +67954,7 @@ return array (
       array (
         'bill_no' => 'SA 552',
         'bill_date' => '2022-10-31',
+        'month_of' => 'October-2022',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -66524,6 +67994,7 @@ return array (
       array (
         'bill_no' => 'SA 704',
         'bill_date' => '2022-10-31',
+        'month_of' => 'October-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -66542,6 +68013,7 @@ return array (
       array (
         'bill_no' => 'SA 394',
         'bill_date' => '2022-10-05',
+        'month_of' => 'October-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -66581,6 +68053,7 @@ return array (
       array (
         'bill_no' => 'SA 507',
         'bill_date' => '2022-10-05',
+        'month_of' => 'October-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -66606,6 +68079,7 @@ return array (
       array (
         'bill_no' => 'SA 206',
         'bill_date' => '2022-09-03',
+        'month_of' => 'September-2022',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -66645,6 +68119,7 @@ return array (
       array (
         'bill_no' => 'SA 262',
         'bill_date' => '2022-09-03',
+        'month_of' => 'September-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -66663,6 +68138,7 @@ return array (
       array (
         'bill_no' => 'SA 257',
         'bill_date' => '2022-09-17',
+        'month_of' => 'September-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -66695,6 +68171,7 @@ return array (
       array (
         'bill_no' => 'SA 314',
         'bill_date' => '2022-09-17',
+        'month_of' => 'September-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -66720,6 +68197,7 @@ return array (
       array (
         'bill_no' => '7557',
         'bill_date' => '2022-09-07',
+        'month_of' => 'September-2022',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -66738,6 +68216,7 @@ return array (
       array (
         'bill_no' => '9909',
         'bill_date' => '2022-09-28',
+        'month_of' => 'September-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -66756,6 +68235,7 @@ return array (
       array (
         'bill_no' => 'SA 14',
         'bill_date' => '2022-08-03',
+        'month_of' => 'August-2022',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -66774,6 +68254,7 @@ return array (
       array (
         'bill_no' => 'SA 19',
         'bill_date' => '2022-08-03',
+        'month_of' => 'August-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -66799,6 +68280,7 @@ return array (
       array (
         'bill_no' => 'SA 63',
         'bill_date' => '2022-08-09',
+        'month_of' => 'August-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -66838,6 +68320,7 @@ return array (
       array (
         'bill_no' => 'SA 72',
         'bill_date' => '2022-08-09',
+        'month_of' => 'August-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -66863,6 +68346,7 @@ return array (
       array (
         'bill_no' => 'SA 154',
         'bill_date' => '2022-08-22',
+        'month_of' => 'August-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -66881,6 +68365,7 @@ return array (
       array (
         'bill_no' => 'SA 186',
         'bill_date' => '2022-08-22',
+        'month_of' => 'August-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -66905,6 +68390,7 @@ return array (
       array (
         'bill_no' => 'Bill # 76233',
         'bill_date' => '2026-06-10',
+        'month_of' => 'June-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -67007,6 +68493,7 @@ return array (
       array (
         'bill_no' => 'Bill # 76110',
         'bill_date' => '2026-05-23',
+        'month_of' => 'May-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -67032,6 +68519,7 @@ return array (
       array (
         'bill_no' => 'Bill # 76042',
         'bill_date' => '2026-05-12',
+        'month_of' => 'May-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -67071,6 +68559,7 @@ return array (
       array (
         'bill_no' => '2825',
         'bill_date' => '2026-05-07',
+        'month_of' => 'May-2026',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -67089,6 +68578,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75960',
         'bill_date' => '2026-05-04',
+        'month_of' => 'May-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -67142,6 +68632,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75879',
         'bill_date' => '2026-04-28',
+        'month_of' => 'April-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -67181,6 +68672,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75812',
         'bill_date' => '2026-04-19',
+        'month_of' => 'April-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -67248,6 +68740,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75422',
         'bill_date' => '2026-04-15',
+        'month_of' => 'April-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -67343,6 +68836,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75604',
         'bill_date' => '2026-04-06',
+        'month_of' => 'April-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -67431,6 +68925,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75602',
         'bill_date' => '2026-03-17',
+        'month_of' => 'March-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -67470,6 +68965,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75549',
         'bill_date' => '2026-03-04',
+        'month_of' => 'March-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -67523,6 +69019,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75375',
         'bill_date' => '2026-02-25',
+        'month_of' => 'February-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -67555,6 +69052,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75047',
         'bill_date' => '2026-02-08',
+        'month_of' => 'February-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -67601,6 +69099,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75242',
         'bill_date' => '2026-02-05',
+        'month_of' => 'February-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -67654,6 +69153,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75040',
         'bill_date' => '2026-01-24',
+        'month_of' => 'January-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -67693,6 +69193,7 @@ return array (
       array (
         'bill_no' => 'Bill # 74950',
         'bill_date' => '2026-01-03',
+        'month_of' => 'January-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -67760,6 +69261,7 @@ return array (
       array (
         'bill_no' => 'Bill # 74890',
         'bill_date' => '2025-12-27',
+        'month_of' => 'December-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -67806,6 +69308,7 @@ return array (
       array (
         'bill_no' => 'Bill # 74584',
         'bill_date' => '2025-12-14',
+        'month_of' => 'December-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -67922,6 +69425,7 @@ return array (
       array (
         'bill_no' => 'Bill # 74251',
         'bill_date' => '2025-12-03',
+        'month_of' => 'December-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -67947,6 +69451,7 @@ return array (
       array (
         'bill_no' => 'Bill # 74446',
         'bill_date' => '2025-11-22',
+        'month_of' => 'November-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -68007,6 +69512,7 @@ return array (
       array (
         'bill_no' => 'Bill # 73913',
         'bill_date' => '2025-10-30',
+        'month_of' => 'October-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -68116,6 +69622,7 @@ return array (
       array (
         'bill_no' => '736',
         'bill_date' => '2025-10-21',
+        'month_of' => 'October-2025',
         'workshop_name' => 'Palash Car A/C Centre',
         'paid_by' => 'company',
         'items' => 
@@ -68183,6 +69690,7 @@ return array (
       array (
         'bill_no' => '13902',
         'bill_date' => '2025-09-27',
+        'month_of' => 'September-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -68236,6 +69744,7 @@ return array (
       array (
         'bill_no' => '569',
         'bill_date' => '2025-09-24',
+        'month_of' => 'September-2025',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -68254,6 +69763,7 @@ return array (
       array (
         'bill_no' => 'Bill # 73661',
         'bill_date' => '2025-09-07',
+        'month_of' => 'September-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -68342,6 +69852,7 @@ return array (
       array (
         'bill_no' => 'Bill # 73306',
         'bill_date' => '2025-08-02',
+        'month_of' => 'August-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -68388,6 +69899,7 @@ return array (
       array (
         'bill_no' => '1346',
         'bill_date' => '2025-07-31',
+        'month_of' => 'July-2025',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -68406,6 +69918,7 @@ return array (
       array (
         'bill_no' => '1473',
         'bill_date' => '2025-07-15',
+        'month_of' => 'July-2025',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -68424,6 +69937,7 @@ return array (
       array (
         'bill_no' => 'Bill # 72918',
         'bill_date' => '2025-07-06',
+        'month_of' => 'July-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -68547,6 +70061,7 @@ return array (
       array (
         'bill_no' => 'Bill # 72763',
         'bill_date' => '2025-06-04',
+        'month_of' => 'June-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -68621,6 +70136,7 @@ return array (
       array (
         'bill_no' => 'Bill # 72679',
         'bill_date' => '2025-05-31',
+        'month_of' => 'May-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -68667,6 +70183,7 @@ return array (
       array (
         'bill_no' => 'Bill # 72445',
         'bill_date' => '2025-05-07',
+        'month_of' => 'May-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -68706,6 +70223,7 @@ return array (
       array (
         'bill_no' => 'Bill # 72331',
         'bill_date' => '2025-04-30',
+        'month_of' => 'April-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -68787,6 +70305,7 @@ return array (
       array (
         'bill_no' => 'Bill # 72217',
         'bill_date' => '2025-04-08',
+        'month_of' => 'April-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -68840,6 +70359,7 @@ return array (
       array (
         'bill_no' => '788',
         'bill_date' => '2025-03-19',
+        'month_of' => 'March-2025',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -68858,6 +70378,7 @@ return array (
       array (
         'bill_no' => 'Bill # 72033',
         'bill_date' => '2025-03-16',
+        'month_of' => 'March-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -68918,6 +70439,7 @@ return array (
       array (
         'bill_no' => 'Bill # 71689',
         'bill_date' => '2025-02-09',
+        'month_of' => 'February-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -68971,6 +70493,7 @@ return array (
       array (
         'bill_no' => 'Bill # 71297',
         'bill_date' => '2025-01-27',
+        'month_of' => 'January-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -69003,6 +70526,7 @@ return array (
       array (
         'bill_no' => 'Bill # 71579',
         'bill_date' => '2025-01-27',
+        'month_of' => 'January-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -69035,6 +70559,7 @@ return array (
       array (
         'bill_no' => 'Bill # 71180',
         'bill_date' => '2024-12-29',
+        'month_of' => 'December-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -69081,6 +70606,7 @@ return array (
       array (
         'bill_no' => 'Bill No # 70979',
         'bill_date' => '2024-12-23',
+        'month_of' => 'December-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -69197,6 +70723,7 @@ return array (
       array (
         'bill_no' => '13302',
         'bill_date' => '2024-11-16',
+        'month_of' => 'November-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -69222,6 +70749,7 @@ return array (
       array (
         'bill_no' => 'SA 563',
         'bill_date' => '2024-11-13',
+        'month_of' => 'November-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -69289,6 +70817,7 @@ return array (
       array (
         'bill_no' => 'SA 822',
         'bill_date' => '2024-11-01',
+        'month_of' => 'November-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -69321,6 +70850,7 @@ return array (
       array (
         'bill_no' => 'SA 512',
         'bill_date' => '2024-11-06',
+        'month_of' => 'November-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -69360,6 +70890,7 @@ return array (
       array (
         'bill_no' => 'SA 770',
         'bill_date' => '2024-11-01',
+        'month_of' => 'November-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -69385,6 +70916,7 @@ return array (
       array (
         'bill_no' => 'SA 374',
         'bill_date' => '2024-10-13',
+        'month_of' => 'October-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -69452,6 +70984,7 @@ return array (
       array (
         'bill_no' => 'SA 543',
         'bill_date' => '2024-10-01',
+        'month_of' => 'October-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -69498,6 +71031,7 @@ return array (
       array (
         'bill_no' => 'SA 221',
         'bill_date' => '2024-09-16',
+        'month_of' => 'September-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -69537,6 +71071,7 @@ return array (
       array (
         'bill_no' => 'SA 324',
         'bill_date' => '2024-09-01',
+        'month_of' => 'September-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -69576,6 +71111,7 @@ return array (
       array (
         'bill_no' => 'SA 208',
         'bill_date' => '2024-09-14',
+        'month_of' => 'September-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -69636,6 +71172,7 @@ return array (
       array (
         'bill_no' => 'SA 310',
         'bill_date' => '2024-09-01',
+        'month_of' => 'September-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -69696,6 +71233,7 @@ return array (
       array (
         'bill_no' => 'SA 40',
         'bill_date' => '2024-08-14',
+        'month_of' => 'August-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -69749,6 +71287,7 @@ return array (
       array (
         'bill_no' => 'SA 59',
         'bill_date' => '2024-08-01',
+        'month_of' => 'August-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -69774,6 +71313,7 @@ return array (
       array (
         'bill_no' => 'SA 2140',
         'bill_date' => '2024-07-18',
+        'month_of' => 'July-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -69813,6 +71353,7 @@ return array (
       array (
         'bill_no' => 'SA 2705',
         'bill_date' => '2024-07-01',
+        'month_of' => 'July-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -69852,6 +71393,7 @@ return array (
       array (
         'bill_no' => 'SA 2101',
         'bill_date' => '2024-07-13',
+        'month_of' => 'July-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -69870,6 +71412,7 @@ return array (
       array (
         'bill_no' => 'SA 2651',
         'bill_date' => '2024-07-01',
+        'month_of' => 'July-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -69888,6 +71431,7 @@ return array (
       array (
         'bill_no' => 'SA 2095',
         'bill_date' => '2024-07-11',
+        'month_of' => 'July-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -69927,6 +71471,7 @@ return array (
       array (
         'bill_no' => 'SA 2642',
         'bill_date' => '2024-07-01',
+        'month_of' => 'July-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -69973,6 +71518,7 @@ return array (
       array (
         'bill_no' => 'SA 2051',
         'bill_date' => '2024-07-06',
+        'month_of' => 'July-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -70005,6 +71551,7 @@ return array (
       array (
         'bill_no' => 'SA 2591',
         'bill_date' => '2024-07-01',
+        'month_of' => 'July-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -70023,6 +71570,7 @@ return array (
       array (
         'bill_no' => 'SA 1836',
         'bill_date' => '2024-05-22',
+        'month_of' => 'May-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -70076,6 +71624,7 @@ return array (
       array (
         'bill_no' => 'SA 2281',
         'bill_date' => '2024-05-01',
+        'month_of' => 'May-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -70108,6 +71657,7 @@ return array (
       array (
         'bill_no' => 'SA 1668',
         'bill_date' => '2024-04-27',
+        'month_of' => 'April-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -70126,6 +71676,7 @@ return array (
       array (
         'bill_no' => 'SA',
         'bill_date' => '2024-04-01',
+        'month_of' => 'April-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -70144,6 +71695,7 @@ return array (
       array (
         'bill_no' => 'SA 1624',
         'bill_date' => '2024-04-21',
+        'month_of' => 'April-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -70190,6 +71742,7 @@ return array (
       array (
         'bill_no' => 'SA 2034',
         'bill_date' => '2024-04-01',
+        'month_of' => 'April-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -70215,6 +71768,7 @@ return array (
       array (
         'bill_no' => 'SA 1573',
         'bill_date' => '2024-04-06',
+        'month_of' => 'April-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -70247,6 +71801,7 @@ return array (
       array (
         'bill_no' => 'SA 1954',
         'bill_date' => '2024-04-01',
+        'month_of' => 'April-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -70272,6 +71827,7 @@ return array (
       array (
         'bill_no' => 'SA 1348',
         'bill_date' => '2024-03-05',
+        'month_of' => 'March-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -70297,6 +71853,7 @@ return array (
       array (
         'bill_no' => 'SA 1682',
         'bill_date' => '2024-03-01',
+        'month_of' => 'March-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -70315,6 +71872,7 @@ return array (
       array (
         'bill_no' => '11702',
         'bill_date' => '2024-02-28',
+        'month_of' => 'February-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -70382,6 +71940,7 @@ return array (
       array (
         'bill_no' => '11701',
         'bill_date' => '2024-02-28',
+        'month_of' => 'February-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -70505,6 +72064,7 @@ return array (
       array (
         'bill_no' => 'SA 1255',
         'bill_date' => '2024-02-20',
+        'month_of' => 'February-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -70544,6 +72104,7 @@ return array (
       array (
         'bill_no' => 'SA 1551',
         'bill_date' => '2024-02-01',
+        'month_of' => 'February-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -70569,6 +72130,7 @@ return array (
       array (
         'bill_no' => 'SA 1007',
         'bill_date' => '2024-01-10',
+        'month_of' => 'January-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -70622,6 +72184,7 @@ return array (
       array (
         'bill_no' => 'SA 1222',
         'bill_date' => '2024-01-01',
+        'month_of' => 'January-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -70661,6 +72224,7 @@ return array (
       array (
         'bill_no' => '2323',
         'bill_date' => '2023-12-23',
+        'month_of' => 'December-2023',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -70679,6 +72243,7 @@ return array (
       array (
         'bill_no' => 'SA 691',
         'bill_date' => '2023-11-20',
+        'month_of' => 'November-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -70837,13 +72402,98 @@ return array (
             'unit' => NULL,
             'amount' => 3710.0,
           ),
+          22 => 
+          array (
+            'item_name' => 'Door Pad - New',
+            'quantity' => NULL,
+            'unit' => NULL,
+            'amount' => 8268.0,
+          ),
+          23 => 
+          array (
+            'item_name' => 'Rain Shet',
+            'quantity' => NULL,
+            'unit' => NULL,
+            'amount' => 2332.0,
+          ),
+          24 => 
+          array (
+            'item_name' => 'Wheel Round Met - Recon',
+            'quantity' => NULL,
+            'unit' => NULL,
+            'amount' => 3286.0,
+          ),
+          25 => 
+          array (
+            'item_name' => 'Side Light All',
+            'quantity' => NULL,
+            'unit' => NULL,
+            'amount' => 848.0,
+          ),
+          26 => 
+          array (
+            'item_name' => 'Back Light',
+            'quantity' => NULL,
+            'unit' => NULL,
+            'amount' => 3816.0,
+          ),
+          27 => 
+          array (
+            'item_name' => 'Wiper Water Nob - Recon',
+            'quantity' => NULL,
+            'unit' => NULL,
+            'amount' => 795.0,
+          ),
+          28 => 
+          array (
+            'item_name' => 'Seat Belt - Recon',
+            'quantity' => NULL,
+            'unit' => NULL,
+            'amount' => 2544.0,
+          ),
+          29 => 
+          array (
+            'item_name' => 'Silencer Box - All',
+            'quantity' => NULL,
+            'unit' => NULL,
+            'amount' => 8480.0,
+          ),
+          30 => 
+          array (
+            'item_name' => 'Power Pump - Recon',
+            'quantity' => NULL,
+            'unit' => NULL,
+            'amount' => 7420.0,
+          ),
+          31 => 
+          array (
+            'item_name' => 'Petron ATF DII',
+            'quantity' => NULL,
+            'unit' => NULL,
+            'amount' => 318.0,
+          ),
+          32 => 
+          array (
+            'item_name' => 'Cylincer Mounting',
+            'quantity' => NULL,
+            'unit' => NULL,
+            'amount' => 954.0,
+          ),
+          33 => 
+          array (
+            'item_name' => 'Silencer Coller',
+            'quantity' => NULL,
+            'unit' => NULL,
+            'amount' => 212.0,
+          ),
         ),
-        'total_amount' => 52670.0,
+        'total_amount' => 91943.0,
       ),
       80 => 
       array (
         'bill_no' => 'SA 839',
         'bill_date' => '2023-11-01',
+        'month_of' => 'November-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -70874,103 +72524,9 @@ return array (
       ),
       81 => 
       array (
-        'bill_no' => 'SA 691',
-        'bill_date' => '2023-11-20',
-        'workshop_name' => 'N.Islam Automobiles',
-        'paid_by' => 'company',
-        'items' => 
-        array (
-          0 => 
-          array (
-            'item_name' => 'Door Pad - New',
-            'quantity' => NULL,
-            'unit' => NULL,
-            'amount' => 8268.0,
-          ),
-          1 => 
-          array (
-            'item_name' => 'Rain Shet',
-            'quantity' => NULL,
-            'unit' => NULL,
-            'amount' => 2332.0,
-          ),
-          2 => 
-          array (
-            'item_name' => 'Wheel Round Met - Recon',
-            'quantity' => NULL,
-            'unit' => NULL,
-            'amount' => 3286.0,
-          ),
-          3 => 
-          array (
-            'item_name' => 'Side Light All',
-            'quantity' => NULL,
-            'unit' => NULL,
-            'amount' => 848.0,
-          ),
-          4 => 
-          array (
-            'item_name' => 'Back Light',
-            'quantity' => NULL,
-            'unit' => NULL,
-            'amount' => 3816.0,
-          ),
-          5 => 
-          array (
-            'item_name' => 'Wiper Water Nob - Recon',
-            'quantity' => NULL,
-            'unit' => NULL,
-            'amount' => 795.0,
-          ),
-          6 => 
-          array (
-            'item_name' => 'Seat Belt - Recon',
-            'quantity' => NULL,
-            'unit' => NULL,
-            'amount' => 2544.0,
-          ),
-          7 => 
-          array (
-            'item_name' => 'Silencer Box - All',
-            'quantity' => NULL,
-            'unit' => NULL,
-            'amount' => 8480.0,
-          ),
-          8 => 
-          array (
-            'item_name' => 'Power Pump - Recon',
-            'quantity' => NULL,
-            'unit' => NULL,
-            'amount' => 7420.0,
-          ),
-          9 => 
-          array (
-            'item_name' => 'Petron ATF DII',
-            'quantity' => NULL,
-            'unit' => NULL,
-            'amount' => 318.0,
-          ),
-          10 => 
-          array (
-            'item_name' => 'Cylincer Mounting',
-            'quantity' => NULL,
-            'unit' => NULL,
-            'amount' => 954.0,
-          ),
-          11 => 
-          array (
-            'item_name' => 'Silencer Coller',
-            'quantity' => NULL,
-            'unit' => NULL,
-            'amount' => 212.0,
-          ),
-        ),
-        'total_amount' => 39273.0,
-      ),
-      82 => 
-      array (
         'bill_no' => 'SA 835',
         'bill_date' => '2023-11-01',
+        'month_of' => 'November-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -70999,10 +72555,11 @@ return array (
         ),
         'total_amount' => 43990.0,
       ),
-      83 => 
+      82 => 
       array (
         'bill_no' => 'SA 679',
         'bill_date' => '2023-11-18',
+        'month_of' => 'November-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -71031,10 +72588,11 @@ return array (
         ),
         'total_amount' => 3922.0,
       ),
-      84 => 
+      83 => 
       array (
         'bill_no' => 'SA 823',
         'bill_date' => '2023-11-01',
+        'month_of' => 'November-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -71049,10 +72607,11 @@ return array (
         ),
         'total_amount' => 424.0,
       ),
-      85 => 
+      84 => 
       array (
         'bill_no' => '2566',
         'bill_date' => '2023-09-16',
+        'month_of' => 'September-2023',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -71067,10 +72626,11 @@ return array (
         ),
         'total_amount' => 7000.0,
       ),
-      86 => 
+      85 => 
       array (
         'bill_no' => 'SA 248',
         'bill_date' => '2023-09-09',
+        'month_of' => 'September-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -71127,10 +72687,11 @@ return array (
         ),
         'total_amount' => 6940.0,
       ),
-      87 => 
+      86 => 
       array (
         'bill_no' => 'SA 285',
         'bill_date' => '2023-09-01',
+        'month_of' => 'September-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -71166,10 +72727,11 @@ return array (
         ),
         'total_amount' => 2014.0,
       ),
-      88 => 
+      87 => 
       array (
         'bill_no' => '10231',
         'bill_date' => '2023-09-04',
+        'month_of' => 'September-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -71198,10 +72760,11 @@ return array (
         ),
         'total_amount' => 4100.0,
       ),
-      89 => 
+      88 => 
       array (
         'bill_no' => '2284',
         'bill_date' => '2023-08-22',
+        'month_of' => 'August-2023',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -71216,10 +72779,11 @@ return array (
         ),
         'total_amount' => 7000.0,
       ),
-      90 => 
+      89 => 
       array (
         'bill_no' => '1469',
         'bill_date' => '2023-08-05',
+        'month_of' => 'August-2023',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -71234,10 +72798,11 @@ return array (
         ),
         'total_amount' => 7500.0,
       ),
-      91 => 
+      90 => 
       array (
         'bill_no' => 'SA 2103',
         'bill_date' => '2023-07-29',
+        'month_of' => 'July-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -71266,10 +72831,11 @@ return array (
         ),
         'total_amount' => 3922.0,
       ),
-      92 => 
+      91 => 
       array (
         'bill_no' => 'SA 2600',
         'bill_date' => '2023-07-01',
+        'month_of' => 'July-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -71284,10 +72850,11 @@ return array (
         ),
         'total_amount' => 212.0,
       ),
-      93 => 
+      92 => 
       array (
         'bill_no' => '118',
         'bill_date' => '2023-07-17',
+        'month_of' => 'July-2023',
         'workshop_name' => 'Palash Car A/C Centre',
         'paid_by' => 'company',
         'items' => 
@@ -71351,10 +72918,11 @@ return array (
         ),
         'total_amount' => 10500.0,
       ),
-      94 => 
+      93 => 
       array (
         'bill_no' => '18195',
         'bill_date' => '2023-07-16',
+        'month_of' => 'July-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -71467,10 +73035,11 @@ return array (
         ),
         'total_amount' => 35500.0,
       ),
-      95 => 
+      94 => 
       array (
         'bill_no' => 'SA 1981',
         'bill_date' => '2023-07-08',
+        'month_of' => 'July-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -71506,10 +73075,11 @@ return array (
         ),
         'total_amount' => 4558.0,
       ),
-      96 => 
+      95 => 
       array (
         'bill_no' => 'SA 2454',
         'bill_date' => '2023-07-01',
+        'month_of' => 'July-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -71545,10 +73115,11 @@ return array (
         ),
         'total_amount' => 3074.0,
       ),
-      97 => 
+      96 => 
       array (
         'bill_no' => 'SA 1789',
         'bill_date' => '2023-06-05',
+        'month_of' => 'June-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -71570,10 +73141,11 @@ return array (
         ),
         'total_amount' => 2490.0,
       ),
-      98 => 
+      97 => 
       array (
         'bill_no' => 'SA 2236',
         'bill_date' => '2023-06-01',
+        'month_of' => 'June-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -71588,10 +73160,11 @@ return array (
         ),
         'total_amount' => 530.0,
       ),
-      99 => 
+      98 => 
       array (
         'bill_no' => 'SA 2018',
         'bill_date' => '2023-05-08',
+        'month_of' => 'May-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -71606,10 +73179,11 @@ return array (
         ),
         'total_amount' => 318.0,
       ),
-      100 => 
+      99 => 
       array (
         'bill_no' => 'SA 1580',
         'bill_date' => '2023-04-29',
+        'month_of' => 'April-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -71659,10 +73233,11 @@ return array (
         ),
         'total_amount' => 12296.0,
       ),
-      101 => 
+      100 => 
       array (
         'bill_no' => 'SA 1962',
         'bill_date' => '2023-04-01',
+        'month_of' => 'April-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -71691,10 +73266,11 @@ return array (
         ),
         'total_amount' => 1908.0,
       ),
-      102 => 
+      101 => 
       array (
         'bill_no' => 'SA 1422',
         'bill_date' => '2023-04-01',
+        'month_of' => 'April-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -71716,10 +73292,11 @@ return array (
         ),
         'total_amount' => 742.0,
       ),
-      103 => 
+      102 => 
       array (
         'bill_no' => 'SA 1796',
         'bill_date' => '2023-04-01',
+        'month_of' => 'April-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -71741,10 +73318,11 @@ return array (
         ),
         'total_amount' => 1166.0,
       ),
-      104 => 
+      103 => 
       array (
         'bill_no' => 'SA 1691',
         'bill_date' => '2023-03-14',
+        'month_of' => 'March-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -71759,10 +73337,11 @@ return array (
         ),
         'total_amount' => 1590.0,
       ),
-      105 => 
+      104 => 
       array (
         'bill_no' => 'SA 1203',
         'bill_date' => '2023-02-18',
+        'month_of' => 'February-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -71798,10 +73377,11 @@ return array (
         ),
         'total_amount' => 4302.0,
       ),
-      106 => 
+      105 => 
       array (
         'bill_no' => 'SA 1519',
         'bill_date' => '2023-02-01',
+        'month_of' => 'February-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -71823,10 +73403,11 @@ return array (
         ),
         'total_amount' => 530.0,
       ),
-      107 => 
+      106 => 
       array (
         'bill_no' => 'SA 1024',
         'bill_date' => '2023-01-14',
+        'month_of' => 'January-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -71869,10 +73450,11 @@ return array (
         ),
         'total_amount' => 8730.0,
       ),
-      108 => 
+      107 => 
       array (
         'bill_no' => 'SA 1289',
         'bill_date' => '2023-01-14',
+        'month_of' => 'January-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -71901,10 +73483,11 @@ return array (
         ),
         'total_amount' => 1484.0,
       ),
-      109 => 
+      108 => 
       array (
         'bill_no' => 'SA 953',
         'bill_date' => '2022-12-30',
+        'month_of' => 'December-2022',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -71933,10 +73516,11 @@ return array (
         ),
         'total_amount' => 3922.0,
       ),
-      110 => 
+      109 => 
       array (
         'bill_no' => 'SA 1181',
         'bill_date' => '2022-12-30',
+        'month_of' => 'December-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -71951,10 +73535,11 @@ return array (
         ),
         'total_amount' => 212.0,
       ),
-      111 => 
+      110 => 
       array (
         'bill_no' => 'SA 778',
         'bill_date' => '2022-12-03',
+        'month_of' => 'December-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -72032,10 +73617,11 @@ return array (
         ),
         'total_amount' => 18416.0,
       ),
-      112 => 
+      111 => 
       array (
         'bill_no' => 'SA 980',
         'bill_date' => '2022-12-03',
+        'month_of' => 'December-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -72078,10 +73664,11 @@ return array (
         ),
         'total_amount' => 10600.0,
       ),
-      113 => 
+      112 => 
       array (
         'bill_no' => 'SA 637',
         'bill_date' => '2022-11-09',
+        'month_of' => 'November-2022',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -72117,10 +73704,11 @@ return array (
         ),
         'total_amount' => 4322.0,
       ),
-      114 => 
+      113 => 
       array (
         'bill_no' => 'SA 803',
         'bill_date' => '2022-11-09',
+        'month_of' => 'November-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -72135,10 +73723,11 @@ return array (
         ),
         'total_amount' => 212.0,
       ),
-      115 => 
+      114 => 
       array (
         'bill_no' => 'SA 592',
         'bill_date' => '2022-11-03',
+        'month_of' => 'November-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -72153,10 +73742,11 @@ return array (
         ),
         'total_amount' => 2125.0,
       ),
-      116 => 
+      115 => 
       array (
         'bill_no' => 'SA 746',
         'bill_date' => '2022-11-03',
+        'month_of' => 'November-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -72171,10 +73761,11 @@ return array (
         ),
         'total_amount' => 530.0,
       ),
-      117 => 
+      116 => 
       array (
         'bill_no' => 'SA 465',
         'bill_date' => '2022-10-17',
+        'month_of' => 'October-2022',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -72196,10 +73787,11 @@ return array (
         ),
         'total_amount' => 10500.0,
       ),
-      118 => 
+      117 => 
       array (
         'bill_no' => 'SA 609',
         'bill_date' => '2022-10-17',
+        'month_of' => 'October-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -72214,10 +73806,11 @@ return array (
         ),
         'total_amount' => 530.0,
       ),
-      119 => 
+      118 => 
       array (
         'bill_no' => 'SA 384',
         'bill_date' => '2022-10-03',
+        'month_of' => 'October-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -72232,10 +73825,11 @@ return array (
         ),
         'total_amount' => 212.0,
       ),
-      120 => 
+      119 => 
       array (
         'bill_no' => 'SA 491',
         'bill_date' => '2022-10-03',
+        'month_of' => 'October-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -72250,10 +73844,11 @@ return array (
         ),
         'total_amount' => 530.0,
       ),
-      121 => 
+      120 => 
       array (
         'bill_no' => 'SA 323',
         'bill_date' => '2022-09-24',
+        'month_of' => 'September-2022',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -72289,10 +73884,11 @@ return array (
         ),
         'total_amount' => 5568.0,
       ),
-      122 => 
+      121 => 
       array (
         'bill_no' => 'SA 415',
         'bill_date' => '2022-09-24',
+        'month_of' => 'September-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -72314,10 +73910,11 @@ return array (
         ),
         'total_amount' => 742.0,
       ),
-      123 => 
+      122 => 
       array (
         'bill_no' => '9231',
         'bill_date' => '2022-09-19',
+        'month_of' => 'September-2022',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -72332,10 +73929,11 @@ return array (
         ),
         'total_amount' => 5800.0,
       ),
-      124 => 
+      123 => 
       array (
         'bill_no' => 'SA 84',
         'bill_date' => '2022-08-11',
+        'month_of' => 'August-2022',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -72357,10 +73955,11 @@ return array (
         ),
         'total_amount' => 2120.0,
       ),
-      125 => 
+      124 => 
       array (
         'bill_no' => 'SA 98',
         'bill_date' => '2022-08-11',
+        'month_of' => 'August-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -72375,10 +73974,11 @@ return array (
         ),
         'total_amount' => 2120.0,
       ),
-      126 => 
+      125 => 
       array (
         'bill_no' => 'SA 124',
         'bill_date' => '2022-08-18',
+        'month_of' => 'August-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -72414,10 +74014,11 @@ return array (
         ),
         'total_amount' => 3964.0,
       ),
-      127 => 
+      126 => 
       array (
         'bill_no' => 'SA 148',
         'bill_date' => '2022-08-18',
+        'month_of' => 'August-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -72442,6 +74043,7 @@ return array (
       array (
         'bill_no' => '753',
         'bill_date' => '2026-03-15',
+        'month_of' => 'March-2026',
         'workshop_name' => 'Palash Car A/C Centre',
         'paid_by' => 'company',
         'items' => 
@@ -72474,6 +74076,7 @@ return array (
       array (
         'bill_no' => '13962',
         'bill_date' => '2026-01-22',
+        'month_of' => 'January-2026',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -72520,6 +74123,7 @@ return array (
       array (
         'bill_no' => '2522',
         'bill_date' => '2026-01-08',
+        'month_of' => 'January-2026',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -72538,6 +74142,7 @@ return array (
       array (
         'bill_no' => '459',
         'bill_date' => '2025-11-09',
+        'month_of' => 'November-2025',
         'workshop_name' => 'Habi Motors',
         'paid_by' => 'company',
         'items' => 
@@ -72563,6 +74168,7 @@ return array (
       array (
         'bill_no' => '13937',
         'bill_date' => '2025-11-09',
+        'month_of' => 'November-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -72588,6 +74194,7 @@ return array (
       array (
         'bill_no' => '13936',
         'bill_date' => '2025-11-09',
+        'month_of' => 'November-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -72711,6 +74318,7 @@ return array (
       array (
         'bill_no' => '13928',
         'bill_date' => '2025-11-03',
+        'month_of' => 'November-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -72729,6 +74337,7 @@ return array (
       array (
         'bill_no' => '1524',
         'bill_date' => '2025-10-05',
+        'month_of' => 'October-2025',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -72747,6 +74356,7 @@ return array (
       array (
         'bill_no' => '723',
         'bill_date' => '2025-09-06',
+        'month_of' => 'September-2025',
         'workshop_name' => 'Palash Car A/C Centre',
         'paid_by' => 'company',
         'items' => 
@@ -72786,6 +74396,7 @@ return array (
       array (
         'bill_no' => '13393',
         'bill_date' => '2025-09-06',
+        'month_of' => 'September-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -72825,6 +74436,7 @@ return array (
       array (
         'bill_no' => '13380',
         'bill_date' => '2025-08-10',
+        'month_of' => 'August-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -72920,6 +74532,7 @@ return array (
       array (
         'bill_no' => '17',
         'bill_date' => '2025-07-31',
+        'month_of' => 'July-2025',
         'workshop_name' => 'The Alamgir Automobile',
         'paid_by' => 'company',
         'items' => 
@@ -72987,6 +74600,7 @@ return array (
       array (
         'bill_no' => '14',
         'bill_date' => '2025-06-14',
+        'month_of' => 'June-2025',
         'workshop_name' => 'The Alamgir Automobile',
         'paid_by' => 'company',
         'items' => 
@@ -73075,6 +74689,7 @@ return array (
       array (
         'bill_no' => '7',
         'bill_date' => '2025-06-03',
+        'month_of' => 'June-2025',
         'workshop_name' => 'The Alamgir Automobile',
         'paid_by' => 'company',
         'items' => 
@@ -73114,6 +74729,7 @@ return array (
       array (
         'bill_no' => '2',
         'bill_date' => '2025-05-19',
+        'month_of' => 'May-2025',
         'workshop_name' => 'The Alamgir Automobile',
         'paid_by' => 'company',
         'items' => 
@@ -73223,6 +74839,7 @@ return array (
       array (
         'bill_no' => '178',
         'bill_date' => '2025-03-04',
+        'month_of' => 'March-2025',
         'workshop_name' => 'Palash Car A/C Centre',
         'paid_by' => 'company',
         'items' => 
@@ -73269,6 +74886,7 @@ return array (
       array (
         'bill_no' => '13334',
         'bill_date' => '2025-03-04',
+        'month_of' => 'March-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -73308,6 +74926,7 @@ return array (
       array (
         'bill_no' => '11789',
         'bill_date' => '2025-02-01',
+        'month_of' => 'February-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -73361,6 +74980,7 @@ return array (
       array (
         'bill_no' => '718',
         'bill_date' => '2024-11-16',
+        'month_of' => 'November-2024',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -73379,6 +74999,7 @@ return array (
       array (
         'bill_no' => '11789',
         'bill_date' => '2024-10-19',
+        'month_of' => 'October-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -73432,6 +75053,7 @@ return array (
       array (
         'bill_no' => '11762',
         'bill_date' => '2024-09-09',
+        'month_of' => 'September-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -73471,6 +75093,7 @@ return array (
       array (
         'bill_no' => '11734',
         'bill_date' => '2024-06-09',
+        'month_of' => 'June-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -73517,6 +75140,7 @@ return array (
       array (
         'bill_no' => '10290',
         'bill_date' => '2024-02-20',
+        'month_of' => 'February-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -73570,6 +75194,7 @@ return array (
       array (
         'bill_no' => '10274',
         'bill_date' => '2024-01-09',
+        'month_of' => 'January-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -73637,6 +75262,7 @@ return array (
       array (
         'bill_no' => '10251',
         'bill_date' => '2023-10-22',
+        'month_of' => 'October-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -73669,6 +75295,7 @@ return array (
       array (
         'bill_no' => '10239',
         'bill_date' => '2023-09-10',
+        'month_of' => 'September-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -73764,6 +75391,7 @@ return array (
       array (
         'bill_no' => '10203',
         'bill_date' => '2023-07-25',
+        'month_of' => 'July-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -73796,6 +75424,7 @@ return array (
       array (
         'bill_no' => '18190',
         'bill_date' => '2023-06-20',
+        'month_of' => 'June-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -73828,6 +75457,7 @@ return array (
       array (
         'bill_no' => '18184',
         'bill_date' => '2023-06-08',
+        'month_of' => 'June-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -73860,6 +75490,7 @@ return array (
       array (
         'bill_no' => '18182',
         'bill_date' => '2023-06-03',
+        'month_of' => 'June-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -73920,6 +75551,7 @@ return array (
       array (
         'bill_no' => '862',
         'bill_date' => '2023-03-11',
+        'month_of' => 'March-2023',
         'workshop_name' => 'Palash Car A/C Centre',
         'paid_by' => 'company',
         'items' => 
@@ -73980,6 +75612,7 @@ return array (
       array (
         'bill_no' => '18156',
         'bill_date' => '2023-03-11',
+        'month_of' => 'March-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -74012,6 +75645,7 @@ return array (
       array (
         'bill_no' => '18103',
         'bill_date' => '2022-11-12',
+        'month_of' => 'November-2022',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -74037,6 +75671,7 @@ return array (
       array (
         'bill_no' => '17845',
         'bill_date' => '2022-10-09',
+        'month_of' => 'October-2022',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -74069,6 +75704,7 @@ return array (
       array (
         'bill_no' => '16773',
         'bill_date' => '2022-09-17',
+        'month_of' => 'September-2022',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -74100,6 +75736,7 @@ return array (
       array (
         'bill_no' => '686',
         'bill_date' => '2026-01-18',
+        'month_of' => 'January-2026',
         'workshop_name' => 'Panama CNG Cinversion',
         'paid_by' => 'company',
         'items' => 
@@ -74118,6 +75755,7 @@ return array (
       array (
         'bill_no' => '529',
         'bill_date' => '2026-01-18',
+        'month_of' => 'January-2026',
         'workshop_name' => 'Ma Enginiaring Works',
         'paid_by' => 'company',
         'items' => 
@@ -74136,6 +75774,7 @@ return array (
       array (
         'bill_no' => '1592',
         'bill_date' => '2025-10-16',
+        'month_of' => 'October-2025',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -74154,6 +75793,7 @@ return array (
       array (
         'bill_no' => '1524',
         'bill_date' => '2025-10-05',
+        'month_of' => 'October-2025',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -74172,6 +75812,7 @@ return array (
       array (
         'bill_no' => '2471',
         'bill_date' => '2023-10-10',
+        'month_of' => 'October-2023',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -74190,6 +75831,7 @@ return array (
       array (
         'bill_no' => '2599',
         'bill_date' => '2023-09-18',
+        'month_of' => 'October-2023',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -74214,6 +75856,7 @@ return array (
       array (
         'bill_no' => '14815',
         'bill_date' => '2026-06-16',
+        'month_of' => 'June-2026',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -74239,6 +75882,7 @@ return array (
       array (
         'bill_no' => '14814',
         'bill_date' => '2026-06-16',
+        'month_of' => 'June-2026',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -74257,6 +75901,7 @@ return array (
       array (
         'bill_no' => '14810',
         'bill_date' => '2026-06-08',
+        'month_of' => 'June-2026',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -74275,6 +75920,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75569',
         'bill_date' => '2026-05-20',
+        'month_of' => 'May-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -74300,6 +75946,7 @@ return array (
       array (
         'bill_no' => 'Bill # 76133',
         'bill_date' => '2026-05-20',
+        'month_of' => 'May-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -74374,6 +76021,7 @@ return array (
       array (
         'bill_no' => '629',
         'bill_date' => '2026-05-16',
+        'month_of' => 'May-2026',
         'workshop_name' => 'Arif Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -74406,6 +76054,7 @@ return array (
       array (
         'bill_no' => '13995',
         'bill_date' => '2026-05-13',
+        'month_of' => 'May-2026',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -74424,6 +76073,7 @@ return array (
       array (
         'bill_no' => '620',
         'bill_date' => '2026-05-01',
+        'month_of' => 'May-2026',
         'workshop_name' => 'Arif Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -74512,6 +76162,7 @@ return array (
       array (
         'bill_no' => '13982',
         'bill_date' => '2026-04-13',
+        'month_of' => 'April-2026',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -74537,6 +76188,7 @@ return array (
       array (
         'bill_no' => '757',
         'bill_date' => '2026-03-30',
+        'month_of' => 'March-2026',
         'workshop_name' => 'Palash Car A/C Centre',
         'paid_by' => 'company',
         'items' => 
@@ -74590,6 +76242,7 @@ return array (
       array (
         'bill_no' => '41',
         'bill_date' => '2026-03-05',
+        'month_of' => 'March-2026',
         'workshop_name' => 'The Alamgir Automobile',
         'paid_by' => 'company',
         'items' => 
@@ -74671,6 +76324,7 @@ return array (
       array (
         'bill_no' => '36',
         'bill_date' => '2026-02-19',
+        'month_of' => 'February-2026',
         'workshop_name' => 'The Alamgir Automobile',
         'paid_by' => 'company',
         'items' => 
@@ -74766,6 +76420,7 @@ return array (
       array (
         'bill_no' => '13919',
         'bill_date' => '2025-10-25',
+        'month_of' => 'October-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -74826,6 +76481,7 @@ return array (
       array (
         'bill_no' => '13930',
         'bill_date' => '2025-10-04',
+        'month_of' => 'October-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -74851,6 +76507,7 @@ return array (
       array (
         'bill_no' => '501',
         'bill_date' => '2025-09-14',
+        'month_of' => 'September-2025',
         'workshop_name' => 'Soniya Tyre & Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -74883,6 +76540,7 @@ return array (
       array (
         'bill_no' => 'Bill # 73484',
         'bill_date' => '2025-09-10',
+        'month_of' => 'September-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -74908,6 +76566,7 @@ return array (
       array (
         'bill_no' => '13386',
         'bill_date' => '2025-08-17',
+        'month_of' => 'August-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -74961,6 +76620,7 @@ return array (
       array (
         'bill_no' => '18',
         'bill_date' => '2025-08-02',
+        'month_of' => 'August-2025',
         'workshop_name' => 'The Alamgir Automobile',
         'paid_by' => 'company',
         'items' => 
@@ -75000,6 +76660,7 @@ return array (
       array (
         'bill_no' => '13367',
         'bill_date' => '2025-06-19',
+        'month_of' => 'June-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -75046,6 +76707,7 @@ return array (
       array (
         'bill_no' => 'Bill # 72878',
         'bill_date' => '2025-06-18',
+        'month_of' => 'June-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -75106,6 +76768,7 @@ return array (
       array (
         'bill_no' => 'Bill # 72713',
         'bill_date' => '2025-05-27',
+        'month_of' => 'May-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -75131,6 +76794,7 @@ return array (
       array (
         'bill_no' => '13359',
         'bill_date' => '2025-05-23',
+        'month_of' => 'May-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -75170,6 +76834,7 @@ return array (
       array (
         'bill_no' => '701',
         'bill_date' => '2025-05-17',
+        'month_of' => 'May-2025',
         'workshop_name' => 'Palash Car A/C Centre',
         'paid_by' => 'company',
         'items' => 
@@ -75209,6 +76874,7 @@ return array (
       array (
         'bill_no' => '13356',
         'bill_date' => '2025-05-10',
+        'month_of' => 'May-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -75234,6 +76900,7 @@ return array (
       array (
         'bill_no' => '192',
         'bill_date' => '2025-05-10',
+        'month_of' => 'May-2025',
         'workshop_name' => 'Palash Car A/C Centre',
         'paid_by' => 'company',
         'items' => 
@@ -75259,6 +76926,7 @@ return array (
       array (
         'bill_no' => 'Bill # 72503',
         'bill_date' => '2025-05-07',
+        'month_of' => 'May-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -75291,6 +76959,7 @@ return array (
       array (
         'bill_no' => '13350',
         'bill_date' => '2025-04-12',
+        'month_of' => 'April-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -75323,6 +76992,7 @@ return array (
       array (
         'bill_no' => 'Bill # 72202',
         'bill_date' => '2025-04-06',
+        'month_of' => 'April-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -75348,6 +77018,7 @@ return array (
       array (
         'bill_no' => '13348',
         'bill_date' => '2025-03-29',
+        'month_of' => 'March-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -75373,6 +77044,7 @@ return array (
       array (
         'bill_no' => '393',
         'bill_date' => '2025-03-17',
+        'month_of' => 'March-2025',
         'workshop_name' => 'MALAK Enterprise',
         'paid_by' => 'company',
         'items' => 
@@ -75398,6 +77070,7 @@ return array (
       array (
         'bill_no' => '13344',
         'bill_date' => '2025-03-17',
+        'month_of' => 'March-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -75437,6 +77110,7 @@ return array (
       array (
         'bill_no' => '13320',
         'bill_date' => '2025-01-26',
+        'month_of' => 'January-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -75497,6 +77171,7 @@ return array (
       array (
         'bill_no' => '13309',
         'bill_date' => '2024-12-03',
+        'month_of' => 'December-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -75515,6 +77190,7 @@ return array (
       array (
         'bill_no' => '790',
         'bill_date' => '2024-11-30',
+        'month_of' => 'November-2024',
         'workshop_name' => 'Soniya Tyre & Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -75533,6 +77209,7 @@ return array (
       array (
         'bill_no' => '11797',
         'bill_date' => '2024-11-07',
+        'month_of' => 'November-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -75565,6 +77242,7 @@ return array (
       array (
         'bill_no' => 'SA 44',
         'bill_date' => '2024-08-14',
+        'month_of' => 'October-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -75618,13 +77296,35 @@ return array (
             'unit' => NULL,
             'amount' => 1144.0,
           ),
+          7 => 
+          array (
+            'item_name' => 'Bp Super Oil',
+            'quantity' => NULL,
+            'unit' => NULL,
+            'amount' => 3604.0,
+          ),
+          8 => 
+          array (
+            'item_name' => 'Oil Filter',
+            'quantity' => NULL,
+            'unit' => NULL,
+            'amount' => 424.0,
+          ),
+          9 => 
+          array (
+            'item_name' => 'Air Filter',
+            'quantity' => NULL,
+            'unit' => NULL,
+            'amount' => 212.0,
+          ),
         ),
-        'total_amount' => 12584.0,
+        'total_amount' => 16824.0,
       ),
       36 => 
       array (
         'bill_no' => 'SA 479',
         'bill_date' => '2024-10-01',
+        'month_of' => 'October-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -75657,6 +77357,7 @@ return array (
       array (
         'bill_no' => '574',
         'bill_date' => '2024-10-20',
+        'month_of' => 'October-2024',
         'workshop_name' => 'Shoid Auto Mobiles',
         'paid_by' => 'company',
         'items' => 
@@ -75675,6 +77376,7 @@ return array (
       array (
         'bill_no' => '11786',
         'bill_date' => '2024-10-17',
+        'month_of' => 'October-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -75700,6 +77402,7 @@ return array (
       array (
         'bill_no' => '11785',
         'bill_date' => '2024-10-12',
+        'month_of' => 'October-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -75781,6 +77484,7 @@ return array (
       array (
         'bill_no' => '11776',
         'bill_date' => '2024-10-02',
+        'month_of' => 'October-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -75799,6 +77503,7 @@ return array (
       array (
         'bill_no' => '460',
         'bill_date' => '2024-10-03',
+        'month_of' => 'October-2024',
         'workshop_name' => 'Soniya Tyre & Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -75817,6 +77522,7 @@ return array (
       array (
         'bill_no' => '143',
         'bill_date' => '2024-08-17',
+        'month_of' => 'August-2024',
         'workshop_name' => 'Soniya Tyre & Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -75833,40 +77539,9 @@ return array (
       ),
       43 => 
       array (
-        'bill_no' => 'SA 44',
-        'bill_date' => '2024-08-14',
-        'workshop_name' => 'N.Islam Automobiles',
-        'paid_by' => 'company',
-        'items' => 
-        array (
-          0 => 
-          array (
-            'item_name' => 'Bp Super Oil',
-            'quantity' => NULL,
-            'unit' => NULL,
-            'amount' => 3604.0,
-          ),
-          1 => 
-          array (
-            'item_name' => 'Oil Filter',
-            'quantity' => NULL,
-            'unit' => NULL,
-            'amount' => 424.0,
-          ),
-          2 => 
-          array (
-            'item_name' => 'Air Filter',
-            'quantity' => NULL,
-            'unit' => NULL,
-            'amount' => 212.0,
-          ),
-        ),
-        'total_amount' => 4240.0,
-      ),
-      44 => 
-      array (
         'bill_no' => 'SA 64',
         'bill_date' => '2024-08-01',
+        'month_of' => 'August-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -75888,10 +77563,11 @@ return array (
         ),
         'total_amount' => 848.0,
       ),
-      45 => 
+      44 => 
       array (
         'bill_no' => '63',
         'bill_date' => '2024-07-27',
+        'month_of' => 'July-2024',
         'workshop_name' => 'Soniya Tyre & Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -75906,10 +77582,11 @@ return array (
         ),
         'total_amount' => 7800.0,
       ),
-      46 => 
+      45 => 
       array (
         'bill_no' => '11740',
         'bill_date' => '2024-07-06',
+        'month_of' => 'July-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -75945,10 +77622,11 @@ return array (
         ),
         'total_amount' => 4850.0,
       ),
-      47 => 
+      46 => 
       array (
         'bill_no' => '11732',
         'bill_date' => '2024-06-04',
+        'month_of' => 'June-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -75991,10 +77669,11 @@ return array (
         ),
         'total_amount' => 3600.0,
       ),
-      48 => 
+      47 => 
       array (
         'bill_no' => '370',
         'bill_date' => '2024-05-02',
+        'month_of' => 'May-2024',
         'workshop_name' => 'Soniya Tyre & Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -76009,10 +77688,11 @@ return array (
         ),
         'total_amount' => 6500.0,
       ),
-      49 => 
+      48 => 
       array (
         'bill_no' => '11735',
         'bill_date' => '2024-05-01',
+        'month_of' => 'May-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -76027,10 +77707,11 @@ return array (
         ),
         'total_amount' => 5500.0,
       ),
-      50 => 
+      49 => 
       array (
         'bill_no' => '11722',
         'bill_date' => '2024-04-25',
+        'month_of' => 'April-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -76059,10 +77740,11 @@ return array (
         ),
         'total_amount' => 3000.0,
       ),
-      51 => 
+      50 => 
       array (
         'bill_no' => '146',
         'bill_date' => '2024-04-07',
+        'month_of' => 'April-2024',
         'workshop_name' => 'Palash Car A/C Centre',
         'paid_by' => 'company',
         'items' => 
@@ -76147,10 +77829,11 @@ return array (
         ),
         'total_amount' => 29000.0,
       ),
-      52 => 
+      51 => 
       array (
         'bill_no' => '11717',
         'bill_date' => '2024-04-06',
+        'month_of' => 'April-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -76214,10 +77897,11 @@ return array (
         ),
         'total_amount' => 10700.0,
       ),
-      53 => 
+      52 => 
       array (
         'bill_no' => '11705',
         'bill_date' => '2024-03-25',
+        'month_of' => 'March-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -76288,10 +77972,11 @@ return array (
         ),
         'total_amount' => 6550.0,
       ),
-      54 => 
+      53 => 
       array (
         'bill_no' => '10287',
         'bill_date' => '2024-02-16',
+        'month_of' => 'February-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -76348,10 +78033,11 @@ return array (
         ),
         'total_amount' => 6700.0,
       ),
-      55 => 
+      54 => 
       array (
         'bill_no' => '10286',
         'bill_date' => '2024-02-11',
+        'month_of' => 'February-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -76436,10 +78122,11 @@ return array (
         ),
         'total_amount' => 10670.0,
       ),
-      56 => 
+      55 => 
       array (
         'bill_no' => '10285',
         'bill_date' => '2024-02-03',
+        'month_of' => 'February-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -76468,10 +78155,11 @@ return array (
         ),
         'total_amount' => 3400.0,
       ),
-      57 => 
+      56 => 
       array (
         'bill_no' => '10271',
         'bill_date' => '2023-12-25',
+        'month_of' => 'December-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -76493,10 +78181,11 @@ return array (
         ),
         'total_amount' => 5400.0,
       ),
-      58 => 
+      57 => 
       array (
         'bill_no' => '10269',
         'bill_date' => '2023-12-12',
+        'month_of' => 'December-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -76518,10 +78207,11 @@ return array (
         ),
         'total_amount' => 1500.0,
       ),
-      59 => 
+      58 => 
       array (
         'bill_no' => '10267',
         'bill_date' => '2023-12-11',
+        'month_of' => 'November-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -76571,10 +78261,11 @@ return array (
         ),
         'total_amount' => 3600.0,
       ),
-      60 => 
+      59 => 
       array (
         'bill_no' => '10254',
         'bill_date' => '2023-10-25',
+        'month_of' => 'October-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -76624,10 +78315,11 @@ return array (
         ),
         'total_amount' => 25400.0,
       ),
-      61 => 
+      60 => 
       array (
         'bill_no' => '10235',
         'bill_date' => '2023-09-06',
+        'month_of' => 'September-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -76677,10 +78369,11 @@ return array (
         ),
         'total_amount' => 5150.0,
       ),
-      62 => 
+      61 => 
       array (
         'bill_no' => '125',
         'bill_date' => '2023-09-05',
+        'month_of' => 'September-2023',
         'workshop_name' => 'Palash Car A/C Centre',
         'paid_by' => 'company',
         'items' => 
@@ -76723,10 +78416,11 @@ return array (
         ),
         'total_amount' => 5800.0,
       ),
-      63 => 
+      62 => 
       array (
         'bill_no' => '10221',
         'bill_date' => '2023-08-26',
+        'month_of' => 'August-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -76755,10 +78449,11 @@ return array (
         ),
         'total_amount' => 2300.0,
       ),
-      64 => 
+      63 => 
       array (
         'bill_no' => '116',
         'bill_date' => '2023-07-08',
+        'month_of' => 'July-2023',
         'workshop_name' => 'Palash Car A/C Centre',
         'paid_by' => 'company',
         'items' => 
@@ -76773,10 +78468,11 @@ return array (
         ),
         'total_amount' => 3000.0,
       ),
-      65 => 
+      64 => 
       array (
         'bill_no' => '18198',
         'bill_date' => '2023-07-22',
+        'month_of' => 'July-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -76847,10 +78543,11 @@ return array (
         ),
         'total_amount' => 21600.0,
       ),
-      66 => 
+      65 => 
       array (
         'bill_no' => '18189',
         'bill_date' => '2023-06-15',
+        'month_of' => 'June-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -76984,10 +78681,11 @@ return array (
         ),
         'total_amount' => 69250.0,
       ),
-      67 => 
+      66 => 
       array (
         'bill_no' => 'SA 1630',
         'bill_date' => '2023-05-10',
+        'month_of' => 'May-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -77002,10 +78700,11 @@ return array (
         ),
         'total_amount' => 742.0,
       ),
-      68 => 
+      67 => 
       array (
         'bill_no' => '103',
         'bill_date' => '2023-05-14',
+        'month_of' => 'May-2023',
         'workshop_name' => 'Palash Car A/C Centre',
         'paid_by' => 'company',
         'items' => 
@@ -77041,10 +78740,11 @@ return array (
         ),
         'total_amount' => 3000.0,
       ),
-      69 => 
+      68 => 
       array (
         'bill_no' => '18177',
         'bill_date' => '2023-05-15',
+        'month_of' => 'May-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -77150,10 +78850,11 @@ return array (
         ),
         'total_amount' => 27500.0,
       ),
-      70 => 
+      69 => 
       array (
         'bill_no' => 'SA 1617',
         'bill_date' => '2023-05-07',
+        'month_of' => 'May-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -77175,10 +78876,11 @@ return array (
         ),
         'total_amount' => 6042.0,
       ),
-      71 => 
+      70 => 
       array (
         'bill_no' => 'SA 2012',
         'bill_date' => '2023-05-01',
+        'month_of' => 'May-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -77193,10 +78895,11 @@ return array (
         ),
         'total_amount' => 636.0,
       ),
-      72 => 
+      71 => 
       array (
         'bill_no' => '18167',
         'bill_date' => '2023-04-15',
+        'month_of' => 'April-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -77211,10 +78914,11 @@ return array (
         ),
         'total_amount' => 1200.0,
       ),
-      73 => 
+      72 => 
       array (
         'bill_no' => '873',
         'bill_date' => '2023-04-15',
+        'month_of' => 'April-2023',
         'workshop_name' => 'Palash Car A/C Centre',
         'paid_by' => 'company',
         'items' => 
@@ -77243,10 +78947,11 @@ return array (
         ),
         'total_amount' => 3500.0,
       ),
-      74 => 
+      73 => 
       array (
         'bill_no' => '18164',
         'bill_date' => '2023-04-05',
+        'month_of' => 'April-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -77289,10 +78994,11 @@ return array (
         ),
         'total_amount' => 6750.0,
       ),
-      75 => 
+      74 => 
       array (
         'bill_no' => '5721',
         'bill_date' => '2023-02-04',
+        'month_of' => 'February-2023',
         'workshop_name' => 'Soniya Tyre & Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -77307,10 +79013,11 @@ return array (
         ),
         'total_amount' => 7500.0,
       ),
-      76 => 
+      75 => 
       array (
         'bill_no' => 'SA 1033',
         'bill_date' => '2023-01-16',
+        'month_of' => 'January-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -77346,10 +79053,11 @@ return array (
         ),
         'total_amount' => 6360.0,
       ),
-      77 => 
+      76 => 
       array (
         'bill_no' => 'SA 1297',
         'bill_date' => '2023-01-01',
+        'month_of' => 'January-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -77371,10 +79079,11 @@ return array (
         ),
         'total_amount' => 1060.0,
       ),
-      78 => 
+      77 => 
       array (
         'bill_no' => '7203',
         'bill_date' => '2022-11-08',
+        'month_of' => 'November-2022',
         'workshop_name' => 'Soniya Tyre & Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -77389,10 +79098,11 @@ return array (
         ),
         'total_amount' => 6700.0,
       ),
-      79 => 
+      78 => 
       array (
         'bill_no' => '18110',
         'bill_date' => '2022-11-24',
+        'month_of' => 'November-2022',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -77435,10 +79145,11 @@ return array (
         ),
         'total_amount' => 7100.0,
       ),
-      80 => 
+      79 => 
       array (
         'bill_no' => '16794',
         'bill_date' => '2022-10-22',
+        'month_of' => 'October-2022',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -77474,10 +79185,11 @@ return array (
         ),
         'total_amount' => 2650.0,
       ),
-      81 => 
+      80 => 
       array (
         'bill_no' => '16788',
         'bill_date' => '2022-10-10',
+        'month_of' => 'October-2022',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -77499,10 +79211,11 @@ return array (
         ),
         'total_amount' => 500.0,
       ),
-      82 => 
+      81 => 
       array (
         'bill_no' => '16786',
         'bill_date' => '2022-10-05',
+        'month_of' => 'October-2022',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -77538,10 +79251,11 @@ return array (
         ),
         'total_amount' => 1550.0,
       ),
-      83 => 
+      82 => 
       array (
         'bill_no' => '16781',
         'bill_date' => '2022-09-28',
+        'month_of' => 'September-2022',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -77577,10 +79291,11 @@ return array (
         ),
         'total_amount' => 10600.0,
       ),
-      84 => 
+      83 => 
       array (
         'bill_no' => 'SA 274',
         'bill_date' => '2022-09-15',
+        'month_of' => 'September-2022',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -77623,10 +79338,11 @@ return array (
         ),
         'total_amount' => 6788.0,
       ),
-      85 => 
+      84 => 
       array (
         'bill_no' => 'SA 338',
         'bill_date' => '2022-09-01',
+        'month_of' => 'September-2022',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -77665,6 +79381,7 @@ return array (
       array (
         'bill_no' => '13993',
         'bill_date' => '2026-05-07',
+        'month_of' => 'May-2026',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -77753,6 +79470,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75148',
         'bill_date' => '2026-04-16',
+        'month_of' => 'April-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -77799,6 +79517,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75306',
         'bill_date' => '2026-02-15',
+        'month_of' => 'February-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -77845,6 +79564,7 @@ return array (
       array (
         'bill_no' => 'Bill # 74941',
         'bill_date' => '2026-01-01',
+        'month_of' => 'January-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -77905,6 +79625,7 @@ return array (
       array (
         'bill_no' => 'Bill # 74086',
         'bill_date' => '2025-10-14',
+        'month_of' => 'October-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -77972,6 +79693,7 @@ return array (
       array (
         'bill_no' => '403',
         'bill_date' => '2025-08-28',
+        'month_of' => 'August-2025',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -77990,6 +79712,7 @@ return array (
       array (
         'bill_no' => '369',
         'bill_date' => '2025-08-08',
+        'month_of' => 'August-2025',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -78008,6 +79731,7 @@ return array (
       array (
         'bill_no' => 'Bill # 73315',
         'bill_date' => '2025-08-03',
+        'month_of' => 'August-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -78061,6 +79785,7 @@ return array (
       array (
         'bill_no' => 'Bill # 72939',
         'bill_date' => '2025-06-23',
+        'month_of' => 'June-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -78086,6 +79811,7 @@ return array (
       array (
         'bill_no' => 'Bill # 72562',
         'bill_date' => '2025-05-13',
+        'month_of' => 'May-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -78139,6 +79865,7 @@ return array (
       array (
         'bill_no' => '448',
         'bill_date' => '2025-04-21',
+        'month_of' => 'April-2025',
         'workshop_name' => 'Arif Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -78192,6 +79919,7 @@ return array (
       array (
         'bill_no' => 'Bill # 71811',
         'bill_date' => '2025-02-19',
+        'month_of' => 'February-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -78259,6 +79987,7 @@ return array (
       array (
         'bill_no' => 'Bill # 71139',
         'bill_date' => '2024-12-18',
+        'month_of' => 'December-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -78319,6 +80048,7 @@ return array (
       array (
         'bill_no' => '13306',
         'bill_date' => '2024-12-01',
+        'month_of' => 'December-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -78351,6 +80081,7 @@ return array (
       array (
         'bill_no' => 'SA 517',
         'bill_date' => '2024-11-06',
+        'month_of' => 'November-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -78390,6 +80121,7 @@ return array (
       array (
         'bill_no' => 'SA 760',
         'bill_date' => '2024-11-01',
+        'month_of' => 'November-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -78422,6 +80154,7 @@ return array (
       array (
         'bill_no' => 'SA 324',
         'bill_date' => '2024-10-06',
+        'month_of' => 'October-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -78447,6 +80180,7 @@ return array (
       array (
         'bill_no' => 'SA 474',
         'bill_date' => '2024-10-01',
+        'month_of' => 'October-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -78472,6 +80206,7 @@ return array (
       array (
         'bill_no' => 'SA 214',
         'bill_date' => '2024-09-16',
+        'month_of' => 'September-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -78511,6 +80246,7 @@ return array (
       array (
         'bill_no' => 'SA 317',
         'bill_date' => '2024-09-01',
+        'month_of' => 'September-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -78536,6 +80272,7 @@ return array (
       array (
         'bill_no' => 'SA 18',
         'bill_date' => '2024-08-08',
+        'month_of' => 'August-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -78554,6 +80291,7 @@ return array (
       array (
         'bill_no' => 'SA 20',
         'bill_date' => '2024-08-01',
+        'month_of' => 'August-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -78572,6 +80310,7 @@ return array (
       array (
         'bill_no' => 'SA 2176',
         'bill_date' => '2024-07-30',
+        'month_of' => 'July-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -78611,6 +80350,7 @@ return array (
       array (
         'bill_no' => 'SA 2754',
         'bill_date' => '2024-07-01',
+        'month_of' => 'July-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -78629,6 +80369,7 @@ return array (
       array (
         'bill_no' => 'SA 1942',
         'bill_date' => '2024-06-10',
+        'month_of' => 'June-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -78668,6 +80409,7 @@ return array (
       array (
         'bill_no' => 'SA 2424',
         'bill_date' => '2024-06-01',
+        'month_of' => 'June-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -78686,6 +80428,7 @@ return array (
       array (
         'bill_no' => 'SA 1670',
         'bill_date' => '2024-04-28',
+        'month_of' => 'April-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -78732,6 +80475,7 @@ return array (
       array (
         'bill_no' => 'SA 2088',
         'bill_date' => '2024-04-01',
+        'month_of' => 'April-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -78750,6 +80494,7 @@ return array (
       array (
         'bill_no' => 'SA 1498',
         'bill_date' => '2024-03-28',
+        'month_of' => 'March-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -78838,6 +80583,7 @@ return array (
       array (
         'bill_no' => 'SA 1855',
         'bill_date' => '2024-03-01',
+        'month_of' => 'March-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -78877,6 +80623,7 @@ return array (
       array (
         'bill_no' => 'SA 1124',
         'bill_date' => '2024-01-28',
+        'month_of' => 'January-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -78916,6 +80663,7 @@ return array (
       array (
         'bill_no' => 'SA 718',
         'bill_date' => '2024-01-01',
+        'month_of' => 'January-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -78941,6 +80689,7 @@ return array (
       array (
         'bill_no' => '2178',
         'bill_date' => '2023-12-14',
+        'month_of' => 'December-2023',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -78959,6 +80708,7 @@ return array (
       array (
         'bill_no' => 'SA 836',
         'bill_date' => '2023-12-14',
+        'month_of' => 'December-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -78998,6 +80748,7 @@ return array (
       array (
         'bill_no' => 'SA 1011',
         'bill_date' => '2023-12-01',
+        'month_of' => 'December-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -79016,6 +80767,7 @@ return array (
       array (
         'bill_no' => 'SA 732',
         'bill_date' => '2023-11-29',
+        'month_of' => 'November-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -79034,6 +80786,7 @@ return array (
       array (
         'bill_no' => 'SA 606',
         'bill_date' => '2023-10-30',
+        'month_of' => 'October-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -79073,6 +80826,7 @@ return array (
       array (
         'bill_no' => 'SA 718',
         'bill_date' => '2023-10-01',
+        'month_of' => 'October-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -79091,6 +80845,7 @@ return array (
       array (
         'bill_no' => 'SA 384',
         'bill_date' => '2023-09-28',
+        'month_of' => 'September-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -79116,6 +80871,7 @@ return array (
       array (
         'bill_no' => 'SA 447',
         'bill_date' => '2023-09-01',
+        'month_of' => 'September-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -79148,6 +80904,7 @@ return array (
       array (
         'bill_no' => '2590',
         'bill_date' => '2023-09-27',
+        'month_of' => 'September-2023',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -79166,6 +80923,7 @@ return array (
       array (
         'bill_no' => '2533',
         'bill_date' => '2023-09-11',
+        'month_of' => 'September-2023',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -79184,6 +80942,7 @@ return array (
       array (
         'bill_no' => 'SA 374',
         'bill_date' => '2023-09-26',
+        'month_of' => 'September-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -79223,6 +80982,7 @@ return array (
       array (
         'bill_no' => 'SA 430',
         'bill_date' => '2023-09-01',
+        'month_of' => 'September-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -79255,6 +81015,7 @@ return array (
       array (
         'bill_no' => 'SA 301',
         'bill_date' => '2023-09-17',
+        'month_of' => 'September-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -79294,6 +81055,7 @@ return array (
       array (
         'bill_no' => 'SA 353',
         'bill_date' => '2023-09-01',
+        'month_of' => 'September-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -79312,6 +81074,7 @@ return array (
       array (
         'bill_no' => 'SA 2122',
         'bill_date' => '2023-07-31',
+        'month_of' => 'July-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -79365,6 +81128,7 @@ return array (
       array (
         'bill_no' => 'SA 2621',
         'bill_date' => '2023-07-01',
+        'month_of' => 'July-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -79397,6 +81161,7 @@ return array (
       array (
         'bill_no' => 'SA 2020',
         'bill_date' => '2023-07-13',
+        'month_of' => 'July-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -79415,6 +81180,7 @@ return array (
       array (
         'bill_no' => '2875',
         'bill_date' => '2023-07-07',
+        'month_of' => 'July-2023',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -79433,6 +81199,7 @@ return array (
       array (
         'bill_no' => 'SA 1861',
         'bill_date' => '2023-06-15',
+        'month_of' => 'June-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -79472,6 +81239,7 @@ return array (
       array (
         'bill_no' => 'SA 2313',
         'bill_date' => '2023-06-01',
+        'month_of' => 'June-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -79490,6 +81258,7 @@ return array (
       array (
         'bill_no' => '2659',
         'bill_date' => '2023-05-27',
+        'month_of' => 'May-2023',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -79508,6 +81277,7 @@ return array (
       array (
         'bill_no' => 'SA 2172',
         'bill_date' => '2023-05-29',
+        'month_of' => 'May-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -79526,6 +81296,7 @@ return array (
       array (
         'bill_no' => 'SA 1620',
         'bill_date' => '2023-05-08',
+        'month_of' => 'May-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -79565,6 +81336,7 @@ return array (
       array (
         'bill_no' => 'SA 2017',
         'bill_date' => '2023-05-01',
+        'month_of' => 'May-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -79583,6 +81355,7 @@ return array (
       array (
         'bill_no' => 'SA 1458',
         'bill_date' => '2023-04-06',
+        'month_of' => 'April-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -79601,6 +81374,7 @@ return array (
       array (
         'bill_no' => 'SA 1828',
         'bill_date' => '2023-04-01',
+        'month_of' => 'April-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -79619,6 +81393,7 @@ return array (
       array (
         'bill_no' => 'SA 1372',
         'bill_date' => '2023-03-20',
+        'month_of' => 'March-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -79644,6 +81419,7 @@ return array (
       array (
         'bill_no' => 'SA 1728',
         'bill_date' => '2023-03-01',
+        'month_of' => 'March-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -79669,6 +81445,7 @@ return array (
       array (
         'bill_no' => 'SA 1354',
         'bill_date' => '2023-03-17',
+        'month_of' => 'March-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -79729,6 +81506,7 @@ return array (
       array (
         'bill_no' => 'SA 1703',
         'bill_date' => '2023-03-01',
+        'month_of' => 'March-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -79747,6 +81525,7 @@ return array (
       array (
         'bill_no' => 'SA 1070',
         'bill_date' => '2023-01-25',
+        'month_of' => 'January-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -79793,6 +81572,7 @@ return array (
       array (
         'bill_no' => 'SA 1346',
         'bill_date' => '2023-01-25',
+        'month_of' => 'January-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -79811,6 +81591,7 @@ return array (
       array (
         'bill_no' => 'SA 854',
         'bill_date' => '2022-12-14',
+        'month_of' => 'December-2022',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -79843,6 +81624,7 @@ return array (
       array (
         'bill_no' => 'SA 1060',
         'bill_date' => '2022-12-01',
+        'month_of' => 'December-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -79868,6 +81650,7 @@ return array (
       array (
         'bill_no' => 'SA 651',
         'bill_date' => '2022-11-13',
+        'month_of' => 'November-2022',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -79893,6 +81676,7 @@ return array (
       array (
         'bill_no' => 'SA 820',
         'bill_date' => '2022-11-13',
+        'month_of' => 'November-2022',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -79911,6 +81695,7 @@ return array (
       array (
         'bill_no' => 'SA 530',
         'bill_date' => '2022-10-28',
+        'month_of' => 'October-2022',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -79964,6 +81749,7 @@ return array (
       array (
         'bill_no' => 'SA 676',
         'bill_date' => '2022-10-28',
+        'month_of' => 'October-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -80003,6 +81789,7 @@ return array (
       array (
         'bill_no' => 'SA 567',
         'bill_date' => '2022-10-12',
+        'month_of' => 'October-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -80021,6 +81808,7 @@ return array (
       array (
         'bill_no' => 'SA 241',
         'bill_date' => '2022-09-09',
+        'month_of' => 'September-2022',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -80046,6 +81834,7 @@ return array (
       array (
         'bill_no' => 'SA 296',
         'bill_date' => '2022-09-09',
+        'month_of' => 'September-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -80064,6 +81853,7 @@ return array (
       array (
         'bill_no' => 'SA 310',
         'bill_date' => '2022-09-21',
+        'month_of' => 'September-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -80103,6 +81893,7 @@ return array (
       array (
         'bill_no' => 'SA 392',
         'bill_date' => '2022-09-21',
+        'month_of' => 'September-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -80128,6 +81919,7 @@ return array (
       array (
         'bill_no' => 'SA 12',
         'bill_date' => '2022-08-02',
+        'month_of' => 'August-2022',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -80167,6 +81959,7 @@ return array (
       array (
         'bill_no' => 'SA 16',
         'bill_date' => '2022-08-02',
+        'month_of' => 'August-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -80191,6 +81984,7 @@ return array (
       array (
         'bill_no' => 'Bill # 76235',
         'bill_date' => '2026-06-10',
+        'month_of' => 'June-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -80272,6 +82066,7 @@ return array (
       array (
         'bill_no' => 'Bill # 76078',
         'bill_date' => '2026-05-23',
+        'month_of' => 'May-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -80297,6 +82092,7 @@ return array (
       array (
         'bill_no' => '13998',
         'bill_date' => '2026-05-19',
+        'month_of' => 'May-2026',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -80350,6 +82146,7 @@ return array (
       array (
         'bill_no' => 'Bill # 76068',
         'bill_date' => '2026-05-14',
+        'month_of' => 'May-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -80389,6 +82186,7 @@ return array (
       array (
         'bill_no' => 'Bill # 76020',
         'bill_date' => '2026-05-10',
+        'month_of' => 'May-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -80449,6 +82247,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75762',
         'bill_date' => '2026-04-11',
+        'month_of' => 'April-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -80509,6 +82308,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75586',
         'bill_date' => '2026-01-08',
+        'month_of' => 'March-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -80576,6 +82376,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75586',
         'bill_date' => '2026-03-08',
+        'month_of' => 'March-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -80643,6 +82444,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75073',
         'bill_date' => '2026-01-27',
+        'month_of' => 'January-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -80675,6 +82477,7 @@ return array (
       array (
         'bill_no' => 'Bill # 74102',
         'bill_date' => '2026-01-08',
+        'month_of' => 'January-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -80735,6 +82538,7 @@ return array (
       array (
         'bill_no' => 'Bill # 74802',
         'bill_date' => '2025-12-30',
+        'month_of' => 'December-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -80802,6 +82606,7 @@ return array (
       array (
         'bill_no' => '2612',
         'bill_date' => '2025-12-17',
+        'month_of' => 'December-2025',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -80820,6 +82625,7 @@ return array (
       array (
         'bill_no' => 'Bill # 74629',
         'bill_date' => '2025-12-10',
+        'month_of' => 'December-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -80880,6 +82686,7 @@ return array (
       array (
         'bill_no' => 'Bill # 74481',
         'bill_date' => '2025-12-02',
+        'month_of' => 'December-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -80919,6 +82726,7 @@ return array (
       array (
         'bill_no' => '24',
         'bill_date' => '2025-11-18',
+        'month_of' => 'November-2025',
         'workshop_name' => 'The Alamgir Automobile',
         'paid_by' => 'company',
         'items' => 
@@ -80965,6 +82773,7 @@ return array (
       array (
         'bill_no' => 'Bill # 74230',
         'bill_date' => '2025-11-11',
+        'month_of' => 'November-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -80997,6 +82806,7 @@ return array (
       array (
         'bill_no' => 'Bill # 74340',
         'bill_date' => '2025-11-09',
+        'month_of' => 'November-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -81050,6 +82860,7 @@ return array (
       array (
         'bill_no' => '22',
         'bill_date' => '2025-11-03',
+        'month_of' => 'November-2025',
         'workshop_name' => 'The Alamgir Automobile',
         'paid_by' => 'company',
         'items' => 
@@ -81117,6 +82928,7 @@ return array (
       array (
         'bill_no' => '13925',
         'bill_date' => '2025-11-01',
+        'month_of' => 'November-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -81170,6 +82982,7 @@ return array (
       array (
         'bill_no' => 'Bill # 74202',
         'bill_date' => '2025-10-27',
+        'month_of' => 'October-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -81209,6 +83022,7 @@ return array (
       array (
         'bill_no' => 'Bill # 74155',
         'bill_date' => '2025-10-25',
+        'month_of' => 'October-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -81241,6 +83055,7 @@ return array (
       array (
         'bill_no' => 'Bill # 74061',
         'bill_date' => '2025-10-12',
+        'month_of' => 'October-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -81301,6 +83116,7 @@ return array (
       array (
         'bill_no' => 'Bill # 74041',
         'bill_date' => '2025-10-11',
+        'month_of' => 'October-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -81396,6 +83212,7 @@ return array (
       array (
         'bill_no' => 'Bill # 73920',
         'bill_date' => '2025-09-29',
+        'month_of' => 'September-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -81435,6 +83252,7 @@ return array (
       array (
         'bill_no' => 'Bill # 73770',
         'bill_date' => '2025-09-24',
+        'month_of' => 'September-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -81495,6 +83313,7 @@ return array (
       array (
         'bill_no' => 'Bill # 73795',
         'bill_date' => '2025-09-18',
+        'month_of' => 'September-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -81527,6 +83346,7 @@ return array (
       array (
         'bill_no' => 'Bill # 73418',
         'bill_date' => '2025-09-14',
+        'month_of' => 'September-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -81587,6 +83407,7 @@ return array (
       array (
         'bill_no' => 'Bill # 73418',
         'bill_date' => '2025-08-14',
+        'month_of' => 'August-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -81647,6 +83468,7 @@ return array (
       array (
         'bill_no' => '13379',
         'bill_date' => '2025-08-05',
+        'month_of' => 'August-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -81763,6 +83585,7 @@ return array (
       array (
         'bill_no' => '13381',
         'bill_date' => '2025-08-04',
+        'month_of' => 'August-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -81788,6 +83611,7 @@ return array (
       array (
         'bill_no' => 'Bill # 73124',
         'bill_date' => '2025-07-16',
+        'month_of' => 'July-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -81834,6 +83658,7 @@ return array (
       array (
         'bill_no' => 'Bill # 73098',
         'bill_date' => '2025-07-10',
+        'month_of' => 'July-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -81901,6 +83726,7 @@ return array (
       array (
         'bill_no' => 'Bill # 73046',
         'bill_date' => '2025-07-07',
+        'month_of' => 'July-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -81933,6 +83759,7 @@ return array (
       array (
         'bill_no' => '1429',
         'bill_date' => '2025-07-06',
+        'month_of' => 'July-2025',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -81951,6 +83778,7 @@ return array (
       array (
         'bill_no' => '13369',
         'bill_date' => '2025-07-01',
+        'month_of' => 'July-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -81983,6 +83811,7 @@ return array (
       array (
         'bill_no' => 'Bill # 72861',
         'bill_date' => '2025-06-18',
+        'month_of' => 'June-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -82113,6 +83942,7 @@ return array (
       array (
         'bill_no' => 'Bill # 72512',
         'bill_date' => '2025-05-08',
+        'month_of' => 'May-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -82180,6 +84010,7 @@ return array (
       array (
         'bill_no' => 'Bill # 71990',
         'bill_date' => '2025-04-13',
+        'month_of' => 'April-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -82289,6 +84120,7 @@ return array (
       array (
         'bill_no' => 'Bill # 71746',
         'bill_date' => '2025-03-05',
+        'month_of' => 'March-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -82391,6 +84223,7 @@ return array (
       array (
         'bill_no' => 'Bill # 71363',
         'bill_date' => '2025-02-09',
+        'month_of' => 'February-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -82465,6 +84298,7 @@ return array (
       array (
         'bill_no' => 'Bill # 71330',
         'bill_date' => '2025-01-07',
+        'month_of' => 'January-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -82539,6 +84373,7 @@ return array (
       array (
         'bill_no' => 'Bill # 71175',
         'bill_date' => '2024-12-31',
+        'month_of' => 'December-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -82564,6 +84399,7 @@ return array (
       array (
         'bill_no' => '953',
         'bill_date' => '2024-12-14',
+        'month_of' => 'December-2024',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -82582,6 +84418,7 @@ return array (
       array (
         'bill_no' => 'SA 676',
         'bill_date' => '2024-12-09',
+        'month_of' => 'December-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -82642,6 +84479,7 @@ return array (
       array (
         'bill_no' => 'SA 980',
         'bill_date' => '2024-12-01',
+        'month_of' => 'December-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -82688,6 +84526,7 @@ return array (
       array (
         'bill_no' => 'SA 677',
         'bill_date' => '2024-12-09',
+        'month_of' => 'December-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -82734,6 +84573,7 @@ return array (
       array (
         'bill_no' => 'SA 981',
         'bill_date' => '2024-12-01',
+        'month_of' => 'December-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -82759,6 +84599,7 @@ return array (
       array (
         'bill_no' => 'SA 516',
         'bill_date' => '2024-11-06',
+        'month_of' => 'November-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -82812,6 +84653,7 @@ return array (
       array (
         'bill_no' => 'SA 759',
         'bill_date' => '2024-11-01',
+        'month_of' => 'November-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -82837,6 +84679,7 @@ return array (
       array (
         'bill_no' => '712',
         'bill_date' => '2024-10-27',
+        'month_of' => 'October-2024',
         'workshop_name' => 'Panama CNG Conversion',
         'paid_by' => 'company',
         'items' => 
@@ -82855,6 +84698,7 @@ return array (
       array (
         'bill_no' => 'SA 323',
         'bill_date' => '2024-11-06',
+        'month_of' => 'October-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -82922,6 +84766,7 @@ return array (
       array (
         'bill_no' => 'SA 473',
         'bill_date' => '2024-10-01',
+        'month_of' => 'October-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -82968,6 +84813,7 @@ return array (
       array (
         'bill_no' => '11787',
         'bill_date' => '2024-10-19',
+        'month_of' => 'October-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -83077,6 +84923,7 @@ return array (
       array (
         'bill_no' => '11788',
         'bill_date' => '2024-10-19',
+        'month_of' => 'October-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -83109,6 +84956,7 @@ return array (
       array (
         'bill_no' => '471',
         'bill_date' => '2024-10-05',
+        'month_of' => 'October-2024',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -83127,6 +84975,7 @@ return array (
       array (
         'bill_no' => '11774',
         'bill_date' => '2024-09-26',
+        'month_of' => 'September-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -83194,6 +85043,7 @@ return array (
       array (
         'bill_no' => '11767',
         'bill_date' => '2024-09-22',
+        'month_of' => 'September-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -83233,6 +85083,7 @@ return array (
       array (
         'bill_no' => 'SA 241',
         'bill_date' => '2024-09-21',
+        'month_of' => 'September-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -83258,6 +85109,7 @@ return array (
       array (
         'bill_no' => 'SA 363',
         'bill_date' => '2024-09-01',
+        'month_of' => 'September-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -83283,6 +85135,7 @@ return array (
       array (
         'bill_no' => 'SA 158',
         'bill_date' => '2024-09-03',
+        'month_of' => 'September-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -83336,6 +85189,7 @@ return array (
       array (
         'bill_no' => 'SA 218',
         'bill_date' => '2024-09-01',
+        'month_of' => 'September-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -83361,6 +85215,7 @@ return array (
       array (
         'bill_no' => '162',
         'bill_date' => '2024-08-08',
+        'month_of' => 'August-2024',
         'workshop_name' => 'Palash Car A/C Centre',
         'paid_by' => 'company',
         'items' => 
@@ -83414,6 +85269,7 @@ return array (
       array (
         'bill_no' => 'SA 2179',
         'bill_date' => '2024-07-30',
+        'month_of' => 'July-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -83481,6 +85337,7 @@ return array (
       array (
         'bill_no' => 'SA 2757',
         'bill_date' => '2024-07-01',
+        'month_of' => 'July-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -83506,6 +85363,7 @@ return array (
       array (
         'bill_no' => 'SA 2079',
         'bill_date' => '2024-07-09',
+        'month_of' => 'July-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -83566,6 +85424,7 @@ return array (
       array (
         'bill_no' => 'SA 2622',
         'bill_date' => '2024-07-01',
+        'month_of' => 'July-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -83605,6 +85464,7 @@ return array (
       array (
         'bill_no' => 'SA 2048',
         'bill_date' => '2024-07-04',
+        'month_of' => 'July-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -83658,6 +85518,7 @@ return array (
       array (
         'bill_no' => 'SA 2577',
         'bill_date' => '2024-07-01',
+        'month_of' => 'July-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -83683,6 +85544,7 @@ return array (
       array (
         'bill_no' => 'SA 1913',
         'bill_date' => '2024-06-06',
+        'month_of' => 'June-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -83729,6 +85591,7 @@ return array (
       array (
         'bill_no' => 'SA 2386',
         'bill_date' => '2024-06-01',
+        'month_of' => 'June-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -83747,6 +85610,7 @@ return array (
       array (
         'bill_no' => 'SA 1881',
         'bill_date' => '2024-05-29',
+        'month_of' => 'May-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -83800,6 +85664,7 @@ return array (
       array (
         'bill_no' => 'SA 2335',
         'bill_date' => '2024-05-01',
+        'month_of' => 'May-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -83825,6 +85690,7 @@ return array (
       array (
         'bill_no' => 'SA 1718',
         'bill_date' => '2024-05-06',
+        'month_of' => 'May-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -83871,6 +85737,7 @@ return array (
       array (
         'bill_no' => 'SA 2144',
         'bill_date' => '2024-05-01',
+        'month_of' => 'May-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -83889,6 +85756,7 @@ return array (
       array (
         'bill_no' => 'SA 1563',
         'bill_date' => '2024-04-04',
+        'month_of' => 'April-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -83935,6 +85803,7 @@ return array (
       array (
         'bill_no' => 'SA 1930',
         'bill_date' => '2024-04-01',
+        'month_of' => 'April-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -83960,6 +85829,7 @@ return array (
       array (
         'bill_no' => 'SA 1377',
         'bill_date' => '2024-03-09',
+        'month_of' => 'March-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -84006,6 +85876,7 @@ return array (
       array (
         'bill_no' => 'SA 1720',
         'bill_date' => '2024-03-01',
+        'month_of' => 'March-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -84038,6 +85909,7 @@ return array (
       array (
         'bill_no' => '10291',
         'bill_date' => '2024-02-29',
+        'month_of' => 'February-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -84105,6 +85977,7 @@ return array (
       array (
         'bill_no' => 'SA 1191',
         'bill_date' => '2024-02-07',
+        'month_of' => 'February-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -84158,6 +86031,7 @@ return array (
       array (
         'bill_no' => 'SA 1446',
         'bill_date' => '2024-02-01',
+        'month_of' => 'February-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -84183,6 +86057,7 @@ return array (
       array (
         'bill_no' => '222',
         'bill_date' => '2024-01-27',
+        'month_of' => 'January-2024',
         'workshop_name' => 'AR Motors',
         'paid_by' => 'company',
         'items' => 
@@ -84229,6 +86104,7 @@ return array (
       array (
         'bill_no' => 'SA 1020',
         'bill_date' => '2024-01-13',
+        'month_of' => 'January-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -84247,6 +86123,7 @@ return array (
       array (
         'bill_no' => 'SA 1238',
         'bill_date' => '2024-01-01',
+        'month_of' => 'January-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -84265,6 +86142,7 @@ return array (
       array (
         'bill_no' => 'SA 998',
         'bill_date' => '2024-01-09',
+        'month_of' => 'January-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -84311,6 +86189,7 @@ return array (
       array (
         'bill_no' => 'SA 1211',
         'bill_date' => '2024-01-01',
+        'month_of' => 'January-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -84343,6 +86222,7 @@ return array (
       array (
         'bill_no' => 'SA 852',
         'bill_date' => '2023-12-17',
+        'month_of' => 'December-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -84361,6 +86241,7 @@ return array (
       array (
         'bill_no' => 'SA 1033',
         'bill_date' => '2023-12-01',
+        'month_of' => 'December-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -84386,6 +86267,7 @@ return array (
       array (
         'bill_no' => 'SA 766',
         'bill_date' => '2023-12-04',
+        'month_of' => 'December-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -84432,6 +86314,7 @@ return array (
       array (
         'bill_no' => 'SA 752',
         'bill_date' => '2023-12-01',
+        'month_of' => 'December-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -84450,6 +86333,7 @@ return array (
       array (
         'bill_no' => 'SA 631',
         'bill_date' => '2023-11-06',
+        'month_of' => 'November-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -84496,6 +86380,7 @@ return array (
       array (
         'bill_no' => 'SA 752',
         'bill_date' => '2023-11-01',
+        'month_of' => 'November-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -84514,6 +86399,7 @@ return array (
       array (
         'bill_no' => 'SA 443',
         'bill_date' => '2023-10-07',
+        'month_of' => 'October-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -84560,6 +86446,7 @@ return array (
       array (
         'bill_no' => 'SA 515',
         'bill_date' => '2023-10-01',
+        'month_of' => 'October-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -84592,6 +86479,7 @@ return array (
       array (
         'bill_no' => 'SA 442',
         'bill_date' => '2023-10-07',
+        'month_of' => 'October-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -84610,6 +86498,7 @@ return array (
       array (
         'bill_no' => 'SA 514',
         'bill_date' => '2023-10-01',
+        'month_of' => 'October-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -84628,6 +86517,7 @@ return array (
       array (
         'bill_no' => 'SA 273',
         'bill_date' => '2023-09-12',
+        'month_of' => 'September-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -84660,6 +86550,7 @@ return array (
       array (
         'bill_no' => 'SA 319',
         'bill_date' => '2023-09-01',
+        'month_of' => 'September-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -84678,6 +86569,7 @@ return array (
       array (
         'bill_no' => 'SA 229',
         'bill_date' => '2023-09-06',
+        'month_of' => 'September-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -84724,6 +86616,7 @@ return array (
       array (
         'bill_no' => 'SA 261',
         'bill_date' => '2023-09-01',
+        'month_of' => 'September-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -84742,6 +86635,7 @@ return array (
       array (
         'bill_no' => '2767',
         'bill_date' => '2023-09-02',
+        'month_of' => 'September-2023',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -84760,6 +86654,7 @@ return array (
       array (
         'bill_no' => '10210',
         'bill_date' => '2023-08-05',
+        'month_of' => 'August-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -84806,6 +86701,7 @@ return array (
       array (
         'bill_no' => 'SA 57',
         'bill_date' => '2023-08-10',
+        'month_of' => 'August-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -84873,6 +86769,7 @@ return array (
       array (
         'bill_no' => 'SA 62',
         'bill_date' => '2023-08-01',
+        'month_of' => 'August-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -84898,6 +86795,7 @@ return array (
       array (
         'bill_no' => 'SA 1960',
         'bill_date' => '2023-07-04',
+        'month_of' => 'July-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -84951,6 +86849,7 @@ return array (
       array (
         'bill_no' => 'SA 2421',
         'bill_date' => '2023-07-01',
+        'month_of' => 'July-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -84976,6 +86875,7 @@ return array (
       array (
         'bill_no' => 'SA 1921',
         'bill_date' => '2023-06-24',
+        'month_of' => 'June-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -85001,6 +86901,7 @@ return array (
       array (
         'bill_no' => 'SA 2376',
         'bill_date' => '2023-06-01',
+        'month_of' => 'June-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -85019,6 +86920,7 @@ return array (
       array (
         'bill_no' => 'SA 1882',
         'bill_date' => '2023-06-18',
+        'month_of' => 'June-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -85037,6 +86939,7 @@ return array (
       array (
         'bill_no' => 'SA 2334',
         'bill_date' => '2023-06-01',
+        'month_of' => 'June-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -85062,6 +86965,7 @@ return array (
       array (
         'bill_no' => 'SA 1836',
         'bill_date' => '2023-06-11',
+        'month_of' => 'June-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -85115,6 +87019,7 @@ return array (
       array (
         'bill_no' => 'SA 2284',
         'bill_date' => '2023-06-01',
+        'month_of' => 'June-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -85133,6 +87038,7 @@ return array (
       array (
         'bill_no' => 'SA 2178',
         'bill_date' => '2023-05-29',
+        'month_of' => 'May-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -85158,6 +87064,7 @@ return array (
       array (
         'bill_no' => 'SA 1632',
         'bill_date' => '2023-05-10',
+        'month_of' => 'May-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -85218,6 +87125,7 @@ return array (
       array (
         'bill_no' => 'SA 2033',
         'bill_date' => '2023-05-01',
+        'month_of' => 'May-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -85243,6 +87151,7 @@ return array (
       array (
         'bill_no' => 'SA 1478',
         'bill_date' => '2023-04-09',
+        'month_of' => 'April-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -85296,6 +87205,7 @@ return array (
       array (
         'bill_no' => 'SA 1846',
         'bill_date' => '2023-04-01',
+        'month_of' => 'April-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -85328,6 +87238,7 @@ return array (
       array (
         'bill_no' => 'SA 1761',
         'bill_date' => '2023-03-25',
+        'month_of' => 'March-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -85353,6 +87264,7 @@ return array (
       array (
         'bill_no' => 'SA 1374',
         'bill_date' => '2023-03-21',
+        'month_of' => 'March-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -85406,6 +87318,7 @@ return array (
       array (
         'bill_no' => 'SA 1731',
         'bill_date' => '2023-03-01',
+        'month_of' => 'March-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -85438,6 +87351,7 @@ return array (
       array (
         'bill_no' => 'SA 1301',
         'bill_date' => '2023-03-06',
+        'month_of' => 'March-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -85484,6 +87398,7 @@ return array (
       array (
         'bill_no' => 'SA 1643',
         'bill_date' => '2023-03-01',
+        'month_of' => 'March-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -85502,6 +87417,7 @@ return array (
       array (
         'bill_no' => 'SA 1276',
         'bill_date' => '2023-03-01',
+        'month_of' => 'March-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -85520,6 +87436,7 @@ return array (
       array (
         'bill_no' => 'SA 1610',
         'bill_date' => '2023-03-01',
+        'month_of' => 'March-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -85538,6 +87455,7 @@ return array (
       array (
         'bill_no' => 'SA 1154',
         'bill_date' => '2023-02-08',
+        'month_of' => 'February-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -85591,6 +87509,7 @@ return array (
       array (
         'bill_no' => 'SA 1453',
         'bill_date' => '2023-02-01',
+        'month_of' => 'February-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -85637,6 +87556,7 @@ return array (
       array (
         'bill_no' => 'SA 989',
         'bill_date' => '2023-01-08',
+        'month_of' => 'January-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -85683,6 +87603,7 @@ return array (
       array (
         'bill_no' => 'SA 1242',
         'bill_date' => '2023-01-01',
+        'month_of' => 'January-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -85715,6 +87636,7 @@ return array (
       array (
         'bill_no' => 'SA 920',
         'bill_date' => '2022-12-25',
+        'month_of' => 'December-2022',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -85740,6 +87662,7 @@ return array (
       array (
         'bill_no' => 'SA 858',
         'bill_date' => '2022-12-15',
+        'month_of' => 'December-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -85765,6 +87688,7 @@ return array (
       array (
         'bill_no' => 'SA 1065',
         'bill_date' => '2022-12-01',
+        'month_of' => 'December-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -85783,6 +87707,7 @@ return array (
       array (
         'bill_no' => 'SA 809',
         'bill_date' => '2022-12-07',
+        'month_of' => 'December-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -85815,6 +87740,7 @@ return array (
       array (
         'bill_no' => 'SA 1010',
         'bill_date' => '2022-12-01',
+        'month_of' => 'December-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -85833,6 +87759,7 @@ return array (
       array (
         'bill_no' => 'SA 789',
         'bill_date' => '2022-12-05',
+        'month_of' => 'December-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -85879,6 +87806,7 @@ return array (
       array (
         'bill_no' => 'SA 991',
         'bill_date' => '2022-12-01',
+        'month_of' => 'December-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -85918,6 +87846,7 @@ return array (
       array (
         'bill_no' => '7290',
         'bill_date' => '2022-11-24',
+        'month_of' => 'November-2022',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -85936,6 +87865,7 @@ return array (
       array (
         'bill_no' => 'SA 940',
         'bill_date' => '2022-11-28',
+        'month_of' => 'November-2022',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -85982,6 +87912,7 @@ return array (
       array (
         'bill_no' => 'SA 745',
         'bill_date' => '2022-11-01',
+        'month_of' => 'November-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -86042,6 +87973,7 @@ return array (
       array (
         'bill_no' => 'SA 597',
         'bill_date' => '2022-11-05',
+        'month_of' => 'November-2022',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -86088,6 +88020,7 @@ return array (
       array (
         'bill_no' => 'SA 757',
         'bill_date' => '2022-11-05',
+        'month_of' => 'November-2022',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -86113,6 +88046,7 @@ return array (
       array (
         'bill_no' => '16795',
         'bill_date' => '2022-10-26',
+        'month_of' => 'October-2022',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -86152,6 +88086,7 @@ return array (
       array (
         'bill_no' => 'SA 648',
         'bill_date' => '2022-10-23',
+        'month_of' => 'October-2022',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -86170,6 +88105,7 @@ return array (
       array (
         'bill_no' => 'SA 365',
         'bill_date' => '2022-10-01',
+        'month_of' => 'October-2022',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -86216,6 +88152,7 @@ return array (
       array (
         'bill_no' => 'SA 472',
         'bill_date' => '2022-10-01',
+        'month_of' => 'October-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -86234,6 +88171,7 @@ return array (
       array (
         'bill_no' => 'SA 233',
         'bill_date' => '2022-09-07',
+        'month_of' => 'September-2022',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -86273,6 +88211,7 @@ return array (
       array (
         'bill_no' => 'SA 287',
         'bill_date' => '2022-09-07',
+        'month_of' => 'September-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -86291,6 +88230,7 @@ return array (
       array (
         'bill_no' => 'SA 289',
         'bill_date' => '2022-09-08',
+        'month_of' => 'September-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -86309,6 +88249,7 @@ return array (
       array (
         'bill_no' => 'SA 371',
         'bill_date' => '2022-09-19',
+        'month_of' => 'September-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -86327,6 +88268,7 @@ return array (
       array (
         'bill_no' => 'SA 355',
         'bill_date' => '2022-09-29',
+        'month_of' => 'September-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -86345,6 +88287,7 @@ return array (
       array (
         'bill_no' => 'SA 462',
         'bill_date' => '2022-09-29',
+        'month_of' => 'September-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -86363,6 +88306,7 @@ return array (
       array (
         'bill_no' => 'SA 26',
         'bill_date' => '2022-08-04',
+        'month_of' => 'August-2022',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -86402,6 +88346,7 @@ return array (
       array (
         'bill_no' => 'SA 35',
         'bill_date' => '2022-08-04',
+        'month_of' => 'August-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -86427,6 +88372,7 @@ return array (
       array (
         'bill_no' => 'SA 198',
         'bill_date' => '2022-08-31',
+        'month_of' => 'August-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -86494,6 +88440,7 @@ return array (
       array (
         'bill_no' => 'SA 247',
         'bill_date' => '2022-08-31',
+        'month_of' => 'August-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -86546,6 +88493,7 @@ return array (
       array (
         'bill_no' => '1890',
         'bill_date' => '2026-06-06',
+        'month_of' => 'June-2026',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -86564,6 +88512,7 @@ return array (
       array (
         'bill_no' => 'Bill # 76140',
         'bill_date' => '2026-05-23',
+        'month_of' => 'May-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -86617,6 +88566,7 @@ return array (
       array (
         'bill_no' => 'Bill # 76009',
         'bill_date' => '2026-05-13',
+        'month_of' => 'May-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -86698,6 +88648,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75761',
         'bill_date' => '2026-04-13',
+        'month_of' => 'April-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -86751,6 +88702,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75575',
         'bill_date' => '2026-03-07',
+        'month_of' => 'March-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -86797,6 +88749,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75524',
         'bill_date' => '2026-03-07',
+        'month_of' => 'March-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -86836,6 +88789,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75252',
         'bill_date' => '2026-02-07',
+        'month_of' => 'February-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -86882,6 +88836,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75041',
         'bill_date' => '2026-01-24',
+        'month_of' => 'January-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -86928,6 +88883,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75113',
         'bill_date' => '2026-01-10',
+        'month_of' => 'January-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -86974,6 +88930,7 @@ return array (
       array (
         'bill_no' => 'Bill # 74591',
         'bill_date' => '2025-12-09',
+        'month_of' => 'December-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -87034,6 +88991,7 @@ return array (
       array (
         'bill_no' => 'Bill # 73660',
         'bill_date' => '2025-11-08',
+        'month_of' => 'November-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -87101,6 +89059,7 @@ return array (
       array (
         'bill_no' => 'Bill # 74049',
         'bill_date' => '2025-10-18',
+        'month_of' => 'October-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -87126,6 +89085,7 @@ return array (
       array (
         'bill_no' => 'Bill # 73958',
         'bill_date' => '2025-10-02',
+        'month_of' => 'October-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -87172,6 +89132,7 @@ return array (
       array (
         'bill_no' => '726',
         'bill_date' => '2025-09-21',
+        'month_of' => 'September-2025',
         'workshop_name' => 'Palash Car A/C Centre',
         'paid_by' => 'company',
         'items' => 
@@ -87239,6 +89200,7 @@ return array (
       array (
         'bill_no' => 'Bill # 73660',
         'bill_date' => '2025-09-07',
+        'month_of' => 'September-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -87299,6 +89261,7 @@ return array (
       array (
         'bill_no' => 'Bill # 73373',
         'bill_date' => '2025-08-13',
+        'month_of' => 'August-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -87359,6 +89322,7 @@ return array (
       array (
         'bill_no' => 'Bill # 73372',
         'bill_date' => '2025-08-13',
+        'month_of' => 'August-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -87419,6 +89383,7 @@ return array (
       array (
         'bill_no' => 'Bill # 73205',
         'bill_date' => '2025-07-28',
+        'month_of' => 'August-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -87472,6 +89437,7 @@ return array (
       array (
         'bill_no' => 'Bill # 73069',
         'bill_date' => '2025-07-10',
+        'month_of' => 'August-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -87504,6 +89470,7 @@ return array (
       array (
         'bill_no' => '1440',
         'bill_date' => '2025-07-07',
+        'month_of' => 'August-2025',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -87522,6 +89489,7 @@ return array (
       array (
         'bill_no' => 'Bill # 73064',
         'bill_date' => '2025-07-06',
+        'month_of' => 'August-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -87568,6 +89536,7 @@ return array (
       array (
         'bill_no' => '9',
         'bill_date' => '2025-06-18',
+        'month_of' => 'June-2025',
         'workshop_name' => 'The Alamgir Automobile',
         'paid_by' => 'company',
         'items' => 
@@ -87705,6 +89674,7 @@ return array (
       array (
         'bill_no' => 'Bill # 72764',
         'bill_date' => '2025-06-02',
+        'month_of' => 'June-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -87779,6 +89749,7 @@ return array (
       array (
         'bill_no' => '5',
         'bill_date' => '2025-05-24',
+        'month_of' => 'May-2025',
         'workshop_name' => 'The Alamgir Automobile',
         'paid_by' => 'company',
         'items' => 
@@ -87818,6 +89789,7 @@ return array (
       array (
         'bill_no' => '1',
         'bill_date' => '2025-05-18',
+        'month_of' => 'May-2025',
         'workshop_name' => 'The Alamgir Automobile',
         'paid_by' => 'company',
         'items' => 
@@ -87983,6 +89955,7 @@ return array (
       array (
         'bill_no' => 'Bill # 72527',
         'bill_date' => '2025-05-10',
+        'month_of' => 'May-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -88029,6 +90002,7 @@ return array (
       array (
         'bill_no' => 'Bill # 72332',
         'bill_date' => '2025-05-07',
+        'month_of' => 'May-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -88082,6 +90056,7 @@ return array (
       array (
         'bill_no' => 'Bill # 72240',
         'bill_date' => '2025-04-09',
+        'month_of' => 'April-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -88128,6 +90103,7 @@ return array (
       array (
         'bill_no' => '657',
         'bill_date' => '2025-04-06',
+        'month_of' => 'April-2025',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -88146,6 +90122,7 @@ return array (
       array (
         'bill_no' => 'Bill # 71940',
         'bill_date' => '2025-03-05',
+        'month_of' => 'March-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -88255,6 +90232,7 @@ return array (
       array (
         'bill_no' => 'Bill # 71916',
         'bill_date' => '2025-03-02',
+        'month_of' => 'March-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -88329,6 +90307,7 @@ return array (
       array (
         'bill_no' => 'Bill # 71660',
         'bill_date' => '2025-02-05',
+        'month_of' => 'February-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -88375,6 +90354,7 @@ return array (
       array (
         'bill_no' => 'Bill # 71555',
         'bill_date' => '2025-01-25',
+        'month_of' => 'January-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -88428,6 +90408,7 @@ return array (
       array (
         'bill_no' => 'Bill # 71312',
         'bill_date' => '2025-01-05',
+        'month_of' => 'January-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -88495,6 +90476,7 @@ return array (
       array (
         'bill_no' => 'SA 640',
         'bill_date' => '2024-12-01',
+        'month_of' => 'December-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -88534,6 +90516,7 @@ return array (
       array (
         'bill_no' => 'SA 933',
         'bill_date' => '2024-12-01',
+        'month_of' => 'December-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -88559,6 +90542,7 @@ return array (
       array (
         'bill_no' => 'SA 643',
         'bill_date' => '2024-12-01',
+        'month_of' => 'December-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -88605,6 +90589,7 @@ return array (
       array (
         'bill_no' => 'SA 936',
         'bill_date' => '2024-12-01',
+        'month_of' => 'December-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -88630,6 +90615,7 @@ return array (
       array (
         'bill_no' => 'SA 527',
         'bill_date' => '2024-11-07',
+        'month_of' => 'November-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -88669,6 +90655,7 @@ return array (
       array (
         'bill_no' => 'SA 771',
         'bill_date' => '2024-11-01',
+        'month_of' => 'November-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -88715,6 +90702,7 @@ return array (
       array (
         'bill_no' => 'SA 369',
         'bill_date' => '2024-10-12',
+        'month_of' => 'October-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -88761,6 +90749,7 @@ return array (
       array (
         'bill_no' => 'SA 534',
         'bill_date' => '2024-10-01',
+        'month_of' => 'October-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -88800,6 +90789,7 @@ return array (
       array (
         'bill_no' => 'SA 205',
         'bill_date' => '2024-09-14',
+        'month_of' => 'September-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -88846,6 +90836,7 @@ return array (
       array (
         'bill_no' => 'SA 306',
         'bill_date' => '2024-09-01',
+        'month_of' => 'September-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -88878,6 +90869,7 @@ return array (
       array (
         'bill_no' => 'SA 30',
         'bill_date' => '2024-08-11',
+        'month_of' => 'August-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -88924,6 +90916,7 @@ return array (
       array (
         'bill_no' => 'SA 41',
         'bill_date' => '2024-08-01',
+        'month_of' => 'August-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -88949,6 +90942,7 @@ return array (
       array (
         'bill_no' => '2091',
         'bill_date' => '2024-07-07',
+        'month_of' => 'July-2024',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -88967,6 +90961,7 @@ return array (
       array (
         'bill_no' => 'SA 2055',
         'bill_date' => '2024-07-06',
+        'month_of' => 'July-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -88999,6 +90994,7 @@ return array (
       array (
         'bill_no' => 'SA 2587',
         'bill_date' => '2024-07-01',
+        'month_of' => 'July-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -89024,6 +91020,7 @@ return array (
       array (
         'bill_no' => 'SA 1924',
         'bill_date' => '2024-06-08',
+        'month_of' => 'June-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -89056,6 +91053,7 @@ return array (
       array (
         'bill_no' => 'SA 2405',
         'bill_date' => '2024-06-01',
+        'month_of' => 'June-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -89074,6 +91072,7 @@ return array (
       array (
         'bill_no' => 'SA 1755',
         'bill_date' => '2024-05-11',
+        'month_of' => 'May-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -89113,6 +91112,7 @@ return array (
       array (
         'bill_no' => 'SA 2184',
         'bill_date' => '2024-05-01',
+        'month_of' => 'May-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -89131,6 +91131,7 @@ return array (
       array (
         'bill_no' => 'SA 1638',
         'bill_date' => '2024-04-22',
+        'month_of' => 'April-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -89163,6 +91164,7 @@ return array (
       array (
         'bill_no' => 'SA 2049',
         'bill_date' => '2024-04-01',
+        'month_of' => 'April-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -89181,6 +91183,7 @@ return array (
       array (
         'bill_no' => 'SA 1614',
         'bill_date' => '2024-04-18',
+        'month_of' => 'April-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -89220,6 +91223,7 @@ return array (
       array (
         'bill_no' => 'SA 2017',
         'bill_date' => '2024-04-01',
+        'month_of' => 'April-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -89238,6 +91242,7 @@ return array (
       array (
         'bill_no' => '11715',
         'bill_date' => '2024-04-05',
+        'month_of' => 'April-2024',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -89277,6 +91282,7 @@ return array (
       array (
         'bill_no' => 'SA 1561',
         'bill_date' => '2024-04-04',
+        'month_of' => 'April-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -89316,6 +91322,7 @@ return array (
       array (
         'bill_no' => 'SA 1927',
         'bill_date' => '2024-04-01',
+        'month_of' => 'April-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -89341,6 +91348,7 @@ return array (
       array (
         'bill_no' => 'SA 1397',
         'bill_date' => '2024-03-12',
+        'month_of' => 'March-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -89380,6 +91388,7 @@ return array (
       array (
         'bill_no' => 'SA 1742',
         'bill_date' => '2024-03-01',
+        'month_of' => 'March-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -89412,6 +91421,7 @@ return array (
       array (
         'bill_no' => 'SA 1329',
         'bill_date' => '2024-03-02',
+        'month_of' => 'March-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -89437,6 +91447,7 @@ return array (
       array (
         'bill_no' => 'SA 1658',
         'bill_date' => '2024-03-01',
+        'month_of' => 'March-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -89455,6 +91466,7 @@ return array (
       array (
         'bill_no' => 'SA 1307',
         'bill_date' => '2024-02-27',
+        'month_of' => 'February-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -89480,6 +91492,7 @@ return array (
       array (
         'bill_no' => '260',
         'bill_date' => '2024-02-01',
+        'month_of' => 'February-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -89498,6 +91511,7 @@ return array (
       array (
         'bill_no' => 'SA 1626',
         'bill_date' => '2024-02-01',
+        'month_of' => 'February-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -89516,6 +91530,7 @@ return array (
       array (
         'bill_no' => 'SA 1254',
         'bill_date' => '2024-02-20',
+        'month_of' => 'February-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -89548,6 +91563,7 @@ return array (
       array (
         'bill_no' => 'SA 1550',
         'bill_date' => '2024-02-01',
+        'month_of' => 'February-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -89573,6 +91589,7 @@ return array (
       array (
         'bill_no' => '074',
         'bill_date' => '2024-01-17',
+        'month_of' => 'January-2024',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -89591,6 +91608,7 @@ return array (
       array (
         'bill_no' => 'SA 942',
         'bill_date' => '2023-12-30',
+        'month_of' => 'December-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -89630,6 +91648,7 @@ return array (
       array (
         'bill_no' => 'SA 1148',
         'bill_date' => '2023-12-01',
+        'month_of' => 'December-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -89648,6 +91667,7 @@ return array (
       array (
         'bill_no' => 'SA 883',
         'bill_date' => '2023-12-21',
+        'month_of' => 'December-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -89715,6 +91735,7 @@ return array (
       array (
         'bill_no' => 'SA 1073',
         'bill_date' => '2023-12-01',
+        'month_of' => 'December-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -89747,6 +91768,7 @@ return array (
       array (
         'bill_no' => 'SA 622',
         'bill_date' => '2023-11-02',
+        'month_of' => 'November-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -89779,6 +91801,7 @@ return array (
       array (
         'bill_no' => 'SA 741',
         'bill_date' => '2023-11-01',
+        'month_of' => 'November-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -89804,6 +91827,7 @@ return array (
       array (
         'bill_no' => 'SA 500',
         'bill_date' => '2023-10-16',
+        'month_of' => 'October-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -89829,6 +91853,7 @@ return array (
       array (
         'bill_no' => 'SA 591',
         'bill_date' => '2023-10-01',
+        'month_of' => 'October-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -89854,6 +91879,7 @@ return array (
       array (
         'bill_no' => 'SA 412',
         'bill_date' => '2023-10-03',
+        'month_of' => 'October-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -89886,6 +91912,7 @@ return array (
       array (
         'bill_no' => 'SA 486',
         'bill_date' => '2023-10-01',
+        'month_of' => 'October-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -89911,6 +91938,7 @@ return array (
       array (
         'bill_no' => 'SA 411',
         'bill_date' => '2023-10-02',
+        'month_of' => 'October-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -89943,6 +91971,7 @@ return array (
       array (
         'bill_no' => 'SA 485',
         'bill_date' => '2023-10-01',
+        'month_of' => 'October-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -89968,6 +91997,7 @@ return array (
       array (
         'bill_no' => 'SA 383',
         'bill_date' => '2023-09-28',
+        'month_of' => 'September-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -89993,6 +92023,7 @@ return array (
       array (
         'bill_no' => 'SA 445',
         'bill_date' => '2023-09-01',
+        'month_of' => 'September-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -90011,6 +92042,7 @@ return array (
       array (
         'bill_no' => 'SA 280',
         'bill_date' => '2023-09-13',
+        'month_of' => 'September-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -90036,6 +92068,7 @@ return array (
       array (
         'bill_no' => 'SA 329',
         'bill_date' => '2023-09-01',
+        'month_of' => 'September-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -90054,6 +92087,7 @@ return array (
       array (
         'bill_no' => 'SA 251',
         'bill_date' => '2023-09-10',
+        'month_of' => 'September-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -90072,6 +92106,7 @@ return array (
       array (
         'bill_no' => 'SA 216',
         'bill_date' => '2023-09-05',
+        'month_of' => 'September-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -90104,6 +92139,7 @@ return array (
       array (
         'bill_no' => 'SA 252',
         'bill_date' => '2023-09-01',
+        'month_of' => 'September-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -90129,6 +92165,7 @@ return array (
       array (
         'bill_no' => 'SA 153',
         'bill_date' => '2023-08-27',
+        'month_of' => 'August-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -90147,6 +92184,7 @@ return array (
       array (
         'bill_no' => 'SA 174',
         'bill_date' => '2023-08-01',
+        'month_of' => 'August-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -90172,6 +92210,7 @@ return array (
       array (
         'bill_no' => 'SA 28',
         'bill_date' => '2023-08-06',
+        'month_of' => 'August-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -90211,6 +92250,7 @@ return array (
       array (
         'bill_no' => 'SA 33',
         'bill_date' => '2023-08-01',
+        'month_of' => 'August-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -90243,6 +92283,7 @@ return array (
       array (
         'bill_no' => 'SA 2109',
         'bill_date' => '2023-07-30',
+        'month_of' => 'July-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -90289,6 +92330,7 @@ return array (
       array (
         'bill_no' => 'SA 2607',
         'bill_date' => '2023-07-01',
+        'month_of' => 'July-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -90307,6 +92349,7 @@ return array (
       array (
         'bill_no' => '1413',
         'bill_date' => '2023-07-29',
+        'month_of' => 'July-2023',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -90325,6 +92368,7 @@ return array (
       array (
         'bill_no' => 'SA 2019',
         'bill_date' => '2023-07-13',
+        'month_of' => 'July-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -90406,6 +92450,7 @@ return array (
       array (
         'bill_no' => 'SA 2497',
         'bill_date' => '2023-07-01',
+        'month_of' => 'July-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -90431,6 +92476,7 @@ return array (
       array (
         'bill_no' => 'SA 2006',
         'bill_date' => '2023-07-11',
+        'month_of' => 'July-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -90463,6 +92509,7 @@ return array (
       array (
         'bill_no' => 'SA 2485',
         'bill_date' => '2023-07-01',
+        'month_of' => 'July-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -90481,6 +92528,7 @@ return array (
       array (
         'bill_no' => 'SA 1985',
         'bill_date' => '2023-07-09',
+        'month_of' => 'July-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -90520,6 +92568,7 @@ return array (
       array (
         'bill_no' => 'SA 2458',
         'bill_date' => '2023-07-01',
+        'month_of' => 'July-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -90545,6 +92594,7 @@ return array (
       array (
         'bill_no' => 'SA 1986',
         'bill_date' => '2023-07-09',
+        'month_of' => 'July-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -90563,6 +92613,7 @@ return array (
       array (
         'bill_no' => 'SA 2459',
         'bill_date' => '2023-07-01',
+        'month_of' => 'July-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -90581,6 +92632,7 @@ return array (
       array (
         'bill_no' => 'SA 1794',
         'bill_date' => '2023-06-05',
+        'month_of' => 'June-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -90627,6 +92679,7 @@ return array (
       array (
         'bill_no' => 'SA 2241',
         'bill_date' => '2023-06-01',
+        'month_of' => 'June-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -90645,6 +92698,7 @@ return array (
       array (
         'bill_no' => 'SA 1855',
         'bill_date' => '2023-06-13',
+        'month_of' => 'June-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -90698,6 +92752,7 @@ return array (
       array (
         'bill_no' => 'SA 2307',
         'bill_date' => '2023-06-01',
+        'month_of' => 'June-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -90723,6 +92778,7 @@ return array (
       array (
         'bill_no' => '1709',
         'bill_date' => '2023-05-10',
+        'month_of' => 'May-2023',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -90741,6 +92797,7 @@ return array (
       array (
         'bill_no' => 'SA 1690',
         'bill_date' => '2023-05-21',
+        'month_of' => 'May-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -90759,6 +92816,7 @@ return array (
       array (
         'bill_no' => 'SA 2107',
         'bill_date' => '2023-05-01',
+        'month_of' => 'May-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -90777,6 +92835,7 @@ return array (
       array (
         'bill_no' => 'SA 1680',
         'bill_date' => '2023-05-18',
+        'month_of' => 'May-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -90802,6 +92861,7 @@ return array (
       array (
         'bill_no' => 'SA 2094',
         'bill_date' => '2023-05-01',
+        'month_of' => 'May-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -90827,6 +92887,7 @@ return array (
       array (
         'bill_no' => 'SA 1594',
         'bill_date' => '2023-05-03',
+        'month_of' => 'May-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -90859,6 +92920,7 @@ return array (
       array (
         'bill_no' => 'SA 1983',
         'bill_date' => '2023-05-01',
+        'month_of' => 'May-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -90877,6 +92939,7 @@ return array (
       array (
         'bill_no' => 'SA 1577',
         'bill_date' => '2023-04-20',
+        'month_of' => 'April-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -90895,6 +92958,7 @@ return array (
       array (
         'bill_no' => 'SA 1957',
         'bill_date' => '2023-04-01',
+        'month_of' => 'April-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -90913,6 +92977,7 @@ return array (
       array (
         'bill_no' => 'SA 1461',
         'bill_date' => '2023-04-06',
+        'month_of' => 'April-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -90938,6 +93003,7 @@ return array (
       array (
         'bill_no' => 'SA 1828',
         'bill_date' => '2023-04-01',
+        'month_of' => 'April-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -90956,6 +93022,7 @@ return array (
       array (
         'bill_no' => 'SA 1431',
         'bill_date' => '2023-04-02',
+        'month_of' => 'April-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -90995,6 +93062,7 @@ return array (
       array (
         'bill_no' => 'SA 1800',
         'bill_date' => '2023-04-01',
+        'month_of' => 'April-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -91013,6 +93081,7 @@ return array (
       array (
         'bill_no' => 'SA 1409',
         'bill_date' => '2023-03-29',
+        'month_of' => 'March-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -91066,6 +93135,7 @@ return array (
       array (
         'bill_no' => 'SA 1782',
         'bill_date' => '2023-03-01',
+        'month_of' => 'March-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -91091,6 +93161,7 @@ return array (
       array (
         'bill_no' => 'SA 1291',
         'bill_date' => '2023-03-05',
+        'month_of' => 'March-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -91123,6 +93194,7 @@ return array (
       array (
         'bill_no' => 'SA 1631',
         'bill_date' => '2023-03-01',
+        'month_of' => 'March-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -91141,6 +93213,7 @@ return array (
       array (
         'bill_no' => 'SA 1162',
         'bill_date' => '2023-02-09',
+        'month_of' => 'February-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -91159,6 +93232,7 @@ return array (
       array (
         'bill_no' => 'SA 1148',
         'bill_date' => '2023-02-08',
+        'month_of' => 'February-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -91198,6 +93272,7 @@ return array (
       array (
         'bill_no' => 'SA 1447',
         'bill_date' => '2023-02-01',
+        'month_of' => 'February-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -91230,6 +93305,7 @@ return array (
       array (
         'bill_no' => '5133',
         'bill_date' => '2023-01-04',
+        'month_of' => 'January-2023',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -91248,6 +93324,7 @@ return array (
       array (
         'bill_no' => 'SA 1081',
         'bill_date' => '2023-01-26',
+        'month_of' => 'January-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -91273,6 +93350,7 @@ return array (
       array (
         'bill_no' => 'SA 1361',
         'bill_date' => '2023-01-26',
+        'month_of' => 'January-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -91291,6 +93369,7 @@ return array (
       array (
         'bill_no' => 'SA 957',
         'bill_date' => '2023-01-01',
+        'month_of' => 'January-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -91344,6 +93423,7 @@ return array (
       array (
         'bill_no' => 'SA 1193',
         'bill_date' => '2023-01-01',
+        'month_of' => 'January-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -91362,6 +93442,7 @@ return array (
       array (
         'bill_no' => 'SA 1088',
         'bill_date' => '2023-01-11',
+        'month_of' => 'January-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -91394,6 +93475,7 @@ return array (
       array (
         'bill_no' => 'SA 1272',
         'bill_date' => '2023-01-11',
+        'month_of' => 'January-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -91412,6 +93494,7 @@ return array (
       array (
         'bill_no' => '5826',
         'bill_date' => '2022-12-19',
+        'month_of' => 'December-2022',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -91430,6 +93513,7 @@ return array (
       array (
         'bill_no' => 'SA 841',
         'bill_date' => '2022-12-13',
+        'month_of' => 'December-2022',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -91469,6 +93553,7 @@ return array (
       array (
         'bill_no' => 'SA 1049',
         'bill_date' => '2022-12-13',
+        'month_of' => 'December-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -91487,6 +93572,7 @@ return array (
       array (
         'bill_no' => 'SA 685',
         'bill_date' => '2022-11-19',
+        'month_of' => 'November-2022',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -91505,53 +93591,42 @@ return array (
             'unit' => NULL,
             'amount' => 350.0,
           ),
-        ),
-        'total_amount' => 750.0,
-      ),
-      139 => 
-      array (
-        'bill_no' => 'SA 685',
-        'bill_date' => '2022-11-19',
-        'workshop_name' => '',
-        'paid_by' => 'company',
-        'items' => 
-        array (
-          0 => 
+          2 => 
           array (
             'item_name' => 'Engine With Gear Box',
             'quantity' => NULL,
             'unit' => NULL,
             'amount' => 65000.0,
           ),
-          1 => 
+          3 => 
           array (
             'item_name' => 'Bp Super Oil',
             'quantity' => NULL,
             'unit' => NULL,
             'amount' => 3000.0,
           ),
-          2 => 
+          4 => 
           array (
             'item_name' => 'Oil Filter',
             'quantity' => NULL,
             'unit' => NULL,
             'amount' => 400.0,
           ),
-          3 => 
+          5 => 
           array (
             'item_name' => 'Air Filter',
             'quantity' => NULL,
             'unit' => NULL,
             'amount' => 200.0,
           ),
-          4 => 
+          6 => 
           array (
             'item_name' => 'A/C Gas',
             'quantity' => NULL,
             'unit' => NULL,
             'amount' => 1500.0,
           ),
-          5 => 
+          7 => 
           array (
             'item_name' => 'ATF Toyota',
             'quantity' => NULL,
@@ -91559,12 +93634,13 @@ return array (
             'amount' => 2700.0,
           ),
         ),
-        'total_amount' => 72800.0,
+        'total_amount' => 73550.0,
       ),
-      140 => 
+      139 => 
       array (
         'bill_no' => 'SA 872',
         'bill_date' => '2022-11-19',
+        'month_of' => 'November-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -91593,10 +93669,11 @@ return array (
         ),
         'total_amount' => 9712.0,
       ),
-      141 => 
+      140 => 
       array (
         'bill_no' => 'SA 827',
         'bill_date' => '2022-11-14',
+        'month_of' => 'November-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -91611,10 +93688,11 @@ return array (
         ),
         'total_amount' => 3180.0,
       ),
-      142 => 
+      141 => 
       array (
         'bill_no' => 'SA 650',
         'bill_date' => '2022-11-13',
+        'month_of' => 'November-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -91629,10 +93707,11 @@ return array (
         ),
         'total_amount' => 530.0,
       ),
-      143 => 
+      142 => 
       array (
         'bill_no' => 'SA 819',
         'bill_date' => '2022-11-13',
+        'month_of' => 'November-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -91647,10 +93726,11 @@ return array (
         ),
         'total_amount' => 212.0,
       ),
-      144 => 
+      143 => 
       array (
         'bill_no' => 'SA 599',
         'bill_date' => '2022-11-05',
+        'month_of' => 'November-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -91679,10 +93759,11 @@ return array (
         ),
         'total_amount' => 3922.0,
       ),
-      145 => 
+      144 => 
       array (
         'bill_no' => 'SA 758',
         'bill_date' => '2022-11-05',
+        'month_of' => 'November-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -91697,10 +93778,11 @@ return array (
         ),
         'total_amount' => 212.0,
       ),
-      146 => 
+      145 => 
       array (
         'bill_no' => '9825',
         'bill_date' => '2022-10-31',
+        'month_of' => 'October-2022',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -91715,10 +93797,11 @@ return array (
         ),
         'total_amount' => 7000.0,
       ),
-      147 => 
+      146 => 
       array (
         'bill_no' => 'SA 401',
         'bill_date' => '2022-10-06',
+        'month_of' => 'October-2022',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -91754,10 +93837,11 @@ return array (
         ),
         'total_amount' => 4240.0,
       ),
-      148 => 
+      147 => 
       array (
         'bill_no' => 'SA 520',
         'bill_date' => '2022-10-06',
+        'month_of' => 'October-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -91779,10 +93863,11 @@ return array (
         ),
         'total_amount' => 848.0,
       ),
-      149 => 
+      148 => 
       array (
         'bill_no' => 'SA 380',
         'bill_date' => '2022-10-02',
+        'month_of' => 'October-2022',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -91825,10 +93910,11 @@ return array (
         ),
         'total_amount' => 19466.0,
       ),
-      150 => 
+      149 => 
       array (
         'bill_no' => 'SA 488',
         'bill_date' => '2022-10-02',
+        'month_of' => 'October-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -91864,10 +93950,11 @@ return array (
         ),
         'total_amount' => 4560.0,
       ),
-      151 => 
+      150 => 
       array (
         'bill_no' => 'SA 222',
         'bill_date' => '2022-09-05',
+        'month_of' => 'September-2022',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -91896,10 +93983,11 @@ return array (
         ),
         'total_amount' => 3922.0,
       ),
-      152 => 
+      151 => 
       array (
         'bill_no' => 'SA 276',
         'bill_date' => '2022-09-05',
+        'month_of' => 'September-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -91914,10 +94002,11 @@ return array (
         ),
         'total_amount' => 212.0,
       ),
-      153 => 
+      152 => 
       array (
         'bill_no' => 'SA 34',
         'bill_date' => '2022-08-06',
+        'month_of' => 'August-2022',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -91967,10 +94056,11 @@ return array (
         ),
         'total_amount' => 8800.0,
       ),
-      154 => 
+      153 => 
       array (
         'bill_no' => 'SA 43',
         'bill_date' => '2022-08-06',
+        'month_of' => 'August-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -91992,10 +94082,11 @@ return array (
         ),
         'total_amount' => 1060.0,
       ),
-      155 => 
+      154 => 
       array (
         'bill_no' => 'SA 42',
         'bill_date' => '2022-08-07',
+        'month_of' => 'August-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -92010,10 +94101,11 @@ return array (
         ),
         'total_amount' => 1805.0,
       ),
-      156 => 
+      155 => 
       array (
         'bill_no' => 'SA 51',
         'bill_date' => '2022-08-07',
+        'month_of' => 'August-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -92028,10 +94120,11 @@ return array (
         ),
         'total_amount' => 320.0,
       ),
-      157 => 
+      156 => 
       array (
         'bill_no' => 'SA 65',
         'bill_date' => '2022-08-09',
+        'month_of' => 'August-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -92060,10 +94153,11 @@ return array (
         ),
         'total_amount' => 12410.0,
       ),
-      158 => 
+      157 => 
       array (
         'bill_no' => 'SA 77',
         'bill_date' => '2022-08-09',
+        'month_of' => 'August-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -92085,10 +94179,11 @@ return array (
         ),
         'total_amount' => 2060.0,
       ),
-      159 => 
+      158 => 
       array (
         'bill_no' => 'SA 151',
         'bill_date' => '2022-08-18',
+        'month_of' => 'August-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -92120,6 +94215,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75988',
         'bill_date' => '2026-05-09',
+        'month_of' => 'May-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -92250,6 +94346,7 @@ return array (
       array (
         'bill_no' => 'Bill # 74409',
         'bill_date' => '2025-11-17',
+        'month_of' => 'November-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -92275,6 +94372,7 @@ return array (
       array (
         'bill_no' => 'Bill # 74309',
         'bill_date' => '2025-11-06',
+        'month_of' => 'November-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -92307,6 +94405,7 @@ return array (
       array (
         'bill_no' => '1593',
         'bill_date' => '2025-10-16',
+        'month_of' => 'October-2025',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -92325,6 +94424,7 @@ return array (
       array (
         'bill_no' => 'Bill # 74079',
         'bill_date' => '2025-10-16',
+        'month_of' => 'October-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -92462,6 +94562,7 @@ return array (
       array (
         'bill_no' => 'Bill # 21059',
         'bill_date' => '2025-06-22',
+        'month_of' => 'June-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -92487,6 +94588,7 @@ return array (
       array (
         'bill_no' => 'Bill # 71833',
         'bill_date' => '2025-02-22',
+        'month_of' => 'February-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -92547,6 +94649,7 @@ return array (
       array (
         'bill_no' => 'Bill # 71332',
         'bill_date' => '2025-01-11',
+        'month_of' => 'January-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -92614,6 +94717,7 @@ return array (
       array (
         'bill_no' => 'SA 699',
         'bill_date' => '2024-12-14',
+        'month_of' => 'December-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -92639,6 +94743,7 @@ return array (
       array (
         'bill_no' => '1455',
         'bill_date' => '2024-12-01',
+        'month_of' => 'December-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -92664,6 +94769,7 @@ return array (
       array (
         'bill_no' => 'SA 417',
         'bill_date' => '2024-10-21',
+        'month_of' => 'October-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -92759,6 +94865,7 @@ return array (
       array (
         'bill_no' => 'SA 1246',
         'bill_date' => '2024-10-01',
+        'month_of' => 'October-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -92791,6 +94898,7 @@ return array (
       array (
         'bill_no' => 'SA 620',
         'bill_date' => '2024-10-01',
+        'month_of' => 'October-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -92872,6 +94980,7 @@ return array (
       array (
         'bill_no' => '334',
         'bill_date' => '2024-09-17',
+        'month_of' => 'September-2024',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -92890,6 +94999,7 @@ return array (
       array (
         'bill_no' => 'SA 2180',
         'bill_date' => '2024-07-30',
+        'month_of' => 'July-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -92929,6 +95039,7 @@ return array (
       array (
         'bill_no' => '934',
         'bill_date' => '2024-07-01',
+        'month_of' => 'July-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -92947,6 +95058,7 @@ return array (
       array (
         'bill_no' => 'SA 2758',
         'bill_date' => '2024-07-01',
+        'month_of' => 'July-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -92972,6 +95084,7 @@ return array (
       array (
         'bill_no' => 'SA 565',
         'bill_date' => '2024-05-09',
+        'month_of' => 'May-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -92990,6 +95103,7 @@ return array (
       array (
         'bill_no' => 'SA 2154',
         'bill_date' => '2024-05-01',
+        'month_of' => 'May-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -93015,6 +95129,7 @@ return array (
       array (
         'bill_no' => 'SA 1581',
         'bill_date' => '2024-04-07',
+        'month_of' => 'Apri-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -93047,6 +95162,7 @@ return array (
       array (
         'bill_no' => 'SA 1487',
         'bill_date' => '2024-03-25',
+        'month_of' => 'March-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -93086,6 +95202,7 @@ return array (
       array (
         'bill_no' => '388',
         'bill_date' => '2024-03-01',
+        'month_of' => 'March-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -93104,6 +95221,7 @@ return array (
       array (
         'bill_no' => 'SA 1838',
         'bill_date' => '2024-03-01',
+        'month_of' => 'March-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -93129,6 +95247,7 @@ return array (
       array (
         'bill_no' => '4005869941',
         'bill_date' => '2023-11-30',
+        'month_of' => 'November-2023',
         'workshop_name' => 'Runner Motors Limited',
         'paid_by' => 'company',
         'items' => 
@@ -93273,6 +95392,7 @@ return array (
       array (
         'bill_no' => 'SA 735',
         'bill_date' => '2023-11-29',
+        'month_of' => 'November-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -93291,6 +95411,7 @@ return array (
       array (
         'bill_no' => 'SA 886',
         'bill_date' => '2023-11-01',
+        'month_of' => 'November-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -93309,6 +95430,7 @@ return array (
       array (
         'bill_no' => 'SA 650',
         'bill_date' => '2023-11-11',
+        'month_of' => 'November-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -93362,6 +95484,7 @@ return array (
       array (
         'bill_no' => 'SA 1353',
         'bill_date' => '2023-11-11',
+        'month_of' => 'November-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -93394,6 +95517,7 @@ return array (
       array (
         'bill_no' => 'SA 781',
         'bill_date' => '2023-11-11',
+        'month_of' => 'November-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -93419,6 +95543,7 @@ return array (
       array (
         'bill_no' => 'SA 649',
         'bill_date' => '2023-11-10',
+        'month_of' => 'November-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -93437,6 +95562,7 @@ return array (
       array (
         'bill_no' => 'SA 307',
         'bill_date' => '2023-09-19',
+        'month_of' => 'September-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -93455,6 +95581,7 @@ return array (
       array (
         'bill_no' => 'SA 359',
         'bill_date' => '2023-09-01',
+        'month_of' => 'September-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -93480,6 +95607,7 @@ return array (
       array (
         'bill_no' => '1452',
         'bill_date' => '2023-08-02',
+        'month_of' => 'August-2023',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -93498,6 +95626,7 @@ return array (
       array (
         'bill_no' => 'SA 732',
         'bill_date' => '2023-07-08',
+        'month_of' => 'July-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -93537,6 +95666,7 @@ return array (
       array (
         'bill_no' => 'SA 1878',
         'bill_date' => '2023-06-18',
+        'month_of' => 'June-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -93555,6 +95685,7 @@ return array (
       array (
         'bill_no' => 'SA 2330',
         'bill_date' => '2023-06-01',
+        'month_of' => 'June-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -93573,6 +95704,7 @@ return array (
       array (
         'bill_no' => 'SA 502',
         'bill_date' => '2023-05-18',
+        'month_of' => 'May-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -93598,6 +95730,7 @@ return array (
       array (
         'bill_no' => 'SA 1677',
         'bill_date' => '2023-05-01',
+        'month_of' => 'May-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -93623,6 +95756,7 @@ return array (
       array (
         'bill_no' => 'SA 2089',
         'bill_date' => '2023-05-01',
+        'month_of' => 'May-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -93655,6 +95789,7 @@ return array (
       array (
         'bill_no' => 'SA 304',
         'bill_date' => '2022-09-20',
+        'month_of' => 'September-2022',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -93680,6 +95815,7 @@ return array (
       array (
         'bill_no' => 'SA 381',
         'bill_date' => '2022-09-01',
+        'month_of' => 'September-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -93698,6 +95834,7 @@ return array (
       array (
         'bill_no' => 'SA 67',
         'bill_date' => '2022-08-10',
+        'month_of' => 'August-2022',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -93744,6 +95881,7 @@ return array (
       array (
         'bill_no' => 'SA 81',
         'bill_date' => '2022-08-01',
+        'month_of' => 'August-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -93789,6 +95927,7 @@ return array (
       array (
         'bill_no' => 'Bill # 76275',
         'bill_date' => '2026-06-10',
+        'month_of' => 'June-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -93835,6 +95974,7 @@ return array (
       array (
         'bill_no' => '2304',
         'bill_date' => '2026-06-09',
+        'month_of' => 'June-2026',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -93853,6 +95993,7 @@ return array (
       array (
         'bill_no' => 'Bill # 76143',
         'bill_date' => '2026-05-24',
+        'month_of' => 'May-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -93927,6 +96068,7 @@ return array (
       array (
         'bill_no' => 'Bill # 76088',
         'bill_date' => '2026-05-20',
+        'month_of' => 'May-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -94008,6 +96150,7 @@ return array (
       array (
         'bill_no' => '2891',
         'bill_date' => '2026-05-20',
+        'month_of' => 'May-2026',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -94026,6 +96169,7 @@ return array (
       array (
         'bill_no' => 'Bill # 76051',
         'bill_date' => '2026-05-13',
+        'month_of' => 'May-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -94086,6 +96230,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75869',
         'bill_date' => '2026-04-22',
+        'month_of' => 'April-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -94139,6 +96284,7 @@ return array (
       array (
         'bill_no' => '754',
         'bill_date' => '2026-03-31',
+        'month_of' => 'March-2026',
         'workshop_name' => 'Palash Car A/C Centre',
         'paid_by' => 'company',
         'items' => 
@@ -94213,6 +96359,7 @@ return array (
       array (
         'bill_no' => '13978',
         'bill_date' => '2026-03-31',
+        'month_of' => 'March-2026',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -94245,6 +96392,7 @@ return array (
       array (
         'bill_no' => '1695',
         'bill_date' => '2026-03-31',
+        'month_of' => 'March-2026',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -94263,6 +96411,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75597',
         'bill_date' => '2026-03-08',
+        'month_of' => 'March-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -94316,6 +96465,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75246',
         'bill_date' => '2026-02-09',
+        'month_of' => 'February-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -94362,6 +96512,7 @@ return array (
       array (
         'bill_no' => '33',
         'bill_date' => '2026-01-31',
+        'month_of' => 'January-2026',
         'workshop_name' => 'The Alamgir Automobile',
         'paid_by' => 'company',
         'items' => 
@@ -94408,6 +96559,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75104',
         'bill_date' => '2026-01-19',
+        'month_of' => 'January-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -94440,6 +96592,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75159',
         'bill_date' => '2026-01-15',
+        'month_of' => 'January-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -94570,6 +96723,7 @@ return array (
       array (
         'bill_no' => 'Bill # 74984',
         'bill_date' => '2026-01-06',
+        'month_of' => 'January-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -94595,6 +96749,7 @@ return array (
       array (
         'bill_no' => 'Bill # 74906',
         'bill_date' => '2025-12-29',
+        'month_of' => 'December-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -94676,6 +96831,7 @@ return array (
       array (
         'bill_no' => 'Bill # 74807',
         'bill_date' => '2025-12-20',
+        'month_of' => 'December-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -94722,6 +96878,7 @@ return array (
       array (
         'bill_no' => 'Bill # 74570',
         'bill_date' => '2025-12-04',
+        'month_of' => 'December-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -94768,6 +96925,7 @@ return array (
       array (
         'bill_no' => '26',
         'bill_date' => '2025-11-26',
+        'month_of' => 'November-2025',
         'workshop_name' => 'The Alamgir Automobile',
         'paid_by' => 'company',
         'items' => 
@@ -94912,6 +97070,7 @@ return array (
       array (
         'bill_no' => 'Bill # 74427',
         'bill_date' => '2025-11-19',
+        'month_of' => 'November-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -94951,6 +97110,7 @@ return array (
       array (
         'bill_no' => 'Bill # 74390',
         'bill_date' => '2025-11-15',
+        'month_of' => 'November-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -95060,6 +97220,7 @@ return array (
       array (
         'bill_no' => 'Bill # 74262',
         'bill_date' => '2025-11-11',
+        'month_of' => 'November-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -95127,6 +97288,7 @@ return array (
       array (
         'bill_no' => 'Bill # 74109',
         'bill_date' => '2025-10-23',
+        'month_of' => 'October-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -95257,6 +97419,7 @@ return array (
       array (
         'bill_no' => '826',
         'bill_date' => '2025-10-22',
+        'month_of' => 'October-2025',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -95282,6 +97445,7 @@ return array (
       array (
         'bill_no' => 'Bill # 73873',
         'bill_date' => '2025-09-30',
+        'month_of' => 'September-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -95314,6 +97478,7 @@ return array (
       array (
         'bill_no' => 'Bill # 73736',
         'bill_date' => '2025-09-24',
+        'month_of' => 'September-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -95381,6 +97546,7 @@ return array (
       array (
         'bill_no' => '508',
         'bill_date' => '2025-09-14',
+        'month_of' => 'September-2025',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -95399,6 +97565,7 @@ return array (
       array (
         'bill_no' => 'Bill # 73186',
         'bill_date' => '2025-07-26',
+        'month_of' => 'July-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -95466,6 +97633,7 @@ return array (
       array (
         'bill_no' => 'Bill # 72935',
         'bill_date' => '2025-06-26',
+        'month_of' => 'June-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -95498,6 +97666,7 @@ return array (
       array (
         'bill_no' => 'Bill # 72929',
         'bill_date' => '2025-06-22',
+        'month_of' => 'June-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -95537,6 +97706,7 @@ return array (
       array (
         'bill_no' => 'Bill # 72680',
         'bill_date' => '2025-06-03',
+        'month_of' => 'June-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -95632,6 +97802,7 @@ return array (
       array (
         'bill_no' => 'Bill # 72366',
         'bill_date' => '2025-05-07',
+        'month_of' => 'May-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -95706,6 +97877,7 @@ return array (
       array (
         'bill_no' => 'Bill # 71891',
         'bill_date' => '2025-02-27',
+        'month_of' => 'February-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -95752,6 +97924,7 @@ return array (
       array (
         'bill_no' => 'Bill # 71641',
         'bill_date' => '2025-02-20',
+        'month_of' => 'February-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -95791,6 +97964,7 @@ return array (
       array (
         'bill_no' => '13328',
         'bill_date' => '2025-02-13',
+        'month_of' => 'February-2025',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -95816,6 +97990,7 @@ return array (
       array (
         'bill_no' => 'Bill # 71580',
         'bill_date' => '2025-01-27',
+        'month_of' => 'January-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -95862,6 +98037,7 @@ return array (
       array (
         'bill_no' => 'Bill # 71562',
         'bill_date' => '2025-01-25',
+        'month_of' => 'January-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -95901,6 +98077,7 @@ return array (
       array (
         'bill_no' => '219',
         'bill_date' => '2025-01-20',
+        'month_of' => 'January-2025',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -95919,6 +98096,7 @@ return array (
       array (
         'bill_no' => '828',
         'bill_date' => '2024-12-28',
+        'month_of' => 'December-2024',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -95937,6 +98115,7 @@ return array (
       array (
         'bill_no' => 'Bill # 71130',
         'bill_date' => '2024-12-18',
+        'month_of' => 'December-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -95962,6 +98141,7 @@ return array (
       array (
         'bill_no' => 'Bill No # 71110',
         'bill_date' => '2024-12-18',
+        'month_of' => 'December-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -96064,6 +98244,7 @@ return array (
       array (
         'bill_no' => 'SA 681',
         'bill_date' => '2024-12-10',
+        'month_of' => 'December-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -96124,6 +98305,7 @@ return array (
       array (
         'bill_no' => 'SA 984',
         'bill_date' => '2024-12-01',
+        'month_of' => 'December-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -96163,6 +98345,7 @@ return array (
       array (
         'bill_no' => 'SA 514',
         'bill_date' => '2024-11-06',
+        'month_of' => 'November-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -96195,6 +98378,7 @@ return array (
       array (
         'bill_no' => 'SA 757',
         'bill_date' => '2024-11-01',
+        'month_of' => 'November-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -96220,6 +98404,7 @@ return array (
       array (
         'bill_no' => '601',
         'bill_date' => '2024-10-09',
+        'month_of' => 'October-2024',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -96238,6 +98423,7 @@ return array (
       array (
         'bill_no' => 'SA 384',
         'bill_date' => '2024-10-14',
+        'month_of' => 'October-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -96291,6 +98477,7 @@ return array (
       array (
         'bill_no' => 'SA 560',
         'bill_date' => '2024-10-01',
+        'month_of' => 'October-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -96330,6 +98517,7 @@ return array (
       array (
         'bill_no' => 'SA 316',
         'bill_date' => '2024-11-05',
+        'month_of' => 'October-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -96369,6 +98557,7 @@ return array (
       array (
         'bill_no' => 'SA 467',
         'bill_date' => '2024-10-01',
+        'month_of' => 'October-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -96394,6 +98583,7 @@ return array (
       array (
         'bill_no' => 'SA 270',
         'bill_date' => '2024-09-25',
+        'month_of' => 'September-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -96524,6 +98714,7 @@ return array (
       array (
         'bill_no' => 'SA 402',
         'bill_date' => '2024-09-01',
+        'month_of' => 'September-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -96563,6 +98754,7 @@ return array (
       array (
         'bill_no' => 'SA 25',
         'bill_date' => '2024-08-10',
+        'month_of' => 'August-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -96595,6 +98787,7 @@ return array (
       array (
         'bill_no' => 'SA 287',
         'bill_date' => '2024-08-01',
+        'month_of' => 'August-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -96613,6 +98806,7 @@ return array (
       array (
         'bill_no' => 'SA 2030',
         'bill_date' => '2024-06-30',
+        'month_of' => 'June-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -96652,6 +98846,7 @@ return array (
       array (
         'bill_no' => 'SA 2555',
         'bill_date' => '2024-06-01',
+        'month_of' => 'June-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -96684,6 +98879,7 @@ return array (
       array (
         'bill_no' => 'SA 1952',
         'bill_date' => '2024-06-11',
+        'month_of' => 'June-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -96702,6 +98898,7 @@ return array (
       array (
         'bill_no' => 'SA 2434',
         'bill_date' => '2024-06-01',
+        'month_of' => 'June-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -96720,6 +98917,7 @@ return array (
       array (
         'bill_no' => 'SA 1861',
         'bill_date' => '2024-05-25',
+        'month_of' => 'May-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -96738,6 +98936,7 @@ return array (
       array (
         'bill_no' => 'SA 2309',
         'bill_date' => '2024-05-01',
+        'month_of' => 'May-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -96756,6 +98955,7 @@ return array (
       array (
         'bill_no' => 'SA 1706',
         'bill_date' => '2024-05-04',
+        'month_of' => 'May-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -96781,6 +98981,7 @@ return array (
       array (
         'bill_no' => 'SA 2127',
         'bill_date' => '2024-05-01',
+        'month_of' => 'May-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -96799,6 +99000,7 @@ return array (
       array (
         'bill_no' => 'SA 1988',
         'bill_date' => '2024-04-16',
+        'month_of' => 'April-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -96817,6 +99019,7 @@ return array (
       array (
         'bill_no' => 'SA 1555',
         'bill_date' => '2024-04-03',
+        'month_of' => 'April-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -96835,6 +99038,7 @@ return array (
       array (
         'bill_no' => 'SA 1916',
         'bill_date' => '2024-04-01',
+        'month_of' => 'April-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -96860,6 +99064,7 @@ return array (
       array (
         'bill_no' => 'SA 1396',
         'bill_date' => '2024-03-12',
+        'month_of' => 'March-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -96899,6 +99104,7 @@ return array (
       array (
         'bill_no' => 'SA 1741',
         'bill_date' => '2024-03-01',
+        'month_of' => 'March-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -96917,6 +99123,7 @@ return array (
       array (
         'bill_no' => 'SA 781',
         'bill_date' => '2023-12-05',
+        'month_of' => 'December-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -96977,6 +99184,7 @@ return array (
       array (
         'bill_no' => 'SA 939',
         'bill_date' => '2023-12-01',
+        'month_of' => 'December-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -97002,6 +99210,7 @@ return array (
       array (
         'bill_no' => 'SA 632',
         'bill_date' => '2023-11-06',
+        'month_of' => 'November-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -97062,6 +99271,7 @@ return array (
       array (
         'bill_no' => 'SA 753',
         'bill_date' => '2023-11-01',
+        'month_of' => 'November-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -97094,6 +99304,7 @@ return array (
       array (
         'bill_no' => 'SA 570',
         'bill_date' => '2023-10-24',
+        'month_of' => 'October-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -97161,6 +99372,7 @@ return array (
       array (
         'bill_no' => 'SA 669',
         'bill_date' => '2023-10-01',
+        'month_of' => 'October-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -97200,6 +99412,7 @@ return array (
       array (
         'bill_no' => 'SA 290',
         'bill_date' => '2023-10-14',
+        'month_of' => 'September-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -97225,6 +99438,7 @@ return array (
       array (
         'bill_no' => 'SA 342',
         'bill_date' => '2023-09-01',
+        'month_of' => 'September-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -97243,6 +99457,7 @@ return array (
       array (
         'bill_no' => 'SA 250',
         'bill_date' => '2023-09-10',
+        'month_of' => 'September-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -97324,6 +99539,7 @@ return array (
       array (
         'bill_no' => 'SA 287',
         'bill_date' => '2023-09-01',
+        'month_of' => 'September-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -97363,6 +99579,7 @@ return array (
       array (
         'bill_no' => '2214',
         'bill_date' => '2023-08-11',
+        'month_of' => 'August-2023',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -97381,6 +99598,7 @@ return array (
       array (
         'bill_no' => 'SA 1430',
         'bill_date' => '2023-08-26',
+        'month_of' => 'August-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -97406,6 +99624,7 @@ return array (
       array (
         'bill_no' => 'SA 164',
         'bill_date' => '2023-08-01',
+        'month_of' => 'August-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -97431,6 +99650,7 @@ return array (
       array (
         'bill_no' => 'SA 137',
         'bill_date' => '2023-08-23',
+        'month_of' => 'August-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -97449,6 +99669,7 @@ return array (
       array (
         'bill_no' => 'SA 71',
         'bill_date' => '2023-08-12',
+        'month_of' => 'August-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -97495,6 +99716,7 @@ return array (
       array (
         'bill_no' => 'SA 77',
         'bill_date' => '2023-08-01',
+        'month_of' => 'August-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -97520,6 +99742,7 @@ return array (
       array (
         'bill_no' => 'SA 2041',
         'bill_date' => '2023-07-18',
+        'month_of' => 'July-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -97545,6 +99768,7 @@ return array (
       array (
         'bill_no' => 'SA 2520',
         'bill_date' => '2023-07-01',
+        'month_of' => 'July-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -97570,6 +99794,7 @@ return array (
       array (
         'bill_no' => 'SA 1992',
         'bill_date' => '2023-07-10',
+        'month_of' => 'July-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -97658,6 +99883,7 @@ return array (
       array (
         'bill_no' => 'SA 2467',
         'bill_date' => '2023-07-01',
+        'month_of' => 'July-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -97690,6 +99916,7 @@ return array (
       array (
         'bill_no' => 'SA 1978',
         'bill_date' => '2023-07-08',
+        'month_of' => 'July-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -97736,6 +99963,7 @@ return array (
       array (
         'bill_no' => 'SA 2449',
         'bill_date' => '2023-07-01',
+        'month_of' => 'July-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -97761,6 +99989,7 @@ return array (
       array (
         'bill_no' => 'SA 1840',
         'bill_date' => '2023-06-11',
+        'month_of' => 'June-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -97779,6 +100008,7 @@ return array (
       array (
         'bill_no' => 'SA 2289',
         'bill_date' => '2023-06-01',
+        'month_of' => 'June-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -97797,6 +100027,7 @@ return array (
       array (
         'bill_no' => 'SA 1813',
         'bill_date' => '2023-06-07',
+        'month_of' => 'June-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -97843,6 +100074,7 @@ return array (
       array (
         'bill_no' => 'SA 2262',
         'bill_date' => '2023-06-01',
+        'month_of' => 'June-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -97875,6 +100107,7 @@ return array (
       array (
         'bill_no' => '1671',
         'bill_date' => '2023-05-04',
+        'month_of' => 'May-2023',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -97893,6 +100126,7 @@ return array (
       array (
         'bill_no' => 'SA 1624',
         'bill_date' => '2023-05-08',
+        'month_of' => 'May-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -97925,6 +100159,7 @@ return array (
       array (
         'bill_no' => 'SA 2021',
         'bill_date' => '2023-05-01',
+        'month_of' => 'May-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -97950,6 +100185,7 @@ return array (
       array (
         'bill_no' => 'SA 1584',
         'bill_date' => '2023-04-30',
+        'month_of' => 'April-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -97968,6 +100204,7 @@ return array (
       array (
         'bill_no' => 'SA 1969',
         'bill_date' => '2023-04-01',
+        'month_of' => 'April-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -97986,6 +100223,7 @@ return array (
       array (
         'bill_no' => 'SA 1899',
         'bill_date' => '2023-04-15',
+        'month_of' => 'April-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -98004,6 +100242,7 @@ return array (
       array (
         'bill_no' => 'SA 1491',
         'bill_date' => '2023-04-11',
+        'month_of' => 'April-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -98036,6 +100275,7 @@ return array (
       array (
         'bill_no' => 'SA 1861',
         'bill_date' => '2023-04-01',
+        'month_of' => 'April-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -98054,6 +100294,7 @@ return array (
       array (
         'bill_no' => '18165',
         'bill_date' => '2023-04-10',
+        'month_of' => 'April-2023',
         'workshop_name' => 'JK Motors',
         'paid_by' => 'company',
         'items' => 
@@ -98079,6 +100320,7 @@ return array (
       array (
         'bill_no' => 'SA 1430',
         'bill_date' => '2023-04-02',
+        'month_of' => 'April-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -98097,6 +100339,7 @@ return array (
       array (
         'bill_no' => 'SA 1407',
         'bill_date' => '2023-03-29',
+        'month_of' => 'March-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -98136,6 +100379,7 @@ return array (
       array (
         'bill_no' => 'SA 1779',
         'bill_date' => '2023-03-01',
+        'month_of' => 'March-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -98154,6 +100398,7 @@ return array (
       array (
         'bill_no' => 'SA 1341',
         'bill_date' => '2023-03-14',
+        'month_of' => 'March-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -98172,6 +100417,7 @@ return array (
       array (
         'bill_no' => 'SA 1689',
         'bill_date' => '2023-03-01',
+        'month_of' => 'March-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -98190,6 +100436,7 @@ return array (
       array (
         'bill_no' => 'SA 1325',
         'bill_date' => '2023-03-12',
+        'month_of' => 'March-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -98222,6 +100469,7 @@ return array (
       array (
         'bill_no' => 'SA 1669',
         'bill_date' => '2023-03-01',
+        'month_of' => 'March-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -98240,6 +100488,7 @@ return array (
       array (
         'bill_no' => 'SA 1158',
         'bill_date' => '2023-02-08',
+        'month_of' => 'February-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -98279,6 +100528,7 @@ return array (
       array (
         'bill_no' => 'SA 1456',
         'bill_date' => '2023-02-08',
+        'month_of' => 'February-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -98304,6 +100554,7 @@ return array (
       array (
         'bill_no' => 'SA 1059',
         'bill_date' => '2023-01-23',
+        'month_of' => 'January-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -98329,6 +100580,7 @@ return array (
       array (
         'bill_no' => 'SA 1336',
         'bill_date' => '2023-01-23',
+        'month_of' => 'January-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -98347,6 +100599,7 @@ return array (
       array (
         'bill_no' => 'SA 988',
         'bill_date' => '2023-01-08',
+        'month_of' => 'January-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -98379,6 +100632,7 @@ return array (
       array (
         'bill_no' => 'SA 1241',
         'bill_date' => '2023-01-08',
+        'month_of' => 'January-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -98397,6 +100651,7 @@ return array (
       array (
         'bill_no' => 'SA 931',
         'bill_date' => '2022-12-28',
+        'month_of' => 'December-2022',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -98415,6 +100670,7 @@ return array (
       array (
         'bill_no' => 'SA 832',
         'bill_date' => '2022-12-12',
+        'month_of' => 'December-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -98447,6 +100703,7 @@ return array (
       array (
         'bill_no' => 'SA 1037',
         'bill_date' => '2022-12-12',
+        'month_of' => 'December-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -98465,6 +100722,7 @@ return array (
       array (
         'bill_no' => 'SA 904',
         'bill_date' => '2022-11-22',
+        'month_of' => 'November-2022',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -98490,6 +100748,7 @@ return array (
       array (
         'bill_no' => 'SA 710',
         'bill_date' => '2022-11-22',
+        'month_of' => 'November-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -98522,6 +100781,7 @@ return array (
       array (
         'bill_no' => 'SA 615',
         'bill_date' => '2022-11-07',
+        'month_of' => 'November-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -98575,6 +100835,7 @@ return array (
       array (
         'bill_no' => 'SA 777',
         'bill_date' => '2022-11-07',
+        'month_of' => 'November-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -98600,6 +100861,7 @@ return array (
       array (
         'bill_no' => 'SA 433',
         'bill_date' => '2022-10-13',
+        'month_of' => 'October-2022',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -98646,6 +100908,7 @@ return array (
       array (
         'bill_no' => 'SA 570',
         'bill_date' => '2022-10-13',
+        'month_of' => 'October-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -98678,6 +100941,7 @@ return array (
       array (
         'bill_no' => 'SA 459',
         'bill_date' => '2022-10-17',
+        'month_of' => 'October-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -98703,6 +100967,7 @@ return array (
       array (
         'bill_no' => 'SA 247',
         'bill_date' => '2022-09-10',
+        'month_of' => 'September-2022',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -98756,6 +101021,7 @@ return array (
       array (
         'bill_no' => 'SA 306',
         'bill_date' => '2022-09-10',
+        'month_of' => 'September-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -98774,6 +101040,7 @@ return array (
       array (
         'bill_no' => 'SA 74',
         'bill_date' => '2022-08-10',
+        'month_of' => 'August-2022',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -98806,6 +101073,7 @@ return array (
       array (
         'bill_no' => 'SA 89',
         'bill_date' => '2022-08-10',
+        'month_of' => 'August-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -98831,6 +101099,7 @@ return array (
       array (
         'bill_no' => 'SA 130',
         'bill_date' => '2022-08-19',
+        'month_of' => 'August-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -98863,6 +101132,7 @@ return array (
       array (
         'bill_no' => 'SA 160',
         'bill_date' => '2022-08-19',
+        'month_of' => 'August-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -98881,6 +101151,7 @@ return array (
       array (
         'bill_no' => 'SA 190',
         'bill_date' => '2022-08-29',
+        'month_of' => 'August-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -98927,6 +101198,7 @@ return array (
       array (
         'bill_no' => 'SA 367',
         'bill_date' => '2022-08-29',
+        'month_of' => 'August-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -98951,6 +101223,7 @@ return array (
       array (
         'bill_no' => 'Bill # 76254',
         'bill_date' => '2026-06-13',
+        'month_of' => 'June-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -99011,6 +101284,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75824',
         'bill_date' => '2026-05-18',
+        'month_of' => 'May-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -99078,6 +101352,7 @@ return array (
       array (
         'bill_no' => 'Bill # 76043',
         'bill_date' => '2026-05-18',
+        'month_of' => 'May-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -99103,6 +101378,7 @@ return array (
       array (
         'bill_no' => 'Bill # 76005',
         'bill_date' => '2026-05-09',
+        'month_of' => 'May-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -99170,6 +101446,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75558',
         'bill_date' => '2026-04-04',
+        'month_of' => 'April-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -99265,6 +101542,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75348',
         'bill_date' => '2026-02-22',
+        'month_of' => 'February-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -99346,6 +101624,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75053',
         'bill_date' => '2026-01-25',
+        'month_of' => 'January-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -99371,6 +101650,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75197',
         'bill_date' => '2026-01-19',
+        'month_of' => 'January-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -99403,6 +101683,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75184',
         'bill_date' => '2026-01-18',
+        'month_of' => 'January-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -99470,6 +101751,7 @@ return array (
       array (
         'bill_no' => 'Bill # 75121',
         'bill_date' => '2026-01-12',
+        'month_of' => 'January-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -99509,6 +101791,7 @@ return array (
       array (
         'bill_no' => '2528',
         'bill_date' => '2025-01-10',
+        'month_of' => 'January-2026',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -99527,6 +101810,7 @@ return array (
       array (
         'bill_no' => 'Bill # 74974',
         'bill_date' => '2026-01-06',
+        'month_of' => 'January-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -99573,6 +101857,7 @@ return array (
       array (
         'bill_no' => 'Bill # 74951',
         'bill_date' => '2025-01-03',
+        'month_of' => 'January-2026',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -99633,6 +101918,7 @@ return array (
       array (
         'bill_no' => 'Bill # 74817',
         'bill_date' => '2025-12-20',
+        'month_of' => 'December-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -99658,6 +101944,7 @@ return array (
       array (
         'bill_no' => 'Bill # 74639',
         'bill_date' => '2025-12-17',
+        'month_of' => 'December-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -99704,6 +101991,7 @@ return array (
       array (
         'bill_no' => 'Bill # 74544',
         'bill_date' => '2025-12-04',
+        'month_of' => 'December-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -99799,6 +102087,7 @@ return array (
       array (
         'bill_no' => 'Bill # 74422',
         'bill_date' => '2025-11-19',
+        'month_of' => 'November-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -99831,6 +102120,7 @@ return array (
       array (
         'bill_no' => 'Bill # 74156',
         'bill_date' => '2025-11-15',
+        'month_of' => 'November-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -99877,6 +102167,7 @@ return array (
       array (
         'bill_no' => 'Bill # 74245',
         'bill_date' => '2025-11-05',
+        'month_of' => 'November-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -99944,6 +102235,7 @@ return array (
       array (
         'bill_no' => 'Bill # 74014',
         'bill_date' => '2025-10-22',
+        'month_of' => 'October-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -100011,6 +102303,7 @@ return array (
       array (
         'bill_no' => 'Bill # 73959',
         'bill_date' => '2025-10-11',
+        'month_of' => 'October-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -100064,6 +102357,7 @@ return array (
       array (
         'bill_no' => 'Bill # 73912',
         'bill_date' => '2025-10-01',
+        'month_of' => 'October-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -100166,6 +102460,7 @@ return array (
       array (
         'bill_no' => 'Bill # 73704',
         'bill_date' => '2025-09-25',
+        'month_of' => 'September-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -100198,6 +102493,7 @@ return array (
       array (
         'bill_no' => 'Bill # 73772',
         'bill_date' => '2025-09-16',
+        'month_of' => 'September-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -100272,6 +102568,7 @@ return array (
       array (
         'bill_no' => 'Bill # 73606',
         'bill_date' => '2025-09-04',
+        'month_of' => 'September-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -100346,6 +102643,7 @@ return array (
       array (
         'bill_no' => 'Bill # 73356',
         'bill_date' => '2025-08-24',
+        'month_of' => 'August-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -100378,6 +102676,7 @@ return array (
       array (
         'bill_no' => 'Bill # 73314',
         'bill_date' => '2025-08-03',
+        'month_of' => 'August-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -100438,6 +102737,7 @@ return array (
       array (
         'bill_no' => 'Bill # 73111',
         'bill_date' => '2025-07-23',
+        'month_of' => 'July-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -100491,6 +102791,7 @@ return array (
       array (
         'bill_no' => 'Bill # 73057',
         'bill_date' => '2025-07-03',
+        'month_of' => 'July-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -100544,6 +102845,7 @@ return array (
       array (
         'bill_no' => '1282',
         'bill_date' => '2025-06-29',
+        'month_of' => 'June-2025',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -100562,6 +102864,7 @@ return array (
       array (
         'bill_no' => '13368',
         'bill_date' => '2025-06-27',
+        'month_of' => 'June-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -100678,6 +102981,7 @@ return array (
       array (
         'bill_no' => 'Bill # 72531',
         'bill_date' => '2025-06-03',
+        'month_of' => 'June-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -100759,6 +103063,7 @@ return array (
       array (
         'bill_no' => '1141',
         'bill_date' => '2025-05-30',
+        'month_of' => 'May-2025',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -100777,6 +103082,7 @@ return array (
       array (
         'bill_no' => '193',
         'bill_date' => '2025-05-11',
+        'month_of' => 'May-2025',
         'workshop_name' => 'Palash Car A/C Centre',
         'paid_by' => 'company',
         'items' => 
@@ -100837,6 +103143,7 @@ return array (
       array (
         'bill_no' => 'Bill # 72453',
         'bill_date' => '2025-05-07',
+        'month_of' => 'May-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -100897,6 +103204,7 @@ return array (
       array (
         'bill_no' => 'Bill # 72216',
         'bill_date' => '2025-04-07',
+        'month_of' => 'April-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -100964,6 +103272,7 @@ return array (
       array (
         'bill_no' => 'Bill # 71670',
         'bill_date' => '2025-03-03',
+        'month_of' => 'March-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -101024,6 +103333,7 @@ return array (
       array (
         'bill_no' => '13331',
         'bill_date' => '2025-02-25',
+        'month_of' => 'February-2025',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -101056,6 +103366,7 @@ return array (
       array (
         'bill_no' => 'Bill # 71632',
         'bill_date' => '2025-02-01',
+        'month_of' => 'February-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -101116,6 +103427,7 @@ return array (
       array (
         'bill_no' => 'Bill # 71551',
         'bill_date' => '2025-01-27',
+        'month_of' => 'January-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -101162,6 +103474,7 @@ return array (
       array (
         'bill_no' => 'Bill # 71347',
         'bill_date' => '2025-01-07',
+        'month_of' => 'January-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -101201,6 +103514,7 @@ return array (
       array (
         'bill_no' => 'Bill # 71293',
         'bill_date' => '2025-01-04',
+        'month_of' => 'January-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -101254,6 +103568,7 @@ return array (
       array (
         'bill_no' => 'SA 654',
         'bill_date' => '2024-12-05',
+        'month_of' => 'December-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -101300,6 +103615,7 @@ return array (
       array (
         'bill_no' => 'SA 951',
         'bill_date' => '2024-12-01',
+        'month_of' => 'December-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -101325,6 +103641,7 @@ return array (
       array (
         'bill_no' => 'SA 492',
         'bill_date' => '2024-11-02',
+        'month_of' => 'November-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -101378,6 +103695,7 @@ return array (
       array (
         'bill_no' => 'SA 725',
         'bill_date' => '2024-11-01',
+        'month_of' => 'November-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -101403,6 +103721,7 @@ return array (
       array (
         'bill_no' => 'SA 315',
         'bill_date' => '2024-10-05',
+        'month_of' => 'October-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -101456,6 +103775,7 @@ return array (
       array (
         'bill_no' => 'SA 465',
         'bill_date' => '2024-10-01',
+        'month_of' => 'October-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -101488,6 +103808,7 @@ return array (
       array (
         'bill_no' => '11773',
         'bill_date' => '2024-09-30',
+        'month_of' => 'September-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -101506,6 +103827,7 @@ return array (
       array (
         'bill_no' => '442',
         'bill_date' => '2024-09-30',
+        'month_of' => 'September-2024',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -101524,6 +103846,7 @@ return array (
       array (
         'bill_no' => 'SA 155',
         'bill_date' => '2024-09-03',
+        'month_of' => 'September-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -101570,6 +103893,7 @@ return array (
       array (
         'bill_no' => 'SA 211',
         'bill_date' => '2024-09-01',
+        'month_of' => 'September-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -101595,6 +103919,7 @@ return array (
       array (
         'bill_no' => '11759',
         'bill_date' => '2024-08-27',
+        'month_of' => 'August-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -101697,6 +104022,7 @@ return array (
       array (
         'bill_no' => 'SA 47',
         'bill_date' => '2024-08-15',
+        'month_of' => 'August-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -101715,6 +104041,7 @@ return array (
       array (
         'bill_no' => 'SA 5',
         'bill_date' => '2024-08-03',
+        'month_of' => 'August-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -101761,6 +104088,7 @@ return array (
       array (
         'bill_no' => 'SA 5',
         'bill_date' => '2024-08-01',
+        'month_of' => 'August-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -101779,6 +104107,7 @@ return array (
       array (
         'bill_no' => 'SA 2132',
         'bill_date' => '2024-07-18',
+        'month_of' => 'July-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -101797,6 +104126,7 @@ return array (
       array (
         'bill_no' => 'SA 2061',
         'bill_date' => '2024-07-07',
+        'month_of' => 'July-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -101836,6 +104166,7 @@ return array (
       array (
         'bill_no' => 'SA 2596',
         'bill_date' => '2024-07-01',
+        'month_of' => 'July-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -101854,6 +104185,7 @@ return array (
       array (
         'bill_no' => 'SA 1935',
         'bill_date' => '2024-06-09',
+        'month_of' => 'June-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -101872,6 +104204,7 @@ return array (
       array (
         'bill_no' => 'SA 1890',
         'bill_date' => '2024-06-01',
+        'month_of' => 'June-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -101918,6 +104251,7 @@ return array (
       array (
         'bill_no' => 'SA 2349',
         'bill_date' => '2024-06-01',
+        'month_of' => 'June-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -101936,6 +104270,7 @@ return array (
       array (
         'bill_no' => 'SA 1713',
         'bill_date' => '2024-05-05',
+        'month_of' => 'May-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -101982,6 +104317,7 @@ return array (
       array (
         'bill_no' => 'SA 2139',
         'bill_date' => '2024-05-01',
+        'month_of' => 'May-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -102000,6 +104336,7 @@ return array (
       array (
         'bill_no' => '11716',
         'bill_date' => '2024-04-06',
+        'month_of' => 'April-2024',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -102032,6 +104369,7 @@ return array (
       array (
         'bill_no' => 'SA 1557',
         'bill_date' => '2024-04-03',
+        'month_of' => 'April-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -102064,6 +104402,7 @@ return array (
       array (
         'bill_no' => 'SA 1919',
         'bill_date' => '2024-04-01',
+        'month_of' => 'April-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -102082,6 +104421,7 @@ return array (
       array (
         'bill_no' => 'SA 1539',
         'bill_date' => '2024-04-01',
+        'month_of' => 'April-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -102121,6 +104461,7 @@ return array (
       array (
         'bill_no' => 'SA 1896',
         'bill_date' => '2024-04-01',
+        'month_of' => 'April-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -102139,6 +104480,7 @@ return array (
       array (
         'bill_no' => 'SA 1524',
         'bill_date' => '2024-03-31',
+        'month_of' => 'March-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -102157,6 +104499,7 @@ return array (
       array (
         'bill_no' => 'SA 1328',
         'bill_date' => '2024-03-02',
+        'month_of' => 'March-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -102210,6 +104553,7 @@ return array (
       array (
         'bill_no' => 'SA 1657',
         'bill_date' => '2024-03-01',
+        'month_of' => 'March-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -102235,6 +104579,7 @@ return array (
       array (
         'bill_no' => 'SA 1148',
         'bill_date' => '2024-01-31',
+        'month_of' => 'January-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -102281,6 +104626,7 @@ return array (
       array (
         'bill_no' => 'SA 1397',
         'bill_date' => '2024-01-01',
+        'month_of' => 'January-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -102299,6 +104645,7 @@ return array (
       array (
         'bill_no' => 'SA 972',
         'bill_date' => '2024-01-03',
+        'month_of' => 'January-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -102352,6 +104699,7 @@ return array (
       array (
         'bill_no' => 'SA 1183',
         'bill_date' => '2024-01-01',
+        'month_of' => 'January-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -102377,6 +104725,7 @@ return array (
       array (
         'bill_no' => '2192',
         'bill_date' => '2023-12-18',
+        'month_of' => 'December-2023',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -102395,6 +104744,7 @@ return array (
       array (
         'bill_no' => 'SA 838',
         'bill_date' => '2023-12-14',
+        'month_of' => 'December-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -102427,6 +104777,7 @@ return array (
       array (
         'bill_no' => 'SA 1013',
         'bill_date' => '2023-12-01',
+        'month_of' => 'December-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -102452,6 +104803,7 @@ return array (
       array (
         'bill_no' => 'SA 755',
         'bill_date' => '2023-12-02',
+        'month_of' => 'December-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -102505,6 +104857,7 @@ return array (
       array (
         'bill_no' => 'SA 911',
         'bill_date' => '2023-12-01',
+        'month_of' => 'December-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -102530,6 +104883,7 @@ return array (
       array (
         'bill_no' => 'SA 636',
         'bill_date' => '2023-11-07',
+        'month_of' => 'November-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -102569,6 +104923,7 @@ return array (
       array (
         'bill_no' => 'SA 757',
         'bill_date' => '2023-11-01',
+        'month_of' => 'November-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -102587,6 +104942,7 @@ return array (
       array (
         'bill_no' => 'SA 546',
         'bill_date' => '2023-10-22',
+        'month_of' => 'October-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -102605,6 +104961,7 @@ return array (
       array (
         'bill_no' => 'SA 640',
         'bill_date' => '2023-10-01',
+        'month_of' => 'October-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -102623,6 +104980,7 @@ return array (
       array (
         'bill_no' => 'SA 516',
         'bill_date' => '2023-10-18',
+        'month_of' => 'October-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -102641,6 +104999,7 @@ return array (
       array (
         'bill_no' => 'SA 608',
         'bill_date' => '2023-10-01',
+        'month_of' => 'October-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -102659,6 +105018,7 @@ return array (
       array (
         'bill_no' => 'SA 453',
         'bill_date' => '2023-10-08',
+        'month_of' => 'October-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -102677,6 +105037,7 @@ return array (
       array (
         'bill_no' => 'SA 525',
         'bill_date' => '2023-10-01',
+        'month_of' => 'October-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -102702,6 +105063,7 @@ return array (
       array (
         'bill_no' => 'SA 416',
         'bill_date' => '2023-10-03',
+        'month_of' => 'October-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -102755,6 +105117,7 @@ return array (
       array (
         'bill_no' => 'SA 489',
         'bill_date' => '2023-10-01',
+        'month_of' => 'October-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -102773,6 +105136,7 @@ return array (
       array (
         'bill_no' => 'SA 233',
         'bill_date' => '2023-09-06',
+        'month_of' => 'September-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -102819,6 +105183,7 @@ return array (
       array (
         'bill_no' => 'SA 266',
         'bill_date' => '2023-09-01',
+        'month_of' => 'September-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -102844,6 +105209,7 @@ return array (
       array (
         'bill_no' => 'SA 72',
         'bill_date' => '2023-08-12',
+        'month_of' => 'August-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -102883,6 +105249,7 @@ return array (
       array (
         'bill_no' => 'SA 78',
         'bill_date' => '2023-08-01',
+        'month_of' => 'August-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -102901,6 +105268,7 @@ return array (
       array (
         'bill_no' => 'SA 1987',
         'bill_date' => '2023-07-09',
+        'month_of' => 'July-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -102940,6 +105308,7 @@ return array (
       array (
         'bill_no' => 'SA 2460',
         'bill_date' => '2023-07-01',
+        'month_of' => 'July-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -102958,6 +105327,7 @@ return array (
       array (
         'bill_no' => 'SA 1934',
         'bill_date' => '2023-06-25',
+        'month_of' => 'June-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -103004,6 +105374,7 @@ return array (
       array (
         'bill_no' => 'SA 2390',
         'bill_date' => '2023-06-01',
+        'month_of' => 'June-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -103022,6 +105393,7 @@ return array (
       array (
         'bill_no' => 'SA 1792',
         'bill_date' => '2023-06-05',
+        'month_of' => 'June-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -103061,6 +105433,7 @@ return array (
       array (
         'bill_no' => 'SA 2240',
         'bill_date' => '2023-06-01',
+        'month_of' => 'June-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -103079,6 +105452,7 @@ return array (
       array (
         'bill_no' => 'SA 1763',
         'bill_date' => '2023-05-21',
+        'month_of' => 'May-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -103125,6 +105499,7 @@ return array (
       array (
         'bill_no' => 'SA 2199',
         'bill_date' => '2023-05-01',
+        'month_of' => 'May-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -103143,6 +105518,7 @@ return array (
       array (
         'bill_no' => '1792',
         'bill_date' => '2023-05-18',
+        'month_of' => 'May-2023',
         'workshop_name' => 'Soniya Tyre And Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -103161,6 +105537,7 @@ return array (
       array (
         'bill_no' => '18180',
         'bill_date' => '2023-05-25',
+        'month_of' => 'May-2023',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -103221,6 +105598,7 @@ return array (
       array (
         'bill_no' => 'SA 1667',
         'bill_date' => '2023-05-16',
+        'month_of' => 'May-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -103260,6 +105638,7 @@ return array (
       array (
         'bill_no' => 'SA 2072',
         'bill_date' => '2023-05-01',
+        'month_of' => 'May-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -103278,6 +105657,7 @@ return array (
       array (
         'bill_no' => 'SA 1600',
         'bill_date' => '2023-05-04',
+        'month_of' => 'May-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -103352,6 +105732,7 @@ return array (
       array (
         'bill_no' => 'SA 1992',
         'bill_date' => '2023-05-01',
+        'month_of' => 'May-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -103370,6 +105751,7 @@ return array (
       array (
         'bill_no' => 'SA 1967',
         'bill_date' => '2023-04-30',
+        'month_of' => 'April-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -103388,6 +105770,7 @@ return array (
       array (
         'bill_no' => 'SA 1558',
         'bill_date' => '2023-04-18',
+        'month_of' => 'April-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -103406,6 +105789,7 @@ return array (
       array (
         'bill_no' => 'SA 1494',
         'bill_date' => '2023-04-11',
+        'month_of' => 'April-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -103424,6 +105808,7 @@ return array (
       array (
         'bill_no' => 'SA 1445',
         'bill_date' => '2023-04-03',
+        'month_of' => 'April-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -103470,6 +105855,7 @@ return array (
       array (
         'bill_no' => 'SA 1817',
         'bill_date' => '2023-04-01',
+        'month_of' => 'April-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -103488,6 +105874,7 @@ return array (
       array (
         'bill_no' => 'SA 1288',
         'bill_date' => '2023-03-04',
+        'month_of' => 'March-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -103534,6 +105921,7 @@ return array (
       array (
         'bill_no' => 'SA 1629',
         'bill_date' => '2023-03-01',
+        'month_of' => 'March-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -103552,6 +105940,7 @@ return array (
       array (
         'bill_no' => '1315',
         'bill_date' => '2023-02-28',
+        'month_of' => 'February-2023',
         'workshop_name' => 'Taiju Motors',
         'paid_by' => 'company',
         'items' => 
@@ -103570,6 +105959,7 @@ return array (
       array (
         'bill_no' => 'SA 1182',
         'bill_date' => '2023-02-13',
+        'month_of' => 'February-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -103623,6 +106013,7 @@ return array (
       array (
         'bill_no' => 'SA 1489',
         'bill_date' => '2023-02-01',
+        'month_of' => 'February-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -103655,6 +106046,7 @@ return array (
       array (
         'bill_no' => 'SA 1062',
         'bill_date' => '2023-01-23',
+        'month_of' => 'January-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -103694,6 +106086,7 @@ return array (
       array (
         'bill_no' => 'SA 1339',
         'bill_date' => '2023-01-01',
+        'month_of' => 'January-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -103712,6 +106105,7 @@ return array (
       array (
         'bill_no' => 'SA 1027',
         'bill_date' => '2023-01-15',
+        'month_of' => 'January-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -103751,6 +106145,7 @@ return array (
       array (
         'bill_no' => 'SA 1022',
         'bill_date' => '2023-01-12',
+        'month_of' => 'January-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -103769,6 +106164,7 @@ return array (
       array (
         'bill_no' => 'SA 1287',
         'bill_date' => '2023-01-01',
+        'month_of' => 'January-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -103794,6 +106190,7 @@ return array (
       array (
         'bill_no' => 'SA 940',
         'bill_date' => '2022-12-29',
+        'month_of' => 'December-2022',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -103833,6 +106230,7 @@ return array (
       array (
         'bill_no' => 'SA 1167',
         'bill_date' => '2022-12-01',
+        'month_of' => 'December-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -103851,6 +106249,7 @@ return array (
       array (
         'bill_no' => 'SA 904',
         'bill_date' => '2022-12-22',
+        'month_of' => 'December-2022',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -104065,6 +106464,7 @@ return array (
       array (
         'bill_no' => 'SA 1116',
         'bill_date' => '2022-12-22',
+        'month_of' => 'December-2022',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -104111,6 +106511,7 @@ return array (
       array (
         'bill_no' => 'SA 662',
         'bill_date' => '2022-11-15',
+        'month_of' => 'November-2022',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -104164,6 +106565,7 @@ return array (
       array (
         'bill_no' => 'SA 835',
         'bill_date' => '2022-11-15',
+        'month_of' => 'November-2022',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -104189,6 +106591,7 @@ return array (
       array (
         'bill_no' => '18114',
         'bill_date' => '2022-11-30',
+        'month_of' => 'November-2022',
         'workshop_name' => 'J K Motors',
         'paid_by' => 'company',
         'items' => 
@@ -104235,6 +106638,7 @@ return array (
       array (
         'bill_no' => 'SA 451',
         'bill_date' => '2022-10-16',
+        'month_of' => 'October-2022',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -104288,6 +106692,7 @@ return array (
       array (
         'bill_no' => 'SA 591',
         'bill_date' => '2022-10-16',
+        'month_of' => 'October-2022',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -104306,6 +106711,7 @@ return array (
       array (
         'bill_no' => 'SA 322',
         'bill_date' => '2022-09-23',
+        'month_of' => 'September-2022',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -104352,6 +106758,7 @@ return array (
       array (
         'bill_no' => 'SA 411',
         'bill_date' => '2022-09-23',
+        'month_of' => 'September-2022',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -104370,6 +106777,7 @@ return array (
       array (
         'bill_no' => 'SA 272',
         'bill_date' => '2022-09-04',
+        'month_of' => 'September-2022',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -104388,6 +106796,7 @@ return array (
       array (
         'bill_no' => 'SA 155',
         'bill_date' => '2022-08-22',
+        'month_of' => 'August-2022',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -104427,6 +106836,7 @@ return array (
       array (
         'bill_no' => 'SA 187',
         'bill_date' => '2022-08-22',
+        'month_of' => 'August-2022',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -104445,6 +106855,7 @@ return array (
       array (
         'bill_no' => 'SA 156',
         'bill_date' => '2022-08-22',
+        'month_of' => 'August-2022',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -104470,6 +106881,7 @@ return array (
       array (
         'bill_no' => 'SA 188',
         'bill_date' => '2022-08-22',
+        'month_of' => 'August-2022',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -104494,6 +106906,7 @@ return array (
       array (
         'bill_no' => '1419',
         'bill_date' => '2025-07-05',
+        'month_of' => 'July-2025',
         'workshop_name' => 'Soniya Tyre & Battery Shop',
         'paid_by' => 'company',
         'items' => 
@@ -104512,6 +106925,7 @@ return array (
       array (
         'bill_no' => 'Bill # 20672',
         'bill_date' => '2025-03-13',
+        'month_of' => 'March-2025',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -104621,6 +107035,7 @@ return array (
       array (
         'bill_no' => 'SA 1198',
         'bill_date' => '2024-10-12',
+        'month_of' => 'October-2024',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -104646,6 +107061,7 @@ return array (
       array (
         'bill_no' => 'SA 1184',
         'bill_date' => '2024-10-01',
+        'month_of' => 'October-2024',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -104685,6 +107101,7 @@ return array (
       array (
         'bill_no' => 'SA 334',
         'bill_date' => '2023-09-23',
+        'month_of' => 'September-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -104703,6 +107120,7 @@ return array (
       array (
         'bill_no' => 'SA 1022',
         'bill_date' => '2024-08-29',
+        'month_of' => 'August-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -104728,6 +107146,7 @@ return array (
       array (
         'bill_no' => 'SA 1002',
         'bill_date' => '2023-08-01',
+        'month_of' => 'August-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -104767,6 +107186,7 @@ return array (
       array (
         'bill_no' => 'SA 944',
         'bill_date' => '2023-08-19',
+        'month_of' => 'August-2023',
         'workshop_name' => 'N.Islam Automobiles',
         'paid_by' => 'company',
         'items' => 
@@ -104911,6 +107331,7 @@ return array (
       array (
         'bill_no' => 'SA 114',
         'bill_date' => '2023-08-01',
+        'month_of' => 'August-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 
@@ -104936,6 +107357,7 @@ return array (
       array (
         'bill_no' => 'SA 892',
         'bill_date' => '2023-08-01',
+        'month_of' => 'August-2023',
         'workshop_name' => '',
         'paid_by' => 'company',
         'items' => 

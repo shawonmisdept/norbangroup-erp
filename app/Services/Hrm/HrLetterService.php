@@ -14,19 +14,24 @@ class HrLetterService
 {
     public function renderTemplate(HrLetterTemplate $template, Employee $employee, array $extra = []): string
     {
-        $employee->loadMissing(['factory', 'department', 'designation']);
+        $employee->loadMissing(['factory', 'department', 'designation', 'reportingTo.designation']);
 
         $replacements = array_merge([
-            '{{date}}'              => now()->format('d M Y'),
-            '{{employee_name}}'     => $employee->name,
-            '{{employee_code}}'     => $employee->employee_code,
-            '{{factory_name}}'      => $employee->factory?->name ?? '',
-            '{{department}}'        => $employee->department?->name ?? '',
-            '{{designation}}'       => $employee->designation?->name ?? '',
-            '{{joining_date}}'      => $employee->joining_date?->format('d M Y') ?? '',
-            '{{confirmation_date}}' => $employee->confirmation_date?->format('d M Y') ?? '',
-            '{{last_working_day}}'  => $employee->last_working_day?->format('d M Y') ?? '',
-            '{{phone}}'             => $employee->phone ?? '',
+            '{{date}}'                       => now()->format('d M Y'),
+            '{{employee_name}}'              => $employee->name,
+            '{{employee_code}}'              => $employee->employee_code,
+            '{{factory_name}}'               => $employee->factory?->name ?? '',
+            '{{office_address}}'             => $employee->factory?->address
+                ?: config('hrm.default_office_address', ''),
+            '{{department}}'                 => $employee->department?->name ?? '',
+            '{{designation}}'                => $employee->designation?->name ?? '',
+            '{{joining_date}}'               => $employee->joining_date?->format('d M Y') ?? '',
+            '{{confirmation_date}}'          => $employee->confirmation_date?->format('d M Y') ?? '',
+            '{{last_working_day}}'           => $employee->last_working_day?->format('d M Y') ?? '',
+            '{{phone}}'                      => $employee->phone ?? '',
+            '{{reporting_manager_name}}'         => $employee->reportingTo?->name ?? '',
+            '{{reporting_manager_designation}}'  => $employee->reportingTo?->designation?->name ?? '',
+            '{{reporting_manager_phone}}'        => $employee->reportingTo?->phone ?? '',
         ], $extra);
 
         return str_replace(array_keys($replacements), array_values($replacements), $template->body);

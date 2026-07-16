@@ -128,7 +128,42 @@
         </div>
     </div>
 
-    @if($application->isPending() && $application->current_approval_step === \App\Services\Hrm\LeaveService::STEP_HR && auth()->user()->hasPermission('hrm.leave.approve'))
+    @if($application->isPending() && $application->current_approval_step === \App\Services\Hrm\LeaveService::STEP_REPORTING && auth()->user()->isReportingManagerFor($application->employee))
+        <div class="space-y-4">
+            <div class="erp-panel">
+                <div class="erp-panel-head">
+                    <h2 class="text-xs font-semibold text-gray-700 uppercase tracking-wide">Team Approval</h2>
+                </div>
+                <p class="erp-panel-body text-xs text-gray-500 pb-0">You are the reporting person for this employee. Approve here to forward to HR — no employee portal login required.</p>
+                <form method="POST" action="{{ route('admin.hrm.leave.transactions.approve-reporting', $application) }}" class="erp-panel-body space-y-3 pt-2"
+                      data-confirm="Forward this leave application to HR?"
+                      data-confirm-variant="primary"
+                      data-confirm-ok="Yes, approve">
+                    @csrf
+                    <div>
+                        <label class="erp-form-label">Notes (optional)</label>
+                        <textarea name="notes" rows="3" class="erp-input !text-xs" placeholder="Approval notes…"></textarea>
+                    </div>
+                    <button type="submit" class="erp-btn-primary w-full">Approve &amp; Forward to HR</button>
+                </form>
+            </div>
+
+            <div class="erp-panel">
+                <div class="erp-panel-head">
+                    <h2 class="text-xs font-semibold text-gray-700 uppercase tracking-wide">Reject</h2>
+                </div>
+                <form method="POST" action="{{ route('admin.hrm.leave.transactions.reject-reporting', $application) }}" class="erp-panel-body space-y-3"
+                      data-confirm="Reject this leave application?">
+                    @csrf
+                    <div>
+                        <label class="erp-form-label">Rejection Reason</label>
+                        <textarea name="rejection_reason" rows="3" class="erp-input !text-xs" required placeholder="Reason for rejection…"></textarea>
+                    </div>
+                    <button type="submit" class="erp-btn-secondary w-full !text-red-700 !border-red-200">Reject Leave</button>
+                </form>
+            </div>
+        </div>
+    @elseif($application->isPending() && $application->current_approval_step === \App\Services\Hrm\LeaveService::STEP_HR && auth()->user()->hasPermission('hrm.leave.approve'))
         <div class="space-y-4">
             <div class="erp-panel">
                 <div class="erp-panel-head">

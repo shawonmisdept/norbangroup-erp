@@ -335,7 +335,10 @@ class MaintenanceController extends Controller
         $validated = $request->validate([
             'bill_no'       => [
                 'required', 'string', 'max:64',
-                Rule::unique('tms_maintenance_bills', 'bill_no')->ignore($bill?->id),
+                Rule::unique('tms_maintenance_bills', 'bill_no')
+                    ->where('vehicle_id', $vehicle->id)
+                    ->where('bill_date', $request->input('bill_date'))
+                    ->ignore($bill?->id),
             ],
             'bill_date'     => ['required', 'date'],
             'workshop_name' => ['required', 'string', 'max:255'],
@@ -362,7 +365,7 @@ class MaintenanceController extends Controller
 
         if (in_array($code, [1062, 19], true) || str_contains(strtolower($e->getMessage()), 'unique')) {
             throw ValidationException::withMessages([
-                'bill_no' => 'This bill / invoice number is already used.',
+                'bill_no' => 'This bill / invoice number is already used for this vehicle.',
             ]);
         }
 

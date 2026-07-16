@@ -149,6 +149,7 @@ return [
     ],
 
     'letter_types' => [
+        'offer'        => 'Offer of Employment',
         'appointment'  => 'Appointment Letter',
         'confirmation' => 'Confirmation Letter',
         'promotion'    => 'Promotion Letter',
@@ -159,6 +160,8 @@ return [
         'experience'   => 'Experience Certificate',
         'relieving'    => 'Relieving Letter',
     ],
+
+    'default_office_address' => 'Head office, House-8/B, Road-1, Gulshan-1, Dhaka-1212.',
 
     'disciplinary_types' => [
         'show_cause'       => 'Show Cause Notice',

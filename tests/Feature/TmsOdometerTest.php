@@ -104,7 +104,7 @@ class TmsOdometerTest extends TestCase
         $log->refresh();
 
         $this->assertSame(1120.0, (float) $log->evening_km);
-        $this->assertSame('06:00 PM', $log->eveningRecordedTime());
+        $this->assertSame('6:00 PM', $log->eveningRecordedTime());
         $this->assertSame(70.0, $log->dailyKm());
         $this->assertSame(1120.0, (float) $this->vehicle->fresh()->last_odometer_km);
 
@@ -112,7 +112,7 @@ class TmsOdometerTest extends TestCase
             ->get(route('admin.tms.odometer.index'))
             ->assertOk()
             ->assertSee('1,120.00')
-            ->assertSee('06:00 PM')
+            ->assertSee('6:00 PM')
             ->assertSee('Complete')
             ->assertDontSee(route('admin.tms.odometer.evening.create', $log), false);
     }

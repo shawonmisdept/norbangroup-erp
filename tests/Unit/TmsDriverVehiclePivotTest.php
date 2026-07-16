@@ -19,6 +19,7 @@ class TmsDriverVehiclePivotTest extends TestCase
     public function test_assigned_driver_names_falls_back_when_pivot_table_missing(): void
     {
         Schema::dropIfExists('tms_driver_vehicles');
+        TmsDriverVehiclePivot::resetCache();
 
         $factory = Factory::create(['name' => 'Pivot Test', 'is_active' => true]);
         $shift = Shift::create([

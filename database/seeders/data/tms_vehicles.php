@@ -1,17 +1,16 @@
 <?php
 
 /**
- * Vehicle register from "Vehicle Papers Update Information" spreadsheet
- * (Sheet1 + Sheet2 merged). Blank / missing cells are omitted.
- * vehicle_category and passenger_capacity are set from model name.
- * unit is Sheet1 Owner (NCL / HAL / BD Com / NFL / DHL) for factory mapping.
- * Allocated user and driver are assigned later in admin.
+ * Vehicle register from "Vehicle Papers Status" spreadsheet (51 rows).
+ * Blank / missing cells in the sheet are omitted — not filled with defaults.
+ * Unit, allocated user, driver, and driver contact are set later in admin.
  *
- * Regenerate:
- *   php database/seeders/scripts/regen_tms_vehicles_from_csv.php
+ * Rebuild ordered list:
+ *   php database/seeders/scripts/rebuild_tms_vehicles_ordered.php
  */
 
-return array (
+return 
+array (
   0 => 
   array (
     'reg_number' => 'DM-GHA-22-1042',
@@ -431,7 +430,7 @@ return array (
   ),
   21 => 
   array (
-    'reg_number' => 'DM-GA-23-5772',
+    'reg_number' => 'DM-GA-30-0062',
     'name' => 'Toyota Axio',
     'vehicle_category' => 'sedan',
     'unit' => 'HAL',
@@ -451,6 +450,26 @@ return array (
   ),
   22 => 
   array (
+    'reg_number' => 'DM-KHA-23-5772',
+    'name' => 'Toyota Axio',
+    'vehicle_category' => 'sedan',
+    'unit' => 'HAL',
+    'model_year' => 2003,
+    'purchase_date' => '3/Mar/21',
+    'registration_date' => '22/Nov/08',
+    'engine_cc' => 1500,
+    'fuel_type' => 'CNG',
+    'purchase_value' => '1,000,000',
+    'fitness_expires_at' => '3-Dec-26',
+    'tax_token_expires_at' => '22-Nov-26',
+    'insurance_expires_at' => '7-Dec-26',
+    'type' => 'own',
+    'passenger_capacity' => 5,
+    'status' => 'available',
+    'registration_paper_status' => 'ok',
+  ),
+  23 => 
+  array (
     'reg_number' => 'DM-GA-43-9461',
     'name' => 'Toyota Axio X',
     'vehicle_category' => 'sedan',
@@ -469,7 +488,7 @@ return array (
     'status' => 'available',
     'registration_paper_status' => 'ok',
   ),
-  23 => 
+  24 => 
   array (
     'reg_number' => 'DM-GA-13-5028',
     'name' => 'Toyota Sidan',
@@ -489,7 +508,7 @@ return array (
     'status' => 'available',
     'registration_paper_status' => 'ok',
   ),
-  24 => 
+  25 => 
   array (
     'reg_number' => 'DM-KHA-12-1223',
     'name' => 'Toyota Corolla X',
@@ -509,7 +528,7 @@ return array (
     'status' => 'available',
     'registration_paper_status' => 'ok',
   ),
-  25 => 
+  26 => 
   array (
     'reg_number' => 'DM-KHA-13-1898',
     'name' => 'Avenza',
@@ -529,7 +548,7 @@ return array (
     'status' => 'available',
     'registration_paper_status' => 'ok',
   ),
-  26 => 
+  27 => 
   array (
     'reg_number' => 'DM-GA-13-9120',
     'name' => 'Toyota Corrola',
@@ -547,7 +566,7 @@ return array (
     'status' => 'available',
     'registration_paper_status' => 'ok',
   ),
-  27 => 
+  28 => 
   array (
     'reg_number' => 'DM-GA-19-9823',
     'name' => 'Station Wagun',
@@ -567,7 +586,7 @@ return array (
     'status' => 'available',
     'registration_paper_status' => 'ok',
   ),
-  28 => 
+  29 => 
   array (
     'reg_number' => 'DM-GA-23-3941',
     'name' => 'Toyota Allion',
@@ -587,7 +606,7 @@ return array (
     'status' => 'available',
     'registration_paper_status' => 'ok',
   ),
-  29 => 
+  30 => 
   array (
     'reg_number' => 'DM-GA-37-9232',
     'name' => 'Toyota Axio',
@@ -607,7 +626,7 @@ return array (
     'status' => 'available',
     'registration_paper_status' => 'ok',
   ),
-  30 => 
+  31 => 
   array (
     'reg_number' => 'DM-GA-37-9227',
     'name' => 'Toyota Axio',
@@ -627,7 +646,7 @@ return array (
     'status' => 'available',
     'registration_paper_status' => 'ok',
   ),
-  31 => 
+  32 => 
   array (
     'reg_number' => 'DM-CHA-53-4286',
     'name' => 'HIACE (Microbus)',
@@ -648,7 +667,7 @@ return array (
     'status' => 'available',
     'registration_paper_status' => 'ok',
   ),
-  32 => 
+  33 => 
   array (
     'reg_number' => 'DM-CHA-11-3870',
     'name' => 'NOAH (Microbus)',
@@ -666,7 +685,7 @@ return array (
     'status' => 'available',
     'registration_paper_status' => 'ok',
   ),
-  33 => 
+  34 => 
   array (
     'reg_number' => 'DM-CHA-53-4349',
     'name' => 'HIACE (Microbus)',
@@ -687,7 +706,7 @@ return array (
     'status' => 'available',
     'registration_paper_status' => 'ok',
   ),
-  34 => 
+  35 => 
   array (
     'reg_number' => 'DM-CHA-53-4348',
     'name' => 'HIACE (Microbus)',
@@ -708,7 +727,7 @@ return array (
     'status' => 'available',
     'registration_paper_status' => 'ok',
   ),
-  35 => 
+  36 => 
   array (
     'reg_number' => 'DM-CHA-56-0973',
     'name' => 'URBAN (Microbus)',
@@ -729,7 +748,7 @@ return array (
     'status' => 'available',
     'registration_paper_status' => 'ok',
   ),
-  36 => 
+  37 => 
   array (
     'reg_number' => 'DM-CHA-56-1146',
     'name' => 'URBAN (Microbus)',
@@ -750,7 +769,7 @@ return array (
     'status' => 'available',
     'registration_paper_status' => 'ok',
   ),
-  37 => 
+  38 => 
   array (
     'reg_number' => 'DM-MA-11-6078',
     'name' => 'Covered Van',
@@ -771,7 +790,7 @@ return array (
     'status' => 'available',
     'registration_paper_status' => 'ok',
   ),
-  38 => 
+  39 => 
   array (
     'reg_number' => 'DM-MA-11-6079',
     'name' => 'Covered Van',
@@ -792,7 +811,7 @@ return array (
     'status' => 'available',
     'registration_paper_status' => 'ok',
   ),
-  39 => 
+  40 => 
   array (
     'reg_number' => 'DM-AU-11-2904',
     'name' => 'Covered Van',
@@ -813,7 +832,7 @@ return array (
     'status' => 'available',
     'registration_paper_status' => 'ok',
   ),
-  40 => 
+  41 => 
   array (
     'reg_number' => 'NAR-MA-11-0043',
     'name' => 'Cover Van',
@@ -834,7 +853,7 @@ return array (
     'status' => 'available',
     'registration_paper_status' => 'ok',
   ),
-  41 => 
+  42 => 
   array (
     'reg_number' => 'DM-AU-11-4206',
     'name' => 'Covered Van',
@@ -855,7 +874,7 @@ return array (
     'status' => 'available',
     'registration_paper_status' => 'ok',
   ),
-  42 => 
+  43 => 
   array (
     'reg_number' => 'DM-AU-14-1095',
     'name' => 'Covered Van',
@@ -876,9 +895,9 @@ return array (
     'status' => 'available',
     'registration_paper_status' => 'ok',
   ),
-  43 => 
+  44 => 
   array (
-    'reg_number' => 'DM-U-11-4801',
+    'reg_number' => 'DM-U-4801',
     'name' => 'Covered Van',
     'vehicle_category' => 'other',
     'unit' => 'HAL',
@@ -897,7 +916,7 @@ return array (
     'status' => 'available',
     'registration_paper_status' => 'ok',
   ),
-  44 => 
+  45 => 
   array (
     'reg_number' => 'DM-MA-51-8450',
     'name' => 'Covered Van',
@@ -918,7 +937,7 @@ return array (
     'status' => 'available',
     'registration_paper_status' => 'ok',
   ),
-  45 => 
+  46 => 
   array (
     'reg_number' => 'DM-MA-14-0155',
     'name' => 'Covered Van',
@@ -939,7 +958,7 @@ return array (
     'status' => 'available',
     'registration_paper_status' => 'ok',
   ),
-  46 => 
+  47 => 
   array (
     'reg_number' => 'DM-TA-15-7042',
     'name' => 'Covered Van',
@@ -959,7 +978,7 @@ return array (
     'status' => 'available',
     'registration_paper_status' => 'ok',
   ),
-  47 => 
+  48 => 
   array (
     'reg_number' => 'DM-TA-13-6693',
     'name' => 'Covered Van',
@@ -979,7 +998,7 @@ return array (
     'status' => 'available',
     'registration_paper_status' => 'ok',
   ),
-  48 => 
+  49 => 
   array (
     'reg_number' => 'DM-DA-11-9103',
     'name' => 'Covered Van',
@@ -998,7 +1017,7 @@ return array (
     'status' => 'available',
     'registration_paper_status' => 'ok',
   ),
-  49 => 
+  50 => 
   array (
     'reg_number' => 'DM-GHA-21-5864',
     'name' => 'Hard Jeep,Toyota',

@@ -48,6 +48,100 @@ class HrmPhase6Test extends TestCase
         $this->assertGreaterThan(0, HrLetterTemplate::count());
     }
 
+    public function test_letter_template_edit_form_renders_placeholder_help(): void
+    {
+        $template = HrLetterTemplate::where('code', 'appointment')->first();
+        $this->assertNotNull($template);
+
+        $this->actingAs($this->phase6Admin())
+            ->get(route('admin.hrm.letter-templates.edit', $template))
+            ->assertOk()
+            ->assertSee('{{employee_name}}', false)
+            ->assertSee('{{date}}', false);
+    }
+
+    public function test_offer_of_employment_template_is_seeded(): void
+    {
+        $this->seed(\Database\Seeders\Hrm\HrLetterTemplateSeeder::class);
+
+        $template = HrLetterTemplate::where('code', 'offer_of_employment')->first();
+        $this->assertNotNull($template);
+        $this->assertSame('offer', $template->letter_type);
+        $this->assertStringContainsString('Private and Confidential', $template->body);
+        $this->assertStringContainsString('Waiting for you here at Norban.', $template->body);
+        $this->assertStringContainsString('{{reporting_manager_name}}', $template->body);
+    }
+
+    public function test_can_issue_offer_of_employment_letter_with_rendered_placeholders(): void
+    {
+        $this->seed(\Database\Seeders\Hrm\HrLetterTemplateSeeder::class);
+
+        $factory = Factory::create([
+            'name'      => 'Norban Comtex Limited',
+            'address'   => 'Head office, House-8/B, Road-1, Gulshan-1, Dhaka-1212.',
+            'is_active' => true,
+        ]);
+
+        $department = \App\Models\Department::create([
+            'factory_id' => $factory->id,
+            'name'       => 'MIS',
+            'is_active'  => true,
+        ]);
+
+        $designation = \App\Models\Designation::create([
+            'department_id' => $department->id,
+            'name'          => 'Data Entry Operator',
+            'is_active'     => true,
+        ]);
+
+        $manager = Employee::create([
+            'factory_id'     => $factory->id,
+            'employee_code'  => 'MGR-OFFER',
+            'name'           => 'Musfique Adnan',
+            'designation_id' => $designation->id,
+            'phone'          => '01755511837',
+            'status'         => 'active',
+        ]);
+
+        $employee = Employee::create([
+            'factory_id'      => $factory->id,
+            'employee_code'   => 'EMP-OFFER',
+            'name'            => 'Shawonoor Rahman',
+            'department_id'   => $department->id,
+            'designation_id'  => $designation->id,
+            'reporting_to_id' => $manager->id,
+            'joining_date'    => '2024-11-05',
+            'status'          => 'active',
+        ]);
+
+        $template = HrLetterTemplate::where('code', 'offer_of_employment')->firstOrFail();
+        $admin = $this->phase6Admin();
+
+        $this->actingAs($admin)->post(route('admin.hrm.letters.store'), [
+            'employee_id' => $employee->id,
+            'template_id' => $template->id,
+        ])->assertRedirect();
+
+        $letter = IssuedLetter::first();
+        $this->assertSame('offer', $letter->letter_type);
+        $this->assertStringContainsString('Shawonoor Rahman', $letter->content);
+        $this->assertStringContainsString('Data Entry Operator', $letter->content);
+        $this->assertStringContainsString('MIS', $letter->content);
+        $this->assertStringContainsString('Norban Comtex Limited', $letter->content);
+        $this->assertStringContainsString('Gulshan-1, Dhaka-1212', $letter->content);
+        $this->assertStringContainsString('Musfique Adnan', $letter->content);
+        $this->assertStringContainsString('01755511837', $letter->content);
+        $this->assertStringContainsString('Private and Confidential', $letter->content);
+        $this->assertStringNotContainsString('{{employee_name}}', $letter->content);
+
+        $this->actingAs($admin)->get(route('admin.hrm.letters.show', $letter))
+            ->assertOk()
+            ->assertSee('Offer of Employment')
+            ->assertSee('Shawonoor Rahman');
+
+        $this->actingAs($admin)->get(route('admin.hrm.letters.print', $letter))->assertOk();
+    }
+
     public function test_can_issue_letter_to_employee(): void
     {
         $factory = Factory::create(['name' => 'Letter Factory', 'is_active' => true]);

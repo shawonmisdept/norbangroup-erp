@@ -50,7 +50,10 @@
                 <label class="erp-form-label">Body</label>
                 <textarea name="body" rows="16" class="erp-input font-mono text-xs" required>{{ old('body', $template->body) }}</textarea>
                 <p class="text-[10px] text-gray-500 mt-1">
-                    Placeholders: {{date}}, {{employee_name}}, {{employee_code}}, {{factory_name}}, {{department}}, {{designation}}, {{joining_date}}, {{confirmation_date}}, {{last_working_day}}, {{phone}}
+                    Placeholders:
+                    @verbatim
+                    {{date}}, {{employee_name}}, {{employee_code}}, {{factory_name}}, {{office_address}}, {{department}}, {{designation}}, {{joining_date}}, {{confirmation_date}}, {{last_working_day}}, {{phone}}, {{reporting_manager_name}}, {{reporting_manager_designation}}, {{reporting_manager_phone}}
+                    @endverbatim
                 </p>
             </div>
 

@@ -98,6 +98,12 @@ class VehiclePaperService
 
     public function worstStatusForVehicle(TmsVehicle $vehicle): string
     {
+        return $this->worstStatusFromPapers($this->papersForVehicle($vehicle));
+    }
+
+    /** @param  array<int, array{paper_type: string, label: string, expires_at: ?Carbon, status: string, days_left: ?int}>  $papers */
+    public function worstStatusFromPapers(array $papers): string
+    {
         $priority = [
             self::STATUS_EXPIRED => 5,
             self::STATUS_URGENT  => 4,
@@ -109,7 +115,7 @@ class VehiclePaperService
 
         $worst = self::STATUS_OK;
 
-        foreach ($this->papersForVehicle($vehicle) as $paper) {
+        foreach ($papers as $paper) {
             if (($priority[$paper['status']] ?? 0) > ($priority[$worst] ?? 0)) {
                 $worst = $paper['status'];
             }

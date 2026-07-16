@@ -57,12 +57,23 @@ class RolePermissionSeederTest extends TestCase
 
         foreach ([
             'hrm.employees.manage',
+            'hrm.leave.approve',
             'hrm.recruitment.applications.convert',
+            'hrm.recruitment.postings.approve',
             'hrm.employees.promotion.approve',
             'hrm.performance.approve',
         ] as $permission) {
             $this->assertTrue($role->hasPermission($permission), "HR Manager missing: {$permission}");
         }
+    }
+
+    public function test_seeder_grants_manager_leave_approve_permission(): void
+    {
+        $this->seed(RolePermissionSeeder::class);
+
+        $role = Role::where('name', 'Manager')->firstOrFail();
+
+        $this->assertTrue($role->hasPermission('hrm.leave.approve'));
     }
 
     public function test_catalog_permissions_are_registered_in_role_ui_options(): void

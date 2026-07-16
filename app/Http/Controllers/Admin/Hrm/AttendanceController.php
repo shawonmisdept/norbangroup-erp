@@ -245,7 +245,7 @@ class AttendanceController extends Controller
     public function daily(Request $request, AttendanceDailyLogPhotoService $photoService)
     {
         $query = AttendanceDailyLog::query()
-            ->with(['employee', 'shift', 'period', 'lateAcceptanceApplication'])
+            ->with(['employee', 'lateAcceptanceApplication'])
             ->latest('attendance_date')
             ->latest('id');
 

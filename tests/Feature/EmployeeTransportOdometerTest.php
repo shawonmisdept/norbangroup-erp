@@ -91,14 +91,14 @@ class EmployeeTransportOdometerTest extends TestCase
 
         $this->assertNotNull($log);
         $this->assertSame(1050.0, (float) $log->morning_km);
-        $this->assertSame('08:30 AM', $log->morningRecordedTime());
+        $this->assertSame('8:30 AM', $log->morningRecordedTime());
         $this->assertSame($this->driverEmployee->id, $log->morning_entered_by_employee);
 
         $this->actingAs($this->driverPortal, 'employee')
             ->get(route('employee.transport.odometer'))
             ->assertOk()
             ->assertSee('1,050.00')
-            ->assertSee('08:30 AM')
+            ->assertSee('8:30 AM')
             ->assertSee('Save Evening KM');
     }
 
@@ -124,14 +124,14 @@ class EmployeeTransportOdometerTest extends TestCase
         $log->refresh();
 
         $this->assertSame(1120.0, (float) $log->evening_km);
-        $this->assertSame('06:15 PM', $log->eveningRecordedTime());
+        $this->assertSame('6:15 PM', $log->eveningRecordedTime());
         $this->assertSame(1120.0, (float) $this->vehicle->fresh()->last_odometer_km);
 
         $this->actingAs($this->driverPortal, 'employee')
             ->get(route('employee.transport.odometer'))
             ->assertOk()
             ->assertSee('1,120.00')
-            ->assertSee('06:15 PM')
+            ->assertSee('6:15 PM')
             ->assertSee('Today complete');
     }
 

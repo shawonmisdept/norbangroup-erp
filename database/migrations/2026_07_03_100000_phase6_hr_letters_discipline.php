@@ -64,6 +64,12 @@ return new class extends Migration
         $now = now();
         $templates = [
             [
+                'code'        => 'offer_of_employment',
+                'name'        => 'Offer of Employment',
+                'letter_type' => 'offer',
+                'body'        => "Offer of Employment\n\nPrivate and Confidential\n\nDate: {{date}}\n\nDear {{employee_name}},\n\nRe: Offer of Employment for the post of {{designation}}.\n\nWe are pleased to offer you the position of {{designation}} ({{department}} department) with us here at {{factory_name}} where we hope you will enjoy your role and make a significant contribution to the success of the business.\n\nCommencement Date\nYour employment will commence on or before {{joining_date}}\n\nLocation\nYou will be based at {{office_address}}\n\nPosition\n{{designation}}\nThe role and responsibilities of this position will be described separately in your Appointment Letter and or in your Job Description.\n\nCompensation\nYou will get consolidated salary as discussed inclusive of all allowances. In addition mobile bill, 2 festival bonuses in a year and any other benefit if any will be as per company policy.\n\nBring copy of your all academic credentials, NID, 2 copy recent passport size photograph and clearance from last organisation for whom you worked for.\n\nNOTE: You will report to {{reporting_manager_name}}, {{reporting_manager_designation}}, Cell No- {{reporting_manager_phone}}\n\nWaiting for you here at Norban.\n\nSincerely,\nHuman Resources Department\n{{factory_name}}",
+            ],
+            [
                 'code'        => 'appointment',
                 'name'        => 'Appointment Letter',
                 'letter_type' => 'appointment',

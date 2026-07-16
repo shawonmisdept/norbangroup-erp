@@ -23,8 +23,13 @@ class VehicleController extends Controller
 
     public function index(Request $request)
     {
+        $relations = ['factory', 'rentalVendor', 'primaryDriver.employee', 'allocatedEmployee.designation', 'defaultDrivers.employee'];
+        if (TmsDriverVehiclePivot::available()) {
+            $relations[] = 'assignedCompanyDrivers.employee';
+        }
+
         $query = TmsVehicle::query()
-            ->with(['factory', 'rentalVendor', 'primaryDriver.employee', 'allocatedEmployee.designation'])
+            ->with($relations)
             ->orderBy('id');
         $this->scopeToUserFactory($query, $request);
 
@@ -51,7 +56,7 @@ class VehicleController extends Controller
 
         if ($request->filled('paper_status')) {
             $status = $request->paper_status;
-            $filtered = $query->get()->filter(
+            $filtered = $allForStats->filter(
                 fn (TmsVehicle $vehicle) => $this->paperService->worstStatusForVehicle($vehicle) === $status
             );
             $vehicles = $filtered->values();
@@ -127,14 +132,16 @@ class VehicleController extends Controller
             ->limit(10)
             ->get();
 
+        $papers = $this->paperService->papersForVehicle($vehicle);
+
         return view('admin.tms.vehicles.show', [
             'vehicle'      => $vehicle,
             'recentTrips'    => $recentTrips,
             'canManage'      => $request->user()?->canManageTmsSubmodule('vehicles') ?? false,
             'paperTypes'     => config('tms.paper_types'),
             'paperService'   => $this->paperService,
-            'papers'         => $this->paperService->papersForVehicle($vehicle),
-            'worstPaperStatus'=> $this->paperService->worstStatusForVehicle($vehicle),
+            'papers'         => $papers,
+            'worstPaperStatus'=> $this->paperService->worstStatusFromPapers($papers),
         ]);
     }
 

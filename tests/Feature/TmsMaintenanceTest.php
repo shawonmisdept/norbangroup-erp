@@ -252,7 +252,7 @@ class TmsMaintenanceTest extends TestCase
             ->assertSee('40,400.00');
     }
 
-    public function test_duplicate_bill_no_is_rejected(): void
+    public function test_duplicate_bill_no_is_rejected_for_same_vehicle_and_date(): void
     {
         TmsMaintenanceBill::create([
             'factory_id'    => $this->factory->id,
@@ -276,10 +276,22 @@ class TmsMaintenanceTest extends TestCase
 
         $this->actingAs($this->user)
             ->post(route('admin.tms.maintenance.bills.store', $this->ownVehicle), $payload)
-            ->assertSessionHasErrors('bill_no');
+            ->assertRedirect()
+            ->assertSessionHasNoErrors();
 
         $this->actingAs($this->user)
             ->post(route('admin.tms.maintenance.bills.store', $this->rentalVehicle), $payload)
+            ->assertRedirect()
+            ->assertSessionHasNoErrors();
+
+        $payload['bill_date'] = '2026-06-10';
+        $this->actingAs($this->user)
+            ->post(route('admin.tms.maintenance.bills.store', $this->ownVehicle), $payload)
+            ->assertRedirect()
+            ->assertSessionHasNoErrors();
+
+        $this->actingAs($this->user)
+            ->post(route('admin.tms.maintenance.bills.store', $this->ownVehicle), $payload)
             ->assertSessionHasErrors('bill_no');
 
         $payload['bill_no'] = ' 14811 ';
@@ -467,7 +479,7 @@ class TmsMaintenanceTest extends TestCase
             ->get(route('admin.tms.maintenance.register.print', $this->rentalVehicle))
             ->assertOk()
             ->assertSee('Summary Of Vehicle Maintenance')
-            ->assertSee('Month Of: June 2026')
+            ->assertSee('Month Of: June-2026')
             ->assertSee('14811')
             ->assertSee('Spark Plug')
             ->assertSee('Bill Total')

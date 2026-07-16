@@ -258,6 +258,8 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
             Route::get('/separations', [\App\Http\Controllers\Admin\Hrm\SeparationController::class, 'index'])->name('separations.index');
             Route::get('/separations/export', [\App\Http\Controllers\Admin\Hrm\SeparationController::class, 'export'])->name('separations.export');
             Route::get('/separations/{separation}', [\App\Http\Controllers\Admin\Hrm\SeparationController::class, 'show'])->name('separations.show')->whereNumber('separation');
+            Route::post('/separations/{separation}/approve-reporting', [\App\Http\Controllers\Admin\Hrm\SeparationController::class, 'approveReporting'])->name('separations.approve-reporting')->whereNumber('separation');
+            Route::post('/separations/{separation}/reject-reporting', [\App\Http\Controllers\Admin\Hrm\SeparationController::class, 'rejectReporting'])->name('separations.reject-reporting')->whereNumber('separation');
         });
 
         Route::middleware('permission:hrm.employees.separation.manage')->group(function () {
@@ -512,6 +514,8 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
         Route::middleware('hrm.submodule:leave,transactions,view')->group(function () {
             Route::get('/leave/transactions', [LeaveTransactionController::class, 'index'])->name('leave.transactions.index');
             Route::get('/leave/transactions/{transaction}', [LeaveTransactionController::class, 'show'])->name('leave.transactions.show');
+            Route::post('/leave/transactions/{transaction}/approve-reporting', [LeaveTransactionController::class, 'approveReporting'])->name('leave.transactions.approve-reporting');
+            Route::post('/leave/transactions/{transaction}/reject-reporting', [LeaveTransactionController::class, 'rejectReporting'])->name('leave.transactions.reject-reporting');
         });
 
         Route::middleware('hrm.submodule:leave,allocation,view')->group(function () {

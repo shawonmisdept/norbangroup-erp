@@ -1,8 +1,11 @@
 @php
+    use App\Models\Hrm\RecruitmentApplication;
+
     $isPublic = $isPublic ?? false;
     $isEdit = $isEdit ?? false;
+    $application = $application ?? new RecruitmentApplication();
     $postings = $postings ?? null;
-    $selectedPosting = $selectedPosting ?? ($posting->id ?? null);
+    $selectedPosting = $selectedPosting ?? (isset($posting) ? $posting->id : null);
     $educationRows = old('education_history');
     if ($educationRows === null) {
         $educationRows = $application->education_history ?? [];
@@ -39,13 +42,16 @@
     $sectionBody = $isPublic ? 'careers-form-section-body' : 'erp-panel-body';
     $labelWrap = $isPublic ? 'careers-field' : '';
     $labelTag = $isPublic ? 'span' : null;
+    $canSubmit = $isPublic || ($isEdit ?? false) || ! empty($postings);
 @endphp
 
 <form method="POST" action="{{ $formAction }}" enctype="multipart/form-data" class="space-y-4" id="recruitment-form">
     @csrf
     @if($formMethod ?? false) @method($formMethod) @endif
 
-    @if(! $isPublic && $postings)
+    @if($isPublic)
+        <input type="hidden" name="job_posting_id" value="{{ $posting->id }}">
+    @elseif(! empty($postings))
         <div class="erp-panel">
             <div class="erp-panel-head"><h2 class="text-xs font-semibold text-gray-700 uppercase">Application Source</h2></div>
             <div class="erp-panel-body grid grid-cols-2 gap-4">
@@ -75,10 +81,19 @@
                 </div>
             </div>
         </div>
+    @elseif($isEdit)
+        <input type="hidden" name="job_posting_id" value="{{ $application->job_posting_id }}">
     @else
-        <input type="hidden" name="job_posting_id" value="{{ $posting->id }}">
+        <div class="erp-panel">
+            <div class="erp-panel-body bg-amber-50 border border-amber-200 rounded-sm p-4 text-sm text-amber-900">
+                <p class="font-medium">No job postings available</p>
+                <p class="mt-1 text-xs text-amber-800">Create a job posting before recording a manual application.</p>
+                <a href="{{ route('admin.hrm.recruitment.postings.create') }}" class="inline-block mt-3 erp-btn-primary !py-1.5 !px-3 text-xs">Create Job Posting</a>
+            </div>
+        </div>
     @endif
 
+    @if($canSubmit)
     <div class="{{ $sectionClass }}">
         <div class="{{ $sectionHead }}">Personal Information</div>
         <div class="{{ $sectionBody }} grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -280,6 +295,7 @@
             <a href="{{ route('careers.show', $posting) }}" class="careers-btn careers-btn-secondary">Cancel</a>
         @endif
     </div>
+    @endif
 </form>
 
 @if($isPublic && ($otpSendUrl ?? null))

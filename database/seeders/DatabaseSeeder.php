@@ -17,18 +17,21 @@ class DatabaseSeeder extends Seeder
         $this->seedDemoUsers();
 
         $this->call(MasterDataSeeder::class);
-
-        $this->seedDemoUsers();
     }
 
     private function seedDemoUsers(): void
     {
-        $adminRole = Role::where('name', 'Administrator')->firstOrFail();
-        $managementRole = Role::where('name', 'Management')->firstOrFail();
-        $managerRole = Role::where('name', 'Manager')->firstOrFail();
-        $viewerRole = Role::where('name', 'Viewer')->firstOrFail();
-        $hrManagerRole = Role::where('name', 'HR Manager')->firstOrFail();
-        $transportRole = Role::where('name', 'Transport Authority')->firstOrFail();
+        $roles = Role::query()
+            ->whereIn('name', ['Administrator', 'Management', 'Manager', 'Viewer', 'HR Manager', 'Transport Authority'])
+            ->get()
+            ->keyBy('name');
+
+        $adminRole = $roles['Administrator'] ?? throw new \RuntimeException('Administrator role missing.');
+        $managementRole = $roles['Management'] ?? throw new \RuntimeException('Management role missing.');
+        $managerRole = $roles['Manager'] ?? throw new \RuntimeException('Manager role missing.');
+        $viewerRole = $roles['Viewer'] ?? throw new \RuntimeException('Viewer role missing.');
+        $hrManagerRole = $roles['HR Manager'] ?? throw new \RuntimeException('HR Manager role missing.');
+        $transportRole = $roles['Transport Authority'] ?? throw new \RuntimeException('Transport Authority role missing.');
 
         $defaultFactoryId = Factory::query()->where('is_active', true)->orderBy('id')->value('id');
 

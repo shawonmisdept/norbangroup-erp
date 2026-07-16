@@ -182,6 +182,40 @@ class SeparationController extends Controller
         return back()->with('success', 'Separation request cancelled.');
     }
 
+    public function approveReporting(Request $request, EmployeeSeparation $separation)
+    {
+        $this->ensureCanView($request);
+        $this->authorizeFactoryAccess($request, $separation->factory_id);
+        $this->authorizeReportingManager($request, $separation);
+
+        $validated = $request->validate(['notes' => ['nullable', 'string', 'max:2000']]);
+
+        $this->service->approveByEmployee(
+            $separation,
+            $request->user()->linkedEmployee(),
+            $validated['notes'] ?? null
+        );
+
+        return back()->with('success', 'Separation request forwarded to HR.');
+    }
+
+    public function rejectReporting(Request $request, EmployeeSeparation $separation)
+    {
+        $this->ensureCanView($request);
+        $this->authorizeFactoryAccess($request, $separation->factory_id);
+        $this->authorizeReportingManager($request, $separation);
+
+        $validated = $request->validate(['rejection_reason' => ['required', 'string', 'max:2000']]);
+
+        $this->service->rejectByEmployee(
+            $separation,
+            $request->user()->linkedEmployee(),
+            $validated['rejection_reason']
+        );
+
+        return back()->with('success', 'Separation request rejected.');
+    }
+
     public function export(Request $request): StreamedResponse
     {
         $this->ensureCanView($request);
@@ -261,6 +295,25 @@ class SeparationController extends Controller
     {
         if (! $request->user()?->hasPermission('hrm.employees.separation.approve')) {
             abort(403, 'You do not have permission to approve separations.');
+        }
+    }
+
+    private function authorizeReportingManager(Request $request, EmployeeSeparation $separation): void
+    {
+        $user = $request->user();
+
+        if (! $user?->linkedEmployee()) {
+            abort(403, 'Your admin account must use the same email as your employee profile to approve team separations.');
+        }
+
+        $separation->loadMissing('employee');
+
+        if ((int) $separation->current_approval_step !== EmployeeSeparationService::STEP_REPORTING) {
+            abort(403, 'This request is not awaiting reporting person approval.');
+        }
+
+        if (! $user->isReportingManagerFor($separation->employee)) {
+            abort(403, 'You are not the reporting person for this employee.');
         }
     }
 }

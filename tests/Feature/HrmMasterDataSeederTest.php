@@ -27,7 +27,7 @@ class HrmMasterDataSeederTest extends TestCase
 
         $factoryCount = Factory::where('is_active', true)->count();
 
-        $this->assertSame(6, $factoryCount);
+        $this->assertSame(7, $factoryCount);
         $this->assertSame(7, WorkerCategory::count());
         $this->assertSame(5, EmploymentType::count());
         $this->assertSame(5, LeaveType::where('is_active', true)->count());

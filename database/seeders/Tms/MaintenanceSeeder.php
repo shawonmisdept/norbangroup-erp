@@ -21,6 +21,7 @@ class MaintenanceSeeder extends Seeder
         $created = 0;
         $updated = 0;
         $skipped = 0;
+        $pruned = 0;
         $itemCount = 0;
 
         foreach ($data as $regNumber => $vehicleData) {
@@ -33,6 +34,8 @@ class MaintenanceSeeder extends Seeder
                 continue;
             }
 
+            $seededBillKeys = [];
+
             foreach ($vehicleData['bills'] as $billRow) {
                 if ($billRow['items'] === [] || empty($billRow['bill_date'])) {
                     $skipped++;
@@ -40,13 +43,20 @@ class MaintenanceSeeder extends Seeder
                     continue;
                 }
 
+                $seededBillKeys[$this->billIdentityKey($billRow['bill_no'], $billRow['bill_date'])] = true;
+
                 DB::transaction(function () use ($vehicle, $billRow, &$created, &$updated, &$itemCount) {
                     $bill = TmsMaintenanceBill::query()->updateOrCreate(
-                        ['bill_no' => $billRow['bill_no']],
+                        [
+                            'vehicle_id' => $vehicle->id,
+                            'bill_no' => $billRow['bill_no'],
+                            'bill_date' => $billRow['bill_date'],
+                        ],
                         [
                             'factory_id' => $vehicle->factory_id,
                             'vehicle_id' => $vehicle->id,
                             'bill_date' => $billRow['bill_date'],
+                            'month_of' => $billRow['month_of'] ?? null,
                             'workshop_name' => $billRow['workshop_name'],
                             'total_amount' => $billRow['total_amount'],
                             'paid_by' => $billRow['paid_by'] ?? 'company',
@@ -70,8 +80,28 @@ class MaintenanceSeeder extends Seeder
                     }
                 });
             }
+
+            $staleBills = TmsMaintenanceBill::query()
+                ->where('vehicle_id', $vehicle->id)
+                ->get()
+                ->filter(function (TmsMaintenanceBill $bill) use ($seededBillKeys) {
+                    $key = $this->billIdentityKey($bill->bill_no, $bill->bill_date->toDateString());
+
+                    return ! isset($seededBillKeys[$key]);
+                });
+
+            foreach ($staleBills as $staleBill) {
+                $staleBill->items()->delete();
+                $staleBill->delete();
+                $pruned++;
+            }
         }
 
-        $this->command?->info("TMS maintenance seeded: {$created} bills created, {$updated} updated, {$skipped} skipped, {$itemCount} line items.");
+        $this->command?->info("TMS maintenance seeded: {$created} bills created, {$updated} updated, {$pruned} pruned, {$skipped} skipped, {$itemCount} line items.");
+    }
+
+    private function billIdentityKey(string $billNo, string $billDate): string
+    {
+        return trim($billNo) . '|' . $billDate;
     }
 }

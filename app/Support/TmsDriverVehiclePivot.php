@@ -12,4 +12,9 @@ class TmsDriverVehiclePivot
     {
         return self::$available ??= Schema::hasTable('tms_driver_vehicles');
     }
+
+    public static function resetCache(): void
+    {
+        self::$available = null;
+    }
 }

@@ -18,6 +18,7 @@ class HrmMasterDataSeeder extends Seeder
             HolidaySeeder::class,
             BiometricDeviceSeeder::class,
             PerformanceSeeder::class,
+            HrLetterTemplateSeeder::class,
         ]);
     }
 }

@@ -14,7 +14,7 @@ class TmsMaintenanceBill extends Model
     protected $table = 'tms_maintenance_bills';
 
     protected $fillable = [
-        'factory_id', 'vehicle_id', 'bill_no', 'bill_date', 'workshop_name',
+        'factory_id', 'vehicle_id', 'bill_no', 'bill_date', 'month_of', 'workshop_name',
         'total_amount', 'paid_by', 'notes', 'created_by', 'updated_by',
         'posted_to_finance_at', 'posted_to_finance_by',
     ];
@@ -67,12 +67,24 @@ class TmsMaintenanceBill extends Model
 
     public function monthKey(): string
     {
-        return $this->bill_date?->format('Y-m') ?? '';
+        if (filled($this->month_of)) {
+            return (string) $this->month_of;
+        }
+
+        if ($this->bill_date === null) {
+            return '';
+        }
+
+        return $this->bill_date->format('F') . '-' . $this->bill_date->format('Y');
     }
 
     public function monthLabel(): string
     {
-        return $this->bill_date?->format('F Y') ?? '';
+        if (filled($this->month_of)) {
+            return (string) $this->month_of;
+        }
+
+        return $this->monthKey();
     }
 
     public function itemsDescription(): string

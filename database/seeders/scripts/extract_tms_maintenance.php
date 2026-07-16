@@ -139,12 +139,20 @@ function parseMonthDate(string $value): ?string
     return $timestamp ? date('Y-m-d', $timestamp) : null;
 }
 
+function normalizeMonthOfLabel(string $value): ?string
+{
+    $value = trim(preg_replace('/^Month Of\s*:\s*/i', '', $value) ?? '');
+
+    return $value !== '' ? $value : null;
+}
+
 function parseMaintenanceSheet(array $rows): array
 {
     $bills = [];
     $currentBill = null;
     $started = false;
     $currentMonthDate = null;
+    $currentMonthOf = null;
 
     foreach ($rows as $row) {
         $billNo = trim($row['A'] ?? '');
@@ -164,6 +172,7 @@ function parseMaintenanceSheet(array $rows): array
         }
 
         if (isMonthHeader($row)) {
+            $currentMonthOf = normalizeMonthOfLabel($billNo);
             $currentMonthDate = parseMonthDate($billNo);
 
             continue;
@@ -188,6 +197,7 @@ function parseMaintenanceSheet(array $rows): array
             $currentBill = [
                 'bill_no' => $billNo,
                 'bill_date' => $billDate,
+                'month_of' => $currentMonthOf,
                 'workshop_name' => $workshop,
                 'paid_by' => 'company',
                 'items' => [],
@@ -248,6 +258,10 @@ function resolveRegNumber(string $sheetName, array $rows, array $suffixToReg): ?
     }
 
     return null;
+}
+
+if (realpath(__FILE__) !== realpath($_SERVER['SCRIPT_FILENAME'] ?? '')) {
+    return;
 }
 
 $strings = loadStrings($base);

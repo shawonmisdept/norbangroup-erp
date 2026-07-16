@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Hrm\Employee;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
@@ -105,6 +106,47 @@ class User extends Authenticatable
     {
         return $this->role?->hasPermission($permission) ?? false;
     }
+
+    /**
+     * Active employee profile linked to this admin account (matched by email).
+     * Head Office users are created with the same email as the employee record.
+     */
+    public function linkedEmployee(): ?Employee
+    {
+        if ($this->linkedEmployeeResolved) {
+            return $this->linkedEmployeeCache;
+        }
+
+        $this->linkedEmployeeResolved = true;
+
+        $email = strtolower(trim((string) $this->email));
+
+        if ($email === '') {
+            $this->linkedEmployeeCache = null;
+
+            return null;
+        }
+
+        $this->linkedEmployeeCache = Employee::query()
+            ->whereIn('status', ['active', 'probation'])
+            ->whereRaw('LOWER(email) = ?', [$email])
+            ->first();
+
+        return $this->linkedEmployeeCache;
+    }
+
+    public function isReportingManagerFor(Employee $employee): bool
+    {
+        $linked = $this->linkedEmployee();
+
+        return $linked !== null
+            && (int) $employee->reporting_to_id === (int) $linked->id;
+    }
+
+    /** @var bool */
+    private bool $linkedEmployeeResolved = false;
+
+    private ?Employee $linkedEmployeeCache = null;
 
     public function adminPortalUrl(): ?string
     {

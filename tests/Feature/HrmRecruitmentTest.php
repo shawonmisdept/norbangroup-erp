@@ -167,6 +167,17 @@ class HrmRecruitmentTest extends TestCase
         $this->assertCount(1, $application->interviews);
     }
 
+    public function test_manual_application_create_page_works_without_job_postings(): void
+    {
+        $admin = $this->hrAdmin();
+
+        $this->actingAs($admin)->get(route('admin.hrm.recruitment.applications.create'))
+            ->assertOk()
+            ->assertSee('Manual Application Entry')
+            ->assertSee('No job postings available')
+            ->assertSee('Create Job Posting');
+    }
+
     public function test_hr_can_create_posting_and_manual_application(): void
     {
         $factory = Factory::create(['name' => 'HR Factory', 'is_active' => true]);
@@ -175,6 +186,9 @@ class HrmRecruitmentTest extends TestCase
 
         $this->actingAs($admin)->get(route('admin.hrm.recruitment.postings.index'))->assertOk();
         $this->actingAs($admin)->get(route('admin.hrm.recruitment.applications.index'))->assertOk();
+        $this->actingAs($admin)->get(route('admin.hrm.recruitment.applications.create'))
+            ->assertOk()
+            ->assertSee('Manual Application Entry');
 
         $this->actingAs($admin)->post(route('admin.hrm.recruitment.applications.store'), [
             'job_posting_id' => $posting->id,
