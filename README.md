@@ -192,7 +192,10 @@ Import fleet and maintenance history from Excel-derived seed files:
 # 1. Vehicles (required first)
 php artisan db:seed --class=Database\\Seeders\\Tms\\VehicleSeeder
 
-# 2. Maintenance bills & line items
+# 2. Company drivers (employee ↔ vehicle assignments)
+php artisan db:seed --class=Database\\Seeders\\Tms\\CompanyDriverSeeder
+
+# 3. Maintenance bills & line items
 php artisan db:seed --class=Database\\Seeders\\Tms\\MaintenanceSeeder
 ```
 
@@ -207,7 +210,7 @@ php database/seeders/scripts/extract_tms_maintenance.php
 php artisan db:seed --class=Database\\Seeders\\Tms\\MaintenanceSeeder
 ```
 
-Seed files live in `database/seeders/data/` (`tms_vehicles.php`, `tms_maintenance.php`). Both seeders are idempotent (`updateOrCreate`).
+Seed files live in `database/seeders/data/` (`tms_vehicles.php`, `tms_company_drivers.php`, `tms_maintenance.php`). All TMS seeders are idempotent.
 
 ### Tests & background jobs
 

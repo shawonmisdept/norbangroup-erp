@@ -101,16 +101,18 @@ This seeds:
 
 ### Step 3 — TMS seed (required — not in DatabaseSeeder)
 
-Run in order — vehicles first, then maintenance:
+Run in order — vehicles first, then company drivers, then maintenance:
 
 ```bash
 php artisan db:seed --class=Database\\Seeders\\Tms\\VehicleSeeder --force
+php artisan db:seed --class=Database\\Seeders\\Tms\\CompanyDriverSeeder --force
 php artisan db:seed --class=Database\\Seeders\\Tms\\MaintenanceSeeder --force
 ```
 
 Expected output:
 
 - **51** vehicles
+- **13** company drivers linked to **18** vehicles
 - **~2488** maintenance bills (MaintenanceSeeder reports created/updated/pruned counts)
 
 ### Step 4 — Rebuild cache
@@ -131,6 +133,8 @@ php database/seeders/scripts/audit_tms_seed_integrity.php
 | Check | Expected |
 |-------|----------|
 | Vehicles | 51 |
+| Company drivers | 13 |
+| Driver ↔ vehicle links | 18 |
 | Maintenance bills | 2400+ |
 | `DM-GA-30-0062`, `DM-KHA-23-5772`, `DM-U-4801` | vehicle=yes, bills > 0 |
 | Orphan maintenance | 0 |
@@ -161,6 +165,7 @@ git pull origin main
 php composer.phar install --no-dev --optimize-autoloader
 php artisan migrate:fresh --seed --force
 php artisan db:seed --class=Database\\Seeders\\Tms\\VehicleSeeder --force
+php artisan db:seed --class=Database\\Seeders\\Tms\\CompanyDriverSeeder --force
 php artisan db:seed --class=Database\\Seeders\\Tms\\MaintenanceSeeder --force
 php artisan config:cache
 php artisan route:cache
